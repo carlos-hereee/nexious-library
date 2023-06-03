@@ -1,5 +1,5 @@
-const multiply = (a: number, b: number): number => {
-  return a * b;
-};
+// requirements
+import { multiply } from "./math";
 
-module.exports = { multiply };
+// exports
+export { multiply };
