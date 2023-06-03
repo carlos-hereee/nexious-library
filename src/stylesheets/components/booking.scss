@@ -30,7 +30,11 @@
       background-color: #{$primary-color};
       .read-more {
         &:has(+ .read-more-toggle:not(:checked))::before {
-          background: linear-gradient(to bottom, transparent, #{$primary-color});
+          background: linear-gradient(
+            to bottom,
+            transparent,
+            #{$primary-color}
+          );
         }
       }
     }

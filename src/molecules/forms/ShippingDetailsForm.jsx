@@ -6,7 +6,8 @@ import { labels } from "./labels";
 import { placeholders } from "./placeholders";
 
 const FormShippingDetails = () => {
-  const { shippingValues, shippingSchema, setShipping } = useContext(AuthContext);
+  const { shippingValues, shippingSchema, setShipping } =
+    useContext(AuthContext);
   const { handleSubmit, handleBlur, handleChange, values, errors } = useFormik({
     initialValues: { shippingValues },
     onSubmit: (e) => setShipping(e),

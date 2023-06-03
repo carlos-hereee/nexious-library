@@ -9,7 +9,8 @@ const AddToCart = ({ data }) => {
       <button
         type="button"
         className="btn btn-green"
-        onClick={() => addToCart(data)}>
+        onClick={() => addToCart(data)}
+      >
         Add to cart
       </button>
     </>

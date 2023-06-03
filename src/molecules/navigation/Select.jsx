@@ -5,7 +5,8 @@ const Select = ({ value, change, children }) => {
     <select
       className={`dropdown-input ${value}`}
       value={value}
-      onChange={(e) => change(e.target.value, value)}>
+      onChange={(e) => change(e.target.value, value)}
+    >
       <option value={value} className="dropdown-item" disabled>
         {value
           .replace(/([a-z0-9])([A-Z])/g, "$1 $2")

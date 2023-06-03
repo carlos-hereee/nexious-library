@@ -9,7 +9,8 @@ const RemoveFromCart = ({ data }) => {
       <button
         type="button"
         className="btn btn-danger"
-        onClick={() => removeFromCart(data, active)}>
+        onClick={() => removeFromCart(data, active)}
+      >
         Remove from cart
       </button>
     </>

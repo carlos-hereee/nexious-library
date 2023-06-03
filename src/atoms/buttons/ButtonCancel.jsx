@@ -1,5 +1,9 @@
 const ButtonCancel = ({ data, click }) => (
-  <button type="button" className="btn-cancel" onClick={() => click(data, true)}>
+  <button
+    type="button"
+    className="btn-cancel"
+    onClick={() => click(data, true)}
+  >
     x
   </button>
 );

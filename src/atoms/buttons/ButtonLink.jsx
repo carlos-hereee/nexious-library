@@ -6,7 +6,8 @@ const ButtonLink = ({ link }) => {
     <button
       type="button"
       className="btn btn-link"
-      onClick={() => navigate(`/${link}`)}>
+      onClick={() => navigate(`/${link}`)}
+    >
       Head to {link}
     </button>
   );

@@ -6,7 +6,8 @@ const ListItem = ({ data, click, icon }) => {
       type="button"
       className="btn list-item"
       data-state={icon}
-      onClick={() => click(data)}>
+      onClick={() => click(data)}
+    >
       {icon && <Icons name={icon} />}
       {/* {data.time.startTime} - {data.time.endTime} */}
       {data}

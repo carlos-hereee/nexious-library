@@ -8,7 +8,9 @@ const CardSectionHeader = ({ data }) => {
       {data.hasIcon && <Icons name={data.hero.icon} size="3x" />}
       <div className="card-section-heading">
         {data.title && <h2 className="card-section-title">{data.title}</h2>}
-        {data.subtitle && <h3 className="card-section-subtitle">{data.subtitle}</h3>}
+        {data.subtitle && (
+          <h3 className="card-section-subtitle">{data.subtitle}</h3>
+        )}
       </div>
       {data.description && <p>{data.description}</p>}
     </div>

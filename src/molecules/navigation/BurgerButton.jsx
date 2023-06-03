@@ -12,7 +12,8 @@ const BurgerButton = ({ isBurger, click }) => {
       className={`${isBurger ? "x" : "burger"} btn-icons`}
       aria-controls="primary-navigation"
       aria-expanded={isBurger === "x"}
-      aria-label="menu">
+      aria-label="menu"
+    >
       <Icons name={isBurger ? "x" : "burger"} size="2x" />
       <SetNotificationCount count={burger.ping} />
     </button>

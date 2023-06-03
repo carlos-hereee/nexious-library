@@ -7,7 +7,9 @@ const CardRow = ({ data, click }) => {
   const { active } = useContext(ServicesContext);
 
   return (
-    <div className={`card-row-wrapper ${data.uid === active?.uid ? "active" : ""}`}>
+    <div
+      className={`card-row-wrapper ${data.uid === active?.uid ? "active" : ""}`}
+    >
       <ButtonCancel data={data} click={click} />
       <ButtonRow data={data} click={click} />
     </div>

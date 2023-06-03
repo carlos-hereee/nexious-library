@@ -7,13 +7,15 @@ const CancelRow = ({ data, click }) => {
         <button
           type="button"
           className="btn btn-back"
-          onClick={() => click(data, false)}>
+          onClick={() => click(data, false)}
+        >
           Back
         </button>
         <button
           type="button"
           className="btn btn-danger"
-          onClick={() => click(data, true)}>
+          onClick={() => click(data, true)}
+        >
           Confirm
         </button>
       </div>

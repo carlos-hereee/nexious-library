@@ -16,7 +16,11 @@ const NotFound = () => {
       ) : (
         <p>Please select the service you would like to book</p>
       )}
-      {active.uid ? <Icons name="top" size="3x" /> : <Icons name="left" size="3x" />}
+      {active.uid ? (
+        <Icons name="top" size="3x" />
+      ) : (
+        <Icons name="left" size="3x" />
+      )}
     </div>
   );
 };

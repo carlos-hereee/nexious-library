@@ -11,7 +11,11 @@ const ShippingRequired = () => {
 
   const handleClick = () => setIsOpen(!isOpen);
   const setData = () => {
-    return isOpen ? <p>Close shipping details</p> : <p>Enter Shipping Details</p>;
+    return isOpen ? (
+      <p>Close shipping details</p>
+    ) : (
+      <p>Enter Shipping Details</p>
+    );
   };
   return (
     <>

@@ -5,19 +5,27 @@
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "npx tsc"
+    "start": "npx tsc",
+    "build": "rm -rf dist/ && prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "build:esm": "tsc",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
+  "files": [
+    "dist"
+  ],
   "author": "carlos-hereee",
-  "license": "MIT",
+  "license": "ISC",
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "devDependencies": {
+    "@types/node": "^20.2.5",
+    "prettier": "2.8.8",
     "typescript": "^5.1.3"
   }
 }

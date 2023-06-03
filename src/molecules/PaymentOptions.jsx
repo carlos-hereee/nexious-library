@@ -11,13 +11,15 @@ import UserCard from "./card/UserCard";
 const PaymentOptions = ({ data }) => {
   const { selectPaymentType } = useContext(AppContext);
   const { cart } = useContext(ServicesContext);
-  const { user, userValues, userSchema, shippingDetails } = useContext(UserContext);
+  const { user, userValues, userSchema, shippingDetails } =
+    useContext(UserContext);
   // todo add toggle active
   return (
     <button
       type="button"
       onClick={() => selectPaymentType(data)}
-      className="btn-icons">
+      className="btn-icons"
+    >
       <Icons name={data.icon} />
       <span className="icon-label">{data.name}</span>
     </button>

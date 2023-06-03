@@ -3,7 +3,11 @@ import { CalendarContext } from "../../../utils/context/CalendarContext";
 import { ServicesContext } from "../../../utils/context/ServicesContext";
 import { UserContext } from "../../../utils/context/UserContext";
 import { scrollToCartItem } from "../../../utils/functions/calendar";
-import { minDate, getMeetingList, minTime } from "../../../utils/functions/moment";
+import {
+  minDate,
+  getMeetingList,
+  minTime,
+} from "../../../utils/functions/moment";
 
 const OpenAppButton = ({ service }) => {
   const { events, setDay, selectedDay, setMeeting, bookNow } =
@@ -35,7 +39,8 @@ const OpenAppButton = ({ service }) => {
     <button
       type="button"
       className="btn btn-link"
-      onClick={() => handleClick(service)}>
+      onClick={() => handleClick(service)}
+    >
       Find Open Appointment
     </button>
   );

@@ -6,7 +6,8 @@ import BagItem from "./BagItem";
 import MeetingDetails from "../../atoms/MeetingDetails";
 
 const BagSummary = ({ data }) => {
-  const { cart, onQuantityChange, removeFromCart } = useContext(ServicesContext);
+  const { cart, onQuantityChange, removeFromCart } =
+    useContext(ServicesContext);
   const [cancel, setCancel] = useState({});
   const cancelReq = (e, isConfirm) => {
     isConfirm ? removeFromCart(cart, e) : setCancel({});
