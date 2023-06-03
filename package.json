@@ -1,12 +1,12 @@
 {
   "name": "nexious-library",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Official database for nexious.tech",
   "main": "src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "npx tsc",
-    "build": "del .\\dist\\* && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "build": "del .\\dist\\* -y && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:mac": "rm -rf dist/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs"
