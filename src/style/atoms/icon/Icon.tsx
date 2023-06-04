@@ -8,7 +8,7 @@ type IconProps = {
   spin: string;
   color: string;
 };
-const Icons = ({ name, size, spin, color }: IconProps) => {
+const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
   return (
     <FontAwesomeIcon
       icon={getDefinition(name)}

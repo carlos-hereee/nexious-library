@@ -1,6 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
-const ButtonLink = ({ data }: { data: string }) => {
+const ButtonLink = ({ data }: { data: string }): JSX.Element => {
   const navigate = useNavigate();
   return (
     <button

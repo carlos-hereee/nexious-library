@@ -1,10 +1,18 @@
 import { Link } from "react-router-dom";
 
-const Hyperlink = ({ data }) => {
+type HyperlinkProps = {
+  data: {
+    responseArr: [string, string];
+    isLink?: boolean;
+    link: string;
+    word: string;
+  };
+};
+const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
   return (
     <p>
       <span>{data.responseArr[0]} </span>
-      {data.isNav ? (
+      {data.isLink ? (
         <Link to={data.link} className="link">
           {data.word}
         </Link>

@@ -1,4 +1,4 @@
-const CapFirstChar = ({ data }: { data: string }) => (
+const CapFirstChar = ({ data }: { data: string }): JSX.Element => (
   <span>
     {data.charAt(0).toUpperCase()}
     {data.slice(1)}
