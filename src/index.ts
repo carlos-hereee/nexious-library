@@ -1,5 +1,1 @@
-// requirements
-import { multiply } from "./math";
-
-// exports
-export { multiply };
+export * from "./math";
