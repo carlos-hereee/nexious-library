@@ -1,4 +1,4 @@
-import Icons from "../icons/Icon";
+import Icons from "../icon/Icon";
 
 const NewGame = ({ click }) => {
   return (

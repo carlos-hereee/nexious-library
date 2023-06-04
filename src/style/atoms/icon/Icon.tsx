@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { svg } from "./Assets";
 
-export const Icons = ({ name, size, spin, color }) => {
+const Icons = ({ name, size, spin, color }) => {
   return (
     <FontAwesomeIcon
       icon={svg[name]}
@@ -13,3 +13,4 @@ export const Icons = ({ name, size, spin, color }) => {
     />
   );
 };
+export default Icons;
