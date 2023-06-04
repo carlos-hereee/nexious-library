@@ -1,5 +1,5 @@
-import { Buttons } from "./buttons";
-import { Icons } from "./icon";
-import { Texts } from "./texts";
+import * as Buttons from "./buttons";
+import * as Icons from "./icon";
+import * as Texts from "./texts";
 
 export { Buttons, Icons, Texts };
