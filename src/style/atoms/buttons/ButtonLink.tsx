@@ -1,14 +1,14 @@
 import { useNavigate } from "react-router-dom";
 
-const ButtonLink = ({ link }) => {
+const ButtonLink = ({ data }: { data: string }) => {
   const navigate = useNavigate();
   return (
     <button
       type="button"
       className="btn btn-link"
-      onClick={() => navigate(`/${link}`)}
+      onClick={() => navigate(`/${data}`)}
     >
-      Head to {link}
+      <span> Head to {data}</span>
     </button>
   );
 };

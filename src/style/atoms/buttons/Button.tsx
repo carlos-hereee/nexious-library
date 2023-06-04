@@ -1,12 +1,13 @@
-// import React from "react";
-
 type ButtonProps = {
   data: string;
+  name?: string;
   click: React.MouseEventHandler<HTMLButtonElement>;
 };
-const Button = ({ data, click }: ButtonProps): JSX.Element => (
-  <button type="button" className={`btn ${data}`} onClick={click}>
-    <span>{data}</span>
-  </button>
-);
+const Button = ({ data, name, click }: ButtonProps): JSX.Element => {
+  return (
+    <button type="button" className={`btn btn-${name}`} onClick={click}>
+      <span>{data}</span>
+    </button>
+  );
+};
 export default Button;
