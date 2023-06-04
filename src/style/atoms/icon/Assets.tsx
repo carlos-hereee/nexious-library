@@ -50,8 +50,17 @@ import {
   faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
+import {
+  IconLookup,
+  IconDefinition,
+  findIconDefinition,
+  library,
+} from "@fortawesome/fontawesome-svg-core";
 
-export const svg = {
+interface KeyDefinition {
+  [key: string]: IconDefinition;
+}
+export const svg: KeyDefinition = {
   home: faHome,
   about: faInfo,
   services: faListCheck,
@@ -109,4 +118,7 @@ export const svg = {
   8: fa8,
   9: fa9,
   0: fa0,
+};
+export const getDefinition = (name: string): IconDefinition => {
+  return svg[name];
 };

@@ -1,10 +1,17 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { svg } from "./Assets";
+import { getDefinition } from "./Assets";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
-const Icons = ({ name, size, spin, color }) => {
+type IconProps = {
+  name: string;
+  size: SizeProp;
+  spin: string;
+  color: string;
+};
+const Icons = ({ name, size, spin, color }: IconProps) => {
   return (
     <FontAwesomeIcon
-      icon={svg[name]}
+      icon={getDefinition(name)}
       size={size}
       className="icon"
       spin={spin === "spin"}
