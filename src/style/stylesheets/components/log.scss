@@ -1,0 +1,24 @@
+.close {
+  background: transparent;
+  position: relative;
+  .icon {
+    position: absolute;
+    animation-duration: 4s;
+  }
+  &:hover {
+    background: transparent;
+  }
+}
+.warning {
+  text-align: center;
+  color: #{$danger};
+}
+.logger {
+  max-height: 600px;
+  overflow-y: auto;
+  border-radius: #{$b-radi};
+  .log {
+    border-bottom: 1px solid #3d3b3d;
+    border-radius: 0.5rem;
+  }
+}
