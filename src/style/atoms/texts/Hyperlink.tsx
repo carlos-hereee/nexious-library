@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-type HyperlinkProps = {
+export type HyperlinkProps = {
   data: {
     responseArr: [string, string];
     isLink?: boolean;
@@ -8,7 +8,7 @@ type HyperlinkProps = {
     word: string;
   };
 };
-const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
+export const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
   return (
     <p>
       <span>{data.responseArr[0]} </span>
@@ -25,5 +25,3 @@ const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
     </p>
   );
 };
-
-export default Hyperlink;

@@ -1,11 +1,11 @@
 import { Buttons, AtomButtonProps } from "./buttons";
-import { IconDataProps, Icon } from "./icon";
-import Texts from "./texts";
+import { Icon, IconDataProps } from "./icon";
+import { Texts, TextProps } from "./texts";
 
-type AtomProps = {
+export type AtomProps = {
   Buttons: AtomButtonProps;
   Icon: IconDataProps;
+  Texts: TextProps;
 };
 
 export const Atom: AtomProps = { Buttons, Icon, Texts };
-// export { Buttons, Icons, Texts };

@@ -1,6 +1,9 @@
 // requirements
-import * as Atoms from "./atoms";
+import { Atom, AtomProps } from "./atoms";
 import "./stylesheets";
 
+type AllProps = {
+  Atom: AtomProps;
+};
 // exports
-export { Atoms };
+export const App: AllProps = { Atom };
