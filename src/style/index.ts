@@ -1,8 +1,6 @@
 // requirements
-import { Buttons, Icons, Texts } from "./atoms";
+import * as Atoms from "./atoms";
+import "./stylesheets";
 
-// load all atoms
-const Atoms = { Buttons, Icons, Texts };
-// load all molecules
 // exports
 export { Atoms };
