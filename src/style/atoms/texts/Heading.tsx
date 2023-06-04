@@ -1,7 +1,7 @@
-const Heading = ({ data }) => {
+const Heading = ({ data }: { data: string }) => {
   return (
     <div className="heading-container">
-      {data.title && <h3 className="heading">{data.title.toUpperCase()}</h3>}
+      <h3 className="heading">{data.toUpperCase()}</h3>
     </div>
   );
 };

@@ -1,7 +1,7 @@
-const CapFirstChar = ({ str }) => (
+const CapFirstChar = ({ data }: { data: string }) => (
   <span>
-    {str.charAt(0).toUpperCase()}
-    {str.slice(1)}
+    {data.charAt(0).toUpperCase()}
+    {data.slice(1)}
   </span>
 );
 

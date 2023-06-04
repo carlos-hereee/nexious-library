@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 
-const HyperlinkText = ({ data }) => {
+const Hyperlink = ({ data }) => {
   return (
     <p>
       <span>{data.responseArr[0]} </span>
@@ -18,4 +18,4 @@ const HyperlinkText = ({ data }) => {
   );
 };
 
-export default HyperlinkText;
+export default Hyperlink;

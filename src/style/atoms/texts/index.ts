@@ -1,9 +1,9 @@
 import CamelSpace from "./CamelSpace";
 import CapFirstChar from "./CapFirstChar";
 import ContactDetailsReq from "./ContactDetailsReq";
-import CustomLink from "./CustomLink";
+import Navlink from "./Navlink";
 import Heading from "./Heading";
-import HyperlinkText from "./HyperlinkText";
+import Hyperlink from "./HyperlinkText";
 import Title from "./Title";
 import ToggleData from "./ToggleData";
 
@@ -11,9 +11,9 @@ const Texts = {
   CamelSpace,
   CapFirstChar,
   ContactDetailsReq,
-  CustomLink,
+  CustomLink: Navlink,
   Heading,
-  HyperlinkText,
+  HyperlinkText: Hyperlink,
   Title,
   ToggleData,
 };
