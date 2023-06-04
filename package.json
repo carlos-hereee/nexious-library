@@ -2,16 +2,16 @@
   "name": "nexious-library",
   "version": "1.0.6",
   "description": "Official database for nexious.tech",
-  "main": "lib/index.js",
-  "types": "lib/index.d.ts",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/index",
     "dev": "node src/index",
-    "build": "del .\\lib\\* && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
-    "build:mac": "rm -rf lib/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "build": "del .\\dist\\* && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "build:mac": "rm -rf dist/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
-    "build:cjs": "tsc --module CommonJS --outDir lib/cjs",
+    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
     "watch": "tsc -p tsconfig.json --watch"
   },
   "repository": {
@@ -19,7 +19,7 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "author": "carlos-hereee",
   "license": "MIT",

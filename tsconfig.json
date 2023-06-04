@@ -50,7 +50,7 @@
 
     /* Emit */
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
-    "outDir": "./lib" /* Specify an output folder for all emitted files. */,
+    "outDir": "dist" /* Specify an output folder for all emitted files. */,
     "sourceMap": true /* Create source map files for emitted JavaScript files. */,
     // "emitDeclarationOnly": true /* Only output d.ts files and not JavaScript files. */,
     // "noEmit": true /* Disable emitting files from a compilation. */,
@@ -107,6 +107,6 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
   },
   "include": ["src/**/*"],
-  "exclude": ["node_modules", "lib"]
+  "exclude": ["node_modules", "dist"]
   // "ts-node": { "esm": true, "experimentalSpecifierResolution": "node" }
 }
