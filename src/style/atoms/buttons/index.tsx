@@ -1,4 +1,9 @@
 import ButtonLink from "./ButtonLink";
-import Button from "./Button";
+import { Button, ButtonProps } from "./Button";
 
-export default { ButtonLink, Button };
+export type AtomButtonProps = {
+  ButtonLink: ({ data }: { data: string }) => JSX.Element;
+  Button: ({ data, name, click }: ButtonProps) => JSX.Element;
+};
+
+export const Buttons: AtomButtonProps = { ButtonLink, Button };

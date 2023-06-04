@@ -2,13 +2,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getDefinition } from "./Assets";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
-type IconProps = {
+export type IconProps = {
   name: string;
   size: SizeProp;
   spin: string;
   color: string;
 };
-const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
+export const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
   return (
     <FontAwesomeIcon
       icon={getDefinition(name)}
@@ -20,4 +20,3 @@ const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
     />
   );
 };
-export default Icons;

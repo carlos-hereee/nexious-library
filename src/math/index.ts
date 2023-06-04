@@ -3,7 +3,7 @@ import { add } from "./add";
 import { subtract } from "./subtract";
 import { multiply } from "./multiply";
 
-type mathProps = {
+type MathProps = {
   multiply: (num1: number, num2: number) => number;
   subtract: (num1: number, num2: number) => number;
   add: (num1: number, num2: number) => number;
@@ -11,5 +11,4 @@ type mathProps = {
 /**
  * Combine all as Math
  */
-const math: mathProps = { multiply, add, subtract };
-export default math;
+export const math: MathProps = { multiply, add, subtract };

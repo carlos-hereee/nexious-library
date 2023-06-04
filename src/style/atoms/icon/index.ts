@@ -1,3 +1,7 @@
-import Icons from "./Icon";
+import { Icons, IconProps } from "./Icon";
 
-export default Icons;
+export type IconDataProps = {
+  Icons: ({ name, size, spin, color }: IconProps) => JSX.Element;
+};
+
+export const Icon: IconDataProps = { Icons };
