@@ -6,7 +6,6 @@
   "bracketSpacing": true,
   "jsxSingleQuote": false,
   "arrowParens": "always",
-  "proseWrap": "never",
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "strict"
 }

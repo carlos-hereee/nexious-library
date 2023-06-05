@@ -1,0 +1,24 @@
+{
+  "root": true,
+  "plugins": ["@typescript-eslint", "prettier", "import"],
+  "extends": [
+    "airbnb-typescript/base",
+    "prettier",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:import/typescript"
+    // "plugin:import/errors",
+    // "plugin:import/warnings",
+    // "plugin:unicorn/recommended",
+  ],
+  "rules": {}
+  // // Parser may not be needed
+  // parser: "@typescript-eslint/parser",
+  // parserOptions: {
+  //   ecmaFeatures: {
+  //     jsx: true,
+  //   },
+  //   emcaVersion: 12,
+  //   sourceType: "module",
+  //   tsconfigRootDir: __dirname,
+  // },
+}

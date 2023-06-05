@@ -4,19 +4,27 @@
   "description": "Official database for nexious.tech",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
+  "sass": "src/stylesheets/index.scss",
+  "style": "dist/stylesheets/index.scss",
+  "keywords": [
+    "css",
+    "sass",
+    "mobile-first",
+    "responsive",
+    "front-end"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node src/main",
-    "dev": "node src/main",
+    "dev": "npm run lint",
     "clean": "del .\\dist\\*",
-    "pretty": "npx prettier --write src/",
-    "build": "npm run clean && npm run pretty && npm run build:esm && npm run build:cjs",
-    "build:mac": "rm -rf dist/ && npm run pretty && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc",
-    "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
-    "watch": "tsc -p tsconfig.json --watch",
-    "patch": "npm run build && npm version patch && npm publish",
-    "release": "npm run build && npm version minor && npm publish",
+    "clean:mac": "rm -rf dist/",
+    "prettier": "npx prettier --write src/",
+    "compile": "npm run prettier && tsc && tsc --module CommonJS --outDir dist/cjs",
+    "build": "npm run clean && npm run compile",
+    "build:mac": "npm run clean:mac && npm run compile",
+    "lint": "tsc -p tsconfig.json --watch",
+    "release:patch": "npm run build && npm version patch && npm publish",
+    "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
   },
   "repository": {
@@ -24,7 +32,9 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "src",
+    "test"
   ],
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
