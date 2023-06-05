@@ -1,7 +1,4 @@
-export type NavProps = {
-  data: string;
-  link: string;
-};
+import { NavProps } from "src/helpers";
 
 export const Navlink = ({ data, link }: NavProps): JSX.Element => {
   return (

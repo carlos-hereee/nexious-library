@@ -1,12 +1,6 @@
-export type HyperlinkProps = {
-  data: {
-    responseArr: [string, string];
-    isLink?: boolean;
-    link: string;
-    word: string;
-  };
-};
-export const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
+import { HyperlinkProps } from "src/helpers";
+
+const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
   return (
     <p>
       <span>{data.responseArr[0]} </span>
@@ -19,3 +13,4 @@ export const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
     </p>
   );
 };
+export default Hyperlink;
