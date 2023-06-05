@@ -1,5 +1,4 @@
 /// <reference types="react" />
-declare const Title: ({ data }: {
-    data: string;
-}) => JSX.Element;
+import { DataStringProp } from "src/types";
+declare const Title: ({ data }: DataStringProp) => JSX.Element;
 export default Title;

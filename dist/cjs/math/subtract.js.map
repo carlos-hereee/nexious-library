@@ -1,1 +1,1 @@
-{"version":3,"file":"subtract.js","sourceRoot":"","sources":["../../../src/math/subtract.ts"],"names":[],"mappings":";;;AAAA;;;;;;;;;GASG;AACI,MAAM,QAAQ,GAAG,CAAC,IAAY,EAAE,IAAY,EAAU,EAAE,CAAC,IAAI,GAAG,IAAI,CAAC;AAA/D,QAAA,QAAQ,YAAuD"}
+{"version":3,"file":"subtract.js","sourceRoot":"","sources":["../../../src/math/subtract.ts"],"names":[],"mappings":";;;AAAA;;;;;;;;;GASG;AACI,IAAM,QAAQ,GAAG,UAAC,IAAY,EAAE,IAAY,IAAa,OAAA,IAAI,GAAG,IAAI,EAAX,CAAW,CAAC;AAA/D,QAAA,QAAQ,YAAuD"}

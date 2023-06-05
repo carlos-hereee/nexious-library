@@ -1,6 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Icon = void 0;
-const Icon_1 = require("./Icon");
-exports.Icon = { Icons: Icon_1.Icons };
+var Icon_1 = require("./Icon");
+Object.defineProperty(exports, "Icon", { enumerable: true, get: function () { return __importDefault(Icon_1).default; } });
 //# sourceMappingURL=index.js.map

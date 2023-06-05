@@ -1,5 +1,4 @@
 /// <reference types="react" />
-declare const Navlink: ({ data }: {
-    data: string;
-}) => JSX.Element;
+import { NavProps } from "src/helpers";
+export declare const Navlink: ({ data, link }: NavProps) => JSX.Element;
 export default Navlink;

@@ -1,2 +1,2 @@
-declare const main: () => void;
-export default main;
+export * from "./atoms";
+export * from "./math";

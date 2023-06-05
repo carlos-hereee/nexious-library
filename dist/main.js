@@ -1,9 +1,3 @@
-import { math } from "./math";
-import { Atom } from "./atoms";
-// import "./stylesheets";
-var main = function () {
-    console.log("math", math);
-    console.log("math", Atom);
-};
-export default main;
+export * from "./atoms";
+export * from "./math";
 //# sourceMappingURL=main.js.map

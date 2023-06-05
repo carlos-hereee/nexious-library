@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getDefinition = exports.svg = void 0;
-const free_brands_svg_icons_1 = require("@fortawesome/free-brands-svg-icons");
-const free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
+var free_brands_svg_icons_1 = require("@fortawesome/free-brands-svg-icons");
+var free_solid_svg_icons_1 = require("@fortawesome/free-solid-svg-icons");
 exports.svg = {
     home: free_solid_svg_icons_1.faHome,
     about: free_solid_svg_icons_1.faInfo,
@@ -62,7 +62,7 @@ exports.svg = {
     9: free_solid_svg_icons_1.fa9,
     0: free_solid_svg_icons_1.fa0,
 };
-const getDefinition = (name) => {
+var getDefinition = function (name) {
     return exports.svg[name];
 };
 exports.getDefinition = getDefinition;

@@ -1,5 +1,4 @@
-import { Buttons } from "./buttons";
-import { Icon } from "./icon";
-import { Texts } from "./texts";
-export var Atom = { Buttons: Buttons, Icon: Icon, Texts: Texts };
+export * from "./buttons";
+export * from "./icon";
+export * from "./texts";
 //# sourceMappingURL=index.js.map

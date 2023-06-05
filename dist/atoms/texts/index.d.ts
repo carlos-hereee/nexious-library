@@ -1,15 +1,8 @@
-/// <reference types="react" />
-import { HyperlinkProps } from "./Hyperlink";
-import { NavProps } from "./Navlink";
-type DataProp = {
-    data: string;
-};
-export type TextProps = {
-    Capitilize: ({ data }: DataProp) => JSX.Element;
-    Heading: ({ data }: DataProp) => JSX.Element;
-    Hyperlink: ({ data }: HyperlinkProps) => JSX.Element;
-    Title: ({ data }: DataProp) => JSX.Element;
-    Navlink: ({ data, link }: NavProps) => JSX.Element;
-};
-export declare const Texts: TextProps;
-export {};
+export { default as Capitalize } from "./Capitalize";
+export { default as Heading } from "./Heading";
+export { default as Title } from "./Title";
+export type { DataStringProp } from "src/types";
+export { default as Hyperlink } from "./Hyperlink";
+export type { HyperlinkProps } from "src/helpers";
+export { default as Navlink } from "./Navlink";
+export type { NavProps } from "src/helpers";

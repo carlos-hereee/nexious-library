@@ -1,5 +1,4 @@
 /// <reference types="react" />
-declare const Heading: ({ data }: {
-    data: string;
-}) => JSX.Element;
+import { DataStringProp } from "src/types";
+declare const Heading: ({ data }: DataStringProp) => JSX.Element;
 export default Heading;

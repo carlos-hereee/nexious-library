@@ -11,6 +11,6 @@ exports.subtract = void 0;
  * substract(4, 5) => -1
  * substract(1, 6) => -5
  */
-const subtract = (num1, num2) => num1 - num2;
+var subtract = function (num1, num2) { return num1 - num2; };
 exports.subtract = subtract;
 //# sourceMappingURL=subtract.js.map

@@ -1,9 +1,4 @@
-// requirements
-import { add } from "./add";
-import { subtract } from "./subtract";
-import { multiply } from "./multiply";
-/**
- * Combine all as Math
- */
-export var math = { multiply: multiply, add: add, subtract: subtract };
+export { add } from "./add";
+export { multiply } from "./multiply";
+export { subtract } from "./subtract";
 //# sourceMappingURL=index.js.map

@@ -1,10 +1,10 @@
 import { jsx as _jsx } from "react/jsx-runtime";
 /**
  * Component - Button
- * @param data manually add content
- * @param name manually add an optional classname of the button component
+ * @param data content of button component
+ * @param name add an optional classname of the button component
  * @param click Callback fired when button is click
- * @returns JSX.Element
+ * @returns JSX.Element -> button
  */
 var Button = function (_a) {
     var data = _a.data, name = _a.name, click = _a.click;

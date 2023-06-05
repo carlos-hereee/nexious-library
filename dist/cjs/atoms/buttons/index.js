@@ -1,7 +1,9 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Buttons = void 0;
-const ButtonLink_1 = require("./ButtonLink");
-const Button_1 = require("./Button");
-exports.Buttons = { ButtonLink: ButtonLink_1.default, Button: Button_1.Button };
+exports.Button = void 0;
+var Button_1 = require("./Button");
+Object.defineProperty(exports, "Button", { enumerable: true, get: function () { return __importDefault(Button_1).default; } });
 //# sourceMappingURL=index.js.map
