@@ -10,6 +10,6 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "nexious-library": "^1.0.13"
+    "nexious-library": "~1.0.13"
   }
 }

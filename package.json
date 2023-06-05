@@ -37,7 +37,8 @@
     "dist",
     "src",
     "test",
-    "packages"
+    "packages",
+    "example"
   ],
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
