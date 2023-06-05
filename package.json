@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run build && npm run lint",
+    "dev": "npm run build && npm run watch",
     "clean": "del .\\dist\\*",
     "clean:mac": "rm -rf dist/",
     "prettier": "npx prettier --write src/",
@@ -24,7 +24,6 @@
     "build": "npm run clean && npm run compile",
     "build:mac": "npm run clean:mac && npm run compile",
     "watch": "tsc -p tsconfig.json --watch",
-    "lint": "nodemon run watch",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
