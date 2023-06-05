@@ -1,4 +1,3 @@
-/// <reference types="react" />
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 export type IconProps = {
     name: string;
@@ -6,4 +5,5 @@ export type IconProps = {
     spin: string;
     color: string;
 };
-export declare const Icons: ({ name, size, spin, color }: IconProps) => JSX.Element;
+declare const Icons: ({ name, size, spin, color }: IconProps) => JSX.Element;
+export default Icons;

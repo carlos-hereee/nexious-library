@@ -1,3 +1,2 @@
-import { Button } from "./Button";
-export var Buttons = { Button: Button };
+export { default as Button } from "./Button";
 //# sourceMappingURL=index.js.map

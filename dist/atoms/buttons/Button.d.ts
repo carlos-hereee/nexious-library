@@ -4,5 +4,15 @@ export type ButtonProps = {
     name?: string;
     click?: React.MouseEventHandler<HTMLButtonElement>;
 };
-declare const Button: ({ data, name, click }: ButtonProps) => JSX.Element;
-export { Button };
+/**
+ * Component - Button
+ * @param data manually add content
+ * @param name manually add an optional classname of the button component
+ * @param click Callback fired when button is click
+ * @returns JSX.Element
+ */
+declare const Button: {
+    ({ data, name, click }: ButtonProps): JSX.Element;
+    displayName: string;
+};
+export default Button;

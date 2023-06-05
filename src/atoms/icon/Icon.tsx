@@ -8,7 +8,7 @@ export type IconProps = {
   spin: string;
   color: string;
 };
-export const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
+const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
   return (
     <FontAwesomeIcon
       icon={getDefinition(name)}
@@ -20,3 +20,4 @@ export const Icons = ({ name, size, spin, color }: IconProps): JSX.Element => {
     />
   );
 };
+export default Icons;

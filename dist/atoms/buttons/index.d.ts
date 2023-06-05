@@ -1,6 +1,2 @@
-/// <reference types="react" />
-import { ButtonProps } from "./Button";
-export type AtomButtonProps = {
-    Button: ({ data, name, click }: ButtonProps) => JSX.Element;
-};
-export declare const Buttons: AtomButtonProps;
+export { default as Button } from "./Button";
+export type { ButtonProps } from "./Button";

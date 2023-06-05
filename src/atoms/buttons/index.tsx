@@ -1,7 +1,2 @@
-import { Button, ButtonProps } from "./Button";
-
-export type AtomButtonProps = {
-  Button: ({ data, name, click }: ButtonProps) => JSX.Element;
-};
-
-export const Buttons: AtomButtonProps = { Button };
+export { default as Button } from "./Button";
+export type { ButtonProps } from "./Button";
