@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.add = void 0;
 /***
  * function addition
  * @param {number} num1 The fist number
@@ -11,6 +8,5 @@ exports.add = void 0;
  * add(4, 5) => 9
  * add(1, 6) => 7
  */
-const add = (num1, num2) => num1 + num2;
-exports.add = add;
+export const add = (num1, num2) => num1 + num2;
 //# sourceMappingURL=add.js.map

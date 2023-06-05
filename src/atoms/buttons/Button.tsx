@@ -1,12 +1,19 @@
 export type ButtonProps = {
   data: string;
+  // data: any;
   name?: string;
-  click: React.MouseEventHandler<HTMLButtonElement>;
+  click?: React.MouseEventHandler<HTMLButtonElement>;
 };
-export const Button = ({ data, name, click }: ButtonProps): JSX.Element => {
+const Button = ({ data, name, click }: ButtonProps): JSX.Element => {
   return (
-    <button type="button" className={`btn btn-${name}`} onClick={click}>
-      <span>{data}</span>
+    <button
+      type="button"
+      className={`btn ${name ? `btn-${name}` : ""}`}
+      onClick={click}
+    >
+      {data}
     </button>
   );
 };
+
+export { Button };

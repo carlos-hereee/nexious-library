@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.multiply = void 0;
 /***
  * function multiply
  * @param {number} num1 The fist number
@@ -11,6 +8,5 @@ exports.multiply = void 0;
  * multiply (4, 5) => 20
  * multiply (1, 6) => 6
  */
-const multiply = (num1, num2) => num1 * num2;
-exports.multiply = multiply;
+export const multiply = (num1, num2) => num1 * num2;
 //# sourceMappingURL=multiply.js.map

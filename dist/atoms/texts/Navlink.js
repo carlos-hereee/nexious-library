@@ -1,9 +1,7 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-const jsx_runtime_1 = require("react/jsx-runtime");
-const react_router_dom_1 = require("react-router-dom");
+import { jsx as _jsx } from "react/jsx-runtime";
+import { Link } from "react-router-dom";
 const Navlink = ({ data }) => {
-    return ((0, jsx_runtime_1.jsx)(react_router_dom_1.Link, { to: `/${data}`, className: "link", children: data }));
+    return (_jsx(Link, { to: `/${data}`, className: "link", children: data }));
 };
-exports.default = Navlink;
+export default Navlink;
 //# sourceMappingURL=Navlink.js.map

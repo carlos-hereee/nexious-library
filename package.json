@@ -22,7 +22,7 @@
     "compile": "npm run prettier && tsc && tsc --module CommonJS --outDir dist/cjs",
     "build": "npm run clean && npm run compile",
     "build:mac": "npm run clean:mac && npm run compile",
-    "lint": "tsc -p tsconfig.json --watch",
+    "lint": "nodemon tsc -p tsconfig.json --watch",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
@@ -62,7 +62,6 @@
   "dependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
-    "@fortawesome/react-fontawesome": "^0.2.0",
-    "react-router-dom": "^6.11.2"
+    "@fortawesome/react-fontawesome": "^0.2.0"
   }
 }

@@ -1,7 +1,8 @@
 /// <reference types="react" />
 export type ButtonProps = {
-    data: string;
+    data: any;
     name?: string;
-    click: React.MouseEventHandler<HTMLButtonElement>;
+    click?: React.MouseEventHandler<HTMLButtonElement>;
 };
-export declare const Button: ({ data, name, click }: ButtonProps) => JSX.Element;
+declare const Button: ({ data, name, click }: ButtonProps) => JSX.Element;
+export { Button };

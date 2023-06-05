@@ -1,6 +1,3 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.subtract = void 0;
 /***
  * function substract
  * @param {number} num1 The fist number
@@ -11,6 +8,5 @@ exports.subtract = void 0;
  * substract(4, 5) => -1
  * substract(1, 6) => -5
  */
-const subtract = (num1, num2) => num1 - num2;
-exports.subtract = subtract;
+export const subtract = (num1, num2) => num1 - num2;
 //# sourceMappingURL=subtract.js.map
