@@ -8,11 +8,16 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "ts-node src/main",
     "dev": "node src/main",
-    "build": "del .\\dist\\* && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
-    "build:mac": "rm -rf dist/ && npx prettier --write src/ && npm run build:esm && npm run build:cjs",
+    "clean": "del .\\dist\\*",
+    "pretty": "npx prettier --write src/",
+    "build": "npm run clean && npm run pretty && npm run build:esm && npm run build:cjs",
+    "build:mac": "rm -rf dist/ && npm run pretty && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc",
     "build:cjs": "tsc --module CommonJS --outDir dist/cjs",
-    "watch": "tsc -p tsconfig.json --watch"
+    "watch": "tsc -p tsconfig.json --watch",
+    "patch": "npm run build && npm version patch && npm publish",
+    "release": "npm run build && npm version minor && npm publish",
+    "release:major": "npm run build && npm version major && npm publish"
   },
   "repository": {
     "type": "git",
@@ -21,7 +26,7 @@
   "files": [
     "dist"
   ],
-  "author": "carlos-hereee",
+  "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"

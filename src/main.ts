@@ -1,2 +1,7 @@
 import { math } from "./math";
-// export * from "./stylesheets";
+import { Atom } from "./atoms";
+import "./stylesheets";
+
+const main = () => {};
+
+export default main;
