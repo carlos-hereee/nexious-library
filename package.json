@@ -16,7 +16,7 @@
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "npm run lint",
+    "dev": "npm run build && npm run lint",
     "clean": "del .\\dist\\*",
     "clean:mac": "rm -rf dist/",
     "prettier": "npx prettier --write src/",

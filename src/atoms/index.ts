@@ -1,3 +1,5 @@
-export * from "./buttons";
-export * from "./icon";
-export * from "./texts";
+import Buttons from "./buttons";
+import Icon from "./icon";
+import Text from "./texts";
+
+export { Buttons, Icon, Text };
