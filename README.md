@@ -12,7 +12,7 @@ Yarn:
 yarn add nexious-library
 ```
 
-# Rename files in directory
+## Rename files in directory
 
 Auto rename files from .js to jsx run on terminal:
 
@@ -20,6 +20,8 @@ Auto rename files from .js to jsx run on terminal:
   Auto rename files from .jsx to tsx run on terminal:
 - renameToTsx.sh
 
-# Style guide
+## Style guide
 
 Eslint + Airbnb + Prettier configuration guide: https://medium.com/@ErikKyleNielsen/setting-up-eslint-prettier-airbnb-base-and-typescript-27b3f9538f0d
+
+##
