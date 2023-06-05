@@ -22,7 +22,8 @@
     "compile": "npm run prettier && tsc && tsc --module CommonJS --outDir dist/cjs",
     "build": "npm run clean && npm run compile",
     "build:mac": "npm run clean:mac && npm run compile",
-    "lint": "nodemon tsc -p tsconfig.json --watch",
+    "watch": "tsc -p tsconfig.json --watch",
+    "lint": "nodemon run watch",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
@@ -59,7 +60,7 @@
     "prettier": "2.8.8",
     "typescript": "^5.1.3"
   },
-  "dependencies": {
+  "peerDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0"

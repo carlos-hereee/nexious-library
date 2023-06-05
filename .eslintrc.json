@@ -11,14 +11,14 @@
     // "plugin:unicorn/recommended",
   ],
   // // Parser may not be needed
-  "parser": "@typescript-eslint/parser",
-  "parserOptions": {
-    "ecmaFeatures": {
-      "jsx": true
-    },
-    "emcaVersion": 12,
-    "sourceType": "module"
-    // "tsconfigRootDir": __dirname
-  },
+  // "parser": "@typescript-eslint/parser",
+  // "parserOptions": {
+  //   "ecmaFeatures": {
+  //     "jsx": true
+  //   },
+  //   "emcaVersion": 12,
+  //   "sourceType": "module"
+  // "tsconfigRootDir": __dirname
+  // },
   "rules": {}
 }
