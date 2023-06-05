@@ -1,5 +1,6 @@
-/// <reference types="react" />
-declare const Navlink: ({ data }: {
+export type NavProps = {
     data: string;
-}) => JSX.Element;
+    link: string;
+};
+export declare const Navlink: ({ data, link }: NavProps) => JSX.Element;
 export default Navlink;

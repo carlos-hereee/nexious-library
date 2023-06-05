@@ -1,5 +1,3 @@
-import { Link } from "react-router-dom";
-
 export type HyperlinkProps = {
   data: {
     responseArr: [string, string];
@@ -12,11 +10,7 @@ export const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
   return (
     <p>
       <span>{data.responseArr[0]} </span>
-      {data.isLink ? (
-        <Link to={data.link} className="link">
-          {data.word}
-        </Link>
-      ) : (
+      {data.isLink && (
         <a href={data.link} className="link">
           {data.word}
         </a>

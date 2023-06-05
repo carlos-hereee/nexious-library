@@ -1,6 +1,6 @@
 /// <reference types="react" />
 export type ButtonProps = {
-    data: any;
+    data: string;
     name?: string;
     click?: React.MouseEventHandler<HTMLButtonElement>;
 };

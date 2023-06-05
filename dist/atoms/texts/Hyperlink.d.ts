@@ -1,4 +1,3 @@
-/// <reference types="react" />
 export type HyperlinkProps = {
     data: {
         responseArr: [string, string];

@@ -1,6 +1,6 @@
 import { faCcVisa, faInstagram, faTwitter, } from "@fortawesome/free-brands-svg-icons";
 import { fa0, fa1, fa2, fa3, fa4, fa5, fa6, fa7, fa8, fa9, faBars, faBullseye, faCalendarAlt, faCalendarDay, faCheckCircle, faCircle, faCircleChevronLeft, faCircleChevronRight, faCircleDot, faCircleNotch, faEnvelope, faGamepad, faGlobe, faHands, faHandSpock, faHeart, faHome, faImage, faInfo, faLeftLong, faListCheck, faMoneyBill, faPaperPlane, faRefresh, faRightLong, faSave, faShoePrints, faShoppingCart, faSpinner, faSquareCheck, faStore, faUpLong, faUsd, faUser, faX, } from "@fortawesome/free-solid-svg-icons";
-export const svg = {
+export var svg = {
     home: faHome,
     about: faInfo,
     services: faListCheck,
@@ -59,7 +59,7 @@ export const svg = {
     9: fa9,
     0: fa0,
 };
-export const getDefinition = (name) => {
+export var getDefinition = function (name) {
     return svg[name];
 };
 //# sourceMappingURL=Assets.js.map

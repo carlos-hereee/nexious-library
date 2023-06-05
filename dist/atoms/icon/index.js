@@ -1,3 +1,3 @@
 import { Icons } from "./Icon";
-export const Icon = { Icons };
+export var Icon = { Icons: Icons };
 //# sourceMappingURL=index.js.map

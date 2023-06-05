@@ -1,3 +1,3 @@
 import { Button } from "./Button";
-export const Buttons = { Button };
+export var Buttons = { Button: Button };
 //# sourceMappingURL=index.js.map

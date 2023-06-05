@@ -1,1 +1,1 @@
-{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/atoms/icon/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAa,MAAM,QAAQ,CAAC;AAM1C,MAAM,CAAC,MAAM,IAAI,GAAkB,EAAE,KAAK,EAAE,CAAC"}
+{"version":3,"file":"index.js","sourceRoot":"","sources":["../../../src/atoms/icon/index.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,KAAK,EAAa,MAAM,QAAQ,CAAC;AAM1C,MAAM,CAAC,IAAM,IAAI,GAAkB,EAAE,KAAK,OAAA,EAAE,CAAC"}

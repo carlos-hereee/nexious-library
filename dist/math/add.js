@@ -8,5 +8,5 @@
  * add(4, 5) => 9
  * add(1, 6) => 7
  */
-export const add = (num1, num2) => num1 + num2;
+export var add = function (num1, num2) { return num1 + num2; };
 //# sourceMappingURL=add.js.map

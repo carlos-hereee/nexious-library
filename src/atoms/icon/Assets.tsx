@@ -50,12 +50,7 @@ import {
   faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  IconLookup,
-  IconDefinition,
-  findIconDefinition,
-  library,
-} from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 interface KeyDefinition {
   [key: string]: IconDefinition;

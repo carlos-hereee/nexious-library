@@ -5,5 +5,5 @@ import { multiply } from "./multiply";
 /**
  * Combine all as Math
  */
-export const math = { multiply, add, subtract };
+export var math = { multiply: multiply, add: add, subtract: subtract };
 //# sourceMappingURL=index.js.map

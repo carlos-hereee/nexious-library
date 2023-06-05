@@ -1,7 +1,10 @@
 import { math } from "./math";
 import { Atom } from "./atoms";
-import "./stylesheets";
+// import "./stylesheets";
 
-const main = () => {};
+const main = () => {
+  console.log("math", math);
+  console.log("math", Atom);
+};
 
 export default main;

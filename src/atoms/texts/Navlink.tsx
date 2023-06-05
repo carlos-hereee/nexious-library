@@ -1,10 +1,13 @@
-import { Link } from "react-router-dom";
+export type NavProps = {
+  data: string;
+  link: string;
+};
 
-const Navlink = ({ data }: { data: string }): JSX.Element => {
+export const Navlink = ({ data, link }: NavProps): JSX.Element => {
   return (
-    <Link to={`/${data}`} className="link">
+    <a href={link} className="nav-link">
       {data}
-    </Link>
+    </a>
   );
 };
 

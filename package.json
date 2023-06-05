@@ -4,6 +4,7 @@
   "description": "Official database for nexious.tech",
   "main": "dist/main.js",
   "types": "dist/main.d.ts",
+  "type": "module",
   "sass": "src/stylesheets/index.scss",
   "style": "dist/stylesheets/index.scss",
   "keywords": [

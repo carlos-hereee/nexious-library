@@ -8,5 +8,5 @@
  * substract(4, 5) => -1
  * substract(1, 6) => -5
  */
-export const subtract = (num1, num2) => num1 - num2;
+export var subtract = function (num1, num2) { return num1 - num2; };
 //# sourceMappingURL=subtract.js.map

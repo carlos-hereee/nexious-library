@@ -1,7 +1,7 @@
 import { jsx as _jsx } from "react/jsx-runtime";
-import { Link } from "react-router-dom";
-const Navlink = ({ data }) => {
-    return (_jsx(Link, { to: `/${data}`, className: "link", children: data }));
+export var Navlink = function (_a) {
+    var data = _a.data, link = _a.link;
+    return (_jsx("a", { href: link, className: "nav-link", children: data }));
 };
 export default Navlink;
 //# sourceMappingURL=Navlink.js.map

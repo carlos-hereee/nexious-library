@@ -8,5 +8,5 @@
  * multiply (4, 5) => 20
  * multiply (1, 6) => 6
  */
-export const multiply = (num1, num2) => num1 * num2;
+export var multiply = function (num1, num2) { return num1 * num2; };
 //# sourceMappingURL=multiply.js.map
