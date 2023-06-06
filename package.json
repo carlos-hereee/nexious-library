@@ -1,6 +1,6 @@
 {
   "name": "nexious-library",
-  "version": "1.0.17",
+  "version": "1.0.18",
   "description": "Official database for nexious.tech",
   "main": "dist/cjs/main.js",
   "types": "dist/esm/main.d.ts",
