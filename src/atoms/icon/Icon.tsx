@@ -1,13 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { getDefinition } from "./Assets";
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { IconProps } from "src/types/helpers";
 
-export type IconProps = {
-  name: string;
-  size?: SizeProp;
-  spin?: string;
-  color?: string;
-};
 /**
  * Component - Icon
  * @param name specify icon name

@@ -1,5 +1,3 @@
 export { default as Button } from "./Button";
-export type { ButtonProps } from "./Button";
-// import Button from "./Button";
-
-// export default Button;
+export { default as BackButton } from "./BackButton";
+export type { ButtonProps } from "src/types/helpers";

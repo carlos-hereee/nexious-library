@@ -31,18 +31,26 @@ const App = () => {
   };
   return (
     <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
+      <div className="container">
+        <h1>Links </h1>
+        <p>Vite</p>
+        <a href="#vite" target="_blank">
           <img src={viteLogo} className="logo" alt="Vite logo" />
         </a>
-        <a href="https://react.dev" target="_blank">
+        <p>React</p>
+        <a href="#react" target="_blank">
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
+        <button onClick={() => history.back()}>Back</button>
+        {/* <form>
+        </form> */}
       </div>
       <h1>Vite + React</h1>
       <h1>
         {name.map((i) => (
-          <Capitalize data={i} />
+          <span key={i}>
+            <Capitalize data={i} />{" "}
+          </span>
         ))}
       </h1>
       <div className="card">
