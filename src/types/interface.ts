@@ -1,4 +1,5 @@
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { HeroProps } from "./types";
 
 export interface HyperlinkProps {
   data: {
@@ -33,4 +34,11 @@ export interface IconButtonProps {
   spin?: string;
   color?: string;
   click?: React.MouseEventHandler<HTMLButtonElement>;
+}
+
+export interface CardHeaderProps {
+  title: string;
+  subtitle?: string;
+  hasHero?: boolean;
+  hero: { link: string; name: string };
 }

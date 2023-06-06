@@ -30,13 +30,8 @@
     max-width: auto;
   }
 }
-.card-header {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  .card-header-heading {
-    text-align: left;
-  }
+.card-header-heading {
+  text-align: left;
 }
 .card-body {
   display: flex;

@@ -1,6 +1,3 @@
-// import NotificationCount from "../SetNotificationCount";
-// import Icons from "../../atoms/icons/Icons";
-
 import { Button, Icon } from "src/atoms";
 import { IconButtonProps } from "src/types/interface";
 import NotificationCount from "../SetNotificationCount";
@@ -24,17 +21,6 @@ const IconButton: React.FC<IconButtonProps> = ({
   color,
   click,
 }) => {
-  // <button
-  //   type="button"
-  //   onClick={handleClick}
-  //   className={`btn-${name} btn-icons`}
-  // >
-  //   {name && <Icons name={name} size={size} />}
-  //   <span className="icon-label">
-  //     {name[0].toUpperCase() + name.substring(1)}
-  //   </span>
-  //   {/* <NotificationCount count={ping} /> */}
-  // </button>
   return (
     <Button name={name} click={click}>
       <Icon name={name} size={size} spin={spin} color={color} />
