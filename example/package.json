@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
+    "dev": "npm i nexious-library && vite",
     "build": "vite build",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
   "dependencies": {
-    "nexious-library": "^1.0.17",
+    "nexious-library": "^1.0.19",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
