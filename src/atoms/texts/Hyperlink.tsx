@@ -1,4 +1,4 @@
-import { HyperlinkProps } from "src/helpers";
+import { HyperlinkProps } from "src/types/helpers";
 
 const Hyperlink: React.FC<HyperlinkProps> = ({ data }) => {
   return (

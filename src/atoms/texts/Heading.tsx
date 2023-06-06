@@ -1,4 +1,4 @@
-import { DataStringProp } from "src/types";
+import { DataStringProp } from "src/types/types";
 
 const Heading: React.FC<DataStringProp> = ({ data }) => {
   return (

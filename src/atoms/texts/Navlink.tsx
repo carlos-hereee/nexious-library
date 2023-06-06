@@ -1,4 +1,4 @@
-import { NavProps } from "src/helpers";
+import { NavProps } from "src/types/helpers";
 
 export const Navlink: React.FC<NavProps> = ({ data, link }) => {
   return (

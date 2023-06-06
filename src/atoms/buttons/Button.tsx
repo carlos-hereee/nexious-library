@@ -24,5 +24,4 @@ const Button: React.FC<ButtonProps> = ({ data, name, click }) => {
   );
 };
 
-Button.displayName = "Button";
 export default Button;
