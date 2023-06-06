@@ -1,7 +1,7 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import { add, Button, Capitalize } from "nexious-library";
+import { add, Button, Capitalize, Heading } from "nexious-library";
 
 const App = () => {
   const [count, setCount] = useState(add(2, 5));
@@ -31,21 +31,6 @@ const App = () => {
   };
   return (
     <>
-      <div className="container">
-        <h1>Links </h1>
-        <p>Vite</p>
-        <a href="#vite" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <p>React</p>
-        <a href="#react" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-        <button onClick={() => history.back()}>Back</button>
-        {/* <form>
-        </form> */}
-      </div>
-      <h1>Vite + React</h1>
       <h1>
         {name.map((i) => (
           <span key={i}>
@@ -53,11 +38,29 @@ const App = () => {
           </span>
         ))}
       </h1>
+      <div className="flex-g">
+        <Heading data="Links" />
+        <div className="hero flex-g">
+          <div>
+            <p className="icon-label">Vite</p>
+            <a href="#vite" target="_blank">
+              <img src={viteLogo} className="logo" alt="Vite logo" />
+            </a>
+          </div>
+          <div>
+            <p>React</p>
+            <a href="#react" target="_blank">
+              <img src={reactLogo} className="logo react" alt="React logo" />
+            </a>
+          </div>
+        </div>
+      </div>
+      <button onClick={() => history.back()}>Back</button>
       <div className="card">
         <Button data={count} click={handleCount} />
 
         {buttons.map((b) => (
-          <Button data={b} />
+          <Button data={b} key={b} />
         ))}
         <button onClick={handleCount}>count is {count}</button>
         <p>
