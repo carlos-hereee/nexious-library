@@ -16,7 +16,7 @@ export type IconProps = {
  * @param color optional specify the color for icon
  * @returns JSX.Element
  */
-const Icon = ({ name, size, spin, color }: IconProps): JSX.Element => {
+const Icon: React.FC<IconProps> = ({ name, size, spin, color }) => {
   return (
     <FontAwesomeIcon
       icon={getDefinition(name)}

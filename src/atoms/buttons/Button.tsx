@@ -12,7 +12,7 @@ export type ButtonProps = {
  * @param click Callback fired when button is click
  * @returns JSX.Element -> button
  */
-const Button = ({ data, name, click }: ButtonProps): JSX.Element => {
+const Button: React.FC<ButtonProps> = ({ data, name, click }) => {
   return (
     <button
       type="button"

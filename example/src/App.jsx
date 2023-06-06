@@ -3,15 +3,20 @@ import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
 import { add, Button, Capitalize } from "nexious-library";
 
-function App() {
+const App = () => {
   const [count, setCount] = useState(add(2, 5));
   const name = "vite + react".split(" ");
-  const cap = name.map((n) => <Capitalize data={n} key={n} />);
+
+  const cap = name.map((n) => {
+    // console.log("n", n);
+    console.log("<Capitalize ", Capitalize({ data: n }));
+    // return;
+  });
 
   const handleCount = () => {
     setCount(() => count + 1);
   };
-  console.log(name, cap);
+  console.log(cap);
   return (
     <>
       <div>
@@ -41,6 +46,6 @@ function App() {
       </p>
     </>
   );
-}
+};
 
 export default App;

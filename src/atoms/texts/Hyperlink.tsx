@@ -1,6 +1,6 @@
 import { HyperlinkProps } from "src/helpers";
 
-const Hyperlink = ({ data }: HyperlinkProps): JSX.Element => {
+const Hyperlink: React.FC<HyperlinkProps> = ({ data }) => {
   return (
     <p>
       <span>{data.responseArr[0]} </span>

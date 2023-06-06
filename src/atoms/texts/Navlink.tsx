@@ -1,6 +1,6 @@
 import { NavProps } from "src/helpers";
 
-export const Navlink = ({ data, link }: NavProps): JSX.Element => {
+export const Navlink: React.FC<NavProps> = ({ data, link }) => {
   return (
     <a href={link} className="nav-link">
       {data}
