@@ -492,9 +492,6 @@ button:disabled {
 /* readmore lines */
 /*  media queries */
 .card {
-  display: flex;
-  gap: 1rem;
-  border-radius: 4px;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;

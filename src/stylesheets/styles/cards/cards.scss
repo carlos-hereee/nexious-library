@@ -1,7 +1,6 @@
 @import "../../vars/mixins.scss", "../../vars/variables.scss";
 
 .card {
-  @include card();
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;

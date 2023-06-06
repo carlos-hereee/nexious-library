@@ -1,3 +1,4 @@
+// vars/mixins.scss
 // We define the mixins for two major breakpoints mobile and tablet
 
 // $breakpoint is the variable that can have several values
@@ -18,13 +19,4 @@
       @content;
     }
   }
-}
-// retrieve css variable
-@function color($color-name) {
-  @return var(--data-color-#{$color-name});
-}
-@mixin card() {
-  display: flex;
-  gap: 1rem;
-  border-radius: 4px;
 }
