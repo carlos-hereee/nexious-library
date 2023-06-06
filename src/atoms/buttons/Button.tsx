@@ -1,8 +1,8 @@
-import { ButtonProps } from "src/types/helpers";
+import { ButtonProps } from "src/types/interface";
 
 /**
  * Component - Button
- * @param children content of button component
+ * @param children content of button
  * @param name add an optional classname of the button component
  * @param click Callback fired when button is click
  * @returns JSX.Element -> button

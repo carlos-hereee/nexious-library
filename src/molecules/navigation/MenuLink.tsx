@@ -1,4 +1,4 @@
-import Buttons from "../buttons/Buttons";
+import IconButton from "../buttons/IconButton";
 
 /**
  *
@@ -11,7 +11,7 @@ const MenuLink = ({ data, click }) => {
       className="nav-link"
       data-state={data.isActive ? "active" : "not-active"}
     >
-      <Buttons name={n} handleClick={() => click(data)} />
+      <IconButton name={n} handleClick={() => click(data)} />
     </li>
   );
 };

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 // import { UserContext } from "../../../utils/context/UserContext";
-import Buttons from "../buttons/Buttons";
+import IconButton from "../buttons/IconButton";
 
 /**
  *
@@ -10,7 +10,7 @@ const Navlink = ({ data, click }) => {
   return (
     <li>
       <Link className="nav-link" to={data.name}>
-        <Buttons
+        <IconButton
           name={data.isPrivate ? data.alt : data.name}
           ping={data.ping}
           handleClick={click}

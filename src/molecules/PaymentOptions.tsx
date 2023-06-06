@@ -4,7 +4,7 @@ import { ServicesContext } from "../../utils/context/ServicesContext";
 import { UserContext } from "../../utils/context/UserContext";
 import Icons from "../icons/Icons";
 import Forms from "../organisms/Forms";
-import Buttons from "./buttons/Buttons";
+import IconButton from "./buttons/IconButton";
 import CardHeader from "./card/CardHeader";
 import UserCard from "./card/UserCard";
 

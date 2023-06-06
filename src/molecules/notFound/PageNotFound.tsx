@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import Buttons from "../buttons/Buttons";
+import IconButton from "../buttons/IconButton";
 
 const PageNotFound = () => {
   return (
@@ -8,7 +8,7 @@ const PageNotFound = () => {
         <h3>Page Not Found</h3>
         <div className="card-body">
           <Link to="/" className="nav-link">
-            <Buttons name="Home" />
+            <IconButton name="Home" />
           </Link>
         </div>
       </section>

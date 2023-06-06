@@ -1,8 +1,8 @@
-import Buttons from "../buttons/Buttons";
+import IconButton from "../buttons/IconButton";
 
 const NavButton = ({ data, click }) => (
   <li key={data.uid} className="nav-link">
-    <Buttons
+    <IconButton
       name={data.isAlt ? data.alt : data.name}
       ping={data.ping}
       handleClick={click}
