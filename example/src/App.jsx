@@ -5,18 +5,30 @@ import { add, Button, Capitalize } from "nexious-library";
 
 const App = () => {
   const [count, setCount] = useState(add(2, 5));
-  const name = "vite + react".split(" ");
+  let name = ["vite", "+", "react"];
+  let buttons = [2, 5];
 
-  const cap = name.map((n) => {
-    // console.log("n", n);
-    console.log("<Capitalize ", Capitalize({ data: n }));
-    // return;
-  });
+  /**
+   * NOTICE: 
+   * mapping through the components displays the react element 
+   *
+   *  const cap = name.map((n) => <Capitalize data={n} />);
+   * 
+   * {
+   *    $$typeof:Symbol(react.element), 
+   *    key:null
+   *    props:{data: 'vite'}
+   *    ref:null
+   *    ...rest
+   * }
+   * 
+   * This is the react element to be invoked 
+
+   */
 
   const handleCount = () => {
     setCount(() => count + 1);
   };
-  console.log(cap);
   return (
     <>
       <div>
@@ -29,13 +41,16 @@ const App = () => {
       </div>
       <h1>Vite + React</h1>
       <h1>
-        {"vite + react"
-          .split(" ")
-          .map((i) => <Capitalize data={i} />)
-          .join(" ")}
+        {name.map((i) => (
+          <Capitalize data={i} />
+        ))}
       </h1>
       <div className="card">
         <Button data={count} click={handleCount} />
+
+        {buttons.map((b) => (
+          <Button data={b} />
+        ))}
         <button onClick={handleCount}>count is {count}</button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
