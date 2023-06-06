@@ -1,6 +1,6 @@
 import { Button, Icon } from "src/atoms";
 import { IconButtonProps } from "src/types/interface";
-import NotificationCount from "../SetNotificationCount";
+// import NotificationCount from "../SetNotificationCount";
 
 /**
  * Icon Button
@@ -27,7 +27,7 @@ const IconButton: React.FC<IconButtonProps> = ({
       {
         <>
           {hasLabel && <span className="icon-label">{label}</span>}
-          {ping && ping > 0 && <NotificationCount count={ping} />}
+          {/* {ping && ping > 0 && <NotificationCount count={ping} />} */}
         </>
       }
     </Button>

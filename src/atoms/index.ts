@@ -1,6 +1,7 @@
-import { Button } from "./buttons";
-import { Icon } from "./icon";
-import { Capitalize, Heading, Hyperlink, Title, Navlink } from "./texts";
+export * from "./buttons";
+export * from "./icon";
+export * from "./texts";
+export * from "./asset";
 
 /**
    * NOTICE: 
@@ -20,4 +21,4 @@ import { Capitalize, Heading, Hyperlink, Title, Navlink } from "./texts";
    * This is the react element to be invoked 
 
    */
-export { Button, Icon, Capitalize, Heading, Hyperlink, Title, Navlink };
+// export { Button, Icon, Capitalize, Heading, Hyperlink, Title, Navlink, Hero };

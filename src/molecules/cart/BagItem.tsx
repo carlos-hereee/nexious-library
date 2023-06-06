@@ -1,4 +1,4 @@
-import CardRow from "../card/CardRow";
+import CardRow from "../CardRow";
 
 const BagItem = ({ data, setCancel, children }) => {
   return (

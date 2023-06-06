@@ -1,14 +1,14 @@
-const ReadMore = ({ data, lines }) => {
-  if (lines > 2) {
-    const element = document.querySelector(".read-more");
-    element && element?.style.setProperty("--max-lines", lines);
-  }
-  return (
-    <div className="read-more-wrapper">
-      <p className="read-more">{data}</p>
-      <input type="checkbox" className="read-more-toggle" />
-    </div>
-  );
-};
+// const ReadMore = ({ data, lines }) => {
+//   if (lines > 2) {
+//     const element = document.querySelector(".read-more");
+//     element && element?.style.setProperty("--max-lines", lines);
+//   }
+//   return (
+//     <div className="read-more-wrapper">
+//       <p className="read-more">{data}</p>
+//       <input type="checkbox" className="read-more-toggle" />
+//     </div>
+//   );
+// };
 
-export default ReadMore;
+// export default ReadMore;

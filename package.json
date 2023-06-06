@@ -8,6 +8,12 @@
   "sass": "src/stylesheets/index.scss",
   "style": "dist/cjs/index.css",
   "module": "dist/esm/main.js",
+  "exports": {
+    ".": "./dist/cjs/main.js",
+    "./math": "./dist/cjs/math",
+    "./atoms": "./dist/cjs/atoms",
+    "./molecules": "./dist/cjs/molecules"
+  },
   "keywords": [
     "css",
     "sass",
