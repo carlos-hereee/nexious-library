@@ -1,17 +1,28 @@
-/* Error: Undefined variable.
- *   ,
- * 4 |   background-color: #{$secondary-color};
- *   |                       ^^^^^^^^^^^^^^^^
- *   '
- *   src\stylesheets\styles\header-footer.scss 4:23  root stylesheet */
+/* readmore lines */
+/*  media queries */
+header {
+  display: flex;
+  align-items: center;
+  background-color: #54494b;
+  border-bottom: 1px solid #f1f7ed;
+  max-height: 15vh;
+  justify-content: space-between;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a   \2577 \a 4 \2502    background-color: #{$secondary-color};\a   \2502                        ^^^^^^^^^^^^^^^^\a   \2575 \a   src\\stylesheets\\styles\\header-footer.scss 4:23  root stylesheet";
+.card-secondary {
+  width: 100%;
+}
+
+footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  color: #eee;
+  background-color: #54494b;
+  gap: 1rem;
+}
+
+.link {
+  color: #333;
 }

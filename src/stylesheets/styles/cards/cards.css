@@ -1,17 +1,113 @@
-/* Error: Undefined mixin.
- *   ,
- * 2 |   @include card();
- *   |   ^^^^^^^^^^^^^^^
- *   '
- *   src\stylesheets\styles\cards\cards.scss 2:3  root stylesheet */
+/* readmore lines */
+/*  media queries */
+.card {
+  display: flex;
+  gap: 1rem;
+  border-radius: 4px;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  gap: 1rem;
+  min-width: 200px;
+  max-width: 280px;
+  background-color: #f1f7ed;
+  color: #333;
+  text-decoration: none;
+}
+.card .hero {
+  border-radius: 1rem;
+  max-width: 10rem;
+  max-height: 10rem;
+}
+.card:has(> div > .ribbon) {
+  position: relative;
+  max-width: 275px;
+}
+.card:has(> div > .ribbon) .btn-primary {
+  background-color: #f1f7ed;
+  margin: auto;
+}
+@media only screen and (max-width: 500px) {
+  .card {
+    min-width: auto;
+    max-width: auto;
+  }
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined mixin.\a   \2577 \a 2 \2502    @include card();\a   \2502    ^^^^^^^^^^^^^^^\a   \2575 \a   src\\stylesheets\\styles\\cards\\cards.scss 2:3  root stylesheet";
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.card-header .card-header-heading {
+  text-align: left;
+}
+
+.card-body {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+}
+.card-body:has(> .btn-primary) {
+  justify-content: space-between;
+}
+.card-body:has(> .btn-primary) .btn-primary {
+  flex: none;
+}
+
+.card-footer {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  padding-top: 0;
+  gap: 1rem;
+}
+
+.secondary-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  min-width: 200px;
+  gap: 1rem;
+}
+
+.secondary-card-body {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.ribbon {
+  position: absolute;
+  top: 0.3rem;
+  right: -2.5rem;
+  rotate: 35deg;
+  background-color: purple;
+  border: 1px solid white;
+  color: white;
+  padding: 0.25rem 4rem;
+}
+
+.cancel-row {
+  min-width: 250px;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cancel-row-footer {
+  display: flex;
+  gap: 1rem;
+  padding-bottom: 2rem;
+}
+
+.card-item {
+  display: flex;
+  flex-direction: column;
 }

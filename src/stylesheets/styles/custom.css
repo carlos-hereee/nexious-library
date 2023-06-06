@@ -1,17 +1,31 @@
-/* Error: Undefined variable.
- *    ,
- * 13 |   background-color: #{$secondary-color2};
- *    |                       ^^^^^^^^^^^^^^^^^
- *    '
- *   src\stylesheets\styles\custom.scss 13:23  root stylesheet */
+/* readmore lines */
+/*  media queries */
+.children {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a    \2577 \a 13 \2502    background-color: #{$secondary-color2};\a    \2502                        ^^^^^^^^^^^^^^^^^\a    \2575 \a   src\\stylesheets\\styles\\custom.scss 13:23  root stylesheet";
+.p-sm {
+  padding: 0.5rem;
+}
+
+.p-1 {
+  padding: 1rem;
+}
+
+.bg-light {
+  background-color: #f1f7ed;
+  border-radius: 0.5rem;
+}
+
+.bg-dark {
+  background-color: #54494b;
+  border-radius: 0.5rem;
+  color: #eee;
+}
+
+.t-center {
+  justify-content: center;
+  text-align: center;
 }

@@ -1,17 +1,33 @@
-/* Error: Undefined variable.
- *   ,
- * 8 |   color: #{$secondary-text};
- *   |            ^^^^^^^^^^^^^^^
- *   '
- *   src\stylesheets\styles\icons.scss 8:12  root stylesheet */
+/* readmore lines */
+/*  media queries */
+.icon {
+  min-width: 1rem;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a   \2577 \a 8 \2502    color: #{$secondary-text};\a   \2502             ^^^^^^^^^^^^^^^\a   \2575 \a   src\\stylesheets\\styles\\icons.scss 8:12  root stylesheet";
+.social {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  color: #eee;
+}
+.social .title {
+  text-align: center;
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.instagram {
+  color: #ea4c52;
+}
+
+.twitter {
+  color: #1da1f2;
+}
+
+.loading {
+  color: #f1f7ed;
 }

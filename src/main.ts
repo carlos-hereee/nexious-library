@@ -8,6 +8,7 @@ import {
   Title,
 } from "./atoms";
 import { add, multiply, subtract } from "./math";
+import "./stylesheets/index.css";
 
 export {
   Button,

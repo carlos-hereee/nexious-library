@@ -1,3 +1,5 @@
+@import "../vars/mixins.scss", "../vars/variables.scss";
+
 .children {
   display: flex;
   flex-wrap: wrap;
@@ -11,11 +13,11 @@
 }
 .bg-light {
   background-color: #{$secondary-color2};
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
 }
 .bg-dark {
   background-color: #{$secondary-color};
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   color: #{$secondary-text};
 }
 .t-center {

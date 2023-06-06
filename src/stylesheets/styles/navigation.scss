@@ -1,3 +1,5 @@
+@import "../vars/mixins.scss", "../vars/variables.scss";
+
 .primary-navigation {
   @include devices(tablet) {
     display: none;
@@ -17,7 +19,7 @@
     position: absolute;
     list-style: none;
     background-color: #{$primary-color2};
-    border-radius: #{$b-radi};
+    border-radius: #{$radii-round};
     gap: 1rem;
     top: 15%;
     right: 0;
@@ -48,7 +50,7 @@
   list-style: none;
   list-style-type: none;
   gap: 0.5rem;
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
 }
 .navbar {
   // width: 100%;
@@ -80,7 +82,7 @@
   justify-content: center;
   background-color: #{$danger};
   color: #{$secondary-text};
-  border-radius: #{$b-full};
+  border-radius: #{$radii-circle};
   padding: 0.35rem;
 }
 .checkout-navigation {

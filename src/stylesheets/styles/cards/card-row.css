@@ -1,17 +1,42 @@
-/* Error: Undefined variable.
- *   ,
- * 8 |   border-bottom: 1px dashed #{$primary-text};
- *   |                               ^^^^^^^^^^^^^
- *   '
- *   src\stylesheets\styles\cards\card-row.scss 8:31  root stylesheet */
+/* readmore lines */
+/*  media queries */
+.row-wrapper {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px dashed #333;
+}
+.row-wrapper:has(> .active) .active {
+  background-color: #54494b;
+  color: #eee;
+  border-radius: 0.5rem;
+}
+.row-wrapper:has(> .active) .active .read-more:has(+ .read-more-toggle:not(:checked))::before {
+  background: linear-gradient(to bottom, transparent, #54494b);
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a   \2577 \a 8 \2502    border-bottom: 1px dashed #{$primary-text};\a   \2502                                ^^^^^^^^^^^^^\a   \2575 \a   src\\stylesheets\\styles\\cards\\card-row.scss 8:31  root stylesheet";
+.card-row-wrapper {
+  position: relative;
+  display: flex;
+}
+
+.card-row {
+  display: flex;
+  align-items: flex-start;
+  flex-direction: column;
+  gap: 1rem;
+  border-radius: 0.5rem;
+}
+@media only screen and (max-width: 500px) {
+  .card-row .card-header {
+    flex-direction: row;
+    gap: 1rem;
+  }
+}
+
+.card-row-footer {
+  margin: auto;
 }

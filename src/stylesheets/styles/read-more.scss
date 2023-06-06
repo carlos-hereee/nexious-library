@@ -1,3 +1,5 @@
+@import "../vars/variables.scss";
+
 .read-more-wrapper {
   position: relative;
 }
@@ -39,7 +41,7 @@
   }
 }
 .message-success {
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   color: #{$primary-text};
   background-color: #{$primary-color2};
 }

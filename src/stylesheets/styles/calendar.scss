@@ -1,3 +1,5 @@
+@import "../vars/variables.scss", "../vars/mixins.scss";
+
 .calendar {
   display: flex;
   background-color: #{$secondary-color2};
@@ -11,7 +13,7 @@
   min-width: 200px;
   max-width: 700px;
   gap: 1rem;
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   @include devices(mobile) {
     width: 100%;
     flex: auto;
@@ -23,7 +25,7 @@
   align-items: center;
   flex: 1;
   background-color: #{$secondary-color2};
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   gap: 1rem;
 }
 .react-calendar__navigation {
@@ -63,7 +65,7 @@
     height: 1rem;
     top: 1px;
     right: 0;
-    border-radius: #{$b-full};
+    border-radius: #{$radii-circle};
     padding: 0.25rem;
   }
   &:hover {

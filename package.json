@@ -21,6 +21,7 @@
     "clean": "del .\\dist\\*",
     "clean:mac": "rm -rf dist/",
     "sass": "npx sass --no-source-map src/stylesheets",
+    "sass:watch": "npx sass --watch src/stylesheets",
     "prettier": "npx prettier --write src/",
     "compile": "npm run prettier && tsc --outDir dist/esm && tsc --module CommonJS --outDir dist/cjs",
     "build": "npm run clean && npm run compile",
@@ -35,7 +36,8 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "dist/**/*.css"
   ],
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",

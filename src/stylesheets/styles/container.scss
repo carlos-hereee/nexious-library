@@ -1,3 +1,5 @@
+@import "../vars/mixins.scss", "../vars/variables.scss";
+
 .container {
   display: flex;
   align-items: flex-start;
@@ -49,7 +51,7 @@
   flex: 1;
   min-width: 200px;
   gap: 1rem;
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   .btn-link {
     background-color: #{$primary-color};
     color: #{$secondary-text};
@@ -64,7 +66,7 @@
   flex-direction: column;
   display: flex;
   background-color: #{$secondary-color};
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   gap: 0.5rem;
 }
 .secondary-section-container {
@@ -84,7 +86,7 @@
 }
 .alt-container {
   background-color: #{$secondary-color2};
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;

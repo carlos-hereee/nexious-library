@@ -1,3 +1,5 @@
+@import "../../vars/mixins.scss", "../../vars/variables.scss";
+
 .row-wrapper {
   display: flex;
   flex-direction: column;
@@ -10,7 +12,7 @@
     .active {
       background-color: #{$secondary-color};
       color: #{$secondary-text};
-      border-radius: #{$b-radi};
+      border-radius: #{$radii-round};
       .read-more {
         &:has(+ .read-more-toggle:not(:checked))::before {
           background: linear-gradient(
@@ -33,7 +35,7 @@
   align-items: flex-start;
   flex-direction: column;
   gap: 1rem;
-  border-radius: #{$b-radi};
+  border-radius: #{$radii-round};
   @include devices(mobile) {
     .card-header {
       flex-direction: row;

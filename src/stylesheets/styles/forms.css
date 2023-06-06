@@ -1,17 +1,88 @@
-/* Error: Undefined variable.
- *   ,
- * 8 |     border: 1px solid #{$primary-color};
- *   |                         ^^^^^^^^^^^^^^
- *   '
- *   src\stylesheets\styles\forms.scss 8:25  root stylesheet */
+/* readmore lines */
+/*  media queries */
+.form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: 1rem;
+}
+.form input,
+.form textarea {
+  border: 1px solid #b33951;
+  border-radius: 0.5rem;
+}
 
-body::before {
-  font-family: "Source Code Pro", "SF Mono", Monaco, Inconsolata, "Fira Mono",
-      "Droid Sans Mono", monospace, monospace;
-  white-space: pre;
-  display: block;
-  padding: 1em;
-  margin-bottom: 1em;
-  border-bottom: 2px solid black;
-  content: "Error: Undefined variable.\a   \2577 \a 8 \2502      border: 1px solid #{$primary-color};\a   \2502                          ^^^^^^^^^^^^^^\a   \2575 \a   src\\stylesheets\\styles\\forms.scss 8:25  root stylesheet";
+.form-submit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+
+.form-fields {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.shipping-form label {
+  text-decoration: underline;
+}
+.shipping-form .form-fields {
+  display: flex;
+  justify-content: space-between;
+  margin: auto;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin: auto;
+}
+.shipping-form .input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+.shipping-form .input {
+  max-width: 150px;
+}
+@media only screen and (max-width: 375px) {
+  .shipping-form .input {
+    max-width: 120px;
+  }
+}
+
+.form-link-wrapper {
+  text-align: center;
+}
+.form-link-wrapper .form-link {
+  color: white;
+  padding-bottom: 1rem;
+}
+
+.horizontal-fields {
+  flex-direction: column;
+}
+.horizontal-fields .input {
+  max-width: 500px;
+}
+
+.no-capcha-form {
+  max-width: 768px;
+  width: 100%;
+}
+.no-capcha-form .label {
+  display: flex;
+  gap: 0.5rem;
+  align-items: center;
+}
+.no-capcha-form .label .required {
+  flex-shrink: 1;
+  margin-left: auto;
+}
+
+#contact-user-form {
+  width: 100%;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
 }
