@@ -5,10 +5,13 @@ import { add, Button, Capitalize } from "nexious-library";
 
 function App() {
   const [count, setCount] = useState(add(2, 5));
+  const name = "vite + react".split(" ");
+  const cap = name.map((n) => <Capitalize data={n} key={n} />);
 
   const handleCount = () => {
     setCount(() => count + 1);
   };
+  console.log(name, cap);
   return (
     <>
       <div>
@@ -19,9 +22,13 @@ function App() {
           <img src={reactLogo} className="logo react" alt="React logo" />
         </a>
       </div>
-
-      <Capitalize data="vite + react" />
       <h1>Vite + React</h1>
+      <h1>
+        {"vite + react"
+          .split(" ")
+          .map((i) => <Capitalize data={i} />)
+          .join(" ")}
+      </h1>
       <div className="card">
         <Button data={count} click={handleCount} />
         <button onClick={handleCount}>count is {count}</button>

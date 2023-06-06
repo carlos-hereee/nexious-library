@@ -1,5 +1,3 @@
-// export * from "./atoms";
-// export * from "./math";
 import {
   Button,
   Capitalize,
