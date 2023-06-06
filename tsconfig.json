@@ -27,6 +27,6 @@
     // "suppressImplicitAnyIndexErrors": true, // deprecated
     "allowSyntheticDefaultImports": true
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "rollup.config.js"],
   "exclude": ["node_modules", "dist"]
 }
