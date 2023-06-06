@@ -1,6 +1,6 @@
-import { DataStringProp } from "src/types/types";
+import { DataStringProps } from "src/types/types";
 
-const Capitalize: React.FC<DataStringProp> = ({ data }) => (
+const Capitalize: React.FC<DataStringProps> = ({ data }) => (
   <span>
     {data.charAt(0).toUpperCase()}
     {data.slice(1)}

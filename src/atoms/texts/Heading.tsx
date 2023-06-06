@@ -1,6 +1,6 @@
-import { DataStringProp } from "src/types/types";
+import { DataStringProps } from "src/types/types";
 
-const Heading: React.FC<DataStringProp> = ({ data }) => {
+const Heading: React.FC<DataStringProps> = ({ data }) => {
   return (
     <div className="heading-container">
       <h3 className="heading">{data}</h3>

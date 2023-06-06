@@ -5,3 +5,4 @@ export { default as Hyperlink } from "./Hyperlink";
 export { default as Ribbon } from "./Ribbon";
 export { default as Subtitle } from "./Subtitle";
 export { default as Navlink } from "./Navlink";
+export { default as KeyValue } from "./KeyValue";
