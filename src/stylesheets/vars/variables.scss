@@ -27,9 +27,9 @@ $max-lines: 2;
 $line-height: 1.4;
 
 /*  media queries */
-$desktop: "only screen and (max-width : 1024px)";
-$tablet: "only screen and (max-width : 768px)";
-$mobile: "only screen and (max-width : 480px)";
+$media-desktop: "only screen and (max-width : 1024px)";
+$media-tablet: "only screen and (max-width : 768px)";
+$media-mobile: "only screen and (max-width : 480px)";
 $tablet: 768px;
 $mobile: 500px;
 $mini: 375px;
@@ -54,9 +54,9 @@ code {
   $shadow-color3: $shadow-color3;
   $max-lines: $max-lines;
   $line-height: $line-height;
-  $desktop: $desktop;
-  $tablet: $tablet;
-  $mobile: $mobile;
+  $media-desktop: $media-desktop;
+  $media-tablet: $media-tablet;
+  $media-mobile: $media-mobile;
   $tablet: $tablet;
   $mobile: $mobile;
   $mini: $mini;
