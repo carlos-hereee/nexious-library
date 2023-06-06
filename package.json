@@ -20,6 +20,7 @@
     "dev": "npm run build && npm run watch",
     "clean": "del .\\dist\\*",
     "clean:mac": "rm -rf dist/",
+    "sass": "npx sass --no-source-map src/stylesheets",
     "prettier": "npx prettier --write src/",
     "compile": "npm run prettier && tsc --outDir dist/esm && tsc --module CommonJS --outDir dist/cjs",
     "build": "npm run clean && npm run compile",
