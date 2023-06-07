@@ -46,3 +46,7 @@ export interface CardButtonProps {
   hasHero?: boolean;
   hero: { link: string; name: string };
 }
+export interface RequiredProps {
+  data: { title: string; value: string };
+  message?: string;
+}
