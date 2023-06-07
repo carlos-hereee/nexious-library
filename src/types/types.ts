@@ -8,3 +8,9 @@ export type MessageProp = { message: string };
 export type PageNotFoundProps = { message: string; hero: HeroProps };
 // export type ChildrenProps = { children: JSX.Element[] | JSX.Element };
 export type KeyStringProps = { [key: string]: string };
+export type OptionProp = {
+  name: string;
+  value: string;
+  isDisabled: boolean;
+  uid?: string;
+};
