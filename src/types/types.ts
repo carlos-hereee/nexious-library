@@ -15,3 +15,5 @@ export type OptionProp = {
   uid?: string;
 };
 export type TableDataProp = { data: string };
+export type TableColumnProp = { span: number; name: string; uid?: string };
+export type TableRowProp = { uid?: string; data: string };
