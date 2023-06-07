@@ -1,11 +1,11 @@
-import { JSXChildProp } from "src/types/types";
+import { ChildProp } from "src/types/types";
 
 /**
  * Component - Button
- * @param children content of button
- * @returns JSX.Element -> button that goes back
+ * @param children JSX Element(s)
+ * @returns JSX.Element -> JSX Element
  */
-const BackButton: React.FC<JSXChildProp> = ({ children }) => {
+const BackButton: React.FC<ChildProp> = ({ children }) => {
   return (
     <button
       type="button"

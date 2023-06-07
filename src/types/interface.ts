@@ -20,8 +20,9 @@ export interface IconProps {
 }
 export interface ButtonProps {
   // children: JSX.Element[] | JSX.Element | boolean | undefined;
-  children: JSX.Element[] | JSX.Element;
+  children?: JSX.Element[] | JSX.Element;
   name?: string;
+  isBurger?: boolean;
   click?: React.MouseEventHandler<HTMLButtonElement>;
 }
 export interface IconButtonProps {
