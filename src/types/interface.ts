@@ -19,7 +19,8 @@ export interface IconProps {
   color?: string;
 }
 export interface ButtonProps {
-  children: JSX.Element[] | JSX.Element | boolean | undefined;
+  // children: JSX.Element[] | JSX.Element | boolean | undefined;
+  children: JSX.Element[] | JSX.Element;
   name?: string;
   click?: React.MouseEventHandler<HTMLButtonElement>;
 }

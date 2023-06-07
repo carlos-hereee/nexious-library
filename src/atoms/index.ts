@@ -2,6 +2,7 @@ export * from "./buttons";
 export * from "./icon";
 export * from "./texts";
 export * from "./asset";
+export * from "./forms";
 
 /**
    * NOTICE: 

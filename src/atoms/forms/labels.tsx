@@ -1,4 +1,6 @@
-export const labels = {
+import { KeyStringProps } from "src/types/types";
+
+export const labels: KeyStringProps = {
   firstName: "First name",
   lastName: "Last name",
   name: "Enter name",
