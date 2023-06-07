@@ -1,4 +1,4 @@
-import Spinner from "./icons/Spinner";
+import Spinner from "./errors/Spinner";
 
 const Loading = () => {
   return (

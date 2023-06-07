@@ -51,3 +51,12 @@ export interface RequiredProps {
   data: { title: string; value: string };
   message?: string;
 }
+export interface InputProps {
+  value: string;
+  type?: string;
+  min?: number;
+  max?: number;
+  change: () => void;
+  blur: () => void;
+  submit?: () => void;
+}

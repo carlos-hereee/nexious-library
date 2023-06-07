@@ -1,12 +1,6 @@
-export type InputQuantityProps = {
-  min: number;
-  max: number;
-  value: string;
-  change: () => void;
-  blur: () => void;
-};
+import { InputProps } from "src/types/interface";
 
-const InputQuantity: React.FC<InputQuantityProps> = ({
+const InputQuantity: React.FC<InputProps> = ({
   min,
   max,
   value,
