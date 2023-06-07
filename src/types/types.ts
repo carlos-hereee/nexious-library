@@ -14,3 +14,4 @@ export type OptionProp = {
   isDisabled: boolean;
   uid?: string;
 };
+export type TableDataProp = { data: string };

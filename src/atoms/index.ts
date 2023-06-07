@@ -3,6 +3,7 @@ export * from "./icon";
 export * from "./texts";
 export * from "./asset";
 export * from "./forms";
+export * from "./table";
 
 /**
    * NOTICE: 

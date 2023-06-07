@@ -1,12 +1,11 @@
-import { useContext } from "react";
-import { AppContext } from "../../utils/context/AppContext";
-import CardHeader from "./card/CardHeader";
+// import { useContext } from "react";
+// import CardHeader from "./card/CardHeader";
 
 const BusinessHours = () => {
-  const { schedule } = useContext(AppContext);
+  // const { schedule } = useContext(AppContext);
   return (
     <div>
-      <CardHeader data={schedule} />
+      {/* <CardHeader data={schedule} /> */}
       <table className="responsive-table">
         <thead>
           <tr className="table-header">
@@ -15,14 +14,14 @@ const BusinessHours = () => {
           </tr>
         </thead>
         <tbody>
-          {schedule.hours.map((b) => (
+          {/* {schedule.hours.map((b) => (
             <tr className="responsive-table-item" key={b.key}>
               <th className="left-header">{b.day}</th>
               <td className="responsive-table-cell">
                 <strong>{b.hours}</strong>
               </td>
             </tr>
-          ))}
+          ))} */}
         </tbody>
       </table>
     </div>
