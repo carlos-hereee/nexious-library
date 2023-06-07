@@ -1,11 +1,11 @@
-import { TableDataProp } from "src/types/types";
+import { CellDataProp } from "src/types/types";
 
 /**
  * table caption
  * @param param0 table tittle
  * @returns caption
  */
-const TableTitle: React.FC<TableDataProp> = ({ data }) => {
+const TableTitle: React.FC<CellDataProp> = ({ data }) => {
   return <caption className="table-caption">{data}</caption>;
 };
 export default TableTitle;

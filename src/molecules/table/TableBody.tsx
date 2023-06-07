@@ -1,10 +1,10 @@
 // import { TableColumnProp } from "src/types/types";
 
-import { TableRowProp } from "src/types/types";
+import { CellDataProp } from "src/types/types";
 import TableRow from "./TableRow";
 
 type TableBodyProp = {
-  data: TableRowProp[];
+  data: CellDataProp[];
 };
 /**
  * element is used in conjunction with the <thead> and <tfoot>

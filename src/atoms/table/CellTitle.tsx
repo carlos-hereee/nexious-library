@@ -1,6 +1,6 @@
-import { TableDataProp } from "src/types/types";
+import { CellDataProp } from "src/types/types";
 
-const CellTitle: React.FC<TableDataProp> = ({ data }) => {
-  return <th className="table-header">{data}</th>;
+const CellTitle: React.FC<CellDataProp> = ({ data }) => {
+  return <th className="cell-header">{data}</th>;
 };
 export default CellTitle;

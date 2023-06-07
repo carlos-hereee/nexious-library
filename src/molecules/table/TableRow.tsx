@@ -1,10 +1,10 @@
-import { CellData } from "src/atoms";
-import { TableDataProp } from "src/types/types";
+import { CellData, CellTitle } from "src/atoms";
+import { CellDataProp } from "src/types/types";
 
-const TableRow: React.FC<TableDataProp> = ({ data }) => {
+const TableRow: React.FC<CellDataProp> = ({ data, isHeader }) => {
   return (
     <tr className="table-row">
-      <CellData data={data} />
+      {isHeader ? <CellTitle data={data} /> : <CellData data={data} />}
     </tr>
   );
 };
