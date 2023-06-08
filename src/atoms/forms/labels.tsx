@@ -1,6 +1,4 @@
-import { KeyStringProps } from "src/types/types";
-
-export const labels: KeyStringProps = {
+export const labels = {
   firstName: "First name",
   lastName: "Last name",
   name: "Enter name",
@@ -16,3 +14,6 @@ export const labels: KeyStringProps = {
   confirmPassword: "Confirm Password",
   search: "Search",
 };
+
+// get all keys in labels
+export type LabelKeys = keyof typeof labels;

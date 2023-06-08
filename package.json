@@ -2,17 +2,17 @@
   "name": "nexious-library",
   "version": "1.1.4",
   "description": "Official database for nexious.tech",
-  "main": "dist/cjs/main.js",
-  "types": "dist/esm/main.d.ts",
+  "main": "dist/main.js",
+  "module": "dist/main.js",
+  "types": "dist/main.d.ts",
   "type": "module",
   "sass": "src/stylesheets/index.scss",
-  "style": "dist/cjs/index.css",
-  "module": "dist/esm/main.js",
+  "style": "dist/index.css",
   "exports": {
-    ".": "./dist/cjs/main.js",
-    "./math": "./dist/cjs/math",
-    "./atoms": "./dist/cjs/atoms",
-    "./molecules": "./dist/cjs/molecules"
+    ".": "./dist/main.js",
+    "./math": "./dist/math",
+    "./atoms": "./dist/atoms",
+    "./molecules": "./dist/molecules"
   },
   "keywords": [
     "css",
@@ -22,19 +22,20 @@
     "front-end"
   ],
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch": "tsc -p tsconfig.json --watch",
     "dev": "npm run build && npm run watch",
-    "clean": "rimraf dist/",
+    "sass": "npx sass --no-source-map src/stylesheets",
     "copy:ejs": "copyfiles -u 1 src/**/*.html src/**/*.css dist/esm",
     "copy:cjs": "copyfiles -u 1 src/**/*.html src/**/*.css dist/cjs",
-    "sass": "npx sass --no-source-map src/stylesheets",
     "sass:watch": "npx sass --watch src/stylesheets",
     "sass:build": "npm run sass && npm run copy:ejs && npm run copy:cjs",
     "prettier": "npx prettier --write src/",
-    "compile": "npm run prettier && tsc --outDir dist/esm && tsc --module CommonJS --outDir dist/cjs",
+    "compile:dist": "tsc --outDir dist/esm && tsc --module CommonJS --outDir dist/cjs",
+    "compile": "tsc && tsc --build tsconfig.json",
+    "clean": "rimraf dist/ && npm run prettier",
     "build": "npm run clean && npm run compile && npm run sass:build",
-    "build:mac": "npm run clean:mac && npm run compile && npm run sass:build",
-    "watch": "tsc -p tsconfig.json --watch",
+    "build:mac": "npm run clean:mac && npm run sass:build",
+    "test": "npm run build && node ./dist/cjs/main.js",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
@@ -44,8 +45,7 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist",
-    "dist/**/*.css"
+    "dist"
   ],
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
@@ -54,8 +54,6 @@
   },
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "devDependencies": {
-    "@rollup/plugin-commonjs": "^25.0.0",
-    "@rollup/plugin-node-resolve": "^15.1.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.8",
@@ -70,7 +68,6 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.22",
-    "postcss": "^8.4.24",
     "prettier": "2.8.8",
     "rimraf": "^5.0.1",
     "sass": "^1.62.1",

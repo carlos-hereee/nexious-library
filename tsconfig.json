@@ -2,11 +2,10 @@
   "compilerOptions": {
     /* Visit https://aka.ms/tsconfig to read more about this file */
     "jsx": "react-jsx",
-    "lib": ["es6", "DOM", "ES2016", "ES2017"],
     /* Language and Environment */
-    // "target": "ESNext" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
+    "target": "ES5" /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
     /* Modules */
-    "module": "CommonJS" /* Specify what module code is generated. */,
+    "module": "ES6" /* Specify what module code is generated. */,
     "baseUrl": "./" /* Specify the base directory to resolve non-relative module names. */,
     /* Emit */
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
@@ -25,8 +24,10 @@
     "noImplicitThis": true,
     "strictNullChecks": true,
     // "suppressImplicitAnyIndexErrors": true, // deprecated
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "noUncheckedIndexedAccess": true, // tightens up ts rules
+    "noEmit": true // use ts as a linter
   },
-  "include": ["src/**/*", "rollup.config.js"],
+  "include": ["src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

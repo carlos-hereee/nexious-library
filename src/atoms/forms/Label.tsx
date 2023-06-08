@@ -1,8 +1,8 @@
-import { labels } from "./labels";
+import { labels, LabelKeys } from "./labels";
 
 type Props = {
   children: JSX.Element[] | JSX.Element;
-  name: string;
+  name: LabelKeys;
 };
 const Label: React.FC<Props> = ({ children, name }) => {
   return (
