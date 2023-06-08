@@ -1194,12 +1194,7 @@ button:disabled {
   }
 }
 
-.card-header {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-.card-header .card-header-heading {
+.card-header-heading {
   text-align: left;
 }
 
