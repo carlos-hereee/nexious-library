@@ -1,9 +1,9 @@
-const FilterResult = ({ total, count }) => {
-  return (
-    <p>
-      Results: {count} of {total}
-    </p>
-  );
-};
+// const FilterResult = ({ total, count }) => {
+//   return (
+//     <p>
+//       Results: {count} of {total}
+//     </p>
+//   );
+// };
 
-export default FilterResult;
+// export default FilterResult;

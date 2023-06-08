@@ -1,6 +1,6 @@
 import { Icon } from "src/atoms";
 
-const Spinner = () => {
+const Spinner: React.FC = () => {
   return (
     <div className="loading">
       <Icon name="loading" spin="spin" />

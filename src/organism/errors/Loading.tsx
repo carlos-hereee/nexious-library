@@ -1,4 +1,4 @@
-import Spinner from "./errors/Spinner";
+import { Spinner } from "src/molecules";
 
 const Loading = () => {
   return (

@@ -2,7 +2,7 @@ import { Hero } from "src/atoms";
 import { CardButtonProps } from "src/types/interface";
 
 const CardButton: React.FC<CardButtonProps> = ({
-  data,
+  // data,
   click,
   hasHero,
   hero,

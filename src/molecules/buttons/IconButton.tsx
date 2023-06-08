@@ -15,7 +15,7 @@ const IconButton: React.FC<IconButtonProps> = ({
   name,
   hasLabel,
   label,
-  ping,
+  // ping,
   size,
   spin,
   color,
