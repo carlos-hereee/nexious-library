@@ -1,6 +1,6 @@
 import { Spinner } from "src/molecules";
 
-const Loading = () => {
+const Loading: React.FC = () => {
   return (
     <div className="container">
       <div className="card-header">Loading...</div>
