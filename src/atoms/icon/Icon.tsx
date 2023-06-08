@@ -1,5 +1,5 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { getDefinition } from "./Assets";
+import { svg } from "./Assets";
 import { IconProps } from "src/types/interface";
 
 /**
@@ -13,7 +13,7 @@ import { IconProps } from "src/types/interface";
 const Icon: React.FC<IconProps> = ({ name, size, spin, color }) => {
   return (
     <FontAwesomeIcon
-      icon={getDefinition(name)}
+      icon={svg[name]}
       size={size}
       className="icon"
       spin={spin === "spin"}

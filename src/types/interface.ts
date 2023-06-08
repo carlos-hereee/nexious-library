@@ -1,4 +1,5 @@
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { IconNames } from "src/atoms/icon/Assets";
 
 export interface HyperlinkProps {
   data: {
@@ -13,13 +14,12 @@ export interface NavProps {
   link: string;
 }
 export interface IconProps {
-  name: string;
+  name: IconNames;
   size?: SizeProp;
   spin?: string;
   color?: string;
 }
 export interface ButtonProps {
-  // children: JSX.Element[] | JSX.Element | boolean | undefined;
   children?: JSX.Element[] | JSX.Element;
   name?: string;
   isBurger?: boolean;
