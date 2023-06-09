@@ -12,7 +12,7 @@
   "license": "MIT",
   "exports": {
     ".": "./dist/cjs/main",
-    "./atom": "./dist/cjs/atom"
+    "./dist/cjs": "./dist/cjs/atom"
   },
   "keywords": [
     "css",
