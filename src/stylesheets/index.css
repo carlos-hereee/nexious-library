@@ -1158,6 +1158,15 @@ button:disabled {
   text-decoration: underline;
 }
 
+.hero {
+  border-radius: 0.5rem;
+  width: 100%;
+}
+
+.hero-logo {
+  max-width: 100px;
+}
+
 /* readmore lines */
 /*  media queries */
 /* readmore lines */
@@ -1454,3 +1463,5 @@ button:disabled {
   text-align: center;
   color: #eee;
 }
+
+/*# sourceMappingURL=index.css.map */
