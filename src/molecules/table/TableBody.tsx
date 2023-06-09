@@ -1,7 +1,7 @@
 // import { TableColumnProp } from "types/types";
 
 import { CellDataProp } from "helpers/types.js";
-import TableRow from "./TableRow";
+import TableRow from "./TableRow.js";
 
 type TableBodyProp = {
   data: CellDataProp[];

@@ -13,7 +13,7 @@
     /* Language and Environment */
     /* if code runs on the browser target should be ES6 */
     "target": "ES6", // if code runs on the browser /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    "module": "Node16",
+    "module": "NodeNext",
     "lib": ["ES5", "ES2015", "ES2016", "DOM", "ESNext"],                                        /* Specify a set of bundled library declaration files that describe the target runtime environment. */
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */

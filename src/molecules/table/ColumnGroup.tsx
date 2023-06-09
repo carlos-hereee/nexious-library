@@ -1,5 +1,5 @@
 import { TableColumnProp } from "helpers/types.js";
-import Column from "../../atoms/table/Column";
+import Column from "../../atoms/table/Column.js";
 
 type CoulmnGroup = {
   data: TableColumnProp[];
