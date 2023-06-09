@@ -22,12 +22,12 @@
   justify-content: flex-end;
   align-items: center;
 }
-.flex-w {
+.flex-wrap {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
-.flex-c {
+.flex-center {
   display: flex;
   justify-content: center;
 }
@@ -35,4 +35,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+}
+.flex-1 {
+  flex: 1;
 }

@@ -1,19 +1,5 @@
 @import "../vars/mixins.scss", "../vars/variables.scss";
 
-button {
-  border: none;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: #{$radii-round};
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-  &:disabled {
-    cursor: not-allowed;
-  }
-}
 .btn-primary {
   // background-color: #{$primary-color};
   // color: #{$primary-text};
@@ -81,6 +67,7 @@ button {
 //   // background-color: #{$primary-color};
 // }
 .btn-cancel {
+  border: none;
   position: absolute;
   // background-color: #{$danger};
   // color: #{$secondary-text};

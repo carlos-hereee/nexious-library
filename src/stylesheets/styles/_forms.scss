@@ -11,6 +11,10 @@
     border-radius: #{$radii-round};
   }
 }
+.input {
+  min-width: 250px;
+  padding: 0.5rem 1rem;
+}
 .form-submit {
   display: flex;
   flex-direction: column;
@@ -34,15 +38,18 @@
     gap: 1rem;
     margin: auto;
   }
-  .input-wrapper {
-    display: flex;
-    flex-direction: column;
-  }
-  .input {
-    max-width: 150px;
-    @include devices(mini) {
-      max-width: 120px;
-    }
+}
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+.input {
+  // max-width: 150px;
+  padding: 0.5rem 1rem;
+  min-width: 250px;
+  @include devices(mini) {
+    max-width: 120px;
   }
 }
 
@@ -74,8 +81,4 @@
 }
 #contact-user-form {
   width: 100%;
-}
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
 }

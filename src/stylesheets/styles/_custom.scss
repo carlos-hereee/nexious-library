@@ -11,6 +11,12 @@
 .p-1 {
   padding: 1rem;
 }
+.p-verticle {
+  padding: 0 1rem;
+}
+.p-horizontal {
+  padding: 1rem 0;
+}
 .bg-light {
   // background-color: #{$secondary-color2};
   border-radius: #{$radii-round};
@@ -20,7 +26,26 @@
   border-radius: #{$radii-round};
   // color: #{$secondary-text};
 }
-.t-center {
+.text-center {
   justify-content: center;
   text-align: center;
+}
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.ping {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  aspect-ratio: 1/1;
+  border-radius: #{$radii-circle};
+  width: 25px;
+  height: 25px;
+  right: -0.5rem;
+  top: -0.5rem;
+}
+.link {
+  text-decoration: none;
 }
