@@ -7,21 +7,21 @@
   align-items: center;
   gap: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px dashed #{$primary-text};
+  // border-bottom: 1px dashed #{$primary-text};
   &:has(> .active) {
     .active {
-      background-color: #{$secondary-color};
-      color: #{$secondary-text};
+      // background-color: #{$secondary-color};
+      // color: #{$secondary-text};
       border-radius: #{$radii-round};
-      .read-more {
-        &:has(+ .read-more-toggle:not(:checked))::before {
-          background: linear-gradient(
-            to bottom,
-            transparent,
-            #{$secondary-color}
-          );
-        }
-      }
+      // .read-more {
+      //   &:has(+ .read-more-toggle:not(:checked))::before {
+      //     background: linear-gradient(
+      //       to bottom,
+      //       transparent,
+      //       #{$secondary-color}
+      //     );
+      //   }
+      // }
     }
   }
 }

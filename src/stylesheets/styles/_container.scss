@@ -27,7 +27,7 @@
 .secondary-container {
   display: flex;
   flex-direction: column;
-  background-color: #{$secondary-color};
+  // background-color: #{$secondary-color};
   min-height: 60vh;
   width: 100%;
   gap: 1rem;
@@ -46,16 +46,16 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  background-color: #{$secondary-color2};
-  color: #{$primary-text};
+  // background-color: #{$secondary-color2};
+  // color: #{$primary-text};
   flex: 1;
   min-width: 200px;
   gap: 1rem;
   border-radius: #{$radii-round};
-  .btn-link {
-    background-color: #{$primary-color};
-    color: #{$secondary-text};
-  }
+  // .btn-link {
+  //   // background-color: #{$primary-color};
+  //   // color: #{$secondary-text};
+  // }
   .fa-left-long {
     @include devices(mobile) {
       transform: rotate(90deg);
@@ -65,7 +65,7 @@
 .section-container {
   flex-direction: column;
   display: flex;
-  background-color: #{$secondary-color};
+  // background-color: #{$secondary-color};
   border-radius: #{$radii-round};
   gap: 0.5rem;
 }
@@ -80,12 +80,12 @@
   display: flex;
   justify-content: center;
   gap: 0.5rem;
-  .btn-link {
-    border: 1px solid #{$secondary-color};
-  }
+  // .btn-link {
+  //   border: 1px solid #{$secondary-color};
+  // }
 }
 .alt-container {
-  background-color: #{$secondary-color2};
+  // background-color: #{$secondary-color2};
   border-radius: #{$radii-round};
   flex: 1;
   overflow-y: auto;

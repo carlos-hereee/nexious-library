@@ -1,26 +1,25 @@
 // common color
 $danger: #f93131;
 $success: #320064;
+// // main active colors
+// $primary-color: #b33951;
+// $primary-color2: #e3d081;
+// $primary-color3: #91c7b1;
+// // background colors
+// $secondary-color: #54494b;
+// $secondary-color2: #f1f7ed;
+// // text colors
+// $primary-text: #333;
+// $secondary-text: #eee;
 
-// main active colors
-$primary-color: #b33951;
-$primary-color2: #e3d081;
-$primary-color3: #91c7b1;
-// background colors
-$secondary-color: #54494b;
-$secondary-color2: #f1f7ed;
-// text colors
-$primary-text: #333;
-$secondary-text: #eee;
+// // shadow blends
+// $shadow-color: #eee;
+// $shadow-color2: purple;
+// $shadow-color3: #ddd;
 
 // popular icons
 $instagram: #ea4c52;
 $twitter: #1da1f2;
-
-// shadow blends
-$shadow-color: #eee;
-$shadow-color2: purple;
-$shadow-color3: #ddd;
 
 /* readmore lines */
 $max-lines: 2;
@@ -40,18 +39,8 @@ $radii-circle: 100%;
 code {
   $danger: $danger;
   $success: $success;
-  $primary-color: $primary-color;
-  $primary-color2: $primary-color2;
-  $primary-color3: $primary-color3;
-  $secondary-color: $secondary-color;
-  $secondary-color2: $secondary-color2;
-  $primary-text: $primary-text;
-  $secondary-text: $secondary-text;
   $instagram: $instagram;
   $twitter: $twitter;
-  $shadow-color: $shadow-color;
-  $shadow-color: $shadow-color;
-  $shadow-color3: $shadow-color3;
   $max-lines: $max-lines;
   $line-height: $line-height;
   $media-desktop: $media-desktop;

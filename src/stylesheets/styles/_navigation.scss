@@ -8,7 +8,7 @@
 .secondary-navigation {
   display: flex;
   align-items: flex-start;
-  background-color: #{$secondary-color};
+  // background-color: #{$secondary-color};
   padding: 1rem 0.5rem;
 }
 .mobile-navigation {
@@ -18,7 +18,7 @@
     justify-content: space-around;
     position: absolute;
     list-style: none;
-    background-color: #{$primary-color2};
+    // background-color: #{$primary-color2};
     border-radius: #{$radii-round};
     gap: 1rem;
     top: 15%;
@@ -59,20 +59,20 @@
   flex-wrap: wrap;
   gap: 1rem;
   padding: 0 1rem;
-  color: #{$primary-text};
+  // color: #{$primary-text};
 }
 .nav-link {
   display: flex;
   text-decoration: none;
   position: relative;
   flex: 1;
-  color: #{$primary-text};
+  // color: #{$primary-text};
 }
 .nav-link[data-state="active"] {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   width: 100%;
-  background-color: $primary-color;
+  // background-color: $primary-color;
 }
 .ping-count {
   position: absolute;
@@ -80,8 +80,8 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background-color: #{$danger};
-  color: #{$secondary-text};
+  // background-color: #{$danger};
+  // color: #{$secondary-text};
   border-radius: #{$radii-circle};
   padding: 0.35rem;
 }

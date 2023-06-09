@@ -3,8 +3,8 @@
 header {
   display: flex;
   align-items: center;
-  background-color: #{$secondary-color};
-  border-bottom: 1px solid #{$secondary-color2};
+  // background-color: #{$secondary-color};
+  // border-bottom: 1px solid #{$secondary-color2};
   max-height: 15vh;
   justify-content: space-between;
 }
@@ -16,10 +16,7 @@ footer {
   align-items: flex-start;
   justify-content: space-around;
   flex-wrap: wrap;
-  color: #{$secondary-text};
-  background-color: #{$secondary-color};
+  // color: #{$secondary-text};
+  // background-color: #{$secondary-color};
   gap: 1rem;
-}
-.link {
-  color: #{$primary-text};
 }
