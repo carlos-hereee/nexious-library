@@ -1,4 +1,4 @@
-import { LabelValueProps } from "helpers/types";
+import { LabelValueProps } from "helpers/types.js";
 
 const KeyValue: React.FC<LabelValueProps> = ({ key, value }) => {
   return (

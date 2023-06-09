@@ -2,27 +2,59 @@
   "name": "nexious-library",
   "version": "1.1.6",
   "description": "Official database for nexious.tech",
-  "main": "dist/cjs/main.js",
-  "module": "dist/esm/main.js",
-  "types": "dist/cjs/main.d.ts",
+  "main": "./dist/cjs/main.cjs",
+  "module": "./dist/esm/main.js",
   "type": "module",
+  "types": "./src/cjs/main.d.ts",
   "sass": "src/stylesheets/index.scss",
   "style": "dist/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
-    ".": "./dist/cjs/main.js",
-    "./atoms": "./dist/cjs/atoms/index.js",
-    "./molecules/index.js": "./dist/cjs/molecules/index.js",
-    "./index.css": "./dist/cjs/stylesheets/index.css"
+    ".": {
+      "import": {
+        "types": "./dist/esm/main.d.ts",
+        "default": "./dist/esm/main.js"
+      },
+      "require": {
+        "types": "./dist/cjs/main.d.cts",
+        "default": "./dist/cjs/main.cts"
+      }
+    },
+    "./atoms": {
+      "import": {
+        "types": "./dist/esm/atoms/index.d.ts",
+        "default": "./dist/esm/atoms/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/atoms/index.d.ts",
+        "default": "./dist/cjs/atoms/index.js"
+      }
+    },
+    "./molecules": {
+      "import": {
+        "types": "./dist/esm/molecules/index.d.ts",
+        "default": "./dist/esm/molecules/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/molecules/index.d.ts",
+        "default": "./dist/cjs/molecules/index.js"
+      }
+    },
+    "./index.css": {
+      "import": "./dist/esm/stylesheets/index.css",
+      "require": null
+    }
   },
   "keywords": [
     "css",
     "sass",
     "mobile-first",
     "responsive",
-    "front-end"
+    "front-end",
+    "react",
+    "react-vite"
   ],
   "scripts": {
     "watch": "tsc -p tsconfig.json --watch",
@@ -30,10 +62,10 @@
     "clean": "rimraf dist/ && npm run prettier",
     "dev": "npm run build && npm run watch",
     "sass": "npx sass --no-source-map src/stylesheets",
-    "copy:ejs": "copyfiles -u 1 src/**/*.html src/**/*.css dist/esm",
-    "copy:cjs": "copyfiles -u 1 src/**/*.html src/**/*.css dist/cjs",
+    "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
+    "copy:cjs": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/cjs",
     "sass:watch": "npx sass --watch src/stylesheets",
-    "sass:build": "npm run sass && npm run copy:ejs && npm run copy:cjs",
+    "sass:build": "npm run sass && npm run copy:esm && npm run copy:cjs",
     "compile": "tsc && tsc --module CommonJS --outDir dist/cjs",
     "build": "npm run clean && npm run compile && npm run sass:build",
     "build:mac": "npm run clean:mac && npm run sass:build",

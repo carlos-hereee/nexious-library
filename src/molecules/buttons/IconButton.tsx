@@ -3,8 +3,8 @@
 // import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
 
-import { Button, Icon } from "main";
-import { IconButtonProps } from "helpers/interface";
+import { Button, Icon } from "atoms/index.js";
+import { IconButtonProps } from "helpers/interface.js";
 
 /**
  * Icon Button

@@ -1,5 +1,5 @@
 import { CellData, CellTitle } from "atoms";
-import { CellDataProp } from "helpers/types";
+import { CellDataProp } from "helpers/types.js";
 
 const TableRow: React.FC<CellDataProp> = ({ data, isHeader }) => {
   return (

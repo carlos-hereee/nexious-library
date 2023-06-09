@@ -1,4 +1,4 @@
-import { HeroProps } from "helpers/types";
+import { HeroProps } from "helpers/types.js";
 
 type Props = { data: HeroProps };
 

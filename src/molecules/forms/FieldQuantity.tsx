@@ -1,5 +1,5 @@
-import { InputQuantity, Label } from "atoms";
-import { LabelKeys } from "atoms/forms/labels";
+import { InputQuantity, Label } from "atoms/index.js";
+import { LabelKeys } from "atoms/forms/labels.js";
 
 type FieldQuantityProps = {
   min: number;

@@ -1,4 +1,4 @@
-import { OptionProp } from "helpers/types";
+import { OptionProp } from "helpers/types.js";
 
 const Option: React.FC<OptionProp> = ({ name, value, isDisabled }) => {
   return (

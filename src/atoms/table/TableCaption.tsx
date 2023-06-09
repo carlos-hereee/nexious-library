@@ -1,4 +1,4 @@
-import { CellDataProp } from "helpers/types";
+import { CellDataProp } from "helpers/types.js";
 
 /**
  * table caption

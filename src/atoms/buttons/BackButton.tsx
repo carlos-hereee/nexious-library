@@ -1,4 +1,4 @@
-import { ChildProp } from "helpers/types";
+import { ChildProp } from "helpers/types.js";
 
 /**
  * Component - Button

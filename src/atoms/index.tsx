@@ -1,9 +1,9 @@
-export * from "./buttons";
-export * from "./icon";
-export * from "./texts";
-export * from "./asset";
-export * from "./forms";
-export * from "./table";
+export * from "./buttons/index.js";
+export * from "./icon/index.js";
+export * from "./texts/index.js";
+export * from "./asset/index.js";
+export * from "./forms/index.js";
+export * from "./table/index.js";
 
 /**
    * NOTICE: 
