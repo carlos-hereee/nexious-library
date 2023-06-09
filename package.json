@@ -11,8 +11,10 @@
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
-    ".": "./dist/cjs/main",
-    "./dist/cjs": "./dist/cjs/atom"
+    ".": "./dist/cjs/main.js",
+    "./atoms": "./dist/cjs/atoms/index.js",
+    "./molecules/index.js": "./dist/cjs/molecules/index.js",
+    "./index.css": "./dist/cjs/stylesheets/index.css"
   },
   "keywords": [
     "css",
