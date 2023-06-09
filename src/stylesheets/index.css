@@ -144,9 +144,9 @@ select {
 }
 
 button,
-html input[type="button"],
-input[type="reset"],
-input[type="submit"] {
+html input[type=button],
+input[type=reset],
+input[type=submit] {
   -webkit-appearance: button;
   cursor: pointer;
 }
@@ -166,24 +166,24 @@ input {
   line-height: normal;
 }
 
-input[type="checkbox"],
-input[type="radio"] {
+input[type=checkbox],
+input[type=radio] {
   box-sizing: border-box;
   padding: 0;
 }
 
-input[type="number"]::-webkit-inner-spin-button,
-input[type="number"]::-webkit-outer-spin-button {
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
   height: auto;
 }
 
-input[type="search"] {
+input[type=search] {
   -webkit-appearance: textfield;
   box-sizing: content-box;
 }
 
-input[type="search"]::-webkit-search-cancel-button,
-input[type="search"]::-webkit-search-decoration {
+input[type=search]::-webkit-search-cancel-button,
+input[type=search]::-webkit-search-decoration {
   -webkit-appearance: none;
 }
 
@@ -691,15 +691,15 @@ button:disabled {
   padding: 1rem 0.5rem;
   transition: clip-path ease-in-out 700ms;
 }
-.mobile-navigation .navigation[data-state="open"] {
+.mobile-navigation .navigation[data-state=open] {
   animation: circleOpen 750ms ease-in-out forwards;
   display: block;
 }
-.mobile-navigation .navigation[data-state="closing"] {
+.mobile-navigation .navigation[data-state=closing] {
   display: block;
   animation: circleClose ease-in-out forwards;
 }
-.mobile-navigation .navigation[data-state="close"] {
+.mobile-navigation .navigation[data-state=close] {
   display: none;
 }
 @media only screen and (max-width: 768px) {
@@ -734,7 +734,7 @@ button:disabled {
   color: #333;
 }
 
-.nav-link[data-state="active"] {
+.nav-link[data-state=active] {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   width: 100%;
@@ -1284,9 +1284,7 @@ button:disabled {
   color: #eee;
   border-radius: 0.5rem;
 }
-.row-wrapper:has(> .active)
-  .active
-  .read-more:has(+ .read-more-toggle:not(:checked))::before {
+.row-wrapper:has(> .active) .active .read-more:has(+ .read-more-toggle:not(:checked))::before {
   background: linear-gradient(to bottom, transparent, #54494b);
 }
 
@@ -1391,8 +1389,7 @@ button:disabled {
 .card-section-row:hover {
   background-color: #e3d081;
 }
-.card-section-row:hover
-  .read-more:has(+ .read-more-toggle:not(:checked))::before {
+.card-section-row:hover .read-more:has(+ .read-more-toggle:not(:checked))::before {
   background: linear-gradient(to bottom, transparent, #e3d081);
 }
 

@@ -1,4 +1,4 @@
-import { MessageProp } from "src/types/types";
+import { MessageProp } from "types/types";
 
 const EmptySection: React.FC<MessageProp> = ({ message }) => {
   return (

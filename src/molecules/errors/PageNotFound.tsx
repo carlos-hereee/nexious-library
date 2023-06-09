@@ -1,5 +1,5 @@
-import { PageNotFoundProps } from "src/types/types";
-import { Hero } from "src/atoms";
+import { PageNotFoundProps } from "types/types";
+import { Hero } from "atoms";
 
 const PageNotFound: React.FC<PageNotFoundProps> = ({ message, hero }) => {
   return (

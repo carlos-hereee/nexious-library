@@ -2,10 +2,10 @@
 // import Hero from "../../atoms/Hero";
 // import Icons from "../../icons/Icons";
 
-import { Heading } from "src/atoms";
-import { Hero } from "src/atoms/asset";
-import Subtitle from "src/atoms/texts/Subtitle";
-import { CardHeaderProps } from "src/types/interface";
+import { Heading } from "atoms";
+import { Hero } from "atoms/asset";
+import Subtitle from "atoms/texts/Subtitle";
+import { CardHeaderProps } from "types/interface";
 
 const CardHeader: React.FC<CardHeaderProps> = ({
   title,

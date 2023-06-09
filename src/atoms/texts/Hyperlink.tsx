@@ -1,4 +1,4 @@
-import { HyperlinkProps } from "src/types/interface";
+import { HyperlinkProps } from "types/interface";
 
 const Hyperlink: React.FC<HyperlinkProps> = ({ data }) => {
   return (

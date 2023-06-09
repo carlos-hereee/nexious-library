@@ -1,6 +1,6 @@
-// import { TableColumnProp } from "src/types/types";
+// import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "src/types/types";
+import { CellDataProp } from "types/types";
 import TableRow from "./TableRow";
 
 type TableHeaderProp = {

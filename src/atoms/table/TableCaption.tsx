@@ -1,4 +1,4 @@
-import { CellDataProp } from "src/types/types";
+import { CellDataProp } from "types/types";
 
 /**
  * table caption

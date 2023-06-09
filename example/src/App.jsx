@@ -1,11 +1,11 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import { Button, Capitalize, Heading } from "nexious-library";
+import { Button, Capitalize, Heading, add } from "nexious-library";
 // import { } from "nexious-library";
 
 const App = () => {
-  // const [count, setCount] = useState(add(2, 5));
+  const [count, setCount] = useState(add(2, 5));
   let name = ["vite", "+", "react"];
   let buttons = [2, 5];
 

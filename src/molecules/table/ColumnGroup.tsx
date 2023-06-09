@@ -1,4 +1,4 @@
-import { TableColumnProp } from "src/types/types";
+import { TableColumnProp } from "types/types";
 import Column from "../../atoms/table/Column";
 
 type CoulmnGroup = {

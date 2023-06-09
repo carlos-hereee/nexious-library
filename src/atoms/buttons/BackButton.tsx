@@ -1,4 +1,4 @@
-import { ChildProp } from "src/types/types";
+import { ChildProp } from "types/types";
 
 /**
  * Component - Button

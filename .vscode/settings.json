@@ -1,0 +1,8 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode", 
+  "editor.bracketPairColorization.enabled": true,
+  "editor.formatOnSave": false, 
+  "editor.formatOnPaste": false, 
+  // "editor.wordWrap": "on", 
+  "git.ignoreLimitWarning": true
+}

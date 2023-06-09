@@ -1,4 +1,4 @@
-import { NavProps } from "src/types/interface";
+import { NavProps } from "types/interface";
 
 export const Navlink: React.FC<NavProps> = ({ data, link }) => {
   return (

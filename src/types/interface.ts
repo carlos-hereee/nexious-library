@@ -1,5 +1,5 @@
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { IconNames } from "src/atoms/icon/Assets";
+import { IconNames } from "atoms/icon/Assets";
 
 export interface HyperlinkProps {
   data: {
@@ -21,13 +21,13 @@ export interface IconProps {
 }
 export interface ButtonProps {
   children?: JSX.Element[] | JSX.Element;
-  name?: string;
+  name?: IconNames;
   isBurger?: boolean;
   click?: React.MouseEventHandler<HTMLButtonElement>;
 }
 export interface IconButtonProps {
   children: JSX.Element;
-  name: string;
+  name: IconNames;
   hasLabel?: boolean;
   label?: string;
   ping?: number;

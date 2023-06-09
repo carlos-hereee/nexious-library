@@ -1,10 +1,11 @@
-import { InputQuantity, Label } from "src/atoms";
+import { InputQuantity, Label } from "atoms";
+import { LabelKeys } from "atoms/forms/labels";
 
 type FieldQuantityProps = {
   min: number;
   max: number;
   value: string;
-  name: string;
+  name: LabelKeys;
   change: () => void;
   blur: () => void;
 };

@@ -1,4 +1,4 @@
-import { InputProps } from "src/types/interface";
+import { InputProps } from "types/interface";
 
 const InputQuantity: React.FC<InputProps> = ({
   min,

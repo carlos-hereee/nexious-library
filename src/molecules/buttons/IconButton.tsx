@@ -1,10 +1,14 @@
-import { Button, Icon } from "src/atoms";
-import { IconButtonProps } from "src/types/interface";
+// import { Button, Icon } from "atoms";
+// import { Button } from "atoms";
+// import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
+
+import { Button, Icon } from "atoms";
+import { IconButtonProps } from "types/interface";
 
 /**
  * Icon Button
- * @param name name of the icon
+ * @param name string to specify the name of an icon
  * @param click callback fired when button is click
  * @param ping specify a notification count
  * @param size specify the size of icon

@@ -1,4 +1,4 @@
-import { ButtonProps } from "src/types/interface";
+import { ButtonProps } from "types/interface";
 
 /**
  * Component - Button

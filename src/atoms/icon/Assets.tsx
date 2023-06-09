@@ -50,7 +50,6 @@ import {
   faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-import { IconDefinition } from "@fortawesome/fontawesome-svg-core";
 
 export const svg = {
   home: faHome,
