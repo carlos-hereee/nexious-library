@@ -1,4 +1,4 @@
-import { InputProps } from "types/interface";
+import { InputProps } from "helpers/interface";
 
 const Input: React.FC<InputProps> = ({ type, value, change, blur }) => {
   return (

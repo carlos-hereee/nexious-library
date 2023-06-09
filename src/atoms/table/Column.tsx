@@ -1,4 +1,4 @@
-import { TableColumnProp } from "types/types";
+import { TableColumnProp } from "helpers/types";
 
 /**
  * Specifies column properties for each column within a <colgroup> element

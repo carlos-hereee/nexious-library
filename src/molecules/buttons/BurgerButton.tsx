@@ -2,7 +2,7 @@
 // import SetNotificationCount from "../SetNotificationCount";
 
 import { Icon } from "atoms";
-import { ButtonProps } from "types/interface";
+import { ButtonProps } from "helpers/interface";
 
 const BurgerButton: React.FC<ButtonProps> = ({ name, isBurger, click }) => {
   return (

@@ -1,4 +1,4 @@
-import { DataStringProps } from "types/types";
+import { DataStringProps } from "helpers/types";
 
 const Capitalize: React.FC<DataStringProps> = ({ data }) => (
   <span>

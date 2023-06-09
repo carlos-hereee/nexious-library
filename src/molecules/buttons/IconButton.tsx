@@ -3,8 +3,8 @@
 // import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
 
-import { Button, Icon } from "atoms";
-import { IconButtonProps } from "types/interface";
+import { Button, Icon } from "main";
+import { IconButtonProps } from "helpers/interface";
 
 /**
  * Icon Button

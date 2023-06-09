@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { svg } from "./Assets";
-import { IconProps } from "types/interface";
+import { IconProps } from "helpers/interface";
 
 /**
  * Component - Icon

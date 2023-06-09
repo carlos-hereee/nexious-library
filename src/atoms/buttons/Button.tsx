@@ -1,4 +1,4 @@
-import { ButtonProps } from "types/interface";
+import { ButtonProps } from "helpers/interface.js";
 
 /**
  * Component - Button

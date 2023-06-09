@@ -5,6 +5,7 @@
   "main": "dist/cjs/main.js",
   "module": "dist/esm/main.js",
   "types": "dist/cjs/main.d.ts",
+  "type": "module",
   "sass": "src/stylesheets/index.scss",
   "style": "dist/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
