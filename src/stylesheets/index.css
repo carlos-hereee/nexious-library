@@ -1,3 +1,20 @@
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+button:disabled {
+  cursor: not-allowed;
+}
+
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+}
+
 /* @docs label: Core Remedies
 version: 0.1.0-beta.2
 
@@ -34,6 +51,7 @@ links:
 category: global
 */
 html {
+  height: 100%;
   line-sizing: normal;
 }
 
@@ -376,14 +394,6 @@ span {
   font-family: "Roboto", sans-serif;
 }
 
-.app {
-  display: flex;
-  flex-direction: column;
-  font-family: "Roboto", sans-serif;
-  margin: auto;
-  max-width: 1100px;
-}
-
 .btn {
   max-width: 220px;
   min-width: 80px;
@@ -411,21 +421,6 @@ span {
 /*  media queries */
 /* readmore lines */
 /*  media queries */
-button {
-  border: none;
-  background-color: transparent;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  border-radius: 0.5rem;
-  gap: 0.5rem;
-  padding: 0.5rem 1rem;
-}
-button:disabled {
-  cursor: not-allowed;
-}
-
 .btn-primary {
   flex: 1;
 }
@@ -460,6 +455,7 @@ button:disabled {
 }
 
 .btn-cancel {
+  border: none;
   position: absolute;
   width: 1rem;
   top: -0.5rem;
@@ -508,7 +504,6 @@ button:disabled {
 #calendar-events {
   display: flex;
   flex-direction: column;
-  align-items: center;
   flex: 1;
   border-radius: 0.5rem;
   gap: 1rem;
@@ -517,11 +512,19 @@ button:disabled {
 .react-calendar__navigation {
   display: flex;
 }
-.react-calendar__navigation button {
-  border-radius: 0;
+.react-calendar__navigation .react-calendar__navigation__prev-button {
+  border-top-left-radius: 0.5rem;
+  border-right: none;
+  border-bottom-left-radius: 0.5rem;
+}
+.react-calendar__navigation .react-calendar__navigation__next-button {
+  border-top-right-radius: 0.5rem;
+  border-left: none;
+  border-bottom-right-radius: 0.5rem;
 }
 
 .react-calendar__tile {
+  border: none;
   position: relative;
   cursor: pointer;
   max-width: 100px;
@@ -529,11 +532,17 @@ button:disabled {
   min-width: 40px;
 }
 .react-calendar__tile .match {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--ping);
+  color: var(--primary-light-color);
   position: absolute;
+  aspect-ratio: 1/1;
   width: 1rem;
   height: 1rem;
+  right: 5px;
   top: 1px;
-  right: 0;
   border-radius: 100%;
   padding: 0.25rem;
 }
@@ -549,8 +558,16 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.react-calendar__navigation__label {
+  border-right: none;
+  border-left: none;
+}
 .react-calendar__navigation__label:disabled {
   cursor: default;
+}
+
+.react-calendar__viewContainer {
+  border-radius: 0.5rem;
 }
 
 /* readmore lines */
@@ -666,6 +683,14 @@ button:disabled {
   padding: 1rem;
 }
 
+.p-verticle {
+  padding: 0 1rem;
+}
+
+.p-horizontal {
+  padding: 1rem 0;
+}
+
 .bg-light {
   border-radius: 0.5rem;
 }
@@ -674,9 +699,31 @@ button:disabled {
   border-radius: 0.5rem;
 }
 
-.t-center {
+.text-center {
   justify-content: center;
   text-align: center;
+}
+
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.ping {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+  width: 25px;
+  height: 25px;
+  right: -0.5rem;
+  top: -0.5rem;
+}
+
+.link {
+  text-decoration: none;
 }
 
 .flex-g {
@@ -708,13 +755,13 @@ button:disabled {
   align-items: center;
 }
 
-.flex-w {
+.flex-wrap {
   display: flex;
   flex-wrap: wrap;
   gap: 0.5rem;
 }
 
-.flex-c {
+.flex-center {
   display: flex;
   justify-content: center;
 }
@@ -723,6 +770,10 @@ button:disabled {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
+}
+
+.flex-1 {
+  flex: 1;
 }
 
 /* readmore lines */
@@ -738,6 +789,11 @@ button:disabled {
 .form input,
 .form textarea {
   border-radius: 0.5rem;
+}
+
+.input {
+  min-width: 250px;
+  padding: 0.5rem 1rem;
 }
 
 .form-submit {
@@ -764,15 +820,19 @@ button:disabled {
   gap: 1rem;
   margin: auto;
 }
-.shipping-form .input-wrapper {
+
+.input-wrapper {
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
 }
-.shipping-form .input {
-  max-width: 150px;
+
+.input {
+  padding: 0.5rem 1rem;
+  min-width: 250px;
 }
 @media only screen and (max-width: 375px) {
-  .shipping-form .input {
+  .input {
     max-width: 120px;
   }
 }
@@ -808,11 +868,6 @@ button:disabled {
 
 #contact-user-form {
   width: 100%;
-}
-
-.input-wrapper {
-  display: flex;
-  flex-direction: column;
 }
 
 .grid {
@@ -1034,7 +1089,7 @@ footer {
 .social {
   display: flex;
   flex-direction: column;
-  gap: 1rem;
+  gap: 0.5rem;
 }
 .social .title {
   text-align: center;
