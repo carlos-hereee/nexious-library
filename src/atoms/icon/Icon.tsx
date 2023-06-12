@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { svg } from "./Assets.js";
-import { IconProps } from "helpers/interface.js";
+import { IconProps } from "@nexious-library/helpers/interface.js";
 
 /**
  * Component - Icon

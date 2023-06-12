@@ -1,4 +1,6 @@
-import { ButtonProps } from "helpers/interface.js";
+// import { ButtonProps } from "@helpers/interface.js";
+
+import { ButtonProps } from "@nexious-library/helpers/interface.js";
 
 /**
  * Component - Button

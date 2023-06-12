@@ -1,9 +1,12 @@
 import { useState } from "react";
 import reactLogo from "./assets/react.svg";
 import viteLogo from "/vite.svg";
-import { Capitalize, Heading, add, Button } from "nexious-library";
+import { Capitalize, Heading, add, Button , BackButton} from "nexious-library";
 // import { Button, Capitalize, Heading, add } from "nexious-library";
 // import { Button, Capitalize, Heading, add } from "nexious-library";
+// import {  Capitalize, Heading, } from 'nexious-library'
+// import {add} from 'nexious-library/@math/index.js'
+// import {Button} from 'nexious-library/@atoms/'
 
 // import { } from "nexious-library";
 
@@ -59,7 +62,8 @@ const App = () => {
           </div>
         </div>
       </div>
-      <button onClick={() => history.back()}>Back</button>
+      {/* <button onClick={() => history.back()}>Back</button> */}
+      <BackButton />
       <div className="card">
         <Button data={count} click={handleCount} />
 

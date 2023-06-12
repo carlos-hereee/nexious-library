@@ -1,4 +1,4 @@
-import { NavProps } from "helpers/interface.js";
+import { NavProps } from "@nexious-library/helpers/interface.js";
 
 export const Navlink: React.FC<NavProps> = ({ data, link }) => {
   return (

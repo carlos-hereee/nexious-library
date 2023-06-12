@@ -17,9 +17,11 @@ yarn add nexious-library
 
 Auto rename files from .js to jsx run on terminal:
 
-- rename.sh  
-  Auto rename files from .jsx to tsx run on terminal:
-- renameToTsx.sh
+- npx nexious-library rename.sh  
+  
+Auto rename files from .jsx to tsx run on terminal:
+
+- npx nexious-library renameToTsx.sh
 
 ## Style guide
 

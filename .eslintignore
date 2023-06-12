@@ -1,5 +1,8 @@
 **/*.min.js
 **/dist/
+**/dist/*
+**/node_modules
+**/node_modules/*
 **/vendor/
 /_site/
 /js/coverage/

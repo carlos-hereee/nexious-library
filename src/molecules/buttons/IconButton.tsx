@@ -1,10 +1,14 @@
-// import { Button, Icon } from "atoms";
-// import { Button } from "atoms";
+// import { Button, Icon } from  "@atoms/index.js";
+// import { Button } from  "@atoms/index.js";
 // import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
 
-import { Button, Icon } from "atoms/index.js";
-import { IconButtonProps } from "helpers/interface.js";
+import { IconButtonProps } from "@nexious-library/helpers/interface.js";
+import { Button, Icon } from "@nexious-library/atoms/index.js";
+
+// import { Button, Icon } from "@atoms/index.js";
+// import { IconButtonProps } from "@helpers/interface.js";
+// import { Button, Icon } from "@atoms/index.js";
 
 /**
  * Icon Button
