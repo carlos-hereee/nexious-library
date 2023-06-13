@@ -1,4 +1,4 @@
-import { TableColumnProp } from "helpers/types.js";
+import { TableColumnProp } from "@nexious-library/helpers/types.tsx";
 
 /**
  * Specifies column properties for each column within a <colgroup> element

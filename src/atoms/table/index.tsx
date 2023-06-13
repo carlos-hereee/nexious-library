@@ -1,4 +1,4 @@
-export { default as CellData } from "./CellData.js";
-export { default as CellTitle } from "./CellTitle.js";
-export { default as TableCaption } from "./TableCaption.js";
-export { default as Column } from "./Column.js";
+export { default as CellData } from "./CellData.tsx";
+export { default as CellTitle } from "./CellTitle.tsx";
+export { default as TableCaption } from "./TableCaption.tsx";
+export { default as Column } from "./Column.tsx";

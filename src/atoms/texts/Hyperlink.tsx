@@ -1,4 +1,4 @@
-import { HyperlinkProps } from "@nexious-library/helpers/interface.js";
+import { HyperlinkProps } from "@nexious-library/helpers/interface.tsx";
 
 const Hyperlink: React.FC<HyperlinkProps> = ({ data }) => {
   return (

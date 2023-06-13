@@ -1,4 +1,4 @@
-import { Spinner } from "molecules/index.js";
+import { Spinner } from "molecules/index.tsx";
 
 const Loading: React.FC = () => {
   return (

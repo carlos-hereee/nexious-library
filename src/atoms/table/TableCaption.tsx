@@ -1,4 +1,4 @@
-import { CellDataProp } from "helpers/types.js";
+import { CellDataProp } from "@nexious-library/helpers/types.tsx";
 
 /**
  * table caption

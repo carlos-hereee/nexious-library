@@ -1,4 +1,4 @@
-import { MessageProp } from "helpers/types.js";
+import { MessageProp } from "@nexious-library/helpers/types.tsx";
 
 const EmptySection: React.FC<MessageProp> = ({ message }) => {
   return (

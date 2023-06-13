@@ -1,9 +1,9 @@
-export * from "./buttons/index.js";
-export * from "./icon/index.js";
-export * from "./texts/index.js";
-export * from "./asset/index.js";
-export * from "./forms/index.js";
-export * from "./table/index.js";
+export * from "./buttons/index.tsx";
+export * from "./icon/index.tsx";
+export * from "./texts/index.tsx";
+export * from "./asset/index.tsx";
+export * from "./forms/index.tsx";
+export * from "./table/index.tsx";
 
 /**
    * NOTICE: 

@@ -1,5 +1,5 @@
-import { RequiredProps } from "@nexious-library/helpers/interface.js";
-import { KeyValue } from "main.js";
+import { RequiredProps } from "@nexious-library/helpers/interface.tsx";
+import { KeyValue } from "main.tsx";
 
 const MessageRequired: React.FC<RequiredProps> = ({ data, message }) => {
   return (

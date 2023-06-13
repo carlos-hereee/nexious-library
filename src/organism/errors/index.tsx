@@ -1,1 +1,1 @@
-export { default as Loading } from "./Loading.js";
+export { default as Loading } from "./Loading.tsx";

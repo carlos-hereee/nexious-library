@@ -1,6 +1,6 @@
-export * from "./atoms/index.js";
-export * from "./math/index.js";
-export * from "./molecules/index.js";
+export * from "@nexious-library/atoms/index.tsx";
+export * from "@nexious-library/math/index.tsx";
+export * from "@nexious-library/molecules/index.tsx";
 
 import "./stylesheets/index.css";
 import "./stylesheets/index.scss";
@@ -25,21 +25,21 @@ import "./stylesheets/index.scss";
     "./atoms": {
       "import": {
         "types": "./dist/esm/atoms/index.d.ts",
-        "default": "./dist/esm/atoms/index.js"
+        "default": "./dist/esm/atoms/index.tsx"
       },
       "require": {
         "types": "./dist/cjs/atoms/index.d.ts",
-        "default": "./dist/cjs/atoms/index.js"
+        "default": "./dist/cjs/atoms/index.tsx"
       }
     },
     "./molecules": {
       "import": {
         "types": "./dist/esm/molecules/index.d.ts",
-        "default": "./dist/esm/molecules/index.js"
+        "default": "./dist/esm/molecules/index.tsx"
       },
       "require": {
         "types": "./dist/cjs/molecules/index.d.ts",
-        "default": "./dist/cjs/molecules/index.js"
+        "default": "./dist/cjs/molecules/index.tsx"
       }
     },
     "./index.css": {

@@ -1,4 +1,4 @@
-import { OptionProp } from "helpers/types.js";
+import { OptionProp } from "@nexious-library/helpers/types.tsx";
 
 const Option: React.FC<OptionProp> = ({ name, value, isDisabled }) => {
   return (

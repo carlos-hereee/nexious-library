@@ -1,1 +1,1 @@
-export { default as Icon } from "./Icon.js";
+export { default as Icon } from "./Icon.tsx";

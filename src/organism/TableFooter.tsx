@@ -1,7 +1,7 @@
 // import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "helpers/types.js";
-import TableRow from "./TableRow.js";
+import { CellDataProp } from "@nexious-library/helpers/types.tsx";
+import TableRow from "../molecules/table/TableRow.tsx";
 
 type TableBodyProp = {
   data: CellDataProp[];
@@ -12,13 +12,13 @@ type TableBodyProp = {
  * @param span array for each section
  * @returns
  */
-const TableBody: React.FC<TableBodyProp> = ({ data }) => {
+const TableFooter: React.FC<TableBodyProp> = ({ data }) => {
   return (
-    <tbody>
+    <tfoot>
       {data.map((d) => (
         <TableRow key={d.uid} data={d.data} />
       ))}
-    </tbody>
+    </tfoot>
   );
 };
-export default TableBody;
+export default TableFooter;

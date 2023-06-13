@@ -1,4 +1,4 @@
-import { Icon } from "main.js";
+import { Icon } from "main.tsx";
 
 const Spinner: React.FC = () => {
   return (

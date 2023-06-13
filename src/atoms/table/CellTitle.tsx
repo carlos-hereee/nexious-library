@@ -1,4 +1,4 @@
-import { CellDataProp } from "helpers/types.js";
+import { CellDataProp } from "@nexious-library/helpers/types.tsx";
 
 const CellTitle: React.FC<CellDataProp> = ({ data }) => {
   return <th className="cell-header">{data}</th>;

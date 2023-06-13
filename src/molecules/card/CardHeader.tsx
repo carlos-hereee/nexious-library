@@ -2,8 +2,8 @@
 // import Hero from "../../atoms/Hero";
 // import Icons from "../../icons/Icons";
 
-import { CardHeaderProps } from "@nexious-library/helpers/interface.js";
-import { Heading, Hero, Subtitle } from "main.js";
+import { CardHeaderProps } from "@nexious-library/helpers/interface.tsx";
+import { Heading, Hero, Subtitle } from "main.tsx";
 
 const CardHeader: React.FC<CardHeaderProps> = ({
   title,

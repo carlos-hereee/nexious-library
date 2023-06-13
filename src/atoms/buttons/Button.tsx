@@ -1,6 +1,6 @@
-// import { ButtonProps } from "@helpers/interface.js";
+// import { ButtonProps } from "@helpers/interface.tsx";
 
-import { ButtonProps } from "@nexious-library/helpers/interface.js";
+import { ButtonProps } from "@nexious-library/helpers/interface.tsx";
 
 /**
  * Component - Button

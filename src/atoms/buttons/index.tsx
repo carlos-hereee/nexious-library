@@ -1,2 +1,2 @@
-export { default as Button } from "./Button.js";
-export { default as BackButton } from "./BackButton.js";
+export { default as Button } from "./Button.tsx";
+export { default as BackButton } from "./BackButton.tsx";

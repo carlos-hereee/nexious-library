@@ -1,10 +1,10 @@
-// import { Icon } from "@atoms/index.js";
+// import { Icon } from "@atoms/index.tsx";
 
-import { Icon } from "main.js";
+import { Icon } from "main.tsx";
 
 // import { Icon } from "main";
 
-// import { Icon } from "main.js";
+// import { Icon } from "main.tsx";
 
 const SubmitButton: React.FC = () => {
   return (

@@ -1,5 +1,5 @@
-import { TableColumnProp } from "helpers/types.js";
-import Column from "../../atoms/table/Column.js";
+import { TableColumnProp } from "@nexious-library/helpers/types.tsx";
+import Column from "../../atoms/table/Column.tsx";
 
 type CoulmnGroup = {
   data: TableColumnProp[];

@@ -1,2 +1,2 @@
-export { default as FieldQuantity } from "./FieldQuantity.js";
-export { default as InputSelect } from "./Select.js";
+export { default as FieldQuantity } from "./FieldQuantity.tsx";
+export { default as InputSelect } from "./Select.tsx";
