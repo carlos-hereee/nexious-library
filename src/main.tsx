@@ -2,15 +2,14 @@ export * from "./atoms";
 export * from "./math";
 export * from "./molecules";
 
-import { add } from "./math";
-import "./stylesheets/index.css";
 import "./stylesheets/index.scss";
 
-const main = () => {
-  console.log("add");
-  console.log(add(1, 5));
-};
-main();
+// import { add } from "./math";
+// const main = () => {
+//   console.log("add");
+//   console.log(add(1, 5));
+// };
+// main();
 /**
  * // package.json
  * 

@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/main.tsx",
-  devtool: "source-map",
+  devtool: "eval-source-map",
   mode: "development",
   module: {
     rules: [
@@ -17,7 +17,7 @@ module.exports = {
         use: ["style-loader", "css-loader", "sass-loader"],
       },
       {
-        test: /\.js$/,
+        test: /\.js$|jsx/,
         use: {
           loader: "babel-loader",
           options: {
@@ -32,12 +32,11 @@ module.exports = {
     ],
   },
   resolve: {
-    roots: [path.resolve(__dirname + "/src")],
     alias: {
-      atoms: path.resolve(__dirname, "src/atoms/*"),
-      helpers: path.resolve(__dirname, "src/helpers/*"),
-      molecules: path.resolve(__dirname, "src/molecules/*"),
-      math: path.resolve(__dirname, "src/math/*"),
+      atoms: path.resolve(__dirname, "src/atoms/"),
+      helpers: path.resolve(__dirname, "src/helpers/"),
+      molecules: path.resolve(__dirname, "src/molecules/"),
+      math: path.resolve(__dirname, "src/math/"),
     },
     extensions: [".tsx", ".ts", ".js", ".jsx", ".scss", ".css"],
   },
