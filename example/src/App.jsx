@@ -41,13 +41,11 @@ const App = () => {
     <>
       <h1>
         {name.map((i) => (
-          <span key={i}>
-            <Capitalize data={i} />{" "}
-          </span>
+          <span key={i}>{/* <Capitalize data={i} />{" "} */}</span>
         ))}
       </h1>
       <div className="flex-g">
-        <Heading data="Links" />
+        {/* <Heading data="Links" /> */}
         <div className="hero flex-g">
           <div>
             <p className="icon-label">Vite</p>
@@ -66,11 +64,11 @@ const App = () => {
       {/* <button onClick={() => history.back()}>Back</button> */}
       <BackButton />
       <div className="card">
-        <Button data={count} click={handleCount} />
+        {/* <Button data={count} click={handleCount} /> */}
 
-        {buttons.map((b) => (
-          <Button data={b} key={b} />
-        ))}
+        {/* {buttons.map((b) => (
+          // <Button data={b} key={b} />
+        ))} */}
         <button onClick={handleCount}>count is {count}</button>
         <p>
           Edit <code>src/App.jsx</code> and save to test HMR
