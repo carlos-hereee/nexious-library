@@ -1,6 +1,6 @@
 // import { ButtonProps } from "@helpers/interface";
 
-import { ButtonProps } from "helpers/interface";
+import { ButtonProps } from "~/helpers/interface";
 
 /**
  * Component - Button

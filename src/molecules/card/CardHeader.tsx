@@ -1,5 +1,5 @@
-import { CardHeaderProps } from "helpers/interface";
-import { Heading, Hero, Subtitle } from "atoms";
+import { CardHeaderProps } from "~/helpers/interface";
+import { Heading, Hero, Subtitle } from "~/atoms";
 
 const CardHeader: React.FC<CardHeaderProps> = ({
   title,

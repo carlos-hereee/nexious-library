@@ -1,5 +1,5 @@
-import { RequiredProps } from "helpers/interface";
-import { KeyValue } from "atoms";
+import { RequiredProps } from "~/helpers/interface";
+import { KeyValue } from "~/atoms";
 
 const MessageRequired: React.FC<RequiredProps> = ({ data, message }) => {
   return (

@@ -1,4 +1,4 @@
-import { Icon } from "atoms";
+import { Icon } from "~/atoms";
 
 const Spinner: React.FC = () => {
   return (

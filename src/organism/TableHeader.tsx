@@ -1,6 +1,6 @@
 // import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "helpers/types";
+import { CellDataProp } from "~/helpers/types";
 import TableRow from "../molecules/table/TableRow";
 
 type TableHeaderProp = {

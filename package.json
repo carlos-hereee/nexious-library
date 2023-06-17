@@ -18,6 +18,14 @@
     "./organism": "./dist/esm/organism/index.js",
     "./index.css": "./dist/esm/stylesheets/index.css"
   },
+  "_moduleAliases": {
+    "~": "src",
+    "atoms": "src/atoms/*",
+    "molecules": "src/molecules/*",
+    "organism": "src/organism/*",
+    "math": "src/math/*",
+    "helpers": "src/helpers/*"
+  },
   "keywords": [
     "css",
     "sass",
@@ -38,17 +46,17 @@
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",
     "prettier": "npx prettier --write src/",
     "clean": "rimraf dist/ && npm run prettier",
+    "paths": "node -r tsconfig-paths/register -r ts-node ./src/main.ts",
     "compile": "tsc && tsc --module commonjs --outDir dist/cjs",
-    "compile:alias": "tsc && tsc-alias",
-    "compile:tsup": "tsup src/main.ts --format esm,esm --dts",
+    "compile:alias": "tsc && tsc-alias && npm run paths",
     "build": "npm run clean && npm run compile && npm run sass",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:webpack": "webpack --mode production --stats-error-details",
     "build:serve": "webpack serve --stats-error-details",
     "build:mac": "npm run clean:mac && npm run sass:build",
-    "build:tsc": "node -r tsconfig-paths/register -r ts-node ./src/main.ts",
-    "build:alias": "npm run compile:alias",
-    "test": "npm run build && npm link",
+    "build:tsc": "node -r tsconfig-paths/register ts-node ./src/main.ts",
+    "build:alias": "npm run clean && npm run compile:alias",
+    "start": "npm run build && npm link",
     "release:patch": "npm unlink && npm run build && npm version patch && npm publish",
     "release:minor": "npm unlink && npm run build && npm version minor && npm publish",
     "release:major": "npm unlink && npm run build && npm version major && npm publish"

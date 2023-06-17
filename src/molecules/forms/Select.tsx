@@ -1,5 +1,5 @@
-import { OptionProp } from "helpers/types";
-import { Option } from "atoms";
+import { OptionProp } from "~/helpers/types";
+import { Option } from "~/atoms";
 
 type SelectProp = {
   name: string;

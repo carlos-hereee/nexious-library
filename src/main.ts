@@ -1,9 +1,9 @@
-import "./paths";
+import "module-alias/register";
 export * from "./atoms";
 export * from "./math";
 export * from "./molecules";
 
-import "./stylesheets/index.scss";
+// import "./stylesheets/index.css";
 
 // import { add } from "./math";
 // const main = () => {
