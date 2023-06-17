@@ -11,21 +11,12 @@
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
-    ".": {
-      "types": "./dist/esm/main.d.ts",
-      "default": "./dist/esm/main.js"
-    },
-    "./atoms": {
-      "types": "./dist/esm/atoms/index.d.ts",
-      "default": "./dist/esm/atoms/index.tsx"
-    },
-    "./molecules": {
-      "types": "./dist/esm/molecules/index.d.ts",
-      "default": "./dist/esm/molecules/index.tsx"
-    },
-    "./index.css": {
-      "import": "./dist/esm/stylesheets/index.css"
-    }
+    ".": "./dist/esm/main.js",
+    "./math": "./dist/esm/math/index.js",
+    "./atoms": "./dist/esm/atoms/index.js",
+    "./molecules": "./dist/esm/molecules/index.js",
+    "./organism": "./dist/esm/organism/index.js",
+    "./index.css": "./dist/esm/stylesheets/index.css"
   },
   "keywords": [
     "css",
@@ -39,7 +30,7 @@
   "scripts": {
     "watch": "tsc -p tsconfig.json --watch",
     "dev": "npm run build && npm run watch",
-    "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.tsx",
+    "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.ts",
     "dev:webpack": "webpack-dev-server --stats-error-details",
     "sass": "npx sass src/stylesheets && npm run copy:esm && npm run copy:esm",
     "sass:watch": "npx sass --watch src/stylesheets",
@@ -47,13 +38,16 @@
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",
     "prettier": "npx prettier --write src/",
     "clean": "rimraf dist/ && npm run prettier",
-    "compile": "tsc && tsc --module commonjs --outDir dist/esm",
-    "compile:tsup": "tsup src/main.tsx --format esm,esm --dts",
+    "compile": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "compile:alias": "tsc && tsc-alias",
+    "compile:tsup": "tsup src/main.ts --format esm,esm --dts",
     "build": "npm run clean && npm run compile && npm run sass",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:webpack": "webpack --mode production --stats-error-details",
     "build:serve": "webpack serve --stats-error-details",
     "build:mac": "npm run clean:mac && npm run sass:build",
+    "build:tsc": "node -r tsconfig-paths/register -r ts-node ./src/main.ts",
+    "build:alias": "npm run compile:alias",
     "test": "npm run build && npm link",
     "release:patch": "npm unlink && npm run build && npm version patch && npm publish",
     "release:minor": "npm unlink && npm run build && npm version minor && npm publish",
@@ -73,6 +67,7 @@
     "@babel/core": "^7.22.5",
     "@babel/preset-env": "^7.22.5",
     "@types/jest": "^29.5.2",
+    "@types/module-alias": "^2.0.1",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
@@ -89,6 +84,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
+    "module-alias": "^2.2.3",
     "nodemon": "^2.0.22",
     "prettier": "2.8.8",
     "rimraf": "^5.0.1",
@@ -97,6 +93,7 @@
     "style-loader": "^3.3.3",
     "ts-loader": "^9.4.3",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.6",
     "tsconfig-paths": "^4.2.0",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "^5.1.3",

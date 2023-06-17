@@ -13,33 +13,34 @@
     /* Language and Environment */
     /* if code runs on the browser target should be ES6 */
     "target": "ES6", // if code runs on the browser /* Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-    // "module": "ESNext",
+    "module": "ESNext",
     "moduleResolution": "node",
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "allowSyntheticDefaultImports": true, // e.i import package from 'library'
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     "allowJs": true,
-    "baseUrl": "src" /* Specify the base directory to resolve non-relative module names. */,
-    // "paths": {
-    //   // "@main/*":["*"], // import {Icon} from '@main/main.js'
-    //   // "@main/":["*"],   // import Icon from '@main'
-    //   "@nexious-library/atoms/*": ["./atoms/*", "./atoms" ], 
-    //   "@nexious-library/helpers/*": ["./helpers/*","./helpers"],
-    //   "@nexious-library/molecules/*": ["molecules/*","./molecules"],
-    //   "@nexious-library/math/*": ["./math/*","./math"],
-    //   } /* Specify a set of entries that re-map imports to additional lookup locations. */,
+    "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
+    "paths": {
+      // "@main/*":["*"], // import {Icon} from '@main/main.js'
+      // "@main/":["*"],   // import Icon from '@main'
+      "./atoms/*": ["./atoms/*", "./atoms" ], 
+      "./helpers/*": ["./helpers/*","./helpers"],
+      "./molecules/*": ["./molecules/*","./molecules"],
+      "./organism/*": ["./organism/*","./organism"],
+      "./math/*": ["./math/*","./math"],
+      } /* Specify a set of entries that re-map imports to additional lookup locations. */,
       "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
       "sourceMap": true /* Create source map files for emitted JavaScript files. */,
       "outDir": "dist/esm" /* Specify an output folder for all emitted files. */,
       "isolatedModules": true,
       "strict": true /* Enable all strict type-checking options. */,
     // "lib": [
-        //   "ES5",
-        //   "ES2015",
-        //   "ES2016",
-        //   "DOM",
-        //   "ESNext"
-        // ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+    //       "ES5",
+    //       "ES2015",
+    //       "ES2016",
+    //       "DOM",
+    //       "ESNext"
+    //     ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
     // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
     // "emitDecoratorMetadata": true,                     /* Emit design-type metadata for decorated declarations in source files. */
     // "jsxFactory": "",                                 /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'. */
