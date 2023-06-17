@@ -1,6 +1,10 @@
-import { Spinner } from "molecules/index.tsx";
+import { Spinner } from "@nexious-library/molecules/errors";
 
-const Loading: React.FC = () => {
+// type LoadingProps = React.HTMLAttributes<HTMLDivElement> & {
+//   children: React.ReactElement[];
+//   className?: string;
+// };
+const Loading = () => {
   return (
     <div className="container">
       <div className="card-header">Loading...</div>

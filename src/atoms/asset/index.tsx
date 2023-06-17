@@ -1,2 +1,2 @@
-export { default as Hero } from "./Hero.tsx";
-export { default as Logo } from "./Logo.tsx";
+export { default as Hero } from "./Hero";
+export { default as Logo } from "./Logo";

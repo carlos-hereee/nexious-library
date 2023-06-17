@@ -1,6 +1,6 @@
-export * from "@nexious-library/atoms/index.tsx";
-export * from "@nexious-library/math/index.tsx";
-export * from "@nexious-library/molecules/index.tsx";
+export * from "@nexious-library/atoms/index";
+export * from "@nexious-library/math/index";
+export * from "@nexious-library/molecules/index";
 
 import "./stylesheets/index.css";
 import "./stylesheets/index.scss";

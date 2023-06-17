@@ -1,14 +1,14 @@
-// import { Button, Icon } from  "@atoms/index.tsx";
-// import { Button } from  "@atoms/index.tsx";
+// import { Button, Icon } from  "@atoms";
+// import { Button } from  "@atoms";
 // import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
 
-import { IconButtonProps } from "@nexious-library/helpers/interface.tsx";
-import { Button, Icon } from "@nexious-library/atoms/index.tsx";
+import { IconButtonProps } from "@nexious-library/helpers/interface";
+import { Button, Icon } from "@nexious-library/atoms/index";
 
-// import { Button, Icon } from "@atoms/index.tsx";
-// import { IconButtonProps } from "@helpers/interface.tsx";
-// import { Button, Icon } from "@atoms/index.tsx";
+// import { Button, Icon } from "@atoms";
+// import { IconButtonProps } from "@helpers/interface";
+// import { Button, Icon } from "@atoms";
 
 /**
  * Icon Button

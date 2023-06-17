@@ -1,4 +1,4 @@
-import { labels, LabelKeys } from "./labels.tsx";
+import { labels, LabelKeys } from "./labels";
 
 type Props = {
   children: JSX.Element[] | JSX.Element;

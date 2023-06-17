@@ -2,15 +2,41 @@
   "name": "nexious-library",
   "version": "1.1.12",
   "description": "Official database for nexious.tech",
-  "main": "./dist/cjs/main.cjs",
+  "main": "dist/cjs/main.cjs",
   "type": "module",
-  "module": "./dist/esm/main.js",
-  "types": "./src/cjs/main.d.ts",
+  "module": "dist/esm/main.js",
+  "types": "src/cjs/main.d.ts",
   "sass": "src/stylesheets/index.scss",
   "style": "dist/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
+  "exports": {
+    "./atoms": {
+      "import": {
+        "types": "./dist/esm/atoms/index.d.ts",
+        "default": "./dist/esm/atoms/index.tsx"
+      },
+      "require": {
+        "types": "./dist/cjs/atoms/index.d.ts",
+        "default": "./dist/cjs/atoms/index.tsx"
+      }
+    },
+    "./molecules": {
+      "import": {
+        "types": "./dist/esm/molecules/index.d.ts",
+        "default": "./dist/esm/molecules/index.tsx"
+      },
+      "require": {
+        "types": "./dist/cjs/molecules/index.d.ts",
+        "default": "./dist/cjs/molecules/index.tsx"
+      }
+    },
+    "./index.css": {
+      "import": "./dist/esm/stylesheets/index.css",
+      "require": null
+    }
+  },
   "bin": {
     "rename": "rename.sh"
   },

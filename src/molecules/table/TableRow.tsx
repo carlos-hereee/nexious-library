@@ -1,16 +1,16 @@
-// import { CellData, CellTitle } from "@atoms/index.tsx";
-// import { CellData, CellTitle } from "@main/main.tsx";
-// import { CellData } from "@main/main.tsx";
-// import { CellData } from "@main/main.tsx";
-import { CellDataProp } from "@nexious-library/helpers/types.tsx";
-import { CellData, CellTitle } from "@nexious-library/atoms/index.tsx";
-// import { CellTitle, CellData } from "@atoms/index.tsx";
-// import { CellData } from "main.tsx";
-// import { CellData, CellTitle } from "@atoms/index.tsx";
-// import { CellData } from "main.tsx";
-// import { CellData, CellTitle } from "main.tsx";
-// import { CellTitle } from "main.tsx";
-// import { CellData, CellTitle } from "main.tsx";
+// import { CellData, CellTitle } from "@atoms";
+// import { CellData, CellTitle } from "@main/main";
+// import { CellData } from "@main/main";
+// import { CellData } from "@main/main";
+import { CellData, CellTitle } from "@nexious-library/atoms/table";
+import { CellDataProp } from "@nexious-library/helpers/types";
+// import { CellTitle, CellData } from "@atoms";
+// import { CellData } from "@nexious-library/atoms/index";
+// import { CellData, CellTitle } from "@atoms";
+// import { CellData } from "@nexious-library/atoms/index";
+// import { CellData, CellTitle } from "@nexious-library/atoms/index";
+// import { CellTitle } from "@nexious-library/atoms/index";
+// import { CellData, CellTitle } from "@nexious-library/atoms/index";
 
 const TableRow: React.FC<CellDataProp> = ({ data, isHeader }) => {
   return (

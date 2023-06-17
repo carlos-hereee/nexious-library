@@ -1,4 +1,4 @@
-import { DataStringProps } from "@nexious-library/helpers/types.tsx";
+import { DataStringProps } from "@nexious-library/helpers/types";
 
 const Capitalize: React.FC<DataStringProps> = ({ data }) => (
   <span>

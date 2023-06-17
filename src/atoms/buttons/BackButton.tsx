@@ -1,4 +1,4 @@
-import { ChildProp } from "@nexious-library/helpers/types.tsx";
+import { ChildProp } from "@nexious-library/helpers/types";
 
 /**
  * Component - Button

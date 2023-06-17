@@ -1,10 +1,10 @@
-// import { Icon } from "@atoms/index.tsx";
+// import { Icon } from "@atoms";
 
-import { Icon } from "main.tsx";
+import { Icon } from "@nexious-library/atoms/index";
 
-// import { Icon } from "main";
+// import { Icon } from "@nexious-library/atoms/index";
 
-// import { Icon } from "main.tsx";
+// import { Icon } from "@nexious-library/atoms/index";
 
 const SubmitButton: React.FC = () => {
   return (

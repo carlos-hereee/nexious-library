@@ -1,3 +1,3 @@
-export { default as IconButton } from "./IconButton.tsx";
-export { default as BurgerButton } from "./BurgerButton.tsx";
-export { default as SubmitButton } from "./SubmitButton.tsx";
+export { default as IconButton } from "./IconButton";
+export { default as BurgerButton } from "./BurgerButton";
+export { default as SubmitButton } from "./SubmitButton";

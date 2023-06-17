@@ -1,9 +1,9 @@
-export * from "./buttons/index.tsx";
-export * from "./icon/index.tsx";
-export * from "./texts/index.tsx";
-export * from "./asset/index.tsx";
-export * from "./forms/index.tsx";
-export * from "./table/index.tsx";
+export * from "./buttons";
+export * from "./icon";
+export * from "./texts";
+export * from "./asset";
+export * from "./forms";
+export * from "./table";
 
 /**
    * NOTICE: 

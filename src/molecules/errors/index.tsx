@@ -1,4 +1,4 @@
-export { default as EmptySection } from "./EmptySection.tsx";
-export { default as MessageRequired } from "./MessageRequired.tsx";
-export { default as PageNotFound } from "./PageNotFound.tsx";
-export { default as Spinner } from "./Spinner.tsx";
+export { default as EmptySection } from "./EmptySection";
+export { default as MessageRequired } from "./MessageRequired";
+export { default as PageNotFound } from "./PageNotFound";
+export { default as Spinner } from "./Spinner";

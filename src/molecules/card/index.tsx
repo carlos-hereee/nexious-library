@@ -1,1 +1,1 @@
-export { default as CardHeader } from "./CardHeader.tsx";
+export { default as CardHeader } from "./CardHeader";

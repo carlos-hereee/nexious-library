@@ -1,5 +1,5 @@
-import { LabelKeys } from "atoms/forms/labels.tsx";
-import { InputQuantity, Label } from "main.tsx";
+import { LabelKeys } from "atoms/forms/labels";
+import { InputQuantity, Label } from "@nexious-library/atoms/index";
 
 type FieldQuantityProps = {
   min: number;

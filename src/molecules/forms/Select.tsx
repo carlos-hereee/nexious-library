@@ -1,5 +1,5 @@
-import { OptionProp } from "@nexious-library/helpers/types.tsx";
-import { Option } from "main.tsx";
+import { OptionProp } from "@nexious-library/helpers/types";
+import { Option } from "@nexious-library/atoms/index";
 
 type SelectProp = {
   name: string;
