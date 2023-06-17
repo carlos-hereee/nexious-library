@@ -1,6 +1,6 @@
 // import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "@nexious-library/helpers/types";
+import { CellDataProp } from "helpers/types";
 import TableRow from "../molecules/table/TableRow";
 
 type TableBodyProp = {

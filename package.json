@@ -12,6 +12,16 @@
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/main.d.ts",
+        "default": "./dist/esm/main.js"
+      },
+      "require": {
+        "types": "./dist/cjs/main.d.cts",
+        "default": "./dist/cjs/main.cts"
+      }
+    },
     "./atoms": {
       "import": {
         "types": "./dist/esm/atoms/index.d.ts",
@@ -53,7 +63,7 @@
     "watch": "tsc -p tsconfig.json --watch",
     "dev": "npm run build && npm run watch",
     "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.tsx",
-    "dev:webpack": "webpack-dev-server --stats-error-details --mode development",
+    "dev:webpack": "webpack-dev-server --stats-error-details",
     "sass": "npx sass src/stylesheets && npm run copy:esm && npm run copy:cjs",
     "sass:watch": "npx sass --watch src/stylesheets",
     "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
@@ -63,8 +73,11 @@
     "prettier": "npx prettier --write src/",
     "clean": "rimraf dist/ && npm run prettier",
     "compile": "tsc && tsc --module commonjs --outDir dist/cjs",
+    "compile:tsup": "tsup src/main.tsx --format cjs,esm --dts",
     "build": "npm run clean && npm run compile && npm run sass",
-    "build:webpack": "webpack --mode development --stats-error-details",
+    "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
+    "build:webpack": "webpack --mode production --stats-error-details",
+    "build:serve": "webpack serve --stats-error-details",
     "build:mac": "npm run clean:mac && npm run sass:build",
     "test": "npm run build && npm link",
     "release:patch": "npm unlink && npm run build && npm version patch && npm publish",
@@ -82,12 +95,15 @@
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
   "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.2.5",
     "@types/react": "^18.2.8",
     "@types/react-dom": "^18.2.4",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
+    "babel-loader": "^9.1.2",
     "copyfiles": "^2.4.1",
     "css-loader": "^6.8.1",
     "eslint": "^8.2.0",
@@ -96,6 +112,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-prettier": "^4.2.1",
+    "html-webpack-plugin": "^5.5.3",
     "mini-css-extract-plugin": "^2.7.6",
     "nodemon": "^2.0.22",
     "prettier": "2.8.8",

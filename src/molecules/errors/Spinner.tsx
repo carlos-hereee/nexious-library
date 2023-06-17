@@ -1,4 +1,4 @@
-import { Icon } from "@nexious-library/atoms/index";
+import { Icon } from "atoms";
 
 const Spinner: React.FC = () => {
   return (

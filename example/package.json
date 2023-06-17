@@ -4,9 +4,9 @@
   "version": "0.0.1",
   "type": "module",
   "scripts": {
-    "dev": "npm install nexious-library && vite",
+    "unlink": "npm unlink nexious-library",
+    "dev": "npm link nexious-library && vite",
     "build": "vite build",
-    "test": "npm link nexious-library && vite",
     "lint": "eslint src --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },

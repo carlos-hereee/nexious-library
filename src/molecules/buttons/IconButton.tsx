@@ -3,8 +3,8 @@
 // import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
 
-import { IconButtonProps } from "@nexious-library/helpers/interface";
-import { Button, Icon } from "@nexious-library/atoms/index";
+import { IconButtonProps } from "helpers/interface";
+import { Button, Icon } from "atoms";
 
 // import { Button, Icon } from "@atoms";
 // import { IconButtonProps } from "@helpers/interface";

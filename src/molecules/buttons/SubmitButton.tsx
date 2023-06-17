@@ -1,10 +1,10 @@
 // import { Icon } from "@atoms";
 
-import { Icon } from "@nexious-library/atoms/index";
+import { Icon } from "atoms";
 
-// import { Icon } from "@nexious-library/atoms/index";
+// import { Icon } from "atoms";
 
-// import { Icon } from "@nexious-library/atoms/index";
+// import { Icon } from "atoms";
 
 const SubmitButton: React.FC = () => {
   return (

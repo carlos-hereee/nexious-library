@@ -1,5 +1,6 @@
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { IconNames } from "atoms/icon/Assets";
+import { IconNames } from "atoms/asset/Assets";
+// import { IconNames } from "";
 
 export interface HyperlinkProps {
   data: {

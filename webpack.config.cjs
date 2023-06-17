@@ -1,47 +1,67 @@
-// import path from "path";
-// import { TsconfigPathsPlugin } from "tsconfig-paths-webpack-plugin";
-// import plugin from "webpack-bundle-analyzer";
 const path = require("path");
-// const plugin = require("webpack-bundle-analyzer");
-const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
   entry: "./src/main.tsx",
+  devtool: "source-map",
+  mode: "development",
   module: {
     rules: [
       {
         test: /\.(tsx|ts)$/,
         use: "ts-loader",
         exclude: /node_modules/,
-        include: [path.resolve(__dirname, "src")],
-      },
-      {
-        test: /\.css$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader"],
       },
       {
         test: /\.scss$/,
-        use: [MiniCssExtractPlugin.loader, "css-loader", "sass-loader"],
+        use: ["style-loader", "css-loader", "sass-loader"],
+      },
+      {
+        test: /\.js$/,
+        use: {
+          loader: "babel-loader",
+          options: {
+            presets: ["@babel/preset-env"],
+          },
+        },
+      },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
       },
     ],
   },
   resolve: {
+    roots: [path.resolve(__dirname + "/src")],
     alias: {
-      "@nexious-library/atoms": path.resolve(__dirname, "src/atoms"),
-      "@nexious-library/helpers": path.resolve(__dirname, "src/helpers"),
-      "@nexious-library/molecules": path.resolve(__dirname, "src/molecules"),
-      "@nexious-library/math": path.resolve(__dirname, "src/math"),
+      atoms: path.resolve(__dirname, "src/atoms/*"),
+      helpers: path.resolve(__dirname, "src/helpers/*"),
+      molecules: path.resolve(__dirname, "src/molecules/*"),
+      math: path.resolve(__dirname, "src/math/*"),
     },
-    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".scss", ".css"],
   },
-  // plugins: [new plugin.BundleAnalyzerPlugin()],
-  plugins: [new MiniCssExtractPlugin({ filename: "styles.css" })],
+  plugins: [
+    new HtmlWebpackPlugin({
+      filename: "index.html",
+      title: "nexious-library",
+      template: "src/template.html",
+    }),
+  ],
   devServer: {
-    static: path.join(__dirname, "./dist"),
-    port: 8080,
+    static: {
+      directory: path.resolve(__dirname, "./dist"),
+    },
+    port: 3000,
+    open: true,
+    hot: true,
+    compress: true,
+    historyApiFallback: true,
   },
   output: {
-    filename: "bundle.js",
     path: path.resolve(__dirname, "dist"),
+    filename: "[name][contenthash].js",
+    clean: true,
+    assetModuleFilename: "[name][ext]",
   },
 };

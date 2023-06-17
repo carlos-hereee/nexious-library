@@ -1,5 +1,5 @@
-import { OptionProp } from "@nexious-library/helpers/types";
-import { Option } from "@nexious-library/atoms/index";
+import { OptionProp } from "helpers/types";
+import { Option } from "atoms";
 
 type SelectProp = {
   name: string;

@@ -1,11 +1,16 @@
-export * from "@nexious-library/atoms/index";
-export * from "@nexious-library/math/index";
-export * from "@nexious-library/molecules/index";
+export * from "./atoms";
+export * from "./math";
+export * from "./molecules";
 
+import { add } from "./math";
 import "./stylesheets/index.css";
 import "./stylesheets/index.scss";
 
-// const main = () => {};
+const main = () => {
+  console.log("add");
+  console.log(add(1, 5));
+};
+main();
 /**
  * // package.json
  * 
