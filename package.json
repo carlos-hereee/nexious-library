@@ -2,17 +2,30 @@
   "name": "nexious-library",
   "version": "1.1.12",
   "description": "Official database for nexious.tech",
-  "main": "dist/cjs/main.cjs",
   "type": "module",
   "module": "dist/esm/main.js",
-  "types": "src/cjs/main.d.ts",
+  "types": "src/esm/main.d.ts",
   "sass": "src/stylesheets/index.scss",
   "style": "dist/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
-  "bin": {
-    "rename": "rename.sh"
+  "exports": {
+    ".": {
+      "types": "./dist/esm/main.d.ts",
+      "default": "./dist/esm/main.js"
+    },
+    "./atoms": {
+      "types": "./dist/esm/atoms/index.d.ts",
+      "default": "./dist/esm/atoms/index.tsx"
+    },
+    "./molecules": {
+      "types": "./dist/esm/molecules/index.d.ts",
+      "default": "./dist/esm/molecules/index.tsx"
+    },
+    "./index.css": {
+      "import": "./dist/esm/stylesheets/index.css"
+    }
   },
   "keywords": [
     "css",
@@ -28,16 +41,14 @@
     "dev": "npm run build && npm run watch",
     "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.tsx",
     "dev:webpack": "webpack-dev-server --stats-error-details",
-    "sass": "npx sass src/stylesheets && npm run copy:esm && npm run copy:cjs",
+    "sass": "npx sass src/stylesheets && npm run copy:esm && npm run copy:esm",
     "sass:watch": "npx sass --watch src/stylesheets",
     "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
-    "copy:cjs": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/cjs",
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",
-    "copy-styles:cjs": "node --loader ts-node/cjs .copy-styles.ts",
     "prettier": "npx prettier --write src/",
     "clean": "rimraf dist/ && npm run prettier",
-    "compile": "tsc && tsc --module commonjs --outDir dist/cjs",
-    "compile:tsup": "tsup src/main.tsx --format cjs,esm --dts",
+    "compile": "tsc && tsc --module commonjs --outDir dist/esm",
+    "compile:tsup": "tsup src/main.tsx --format esm,esm --dts",
     "build": "npm run clean && npm run compile && npm run sass",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:webpack": "webpack --mode production --stats-error-details",
