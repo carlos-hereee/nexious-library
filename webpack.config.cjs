@@ -9,7 +9,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 module.exports = {
   entry: path.resolve(__dirname, "./src/main.ts"),
   devtool: "source-map",
-  // target: "",
+  target: "node",
   // mode: "development",
   module: {
     rules: [
@@ -48,7 +48,7 @@ module.exports = {
       "@/math": path.resolve(__dirname, "src/math"),
     },
     extensions: [".tsx", ".ts", ".js", ".jsx"],
-    fallback: { path: require.resolve("path-browserify") },
+    fallback: { path: require.resolve("path-browserify"), fs: false },
   },
   // resolveLoader:
   plugins: [
