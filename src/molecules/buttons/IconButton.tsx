@@ -3,12 +3,12 @@
 // import { IconButtonProps } from "types/interface";
 // import NotificationCount from "../SetNotificationCount";
 
-import { IconButtonProps } from "~/helpers/interface";
-import { Button, Icon } from "~/atoms";
+import { IconButtonProps } from "@/helpers/interface";
+import { Button, Icon } from "@/atoms";
 
-// import { Button, Icon } from "~/atoms";
+// import { Button, Icon } from "@/atoms";
 // import { IconButtonProps } from "@helpers/interface";
-// import { Button, Icon } from "~/atoms";
+// import { Button, Icon } from "@/atoms";
 
 /**
  * Icon Button

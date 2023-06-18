@@ -19,12 +19,12 @@
     "./index.css": "./dist/esm/stylesheets/index.css"
   },
   "_moduleAliases": {
-    "~": "src",
-    "atoms": "src/atoms/*",
-    "molecules": "src/molecules/*",
-    "organism": "src/organism/*",
-    "math": "src/math/*",
-    "helpers": "src/helpers/*"
+    "@": "src",
+    "@/atoms": "src/atoms",
+    "@/molecules": "src/molecules",
+    "@/helpers": "src/helpers",
+    "@/organism": "src/organism",
+    "@/math": "src/math"
   },
   "keywords": [
     "css",
@@ -51,7 +51,7 @@
     "compile:alias": "tsc && tsc-alias && npm run paths",
     "build": "npm run clean && npm run compile && npm run sass",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
-    "build:webpack": "webpack --mode production --stats-error-details",
+    "build:webpack": "npm run clean && webpack --mode production --stats-error-details",
     "build:serve": "webpack serve --stats-error-details",
     "build:mac": "npm run clean:mac && npm run sass:build",
     "build:tsc": "node -r tsconfig-paths/register ts-node ./src/main.ts",
@@ -94,6 +94,7 @@
     "mini-css-extract-plugin": "^2.7.6",
     "module-alias": "^2.2.3",
     "nodemon": "^2.0.22",
+    "path-browserify": "^1.0.1",
     "prettier": "2.8.8",
     "rimraf": "^5.0.1",
     "sass": "^1.62.1",

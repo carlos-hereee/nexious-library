@@ -1,10 +1,16 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 
+/**
+ *   "_moduleAliases": {
+    "@": "src"
+  },
+ */
 module.exports = {
-  entry: "./src/main.ts",
-  devtool: "eval-source-map",
-  mode: "development",
+  entry: path.resolve(__dirname, "./src/main.ts"),
+  devtool: "source-map",
+  // target: "",
+  // mode: "development",
   module: {
     rules: [
       {
@@ -32,14 +38,19 @@ module.exports = {
     ],
   },
   resolve: {
+    // roots: [__dirname],
     alias: {
-      atoms: path.resolve(__dirname, "src/atoms/"),
-      helpers: path.resolve(__dirname, "src/helpers/"),
-      molecules: path.resolve(__dirname, "src/molecules/"),
-      math: path.resolve(__dirname, "src/math/"),
+      "@": path.resolve(__dirname, "src"),
+      "@/atoms": path.resolve(__dirname, "src/atoms"),
+      "@/molecules": path.resolve(__dirname, "src/molecules"),
+      "@/helpers": path.resolve(__dirname, "src/helpers"),
+      "@/organism": path.resolve(__dirname, "src/organism"),
+      "@/math": path.resolve(__dirname, "src/math"),
     },
-    extensions: [".tsx", ".ts", ".js", ".jsx", ".scss", ".css"],
+    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    fallback: { path: require.resolve("path-browserify") },
   },
+  // resolveLoader:
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",

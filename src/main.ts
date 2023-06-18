@@ -1,4 +1,6 @@
+// add this line at the very main file of your app before any code
 import "module-alias/register";
+
 export * from "./atoms";
 export * from "./math";
 export * from "./molecules";

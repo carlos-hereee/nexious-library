@@ -292,8 +292,8 @@ note: |
 
 category: legacy browsers
 */
-[type=checkbox],
-[type=radio] {
+[type="checkbox"],
+[type="radio"] {
   box-sizing: border-box;
   padding: 0;
 }
@@ -1143,15 +1143,15 @@ footer {
   padding: 1rem 0.5rem;
   transition: clip-path ease-in-out 700ms;
 }
-.mobile-navigation .navigation[data-state=open] {
+.mobile-navigation .navigation[data-state="open"] {
   animation: circleOpen 750ms ease-in-out forwards;
   display: block;
 }
-.mobile-navigation .navigation[data-state=closing] {
+.mobile-navigation .navigation[data-state="closing"] {
   display: block;
   animation: circleClose ease-in-out forwards;
 }
-.mobile-navigation .navigation[data-state=close] {
+.mobile-navigation .navigation[data-state="close"] {
   display: none;
 }
 @media only screen and (max-width: 768px) {
@@ -1184,7 +1184,7 @@ footer {
   flex: 1;
 }
 
-.nav-link[data-state=active] {
+.nav-link[data-state="active"] {
   border-top-left-radius: 1rem;
   border-bottom-left-radius: 1rem;
   width: 100%;

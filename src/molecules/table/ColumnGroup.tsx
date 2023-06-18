@@ -1,5 +1,6 @@
-import { TableColumnProp } from "~/helpers/types";
-import Column from "../../atoms/table/Column";
+import { Column } from "@/atoms";
+import { TableColumnProp } from "@/helpers/types";
+// import Column from "../../atoms/table/Column";
 
 type CoulmnGroup = {
   data: TableColumnProp[];

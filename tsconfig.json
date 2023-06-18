@@ -23,12 +23,12 @@
     "paths": {
       // "@main/*":["*"], // import {Icon} from '@main/main.js'
       // "@main/":["*"],   // import Icon from '@main'
-      "~/*":["*"],
-      "atoms/*": ["./atoms/*", "./atoms" ], 
-      "helpers/*": ["./helpers/*","./helpers"],
-      "molecules/*": ["./molecules/*","./molecules"],
-      "organism/*": ["./organism/*","./organism"],
-      "math/*": ["./math/*","./math"],
+      "@/*":["./*"],
+      "@/atoms/*": ["./atoms/*","./atoms"], 
+      "@/helpers/*": ["./helpers/*", "./helpers"],
+      "@/molecules/*": ["./molecules/*", "./molecules"],
+      "@/organism/*": ["./organism/*", "./organism"],
+      "@/math/*": ["./math/*", "./math"],
       } /* Specify a set of entries that re-map imports to additional lookup locations. */,
       "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
       "sourceMap": true /* Create source map files for emitted JavaScript files. */,
