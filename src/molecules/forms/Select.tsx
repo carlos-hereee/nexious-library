@@ -1,4 +1,4 @@
-import { Option } from "@nexious/atoms";
+import { Option } from "@nexious-atoms/index";
 import { OptionProp } from "@nexious-helpers/types";
 
 type SelectProp = {

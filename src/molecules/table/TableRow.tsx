@@ -1,4 +1,4 @@
-import { CellData, CellTitle } from "@nexious/atoms";
+import { CellData, CellTitle } from "@nexious-atoms/index";
 import { CellDataProp } from "@nexious-helpers/types";
 
 const TableRow: React.FC<CellDataProp> = ({ data, isHeader }) => {

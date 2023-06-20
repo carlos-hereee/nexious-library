@@ -1,22 +1,24 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
-const tsconfig = require("./tsconfig.json");
+// const tsconfig = require("./tsconfig.json");
 const packagejson = require("./package.json");
 
 const SRC_DIR = path.resolve(__dirname, "./src");
 const DIST_DIR = path.resolve(__dirname, "./dist");
 // add this line at the very main file of your app before any code
-// import "module-alias/register";
-// require("module-alias/register");
 
 // let mode = 'development'
 let target = "web";
 
 module.exports = {
-  entry: SRC_DIR + "/main.ts",
+  entry: [
+    SRC_DIR + "/atoms/index.ts",
+    SRC_DIR + "/molecules/index.ts",
+    SRC_DIR + "/organism/index.ts",
+    SRC_DIR + "/math/index.ts",
+  ],
   devtool: "source-map",
   target: target,
-  // mode: mode,
   module: {
     rules: [
       {
@@ -45,17 +47,7 @@ module.exports = {
   },
   resolve: {
     root: __dirname,
-    alias: packagejson._moduleAliases || //     path[pathname] = path.resolve( //   (path, pathname) => { // Object.keys(tsconfig.compilerOptions.paths).reduce(
-    //       __dirname,
-    //       `src/${tsconfig.compilerOptions.paths[pathname][0]}`
-    //     );
-    //     return path;
-    //   },
-    //   {}
-    // )
-
-    {
-      "@nexious": path.resolve(__dirname, "src/"),
+    alias: packagejson._moduleAliases || { // ) //   {} //   }, //     return path; //     ); //       `src/${tsconfig.compilerOptions.paths[pathname][0]}` //       __dirname, //     path[pathname] = path.resolve( //   (path, pathname) => { // Object.keys(tsconfig.compilerOptions.paths).reduce(
       "@nexious-atoms": path.resolve(__dirname, "src/atoms"),
       "@nexious-molecules": path.resolve(__dirname, "src/molecules"),
       "@nexious-helpers": path.resolve(__dirname, "src/helpers"),

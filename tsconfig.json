@@ -16,33 +16,27 @@
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "allowSyntheticDefaultImports": true, // e.i import package from 'library'
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
-    // "allowJs": true,
     "baseUrl": "src" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      // "@main/*":["*"], // import {Icon} from '@main/main.js'
-      // "@main/":["*"],   // import Icon from '@main'
-      "/*": [
-        "/*", "/"
-      ],
       "@nexious-atoms/*": [
-        "./atoms/*",
-        "./atoms/"
+        "atoms/*",
+        "atoms"
       ],
       "@nexious-helpers/*": [
-        "./helpers/*",
-        "./helpers/",
+        "helpers/*",
+        "helpers",
       ],
       "@nexious-molecules/*": [
-        "./molecules/*",
-        "./molecules/",
+        "molecules/*",
+        "molecules",
       ],
       "@nexious-organism/*": [
-        "./organism/*",
-        "./organism/",
+        "organism/*",
+        "organism",
       ],
       "@nexious-math/*": [
-        "./math/*",
-        "./math/",
+        "math/*",
+        "math",
       ],
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
@@ -93,7 +87,7 @@
     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
     // "inlineSourceMap": true,                          /* Include sourcemap files inside the emitted JavaScript. */
     // "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
-    "removeComments": true,                           /* Disable emitting comments. */
+    "removeComments": true, /* Disable emitting comments. */
     // "noEmit": true,                                   /* Disable emitting files from a compilation. */
     // "importHelpers": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
     // "importsNotUsedAsValues": "remove",               /* Specify emit/checking behavior for imports that are only used for types. */

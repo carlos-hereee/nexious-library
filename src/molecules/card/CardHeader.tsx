@@ -1,5 +1,5 @@
-import { Heading, Hero, Subtitle } from "@nexious/atoms";
-import { CardHeaderProps } from "@nexious/helpers/interface";
+import { Heading, Hero, Subtitle } from "@nexious-atoms/index";
+import { CardHeaderProps } from "@nexious-helpers/interface";
 
 const CardHeader: React.FC<CardHeaderProps> = ({
   title,

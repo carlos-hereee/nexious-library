@@ -1,4 +1,4 @@
-import { Column } from "@nexious/atoms";
+import { Column } from "@nexious-atoms/index";
 import { TableColumnProp } from "@nexious-helpers/types";
 
 type CoulmnGroup = {

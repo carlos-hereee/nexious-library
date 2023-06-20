@@ -1,4 +1,4 @@
-import { InputQuantity, Label } from "@nexious/atoms";
+import { InputQuantity, Label } from "@nexious-atoms/index";
 import { LabelKeys } from "@nexious-helpers/types";
 
 type FieldQuantityProps = {

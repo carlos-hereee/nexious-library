@@ -3,25 +3,11 @@
   "version": "1.1.13",
   "description": "Official database for nexious.tech",
   "type": "module",
-  "module": "dist/esm/main.js",
-  "main": "dist/cjs/main.cjs",
-  "types": "src/main.d.ts",
-  "sass": "src/stylesheets/index.scss",
   "style": "dist/stylesheets/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
-    ".": {
-      "import": {
-        "types": "./dist/esm/main.d.ts",
-        "default": "./dist/esm/main.js"
-      },
-      "require": {
-        "types": "./dist/cjs/main.d.cjs",
-        "default": "./dist/cjs/main.cjs"
-      }
-    },
     "./@nexious-math": {
       "import": {
         "types": "./dist/esm/math/index.d.ts",
@@ -65,7 +51,6 @@
     "./index.css": "./dist/esm/stylesheets/index.css"
   },
   "_moduleAliases": {
-    ".":"src",
     "@nexious": "src",
     "@nexious-helpers": "src/helpers",
     "@nexious-atoms": "src/atoms",
