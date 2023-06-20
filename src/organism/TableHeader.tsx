@@ -1,7 +1,7 @@
 // import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "@/helpers/types";
-import TableRow from "../molecules/table/TableRow";
+import { CellDataProp } from "@nexious/helpers/types";
+import { TableRow } from "@nexious/molecules/index.js";
 
 type TableHeaderProp = {
   data: CellDataProp[];

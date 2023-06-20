@@ -1,3 +1,5 @@
+import { labels } from "@nexious/atoms/forms/labels";
+
 export type DataStringProps = { data: string; name?: string };
 export type IconNameProp = "";
 export type String = string;
@@ -16,3 +18,4 @@ export type OptionProp = {
 };
 export type CellDataProp = { data: string; isHeader?: boolean; uid?: string };
 export type TableColumnProp = { span: number; name: string; uid?: string };
+export type LabelKeys = keyof typeof labels;

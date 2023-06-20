@@ -1,10 +1,5 @@
-// import Icons from "../../atoms/icons/Icons";
-// import SetNotificationCount from "../SetNotificationCount";
-
-// import { Icon } from "@/atoms";
-// import { ButtonProps } from "@helpers/interface";
-import { ButtonProps } from "@/helpers/interface";
-import { Icon } from "@/atoms";
+import { Icon } from "@nexious/atoms";
+import { ButtonProps } from "@nexious/helpers/interface";
 
 const BurgerButton: React.FC<ButtonProps> = ({ name, isBurger, click }) => {
   return (

@@ -1,9 +1,7 @@
-// add this line at the very main file of your app before any code
 import "module-alias/register";
-
-export * from "./atoms";
-export * from "./math";
-export * from "./molecules";
+export * from "@nexious-atoms/index";
+export * from "@nexious-math/index";
+export * from "@nexious-molecules/index";
 
 // import "./stylesheets/index.css";
 

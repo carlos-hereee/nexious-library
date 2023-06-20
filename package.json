@@ -4,27 +4,73 @@
   "description": "Official database for nexious.tech",
   "type": "module",
   "module": "dist/esm/main.js",
-  "types": "src/esm/main.d.ts",
+  "main": "dist/cjs/main.cjs",
+  "types": "src/main.d.ts",
   "sass": "src/stylesheets/index.scss",
-  "style": "dist/index.css",
+  "style": "dist/stylesheets/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
-    ".": "./dist/esm/main.js",
-    "./math": "./dist/esm/math/index.js",
-    "./atoms": "./dist/esm/atoms/index.js",
-    "./molecules": "./dist/esm/molecules/index.js",
-    "./organism": "./dist/esm/organism/index.js",
+    ".": {
+      "import": {
+        "types": "./dist/esm/main.d.ts",
+        "default": "./dist/esm/main.js"
+      },
+      "require": {
+        "types": "./dist/cjs/main.d.cjs",
+        "default": "./dist/cjs/main.cjs"
+      }
+    },
+    "./@nexious-math": {
+      "import": {
+        "types": "./dist/esm/math/index.d.ts",
+        "default": "./dist/esm/math/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/math/index.d.ts",
+        "default": "./dist/cjs/math/index.cjs"
+      }
+    },
+    "./@nexious-atoms": {
+      "import": {
+        "types": "./dist/esm/atoms/index.d.ts",
+        "default": "./dist/esm/atoms/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/atoms/index.d.ts",
+        "default": "./dist/cjs/atoms/index.cjs"
+      }
+    },
+    "./@nexious-molecules": {
+      "import": {
+        "types": "./dist/esm/molecules/index.d.ts",
+        "default": "./dist/esm/molecules/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/molecules/index.d.ts",
+        "default": "./dist/cjs/molecules/index.cjs"
+      }
+    },
+    "./@nexious-organism": {
+      "import": {
+        "types": "./dist/esm/organism/index.d.ts",
+        "default": "./dist/esm/organism/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/organism/index.d.ts",
+        "default": "./dist/cjs/organism/index.cjs"
+      }
+    },
     "./index.css": "./dist/esm/stylesheets/index.css"
   },
   "_moduleAliases": {
-    "@": "src",
-    "@/atoms": "src/atoms",
-    "@/molecules": "src/molecules",
-    "@/helpers": "src/helpers",
-    "@/organism": "src/organism",
-    "@/math": "src/math"
+    "@nexious": "dist/esm",
+    "@nexious-helpers": "dist/esm/helpers",
+    "@nexious-atoms": "dist/esm/atoms",
+    "@nexious-molecules": "dist/esm/molecules",
+    "@nexious-organism": "dist/esm/organism",
+    "@nexious-math": "dist/esm/math"
   },
   "keywords": [
     "css",
@@ -48,7 +94,7 @@
     "clean": "rimraf dist/ && npm run prettier",
     "paths": "node -r tsconfig-paths/register -r ts-node ./src/main.ts",
     "compile": "tsc && tsc --module commonjs --outDir dist/cjs",
-    "compile:alias": "npm run compile:esm && npm run compile:cjs",
+    "compile:alias": "npm run compile:esm",
     "compile:esm": "webpack --mode production --stats-error-details",
     "compile:cjs": "tsc --module commonjs --outDir dist/cjs",
     "compile:css": "",

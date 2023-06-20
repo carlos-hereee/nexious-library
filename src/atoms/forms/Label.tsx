@@ -1,4 +1,5 @@
-import { labels, LabelKeys } from "./labels";
+import { LabelKeys } from "@nexious/helpers/types";
+import { labels } from "./labels";
 
 type Props = {
   children: JSX.Element[] | JSX.Element;

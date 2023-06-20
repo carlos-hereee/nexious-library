@@ -1,16 +1,21 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const tsconfig = require("./tsconfig.json");
 
-/**
- *   "_moduleAliases": {
-    "@": "src"
-  },
- */
+const SRC_DIR = path.resolve(__dirname, './src')
+const DIST_DIR = path.resolve(__dirname, './dist')
+// add this line at the very main file of your app before any code
+// import "module-alias/register";
+// require("module-alias/register");
+
+// let mode = 'development'
+let target = 'web'
+
 module.exports = {
-  entry: path.resolve(__dirname, "./src/main.ts"),
+  entry: SRC_DIR + '/main.ts',
   devtool: "source-map",
-  target: "node",
-  // mode: "development",
+  target:target,
+  // mode: mode, 
   module: {
     rules: [
       {
@@ -38,19 +43,26 @@ module.exports = {
     ],
   },
   resolve: {
-    // roots: [__dirname],
-    alias: {
-      "@": path.resolve(__dirname, "src"),
-      "@/atoms": path.resolve(__dirname, "src/atoms"),
-      "@/molecules": path.resolve(__dirname, "src/molecules"),
-      "@/helpers": path.resolve(__dirname, "src/helpers"),
-      "@/organism": path.resolve(__dirname, "src/organism"),
-      "@/math": path.resolve(__dirname, "src/math"),
+    alias: Object.keys(tsconfig.compilerOptions.paths).reduce(
+      (path, pathname) => {
+        path[pathname] = path.resolve(
+          __dirname,
+          `src/${tsconfig.compilerOptions.paths[pathname][0]}`
+        );
+        return path;
+      },
+      {}
+    ) || {
+      "@nexious": path.resolve(__dirname, "src/"),
+      "@nexious-atoms": path.resolve(__dirname, "src/atoms"),
+      "@nexious-molecules": path.resolve(__dirname, "src/molecules"),
+      "@nexious-helpers": path.resolve(__dirname, "src/helpers"),
+      "@nexious-organism": path.resolve(__dirname, "src/organism"),
+      "@nexious-math": path.resolve(__dirname, "src/math"),
     },
-    extensions: [".tsx", ".ts", ".js", ".jsx"],
+    extensions: [".tsx", ".ts", ".js", ".jsx", ".json"],
     fallback: { path: require.resolve("path-browserify"), fs: false },
   },
-  // resolveLoader:
   plugins: [
     new HtmlWebpackPlugin({
       filename: "index.html",
@@ -60,7 +72,7 @@ module.exports = {
   ],
   devServer: {
     static: {
-      directory: path.resolve(__dirname, "./dist"),
+      directory: DIST_DIR
     },
     port: 3000,
     open: true,
@@ -69,8 +81,7 @@ module.exports = {
     historyApiFallback: true,
   },
   output: {
-    path: path.resolve(__dirname, "dist"),
-    filename: "[name][contenthash].js",
+    path: DIST_DIR,
     clean: true,
     assetModuleFilename: "[name][ext]",
   },
