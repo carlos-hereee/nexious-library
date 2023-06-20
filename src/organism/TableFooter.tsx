@@ -1,4 +1,4 @@
-import { CellDataProp } from "@nexious/helpers/types";
+import { CellDataProp } from "@nexious-helpers/types";
 import { TableRow } from "@nexious/molecules/index.js";
 
 type TableBodyProp = {

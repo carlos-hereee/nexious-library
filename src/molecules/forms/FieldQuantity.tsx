@@ -1,5 +1,5 @@
 import { InputQuantity, Label } from "@nexious/atoms";
-import { LabelKeys } from "@nexious/helpers/types";
+import { LabelKeys } from "@nexious-helpers/types";
 
 type FieldQuantityProps = {
   min: number;

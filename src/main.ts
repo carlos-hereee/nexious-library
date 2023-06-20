@@ -3,8 +3,6 @@ export * from "@nexious-atoms/index";
 export * from "@nexious-math/index";
 export * from "@nexious-molecules/index";
 
-// import "./stylesheets/index.css";
-
 // import { add } from "./math";
 // const main = () => {
 //   console.log("add");

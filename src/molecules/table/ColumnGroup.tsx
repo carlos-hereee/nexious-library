@@ -1,5 +1,5 @@
 import { Column } from "@nexious/atoms";
-import { TableColumnProp } from "@nexious/helpers/types";
+import { TableColumnProp } from "@nexious-helpers/types";
 
 type CoulmnGroup = {
   data: TableColumnProp[];

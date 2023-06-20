@@ -21,11 +21,8 @@
     "paths": {
       // "@main/*":["*"], // import {Icon} from '@main/main.js'
       // "@main/":["*"],   // import Icon from '@main'
-      "@nexious/*": [
-        "*"
-      ],
-      "@root/*": [
-        "*"
+      "/*": [
+        "/*", "/"
       ],
       "@nexious-atoms/*": [
         "./atoms/*",
