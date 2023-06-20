@@ -1,4 +1,4 @@
-import "module-alias/register";
+// import "module-alias/register";
 export * from "@nexious-atoms/index";
 export * from "@nexious-math/index";
 export * from "@nexious-molecules/index";

@@ -1,21 +1,22 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const tsconfig = require("./tsconfig.json");
+const packagejson = require("./package.json");
 
-const SRC_DIR = path.resolve(__dirname, './src')
-const DIST_DIR = path.resolve(__dirname, './dist')
+const SRC_DIR = path.resolve(__dirname, "./src");
+const DIST_DIR = path.resolve(__dirname, "./dist");
 // add this line at the very main file of your app before any code
 // import "module-alias/register";
 // require("module-alias/register");
 
 // let mode = 'development'
-let target = 'web'
+let target = "web";
 
 module.exports = {
-  entry: SRC_DIR + '/main.ts',
+  entry: SRC_DIR + "/main.ts",
   devtool: "source-map",
-  target:target,
-  // mode: mode, 
+  target: target,
+  // mode: mode,
   module: {
     rules: [
       {
@@ -43,16 +44,17 @@ module.exports = {
     ],
   },
   resolve: {
-    alias: Object.keys(tsconfig.compilerOptions.paths).reduce(
-      (path, pathname) => {
-        path[pathname] = path.resolve(
-          __dirname,
-          `src/${tsconfig.compilerOptions.paths[pathname][0]}`
-        );
-        return path;
-      },
-      {}
-    ) || {
+    root: __dirname,
+    alias: packagejson._moduleAliases || //     path[pathname] = path.resolve( //   (path, pathname) => { // Object.keys(tsconfig.compilerOptions.paths).reduce(
+    //       __dirname,
+    //       `src/${tsconfig.compilerOptions.paths[pathname][0]}`
+    //     );
+    //     return path;
+    //   },
+    //   {}
+    // )
+
+    {
       "@nexious": path.resolve(__dirname, "src/"),
       "@nexious-atoms": path.resolve(__dirname, "src/atoms"),
       "@nexious-molecules": path.resolve(__dirname, "src/molecules"),
@@ -72,7 +74,7 @@ module.exports = {
   ],
   devServer: {
     static: {
-      directory: DIST_DIR
+      directory: DIST_DIR,
     },
     port: 3000,
     open: true,

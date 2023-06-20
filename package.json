@@ -65,12 +65,13 @@
     "./index.css": "./dist/esm/stylesheets/index.css"
   },
   "_moduleAliases": {
-    "@nexious": "dist/esm",
-    "@nexious-helpers": "dist/esm/helpers",
-    "@nexious-atoms": "dist/esm/atoms",
-    "@nexious-molecules": "dist/esm/molecules",
-    "@nexious-organism": "dist/esm/organism",
-    "@nexious-math": "dist/esm/math"
+    "@root": ".",
+    "@nexious": "src",
+    "@nexious-helpers": "src/helpers",
+    "@nexious-atoms": "src/atoms",
+    "@nexious-molecules": "src/molecules",
+    "@nexious-organism": "src/organism",
+    "@nexious-math": "src/math"
   },
   "keywords": [
     "css",
@@ -91,9 +92,10 @@
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",
     "clean": "rimraf dist/ && npx prettier --write src/",
     "paths": "node -r tsconfig-paths/register -r ts-node ./src/main.ts",
-    "compile": "npm run compile:js && npm run compile:css",
+    "compile": "npm run compile:paths && npm run compile:js && npm run compile:css",
     "compile:js": "tsc && tsc --module commonjs --outDir dist/cjs",
     "compile:css": "npx sass src/stylesheets && npm run copy:esm && npm run copy:esm",
+    "compile:paths": "ts-node -r node_modules/module-alias/register -r esm src/main.ts 8081",
     "compile:webpack": "webpack --mode production --stats-error-details",
     "build": "npm run clean && npm run compile",
     "build:phase1": "npm run clean && npm run compile",

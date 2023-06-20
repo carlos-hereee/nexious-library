@@ -24,6 +24,9 @@
       "@nexious/*": [
         "*"
       ],
+      "@root/*": [
+        "*"
+      ],
       "@nexious-atoms/*": [
         "./atoms/*",
         "./atoms/"
