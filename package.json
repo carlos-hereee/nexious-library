@@ -96,14 +96,14 @@
     "compile:css": "npx sass src/stylesheets && npm run copy:esm && npm run copy:esm",
     "compile:webpack": "webpack --mode production --stats-error-details",
     "build": "npm run clean && npm run compile",
-    "build:phase1" : "npm run clean && npm run compile",
+    "build:phase1": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:webpack": "npm run clean && npm run compile && npm run",
     "build:serve": "webpack serve --stats-error-details",
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
-    "release:patch": "npm unlink && npm run build && npm version patch && npm publish",
-    "release:minor": "npm unlink && npm run build && npm version minor && npm publish",
-    "release:major": "npm unlink && npm run build && npm version major && npm publish"
+    "release:patch": "npm run build && npm version patch && npm publish",
+    "release:minor": "npm run build && npm version minor && npm publish",
+    "release:major": "npm run build && npm version major && npm publish"
   },
   "repository": {
     "type": "git",
