@@ -3,70 +3,19 @@
   "version": "1.1.13",
   "description": "Official database for nexious.tech",
   "type": "module",
+  "main": "src/main.ts",
   "style": "dist/stylesheets/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
-  "exports": {
-    ".":{
-      "import": {
-        "types" :"./dist/esm/main.d.ts",
-        "default" :"./dist/esm/main.js"
-      }, 
-      "require":{
-        "types": "./dist/cjs/main.d.ts",
-        "default": "./dist/cjs/main.js"
-      }
-    },
-    "./@nexious-math": {
-      "import": {
-        "types": "./dist/esm/math/index.d.ts",
-        "default": "./dist/esm/math/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/math/index.d.ts",
-        "default": "./dist/cjs/math/index.cjs"
-      }
-    },
-    "./@nexious-atoms": {
-      "import": {
-        "types": "./dist/esm/atoms/index.d.ts",
-        "default": "./dist/esm/atoms/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/atoms/index.d.ts",
-        "default": "./dist/cjs/atoms/index.cjs"
-      }
-    },
-    "./@nexious-molecules": {
-      "import": {
-        "types": "./dist/esm/molecules/index.d.ts",
-        "default": "./dist/esm/molecules/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/molecules/index.d.ts",
-        "default": "./dist/cjs/molecules/index.cjs"
-      }
-    },
-    "./@nexious-organism": {
-      "import": {
-        "types": "./dist/esm/organism/index.d.ts",
-        "default": "./dist/esm/organism/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/organism/index.d.ts",
-        "default": "./dist/cjs/organism/index.cjs"
-      }
-    },
-    "./index.css": "./dist/esm/stylesheets/index.css"
-  },
   "_moduleAliases": {
-    "@nexious": "src",
-    "@nexious-helpers": "src/helpers",
-    "@nexious-atoms": "src/atoms",
-    "@nexious-molecules": "src/molecules",
-    "@nexious-organism": "src/organism",
-    "@nexious-math": "src/math"
+    "@nexious": "dist/esm",
+    "@nexious-helpers": "dist/esm/helpers",
+    "@nexious-atoms": "dist/esm/atoms",
+    "@nexious-molecules": "dist/esm/molecules",
+    "@nexious-organism": "dist/esm/organism",
+    "@nexious-math": "dist/esm/math",
+    "@index.css": "dist/esm/stylesheets/index.css"
   },
   "keywords": [
     "css",
@@ -79,7 +28,7 @@
   ],
   "scripts": {
     "watch": "tsc -p tsconfig.json --watch",
-    "dev": "npm run build && npm run watch",
+    "dev": "nodemon",
     "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.ts",
     "dev:webpack": "webpack-dev-server --stats-error-details",
     "sass:watch": "npx sass --watch src/stylesheets",
@@ -89,7 +38,7 @@
     "compile": "npm run compile:js && npm run compile:css",
     "compile:js": "tsc && tsc --module commonjs --outDir dist/cjs",
     "compile:css": "npx sass src/stylesheets && npm run copy:esm && npm run copy:esm",
-    "compile:paths": "node -r tsconfig-paths/register -r ts-node ./src/main.ts 8081",
+    "compile:paths": "ts-node -r tsconfig-paths/register src/main.ts",
     "compile:webpack": "webpack --mode production --stats-error-details",
     "build": "npm run clean && npm run compile",
     "build:phase1": "npm run clean && npm run compile",
