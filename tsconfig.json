@@ -30,15 +30,19 @@
       ],
       "@nexious-helpers/*": [
         "./helpers/*",
+        "./helpers/",
       ],
       "@nexious-molecules/*": [
         "./molecules/*",
+        "./molecules/",
       ],
       "@nexious-organism/*": [
         "./organism/*",
+        "./organism/",
       ],
       "@nexious-math/*": [
         "./math/*",
+        "./math/",
       ],
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,

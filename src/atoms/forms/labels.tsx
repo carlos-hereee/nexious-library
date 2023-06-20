@@ -14,4 +14,3 @@ export const labels = {
   confirmPassword: "Confirm Password",
   search: "Search",
 };
-
