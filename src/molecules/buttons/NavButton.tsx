@@ -1,9 +1,11 @@
-import { Button } from "@nxs/atoms";
+import { IconNames } from "@nxs/atoms";
+import IconButton from "./IconButton";
 
 export type NavButtonProps = {
   data: {
     uid: string;
     name: string;
+    icon: IconNames;
     isAlt: boolean;
     alt?: string;
   };
@@ -17,10 +19,22 @@ export type NavButtonProps = {
  * @returns navigation button
  */
 const NavButton: React.FC<NavButtonProps> = ({ data, click }) => (
-  <li key={data.uid} className="nav-btn">
-    <Button name={data.name} click={click}>
-      <span>{data.isAlt ? data.alt : data.name}</span>
-    </Button>
+  <li className="nav-btn">
+    {data.isAlt ? (
+      <IconButton
+        name={data.icon}
+        hasLabel={true}
+        label={data.alt}
+        click={click}
+      />
+    ) : (
+      <IconButton
+        name={data.icon}
+        hasLabel={true}
+        label={data.name}
+        click={click}
+      />
+    )}
   </li>
 );
 export default NavButton;

@@ -18,9 +18,9 @@ export interface IconProps {
 }
 
 export interface IconButtonProps {
-  children: JSX.Element;
   name: IconNames;
   hasLabel?: boolean;
+  children?: JSX.Element;
   label?: string;
   ping?: number;
   size?: SizeProp;

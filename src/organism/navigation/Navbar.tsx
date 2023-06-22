@@ -1,3 +1,4 @@
+import { IconNames } from "@nxs/atoms";
 import { NavButton } from "@nxs/molecules";
 
 export type NavbarProps = {
@@ -11,6 +12,7 @@ export type NavbarProps = {
       isAlt: boolean;
       name: string;
       alt?: string;
+      icon: IconNames;
     }
   ];
 };
