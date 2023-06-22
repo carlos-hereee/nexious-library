@@ -1,5 +1,5 @@
-import { Button, Icon } from "@nexious-atoms/index";
-import { IconButtonProps } from "@nexious-helpers/interface";
+import { Button, Icon } from "@nxs-atoms";
+import { IconButtonProps } from "@nxs-helpers/interface";
 
 /**
  * Icon Button

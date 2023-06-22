@@ -47,12 +47,13 @@ module.exports = {
   },
   resolve: {
     root: __dirname,
-    alias: packagejson._moduleAliases || { // ) //   {} //   }, //     return path; //     ); //       `src/${tsconfig.compilerOptions.paths[pathname][0]}` //       __dirname, //     path[pathname] = path.resolve( //   (path, pathname) => { // Object.keys(tsconfig.compilerOptions.paths).reduce(
-      "@nexious-atoms": path.resolve(__dirname, "src/atoms"),
-      "@nexious-molecules": path.resolve(__dirname, "src/molecules"),
-      "@nexious-helpers": path.resolve(__dirname, "src/helpers"),
-      "@nexious-organism": path.resolve(__dirname, "src/organism"),
-      "@nexious-math": path.resolve(__dirname, "src/math"),
+    alias: packagejson._moduleAliases || {
+      // ) //   {} //   }, //     return path; //     ); //       `src/${tsconfig.compilerOptions.paths[pathname][0]}` //       __dirname, //     path[pathname] = path.resolve( //   (path, pathname) => { // Object.keys(tsconfig.compilerOptions.paths).reduce(
+      "@nxs-atoms": path.resolve(__dirname, "src/atoms"),
+      "@nxs-molecules": path.resolve(__dirname, "src/molecules"),
+      "@nxs-helpers": path.resolve(__dirname, "src/helpers"),
+      "@nxs-organism": path.resolve(__dirname, "src/organism"),
+      "@nxs-math": path.resolve(__dirname, "src/math"),
     },
     extensions: [".tsx", ".ts", ".js", ".jsx", ".json"],
     fallback: { path: require.resolve("path-browserify"), fs: false },

@@ -1,4 +1,4 @@
-import { DataStringProps } from "@nexious-helpers/types";
+import { DataStringProps } from "@nxs-helpers/types";
 
 const Heading: React.FC<DataStringProps> = ({ data }) => {
   return (

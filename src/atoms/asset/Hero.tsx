@@ -1,4 +1,4 @@
-import { HeroProps } from "@nexious-helpers/types";
+import { HeroProps } from "@nxs-helpers/types";
 
 type Props = { data: HeroProps };
 

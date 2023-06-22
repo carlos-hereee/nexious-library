@@ -1,4 +1,4 @@
-import { InputProps } from "@nexious-helpers/interface";
+import { InputProps } from "@nxs-helpers/interface";
 
 const InputQuantity: React.FC<InputProps> = ({
   min,

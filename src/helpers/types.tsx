@@ -1,4 +1,4 @@
-import { labels } from "@nexious-atoms/forms/labels";
+import { labels } from "@nxs-atoms/forms/labels";
 
 export type DataStringProps = { data: string; name?: string };
 export type IconNameProp = "";

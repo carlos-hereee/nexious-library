@@ -1,4 +1,4 @@
-import { LabelValueProps } from "@nexious-helpers/types";
+import { LabelValueProps } from "@nxs-helpers/types";
 
 const KeyValue: React.FC<LabelValueProps> = ({ key, value }) => {
   return (

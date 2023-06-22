@@ -20,5 +20,6 @@
   //   "sourceType": "module"
   // "tsconfigRootDir": __dirname
   // },
-  "rules": {}
+  "rules": {
+    "import/no-unresolved": "error"  }
 }

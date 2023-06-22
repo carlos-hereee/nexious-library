@@ -1,4 +1,4 @@
-import { LabelKeys } from "@nexious-helpers/types";
+import { LabelKeys } from "@nxs-helpers/types";
 import { labels } from "./labels";
 
 type Props = {

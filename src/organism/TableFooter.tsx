@@ -1,5 +1,5 @@
-import { CellDataProp } from "@nexious-helpers/types";
-import { TableRow } from "@nexious-molecules/index";
+import { CellDataProp } from "@nxs-helpers/types";
+import { TableRow } from "@nxs-molecules";
 
 type TableBodyProp = {
   data: CellDataProp[];

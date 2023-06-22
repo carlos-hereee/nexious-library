@@ -1,5 +1,5 @@
-import { PageNotFoundProps } from "@nexious-helpers/types";
-import { Hero } from "@nexious-atoms/index";
+import { PageNotFoundProps } from "@nxs-helpers/types";
+import { Hero } from "@nxs-atoms";
 
 const PageNotFound: React.FC<PageNotFoundProps> = ({ message, hero }) => {
   return (

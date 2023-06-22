@@ -1,4 +1,4 @@
-import { CellDataProp } from "@nexious-helpers/types";
+import { CellDataProp } from "@nxs-helpers/types";
 
 /**
  * table caption

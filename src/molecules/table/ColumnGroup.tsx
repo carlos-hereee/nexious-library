@@ -1,5 +1,5 @@
-import { Column } from "@nexious-atoms/index";
-import { TableColumnProp } from "@nexious-helpers/types";
+import { Column } from "@nxs-atoms";
+import { TableColumnProp } from "@nxs-helpers/types";
 
 type CoulmnGroup = {
   data: TableColumnProp[];
