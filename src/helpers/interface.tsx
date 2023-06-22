@@ -1,6 +1,5 @@
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { IconNames } from "atoms/asset/Assets";
-// import { IconNames } from "";
+import { IconNames } from "@nxs/atoms";
 
 export interface HyperlinkProps {
   data: {
@@ -10,22 +9,14 @@ export interface HyperlinkProps {
     word: string;
   };
 }
-export interface NavProps {
-  data: string;
-  link: string;
-}
+
 export interface IconProps {
   name: IconNames;
   size?: SizeProp;
   spin?: string;
   color?: string;
 }
-export interface ButtonProps {
-  children?: JSX.Element[] | JSX.Element;
-  name?: IconNames;
-  isBurger?: boolean;
-  click?: React.MouseEventHandler<HTMLButtonElement>;
-}
+
 export interface IconButtonProps {
   children: JSX.Element;
   name: IconNames;
@@ -35,7 +26,7 @@ export interface IconButtonProps {
   size?: SizeProp;
   spin?: string;
   color?: string;
-  click?: React.MouseEventHandler<HTMLButtonElement>;
+  click: React.MouseEventHandler<HTMLButtonElement>;
 }
 export interface CardHeaderProps {
   title: string;

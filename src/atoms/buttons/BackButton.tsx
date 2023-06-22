@@ -1,11 +1,12 @@
-import { ChildProp } from "@nxs-helpers/types";
-
+type BackButtonProp = {
+  children: React.ReactNode;
+};
 /**
  * Component - Button
  * @param children JSX Element(s)
  * @returns JSX.Element -> JSX Element
  */
-const BackButton: React.FC<ChildProp> = ({ children }) => {
+const BackButton: React.FC<BackButtonProp> = ({ children }) => {
   return (
     <button
       type="button"

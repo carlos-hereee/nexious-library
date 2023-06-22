@@ -2,9 +2,12 @@
 export { default as Hero } from "./asset/Hero";
 export { default as Logo } from "./asset/Logo";
 export { default as Icon } from "./asset/Icon";
+export type { IconNames } from "./asset/Assets";
 
 // buttons
+export { default as Btn } from "./buttons/Btn";
 export { default as Button } from "./buttons/Button";
+export type { ButtonProps } from "./buttons/Button";
 export { default as BackButton } from "./buttons/BackButton";
 
 // forms

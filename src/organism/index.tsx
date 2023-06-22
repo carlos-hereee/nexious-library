@@ -1,5 +1,11 @@
+// errors
 export { default as Loading } from "./errors/Loading";
-// export * from "./navigation";
-export { default as TableBody } from "./TableBody";
-export { default as TableHeader } from "./TableHeader";
-export { default as TableFooter } from "./TableFooter";
+
+// navigation
+export { default as Navbar } from "./navigation/Navbar";
+export type { NavbarProps } from "./navigation/Navbar";
+
+// tables
+export { default as TableBody } from "./table/TableBody";
+export { default as TableHeader } from "./table/TableHeader";
+export { default as TableFooter } from "./table/TableFooter";

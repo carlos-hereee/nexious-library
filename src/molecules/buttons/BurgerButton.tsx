@@ -1,5 +1,4 @@
-import { Icon } from "@nxs-atoms";
-import { ButtonProps } from "@nxs-helpers/interface";
+import { ButtonProps, Icon } from "@nxs-atoms";
 
 const BurgerButton: React.FC<ButtonProps> = ({ name, isBurger, click }) => {
   return (

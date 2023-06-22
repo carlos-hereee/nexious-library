@@ -1,10 +1,12 @@
-// import { ButtonProps } from "@nxs-helpers/interface";
-
-import { ButtonProps } from "@nxs-helpers/interface";
-
+export type ButtonProps = {
+  children: React.ReactNode;
+  click: React.MouseEventHandler<HTMLButtonElement>;
+  name?: string;
+  isBurger?: boolean;
+};
 /**
  * Component - Button
- * @param children content of button
+ * @param children children props
  * @param name add an optional classname of the button component
  * @param click Callback fired when button is click
  * @returns JSX.Element -> button
