@@ -1,4 +1,4 @@
-@import "../vars/mixins.scss", "../vars/variables.scss";
+@import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .btn-primary {
   // background-color: #{$primary-color};
@@ -99,7 +99,7 @@
 // .btn {
 //   display: flex;
 //   border-radius: #{$radii-round};
-//   gap: 1rem;
+//   gap: #{$gap};
 // }
 .btn-link {
   // background-color: #{$secondary-color2};
@@ -120,5 +120,5 @@
 // .btn-back {
 //   display: flex;
 //   // color: white;
-//   gap: 1rem;
+//   gap: #{$gap};
 // }

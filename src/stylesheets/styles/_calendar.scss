@@ -12,7 +12,7 @@
   flex: 1;
   min-width: 200px;
   max-width: 700px;
-  gap: 1rem;
+  gap: #{$gap};
   border-radius: #{$radii-round};
   @include devices(mobile) {
     width: 100%;
@@ -26,7 +26,7 @@
   flex: 1;
   // background-color: #{$secondary-color2};
   border-radius: #{$radii-round};
-  gap: 1rem;
+  gap: #{$gap};
 }
 .react-calendar__navigation {
   display: flex;

@@ -1,4 +1,4 @@
-@import "../vars/mixins.scss", "../vars/variables.scss";
+@import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 header {
   display: flex;
@@ -18,5 +18,5 @@ footer {
   flex-wrap: wrap;
   // color: #{$secondary-text};
   // background-color: #{$secondary-color};
-  gap: 1rem;
+  gap: #{$gap};
 }

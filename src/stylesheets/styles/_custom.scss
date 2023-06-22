@@ -1,9 +1,9 @@
-@import "../vars/mixins.scss", "../vars/variables.scss";
+@import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .children {
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: #{$gap};
 }
 .p-sm {
   padding: 0.5rem;

@@ -5,7 +5,7 @@
   flex-direction: column;
   text-align: center;
   align-items: center;
-  gap: 1rem;
+  gap: #{$gap};
   padding-bottom: 0.5rem;
   // border-bottom: 1px dashed #{$primary-text};
   &:has(> .active) {
@@ -34,12 +34,12 @@
   display: flex;
   align-items: flex-start;
   flex-direction: column;
-  gap: 1rem;
+  gap: #{$gap};
   border-radius: #{$radii-round};
   @include devices(mobile) {
     .card-header {
       flex-direction: row;
-      gap: 1rem;
+      gap: #{$gap};
     }
   }
 }

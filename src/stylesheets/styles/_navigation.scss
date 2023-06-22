@@ -1,4 +1,4 @@
-@import "../vars/mixins.scss", "../vars/variables.scss";
+@import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .primary-navigation {
   @include devices(tablet) {
@@ -20,7 +20,7 @@
     list-style: none;
     // background-color: #{$primary-color2};
     border-radius: #{$radii-round};
-    gap: 1rem;
+    gap: #{$gap};
     top: 15%;
     right: 0;
     z-index: 999;
@@ -57,7 +57,7 @@
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: #{$gap};
   padding: 0 1rem;
   // color: #{$primary-text};
 }

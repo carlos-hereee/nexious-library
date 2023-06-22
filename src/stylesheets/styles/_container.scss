@@ -1,10 +1,10 @@
-@import "../vars/mixins.scss", "../vars/variables.scss";
+@import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .container {
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: 1rem;
+  gap: #{$gap};
 }
 .container-header {
   display: flex;
@@ -17,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: 1rem;
+  gap: #{$gap};
   @include devices(mobile) {
     flex: 0 0 100%;
     width: auto;
@@ -30,7 +30,7 @@
   // background-color: #{$secondary-color};
   min-height: 60vh;
   width: 100%;
-  gap: 1rem;
+  gap: #{$gap};
   @include devices(mobile) {
     width: auto;
   }
@@ -39,7 +39,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  gap: 1rem;
+  gap: #{$gap};
   justify-content: center;
 }
 .container-empty {
@@ -50,7 +50,7 @@
   // color: #{$primary-text};
   flex: 1;
   min-width: 200px;
-  gap: 1rem;
+  gap: #{$gap};
   border-radius: #{$radii-round};
   // .btn-link {
   //   // background-color: #{$primary-color};

@@ -1,10 +1,10 @@
-@import "../vars/mixins.scss", "../vars/variables.scss";
+@import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .form {
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: 1rem;
+  gap: #{$gap};
   input,
   textarea {
     // border: 1px solid #{$primary-color};
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 1rem;
+  gap: #{$gap};
 }
 .form-fields {
   display: flex;
@@ -35,7 +35,7 @@
     justify-content: space-between;
     margin: auto;
     flex-wrap: wrap;
-    gap: 1rem;
+    gap: #{$gap};
     margin: auto;
   }
 }
