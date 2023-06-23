@@ -18,14 +18,14 @@ $mobile: 500px;
 $mini: 375px;
 
 // rems
-$rem-1: 1rem;
+$rem: 1rem;
 $rem-05: 0.5rem;
 $rem-025: 0.25rem;
 // border-radius :circle
 $rounded-full: 100%;
 
 // gap
-$gap-1: 1rem;
+$gap: 1rem;
 $gap-05: 0.5rem;
 $gap-025: 0.25rem;
 
@@ -43,10 +43,10 @@ code {
   $tablet: $tablet;
   $mobile: $mobile;
   $mini: $mini;
-  $rem-1: $rem-1;
+  $rem: $rem;
   $rem-05: $rem-05;
   $rem-025: $rem-025;
-  $gap-1: $gap-1;
+  $gap: $gap;
   $gap-05: $gap-05;
   $gap-025: $gap-025;
   $rounded-full: $rounded-full;
