@@ -51,7 +51,7 @@
   flex: 1;
   min-width: 200px;
   gap: #{$gap};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
   // .btn-link {
   //   // background-color: #{$primary-color};
   //   // color: #{$secondary-text};
@@ -66,7 +66,7 @@
   flex-direction: column;
   display: flex;
   // background-color: #{$secondary-color};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
   gap: 0.5rem;
 }
 .secondary-section-container {
@@ -86,7 +86,7 @@
 }
 .alt-container {
   // background-color: #{$secondary-color2};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;

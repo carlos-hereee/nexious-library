@@ -19,7 +19,7 @@
     position: absolute;
     list-style: none;
     // background-color: #{$primary-color2};
-    border-radius: #{$radii-round};
+    border-radius: #{$rem-05};
     gap: #{$gap};
     top: 15%;
     right: 0;
@@ -50,7 +50,7 @@
   list-style: none;
   list-style-type: none;
   gap: 0.5rem;
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
 }
 .navbar {
   // width: 100%;
@@ -82,7 +82,7 @@
   justify-content: center;
   // background-color: #{$danger};
   // color: #{$secondary-text};
-  border-radius: #{$radii-circle};
+  border-radius: #{$rem-05-full};
   padding: 0.35rem;
 }
 .checkout-navigation {

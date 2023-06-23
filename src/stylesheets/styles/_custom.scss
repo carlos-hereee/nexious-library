@@ -19,11 +19,11 @@
 }
 .bg-light {
   // background-color: #{$secondary-color2};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
 }
 .bg-dark {
   // background-color: #{$secondary-color};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
   // color: #{$secondary-text};
 }
 .text-center {
@@ -40,7 +40,7 @@
   justify-content: center;
   position: absolute;
   aspect-ratio: 1/1;
-  border-radius: #{$radii-circle};
+  border-radius: #{$rem-05-full};
   width: 25px;
   height: 25px;
   right: -0.5rem;

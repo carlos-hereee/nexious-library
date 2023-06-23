@@ -3,6 +3,7 @@ $danger: #f93131;
 $success: #320064;
 $instagram: #ea4c52;
 $twitter: #1da1f2;
+$gray: #777;
 
 /* readmore lines */
 $max-lines: 2;
@@ -16,18 +17,24 @@ $tablet: 768px;
 $mobile: 500px;
 $mini: 375px;
 
-// radius
-$radii-round: 0.5rem;
-$radii-circle: 100%;
+// rems
+$rem-1: 1rem;
+$rem-05: 0.5rem;
+$rem-025: 0.25rem;
+// border-radius :circle
+$rounded-full: 100%;
 
 // gap
-$gap: 0.5rem;
+$gap-1: 1rem;
+$gap-05: 0.5rem;
+$gap-025: 0.25rem;
 
 code {
   $danger: $danger;
   $success: $success;
   $instagram: $instagram;
   $twitter: $twitter;
+  $gray: $gray;
   $max-lines: $max-lines;
   $line-height: $line-height;
   $media-desktop: $media-desktop;
@@ -36,6 +43,11 @@ code {
   $tablet: $tablet;
   $mobile: $mobile;
   $mini: $mini;
-  $radii-round: $radii-round;
-  $radii-circle: $radii-circle;
+  $rem-1: $rem-1;
+  $rem-05: $rem-05;
+  $rem-025: $rem-025;
+  $gap-1: $gap-1;
+  $gap-05: $gap-05;
+  $gap-025: $gap-025;
+  $rounded-full: $rounded-full;
 }

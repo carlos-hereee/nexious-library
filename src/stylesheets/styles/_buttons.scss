@@ -1,5 +1,14 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
+.btn {
+  display: flex;
+  align-items: center;
+  border: 1px solid #{$gray};
+  max-width: 250px;
+  min-width: 100px;
+  padding: #{$rem-05} #{$rem-1};
+  gap: #{$gap-05};
+}
 .btn-primary {
   // background-color: #{$primary-color};
   // color: #{$primary-text};
@@ -41,7 +50,7 @@
   justify-content: center;
   // background-color: #{$secondary-color};
   // color: white;
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
 }
 .btn-icons {
   display: flex;
@@ -75,7 +84,7 @@
   top: -0.5rem;
   right: -0.5rem;
   z-index: 99;
-  border-radius: #{$radii-circle};
+  border-radius: #{$rem-05-full};
 }
 .btn-search {
   margin: auto;
@@ -98,7 +107,8 @@
 // }
 // .btn {
 //   display: flex;
-//   border-radius: #{$radii-round};
+//   border-radius: #{$rem-05
+// };
 //   gap: #{$gap};
 // }
 .btn-link {
@@ -111,14 +121,9 @@
   // top: 25%;
   // margin: 0 1rem;
   // flex: 1;
-  // border-radius: #{$radii-round};
+  // border-radius: #{$rem-05
 }
 
 .btn-next {
   margin: 1rem;
 }
-// .btn-back {
-//   display: flex;
-//   // color: white;
-//   gap: #{$gap};
-// }

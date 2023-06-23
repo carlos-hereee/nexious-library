@@ -13,7 +13,7 @@
   min-width: 200px;
   max-width: 700px;
   gap: #{$gap};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
   @include devices(mobile) {
     width: 100%;
     flex: auto;
@@ -25,7 +25,7 @@
   // align-items: center;
   flex: 1;
   // background-color: #{$secondary-color2};
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
   gap: #{$gap};
 }
 .react-calendar__navigation {
@@ -82,7 +82,7 @@
     height: 1rem;
     right: 5px;
     top: 1px;
-    border-radius: #{$radii-circle};
+    border-radius: #{$rem-05-full};
     padding: 0.25rem;
   }
   // &:hover {
@@ -117,5 +117,5 @@
 }
 .react-calendar__viewContainer {
   // border: 1px solid var(--border-color);
-  border-radius: #{$radii-round};
+  border-radius: #{$rem-05};
 }
