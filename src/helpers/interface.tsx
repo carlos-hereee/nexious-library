@@ -26,7 +26,20 @@ export interface IconButtonProps {
   size?: SizeProp;
   spin?: string;
   color?: string;
-  click: React.MouseEventHandler<HTMLButtonElement>;
+  data: {
+    uid: string;
+    name: string;
+    icon: IconNames;
+    isAlt: boolean;
+    alt?: string;
+  };
+  click: (e: {
+    uid: string;
+    name: string;
+    icon: IconNames;
+    isAlt: boolean;
+    alt?: string;
+  }) => void;
 }
 export interface CardHeaderProps {
   title: string;

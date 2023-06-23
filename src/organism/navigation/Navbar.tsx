@@ -3,8 +3,20 @@ import { NavButton } from "@nxs/molecules";
 
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
-  toggle: React.MouseEventHandler<HTMLButtonElement>;
-  click: React.MouseEventHandler<HTMLButtonElement>;
+  toggle: (e: {
+    uid: string;
+    name: string;
+    icon: IconNames;
+    isAlt: boolean;
+    alt?: string;
+  }) => void;
+  click: (e: {
+    uid: string;
+    name: string;
+    icon: IconNames;
+    isAlt: boolean;
+    alt?: string;
+  }) => void;
   menu: [
     {
       uid: string;

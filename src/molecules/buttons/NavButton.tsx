@@ -9,7 +9,13 @@ export type NavButtonProps = {
     isAlt: boolean;
     alt?: string;
   };
-  click: React.MouseEventHandler<HTMLButtonElement>;
+  click: (e: {
+    uid: string;
+    name: string;
+    icon: IconNames;
+    isAlt: boolean;
+    alt?: string;
+  }) => void;
 };
 /**
  *  Component - NavButton
@@ -25,11 +31,13 @@ const NavButton: React.FC<NavButtonProps> = ({ data, click }) => (
         name={data.icon}
         hasLabel={true}
         label={data.alt}
+        data={data}
         click={click}
       />
     ) : (
       <IconButton
         name={data.icon}
+        data={data}
         hasLabel={true}
         label={data.name}
         click={click}

@@ -1,4 +1,4 @@
-import { Button, Icon } from "@nxs-atoms";
+import { Icon } from "@nxs-atoms";
 import { IconButtonProps } from "@nxs-helpers/interface";
 
 /**
@@ -19,9 +19,10 @@ const IconButton: React.FC<IconButtonProps> = ({
   spin,
   color,
   click,
+  data,
 }) => {
   return (
-    <Button name={name} click={click}>
+    <button className={`btn-${name}`} onClick={() => click(data)} type="button">
       <Icon name={name} size={size} spin={spin} color={color} />
       {
         <>
@@ -29,7 +30,7 @@ const IconButton: React.FC<IconButtonProps> = ({
           {/* {ping && ping > 0 && <NotificationCount count={ping} />} */}
         </>
       }
-    </Button>
+    </button>
   );
 };
 
