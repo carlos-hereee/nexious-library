@@ -1,3 +1,6 @@
+// assets
+export { default as Logo } from "./assets/Logo";
+
 // buttons
 export { default as IconButton } from "./buttons/IconButton";
 export { default as BurgerButton } from "./buttons/BurgerButton";
