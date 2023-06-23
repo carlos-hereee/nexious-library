@@ -27,6 +27,7 @@
     transition: clip-path ease-in-out 700ms;
   }
   .navigation[data-state="open"] {
+    display: flex;
     animation: circleOpen 750ms ease-in-out forwards;
   }
   .navigation[data-state="closing"] {
@@ -78,4 +79,10 @@
 .checkout-navigation {
   display: flex;
   flex-direction: column;
+}
+.nav-btn {
+  .btn {
+    width: 100%;
+    justify-content: flex-start;
+  }
 }

@@ -4,6 +4,7 @@
   display: flex;
   align-items: center;
   border: 1px solid #{$gray};
+  border-radius: #{$rem-025};
   max-width: 250px;
   min-width: 100px;
   padding: #{$rem-05} #{$rem};
@@ -126,4 +127,8 @@
 
 .btn-next {
   margin: 1rem;
+}
+.btn-burger,
+.btn-x {
+  min-width: min-content;
 }

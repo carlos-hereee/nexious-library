@@ -22,7 +22,11 @@ const IconButton: React.FC<IconButtonProps> = ({
   data,
 }) => {
   return (
-    <button className={`btn-${name}`} onClick={() => click(data)} type="button">
+    <button
+      className={`btn btn-${name}`}
+      onClick={() => click(data)}
+      type="button"
+    >
       <Icon name={name} size={size} spin={spin} color={color} />
       {
         <>
