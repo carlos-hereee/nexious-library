@@ -20,11 +20,11 @@ export type NavbarProps = {
   menu: [
     {
       uid: string;
-      isToggle: boolean;
-      isAlt: boolean;
       name: string;
-      alt?: string;
       icon: IconNames;
+      alt?: string;
+      isAlt: boolean;
+      isToggle?: boolean;
     }
   ];
 };

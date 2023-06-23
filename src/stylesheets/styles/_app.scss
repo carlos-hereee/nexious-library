@@ -1,29 +1,5 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
-// h1,
-// h2,
-// h3,
-// h4,
-// h5,
-// h6 {
-//   width: 100%;
-//   font-family: "Cinzel", serif;
-// }
-// p,
-// span {
-//   font-family: "Roboto", sans-serif;
-// }
-
-// for accessibiblity
-@media (prefers-reduced-inputdirection: reduce) {
-  *,
-  ::before,
-  ::after {
-    animation-delay: -1ms !important;
-    animation-duration: 1ms !important;
-    animation-iteration-count: 1 !important;
-    background-attachment: initial !important;
-    transition-duration: 0s !important;
-    transition-delay: 0s !important;
-  }
+.app {
+  margin: 0 0.5rem;
 }

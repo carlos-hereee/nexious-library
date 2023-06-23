@@ -1,7 +1,29 @@
+@import "./variables";
+
 button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: transparent;
+  padding: #{$rem-05} #{$rem};
+  max-width: 250px;
+  min-width: 100px;
+  gap: #{$gap-05};
   cursor: pointer;
   &:disabled {
     cursor: not-allowed;
+  }
+}
+// for accessibiblity
+@media (prefers-reduced-inputdirection: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
   }
 }
