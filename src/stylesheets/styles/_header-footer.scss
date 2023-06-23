@@ -3,20 +3,14 @@
 header {
   display: flex;
   align-items: center;
-  // background-color: #{$secondary-color};
-  // border-bottom: 1px solid #{$secondary-color2};
-  max-height: 15vh;
   justify-content: space-between;
+  max-height: 15vh;
 }
-.card-secondary {
-  width: 100%;
-}
+
 footer {
   display: flex;
   align-items: flex-start;
   justify-content: space-around;
   flex-wrap: wrap;
-  // color: #{$secondary-text};
-  // background-color: #{$secondary-color};
   gap: #{$gap};
 }

@@ -1,13 +1,23 @@
 import { HeroProps } from "@nxs-helpers/types";
 
-type Props = { data: HeroProps };
+type Props = {
+  data: HeroProps;
+  name?: string;
+};
 
-const Logo: React.FC<Props> = ({ data }) => {
+/**
+ * Component Hero Logo
+ * @param data.url string; add url pointing to asset
+ * @param data.alt string; add an alt tag
+ * @param name string; add an optional classname
+ * @returns image component
+ */
+const Logo: React.FC<Props> = ({ data, name }) => {
   return (
     <img
-      className={`hero hero-logo ${data.name}`}
-      src={data.link}
-      alt={data.name}
+      className={name ? `hero hero-logo ${name}` : "hero hero-logo"}
+      src={data.url}
+      alt={data.alt}
     />
   );
 };

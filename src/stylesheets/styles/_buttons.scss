@@ -1,7 +1,6 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .btn {
-  border: 1px solid #{$gray};
   border-radius: #{$rem-025};
 }
 .btn-primary {

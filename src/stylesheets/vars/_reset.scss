@@ -8,6 +8,7 @@ button {
   padding: #{$rem-05} #{$rem};
   max-width: 250px;
   min-width: 100px;
+  border: 1px solid #{$gray};
   gap: #{$gap-05};
   cursor: pointer;
   &:disabled {
