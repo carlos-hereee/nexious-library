@@ -1,4 +1,4 @@
-import { IconNames } from "@nxs/atoms";
+import { IconNames } from "@nxs-atoms";
 import IconButton from "./IconButton";
 
 export type NavButtonProps = {

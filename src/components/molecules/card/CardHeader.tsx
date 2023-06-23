@@ -11,7 +11,7 @@ const CardHeader: React.FC<CardHeaderProps> = ({
     <div className="flex-g">
       <div>
         <Heading data={title} />
-        {hasHero && <Hero data={hero} />}
+        {/* {hasHero && <Hero data={hero} />} */}
       </div>
       {subtitle && <Subtitle data={subtitle} />}
       {/* data.hasIcon && <Icons name={data.hero.icon} size="3x" />}

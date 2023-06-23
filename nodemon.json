@@ -1,6 +1,6 @@
 {
   "ignore": ["**/*.test.ts", "**/*.spec.ts", ".git", "node_modules"],
   "watch": ["src"],
-  "exec": "tsc-alias -p tsconfig.json --watch",
+  "exec": "npm run watch:3",
   "ext": "ts, js, tsx, jsx"
 } 

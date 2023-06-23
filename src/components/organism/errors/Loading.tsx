@@ -2,7 +2,7 @@
 //   children: React.ReactElement[];
 //   className?: string;
 
-import { Spinner } from "molecules";
+import { Spinner } from "@nxs-molecules";
 
 // import { Spinner } from "";
 

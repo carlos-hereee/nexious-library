@@ -69,12 +69,12 @@
     "@nxs-helpers": "dist/esm/helpers"
   },
   "scripts": {
-    "dev": "nodemon",
+    "nodemon": "nodemon",
     "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.ts",
     "dev:webpack": "webpack-dev-server --stats-error-details",
-    "watch:sass": "npx sass src/stylesheets:dist/css --watch",
-    "watch:tsc": "tsc -p tsconfig.json --watch",
-    "watch:tsc-alias": "tsc-alias -p tsconfig.json --watch",
+    "watch:1": "npx sass src/stylesheets:dist/css --watch",
+    "watch:2": "tsc -p tsconfig.json --watch",
+    "watch:3": "tsc-alias -p tsconfig.json --watch",
     "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
     "copy:css": "node ./copy-styles.js",
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",

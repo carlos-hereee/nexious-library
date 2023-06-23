@@ -1,5 +1,5 @@
 import { HeroProps } from "@nxs-helpers/types";
-import { Capitalize, Heading, Hero } from "@nxs/atoms";
+import { Capitalize, Heading, Hero } from "@nxs-atoms";
 
 export type LogoProps = {
   data: HeroProps;

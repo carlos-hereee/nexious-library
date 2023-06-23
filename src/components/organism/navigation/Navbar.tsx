@@ -1,5 +1,5 @@
-import { IconNames } from "@nxs/atoms";
-import { NavButton } from "@nxs/molecules";
+import { IconNames } from "@nxs-atoms";
+import { NavButton } from "@nxs-molecules";
 
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };

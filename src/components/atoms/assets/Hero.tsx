@@ -1,6 +1,6 @@
 import { HeroProps } from "@nxs-helpers/types";
 
-type Props = { data: HeroProps; name: string };
+type Props = { data: HeroProps; name?: string };
 
 /**
  * Component Hero
