@@ -4,7 +4,7 @@ import { Hero } from "@nxs-atoms";
 const PageNotFound: React.FC<PageNotFoundProps> = ({ message, hero }) => {
   return (
     <div className="container-not-found">
-      <Hero data={hero} />
+      {/* <Hero data={hero} /> */}
       <p className="not-found">{message}</p>
     </div>
   );
