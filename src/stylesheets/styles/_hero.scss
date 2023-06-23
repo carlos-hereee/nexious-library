@@ -5,3 +5,7 @@
 .hero-logo {
   max-width: 100px;
 }
+.logo {
+  display: flex;
+  gap: #{$rem-025};
+}
