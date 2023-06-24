@@ -39,6 +39,7 @@ const Header: React.FC<HeaderProps> = ({ menu, data, title }) => {
     document.addEventListener("animationend", initClose, true);
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
+
   return (
     <header>
       <Link to="/" className="navlink">
