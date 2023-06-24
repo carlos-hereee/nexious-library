@@ -1,8 +1,22 @@
-// @import "../vars/variables.scss";
+@import "../vars/_variables.scss";
 
-// .dg-1 {
-//   background-color: #{$secondary-color};
-// }
-// .dg-2 {
-//   background-color: #{$secondary-color2};
-// }
+.bg-light {
+  background-color: #{$light-primary};
+  color: #{$dark-primary};
+  border-radius: #{$rem-025};
+}
+.bg-dark {
+  background-color: #{$dark-primary};
+  color: #{$light-primary};
+  border-radius: #{$rem-025};
+}
+.bg-ligt-alt {
+  background-color: #{$light};
+  color: #{$dark};
+  border-radius: #{$rem-025};
+}
+.bg-light-alt {
+  background-color: #{$dark};
+  color: #{$light};
+  border-radius: #{$rem-025};
+}

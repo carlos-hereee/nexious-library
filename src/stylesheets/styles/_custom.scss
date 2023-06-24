@@ -17,17 +17,7 @@
 .p-horizontal {
   padding: 1rem 0;
 }
-.bg-light {
-  // background-color: #{$secondary-color2};
-  border-radius: #{$rem-05};
-}
-.bg-dark {
-  // background-color: #{$secondary-color};
-  border-radius: #{$rem-05};
-  // color: #{$secondary-text};
-}
 .text-center {
-  justify-content: center;
   text-align: center;
 }
 .scroll-y {
@@ -46,6 +36,6 @@
   right: -0.5rem;
   top: -0.5rem;
 }
-.link {
+.navlink {
   text-decoration: none;
 }

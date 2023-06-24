@@ -3,7 +3,13 @@ $danger: #f93131;
 $success: #320064;
 $instagram: #ea4c52;
 $twitter: #1da1f2;
-$gray: #777;
+
+// default colors
+$light: #fafafa;
+$light-primary: #e4e5f1;
+$action-color: #d2d3db;
+$dark: #9394a5;
+$dark-primary: #484b6a;
 
 /* readmore lines */
 $max-lines: 2;
@@ -31,7 +37,7 @@ code {
   $success: $success;
   $instagram: $instagram;
   $twitter: $twitter;
-  $gray: $gray;
+  $dark: $dark;
   $max-lines: $max-lines;
   $line-height: $line-height;
   $tablet: $tablet;

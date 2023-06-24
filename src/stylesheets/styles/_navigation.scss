@@ -18,13 +18,13 @@
     position: absolute;
     list-style: none;
     border-radius: #{$rem-05};
-    top: 15%;
-    right: 0;
-    z-index: 999;
+    transition: clip-path ease-in-out 700ms;
+    padding: #{$rem-05} #{$rem};
     min-width: 250px;
     min-height: 70vh;
-    padding: #{$rem-05} #{$rem};
-    transition: clip-path ease-in-out 700ms;
+    z-index: 999;
+    right: 0;
+    top: 15%;
   }
   .navigation[data-state="open"] {
     display: flex;
