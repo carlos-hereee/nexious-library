@@ -1,11 +1,12 @@
-import { Icon } from "@nxs-atoms";
+import { Icon, PingCount } from "@nxs-atoms";
 
 export type BurgerProps = {
   click: React.MouseEventHandler<HTMLButtonElement>;
   isBurger: boolean;
+  ping: number;
 };
 
-const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click }) => {
+const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click, ping }) => {
   return (
     <button
       type="button"
@@ -16,7 +17,7 @@ const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click }) => {
       aria-label={isBurger ? "open menu" : "close menu"}
     >
       <Icon name={isBurger ? "x" : "burger"} size="2x" />
-      {/* <SetNotificationCount count={burger.ping} /> */}
+      <PingCount count={ping} />
     </button>
   );
 };

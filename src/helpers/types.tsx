@@ -7,7 +7,7 @@ export type HeroProps = { url: string; alt?: string };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };
 export type PageNotFoundProps = { message: string; hero: HeroProps };
-export type KeyStringProps = { [key: string]: string };
+export type KeyStringProp = { [key: string]: string };
 export type OptionProp = {
   name: string;
   value: string;
