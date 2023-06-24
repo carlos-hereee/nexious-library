@@ -24,6 +24,8 @@
       "@nxs-molecules": ["components/molecules"],
       "@nxs-organism/*": ["components/organism/*"],
       "@nxs-organism": ["components/organism"],
+      "@nxs-template/*": ["components/template/*"],
+      "@nxs-template": ["components/template"],
       "@nxs-math/*": ["components/math/*"],
       "@nxs-math": ["math"],
       "@nxs-helpers/*": ["helpers/*"],

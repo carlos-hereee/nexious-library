@@ -49,6 +49,16 @@
         "default": "./dist/cjs/organism/index.cjs"
       }
     },
+    "./@nxs-template": {
+      "import": {
+        "types": "./dist/esm/template/index.d.ts",
+        "default": "./dist/esm/template/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/template/index.d.ts",
+        "default": "./dist/cjs/template/index.cjs"
+      }
+    },
     "./@nxs-math": {
       "import": {
         "types": "./dist/esm/math/index.d.ts",
@@ -65,6 +75,7 @@
     "@nxs-atoms": "dist/esm/atoms",
     "@nxs-molecules": "dist/esm/molecules",
     "@nxs-organism": "dist/esm/organism",
+    "@nxs-template": "dist/esm/template",
     "@nxs-math": "dist/esm/math",
     "@nxs-helpers": "dist/esm/helpers"
   },
