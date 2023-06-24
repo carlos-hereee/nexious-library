@@ -1,32 +1,19 @@
 import { IconNames } from "@nxs-atoms";
 import { NavButton } from "@nxs-molecules";
 
+export type MenuItemProp = {
+  uid: string;
+  name: string;
+  icon: IconNames;
+  alt?: string;
+  isAlt: boolean;
+  isToggle?: boolean;
+};
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
-  toggle: (e: {
-    uid: string;
-    name: string;
-    icon: IconNames;
-    isAlt: boolean;
-    alt?: string;
-  }) => void;
-  click: (e: {
-    uid: string;
-    name: string;
-    icon: IconNames;
-    isAlt: boolean;
-    alt?: string;
-  }) => void;
-  menu: [
-    {
-      uid: string;
-      name: string;
-      icon: IconNames;
-      alt?: string;
-      isAlt: boolean;
-      isToggle?: boolean;
-    }
-  ];
+  toggle: (e: MenuItemProp) => void;
+  click: (e: MenuItemProp) => void;
+  menu: MenuItemProp[];
 };
 /**
  * Component - Navbar

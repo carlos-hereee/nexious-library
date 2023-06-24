@@ -1,6 +1,6 @@
 export type ButtonProps = {
-  children: React.ReactNode;
   click: React.MouseEventHandler<HTMLButtonElement>;
+  children?: React.ReactNode;
   name?: string;
   isBurger?: boolean;
 };

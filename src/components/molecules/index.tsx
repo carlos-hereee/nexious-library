@@ -1,5 +1,6 @@
 // assets
 export { default as Logo } from "./assets/Logo";
+export type { LogoProps } from "./assets/Logo";
 
 // buttons
 export { default as IconButton } from "./buttons/IconButton";
