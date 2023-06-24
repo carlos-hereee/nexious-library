@@ -1,9 +1,9 @@
 import { DataStringProps } from "@nxs-helpers/types";
 
 /**
- * Heading - div > h3(classname=heading)
- * @param data Heading component
- * @returns JSX div > h3 (classname=heading)
+ * Component - Heading
+ * @param data string
+ * @returns JSX h2 with classname=heading
  */
 const Heading: React.FC<DataStringProps> = ({ data }) => {
   return <h2 className="heading">{data}</h2>;

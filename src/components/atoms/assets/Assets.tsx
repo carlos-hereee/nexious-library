@@ -72,6 +72,7 @@ export const svg = {
   braids: faUser,
   nail: faHandSpock,
   all: faGlobe,
+  flag: faGlobe,
   manicure: faHands,
   pedicure: faShoePrints,
   promotion: faBullseye,

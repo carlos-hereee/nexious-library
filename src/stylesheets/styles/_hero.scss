@@ -3,9 +3,10 @@
   width: 100%;
 }
 .hero-logo {
-  max-width: 100px;
+  max-width: 70px;
 }
 .logo {
   display: flex;
+  align-items: center;
   gap: #{$rem-025};
 }
