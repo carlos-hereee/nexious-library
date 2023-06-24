@@ -437,7 +437,7 @@ span {
   border-radius: 0.5rem;
 }
 
-.btn-icons {
+.btn-icon {
   display: flex;
   flex-direction: row;
   position: relative;
@@ -445,11 +445,11 @@ span {
   gap: 0.5rem;
   flex: 1;
 }
-.btn-icons .icon-label {
+.btn-icon .icon-label {
   flex: 1;
   text-align: left;
 }
-.btn-icons .ping-count {
+.btn-icon .ping-count {
   top: -0.5rem;
   right: -0.5rem;
 }

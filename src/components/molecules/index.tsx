@@ -5,6 +5,7 @@ export type { LogoProps } from "./assets/Logo";
 // buttons
 export { default as IconButton } from "./buttons/IconButton";
 export { default as BurgerButton } from "./buttons/BurgerButton";
+export type { BurgerProps } from "./buttons/BurgerButton";
 export { default as SubmitButton } from "./buttons/SubmitButton";
 export { default as NavButton } from "./buttons/NavButton";
 export type { NavButtonProps } from "./buttons/NavButton";
