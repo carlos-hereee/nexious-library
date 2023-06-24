@@ -1,3 +1,9 @@
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
 .flex-g {
   display: flex;
   gap: 0.5rem;
@@ -35,7 +41,4 @@
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-}
-.flex-1 {
-  flex: 1;
 }
