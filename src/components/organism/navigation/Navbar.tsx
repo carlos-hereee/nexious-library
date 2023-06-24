@@ -37,7 +37,7 @@ export type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = ({ show, toggle, click, menu }) => {
   return (
     <ul
-      className="navigation"
+      className={show.isActive ? "navigation bg-dark" : "navigation"}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) =>

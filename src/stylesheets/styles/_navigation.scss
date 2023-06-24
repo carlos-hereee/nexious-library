@@ -14,15 +14,12 @@
   display: none;
   .navigation {
     flex-direction: column;
-    justify-content: space-around;
     position: absolute;
-    list-style: none;
-    border-radius: #{$rem-05};
     transition: clip-path ease-in-out 700ms;
-    padding: #{$rem-05} #{$rem};
-    min-width: 250px;
+    padding: #{$rem};
+    min-width: 50%;
     min-height: 70vh;
-    z-index: 999;
+    z-index: 9999;
     right: 0;
     top: 15%;
   }
@@ -43,7 +40,6 @@
 }
 .navigation {
   display: flex;
-  justify-content: space-around;
   list-style: none;
   list-style-type: none;
   gap: #{$rem-05};

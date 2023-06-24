@@ -9,14 +9,20 @@
   background-color: #{$dark-primary};
   color: #{$light-primary};
   border-radius: #{$rem-025};
+  .btn {
+    color: #{$light-primary};
+  }
 }
-.bg-ligt-alt {
+.bg-light-alt {
   background-color: #{$light};
   color: #{$dark};
   border-radius: #{$rem-025};
 }
-.bg-light-alt {
+.bg-dark-alt {
   background-color: #{$dark};
   color: #{$light};
   border-radius: #{$rem-025};
+  .btn {
+    color: #{$light};
+  }
 }
