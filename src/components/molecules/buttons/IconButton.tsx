@@ -12,19 +12,19 @@ import { IconButtonProps } from "@nxs-helpers/interface";
 
 const IconButton: React.FC<IconButtonProps> = ({ icon, ping, click }) => {
   return (
-    <button className={`btn btn-${icon.name}`} onClick={click} type="button">
+    <button
+      className={`btn btn-icon btn-${icon.name}`}
+      onClick={click}
+      type="button"
+    >
       <Icon
         icon={icon.icon}
         size={icon.size}
         spin={icon.spin}
         color={icon.color}
       />
-      {
-        <>
-          {icon.label && <span className="icon-label">{icon.label}</span>}
-          {ping && ping > 0 && <PingCount count={ping} />}
-        </>
-      }
+      {icon.label && <span className="icon-label">{icon.label}</span>}
+      {ping && ping > 0 && <PingCount count={ping} />}
     </button>
   );
 };

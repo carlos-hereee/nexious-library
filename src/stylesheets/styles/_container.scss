@@ -4,7 +4,7 @@
   display: flex;
   align-items: flex-start;
   flex-wrap: wrap;
-  gap: #{$gap};
+  gap: #{$rem};
 }
 .container-header {
   display: flex;
@@ -17,7 +17,7 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: #{$gap};
+  gap: #{$rem};
   @include devices(mobile) {
     flex: 0 0 100%;
     width: auto;
@@ -29,7 +29,7 @@
   flex-direction: column;
   min-height: 60vh;
   width: 100%;
-  gap: #{$gap};
+  gap: #{$rem};
   @include devices(mobile) {
     width: auto;
   }
@@ -38,7 +38,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  gap: #{$gap};
+  gap: #{$rem};
   justify-content: center;
 }
 .container-empty {
@@ -47,8 +47,8 @@
   text-align: center;
   flex: 1;
   min-width: 200px;
-  gap: #{$gap};
-  border-radius: #{$rem-05};
+  gap: #{$rem};
+  border-radius: #{$rem05};
   .fa-left-long {
     @include devices(mobile) {
       transform: rotate(90deg);
@@ -58,7 +58,7 @@
 .section-container {
   flex-direction: column;
   display: flex;
-  border-radius: #{$rem-05};
+  border-radius: #{$rem05};
   gap: 0.5rem;
 }
 .secondary-section-container {
@@ -74,7 +74,7 @@
   gap: 0.5rem;
 }
 .alt-container {
-  border-radius: #{$rem-05};
+  border-radius: #{$rem05};
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;

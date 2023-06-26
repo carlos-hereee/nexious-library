@@ -3,12 +3,12 @@
 .bg-light {
   background-color: #{$light-primary};
   color: #{$dark-primary};
-  border-radius: #{$rem-025};
+  border-radius: #{$rem025};
 }
 .bg-dark {
   background-color: #{$dark-primary};
   color: #{$light-primary};
-  border-radius: #{$rem-025};
+  border-radius: #{$rem025};
   .btn {
     color: #{$light-primary};
   }
@@ -16,12 +16,12 @@
 .bg-light-alt {
   background-color: #{$light};
   color: #{$dark};
-  border-radius: #{$rem-025};
+  border-radius: #{$rem025};
 }
 .bg-dark-alt {
   background-color: #{$dark};
   color: #{$light};
-  border-radius: #{$rem-025};
+  border-radius: #{$rem025};
   .btn {
     color: #{$light};
   }

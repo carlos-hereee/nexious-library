@@ -5,7 +5,7 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  gap: #{$gap};
+  gap: #{$rem};
   min-width: 200px;
   max-width: 280px;
   // background-color: #{$secondary-color2};
@@ -52,7 +52,7 @@
   text-align: center;
   align-items: center;
   padding-top: 0;
-  gap: #{$gap};
+  gap: #{$rem};
 }
 .secondary-card {
   display: flex;
@@ -60,12 +60,12 @@
   justify-content: space-between;
   flex: 1;
   min-width: 200px;
-  gap: #{$gap};
+  gap: #{$rem};
 }
 .secondary-card-body {
   display: flex;
   flex-wrap: wrap;
-  gap: #{$gap};
+  gap: #{$rem};
 }
 .ribbon {
   position: absolute;
@@ -86,7 +86,7 @@
 }
 .cancel-row-footer {
   display: flex;
-  gap: #{$gap};
+  gap: #{$rem};
   padding-bottom: 2rem;
 }
 .card-item {

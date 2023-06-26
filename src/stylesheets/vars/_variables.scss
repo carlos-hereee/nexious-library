@@ -22,15 +22,10 @@ $mini: 375px;
 
 // rems
 $rem: 1rem;
-$rem-05: 0.5rem;
-$rem-025: 0.25rem;
+$rem05: 0.5rem;
+$rem025: 0.25rem;
 // border-radius :circle
 $rounded-full: 100%;
-
-// gap
-$gap: 1rem;
-$gap-05: 0.5rem;
-$gap-025: 0.25rem;
 
 code {
   $danger: $danger;
@@ -44,10 +39,7 @@ code {
   $mobile: $mobile;
   $mini: $mini;
   $rem: $rem;
-  $rem-05: $rem-05;
-  $rem-025: $rem-025;
-  $gap: $gap;
-  $gap-05: $gap-05;
-  $gap-025: $gap-025;
+  $rem05: $rem05;
+  $rem025: $rem025;
   $rounded-full: $rounded-full;
 }

@@ -4,11 +4,11 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: #{$gap};
+  gap: #{$rem};
   input,
   textarea {
     // border: 1px solid #{$primary-color};
-    border-radius: #{$rem-05};
+    border-radius: #{$rem05};
   }
 }
 .input {
@@ -19,7 +19,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: #{$gap};
+  gap: #{$rem};
 }
 .form-fields {
   display: flex;
@@ -35,7 +35,7 @@
     justify-content: space-between;
     margin: auto;
     flex-wrap: wrap;
-    gap: #{$gap};
+    gap: #{$rem};
     margin: auto;
   }
 }

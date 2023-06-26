@@ -3,7 +3,7 @@
 .children {
   display: flex;
   flex-wrap: wrap;
-  gap: #{$gap};
+  gap: #{$rem};
 }
 .p-sm {
   padding: 0.5rem;
@@ -30,7 +30,7 @@
   justify-content: center;
   position: absolute;
   aspect-ratio: 1/1;
-  border-radius: #{$rem-05};
+  border-radius: #{$rem05};
   width: 25px;
   height: 25px;
   right: -0.5rem;

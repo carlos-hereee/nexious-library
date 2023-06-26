@@ -6,17 +6,17 @@
 }
 .flex-g {
   display: flex;
-  gap: 0.5rem;
+  gap: #{$rem05};
 }
 .flex-d-row {
   display: flex;
   flex-direction: row;
-  gap: 0.5rem;
+  gap: #{$rem05};
 }
 .flex-d-column {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: #{$rem05};
 }
 .flex-j-start {
   display: flex;
@@ -31,11 +31,12 @@
 .flex-wrap {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: #{$rem05};
 }
 .flex-center {
   display: flex;
   justify-content: center;
+  gap: #{$rem05};
 }
 .flex-start {
   display: flex;

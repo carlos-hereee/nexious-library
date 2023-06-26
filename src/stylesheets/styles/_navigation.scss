@@ -42,14 +42,14 @@
   display: flex;
   list-style: none;
   list-style-type: none;
-  gap: #{$rem-05};
-  border-radius: #{$rem-05};
+  gap: #{$rem05};
+  border-radius: #{$rem05};
 }
 .navbar {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: #{$gap};
+  gap: #{$rem};
   padding: 0 #{$rem};
 }
 .nav-link {
@@ -69,7 +69,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: #{$rem-05};
+  border-radius: #{$rem05};
   padding: 0.35rem;
 }
 .checkout-navigation {

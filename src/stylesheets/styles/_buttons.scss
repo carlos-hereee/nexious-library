@@ -1,7 +1,7 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .btn {
-  border-radius: #{$rem-025};
+  border-radius: #{$rem025};
 }
 .btn-primary {
   flex: 1;
@@ -15,7 +15,7 @@
 .custom-btn-link {
   display: flex;
   justify-content: center;
-  border-radius: #{$rem-05};
+  border-radius: #{$rem05};
 }
 .btn-icon {
   display: flex;
@@ -41,7 +41,7 @@
   top: -0.5rem;
   right: -0.5rem;
   z-index: 99;
-  border-radius: #{$rem-05};
+  border-radius: #{$rem05};
 }
 
 .btn-next {
