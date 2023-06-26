@@ -4,10 +4,11 @@ import { IconProps } from "@nxs-helpers/interface";
 
 /**
  * Component - Icon
- * @param name specify icon name
+ * @param icon specify icon name
  * @param size optional specify size for icon
  * @param spin optional specify if icon should spin
  * @param color optional specify the color for icon
+ * @param label optional specify the color for icon
  * @returns JSX.Element
  */
 const Icon: React.FC<IconProps> = ({ icon, size, spin, color }) => {

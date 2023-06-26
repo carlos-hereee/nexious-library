@@ -6,6 +6,8 @@ type Props = {
 };
 /**
  * Component - Card Footer
+ * @param data.data string; display content on page
+ * @param data.buttons string[]; display any number of buttons
  * @returns
  */
 const CardFooter: React.FC<Props> = ({ data }) => {

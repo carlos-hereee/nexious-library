@@ -7,10 +7,11 @@ export interface IconProps {
   size?: SizeProp;
   spin?: string;
   color?: string;
+  label?: string;
+  name?: string;
 }
 export interface IconButtonProps {
   icon: IconProps;
-  hasLabel?: boolean;
   label?: string;
   ping?: number;
   click: React.MouseEventHandler<HTMLButtonElement>;
