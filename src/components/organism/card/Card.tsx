@@ -1,13 +1,8 @@
-import { CardBodyProps } from "@nxs-helpers/types";
+import { CardBodyProps, CardHeaderProps } from "@nxs-helpers/types";
 import { CardBody, CardHeader } from "@nxs-molecules";
 
 export type CardProps = {
-  header: {
-    title: string;
-    subtitle?: string;
-    hero?: { name: string; url: string; alt: string };
-    hasHero?: boolean;
-  };
+  header: CardHeaderProps;
   body: CardBodyProps;
 };
 /**

@@ -9,6 +9,16 @@
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/esm/main.d.ts",
+        "default": "./dist/esm/main.js"
+      },
+      "require": {
+        "types": "./dist/cjs/main.d.ts",
+        "default": "./dist/cjs/main.js"
+      }
+    },
     "./@nxs-atoms": {
       "import": {
         "types": "./dist/esm/atoms/index.d.ts",

@@ -10,7 +10,6 @@ export interface HyperlinkProps {
     word: string;
   };
 }
-
 export interface IconProps {
   name: IconNames;
   size?: SizeProp;
@@ -41,12 +40,6 @@ export interface IconButtonProps {
     isAlt: boolean;
     alt?: string;
   }) => void;
-}
-export interface CardHeaderProps {
-  title: string;
-  subtitle?: string;
-  hasHero?: boolean;
-  hero?: HeroProp;
 }
 export interface CardButtonProps {
   data: any;
