@@ -37,7 +37,7 @@ export type CardFooterProps = {
     name: string;
     icon: IconNames;
   }[];
-  click: (e: IconItemProp) => void;
+  click: React.MouseEventHandler<HTMLButtonElement>;
 };
 export type IconItemProp = {
   uid: string;

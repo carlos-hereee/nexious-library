@@ -3,7 +3,7 @@ import { Icon } from "@nxs-atoms";
 const Spinner: React.FC = () => {
   return (
     <div className="loading">
-      <Icon name="loading" spin="spin" />
+      <Icon icon="loading" spin="spin" />
     </div>
   );
 };

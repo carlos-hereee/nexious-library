@@ -3,23 +3,18 @@ import { IconNames } from "@nxs-atoms";
 import { HeroProp, IconItemProp } from "@nxs-helpers/types";
 
 export interface IconProps {
-  name: IconNames;
+  icon: IconNames;
+  // name?: string;
   size?: SizeProp;
   spin?: string;
   color?: string;
 }
 export interface IconButtonProps {
   icon: IconProps;
-  name: IconNames;
   hasLabel?: boolean;
-  children?: JSX.Element;
   label?: string;
   ping?: number;
-  size?: SizeProp;
-  spin?: string;
-  color?: string;
-  data: IconItemProp;
-  click: (e: IconItemProp) => void;
+  click: React.MouseEventHandler<HTMLButtonElement>;
 }
 export interface CardButtonProps {
   click: React.MouseEventHandler<HTMLButtonElement>;

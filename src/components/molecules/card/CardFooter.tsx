@@ -14,7 +14,7 @@ const CardFooter: React.FC<Props> = ({ data }) => {
       {data.data && <p className="card-footer-p">{data.data}</p>}
       {data.buttons &&
         data.buttons.map((b) => (
-          <IconButton name={b.icon} data={b} click={click} />
+          <IconButton icon={b} click={data.click} key={b.uid} />
         ))}
     </div>
   );

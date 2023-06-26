@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms";
+import { Icon, PingCount } from "@nxs-atoms";
 import { IconButtonProps } from "@nxs-helpers/interface";
 
 /**
@@ -16,27 +16,23 @@ import { IconButtonProps } from "@nxs-helpers/interface";
 
 const IconButton: React.FC<IconButtonProps> = ({
   icon,
-  name,
   hasLabel,
   label,
-  // ping,
-  size,
-  spin,
-  color,
+  ping,
   click,
-  data,
 }) => {
   return (
-    <button
-      className={`btn btn-${name}`}
-      onClick={() => click(data)}
-      type="button"
-    >
-      <Icon name={name} size={size} spin={spin} color={color} />
+    <button className={`btn btn-${icon.name}`} onClick={click} type="button">
+      <Icon
+        name={icon.name}
+        size={icon.size}
+        spin={icon.spin}
+        color={icon.color}
+      />
       {
         <>
           {hasLabel && <span className="icon-label">{label}</span>}
-          {/* {ping && ping > 0 && <NotificationCount count={ping} />} */}
+          {ping && ping > 0 && <PingCount count={ping} />}
         </>
       }
     </button>
