@@ -46,3 +46,11 @@ export type IconItemProp = {
   isAlt?: boolean;
   alt?: string;
 };
+export type MenuItemProp = {
+  uid: string;
+  name: string;
+  icon: IconNames;
+  alt?: string;
+  isAlt?: boolean;
+  isToggle?: boolean;
+};

@@ -39,7 +39,7 @@ const PingCount: React.FC<PingCountProp> = ({ count }) => {
   return (
     <span className="ping-count">
       {nums.map((n) => (
-        <Icon key={n} name={n} />
+        <Icon key={n} icon={n} />
       ))}
     </span>
   );

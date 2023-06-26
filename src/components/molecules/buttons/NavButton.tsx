@@ -1,21 +1,9 @@
-import { IconNames } from "@nxs-atoms";
 import IconButton from "./IconButton";
+import { MenuItemProp } from "@nxs-helpers/types";
 
 export type NavButtonProps = {
-  data: {
-    uid: string;
-    name: string;
-    icon: IconNames;
-    isAlt: boolean;
-    alt?: string;
-  };
-  click: (e: {
-    uid: string;
-    name: string;
-    icon: IconNames;
-    isAlt: boolean;
-    alt?: string;
-  }) => void;
+  data: MenuItemProp;
+  click: (e: MenuItemProp) => void;
 };
 /**
  *  Component - NavButton
@@ -28,19 +16,17 @@ const NavButton: React.FC<NavButtonProps> = ({ data, click }) => (
   <li className="nav-btn">
     {data.isAlt ? (
       <IconButton
-        name={data.icon}
+        icon={{ icon: data.icon }}
         hasLabel={true}
         label={data.alt}
-        data={data}
-        click={click}
+        click={() => click(data)}
       />
     ) : (
       <IconButton
-        name={data.icon}
-        data={data}
+        icon={data}
         hasLabel={true}
         label={data.name}
-        click={click}
+        click={() => click(data)}
       />
     )}
   </li>

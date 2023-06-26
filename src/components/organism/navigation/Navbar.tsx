@@ -1,14 +1,6 @@
-import { IconNames } from "@nxs-atoms";
+import { MenuItemProp } from "@nxs-helpers/types";
 import { NavButton } from "@nxs-molecules";
 
-export type MenuItemProp = {
-  uid: string;
-  name: string;
-  icon: IconNames;
-  alt?: string;
-  isAlt: boolean;
-  isToggle?: boolean;
-};
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
   toggle: (e: MenuItemProp) => void;

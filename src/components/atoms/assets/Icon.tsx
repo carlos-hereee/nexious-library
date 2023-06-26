@@ -10,10 +10,10 @@ import { IconProps } from "@nxs-helpers/interface";
  * @param color optional specify the color for icon
  * @returns JSX.Element
  */
-const Icon: React.FC<IconProps> = ({ name, size, spin, color }) => {
+const Icon: React.FC<IconProps> = ({ icon, size, spin, color }) => {
   return (
     <FontAwesomeIcon
-      icon={svg[name]}
+      icon={svg[icon]}
       size={size}
       className="icon"
       spin={spin === "spin"}

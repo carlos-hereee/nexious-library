@@ -24,7 +24,7 @@ const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click, ping }) => {
       aria-expanded={isBurger}
       aria-label={isBurger ? "open menu" : "close menu"}
     >
-      <Icon name={isBurger ? "x" : "burger"} size="2x" />
+      <Icon icon={isBurger ? "x" : "burger"} size="2x" />
       {ping > 0 && <PingCount count={ping} />}
     </button>
   );

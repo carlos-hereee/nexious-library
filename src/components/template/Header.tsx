@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BurgerButton, Logo } from "@nxs-molecules";
-import { MenuItemProp, Navbar } from "@nxs-organism";
+import { Navbar } from "@nxs-organism";
+import { MenuItemProp } from "@nxs-helpers/types";
 
 export type HeaderProps = {
   data: { url: string; alt?: string; title: string };
