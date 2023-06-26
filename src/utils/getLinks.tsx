@@ -1,12 +1,11 @@
+import { LinkProp } from "@nxs-helpers/types";
+
 type Links = {
   links: { word: string; link: string }[];
   response: string;
 };
-export const getLinks = ({
-  links,
-  response,
-}: Links): { str: string; isLink: boolean; link: string }[] => {
-  let arr: { str: string; isLink: boolean; link: string }[] = [];
+export const getLinks = ({ links, response }: Links): LinkProp[] => {
+  let arr: LinkProp[] = [];
   for (let i = 0; i < links.length; i++) {
     const { word, link } = links[i];
     let split = response.split(word);
