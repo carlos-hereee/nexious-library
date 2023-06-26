@@ -32,23 +32,3 @@ export { default as Navlink } from "./texts/Navlink";
 export { default as KeyValue } from "./texts/KeyValue";
 export { default as CamelSpace } from "./texts/CamelSpace";
 export { default as PingCount } from "./texts/PingCount";
-
-/**
-   * NOTICE: 
-   * mapping through the components displays the react element 
-   *
-   *  const cap = name.map((n) => <Capitalize data={n} />);
-   *  I.E.
-   * 
-   * {
-   *    $$typeof:Symbol(react.element), 
-   *    key:null
-   *    props:{data: 'vite'}
-   *    ref:null
-   *    ...rest
-   * }
-   * 
-   * This is the react element to be invoked 
-
-   */
-// export { Button, Icon, Capitalize, Heading, Hyperlink, Title, Navlink, Hero };
