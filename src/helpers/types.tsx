@@ -16,3 +16,9 @@ export type CellDataProp = { data: string; isHeader?: boolean; uid?: string };
 export type TableColumnProp = { span: number; name: string; uid?: string };
 export type LabelKeys = keyof typeof labels;
 export type NavlinkProp = { data: string; link: string };
+export type CardBodyProps = {
+  response: string;
+  hyperlink: { word: string; link: string }[];
+  hasLink?: boolean;
+  uid: string;
+};

@@ -1,4 +1,5 @@
-import { CardHeader } from "@nxs-molecules";
+import { CardBodyProps } from "@nxs-helpers/types";
+import { CardBody, CardHeader } from "@nxs-molecules";
 
 export type CardProps = {
   header: {
@@ -7,6 +8,7 @@ export type CardProps = {
     hero?: { name: string; url: string; alt: string };
     hasHero?: boolean;
   };
+  body: CardBodyProps;
 };
 /**
  * Component - Card
@@ -17,10 +19,11 @@ export type CardProps = {
  * @param click   callback to be fired when button is click
  * @returns Card
  */
-const Card: React.FC<CardProps> = ({ header }) => {
+const Card: React.FC<CardProps> = ({ header, body }) => {
   return (
     <div className="card">
       <CardHeader data={header} />
+      <CardBody data={body} />
       {/* {menu.map((m) =>
         m.isToggle ? (
           <NavButton data={m} key={m.uid} click={toggle} />

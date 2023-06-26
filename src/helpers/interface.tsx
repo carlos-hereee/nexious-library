@@ -4,7 +4,7 @@ import { HeroProp } from "./types";
 
 export interface HyperlinkProps {
   data: {
-    responseArr: [string, string];
+    responseArr: string[];
     isLink?: boolean;
     link: string;
     word: string;
