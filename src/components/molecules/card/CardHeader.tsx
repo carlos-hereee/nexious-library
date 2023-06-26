@@ -1,25 +1,24 @@
 import { Heading, Hero, Subtitle } from "@nxs-atoms";
 import { CardHeaderProps } from "@nxs-helpers/interface";
 
-const CardHeader: React.FC<CardHeaderProps> = ({
-  title,
-  subtitle,
-  hasHero,
-  hero,
-}) => {
+type CardHeaderProp = {
+  data: CardHeaderProps;
+};
+/**
+ * Component - Card Header
+ * @param title string;
+ * @param subTitle string;
+ * @param hero.link string; url to assets
+ * @param hero.name string; name of assets
+ * @param hasHero boolean; check if component needs assets
+ * @returns
+ */
+const CardHeader: React.FC<CardHeaderProp> = ({ data }) => {
   return (
-    <div className="flex-g">
-      <div>
-        <Heading data={title} />
-        {/* {hasHero && <Hero data={hero} />} */}
-      </div>
-      {subtitle && <Subtitle data={subtitle} />}
-      {/* data.hasIcon && <Icons name={data.hero.icon} size="3x" />}
-      <div className="card-header-heading">
-        {data.title && <h2 className="title">{data.title}</h2>}
-        {data.subtitle && <h3 className="sub-title">{data.subtitle}</h3>}
-      </div>
-      {data.description && <p>{data.description}</p>} */}
+    <div className="flex-g card-header">
+      <Heading data={data.title} />
+      {data.hasHero && data.hero && <Hero data={data.hero} />}
+      {data.subtitle && <Subtitle data={data.subtitle} />}
     </div>
   );
 };
