@@ -1,4 +1,4 @@
-import { NavlinkProp } from "@nxs/helpers/types";
+import { NavlinkProp } from "@nxs-helpers/types";
 
 export const Navlink: React.FC<NavlinkProp> = ({ data, link }) => {
   return (

@@ -16,6 +16,11 @@ type reverseCountProp = {
     | "nine"
     | "zero";
 };
+/**
+ * Component Ping Count
+ * @param param0 number; set nofication count, must be greater than 0
+ * @returns
+ */
 const PingCount: React.FC<PingCountProp> = ({ count }) => {
   const stringCount = count.toString().split("");
   const reverseCount: reverseCountProp = {

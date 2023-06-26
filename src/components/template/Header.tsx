@@ -7,6 +7,7 @@ export type HeaderProps = {
   data: { url: string; alt?: string; title: string };
   menu: MenuItemProp[];
   title: string;
+  ping: number;
 };
 /**
  * Component - Header
@@ -21,7 +22,7 @@ export type HeaderProps = {
  * @param menu.isToggle boolean;
  * @returns Header component
  */
-const Header: React.FC<HeaderProps> = ({ menu, data, title }) => {
+const Header: React.FC<HeaderProps> = ({ menu, data, title, ping }) => {
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const [items, setItems] = useState(menu || []);
@@ -54,7 +55,11 @@ const Header: React.FC<HeaderProps> = ({ menu, data, title }) => {
         />
       </nav>
       <nav className="mobile-navigation">
-        <BurgerButton isBurger={isActive} click={() => setActive(!isActive)} />
+        <BurgerButton
+          isBurger={isActive}
+          click={() => setActive(!isActive)}
+          ping={ping}
+        />
         <Navbar
           show={{ isActive, isClose }}
           menu={items}
