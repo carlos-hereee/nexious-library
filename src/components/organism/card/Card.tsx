@@ -1,9 +1,14 @@
-import { CardBodyProps, CardHeaderProps } from "@nxs-helpers/types";
-import { CardBody, CardHeader } from "@nxs-molecules";
+import {
+  CardBodyProps,
+  CardFooterProps,
+  CardHeaderProps,
+} from "@nxs-helpers/types";
+import { CardBody, CardHeader, CardFooter } from "@nxs-molecules";
 
 export type CardProps = {
   header: CardHeaderProps;
   body: CardBodyProps;
+  footer?: CardFooterProps;
 };
 /**
  * Component - Card
@@ -19,21 +24,16 @@ export type CardProps = {
  * @param hyperlink.link; string; link url
  * @param hasLink: boolean; the separator to notify component its working with
  *                          hyperlink
-
+ --footer 
+  @param content string; display footer data
  * @returns Card
  */
-const Card: React.FC<CardProps> = ({ header, body }) => {
+const Card: React.FC<CardProps> = ({ header, body, footer }) => {
   return (
     <div className="card">
       <CardHeader data={header} />
       <CardBody data={body} />
-      {/* {menu.map((m) =>
-        m.isToggle ? (
-          <NavButton data={m} key={m.uid} click={toggle} />
-        ) : (
-          <NavButton data={m} key={m.uid} click={click} />
-        )
-      )} */}
+      {footer && <CardFooter data={footer} />}
     </div>
   );
 };

@@ -13,6 +13,7 @@ export type { NavButtonProps } from "./buttons/NavButton";
 // card
 export { default as CardHeader } from "./card/CardHeader";
 export { default as CardBody } from "./card/CardBody";
+export { default as CardFooter } from "./card/CardFooter";
 
 // errors
 export { default as EmptySection } from "./errors/EmptySection";

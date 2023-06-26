@@ -1,4 +1,5 @@
 import { labels } from "@nxs-atoms/forms/labels";
+import { IconNames } from "@nxs-atoms";
 
 export type DataStringProps = { data: string; name?: string };
 export type LinkProp = { isLink: boolean; str: string; link: string };
@@ -28,4 +29,20 @@ export type CardBodyProps = {
   hyperlink: { word: string; link: string }[];
   hasLink?: boolean;
   uid: string;
+};
+export type CardFooterProps = {
+  data?: string;
+  buttons?: {
+    uid: string;
+    name: string;
+    icon: IconNames;
+  }[];
+  click: (e: IconItemProp) => void;
+};
+export type IconItemProp = {
+  uid: string;
+  name: string;
+  icon: IconNames;
+  isAlt?: boolean;
+  alt?: string;
 };

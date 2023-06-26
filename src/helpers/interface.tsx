@@ -1,6 +1,6 @@
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { IconNames } from "@nxs-atoms";
-import { HeroProp } from "./types";
+import { HeroProp, IconItemProp } from "@nxs-helpers/types";
 
 export interface IconProps {
   name: IconNames;
@@ -9,6 +9,7 @@ export interface IconProps {
   color?: string;
 }
 export interface IconButtonProps {
+  icon: IconProps;
   name: IconNames;
   hasLabel?: boolean;
   children?: JSX.Element;
@@ -17,23 +18,10 @@ export interface IconButtonProps {
   size?: SizeProp;
   spin?: string;
   color?: string;
-  data: {
-    uid: string;
-    name: string;
-    icon: IconNames;
-    isAlt: boolean;
-    alt?: string;
-  };
-  click: (e: {
-    uid: string;
-    name: string;
-    icon: IconNames;
-    isAlt: boolean;
-    alt?: string;
-  }) => void;
+  data: IconItemProp;
+  click: (e: IconItemProp) => void;
 }
 export interface CardButtonProps {
-  data: any;
   click: React.MouseEventHandler<HTMLButtonElement>;
   hasHero?: boolean;
   hero: HeroProp;

@@ -10,7 +10,12 @@ import { IconButtonProps } from "@nxs-helpers/interface";
  * @returns button with icon label
  */
 
+// type Props = {
+//   icon:
+// }
+
 const IconButton: React.FC<IconButtonProps> = ({
+  icon,
   name,
   hasLabel,
   label,
