@@ -2,21 +2,12 @@ import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 import { IconNames } from "@nxs-atoms";
 import { HeroProp } from "./types";
 
-export interface HyperlinkProps {
-  data: {
-    responseArr: string[];
-    isLink?: boolean;
-    link: string;
-    word: string;
-  };
-}
 export interface IconProps {
   name: IconNames;
   size?: SizeProp;
   spin?: string;
   color?: string;
 }
-
 export interface IconButtonProps {
   name: IconNames;
   hasLabel?: boolean;

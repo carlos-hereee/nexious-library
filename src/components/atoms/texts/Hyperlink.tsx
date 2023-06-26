@@ -1,16 +1,16 @@
-import { HyperlinkProps } from "@nxs-helpers/interface";
+import { LinkProp } from "@nxs-helpers/types";
 
-const Hyperlink: React.FC<HyperlinkProps> = ({ data }) => {
-  return (
-    <p>
-      <span>{data.responseArr[0]} </span>
-      {data.isLink && (
-        <a href={data.link} className="link">
-          {data.word}
-        </a>
-      )}
-      <span>{data.responseArr[1]}</span>
-    </p>
+type LinkProps = {
+  data: LinkProp;
+};
+
+const Hyperlink: React.FC<LinkProps> = ({ data }) => {
+  return data.isLink ? (
+    <a href={data.link} className="link">
+      {data.link}
+    </a>
+  ) : (
+    <span>{data.str} </span>
   );
 };
 export default Hyperlink;

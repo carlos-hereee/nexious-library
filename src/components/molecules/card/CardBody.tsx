@@ -1,20 +1,18 @@
 import { Hyperlink } from "@nxs-atoms";
 import { CardBodyProps } from "@nxs-helpers/types";
+import { getLinks } from "utils/getLinks";
 
 type Props = {
   data: CardBodyProps;
 };
 const CardBody: React.FC<Props> = ({ data }) => {
   const { hyperlink, response, hasLink, uid } = data;
+  const links = getLinks({ links: hyperlink, response });
+
   return (
     <div className="card-body">
       {hasLink ? (
-        hyperlink.map(({ word, link }) => (
-          <Hyperlink
-            data={{ word, responseArr: response.split(word), link }}
-            key={uid}
-          />
-        ))
+        links.map((l) => <Hyperlink data={l} key={l.str} />)
       ) : (
         <p>{response}</p>
       )}
