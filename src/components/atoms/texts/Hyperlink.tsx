@@ -15,11 +15,11 @@ type LinkProps = {
 
 const Hyperlink: React.FC<LinkProps> = ({ data }) => {
   return data.isLink ? (
-    <a href={data.link} className="link">
-      {data.link}
+    <a href={data.data} className="link">
+      {data.data}
     </a>
   ) : (
-    <span>{data.str} </span>
+    <span>{data.data} </span>
   );
 };
 export default Hyperlink;

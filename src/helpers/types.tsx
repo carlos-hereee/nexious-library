@@ -2,7 +2,7 @@ import { labels } from "@nxs-atoms/forms/labels";
 import { IconNames } from "@nxs-atoms";
 
 export type DataStringProps = { data: string; name?: string };
-export type LinkProp = { isLink: boolean; str: string; link: string };
+export type LinkProp = { data: string; isLink: boolean };
 export type HeroProp = { url: string; alt?: string; name?: string };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };

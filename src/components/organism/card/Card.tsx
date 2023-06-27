@@ -25,7 +25,8 @@ export type CardProps = {
  * @param hasLink: boolean; the separator to notify component its working with
  *                          hyperlink
  --footer 
-  @param content string; display footer data
+ * @param data.data string; display content on page
+ * @param data.buttons string[]; display any number of buttons
  * @returns Card
  */
 const Card: React.FC<CardProps> = ({ header, body, footer }) => {
