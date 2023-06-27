@@ -3,7 +3,7 @@ import { Icon, PingCount } from "@nxs-atoms";
 export type BurgerProps = {
   click: React.MouseEventHandler<HTMLButtonElement>;
   isBurger: boolean;
-  ping: number;
+  ping?: number;
 };
 
 /**
@@ -25,7 +25,7 @@ const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click, ping }) => {
       aria-label={isBurger ? "open menu" : "close menu"}
     >
       <Icon icon={isBurger ? "x" : "burger"} size="2x" />
-      {ping > 0 && <PingCount count={ping} />}
+      {ping && ping > 0 && <PingCount count={ping} />}
     </button>
   );
 };

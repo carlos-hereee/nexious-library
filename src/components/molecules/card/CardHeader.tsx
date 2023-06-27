@@ -15,7 +15,7 @@ type CardHeaderProp = {
  */
 const CardHeader: React.FC<CardHeaderProp> = ({ data }) => {
   return (
-    <div className="flex-g card-header">
+    <div className="flex-d-column card-header">
       <Heading data={data.title} />
       {data.hasHero && data.hero && <Hero data={data.hero} />}
       {data.subtitle && <Subtitle data={data.subtitle} />}

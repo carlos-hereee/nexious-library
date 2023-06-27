@@ -5,16 +5,16 @@ import { Navbar } from "@nxs-organism";
 import { MenuItemProp } from "@nxs-helpers/types";
 
 export type HeaderProps = {
-  data: { url: string; alt?: string; title: string };
+  logo: { url: string; alt?: string; title: string };
   menu: MenuItemProp[];
   title: string;
-  ping: number;
+  ping?: number;
 };
 /**
  * Component - Header
- * @param dara.url string; url pointing to asset
- * @param dara.alt string; alt tag to asset
- * @param dara.title string; logo title
+ * @param logo.url string; url pointing to asset
+ * @param logo.alt string; alt tag to asset
+ * @param logo.title string; logo title
  * @param menu.uid string; menu item uid
  * @param menu.name string; menu item name
  * @param menu.icon string; menu item icon name
@@ -23,7 +23,7 @@ export type HeaderProps = {
  * @param menu.isToggle boolean;
  * @returns Header component
  */
-const Header: React.FC<HeaderProps> = ({ menu, data, title, ping }) => {
+const Header: React.FC<HeaderProps> = ({ menu, logo, title, ping }) => {
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const [items, setItems] = useState(menu || []);
@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = ({ menu, data, title, ping }) => {
   return (
     <header>
       <Link to="/" className="navlink">
-        <Logo data={data} title={title} />
+        <Logo data={logo} title={title} />
       </Link>
       <nav className="primary-navigation">
         <Navbar
