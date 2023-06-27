@@ -5,11 +5,9 @@
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
-  gap: #{$rem};
+  gap: #{$rem05};
   min-width: 200px;
   max-width: 280px;
-  // background-color: #{$secondary-color2};
-  // color: #{$primary-text};
   text-decoration: none;
   .hero {
     border-radius: 1rem;
@@ -18,10 +16,8 @@
   }
   &:has(> div > .ribbon) {
     position: relative;
-    // height: auto;
     max-width: 275px;
     .btn-primary {
-      // background-color: #{$secondary-color2};
       margin: auto;
     }
   }
@@ -72,9 +68,7 @@
   top: 0.3rem;
   right: -2.5rem;
   rotate: 35deg;
-  // background-color: purple;
   border: 1px solid white;
-  // color: white;
   padding: 0.25rem 4rem;
 }
 .cancel-row {

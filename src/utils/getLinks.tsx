@@ -4,6 +4,11 @@ type Links = {
   links: { word: string; link: string }[];
   response: string;
 };
+/**
+ * TODO
+ * @param param0
+ * @returns
+ */
 export const getLinks = ({ links, response }: Links): LinkProp[] => {
   let arr: LinkProp[] = [];
 
