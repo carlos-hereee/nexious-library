@@ -18,15 +18,20 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
   const [year, setYear] = useState<number>(0);
   const [date, setDate] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
+  const [weeks, setWeeks] = useState<number>(4);
 
   useEffect(() => value && updateValue(value), [value]);
 
   const updateValue = (e: Date) => {
-    setDay(e.getDay());
+    const maxDays = new Date(e.getFullYear(), e.getMonth(), 0).getDate();
+    const start = e.getDay();
+    const maxWeeks = (maxDays + start) / 7;
+    setDay(start);
     setMonth(e.getMonth());
     setYear(e.getFullYear());
     setDate(e.getDate());
-    setMax(new Date(e.getFullYear(), e.getMonth(), 0).getDate());
+    setMax(maxDays);
+    setWeeks(Math.ceil(maxWeeks));
   };
   const monthChange = (e: string) => {
     if (e === "start") {
@@ -64,7 +69,7 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
       <div className="flex-d-row">
         <CalendarNavigation month={month} year={year} click={monthChange} />
       </div>
-      <CalendarView date={{ date, day, max }} />
+      <CalendarView date={{ date, day, max }} weeks={weeks} />
     </div>
   );
 };

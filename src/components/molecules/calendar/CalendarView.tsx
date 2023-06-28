@@ -1,9 +1,10 @@
-import { days, monthDays } from "@nxs-helpers/data";
+import { days, monthWeeks } from "@nxs-helpers/data";
 
 type CalendarViewProps = {
   date: { date: number; day: number; max: number };
+  weeks: number | 4 | 5 | 6;
 };
-const CalendarView: React.FC<CalendarViewProps> = ({ date }) => {
+const CalendarView: React.FC<CalendarViewProps> = ({ date, weeks }) => {
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -14,7 +15,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ date }) => {
         ))}
       </div>
       <div className="flex-w">
-        {monthDays.map((md) =>
+        {monthWeeks[weeks].map((md) =>
           md > date.day && md - date.day <= date.max ? (
             <button key={md} className="btn btn-calendar-tile">
               {md - date.day}
