@@ -17,13 +17,9 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
   const [year, setYear] = useState<number>(0);
   const [date, setDate] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
-  const [navigate, setNavigation] = useState();
 
-  useEffect(() => {
-    if (value) {
-      updateValue(value);
-    }
-  }, [value]);
+  useEffect(() => value && updateValue(value), [value]);
+
   const updateValue = (e: Date) => {
     setDay(e.getDay());
     setMonth(e.getMonth());
@@ -36,33 +32,34 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
       updateValue(value);
     }
     if (e === "last") {
-      updateValue(new Date(year, 12, 0));
+      updateValue(new Date(year, 12, 1));
     }
     if (e === "prev") {
       if (month === 0) {
-        updateValue(new Date(year - 1, 12, 0));
+        updateValue(new Date(year - 1, 12, 1));
       } else if (month <= 12) {
-        updateValue(new Date(year, month - 1, 0));
+        updateValue(new Date(year, month - 1, 1));
       }
     }
     if (e === "next") {
-      console.log("month", month);
       if (month === 11) {
-        updateValue(new Date(year + 1, 0, 0));
-      } else if (month <= 10) updateValue(new Date(year, month + 1, 0));
+        updateValue(new Date(year + 1, 1, 1));
+      }
+      if (month < 11) {
+        console.log("name", new Date(year, month + 1, 1));
+        updateValue(new Date(year, month + 1, 1));
+      }
     }
   };
   return (
     <div className="calendar flex-d-column">
-      {month && year && (
-        <div className="flex-d-row">
-          <CalendarNavigation month={month} year={year} click={monthChange} />
-          <button className="btn btn-reset" onClick={() => updateValue(value)}>
-            Reset
-          </button>
-        </div>
-      )}
-      {date && day && max && <CalendarView date={{ date, day, max }} />}
+      <div className="flex-d-row">
+        <CalendarNavigation month={month} year={year} click={monthChange} />
+        <button className="btn btn-reset" onClick={() => updateValue(value)}>
+          Reset
+        </button>
+      </div>
+      <CalendarView date={{ date, day, max }} />
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import { months } from "@nxs-helpers/data";
-import { Heading } from "main";
+import { Heading } from "@nxs-atoms";
 
 type CalendarNavProps = {
   month: number;
@@ -34,7 +34,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
       >
         {"<"}
       </button>
-      {month && <Heading data={`${months[month]} ${year}`} />}
+      <Heading data={`${months[month]} ${year}`} />
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
