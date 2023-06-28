@@ -4,7 +4,7 @@ import { Heading } from "main";
 type CalendarNavProps = {
   month: number;
   year: number;
-  click: () => void;
+  click: (e: string) => void;
 };
 /**
  * Component Calendar Navigation
@@ -23,14 +23,14 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
-        onClick={click}
+        onClick={() => click("start")}
       >
         {"<<"}
       </button>
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
-        onClick={click}
+        onClick={() => click("prev")}
       >
         {"<"}
       </button>
@@ -38,14 +38,14 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
-        onClick={click}
+        onClick={() => click("next")}
       >
         {">"}
       </button>
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
-        onClick={click}
+        onClick={() => click("last")}
       >
         {">>"}
       </button>
