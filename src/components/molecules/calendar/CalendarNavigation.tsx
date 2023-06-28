@@ -1,9 +1,8 @@
 import { months } from "@nxs-helpers/data";
 
 type CalendarNavProps = {
-  month: number;
-  day: number;
-  year: number;
+  month?: number;
+  year?: number;
 };
 /**
  * Component Calendar Navigation
@@ -12,11 +11,7 @@ type CalendarNavProps = {
  * @param year number
  * @returns
  */
-const CalendarNavigation: React.FC<CalendarNavProps> = ({
-  month,
-  day,
-  year,
-}) => {
+const CalendarNavigation: React.FC<CalendarNavProps> = ({ month, year }) => {
   return (
     <div className="calendar-navigation flex-g">
       <button
@@ -32,7 +27,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
         {"<"}
       </button>
       <h2>
-        {months[month]} {day}, {year}
+        {month && months[month]} {year}
       </h2>
       <button
         type="button"

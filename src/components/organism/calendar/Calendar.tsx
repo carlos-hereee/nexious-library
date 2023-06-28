@@ -3,7 +3,7 @@ import CalendarView from "@nxs-molecules/calendar/CalendarView";
 import { useEffect, useState } from "react";
 
 type CalendarProps = {
-  value?: Date;
+  value: Date;
   onChange?: string;
 };
 /**
@@ -12,22 +12,23 @@ type CalendarProps = {
  * @returns
  */
 const Calendar: React.FC<CalendarProps> = ({ value }) => {
-  const [day, setDay] = useState(new Date().getDay());
-  const [month, setMonth] = useState(new Date().getMonth());
-  const [year, setYear] = useState(new Date().getFullYear());
+  const [day, setDay] = useState<number>();
+  const [month, setMonth] = useState<number>();
+  const [year, setYear] = useState<number>();
+  const [date, setDate] = useState<number>();
 
   useEffect(() => {
     if (value) {
       setDay(value.getDay());
       setMonth(value.getMonth());
       setYear(value.getFullYear());
+      setDate(value.getDate());
     }
   }, [value]);
   return (
     <div className="calendar flex-d-column">
-      <CalendarNavigation month={month} day={day} year={year} />
-      {/* <p>Calendar view </p> */}
-      <CalendarView />
+      <CalendarNavigation month={month} year={year} />
+      {date && day && <CalendarView date={{ date, day }} />}
     </div>
   );
 };

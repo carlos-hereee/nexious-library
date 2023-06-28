@@ -7,6 +7,9 @@
 .btn-calendar-tile {
   flex: 1 0 13%;
 }
+.day {
+  padding: #{$rem025};
+}
 // .react-calendar {
 //   display: flex;
 //   flex-direction: column;
