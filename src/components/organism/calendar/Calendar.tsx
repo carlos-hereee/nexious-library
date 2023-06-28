@@ -16,6 +16,7 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
   const [month, setMonth] = useState<number>();
   const [year, setYear] = useState<number>();
   const [date, setDate] = useState<number>();
+  const [max, setMax] = useState<number>();
 
   useEffect(() => {
     if (value) {
@@ -23,12 +24,13 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
       setMonth(value.getMonth());
       setYear(value.getFullYear());
       setDate(value.getDate());
+      setMax(new Date(value.getFullYear(), value.getMonth(), 0).getDate());
     }
   }, [value]);
   return (
     <div className="calendar flex-d-column">
       <CalendarNavigation month={month} year={year} />
-      {date && day && <CalendarView date={{ date, day }} />}
+      {date && day && max && <CalendarView date={{ date, day, max }} />}
     </div>
   );
 };

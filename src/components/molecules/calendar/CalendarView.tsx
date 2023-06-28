@@ -4,7 +4,6 @@ type CalendarViewProps = {
   date: { date: number; day: number; max: number };
 };
 const CalendarView: React.FC<CalendarViewProps> = ({ date }) => {
-  console.log(days[date.day - 1]);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -16,7 +15,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ date }) => {
       </div>
       <div className="flex-w">
         {monthDays.map((md) =>
-          md > date.day && date.day < 31 ? (
+          md > date.day && md - date.day <= date.max ? (
             <button key={md} className="btn btn-calendar-tile">
               {md - date.day}
             </button>
