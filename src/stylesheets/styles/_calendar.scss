@@ -7,6 +7,10 @@
 .btn-calendar-tile {
   flex: 1 0 13%;
 }
+.calendar-icon-container .btn-icon {
+  max-width: fit-content;
+  min-width: fit-content;
+}
 .day {
   padding: #{$rem025};
 }
