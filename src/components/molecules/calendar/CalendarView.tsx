@@ -20,7 +20,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ date }) => {
               {md - date.day}
             </button>
           ) : (
-            <button type="button" className="btn btn-calendar-tile">
+            <button key={md} type="button" className="btn btn-calendar-tile">
               {" "}
             </button>
           )

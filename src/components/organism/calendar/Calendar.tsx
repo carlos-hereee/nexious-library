@@ -27,9 +27,12 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
       setMax(new Date(value.getFullYear(), value.getMonth(), 0).getDate());
     }
   }, [value]);
+  const monthChange = () => {};
   return (
     <div className="calendar flex-d-column">
-      <CalendarNavigation month={month} year={year} />
+      {month && year && (
+        <CalendarNavigation month={month} year={year} click={monthChange} />
+      )}
       {date && day && max && <CalendarView date={{ date, day, max }} />}
     </div>
   );

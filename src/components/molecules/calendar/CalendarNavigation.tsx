@@ -1,8 +1,10 @@
 import { months } from "@nxs-helpers/data";
+import { Heading } from "main";
 
 type CalendarNavProps = {
-  month?: number;
-  year?: number;
+  month: number;
+  year: number;
+  click: () => void;
 };
 /**
  * Component Calendar Navigation
@@ -11,33 +13,39 @@ type CalendarNavProps = {
  * @param year number
  * @returns
  */
-const CalendarNavigation: React.FC<CalendarNavProps> = ({ month, year }) => {
+const CalendarNavigation: React.FC<CalendarNavProps> = ({
+  month,
+  year,
+  click,
+}) => {
   return (
     <div className="calendar-navigation flex-g">
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
+        onClick={click}
       >
         {"<<"}
       </button>
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
+        onClick={click}
       >
         {"<"}
       </button>
-      <h2>
-        {month && months[month]} {year}
-      </h2>
+      {month && <Heading data={`${months[month]} ${year}`} />}
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
+        onClick={click}
       >
         {">"}
       </button>
       <button
         type="button"
         className="btn btn-calendar btn-calendar-navigation"
+        onClick={click}
       >
         {">>"}
       </button>
