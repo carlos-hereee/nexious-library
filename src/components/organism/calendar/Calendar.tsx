@@ -1,3 +1,5 @@
+import { CalendarNavigation } from "@nxs-molecules";
+import CalendarView from "@nxs-molecules/calendar/CalendarView";
 import { useEffect, useState } from "react";
 
 type CalendarProps = {
@@ -21,10 +23,11 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
       setYear(value.getFullYear());
     }
   }, [value]);
-  console.log("value", day, month, year);
   return (
     <div className="calendar flex-d-column">
-      <p>Calendar view </p>
+      <CalendarNavigation month={month} day={day} year={year} />
+      {/* <p>Calendar view </p> */}
+      <CalendarView />
     </div>
   );
 };
