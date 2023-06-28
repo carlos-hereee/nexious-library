@@ -37,13 +37,14 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
     if (e === "prev") {
       if (month === 0) {
         updateValue(new Date(year - 1, 12, 1));
-      } else if (month <= 12) {
+      }
+      if (month <= 12) {
         updateValue(new Date(year, month - 1, 1));
       }
     }
     if (e === "next") {
       if (month === 11) {
-        updateValue(new Date(year + 1, 1, 1));
+        updateValue(new Date(year + 1, 1, 0));
       }
       if (month < 11) {
         console.log("name", new Date(year, month + 1, 1));
