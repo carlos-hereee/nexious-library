@@ -25,6 +25,9 @@ export { default as Spinner } from "./errors/Spinner";
 export { default as FieldQuantity } from "./forms/FieldQuantity";
 export { default as InputSelect } from "./forms/Select";
 
+// navigation
+export { default as CalendarNavigation } from "./navigation/CalendarNavigation";
+
 // tables
 export { default as ColumnGroup } from "./table/ColumnGroup";
 export { default as TableRow } from "./table/TableRow";
