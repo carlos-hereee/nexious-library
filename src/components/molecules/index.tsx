@@ -28,7 +28,6 @@ export { default as InputSelect } from "./forms/Select";
 // calendar
 export { default as CalendarNavigation } from "./calendar/CalendarNavigation";
 export { default as CalendarView } from "./calendar/CalendarView";
-export { default as TileContent } from "./calendar/TileContent";
 
 // tables
 export { default as ColumnGroup } from "./table/ColumnGroup";

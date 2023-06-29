@@ -1,5 +1,5 @@
 import { days, monthWeeks } from "@nxs-helpers/data";
-import { TileContent } from "@nxs-molecules";
+import { TileContent } from "@nxs-atoms";
 
 type CalendarViewProps = {
   date: { date: number; day: number; max: number };
