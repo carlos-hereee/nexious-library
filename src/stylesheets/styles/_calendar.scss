@@ -53,14 +53,18 @@
 }
 .btn-calendar-tile {
   position: relative;
+  min-height: 50px;
   .icon-tile-ping {
     position: absolute;
-    top: 0;
-    right: 0;
+    top: -9%;
+    right: -3%;
     background-color: #{$ping-color};
     padding: #{$rem025};
     border-radius: 100%;
     color: #{$dark-primary};
+  }
+  @include devices(mobile) {
+    min-height: 40px;
   }
 }
 // .react-calendar {
