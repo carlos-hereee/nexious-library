@@ -22,10 +22,11 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
   click,
 }) => {
   return (
-    <div className="calendar-navigation flex-j-between">
+    <div className="calendar-navigation">
       <div className="flex-d-row">
         {previous.map((p) => (
           <IconButton
+            key={p.label}
             click={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
           />
@@ -37,6 +38,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
       <div className="calendar-navigation-next-buttons flex-d-row">
         {next.map((p) => (
           <IconButton
+            key={p.label}
             click={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
           />

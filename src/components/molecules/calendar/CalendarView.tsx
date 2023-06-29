@@ -9,12 +9,12 @@ const CalendarView: React.FC<CalendarViewProps> = ({ date, weeks }) => {
     <div className="calendar-view">
       <div className="calendar-week flex-g">
         {days.map((w) => (
-          <span key={w} className="day">
+          <span key={w} className="day text-overflow">
             {w}
           </span>
         ))}
       </div>
-      <div className="flex-w">
+      <div className="calendar-view-month">
         {monthWeeks[weeks].map((md) =>
           md > date.day && md - date.day <= date.max ? (
             <button key={md} className="btn btn-calendar-tile">

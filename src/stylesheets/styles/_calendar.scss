@@ -2,11 +2,36 @@
 
 .calendar {
   display: flex;
+  overflow: hidden;
 }
+
 .calendar-week .day,
 .btn-calendar-tile {
   flex: 1 0 13%;
+  max-width: auto;
+  min-width: auto;
 }
+
+.calendar-navigation {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: #{$rem05};
+  .btn-icon {
+    min-width: auto;
+    max-width: auto;
+  }
+}
+.calendar-view-month {
+  display: flex;
+  flex-wrap: wrap;
+  gap: #{$rem025};
+  @include devices(mobile) {
+    gap: 0;
+  }
+}
+
 .calendar-navigation .heading {
   text-align: center;
 }
@@ -17,9 +42,7 @@
   max-width: fit-content;
   min-width: fit-content;
 }
-.day {
-  padding: #{$rem025};
-}
+
 // .react-calendar {
 //   display: flex;
 //   flex-direction: column;
