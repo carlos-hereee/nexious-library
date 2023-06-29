@@ -10,6 +10,9 @@
   flex: 1 0 13%;
   max-width: auto;
   min-width: auto;
+  @include devices(mobile) {
+    width: 40px;
+  }
 }
 
 .calendar-navigation {
@@ -22,13 +25,19 @@
     min-width: auto;
     max-width: auto;
   }
+  @include devices(mobile) {
+    .btn-start,
+    .btn-last {
+      display: none;
+    }
+  }
 }
 .calendar-view-month {
   display: flex;
   flex-wrap: wrap;
   gap: #{$rem025};
   @include devices(mobile) {
-    gap: 0;
+    gap: #{$rem025};
   }
 }
 
