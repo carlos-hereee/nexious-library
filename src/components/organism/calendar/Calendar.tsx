@@ -41,19 +41,19 @@ const Calendar: React.FC<CalendarProps> = ({ value, events, onDayClick }) => {
   useEffect(() => value && updateValue(value), [value]);
   useEffect(() => {
     if (events && events.length > 0) {
-      if (month) {
+      if (month || year) {
         let thisMonth = events.filter(({ date }) => {
-          return new Date(date).getMonth() === month;
+          const current = new Date(date);
+          return current.getMonth() === month && current.getFullYear() === year;
         });
         setEventFormat(thisMonth.map((m) => new Date(m.date).getDate()));
       }
     }
-  }, [JSON.stringify(events), month]);
+  }, [JSON.stringify(events), month, year]);
 
   const updateValue = (e: Date) => {
     const maxDays = new Date(e.getFullYear(), e.getMonth(), 0).getDate();
     const start = e.getDay();
-    console.log("e.getMonth()", e.getMonth());
     const maxWeeks = (maxDays + start) / 7;
     setDay(start);
     setMonth(e.getMonth());
