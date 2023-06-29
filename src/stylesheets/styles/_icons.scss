@@ -3,26 +3,10 @@
 .icon {
   min-width: 1rem;
 }
-.social {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  // color: #{$secondary-text};
-  .title {
-    text-align: center;
-  }
-}
-.social-icons {
-  display: flex;
-  justify-content: center;
-  gap: 0.5rem;
-}
+
 .instagram {
   color: #{$instagram};
 }
 .twitter {
   color: #{$twitter};
 }
-// .loading {
-//   // color: #{$secondary-color2};
-// }

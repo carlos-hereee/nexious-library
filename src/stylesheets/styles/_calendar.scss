@@ -1,4 +1,4 @@
-@import "../vars/variables.scss", "../vars/mixins.scss";
+@import "../vars/_variables.scss", "../vars/_mixins.scss";
 
 .calendar {
   display: flex;
@@ -6,6 +6,12 @@
 .calendar-week .day,
 .btn-calendar-tile {
   flex: 1 0 13%;
+}
+.calendar-navigation .heading {
+  text-align: center;
+}
+.calendar-navigation-next-buttons .btn-icon {
+  justify-content: flex-end;
 }
 .calendar-icon-container .btn-icon {
   max-width: fit-content;

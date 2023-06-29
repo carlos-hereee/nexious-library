@@ -23,19 +23,25 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
 }) => {
   return (
     <div className="calendar-navigation flex-j-between">
-      {previous.map((p) => (
-        <IconButton
-          click={() => click(p.label)}
-          icon={{ name: p.label, icon: p.icon }}
-        />
-      ))}
-      <Heading data={`${months[date.month]} ${date.year}`} />
-      {next.map((p) => (
-        <IconButton
-          click={() => click(p.label)}
-          icon={{ name: p.label, icon: p.icon }}
-        />
-      ))}
+      <div className="flex-d-row">
+        {previous.map((p) => (
+          <IconButton
+            click={() => click(p.label)}
+            icon={{ name: p.label, icon: p.icon }}
+          />
+        ))}
+      </div>
+      <div className="heading-container">
+        <Heading data={`${months[date.month]} ${date.year}`} />
+      </div>
+      <div className="calendar-navigation-next-buttons flex-d-row">
+        {next.map((p) => (
+          <IconButton
+            click={() => click(p.label)}
+            icon={{ name: p.label, icon: p.icon }}
+          />
+        ))}
+      </div>
     </div>
   );
 };
