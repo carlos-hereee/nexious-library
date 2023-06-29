@@ -3,6 +3,7 @@ $danger: #f93131;
 $success: #320064;
 $instagram: #ea4c52;
 $twitter: #1da1f2;
+$ping-color: #eaab4c;
 
 // default colors
 $light: #fafafa;
@@ -26,20 +27,3 @@ $rem05: 0.5rem;
 $rem025: 0.25rem;
 // border-radius :circle
 $rounded-full: 100%;
-
-code {
-  $danger: $danger;
-  $success: $success;
-  $instagram: $instagram;
-  $twitter: $twitter;
-  $dark: $dark;
-  $max-lines: $max-lines;
-  $line-height: $line-height;
-  $tablet: $tablet;
-  $mobile: $mobile;
-  $mini: $mini;
-  $rem: $rem;
-  $rem05: $rem05;
-  $rem025: $rem025;
-  $rounded-full: $rounded-full;
-}

@@ -51,7 +51,18 @@
   max-width: fit-content;
   min-width: fit-content;
 }
-
+.btn-calendar-tile {
+  position: relative;
+  .icon-tile-ping {
+    position: absolute;
+    top: 0;
+    right: 0;
+    background-color: #{$ping-color};
+    padding: #{$rem025};
+    border-radius: 100%;
+    color: #{$dark-primary};
+  }
+}
 // .react-calendar {
 //   display: flex;
 //   flex-direction: column;
