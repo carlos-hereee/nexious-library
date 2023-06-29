@@ -1,11 +1,18 @@
 import { days, monthWeeks } from "@nxs-helpers/data";
+import { TileContent } from "@nxs-molecules";
 
 type CalendarViewProps = {
   date: { date: number; day: number; max: number };
   weeks: number | 4 | 5 | 6;
   click: (e: number) => void;
+  events?: any[];
 };
-const CalendarView: React.FC<CalendarViewProps> = ({ date, weeks, click }) => {
+const CalendarView: React.FC<CalendarViewProps> = ({
+  date,
+  weeks,
+  click,
+  events,
+}) => {
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -24,13 +31,19 @@ const CalendarView: React.FC<CalendarViewProps> = ({ date, weeks, click }) => {
               onClick={() => click(md - date.day)}
             >
               {md - date.day}
+              {events?.includes(md - date.day) ? (
+                <TileContent
+                  tile={events.filter((e) => e === md - date.day).length}
+                />
+              ) : (
+                ""
+              )}
             </button>
           ) : (
             <button
               key={md}
               type="button"
               className="btn btn-calendar-tile"
-              // disabled
               onClick={() => click(md - date.day)}
             >
               {" "}
