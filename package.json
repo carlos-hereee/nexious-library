@@ -21,42 +21,42 @@
     },
     "./@nxs-atoms": {
       "import": {
-        "types": "./dist/esm/atoms/index.d.ts",
-        "default": "./dist/esm/atoms/index.js"
+        "types": "./dist/esm/components/atoms/index.d.ts",
+        "default": "./dist/esm/components/atoms/index.js"
       },
       "require": {
-        "types": "./dist/cjs/atoms/index.d.ts",
-        "default": "./dist/cjs/atoms/index.cjs"
+        "types": "./dist/cjs/components/atoms/index.d.ts",
+        "default": "./dist/cjs/components/atoms/index.cjs"
       }
     },
     "./@nxs-molecules": {
       "import": {
-        "types": "./dist/esm/molecules/index.d.ts",
-        "default": "./dist/esm/molecules/index.js"
+        "types": "./dist/esm/components/molecules/index.d.ts",
+        "default": "./dist/esm/components/molecules/index.js"
       },
       "require": {
-        "types": "./dist/cjs/molecules/index.d.ts",
-        "default": "./dist/cjs/molecules/index.cjs"
+        "types": "./dist/cjs/components/molecules/index.d.ts",
+        "default": "./dist/cjs/components/molecules/index.cjs"
       }
     },
     "./@nxs-organism": {
       "import": {
-        "types": "./dist/esm/organism/index.d.ts",
-        "default": "./dist/esm/organism/index.js"
+        "types": "./dist/esm/components/organism/index.d.ts",
+        "default": "./dist/esm/components/organism/index.js"
       },
       "require": {
-        "types": "./dist/cjs/organism/index.d.ts",
-        "default": "./dist/cjs/organism/index.cjs"
+        "types": "./dist/cjs/components/organism/index.d.ts",
+        "default": "./dist/cjs/components/organism/index.cjs"
       }
     },
     "./@nxs-template": {
       "import": {
-        "types": "./dist/esm/template/index.d.ts",
-        "default": "./dist/esm/template/index.js"
+        "types": "./dist/esm/components/template/index.d.ts",
+        "default": "./dist/esm/components/template/index.js"
       },
       "require": {
-        "types": "./dist/cjs/template/index.d.ts",
-        "default": "./dist/cjs/template/index.cjs"
+        "types": "./dist/cjs/components/template/index.d.ts",
+        "default": "./dist/cjs/components/template/index.cjs"
       }
     },
     "./@nxs-math": {
@@ -70,14 +70,6 @@
       }
     },
     "./@index.css": "./dist/css/index.css"
-  },
-  "_moduleAliases": {
-    "@nxs-atoms": "dist/esm/atoms",
-    "@nxs-molecules": "dist/esm/molecules",
-    "@nxs-organism": "dist/esm/organism",
-    "@nxs-template": "dist/esm/template",
-    "@nxs-math": "dist/esm/math",
-    "@nxs-helpers": "dist/esm/helpers"
   },
   "scripts": {
     "nodemon": "nodemon",

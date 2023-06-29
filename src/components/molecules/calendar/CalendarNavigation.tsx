@@ -1,11 +1,12 @@
 import { months } from "@nxs-helpers/data";
-import { Button, Heading, IconNames } from "@nxs-atoms";
+import { Heading, IconNames } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 
 type CalendarNavProps = {
-  month: number;
-  year: number;
+  date: { month: number; year: number };
   click: (e: string) => void;
+  previous: { label: string; icon: IconNames }[];
+  next: { label: string; icon: IconNames }[];
 };
 /**
  * Component Calendar Navigation
@@ -15,18 +16,11 @@ type CalendarNavProps = {
  * @returns
  */
 const CalendarNavigation: React.FC<CalendarNavProps> = ({
-  month,
-  year,
+  date,
+  previous,
+  next,
   click,
 }) => {
-  const previous: { label: string; icon: IconNames }[] = [
-    { label: "start", icon: "first" },
-    { label: "prev", icon: "left" },
-  ];
-  const next: { label: string; icon: IconNames }[] = [
-    { label: "next", icon: "right" },
-    { label: "last", icon: "last" },
-  ];
   return (
     <div className="calendar-navigation flex-j-between">
       {previous.map((p) => (
@@ -35,7 +29,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = ({
           icon={{ name: p.label, icon: p.icon }}
         />
       ))}
-      <Heading data={`${months[month]} ${year}`} />
+      <Heading data={`${months[date.month]} ${date.year}`} />
       {next.map((p) => (
         <IconButton
           click={() => click(p.label)}

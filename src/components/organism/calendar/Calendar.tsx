@@ -1,5 +1,6 @@
 import { CalendarNavigation, IconButton } from "@nxs-molecules";
 import CalendarView from "@nxs-molecules/calendar/CalendarView";
+import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
 
 type CalendarProps = {
@@ -18,6 +19,15 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
   const [date, setDate] = useState<number>(0);
   const [max, setMax] = useState<number>(0);
   const [weeks, setWeeks] = useState<number>(4);
+
+  const previous: { label: string; icon: IconNames }[] = [
+    { label: "start", icon: "first" },
+    { label: "prev", icon: "left" },
+  ];
+  const next: { label: string; icon: IconNames }[] = [
+    { label: "next", icon: "right" },
+    { label: "last", icon: "last" },
+  ];
 
   useEffect(() => value && updateValue(value), [value]);
 
@@ -64,7 +74,12 @@ const Calendar: React.FC<CalendarProps> = ({ value }) => {
           icon={{ icon: "refresh" }}
         />
       </div>
-      <CalendarNavigation month={month} year={year} click={monthChange} />
+      <CalendarNavigation
+        date={{ month, year }}
+        click={monthChange}
+        previous={previous}
+        next={next}
+      />
       <CalendarView date={{ date, day, max }} weeks={weeks} />
     </div>
   );
