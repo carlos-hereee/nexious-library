@@ -27,20 +27,31 @@ const Header: React.FC<HeaderProps> = ({ menu, logo, title, ping }) => {
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const [items, setItems] = useState(menu || []);
+  const [lan, setLan] = useState<string>();
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
     let toggle = items.map((i) => {
-      return i.uid === e.uid ? { ...i, isAlt: !i.isAlt } : i;
+      if (i.uid === e.uid) {
+        setLanguage(i, i.isAlt);
+        return { ...i, isAlt: !i.isAlt };
+      }
+      return i;
     });
     setItems(toggle);
   };
-
+  const setLanguage = (item: MenuItemProp, isAlt?: boolean) => {
+    return isAlt ? setLan(item.name) : item.alt && setLan(item.alt);
+  };
   useEffect(() => {
+    menu.forEach((m) => {
+      if (m.icon === "flag") setLanguage(m, !m.isAlt);
+    });
     const initClose = () => setClose(true);
     document.addEventListener("animationend", initClose, true);
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
+  console.log("lan", lan);
 
   return (
     <header>
