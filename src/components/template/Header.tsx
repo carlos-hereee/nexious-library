@@ -5,10 +5,10 @@ import { Navbar } from "@nxs-organism";
 import { MenuItemProp } from "@nxs-helpers/types";
 
 export type HeaderProps = {
-  logo: { url: string; alt?: string; title: string };
+  logo: { url: string; alt?: string; name: string };
   menu: MenuItemProp[];
-  title: string;
   ping?: number;
+  setLanguage?: (e: string) => void;
 };
 /**
  * Component - Header
@@ -23,40 +23,58 @@ export type HeaderProps = {
  * @param menu.isToggle boolean;
  * @returns Header component
  */
-const Header: React.FC<HeaderProps> = ({ menu, logo, title, ping }) => {
+const Header: React.FC<HeaderProps> = (props) => {
+  const { menu, logo, ping, setLanguage } = props;
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const [items, setItems] = useState(menu || []);
-  const [lan, setLan] = useState<string>();
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
     let toggle = items.map((i) => {
       if (i.uid === e.uid) {
-        setLanguage(i, i.isAlt);
+        setLan(i, i.isAlt);
         return { ...i, isAlt: !i.isAlt };
       }
       return i;
     });
     setItems(toggle);
   };
-  const setLanguage = (item: MenuItemProp, isAlt?: boolean) => {
-    return isAlt ? setLan(item.name) : item.alt && setLan(item.alt);
+  const setLan = (item: MenuItemProp, isAlt?: boolean) => {
+    if (setLanguage) {
+      // return isAlt ? setData(item.name) : item.alt && setData(item.alt);
+      return isAlt ? setLanguage(item.name) : item.alt && setLanguage(item.alt);
+    }
   };
   useEffect(() => {
-    menu.forEach((m) => {
-      if (m.icon === "flag") setLanguage(m, !m.isAlt);
-    });
+    menu.forEach((m) => m.icon === "flag" && setLan(m, !m.isAlt));
     const initClose = () => setClose(true);
     document.addEventListener("animationend", initClose, true);
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
-  console.log("lan", lan);
 
+  // useEffect(() => {
+  //   if (data === "english" || data === "ingles") {
+  //     document.documentElement.setAttribute("lang", "en-US");
+  //   }
+  //   if (data === "espanol" || data === "spanish") {
+  //     const inEnglish = new Intl.DisplayNames(["en"], { type: "region" });
+  //     const inSpanish = new Intl.DisplayNames(["es"], { type: "region" });
+
+  //     console.log(inEnglish.of("US"));
+  //     // Expected output: "United States"
+
+  //     console.log(inSpanish.of("US"));
+  //     // Expected output: "美國"
+
+  //     // document.documentElement.setAttribute("lang", "es-US");
+  //   }
+  // }, [data]);
+  // console.log("data", data);
   return (
     <header>
       <Link to="/" className="navlink">
-        <Logo data={logo} title={title} />
+        <Logo data={logo} />
       </Link>
       <nav className="primary-navigation">
         <Navbar
