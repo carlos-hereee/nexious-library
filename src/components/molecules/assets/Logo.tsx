@@ -4,7 +4,6 @@ import { capFirstChar } from "utils/text";
 
 export type LogoProps = {
   data: HeroProp;
-  title: string;
   name?: string;
   logoName?: string;
 };
@@ -17,8 +16,10 @@ export type LogoProps = {
  * @param logoName string; add an optional classname for logo asset
  * @returns image component
  */
-const Logo: React.FC<LogoProps> = ({ data, name, title, logoName }) => {
-  let heading = title.split(" ").map((t) => capFirstChar(t));
+const Logo: React.FC<LogoProps> = ({ data, name, logoName }) => {
+  let heading = data.name
+    ? data.name.split(" ").map((t) => capFirstChar(t))
+    : [""];
   return (
     <div className={name ? `logo ${name}` : "logo"}>
       <Heading data={heading.join(" ")} />
