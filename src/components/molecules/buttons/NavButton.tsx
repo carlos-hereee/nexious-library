@@ -15,17 +15,10 @@ export type NavButtonProps = {
 const NavButton: React.FC<NavButtonProps> = ({ data, click }) => {
   return (
     <li className="nav-btn">
-      {data.isAlt ? (
-        <IconButton
-          icon={{ ...data, label: data.alt }}
-          click={() => click(data)}
-        />
-      ) : (
-        <IconButton
-          icon={{ ...data, label: data.name }}
-          click={() => click(data)}
-        />
-      )}
+      <IconButton
+        icon={{ ...data, label: data.name }}
+        click={() => click(data)}
+      />
     </li>
   );
 };

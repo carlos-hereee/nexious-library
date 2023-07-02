@@ -27,33 +27,23 @@ const Header: React.FC<HeaderProps> = (props) => {
   const { menu, logo, ping, setLanguage } = props;
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
-  const [items, setItems] = useState(menu || []);
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
-    let toggle = items.map((i) => {
-      if (i.uid === e.uid) {
-        setLan(i, i.isAlt);
-        return { ...i, isAlt: !i.isAlt };
-      }
-      return i;
-    });
-    setItems(toggle);
+    if (e.icon === "flag") setLan(e);
   };
-  const setLan = (item: MenuItemProp, isAlt?: boolean) => {
-    if (setLanguage && item.alt) {
-      const lan = isAlt ? item.name : item.alt;
-      if (lan === "spanish" || lan === "espanol") {
-        document.documentElement.setAttribute("lang", "es-US");
-      }
-      if (lan === "english" || lan === "ingles") {
+  const setLan = (item: MenuItemProp) => {
+    if (setLanguage) {
+      if (item.name === "espanol") {
         document.documentElement.setAttribute("lang", "en-US");
       }
-      return setLanguage(lan);
+      if (item.name === "english") {
+        document.documentElement.setAttribute("lang", "es-US");
+      }
+      return setLanguage(item.name);
     }
   };
   useEffect(() => {
-    menu.forEach((m) => m.icon === "flag" && setLan(m, !m.isAlt));
     const initClose = () => setClose(true);
     document.addEventListener("animationend", initClose, true);
     return () => document.removeEventListener("animationend", initClose, true);
@@ -67,7 +57,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       <nav className="primary-navigation">
         <Navbar
           show={{ isActive, isClose }}
-          menu={items}
+          menu={menu}
           toggle={handleToggle}
           click={(e) => navigate(`${e.name}`)}
         />
@@ -80,7 +70,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         />
         <Navbar
           show={{ isActive, isClose }}
-          menu={items}
+          menu={menu}
           toggle={handleToggle}
           click={(e) => navigate(`${e.name}`)}
         />
