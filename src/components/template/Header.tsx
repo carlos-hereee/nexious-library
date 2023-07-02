@@ -7,7 +7,6 @@ import { MenuItemProp } from "@nxs-helpers/types";
 export type HeaderProps = {
   logo: { url: string; alt?: string; name: string };
   menu: MenuItemProp[];
-  appName: string;
   ping?: number;
   setLanguage?: (e: string) => void;
 };
@@ -25,7 +24,7 @@ export type HeaderProps = {
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, appName, setLanguage } = props;
+  const { menu, logo, ping, setLanguage } = props;
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const [items, setItems] = useState(menu || []);
@@ -75,7 +74,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   return (
     <header>
       <Link to="/" className="navlink">
-        <Logo logo={logo} appName={appName} />
+        <Logo logo={logo} />
       </Link>
       <nav className="primary-navigation">
         <Navbar
