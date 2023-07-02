@@ -1,14 +1,14 @@
 @import "../../vars/_mixins.scss", "../../vars/_variables.scss";
 
 .card {
+  display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
   overflow: hidden;
   gap: #{$rem05};
   min-width: 200px;
-  max-width: 280px;
-  text-decoration: none;
+  max-width: 400px;
   .hero {
     border-radius: 1rem;
     max-width: 10rem;
@@ -17,23 +17,20 @@
   &:has(> div > .ribbon) {
     position: relative;
     max-width: 275px;
-    .btn-primary {
-      margin: auto;
-    }
   }
   @include devices(mobile) {
     min-width: auto;
     max-width: auto;
   }
 }
-.card-header-heading {
-  text-align: left;
+.card-header {
+  display: flex;
+  // flex-direction: row;
+  gap: #{$rem05};
 }
 .card-body {
   display: flex;
   flex-direction: column;
-  width: 100%;
-  text-align: left;
   &:has(> .btn-primary) {
     justify-content: space-between;
     .btn-primary {
@@ -45,9 +42,7 @@
   display: flex;
   justify-content: center;
   flex-direction: column;
-  text-align: center;
   align-items: center;
-  padding-top: 0;
   gap: #{$rem};
 }
 .secondary-card {
