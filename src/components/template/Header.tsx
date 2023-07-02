@@ -41,9 +41,15 @@ const Header: React.FC<HeaderProps> = (props) => {
     setItems(toggle);
   };
   const setLan = (item: MenuItemProp, isAlt?: boolean) => {
-    if (setLanguage) {
-      // return isAlt ? setData(item.name) : item.alt && setData(item.alt);
-      return isAlt ? setLanguage(item.name) : item.alt && setLanguage(item.alt);
+    if (setLanguage && item.alt) {
+      const lan = isAlt ? item.name : item.alt;
+      if (lan === "spanish" || lan === "espanol") {
+        document.documentElement.setAttribute("lang", "es-US");
+      }
+      if (lan === "english" || lan === "ingles") {
+        document.documentElement.setAttribute("lang", "en-US");
+      }
+      return setLanguage(lan);
     }
   };
   useEffect(() => {
@@ -53,24 +59,6 @@ const Header: React.FC<HeaderProps> = (props) => {
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
 
-  // useEffect(() => {
-  //   if (data === "english" || data === "ingles") {
-  //     document.documentElement.setAttribute("lang", "en-US");
-  //   }
-  //   if (data === "espanol" || data === "spanish") {
-  //     const inEnglish = new Intl.DisplayNames(["en"], { type: "region" });
-  //     const inSpanish = new Intl.DisplayNames(["es"], { type: "region" });
-
-  //     console.log(inEnglish.of("US"));
-  //     // Expected output: "United States"
-
-  //     console.log(inSpanish.of("US"));
-  //     // Expected output: "美國"
-
-  //     // document.documentElement.setAttribute("lang", "es-US");
-  //   }
-  // }, [data]);
-  // console.log("data", data);
   return (
     <header>
       <Link to="/" className="navlink">
