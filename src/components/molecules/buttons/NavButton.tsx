@@ -23,6 +23,3 @@ const NavButton: React.FC<NavButtonProps> = ({ data, click }) => {
   );
 };
 export default NavButton;
-{
-  /* notification={data.notification} */
-}

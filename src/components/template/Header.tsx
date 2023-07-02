@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           show={{ isActive, isClose }}
           menu={menu}
           toggle={handleToggle}
-          click={(e) => navigate(`${e.name}`)}
+          click={(e) => navigate(`${e.icon}`)}
         />
       </nav>
       <nav className="mobile-navigation">
@@ -72,7 +72,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           show={{ isActive, isClose }}
           menu={menu}
           toggle={handleToggle}
-          click={(e) => navigate(`${e.name}`)}
+          click={(e) => navigate(`${e.icon}`)}
         />
       </nav>
     </header>
