@@ -1,16 +1,16 @@
 export type FooterProps = {
-  title: string;
+  appName: string;
 };
 /**
  * Component - Footer
- * @param title string;
+ * @param appName string;
  * @returns
  */
-const Footer: React.FC<FooterProps> = ({ title }) => {
+const Footer: React.FC<FooterProps> = ({ appName }) => {
   return (
     <footer>
       <span className="text-center">
-        {title} © {new Date().getFullYear()}
+        {appName} © {new Date().getFullYear()}
       </span>
     </footer>
   );
