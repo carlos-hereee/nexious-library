@@ -10,7 +10,7 @@ type CalendarViewProps = {
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate } = props;
-  console.log("date.day", data);
+  console.log("date.day", minDate);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -22,8 +22,8 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
       </div>
       <div className="calendar-view-month">
         {monthWeeks[data.weeks].map((mday) =>
-          mday > data.day && mday - data.day <= data.maxDays ? (
-            minDate?.minDay && minDate.minDay + data.day > mday ? (
+          mday > data.start && mday <= data.maxDays + data.start ? (
+            minDate?.minDay && minDate.minDay + data.start > mday ? (
               <button key={mday}>Min Day</button>
             ) : (
               <button
@@ -31,8 +31,8 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
                 className="btn btn-calendar-tile"
                 onClick={() => click(mday - data.day)}
               >
-                {mday - data.day}
-                {events?.includes(mday - data.day) ? (
+                {mday - data.start}
+                {events?.includes(mday - data.start) ? (
                   <TileContent
                     tile={events.filter((e) => e === mday - data.day).length}
                   />

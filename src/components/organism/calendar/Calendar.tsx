@@ -54,7 +54,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   }, [value, minDate]);
   useEffect(() => {
     if (events && events.length > 0) {
-      if (current.month || current.year) {
+      if (current?.month || current?.year) {
         let thisMonth = events.filter(({ date }) => {
           const c = new Date(date);
           return (
@@ -71,45 +71,53 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
     const maxWeeks = Math.ceil((maxDays + e.getDay()) / 7);
     const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
-
+    // console.log("start", start);
     setCurrent({
       day: e.getDay(),
       month: e.getMonth(),
       year: e.getFullYear(),
       date: e.getDate(),
       maxDays: maxDays,
-      weeks: maxWeeks,
+      weeks: start < 5 ? maxWeeks : maxWeeks + 1,
       start,
     });
   };
   const prevMonth = () => {
-    if (current.month === 0) {
-      updateValue(new Date(current.year - 1, 12, 1));
-    }
-    if (current.month <= 12) {
-      updateValue(new Date(current.year, current.month - 1, 1));
+    if (current) {
+      if (current.month === 0) {
+        updateValue(new Date(current.year - 1, 12, 1));
+      }
+      if (current.month <= 12) {
+        updateValue(new Date(current.year, current.month - 1, 1));
+      }
     }
   };
   const nextMonth = () => {
-    if (current.month === 11) {
-      updateValue(new Date(current.year + 1, 1, 0));
-    }
-    if (current.month < 11) {
-      updateValue(new Date(current.year, current.month + 1, 1));
+    if (current) {
+      if (current.month === 11) {
+        updateValue(new Date(current.year + 1, 1, 0));
+      }
+      if (current.month < 11) {
+        updateValue(new Date(current.year, current.month + 1, 1));
+      }
     }
   };
   const monthChange = (e: string) => {
-    if (e === "start") updateValue(new Date(current.year, 0, 1));
-    if (e === "last") updateValue(new Date(current.year, 12, 1));
+    if (current) {
+      if (e === "start") updateValue(new Date(current.year, 0, 1));
+      if (e === "last") updateValue(new Date(current.year, 12, 1));
+    }
     if (e === "prev") prevMonth();
     if (e === "next") nextMonth();
   };
   const dayChange = (e: number) => {
     if (e <= 0) prevMonth();
-    if (e > 0 && e < current.maxDays) {
-      onDayClick && onDayClick(new Date(current.year, current.month, e));
+    if (current) {
+      if (e > 0 && e < current.maxDays) {
+        onDayClick && onDayClick(new Date(current.year, current.month, e));
+      }
+      if (e > current.maxDays) nextMonth();
     }
-    if (e > current.maxDays) nextMonth();
   };
   return (
     <div className="calendar flex-d-column">
