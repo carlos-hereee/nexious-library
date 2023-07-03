@@ -69,15 +69,15 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   const updateValue = (e: Date) => {
     // get max days for current.month
     const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
-    const maxWeeks = Math.ceil((maxDays + e.getDay()) / 7);
     const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
+    const maxWeeks = Math.ceil((maxDays + start) / 7);
     setCurrent({
       day: e.getDay(),
       month: e.getMonth(),
       year: e.getFullYear(),
       date: e.getDate(),
       maxDays: maxDays,
-      weeks: start < 5 ? maxWeeks : maxWeeks + 1,
+      weeks: maxWeeks,
       start,
     });
   };
