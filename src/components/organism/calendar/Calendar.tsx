@@ -71,7 +71,6 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
     const maxWeeks = Math.ceil((maxDays + e.getDay()) / 7);
     const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
-    // console.log("start", start);
     setCurrent({
       day: e.getDay(),
       month: e.getMonth(),

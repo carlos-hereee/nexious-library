@@ -1,6 +1,7 @@
 import { sundayFirst, monthWeeks } from "@nxs-helpers/data";
-import { TileContent } from "@nxs-atoms";
+import { Button } from "@nxs-atoms";
 import { CalendarDayProps } from "@nxs-helpers/types";
+import { CalendarTile } from "@nxs-molecules";
 
 type CalendarViewProps = {
   data: CalendarDayProps;
@@ -10,7 +11,6 @@ type CalendarViewProps = {
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate } = props;
-  console.log("date.day", minDate);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -23,34 +23,23 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
       <div className="calendar-view-month">
         {monthWeeks[data.weeks].map((mday) =>
           mday > data.start && mday <= data.maxDays + data.start ? (
-            minDate?.minDay && minDate.minDay + data.start > mday ? (
-              <button key={mday}>Min Day</button>
-            ) : (
-              <button
-                key={mday}
-                className="btn btn-calendar-tile"
-                onClick={() => click(mday - data.day)}
-              >
-                {mday - data.start}
-                {events?.includes(mday - data.start) ? (
-                  <TileContent
-                    tile={events.filter((e) => e === mday - data.day).length}
-                  />
-                ) : (
-                  ""
-                )}
-              </button>
-            )
-          ) : (
-            <button
+            <CalendarTile
               key={mday}
-              type="button"
-              className="btn btn-calendar-tile"
-              onClick={() => click(mday - data.day)}
-            >
-              {" "}
-              <span className="text-mute"> {mday}</span>
-            </button>
+              click={() => click(mday - data.start)}
+              events={events}
+              data={{
+                tile: mday - data.start,
+                muted: minDate
+                  ? minDate.minDay >= mday - data.start - 1
+                  : false,
+              }}
+            />
+          ) : (
+            <Button
+              key={mday}
+              name="calendar-tile"
+              click={() => click(mday - data.day)}
+            />
           )
         )}
       </div>
