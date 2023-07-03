@@ -3,6 +3,7 @@ import { CalendarView } from "@nxs-molecules";
 import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
 import { CalendarDayProps, CalendarMinimumDayProps } from "@nxs-helpers/types";
+import { isTileMute } from "@nxs-utils/isTileMute";
 
 type CalendarProps = {
   value: Date;
@@ -15,7 +16,7 @@ type CalendarProps = {
     start: number;
     end: number;
   }[];
-  onDayClick?: (e: Date) => void;
+  onDayClick?: (e: Date | string) => void;
 };
 
 /**
@@ -107,10 +108,13 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (e === "prev") prevMonth();
     if (e === "next") nextMonth();
   };
-  const dayChange = (e: number) => {
+  const dayChange = (e: number, isMuted: boolean) => {
     if (e <= 0) prevMonth();
     if (current) {
       if (e > 0 && e < current.maxDays) {
+        if (isMuted) {
+          return onDayClick && onDayClick("tile is muted");
+        }
         onDayClick && onDayClick(new Date(current.year, current.month, e));
       }
       if (e > current.maxDays) nextMonth();

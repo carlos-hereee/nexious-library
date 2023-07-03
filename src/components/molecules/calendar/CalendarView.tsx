@@ -6,7 +6,7 @@ import { isTileMute } from "@nxs-utils/isTileMute";
 
 type CalendarViewProps = {
   data: CalendarDayProps;
-  click: (e: number) => void;
+  click: (e: number, isMuted: boolean) => void;
   minDate?: CalendarMinimumDayProps;
   events?: any[];
 };
@@ -26,7 +26,12 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
           mday > data.start && mday <= data.maxDays + data.start ? (
             <CalendarTile
               key={mday}
-              click={() => click(mday - data.start)}
+              click={() =>
+                click(
+                  mday - data.start,
+                  isTileMute({ day: mday - data.start, minDate, data })
+                )
+              }
               events={events}
               data={{
                 tile: mday - data.start,
@@ -37,7 +42,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
             <Button
               key={mday}
               name="calendar-tile"
-              click={() => click(mday - data.start)}
+              click={() => click(mday - data.start, false)}
             />
           )
         )}
