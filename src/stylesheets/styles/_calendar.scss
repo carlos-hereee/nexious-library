@@ -14,7 +14,9 @@
     width: 40px;
   }
 }
-
+.btn-calendar-tile--muted {
+  cursor: not-allowed;
+}
 .calendar-navigation {
   display: flex;
   justify-content: space-between;

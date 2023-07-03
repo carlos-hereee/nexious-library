@@ -3,7 +3,6 @@ import { CalendarView } from "@nxs-molecules";
 import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
 import { CalendarDayProps, CalendarMinimumDayProps } from "@nxs-helpers/types";
-import { isTileMute } from "@nxs-utils/isTileMute";
 
 type CalendarProps = {
   value: Date;
