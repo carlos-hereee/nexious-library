@@ -54,3 +54,12 @@ export type MenuItemProp = {
   isAlt?: boolean;
   isToggle?: boolean;
 };
+export type CalendarDayProps = {
+  day: number;
+  month: number;
+  year: number;
+  date: number;
+  maxDays: number;
+  weeks: number;
+  start: number;
+};

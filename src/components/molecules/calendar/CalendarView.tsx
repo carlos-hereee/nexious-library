@@ -1,40 +1,40 @@
-import { days, monthWeeks } from "@nxs-helpers/data";
+import { sundayFirst, monthWeeks } from "@nxs-helpers/data";
 import { TileContent } from "@nxs-atoms";
+import { CalendarDayProps } from "@nxs-helpers/types";
 
 type CalendarViewProps = {
-  date: { date: number; day: number; max: number };
-  weeks: number | 4 | 5 | 6;
+  data: CalendarDayProps;
   click: (e: number) => void;
   minDate?: { minDay: number; minMonth: number };
   events?: any[];
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
-  const { date, weeks, click, events, minDate } = props;
-  // console.log("date.day", date);
+  const { data, click, events, minDate } = props;
+  console.log("date.day", data);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
-        {days.map((w) => (
+        {sundayFirst.map((w) => (
           <span key={w} className="day text-overflow">
             {w}
           </span>
         ))}
       </div>
       <div className="calendar-view-month">
-        {monthWeeks[weeks].map((mday) =>
-          mday > date.day && mday - date.day <= date.max ? (
-            minDate?.minDay && minDate.minDay + date.day > mday ? (
-              <button>Min Day</button>
+        {monthWeeks[data.weeks].map((mday) =>
+          mday > data.day && mday - data.day <= data.maxDays ? (
+            minDate?.minDay && minDate.minDay + data.day > mday ? (
+              <button key={mday}>Min Day</button>
             ) : (
               <button
                 key={mday}
                 className="btn btn-calendar-tile"
-                onClick={() => click(mday - date.day)}
+                onClick={() => click(mday - data.day)}
               >
-                {mday - date.day}
-                {events?.includes(mday - date.day) ? (
+                {mday - data.day}
+                {events?.includes(mday - data.day) ? (
                   <TileContent
-                    tile={events.filter((e) => e === mday - date.day).length}
+                    tile={events.filter((e) => e === mday - data.day).length}
                   />
                 ) : (
                   ""
@@ -46,9 +46,10 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
               key={mday}
               type="button"
               className="btn btn-calendar-tile"
-              onClick={() => click(mday - date.day)}
+              onClick={() => click(mday - data.day)}
             >
               {" "}
+              <span className="text-mute"> {mday}</span>
             </button>
           )
         )}

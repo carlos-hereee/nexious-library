@@ -12,7 +12,16 @@ export const months = [
   "November",
   "December",
 ];
-export const days = [
+export const sundayFirst = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+export const mondayFirst = [
   "Monday",
   "Tuesday",
   "Wednesday",

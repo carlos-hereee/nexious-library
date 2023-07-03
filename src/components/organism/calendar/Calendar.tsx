@@ -2,6 +2,7 @@ import { CalendarNavigation, IconButton } from "@nxs-molecules";
 import { CalendarView } from "@nxs-molecules";
 import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
+import { CalendarDayProps } from "@nxs-helpers/types";
 
 type CalendarProps = {
   value: Date;
@@ -16,6 +17,7 @@ type CalendarProps = {
   }[];
   onDayClick?: (e: Date) => void;
 };
+
 /**
  *
  * @param value current date value
@@ -25,12 +27,7 @@ type CalendarProps = {
  */
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, onDayClick, minDate } = props;
-  const [day, setDay] = useState<number>(0);
-  const [month, setMonth] = useState<number>(0);
-  const [year, setYear] = useState<number>(0);
-  const [date, setDate] = useState<number>(0);
-  const [max, setMax] = useState<number>(0);
-  const [weeks, setWeeks] = useState<number>(4);
+  const [current, setCurrent] = useState<CalendarDayProps>();
   const [eventFormat, setEventFormat] = useState<number[]>();
   const [mininumDate, setMininumDate] = useState<{
     minDay: number;
@@ -57,56 +54,62 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   }, [value, minDate]);
   useEffect(() => {
     if (events && events.length > 0) {
-      if (month || year) {
+      if (current.month || current.year) {
         let thisMonth = events.filter(({ date }) => {
-          const current = new Date(date);
-          return current.getMonth() === month && current.getFullYear() === year;
+          const c = new Date(date);
+          return (
+            c.getMonth() === current.month && c.getFullYear() === current.year
+          );
         });
         setEventFormat(thisMonth.map((m) => new Date(m.date).getDate()));
       }
     }
-  }, [JSON.stringify(events), month, year]);
+  }, [JSON.stringify(events), current?.month, current?.year]);
 
   const updateValue = (e: Date) => {
-    // get max days for month
+    // get max days for current.month
     const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
-    const start = e.getDay();
-    const maxWeeks = (maxDays + start) / 7;
-    setDay(start);
-    setMonth(e.getMonth());
-    setYear(e.getFullYear());
-    setDate(e.getDate());
-    setMax(maxDays);
-    setWeeks(Math.ceil(maxWeeks));
+    const maxWeeks = Math.ceil((maxDays + e.getDay()) / 7);
+    const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
+
+    setCurrent({
+      day: e.getDay(),
+      month: e.getMonth(),
+      year: e.getFullYear(),
+      date: e.getDate(),
+      maxDays: maxDays,
+      weeks: maxWeeks,
+      start,
+    });
   };
   const prevMonth = () => {
-    if (month === 0) {
-      updateValue(new Date(year - 1, 12, 1));
+    if (current.month === 0) {
+      updateValue(new Date(current.year - 1, 12, 1));
     }
-    if (month <= 12) {
-      updateValue(new Date(year, month - 1, 1));
+    if (current.month <= 12) {
+      updateValue(new Date(current.year, current.month - 1, 1));
     }
   };
   const nextMonth = () => {
-    if (month === 11) {
-      updateValue(new Date(year + 1, 1, 0));
+    if (current.month === 11) {
+      updateValue(new Date(current.year + 1, 1, 0));
     }
-    if (month < 11) {
-      updateValue(new Date(year, month + 1, 1));
+    if (current.month < 11) {
+      updateValue(new Date(current.year, current.month + 1, 1));
     }
   };
   const monthChange = (e: string) => {
-    if (e === "start") updateValue(new Date(year, 0, 1));
-    if (e === "last") updateValue(new Date(year, 12, 1));
+    if (e === "start") updateValue(new Date(current.year, 0, 1));
+    if (e === "last") updateValue(new Date(current.year, 12, 1));
     if (e === "prev") prevMonth();
     if (e === "next") nextMonth();
   };
   const dayChange = (e: number) => {
     if (e <= 0) prevMonth();
-    if (e > 0 && e < max) {
-      onDayClick && onDayClick(new Date(year, month, e));
+    if (e > 0 && e < current.maxDays) {
+      onDayClick && onDayClick(new Date(current.year, current.month, e));
     }
-    if (e > max) nextMonth();
+    if (e > current.maxDays) nextMonth();
   };
   return (
     <div className="calendar flex-d-column">
@@ -116,19 +119,22 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           icon={{ icon: "refresh" }}
         />
       </div>
-      <CalendarNavigation
-        date={{ month, year }}
-        click={monthChange}
-        previous={previous}
-        next={next}
-      />
-      <CalendarView
-        date={{ date, day, max }}
-        minDate={mininumDate}
-        weeks={weeks}
-        click={dayChange}
-        events={eventFormat}
-      />
+      {current && (
+        <>
+          <CalendarNavigation
+            date={current}
+            click={monthChange}
+            previous={previous}
+            next={next}
+          />
+          <CalendarView
+            data={current}
+            minDate={mininumDate}
+            click={dayChange}
+            events={eventFormat}
+          />
+        </>
+      )}
     </div>
   );
 };
