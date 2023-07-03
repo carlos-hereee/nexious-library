@@ -5,14 +5,12 @@ type CalendarViewProps = {
   date: { date: number; day: number; max: number };
   weeks: number | 4 | 5 | 6;
   click: (e: number) => void;
+  minDate?: { minDay: number; minMonth: number };
   events?: any[];
 };
-const CalendarView: React.FC<CalendarViewProps> = ({
-  date,
-  weeks,
-  click,
-  events,
-}) => {
+const CalendarView: React.FC<CalendarViewProps> = (props) => {
+  const { date, weeks, click, events, minDate } = props;
+  // console.log("date.day", date);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -23,28 +21,32 @@ const CalendarView: React.FC<CalendarViewProps> = ({
         ))}
       </div>
       <div className="calendar-view-month">
-        {monthWeeks[weeks].map((md) =>
-          md > date.day && md - date.day <= date.max ? (
-            <button
-              key={md}
-              className="btn btn-calendar-tile"
-              onClick={() => click(md - date.day)}
-            >
-              {md - date.day}
-              {events?.includes(md - date.day) ? (
-                <TileContent
-                  tile={events.filter((e) => e === md - date.day).length}
-                />
-              ) : (
-                ""
-              )}
-            </button>
+        {monthWeeks[weeks].map((mday) =>
+          mday > date.day && mday - date.day <= date.max ? (
+            minDate?.minDay && minDate.minDay + date.day > mday ? (
+              <button>Min Day</button>
+            ) : (
+              <button
+                key={mday}
+                className="btn btn-calendar-tile"
+                onClick={() => click(mday - date.day)}
+              >
+                {mday - date.day}
+                {events?.includes(mday - date.day) ? (
+                  <TileContent
+                    tile={events.filter((e) => e === mday - date.day).length}
+                  />
+                ) : (
+                  ""
+                )}
+              </button>
+            )
           ) : (
             <button
-              key={md}
+              key={mday}
               type="button"
               className="btn btn-calendar-tile"
-              onClick={() => click(md - date.day)}
+              onClick={() => click(mday - date.day)}
             >
               {" "}
             </button>

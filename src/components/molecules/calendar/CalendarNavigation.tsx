@@ -15,12 +15,8 @@ type CalendarNavProps = {
  * @param year number
  * @returns
  */
-const CalendarNavigation: React.FC<CalendarNavProps> = ({
-  date,
-  previous,
-  next,
-  click,
-}) => {
+const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
+  const { date, previous, next, click } = props;
   return (
     <div className="calendar-navigation">
       <div className="flex-d-row">
