@@ -2,27 +2,16 @@ import { sundayFirst, monthWeeks } from "@nxs-helpers/data";
 import { Button } from "@nxs-atoms";
 import { CalendarDayProps, CalendarMinimumDayProps } from "@nxs-helpers/types";
 import { CalendarTile } from "@nxs-molecules";
+import { isTileMute } from "@nxs-utils/isTileMute";
 
 type CalendarViewProps = {
   data: CalendarDayProps;
-  click: () => void;
+  click: (e: number) => void;
   minDate?: CalendarMinimumDayProps;
   events?: any[];
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate } = props;
-  const isTileMute = (e: number) => {
-    const minYear = minDate && minDate?.year > data.year;
-    const minMonth = minDate && minDate?.month > data.month;
-    const currentMonth = minDate && minDate.month === data.month;
-    const currentYear = minDate && minDate.year === data.year;
-    const minDay = minDate && minDate.day > e;
-
-    if (minYear) return true;
-    else if (currentYear && minMonth) return true;
-    else if (currentMonth && minDay) return true;
-    return false;
-  };
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -37,15 +26,19 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
           mday > data.start && mday <= data.maxDays + data.start ? (
             <CalendarTile
               key={mday}
-              click={click}
+              click={() => click(mday - data.start)}
               events={events}
               data={{
                 tile: mday - data.start,
-                muted: isTileMute(mday - data.start),
+                muted: isTileMute({ day: mday - data.start, minDate, data }),
               }}
             />
           ) : (
-            <Button key={mday} name="calendar-tile" click={click} />
+            <Button
+              key={mday}
+              name="calendar-tile"
+              click={() => click(mday - data.start)}
+            />
           )
         )}
       </div>
