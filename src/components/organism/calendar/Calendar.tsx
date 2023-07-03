@@ -2,7 +2,7 @@ import { CalendarNavigation, IconButton } from "@nxs-molecules";
 import { CalendarView } from "@nxs-molecules";
 import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
-import { CalendarDayProps } from "@nxs-helpers/types";
+import { CalendarDayProps, CalendarMinimumDayProps } from "@nxs-helpers/types";
 
 type CalendarProps = {
   value: Date;
@@ -29,10 +29,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, onDayClick, minDate } = props;
   const [current, setCurrent] = useState<CalendarDayProps>();
   const [eventFormat, setEventFormat] = useState<number[]>();
-  const [mininumDate, setMininumDate] = useState<{
-    minDay: number;
-    minMonth: number;
-  }>();
+  const [mininumDate, setMininumDate] = useState<CalendarMinimumDayProps>();
 
   const previous: { label: string; icon: IconNames }[] = [
     { label: "start", icon: "first" },
@@ -47,8 +44,9 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (value) updateValue(value);
     if (minDate) {
       setMininumDate({
-        minDay: minDate.getDay(),
-        minMonth: minDate.getMonth(),
+        day: minDate.getDate(),
+        month: minDate.getMonth(),
+        year: minDate.getFullYear(),
       });
     }
   }, [value, minDate]);

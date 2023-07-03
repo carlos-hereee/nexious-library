@@ -63,3 +63,8 @@ export type CalendarDayProps = {
   weeks: number;
   start: number;
 };
+export type CalendarMinimumDayProps = {
+  day: number;
+  month: number;
+  year: number;
+};
