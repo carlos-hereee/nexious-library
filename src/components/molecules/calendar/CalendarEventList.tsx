@@ -3,10 +3,10 @@ import { Icon } from "@nxs-atoms";
 type CalendarEventListProps = {
   list: any[];
   click: (value: any) => void;
-  active?: any;
+  meeting?: any;
 };
 const CalendarEventList: React.FC<CalendarEventListProps> = (props) => {
-  const { list, click, active } = props;
+  const { list, click, meeting } = props;
   return (
     <div className="event-list">
       {list.map((d) => (
@@ -16,8 +16,8 @@ const CalendarEventList: React.FC<CalendarEventListProps> = (props) => {
           className="btn btn-item"
           title={d.response}
         >
-          {active ? (
-            <Icon icon={d.uid === active.uid ? "check" : "uncheck"} />
+          {meeting ? (
+            <Icon icon={d.uid === meeting.uid ? "check" : "uncheck"} />
           ) : (
             <Icon icon="uncheck" />
           )}{" "}

@@ -32,6 +32,7 @@ export { default as CalendarNavigation } from "./calendar/CalendarNavigation";
 export { default as CalendarView } from "./calendar/CalendarView";
 export { default as CalendarTile } from "./calendar/CalendarTile";
 export { default as CalendarEventList } from "./calendar/CalendarEventList";
+export { default as CalendarEvent } from "./calendar/CalendarEvent";
 
 // tables
 export { default as ColumnGroup } from "./table/ColumnGroup";
