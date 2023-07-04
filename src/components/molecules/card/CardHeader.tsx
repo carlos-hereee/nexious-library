@@ -16,8 +16,10 @@ type CardHeaderProp = {
 const CardHeader: React.FC<CardHeaderProp> = ({ data }) => {
   return (
     <div className="card-header">
-      <Heading data={data.title} />
-      {data.hasHero && data.hero && <Hero data={data.hero} />}
+      <div>
+        <Heading data={data.title} />
+        {data.hasHero && data.hero && <Hero data={data.hero} />}
+      </div>
       {data.subtitle && <Subtitle data={data.subtitle} />}
     </div>
   );
