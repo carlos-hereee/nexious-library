@@ -8,6 +8,7 @@ export { default as Btn } from "./buttons/Btn";
 export { default as Button } from "./buttons/Button";
 export type { ButtonProps } from "./buttons/Button";
 export { default as BackButton } from "./buttons/BackButton";
+export { default as CancelButton } from "./buttons/CancelButton";
 
 // forms
 export { default as Input } from "./forms/Input";
@@ -33,3 +34,4 @@ export { default as KeyValue } from "./texts/KeyValue";
 export { default as CamelSpace } from "./texts/CamelSpace";
 export { default as PingCount } from "./texts/PingCount";
 export { default as TileContent } from "./texts/TileContent";
+export { default as ReadMore } from "./texts/ReadMore";

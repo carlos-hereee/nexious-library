@@ -26,7 +26,7 @@ const Cart: React.FC<CartProps> = (props) => {
           // <CancelRow data={c} key={c.uid} click={cancelReq} />
           "to do cancel row"
         ) : (
-          <CartRow key={c.uid} data={c} setCancel={setCancel} />
+          <CartRow key={c.uid} data={c} setCancel={() => setCancel(c)} />
         )
       )}
     </div>
