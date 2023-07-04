@@ -14,6 +14,7 @@ export type { NavButtonProps } from "./buttons/NavButton";
 export { default as CardHeader } from "./card/CardHeader";
 export { default as CardBody } from "./card/CardBody";
 export { default as CardFooter } from "./card/CardFooter";
+export { default as CartRow } from "./card/CartRow";
 
 // errors
 export { default as EmptySection } from "./errors/EmptySection";
