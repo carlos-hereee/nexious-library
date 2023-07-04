@@ -15,6 +15,7 @@ export { default as Card } from "./card/Card";
 
 // calendar
 export { default as Calendar } from "./calendar/Calendar";
+export { default as CalendarEvents } from "./calendar/CalendarEvents";
 
 // cart
 export { default as Cart } from "./card/Cart";
