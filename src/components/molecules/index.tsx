@@ -15,6 +15,7 @@ export { default as CardHeader } from "./card/CardHeader";
 export { default as CardBody } from "./card/CardBody";
 export { default as CardFooter } from "./card/CardFooter";
 export { default as CartRow } from "./card/CartRow";
+export { default as CartCancel } from "./card/CartCancelRow";
 
 // errors
 export { default as EmptySection } from "./errors/EmptySection";
