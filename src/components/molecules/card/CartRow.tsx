@@ -1,4 +1,4 @@
-import { CancelButton, ReadMore, Cost } from "@nxs-atoms";
+import { ButtonCancel, ReadMore, Cost } from "@nxs-atoms";
 import CardHeader from "./CardHeader";
 
 type CartRowProps = {
@@ -7,14 +7,15 @@ type CartRowProps = {
 };
 const CartRow: React.FC<CartRowProps> = (props) => {
   const { data, setCancel } = props;
-  console.log("data", data);
   return (
     <div className="card-row-wrapper">
-      <CancelButton click={setCancel} />
+      <ButtonCancel click={setCancel} />
       <button className="card-row">
         <CardHeader data={data} />
-        {data.response && <ReadMore data={data.response} />}
-        {data.cost && <Cost data={data.cost} />}
+        <div className="card-row-body">
+          {data.response && <ReadMore data={data.response} />}
+          {data.cost && <Cost data={data.cost} />}
+        </div>
       </button>
     </div>
   );

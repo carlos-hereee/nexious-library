@@ -8,7 +8,7 @@ export { default as Btn } from "./buttons/Btn";
 export { default as Button } from "./buttons/Button";
 export type { ButtonProps } from "./buttons/Button";
 export { default as BackButton } from "./buttons/BackButton";
-export { default as CancelButton } from "./buttons/CancelButton";
+export { default as ButtonCancel } from "./buttons/ButtonCancel";
 
 // forms
 export { default as Input } from "./forms/Input";

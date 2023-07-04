@@ -37,11 +37,16 @@
 .btn-cancel {
   border: none;
   position: absolute;
-  width: 1rem;
-  top: -0.5rem;
+  font-size: x-large;
+  background-color: #{$danger};
+  color: #{$light-primary};
+  padding: 0.5rem;
+  min-width: 2.5rem;
+  aspect-ratio: 1/1;
+  top: -0.7rem;
   right: -0.5rem;
   z-index: 99;
-  border-radius: #{$rem05};
+  border-radius: 100%;
 }
 
 .btn-burger,

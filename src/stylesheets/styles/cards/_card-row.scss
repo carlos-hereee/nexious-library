@@ -33,13 +33,24 @@
 .card-row {
   display: flex;
   align-items: flex-start;
-  // flex-direction: column;
+  max-width: 100%;
   gap: #{$rem05};
   border-radius: #{$rem05};
   @include devices(mobile) {
     .card-header {
       flex-direction: row;
       gap: #{$rem};
+    }
+  }
+}
+.card-row-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  &:has(+ .cost) {
+    .cost {
+      margin-top: auto;
+      text-align: right;
     }
   }
 }
