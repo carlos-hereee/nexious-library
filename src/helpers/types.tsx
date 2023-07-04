@@ -68,3 +68,11 @@ export type CalendarMinimumDayProps = {
   month: number;
   year: number;
 };
+export type CalendarEventProp = {
+  uid: string;
+  response: string;
+  isOpen: boolean;
+  date: string;
+  start: number;
+  end: number;
+};

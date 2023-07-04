@@ -1,21 +1,17 @@
-import { CalendarNavigation, IconButton } from "@nxs-molecules";
-import { CalendarView } from "@nxs-molecules";
+import { CalendarView, CalendarNavigation, IconButton } from "@nxs-molecules";
 import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
-import { CalendarDayProps, CalendarMinimumDayProps } from "@nxs-helpers/types";
+import {
+  CalendarDayProps,
+  CalendarEventProp,
+  CalendarMinimumDayProps,
+} from "@nxs-helpers/types";
 
 type CalendarProps = {
   value: Date;
   minDate?: Date;
-  events?: {
-    uid: string;
-    response: string;
-    isOpen: boolean;
-    date: string;
-    start: number;
-    end: number;
-  }[];
-  onDayClick?: (e: Date | string) => void;
+  events?: CalendarEventProp[];
+  onDayClick?: (e: any) => void;
 };
 
 /**
@@ -28,7 +24,7 @@ type CalendarProps = {
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, onDayClick, minDate } = props;
   const [current, setCurrent] = useState<CalendarDayProps>();
-  const [eventFormat, setEventFormat] = useState<number[]>();
+  const [eventDays, setEventDays] = useState<number[]>();
   const [mininumDate, setMininumDate] = useState<CalendarMinimumDayProps>();
 
   const previous: { label: string; icon: IconNames }[] = [
@@ -59,7 +55,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             c.getMonth() === current.month && c.getFullYear() === current.year
           );
         });
-        setEventFormat(thisMonth.map((m) => new Date(m.date).getDate()));
+        setEventDays(thisMonth.map((m) => new Date(m.date).getDate()));
       }
     }
   }, [JSON.stringify(events), current?.month, current?.year]);
@@ -107,14 +103,14 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (e === "prev") prevMonth();
     if (e === "next") nextMonth();
   };
-  const dayChange = (e: number, isMuted: boolean) => {
+  const dayChange = (e: number) => {
     if (e <= 0) prevMonth();
     if (current) {
       if (e > 0 && e < current.maxDays) {
-        if (isMuted) {
-          return onDayClick && onDayClick("tile is muted");
-        }
-        onDayClick && onDayClick(new Date(current.year, current.month, e));
+        if (eventDays && eventDays?.includes(e)) {
+          const et = events?.filter((ev) => new Date(ev.date).getDate() === e);
+          return et && onDayClick && onDayClick(et[0]);
+        } else return onDayClick && onDayClick([""]);
       }
       if (e > current.maxDays) nextMonth();
     }
@@ -139,7 +135,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             data={current}
             minDate={mininumDate}
             click={dayChange}
-            events={eventFormat}
+            events={eventDays}
           />
         </>
       )}
