@@ -1,4 +1,4 @@
-import { CalendarDayProps } from "@nxs-helpers/types";
+import { CalendarDayProps, CalendarEventProp } from "@nxs-helpers/types";
 
 export const calendarValues = (e: Date): CalendarDayProps => {
   // get max days for current.month
@@ -33,4 +33,13 @@ export const nextMonth = (c: CalendarDayProps, cb: (a: any) => void) => {
   if (c.month < 11) {
     cb(calendarValues(new Date(c.year, c.month + 1, 1)));
   }
+};
+export const findMonthEvents = (
+  array: CalendarEventProp[],
+  item: CalendarDayProps
+) => {
+  return array.filter(({ date }) => {
+    const c = new Date(date);
+    return c.getMonth() === item?.month && c.getFullYear() === item?.year;
+  });
 };

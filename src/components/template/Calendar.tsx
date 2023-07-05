@@ -1,11 +1,7 @@
 import { CalendarView, CalendarNavigation, IconButton } from "@nxs-molecules";
 import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
-import {
-  CalendarDayProps,
-  CalendarEventProp,
-  CalendarMinimumDayProps,
-} from "@nxs-helpers/types";
+import { CalendarDayEventProp, CalendarDayProps } from "@nxs-helpers/types";
 import {
   calendarValues,
   nextMonth,
@@ -15,8 +11,8 @@ import {
 type CalendarProps = {
   value: Date;
   minDate?: Date;
-  events?: CalendarEventProp[];
-  onDayClick?: (e: any) => void;
+  events?: CalendarDayEventProp[];
+  onDayClick: (e: any) => void;
 };
 
 /**
@@ -29,11 +25,8 @@ type CalendarProps = {
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, onDayClick, minDate } = props;
   const [current, setCurrent] = useState<CalendarDayProps>();
-  const [today, setToday] = useState<CalendarDayProps>(
-    calendarValues(new Date())
-  );
-  const [eventDays, setEventDays] = useState<number[]>();
-  const [mininumDate, setMininumDate] = useState<CalendarMinimumDayProps>();
+  const [today, setToday] = useState<CalendarDayProps>();
+  const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
 
   const previous: { label: string; icon: IconNames }[] = [
     { label: "start", icon: "first" },
@@ -45,28 +38,16 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   ];
 
   useEffect(() => {
-    if (value) setCurrent(calendarValues(value));
+    if (value) {
+      const values = calendarValues(value);
+      setToday(calendarValues(new Date()));
+      setCurrent(values);
+      // onDayClick && onDayClick({ date: values.day });
+    }
     if (minDate) {
-      setMininumDate({
-        day: minDate.getDate(),
-        month: minDate.getMonth(),
-        year: minDate.getFullYear(),
-      });
+      setMininumDate(calendarValues(minDate));
     }
   }, [value, minDate]);
-  useEffect(() => {
-    if (events && events.length > 0) {
-      if (current?.month || current?.year) {
-        let thisMonth = events.filter(({ date }) => {
-          const c = new Date(date);
-          return (
-            c.getMonth() === current.month && c.getFullYear() === current.year
-          );
-        });
-        setEventDays(thisMonth.map((m) => new Date(m.date).getDate()));
-      }
-    }
-  }, [JSON.stringify(events), current?.month, current?.year]);
 
   const monthChange = (e: string) => {
     if (current) {
@@ -82,12 +63,13 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (current) {
       if (e <= 0) prevMonth(current, setCurrent);
       if (e > 0 && e < current.maxDays) {
-        if (eventDays && eventDays?.includes(e)) {
-          const et = events?.filter((ev) => new Date(ev.date).getDate() === e);
-          return et && onDayClick && onDayClick(et[0]);
-        } else {
-          return onDayClick && onDayClick({ date: current.day });
-        }
+        console.log("e", e);
+        // if (eventDays && eventDays?.includes(e)) {
+        //   const et = events?.filter((ev) => new Date(ev.date).getDate() === e);
+        //   return et && onDayClick && onDayClick(et[0]);
+        // } else {
+        //   return onDayClick && onDayClick({ date: current.day });
+        // }
       }
       if (e > current.maxDays) nextMonth(current, setCurrent);
     }
@@ -113,7 +95,9 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             today={today}
             minDate={mininumDate}
             click={dayChange}
-            events={eventDays}
+            events={events?.map((e) => {
+              return { date: new Date(e.date).getDate(), ping: e.list.length };
+            })}
           />
         </>
       )}

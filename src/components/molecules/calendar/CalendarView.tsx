@@ -1,19 +1,19 @@
 import { sundayFirst, monthWeeks } from "@nxs-helpers/data";
 import { Button } from "@nxs-atoms";
-import { CalendarDayProps, CalendarMinimumDayProps } from "@nxs-helpers/types";
+import { CalendarDayProps } from "@nxs-helpers/types";
 import { CalendarTile } from "@nxs-molecules";
 import { isTileMute } from "@nxs-utils/isTileMute";
 
 type CalendarViewProps = {
   data: CalendarDayProps;
   click: (e: number) => void;
-  today: CalendarDayProps;
-  minDate?: CalendarMinimumDayProps;
+  today?: CalendarDayProps;
+  minDate?: CalendarDayProps;
   events?: any[];
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today } = props;
-  console.log("data, today", data, today);
+  console.log("events", events);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -29,10 +29,10 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
             <CalendarTile
               key={mday}
               click={() => click(mday - data.start)}
-              events={events}
+              events={events?.filter((e) => e.date === mday - data.start)[0]}
               data={{
                 tile: mday - data.start,
-                isToday: mday - data.start === today.date,
+                isToday: mday - data.start === today?.date,
                 isMuted: isTileMute({ day: mday - data.start, minDate, data }),
               }}
             />

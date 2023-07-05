@@ -2,7 +2,7 @@ import { Button, TileContent } from "@nxs-atoms";
 
 export type CalendarTileProps = {
   data: { tile: number; isMuted: boolean; isToday: boolean };
-  events?: any[];
+  events?: { date: number; ping: number };
   click: () => void;
 };
 const CalendarTile: React.FC<CalendarTileProps> = (props) => {
@@ -15,9 +15,7 @@ const CalendarTile: React.FC<CalendarTileProps> = (props) => {
       click={click}
     >
       <span className={data.isMuted ? "text-mute" : ""}>{data.tile}</span>
-      {events && events?.includes(data.tile) && (
-        <TileContent tile={events.filter((e) => e === data.tile).length} />
-      )}
+      {events && events.date == data.tile && <TileContent tile={events.ping} />}
     </Button>
   );
 };

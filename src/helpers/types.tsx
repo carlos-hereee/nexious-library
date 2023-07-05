@@ -65,11 +65,6 @@ export type CalendarDayProps = {
   day: string;
   yyyyddmm: string;
 };
-export type CalendarMinimumDayProps = {
-  day: number;
-  month: number;
-  year: number;
-};
 export type CalendarEventProp = {
   uid: string;
   response: string;
@@ -77,4 +72,8 @@ export type CalendarEventProp = {
   date: string;
   start: number;
   end: number;
+};
+export type CalendarDayEventProp = {
+  date: string;
+  list: CalendarEventProp[];
 };
