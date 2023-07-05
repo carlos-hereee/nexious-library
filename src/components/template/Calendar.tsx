@@ -6,6 +6,11 @@ import {
   CalendarEventProp,
   CalendarMinimumDayProps,
 } from "@nxs-helpers/types";
+import {
+  calendarValues,
+  nextMonth,
+  prevMonth,
+} from "@nxs-utils/calendar/calendarValues";
 
 type CalendarProps = {
   value: Date;
@@ -38,7 +43,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   ];
 
   useEffect(() => {
-    if (value) updateValue(value);
+    if (value) setCurrent(calendarValues(value));
     if (minDate) {
       setMininumDate({
         day: minDate.getDate(),
@@ -61,72 +66,19 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     }
   }, [JSON.stringify(events), current?.month, current?.year]);
 
-  const formatValue = (e: Date) => {
-    // get max days for current.month
-    const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
-    const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
-    const maxWeeks = Math.ceil((maxDays + start) / 7);
-    return {
-      dayIdx: e.getDay(),
-      month: e.getMonth(),
-      year: e.getFullYear(),
-      date: e.getDate(),
-      maxDays: maxDays,
-      weeks: maxWeeks,
-      day: e.toDateString(),
-      yyyyddmm: e.toISOString().substring(0, 10),
-      start,
-    };
-  };
-
-  const updateValue = (e: Date) => {
-    // get max days for current.month
-    const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
-    const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
-    const maxWeeks = Math.ceil((maxDays + start) / 7);
-    setCurrent({
-      dayIdx: e.getDay(),
-      month: e.getMonth(),
-      year: e.getFullYear(),
-      date: e.getDate(),
-      maxDays: maxDays,
-      weeks: maxWeeks,
-      day: e.toDateString(),
-      yyyyddmm: e.toISOString().substring(0, 10),
-      start,
-    });
-  };
-  const prevMonth = () => {
-    if (current) {
-      if (current.month === 0) {
-        updateValue(new Date(current.year - 1, 12, 1));
-      }
-      if (current.month <= 12) {
-        updateValue(new Date(current.year, current.month - 1, 1));
-      }
-    }
-  };
-  const nextMonth = () => {
-    if (current) {
-      if (current.month === 11) {
-        updateValue(new Date(current.year + 1, 1, 0));
-      }
-      if (current.month < 11) {
-        updateValue(new Date(current.year, current.month + 1, 1));
-      }
-    }
-  };
   const monthChange = (e: string) => {
     if (current) {
-      if (e === "start") updateValue(new Date(current.year, 0, 1));
-      if (e === "last") updateValue(new Date(current.year, 12, 1));
+      if (e === "start")
+        setCurrent(calendarValues(new Date(current.year, 0, 1)));
+      if (e === "last")
+        setCurrent(calendarValues(new Date(current.year, 12, 1)));
+      if (e === "prev") prevMonth(current, setCurrent);
+      if (e === "next") nextMonth(current, setCurrent);
     }
-    if (e === "prev") prevMonth();
-    if (e === "next") nextMonth();
   };
   const dayChange = (e: number) => {
-    if (e <= 0) prevMonth();
     if (current) {
+      if (e <= 0) prevMonth(current, setCurrent);
       if (e > 0 && e < current.maxDays) {
         if (eventDays && eventDays?.includes(e)) {
           const et = events?.filter((ev) => new Date(ev.date).getDate() === e);
@@ -135,7 +87,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           return onDayClick && onDayClick({ date: current.day });
         }
       }
-      if (e > current.maxDays) nextMonth();
+      if (e > current.maxDays) nextMonth(current, setCurrent);
     }
   };
   return (
