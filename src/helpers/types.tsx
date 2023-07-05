@@ -55,13 +55,15 @@ export type MenuItemProp = {
   isToggle?: boolean;
 };
 export type CalendarDayProps = {
-  day: number;
+  dayIdx: number;
   month: number;
   year: number;
   date: number;
   maxDays: number;
   weeks: number;
   start: number;
+  day: string;
+  yyyyddmm: string;
 };
 export type CalendarMinimumDayProps = {
   day: number;

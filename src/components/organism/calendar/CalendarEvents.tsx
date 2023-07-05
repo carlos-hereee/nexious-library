@@ -1,17 +1,23 @@
 import { CalendarEventList, CardHeader, CalendarEvent } from "@nxs-molecules";
 
 type CalendarEventProps = {
-  selectedDay: any;
+  selectedDay: { date: string; list: any[] };
   click: (value: any) => void;
   active?: any;
   meeting?: any;
+  events: any[];
 };
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
   const { selectedDay, click, active, meeting } = props;
-  console.log("meeting, active", meeting, active);
+  // console.log("meeting, active", meeting, active);
   return (
-    <div className="p-sm" id="calendar-events">
+    <div className="calendar-events" id="calendar-events">
       <CardHeader data={{ title: selectedDay.date }} />
+      {meeting.uid ? (
+        <CalendarEvent active={active} meeting={meeting} />
+      ) : (
+        "<NotFound />"
+      )}
       {selectedDay.list?.length > 0 ? (
         <CalendarEventList
           list={selectedDay.list}
@@ -20,11 +26,6 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         />
       ) : (
         <h3 className="heading">All booked up, please try a different day</h3>
-      )}
-      {active.uid && meeting.uid ? (
-        <CalendarEvent active={active} meeting={meeting} />
-      ) : (
-        "<NotFound />"
       )}
     </div>
   );

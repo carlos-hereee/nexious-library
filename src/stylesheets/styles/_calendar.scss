@@ -4,11 +4,17 @@
   display: flex;
   overflow: hidden;
 }
-
+.calendar-events {
+  display: flex;
+  flex-direction: column;
+  flex: wrap;
+  width: 100%;
+  gap: #{$rem05};
+}
 .calendar-week .day,
 .btn-calendar-tile {
   flex: 1 0 13%;
-  max-width: auto;
+  max-width: 100%;
   min-width: auto;
   @include devices(mobile) {
     width: 40px;
@@ -59,7 +65,7 @@
   .icon-tile-ping {
     position: absolute;
     top: -9%;
-    right: -3%;
+    right: -2%;
     background-color: #{$ping-color};
     padding: #{$rem025};
     border-radius: 100%;

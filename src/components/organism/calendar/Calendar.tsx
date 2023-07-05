@@ -66,12 +66,14 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
     const maxWeeks = Math.ceil((maxDays + start) / 7);
     setCurrent({
-      day: e.getDay(),
+      dayIdx: e.getDay(),
       month: e.getMonth(),
       year: e.getFullYear(),
       date: e.getDate(),
       maxDays: maxDays,
       weeks: maxWeeks,
+      day: e.toDateString(),
+      yyyyddmm: e.toISOString().substring(0, 10),
       start,
     });
   };
@@ -110,7 +112,9 @@ const Calendar: React.FC<CalendarProps> = (props) => {
         if (eventDays && eventDays?.includes(e)) {
           const et = events?.filter((ev) => new Date(ev.date).getDate() === e);
           return et && onDayClick && onDayClick(et[0]);
-        } else return onDayClick && onDayClick([""]);
+        } else {
+          return onDayClick && onDayClick({ date: current.day });
+        }
       }
       if (e > current.maxDays) nextMonth();
     }
