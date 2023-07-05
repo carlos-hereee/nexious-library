@@ -3,6 +3,9 @@
 .btn {
   border-radius: #{$rem025};
 }
+.btn-main {
+  max-width: 100%;
+}
 .btn-primary {
   flex: 1;
 }

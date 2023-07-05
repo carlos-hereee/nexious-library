@@ -8,17 +8,24 @@ type CalendarEventProps = {
   events: any[];
 };
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
-  const { selectedDay, click, active, meeting } = props;
-  // console.log("meeting, active", meeting, active);
+  const { selectedDay, click, active, meeting, events } = props;
   return (
     <div className="calendar-events" id="calendar-events">
-      <CardHeader data={{ title: selectedDay.date }} />
+      <CardHeader
+        data={{
+          title: `${selectedDay.date} ${
+            meeting.uid ? `@ ${meeting.response}` : ""
+          }`,
+        }}
+      />
       {meeting.uid ? (
-        <CalendarEvent active={active} meeting={meeting} />
-      ) : (
-        "<NotFound />"
-      )}
-      {selectedDay.list?.length > 0 ? (
+        <CalendarEvent
+          active={active}
+          meeting={meeting}
+          events={events}
+          click={() => click({})}
+        />
+      ) : selectedDay.list?.length > 0 ? (
         <CalendarEventList
           list={selectedDay.list}
           click={(e) => click(e)}

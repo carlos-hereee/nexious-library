@@ -121,12 +121,12 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   };
   return (
     <div className="calendar flex-d-column">
-      <div className="calendar-icon-container flex-j-end">
+      {/* <div className="calendar-icon-container flex-j-end">
         <IconButton
           click={() => updateValue(value)}
           icon={{ icon: "refresh" }}
         />
-      </div>
+      </div> */}
       {current && (
         <>
           <CalendarNavigation
