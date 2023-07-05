@@ -24,6 +24,7 @@ type CalendarProps = {
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, onDayClick, minDate } = props;
   const [current, setCurrent] = useState<CalendarDayProps>();
+  const [today, setToday] = useState();
   const [eventDays, setEventDays] = useState<number[]>();
   const [mininumDate, setMininumDate] = useState<CalendarMinimumDayProps>();
 
@@ -59,6 +60,24 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       }
     }
   }, [JSON.stringify(events), current?.month, current?.year]);
+
+  const formatValue = (e: Date) => {
+    // get max days for current.month
+    const maxDays = new Date(e.getFullYear(), e.getMonth() + 1, 0).getDate();
+    const start = new Date(e.getFullYear(), e.getMonth(), 1).getDay();
+    const maxWeeks = Math.ceil((maxDays + start) / 7);
+    return {
+      dayIdx: e.getDay(),
+      month: e.getMonth(),
+      year: e.getFullYear(),
+      date: e.getDate(),
+      maxDays: maxDays,
+      weeks: maxWeeks,
+      day: e.toDateString(),
+      yyyyddmm: e.toISOString().substring(0, 10),
+      start,
+    };
+  };
 
   const updateValue = (e: Date) => {
     // get max days for current.month
