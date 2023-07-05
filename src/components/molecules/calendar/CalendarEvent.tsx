@@ -13,7 +13,7 @@ const CalendarEvent: React.FC<CalendarEventProps> = (props) => {
   console.log("meeting", meeting);
   console.log("events", events);
   return (
-    <div>
+    <div className="flex-2">
       <Cart data={events} heading="Select a package" removeFromCart={click} />
       {/* <Heading data={`Booking meeting ${active.title} ${active.subtitle}`} />
        */}

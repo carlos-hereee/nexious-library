@@ -15,7 +15,7 @@ const Cart: React.FC<CartProps> = (props) => {
   };
 
   return (
-    <div className="flex-d-column scroll-y flex-1">
+    <div className="flex-d-column scroll-y">
       <Heading data={heading} />
       {data.map((c) =>
         cancel && cancel.uid === c.uid ? (
