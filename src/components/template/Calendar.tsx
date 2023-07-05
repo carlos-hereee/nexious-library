@@ -39,16 +39,17 @@ const Calendar: React.FC<CalendarProps> = (props) => {
 
   useEffect(() => {
     if (value) {
-      const values = calendarValues(value);
       setToday(calendarValues(new Date()));
-      setCurrent(values);
-      // onDayClick && onDayClick({ date: values.day });
+      setCurrent(calendarValues(value));
     }
     if (minDate) {
       setMininumDate(calendarValues(minDate));
     }
   }, [value, minDate]);
 
+  const dayMatch = (e: number) => {
+    return events?.filter(({ date }) => new Date(date).getDate() === e)[0];
+  };
   const monthChange = (e: string) => {
     if (current) {
       if (e === "start")
@@ -63,25 +64,20 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (current) {
       if (e <= 0) prevMonth(current, setCurrent);
       if (e > 0 && e < current.maxDays) {
-        console.log("e", e);
-        // if (eventDays && eventDays?.includes(e)) {
-        //   const et = events?.filter((ev) => new Date(ev.date).getDate() === e);
-        //   return et && onDayClick && onDayClick(et[0]);
-        // } else {
-        //   return onDayClick && onDayClick({ date: current.day });
-        // }
+        const filter = dayMatch(e);
+        filter ? onDayClick(filter) : onDayClick({ date: current.day });
       }
       if (e > current.maxDays) nextMonth(current, setCurrent);
     }
   };
   return (
     <div className="calendar flex-d-column">
-      {/* <div className="calendar-icon-container flex-j-end">
+      <div className="calendar-icon-container flex-j-end">
         <IconButton
-          click={() => updateValue(value)}
+          click={() => setCurrent(calendarValues(value))}
           icon={{ icon: "refresh" }}
         />
-      </div> */}
+      </div>
       {current && (
         <>
           <CalendarNavigation

@@ -6,7 +6,7 @@ import { DataStringProps } from "@nxs-helpers/types";
  * @returns
  */
 const Subtitle: React.FC<DataStringProps> = ({ data }) => {
-  return <h3 className="sub-title">{data}</h3>;
+  return <h4 className="sub-title">{data}</h4>;
 };
 
 export default Subtitle;

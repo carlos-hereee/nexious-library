@@ -1,10 +1,11 @@
 import { Heading, Icon } from "@nxs-atoms/index";
+import { Cart } from "@nxs-organism/index";
 
 type CalendarEventProps = {
   active: any;
   meeting: any;
   events: any[];
-  click?: () => void;
+  click: () => void;
 };
 const CalendarEvent: React.FC<CalendarEventProps> = (props) => {
   const { active, meeting, events, click } = props;
@@ -13,14 +14,10 @@ const CalendarEvent: React.FC<CalendarEventProps> = (props) => {
   console.log("events", events);
   return (
     <div>
+      <Cart data={events} heading="Select a package" removeFromCart={click} />
       {/* <Heading data={`Booking meeting ${active.title} ${active.subtitle}`} />
        */}
-      {active.uid ? "active" : "no active"}
-      <button type="button" className="btn btn-main" onClick={click}>
-        <Icon icon="x" />
-        <strong>Selected time: </strong>
-        {meeting.time.startTime} {meeting.time.endTime}
-      </button>
+      {/* {active.uid ? "active" : "no active"} */}
     </div>
   );
 };

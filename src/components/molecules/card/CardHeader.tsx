@@ -1,4 +1,4 @@
-import { Heading, Hero, Subtitle } from "@nxs-atoms";
+import { Hero, Subtitle } from "@nxs-atoms";
 import { CardHeaderProps } from "@nxs-helpers/types";
 
 type CardHeaderProp = {
@@ -17,7 +17,7 @@ const CardHeader: React.FC<CardHeaderProp> = ({ data }) => {
   return (
     <div className="card-header">
       <div>
-        <Heading data={data.title} />
+        {data.title && <h3 className="heading">{data.title}</h3>}
         {data.hasHero && data.hero && <Hero data={data.hero} />}
       </div>
       {data.subtitle && <Subtitle data={data.subtitle} />}

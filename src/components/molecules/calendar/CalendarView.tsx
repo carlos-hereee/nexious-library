@@ -13,7 +13,6 @@ type CalendarViewProps = {
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today } = props;
-  console.log("events", events);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
