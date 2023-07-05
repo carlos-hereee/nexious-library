@@ -5,18 +5,21 @@ type CalendarEventProps = {
   active: any;
   meeting: any;
   events: any[];
-  click: () => void;
+  removeFromCart: (value: any) => void;
+  setActive: (value: any) => void;
 };
 const CalendarEvent: React.FC<CalendarEventProps> = (props) => {
-  const { active, meeting, events, click } = props;
-  console.log("active", active);
-  console.log("meeting", meeting);
-  console.log("events", events);
+  const { active, meeting, events, removeFromCart, setActive } = props;
+
   return (
     <div className="flex-2">
-      <Cart data={events} heading="Select a package" removeFromCart={click} />
-      {/* <Heading data={`Booking meeting ${active.title} ${active.subtitle}`} />
-       */}
+      <Cart
+        data={events}
+        heading="Select a package"
+        removeFromCart={removeFromCart}
+        setActive={setActive}
+      />
+
       {/* {active.uid ? "active" : "no active"} */}
     </div>
   );

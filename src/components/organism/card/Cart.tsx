@@ -6,9 +6,10 @@ type CartProps = {
   data: any[];
   heading: string;
   removeFromCart: (e: any) => void;
+  setActive: (value: any) => void;
 };
 const Cart: React.FC<CartProps> = (props) => {
-  const { data, heading, removeFromCart } = props;
+  const { data, heading, removeFromCart, setActive } = props;
   const [cancel, setCancel] = useState<{ uid?: string }>();
   const cancelReq = (e: any, isConfirm: boolean) => {
     isConfirm ? removeFromCart(e) : setCancel({});
@@ -21,7 +22,12 @@ const Cart: React.FC<CartProps> = (props) => {
         cancel && cancel.uid === c.uid ? (
           <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
         ) : (
-          <CartRow key={c.uid} data={c} setCancel={() => setCancel(c)} />
+          <CartRow
+            key={c.uid}
+            data={c}
+            setCancel={() => setCancel(c)}
+            setActive={setActive}
+          />
         )
       )}
     </div>
