@@ -7,11 +7,13 @@ import { isTileMute } from "@nxs-utils/isTileMute";
 type CalendarViewProps = {
   data: CalendarDayProps;
   click: (e: number) => void;
+  today: CalendarDayProps;
   minDate?: CalendarMinimumDayProps;
   events?: any[];
 };
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
-  const { data, click, events, minDate } = props;
+  const { data, click, events, minDate, today } = props;
+  console.log("data, today", data, today);
   return (
     <div className="calendar-view">
       <div className="calendar-week flex-g">
@@ -30,7 +32,8 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
               events={events}
               data={{
                 tile: mday - data.start,
-                muted: isTileMute({ day: mday - data.start, minDate, data }),
+                isToday: mday - data.start === today.date,
+                isMuted: isTileMute({ day: mday - data.start, minDate, data }),
               }}
             />
           ) : (

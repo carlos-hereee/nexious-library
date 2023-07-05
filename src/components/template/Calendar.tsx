@@ -29,7 +29,9 @@ type CalendarProps = {
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, onDayClick, minDate } = props;
   const [current, setCurrent] = useState<CalendarDayProps>();
-  const [today, setToday] = useState();
+  const [today, setToday] = useState<CalendarDayProps>(
+    calendarValues(new Date())
+  );
   const [eventDays, setEventDays] = useState<number[]>();
   const [mininumDate, setMininumDate] = useState<CalendarMinimumDayProps>();
 
@@ -108,6 +110,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           />
           <CalendarView
             data={current}
+            today={today}
             minDate={mininumDate}
             click={dayChange}
             events={eventDays}

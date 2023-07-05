@@ -1,7 +1,7 @@
 import { Button, TileContent } from "@nxs-atoms";
 
 export type CalendarTileProps = {
-  data: { tile: number; muted: boolean };
+  data: { tile: number; isMuted: boolean; isToday: boolean };
   events?: any[];
   click: () => void;
 };
@@ -9,12 +9,12 @@ const CalendarTile: React.FC<CalendarTileProps> = (props) => {
   const { events, click, data } = props;
   return (
     <Button
-      name={
-        data.muted ? "calendar-tile btn-calendar-tile--muted" : "calendar-tile"
-      }
+      name={`calendar-tile${data.isMuted ? " btn-calendar-tile--muted" : ""}${
+        data.isToday ? " btn-calendar-tile--today" : ""
+      }`}
       click={click}
     >
-      <span className={data.muted ? "text-mute" : ""}>{data.tile}</span>
+      <span className={data.isMuted ? "text-mute" : ""}>{data.tile}</span>
       {events && events?.includes(data.tile) && (
         <TileContent tile={events.filter((e) => e === data.tile).length} />
       )}

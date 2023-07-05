@@ -11,6 +11,9 @@
   width: 100%;
   gap: #{$rem05};
 }
+.btn-calendar-tile--today {
+  background-color: #{$action-color};
+}
 .calendar-week .day,
 .btn-calendar-tile {
   flex: 1 0 13%;
