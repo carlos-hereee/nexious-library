@@ -3,11 +3,6 @@
 .card-row-wrapper {
   position: relative;
   display: flex;
-  min-width: 250px;
-  width: max-content;
-  @include devices(mobile) {
-    width: auto;
-  }
 }
 
 .card-row {
@@ -15,10 +10,10 @@
   align-items: flex-start;
   flex-direction: column;
   gap: #{$rem05};
-  max-width: 100%;
-  // max-height: 10vh;
+  min-width: 450px;
   border-radius: #{$rem05};
   @include devices(mobile) {
+    min-width: 100%;
     padding: #{$rem025};
     .card-header {
       text-align: left;

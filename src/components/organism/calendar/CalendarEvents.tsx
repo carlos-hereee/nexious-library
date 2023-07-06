@@ -21,7 +21,6 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
     setActive,
     removeFromCart,
   } = props;
-  console.log("active", active);
   return (
     <div className="calendar-events" id="calendar-events">
       <Heading
@@ -29,8 +28,8 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
           meeting.uid ? `@ ${meeting.response}` : ""
         }`}
       />
-      <div className="flex-w">
-        <div className="flex-2">
+      <div className="calendar-events-wrapper">
+        <div className="calendar-event-cart">
           <Cart
             data={events}
             heading="Select a package"
@@ -42,24 +41,17 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         <div className="event-wrapper">
           {meeting.uid ? (
             <div className="flex-d-column">
-              <div>
-                <button
-                  type="button"
-                  className="btn btn-main"
-                  onClick={setMeeting}
-                >
-                  <Icon icon="x" />
-                  <strong>Selected time: </strong>
-                  {meeting.time.startTime} {meeting.time.endTime}
-                </button>
-              </div>
-              <div>
-                {active.uid ? (
-                  <MeetingDetails active={active} meeting={meeting} />
-                ) : (
-                  "Select a package <-"
-                )}
-              </div>
+              <button
+                type="button"
+                className="btn btn-main"
+                onClick={setMeeting}
+              >
+                <Icon icon="x" />
+                {meeting.time.startTime} {meeting.time.endTime}
+              </button>
+              {active.uid && (
+                <MeetingDetails active={active} meeting={meeting} />
+              )}
             </div>
           ) : selectedDay.list?.length > 0 ? (
             <CalendarEventList
