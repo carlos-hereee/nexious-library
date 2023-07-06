@@ -7,6 +7,7 @@ type CalendarEventProps = {
   setMeeting: (value: any) => void;
   setActive: (value: any) => void;
   removeFromCart: (value: any) => void;
+  handleCheckout: (value: any) => void;
   active?: any;
   meeting?: any;
   events: any[];
@@ -20,6 +21,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
     setMeeting,
     setActive,
     removeFromCart,
+    handleCheckout,
   } = props;
   return (
     <div className="calendar-events" id="calendar-events">
@@ -32,6 +34,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         <div className="calendar-event-cart">
           <Cart
             data={events}
+            active={active}
             heading="Select a package"
             removeFromCart={removeFromCart}
             setActive={setActive}
@@ -49,8 +52,21 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
                 <Icon icon="x" />
                 {meeting.time.startTime} {meeting.time.endTime}
               </button>
-              {active.uid && (
-                <MeetingDetails active={active} meeting={meeting} />
+              {active.uid ? (
+                <>
+                  <MeetingDetails active={active} meeting={meeting} />
+                  <button
+                    type="button"
+                    className="btn btn-main"
+                    onClick={handleCheckout}
+                  >
+                    Proceed to checkout
+                  </button>
+                </>
+              ) : (
+                <h4 className="heading text-center">
+                  Make a selection and proceed to checkout
+                </h4>
               )}
             </div>
           ) : selectedDay.list?.length > 0 ? (

@@ -3,16 +3,19 @@ import CardHeader from "./CardHeader";
 
 type CartRowProps = {
   data: any;
+  active: any;
   setCancel: () => void;
   setActive: (value: any) => void;
 };
 const CartRow: React.FC<CartRowProps> = (props) => {
-  const { data, setCancel, setActive } = props;
+  const { data, setCancel, setActive, active } = props;
   return (
     <div className="card-row-wrapper">
       <ButtonCancel click={setCancel} />
       <button
-        className="card-row"
+        className={
+          active.uid === data.uid ? "card-row card-row--active" : "card-row"
+        }
         type="button"
         onClick={() => setActive(data)}
       >

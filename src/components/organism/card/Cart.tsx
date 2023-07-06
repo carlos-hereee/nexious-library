@@ -5,11 +5,12 @@ import { CartRow, CartCancel } from "@nxs-molecules";
 type CartProps = {
   data: any[];
   heading: string;
+  active: any;
   removeFromCart: (e: any) => void;
   setActive: (value: any) => void;
 };
 const Cart: React.FC<CartProps> = (props) => {
-  const { data, heading, removeFromCart, setActive } = props;
+  const { data, heading, removeFromCart, setActive, active } = props;
   const [cancel, setCancel] = useState<{ uid?: string }>();
   const cancelReq = (e: any, isConfirm: boolean) => {
     isConfirm ? removeFromCart(e) : setCancel({});
@@ -27,6 +28,7 @@ const Cart: React.FC<CartProps> = (props) => {
             data={c}
             setCancel={() => setCancel(c)}
             setActive={setActive}
+            active={active}
           />
         )
       )}
