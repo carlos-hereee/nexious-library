@@ -1,5 +1,6 @@
-import { Heading, Icon } from "@nxs-atoms/index";
-import { CalendarEventList, CalendarEvent } from "@nxs-molecules";
+import { Heading, Icon, MeetingDetails } from "@nxs-atoms/index";
+import { CalendarEventList } from "@nxs-molecules";
+import { Cart } from "@nxs-organism";
 
 type CalendarEventProps = {
   selectedDay: { date: string; list: any[] };
@@ -29,20 +30,37 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         }`}
       />
       <div className="flex-w">
-        <CalendarEvent
-          active={active}
-          meeting={meeting}
-          events={events}
-          removeFromCart={removeFromCart}
-          setActive={setActive}
-        />
+        <div className="flex-2">
+          <Cart
+            data={events}
+            heading="Select a package"
+            removeFromCart={removeFromCart}
+            setActive={setActive}
+          />
+        </div>
+
         <div className="event-wrapper">
           {meeting.uid ? (
-            <button type="button" className="btn btn-main" onClick={setMeeting}>
-              <Icon icon="x" />
-              <strong>Selected time: </strong>
-              {meeting.time.startTime} {meeting.time.endTime}
-            </button>
+            <div className="flex-d-column">
+              <div>
+                <button
+                  type="button"
+                  className="btn btn-main"
+                  onClick={setMeeting}
+                >
+                  <Icon icon="x" />
+                  <strong>Selected time: </strong>
+                  {meeting.time.startTime} {meeting.time.endTime}
+                </button>
+              </div>
+              <div>
+                {active.uid ? (
+                  <MeetingDetails active={active} meeting={meeting} />
+                ) : (
+                  "Select a package <-"
+                )}
+              </div>
+            </div>
           ) : selectedDay.list?.length > 0 ? (
             <CalendarEventList
               list={selectedDay.list}

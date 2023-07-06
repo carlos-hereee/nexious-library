@@ -36,3 +36,4 @@ export { default as PingCount } from "./texts/PingCount";
 export { default as TileContent } from "./texts/TileContent";
 export { default as ReadMore } from "./texts/ReadMore";
 export { default as Cost } from "./texts/Cost";
+export { default as MeetingDetails } from "./texts/MeetingDetails";
