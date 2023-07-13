@@ -1,4 +1,4 @@
-import { Btn, Hero } from "@nxs-atoms/index";
+import { Hero, Btn } from "@nxs-atoms/index";
 
 type HeroCardProps = {
   heading: string;
@@ -17,7 +17,9 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
       <div className="hero-card-header">
         <h1 className="hero-card-heading">{heading}</h1>
         <h3 className="tagline">{tagline}</h3>
-        <Btn name={cta}>{cta}</Btn>
+        <Btn name="cta" title={cta}>
+          {cta}
+        </Btn>
       </div>
       <div>
         <Hero hero={hero} name={hero.name} />

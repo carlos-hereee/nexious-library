@@ -1,5 +1,6 @@
 type BtnProp = {
   name: string;
+  title?: string;
   children?: React.ReactNode;
 };
 /**
@@ -8,12 +9,12 @@ type BtnProp = {
  * @returns JSX.Element -> button
  */
 const Btn: React.FC<BtnProp> = (props) => {
-  const { name, children } = props;
+  const { name, children, title } = props;
   return (
     <button
       type="button"
       className={`btn${name ? ` btn-${name}` : ""}`}
-      title={name ? name : ""}
+      title={title ? title : ""}
     >
       {children}
     </button>
