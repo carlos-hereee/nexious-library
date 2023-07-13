@@ -3,7 +3,13 @@ import { IconNames } from "@nxs-atoms";
 
 export type DataStringProps = { data: string; name?: string };
 export type LinkProp = { data: string; isLink: boolean };
-export type HeroProp = { url: string; alt?: string; name?: string };
+export type HeroProp = {
+  url: string;
+  alt?: string;
+  name?: string;
+  isIcon?: boolean;
+  icon?: IconNames;
+};
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };
 export type PageNotFoundProps = { message: string; hero: HeroProp };
