@@ -3,14 +3,13 @@ import { HeroProp } from "@nxs-helpers/types";
 
 type FeatureCardProps = {
   feature: {
-    hero: HeroProp;
     heading: string;
     description: string;
   };
+  hero: HeroProp;
 };
-const FeatureCard: React.FC<FeatureCardProps> = ({ feature }) => {
-  const { hero, heading, description } = feature;
-  console.log("feature", hero);
+const FeatureCard: React.FC<FeatureCardProps> = (props) => {
+  const { hero, feature } = props;
   return (
     <div className="card">
       <div className="card-hero-header">
@@ -19,9 +18,9 @@ const FeatureCard: React.FC<FeatureCardProps> = ({ feature }) => {
         ) : (
           <Hero hero={hero} name={hero.name} />
         )}
-        <h2 className="heading">{heading}</h2>
+        <h2 className="heading">{feature.heading}</h2>
       </div>
-      <p>{description}</p>
+      <p>{feature.description}</p>
     </div>
   );
 };
