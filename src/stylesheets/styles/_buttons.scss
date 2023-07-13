@@ -2,9 +2,16 @@
 
 .btn {
   border-radius: #{$rem025};
+  border: none;
 }
 .btn-main {
   max-width: 100%;
+}
+.btn-cta {
+  background-color: #{$cta-color};
+  min-width: 100%;
+  width: 100%;
+  font-size: large;
 }
 .btn-primary {
   flex: 1;

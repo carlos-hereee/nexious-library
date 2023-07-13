@@ -25,7 +25,7 @@ const Logo: React.FC<LogoProps> = ({ logo, name, logoName }) => {
     <div className={name ? `logo ${name}` : "logo"}>
       <Heading data={heading.join(" ")} />
       <Hero
-        data={logo}
+        hero={logo}
         name={logoName ? `hero-logo ${logoName}` : "hero-logo"}
       />
     </div>

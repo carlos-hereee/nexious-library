@@ -12,6 +12,7 @@ export { default as TableFooter } from "./table/TableFooter";
 
 // card
 export { default as Card } from "./card/Card";
+export { default as HeroCard } from "./card/HeroCard";
 
 // calendar
 export { default as CalendarEvents } from "./calendar/CalendarEvents";

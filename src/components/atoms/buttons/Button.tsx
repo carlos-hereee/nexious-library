@@ -15,6 +15,7 @@ const Button: React.FC<ButtonProps> = ({ children, name, click }) => {
     <button
       type="button"
       className={`btn${name ? ` btn-${name}` : ""}`}
+      title={name ? name : ""}
       onClick={click}
     >
       {children}

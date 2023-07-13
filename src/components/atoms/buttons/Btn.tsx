@@ -1,14 +1,20 @@
-import { ButtonProps } from "./Button";
-
+type BtnProp = {
+  name: string;
+  children?: React.ReactNode;
+};
 /**
  * Component - Button
- * @param children content of button
  * @param name add an optional classname of the button component
  * @returns JSX.Element -> button
  */
-const Btn: React.FC<ButtonProps> = ({ children, name }) => {
+const Btn: React.FC<BtnProp> = (props) => {
+  const { name, children } = props;
   return (
-    <button type="button" className={`btn${name ? ` btn-${name}` : ""}`}>
+    <button
+      type="button"
+      className={`btn${name ? ` btn-${name}` : ""}`}
+      title={name ? name : ""}
+    >
       {children}
     </button>
   );

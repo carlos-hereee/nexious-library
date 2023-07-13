@@ -2,6 +2,21 @@
   border-radius: 0.5rem;
   width: 100%;
 }
+.hero-main {
+  min-height: 50vh;
+  max-height: 70vh;
+}
+.hero-card {
+  display: flex;
+  gap: #{$rem05};
+  justify-content: space-around;
+}
+.hero-card-header {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
 .hero-logo {
   max-width: 70px;
 }
