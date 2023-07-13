@@ -4,7 +4,7 @@
   position: relative;
 }
 .read-more {
-  --max-lines: 3;
+  --max-lines: 1;
   --line-height: 1.1;
   text-align: left;
   max-height: calc(var(--max-lines) * 1em * var(--line-height));

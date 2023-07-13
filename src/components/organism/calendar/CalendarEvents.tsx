@@ -1,4 +1,4 @@
-import { Heading, Icon, MeetingDetails } from "@nxs-atoms/index";
+import { Icon, MeetingDetails } from "@nxs-atoms/index";
 import { CalendarEventList } from "@nxs-molecules";
 import { Cart } from "@nxs-organism";
 
@@ -25,11 +25,6 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
   } = props;
   return (
     <div className="calendar-events" id="calendar-events">
-      <Heading
-        data={`${selectedDay.date} ${
-          meeting.uid ? `@ ${meeting.response}` : ""
-        }`}
-      />
       <div className="calendar-events-wrapper">
         <div className="calendar-event-cart">
           <Cart
@@ -42,6 +37,11 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         </div>
 
         <div className="event-wrapper">
+          <h3 className="heading">
+            {`${selectedDay.date} ${
+              meeting.uid ? `@ ${meeting.response}` : ""
+            }`}
+          </h3>
           {meeting.uid ? (
             <div className="flex-d-column">
               <button
@@ -76,9 +76,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
               meeting={meeting}
             />
           ) : (
-            <h3 className="heading">
-              All booked up, please try a different day
-            </h3>
+            <strong>All booked up, please try a different day</strong>
           )}
         </div>
       </div>

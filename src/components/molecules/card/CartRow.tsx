@@ -19,7 +19,7 @@ const CartRow: React.FC<CartRowProps> = (props) => {
         type="button"
         onClick={() => setActive(data)}
       >
-        <CardHeader data={data} />
+        <CardHeader data={data} isRow={true} />
         <div className="card-row-body">
           {data.response && <ReadMore data={data.response} />}
           {data.cost && <Cost data={data.cost} />}
