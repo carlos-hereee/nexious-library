@@ -3,12 +3,22 @@
 .icon {
   min-width: 1rem;
 }
-.instagram {
+.icon-instagram {
   color: #{$instagram};
 }
-.twitter {
+.icon-twitter {
   color: #{$twitter};
 }
 .icon-hero {
   width: 150px;
+}
+.socials {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.socials-icons {
+  margin: auto;
+  display: flex;
+  gap: #{$rem05};
 }
