@@ -79,3 +79,9 @@
   overflow-y: auto;
   overflow-x: hidden;
 }
+.feature-card-container {
+  display: flex;
+  gap: #{$rem05};
+  flex-wrap: wrap;
+  justify-content: space-around;
+}

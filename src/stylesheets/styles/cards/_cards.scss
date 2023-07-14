@@ -86,3 +86,6 @@
   display: flex;
   gap: #{$rem05};
 }
+.feature-card {
+  max-width: 300px;
+}

@@ -5,17 +5,37 @@
 .hero-main {
   min-height: 50vh;
   max-height: 60vh;
+  max-width: 600px;
+  min-width: 400px;
 }
 .hero-card {
+  position: relative;
   display: flex;
   gap: #{$rem05};
-  justify-content: space-around;
-  align-items: flex-end;
+  justify-content: space-between;
+  @include devices(mobile) {
+    text-align: center;
+    flex-wrap: wrap;
+    flex-direction: column-reverse;
+    .hero-card-heading {
+      margin: auto;
+    }
+  }
+}
+.hero-container {
+  display: flex;
+  align-items: center;
+  // padding: 1rem 0;
+  // .hero-main {
+  //   height: 100%;
+  //   margin: auto 0;
+  // }
 }
 .hero-card-header {
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  min-width: 250px;
 }
 
 .hero-logo {

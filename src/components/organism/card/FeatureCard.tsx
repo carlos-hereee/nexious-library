@@ -11,7 +11,7 @@ type FeatureCardProps = {
 const FeatureCard: React.FC<FeatureCardProps> = (props) => {
   const { hero, feature } = props;
   return (
-    <div className="card">
+    <div className="card feature-card">
       <div className="card-hero-header">
         {hero.isIcon && hero.icon ? (
           <Icon icon={hero.icon} size="6x" name={hero.name} />
