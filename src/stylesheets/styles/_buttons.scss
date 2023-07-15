@@ -6,6 +6,7 @@
 }
 .btn-main {
   max-width: 100%;
+  border: 1px solid #{$dark};
 }
 .btn-cta {
   background-color: #{$cta-color};

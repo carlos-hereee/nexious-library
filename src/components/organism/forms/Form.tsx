@@ -36,10 +36,8 @@ const Form: React.FC<FormProps> = (props) => {
           <div key={v} className="input-wrapper">
             {!hideLabels && (
               <label htmlFor={v} className="label">
-                <strong>
-                  {" "}
-                  {labels[v]}: <br />
-                </strong>
+                {" "}
+                {labels[v]}: <br />
                 {/* {errors[v] && <span className="required">{errors[v]}</span>} */}
               </label>
             )}
@@ -56,7 +54,7 @@ const Form: React.FC<FormProps> = (props) => {
           </div>
         ))}
       </div>
-      <button type="submit" className="btn-main">
+      <button type="submit" className="btn btn-main">
         {type === "search" ? (
           <span>
             <Icon icon="save" />
