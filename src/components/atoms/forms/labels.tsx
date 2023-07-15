@@ -13,4 +13,5 @@ export const labels: { [key: string]: string } = {
   password: "Password",
   confirmPassword: "Confirm Password",
   search: "Search",
+  message: "Message",
 };

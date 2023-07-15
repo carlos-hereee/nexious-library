@@ -1,28 +1,30 @@
 import { Icon } from "@nxs-atoms/index";
 import { labels } from "@nxs-atoms/forms/labels";
+import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
-// import { schema } from "./schema";
 
 type FormProps = {
-  values: {
-    [key: string]: string;
-  }[];
+  values: { [key: string]: string };
   submit: (e: any) => void;
   type?: string;
 };
-const NoCaptchaForm: React.FC<FormProps> = (props) => {
+const Form: React.FC<FormProps> = (props) => {
   const { submit, type, values } = props;
-  const [value, setValue] = useState();
+  const [value, setValue] = useState<{ [key: string]: string }>(values);
+
+  const handleChange = (e: any) => {
+    const key = e.target.name;
+    const val = e.currentTarget.value;
+    const change = { ...value, [key]: val };
+    setValue(change);
+  };
+  // const handleBlur = (e: any) => {
+  //   console.log("e", e);
+  // };
   const handleSubmit = (e: any) => {
-    console.log("e", e);
-  };
-  const handleChange = (data: any) => {
-    handleChange(data);
-    submit(data.target.value);
-  };
-  const handleBlur = (e: any) => {
-    console.log("e", e);
+    e.preventDefault();
+    submit(value);
   };
   return (
     <form className="form no-capcha-form" onSubmit={handleSubmit}>
@@ -37,13 +39,13 @@ const NoCaptchaForm: React.FC<FormProps> = (props) => {
               {/* {errors[v] && <span className="required">{errors[v]}</span>} */}
             </label>
             <input
-              type={labels[v]}
+              type={types[typeof labels[v]]}
               autoComplete="on"
               name={v}
-              value={value}
+              value={value[v] || ""}
               placeholder={placeholders[v]}
               onChange={handleChange}
-              onBlur={handleBlur}
+              // onBlur={handleBlur}
               className="input"
             />
           </div>
@@ -65,4 +67,4 @@ const NoCaptchaForm: React.FC<FormProps> = (props) => {
     </form>
   );
 };
-export default NoCaptchaForm;
+export default Form;
