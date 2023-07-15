@@ -1,5 +1,4 @@
 import { labels } from "@nxs-atoms/forms/labels";
-import { IconNames } from "@nxs-atoms";
 
 export type DataStringProps = { data: string; name?: string };
 export type LinkProp = { data: string; isLink: boolean };
@@ -8,7 +7,7 @@ export type HeroProp = {
   alt?: string;
   name?: string;
   isIcon?: boolean;
-  icon?: IconNames;
+  icon?: string;
 };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };
@@ -41,21 +40,21 @@ export type CardFooterProps = {
   buttons?: {
     uid: string;
     name: string;
-    icon: IconNames;
+    icon: string;
   }[];
   click: React.MouseEventHandler<HTMLButtonElement>;
 };
 export type IconItemProp = {
   uid: string;
   name: string;
-  icon: IconNames;
+  icon: string;
   isAlt?: boolean;
   alt?: string;
 };
 export type MenuItemProp = {
   uid: string;
   name: string;
-  icon: IconNames;
+  icon: string;
   alt?: string;
   isAlt?: boolean;
   isToggle?: boolean;

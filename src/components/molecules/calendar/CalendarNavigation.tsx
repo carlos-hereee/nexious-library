@@ -1,12 +1,12 @@
 import { months } from "@nxs-helpers/data";
-import { Heading, IconNames } from "@nxs-atoms";
+import { Heading } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 
 type CalendarNavProps = {
   date: { month: number; year: number };
   click: (e: string) => void;
-  previous: { label: string; icon: IconNames }[];
-  next: { label: string; icon: IconNames }[];
+  previous: { label: string; icon: string }[];
+  next: { label: string; icon: string }[];
 };
 /**
  * Component Calendar Navigation

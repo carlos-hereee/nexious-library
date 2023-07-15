@@ -1,8 +1,8 @@
-import { Icon, IconNames } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms/index";
 
 type SocialsProps = {
   data: {
-    name: IconNames;
+    name: string;
     uid?: string;
     link: string;
   }[];

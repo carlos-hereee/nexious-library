@@ -1,15 +1,6 @@
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { IconNames } from "@nxs-atoms";
+import { IconProps } from "@nxs-atoms/assets/Icon";
 import { HeroProp } from "@nxs-helpers/types";
 
-export interface IconProps {
-  icon: IconNames;
-  size?: SizeProp;
-  spin?: string;
-  color?: string;
-  label?: string;
-  name?: string;
-}
 export interface IconButtonProps {
   icon: IconProps;
   label?: string;

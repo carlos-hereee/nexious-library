@@ -36,8 +36,17 @@ import {
   faLeftLong,
   faListCheck,
   faLock,
+  // faMagnifyingGlass,
+  // faMagnifyingGlassArrowRight,
+  // faMagnifyingGlassChart,
+  // faMagnifyingGlassDollar,
+  // faMagnifyingGlassLocation,
+  // faMagnifyingGlassMinus,
+  // faMagnifyingGlassPlus,
   faMoneyBill,
   faPaperPlane,
+  faQuestion,
+  // faReceipt,
   faRefresh,
   faRightLong,
   faSave,
@@ -51,14 +60,18 @@ import {
   faUser,
   faX,
 } from "@fortawesome/free-solid-svg-icons";
-
-export const svg = {
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+type SVGProp = {
+  [key: string]: IconDefinition;
+};
+const svg: SVGProp = {
   about: faInfo,
   accessories: faImage,
   all: faGlobe,
   appointments: faSquareCheck,
   booking: faCalendarAlt,
-  braids: faUser,
+  user: faUser,
   booked: faSquareCheck,
   burger: faBars,
   cashapp: faMoneyBill,
@@ -69,6 +82,7 @@ export const svg = {
   dot: faCircleDot,
   dashboard: faUser,
   flag: faGlobe,
+  FAQ: faQuestion,
   first: faCircleChevronLeft,
   games: faGamepad,
   heart: faHeart,
@@ -91,6 +105,14 @@ export const svg = {
   spinner: faSpinner,
   store: faStore,
   today: faCalendarDay,
+  testimonials: faBullseye,
+  // testimonials: faReceipt,
+  // testimonials: faMagnifyingGlassArrowRight,
+  // testimonials: faMagnifyingGlassChart,
+  // testimonials: faMagnifyingGlassDollar,
+  // testimonials: faMagnifyingGlassLocation,
+  // testimonials: faMagnifyingGlassMinus,
+  // testimonials: faMagnifyingGlassPlus,
   twitter: faTwitter,
   top: faUpLong,
   uncheck: faCircle,
@@ -112,4 +134,5 @@ export const svg = {
   nine: fa9,
   zero: fa0,
 };
-export type IconNames = keyof typeof svg;
+library.add(svg);
+export { svg };

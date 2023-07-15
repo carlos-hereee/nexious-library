@@ -1,5 +1,4 @@
 import { CalendarView, CalendarNavigation, IconButton } from "@nxs-molecules";
-import { IconNames } from "@nxs-atoms";
 import { useEffect, useState } from "react";
 import { CalendarDayEventProp, CalendarDayProps } from "@nxs-helpers/types";
 import {
@@ -28,11 +27,11 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   const [today, setToday] = useState<CalendarDayProps>();
   const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
 
-  const previous: { label: string; icon: IconNames }[] = [
+  const previous: { label: string; icon: string }[] = [
     { label: "start", icon: "first" },
     { label: "prev", icon: "left" },
   ];
-  const next: { label: string; icon: IconNames }[] = [
+  const next: { label: string; icon: string }[] = [
     { label: "next", icon: "right" },
     { label: "last", icon: "last" },
   ];

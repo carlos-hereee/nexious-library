@@ -1,7 +1,7 @@
 // assets
 export { default as Hero } from "./assets/Hero";
 export { default as Icon } from "./assets/Icon";
-export type { IconNames } from "./assets/Assets";
+export type { IconProps } from "./assets/Icon";
 
 // buttons
 export { default as Btn } from "./buttons/Btn";
