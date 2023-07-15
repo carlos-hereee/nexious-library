@@ -9,6 +9,7 @@ export type CardProps = {
   header: CardHeaderProps;
   body: CardBodyProps;
   footer?: CardFooterProps;
+  name?: string;
   click?: (e: any) => void;
 };
 /**
@@ -31,9 +32,9 @@ export type CardProps = {
  * @returns Card
  */
 const Card: React.FC<CardProps> = (props) => {
-  const { header, body, footer, click } = props;
+  const { header, body, footer, click, name } = props;
   return (
-    <div className="card">
+    <div className={`card ${name ? name : ""}`}>
       <CardHeader data={header} />
       <CardBody data={body} />
       {footer && (
