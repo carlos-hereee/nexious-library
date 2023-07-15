@@ -21,9 +21,16 @@
 }
 .p-stretch {
   max-width: 100%;
+  width: 100%;
 }
 .text-bubble {
+  height: fit-content;
   background-color: #{$text-bubble};
   padding: #{$rem05};
   border-radius: #{$rem} 0;
+}
+.rating {
+  display: flex;
+  gap: #{$rem025};
+  padding: #{$rem};
 }

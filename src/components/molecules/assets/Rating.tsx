@@ -8,9 +8,7 @@ const Rating: React.FC<RatingProps> = (props) => {
   const ratings = [1, 2, 3, 4, 5];
   return (
     <div className="rating">
-      <p>
-        <strong>{star} / 5</strong>
-      </p>
+      <strong>{star} / 5 </strong>{" "}
       {ratings.map((r) => (
         <Icon icon="star" name={star < r ? "star" : "star-filled"} key={r} />
       ))}
