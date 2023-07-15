@@ -22,3 +22,8 @@
 .p-stretch {
   max-width: 100%;
 }
+.text-bubble {
+  background-color: #{$text-bubble};
+  padding: #{$rem05};
+  border-radius: #{$rem} 0;
+}
