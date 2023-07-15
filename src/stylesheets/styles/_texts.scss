@@ -34,3 +34,12 @@
   gap: #{$rem025};
   padding: #{$rem};
 }
+.btn-rating {
+  min-width: fit-content;
+  padding: 0;
+  .icon-star,
+  .icon-star-filled {
+    min-width: 35px;
+    min-height: 35px;
+  }
+}

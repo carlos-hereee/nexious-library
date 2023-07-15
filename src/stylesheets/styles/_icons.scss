@@ -13,7 +13,9 @@
   width: 150px;
 }
 .icon-star {
-  color: #{$star};
+  color: white;
+  stroke: #{$star};
+  stroke-width: 3rem;
 }
 .icon-star-filled {
   color: #{$star-filled};
