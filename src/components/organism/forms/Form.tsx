@@ -8,11 +8,12 @@ type FormProps = {
   values: { [key: string]: string };
   submit: (e: any) => void;
   hideLabels?: boolean;
+  stretchInput?: boolean;
   name?: string;
   type?: string;
 };
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, values, hideLabels, name } = props;
+  const { submit, type, values, hideLabels, name, stretchInput } = props;
   const [value, setValue] = useState<{ [key: string]: string }>(values);
 
   const handleChange = (e: any) => {
@@ -30,7 +31,7 @@ const Form: React.FC<FormProps> = (props) => {
   };
   return (
     <form className={`form ${name ? name : ""}`} onSubmit={handleSubmit}>
-      <div className="form-fields">
+      <div className={`form-fields ${stretchInput ? "w-100" : ""}`}>
         {Object.keys(values).map((v) => (
           <div key={v} className="input-wrapper">
             {!hideLabels && (
