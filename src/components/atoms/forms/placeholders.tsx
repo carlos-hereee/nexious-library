@@ -1,4 +1,4 @@
-export const placeholders = {
+export const placeholders: { [key: string]: string } = {
   firstName: "Peter..",
   lastName: "Griffin..",
   name: "Enter name",

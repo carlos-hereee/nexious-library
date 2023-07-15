@@ -1,4 +1,4 @@
-export const labels = {
+export const labels: { [key: string]: string } = {
   firstName: "First name",
   lastName: "Last name",
   name: "Enter name",
