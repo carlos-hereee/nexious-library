@@ -93,3 +93,7 @@
   max-width: 150px;
   min-width: 100px;
 }
+.hero-card-alt-body {
+  display: flex;
+  gap: #{$rem};
+}
