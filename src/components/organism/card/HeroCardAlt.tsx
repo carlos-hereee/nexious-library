@@ -1,7 +1,7 @@
-import { Hero, Btn } from "@nxs-atoms/index";
+import { Hero } from "@nxs-atoms/index";
 
 type HeroCardProps = {
-  heading: string;
+  heading?: string;
   body: string;
   hero: {
     url: string;
@@ -13,7 +13,7 @@ const HeroCardAlt: React.FC<HeroCardProps> = (props) => {
   const { heading, body, hero } = props;
   return (
     <div className="hero-card-alt">
-      <h1 className="heading">{heading}</h1>
+      {heading && <h1 className="heading">{heading}</h1>}
       <div className="hero-card-alt-body">
         <Hero hero={hero} name={hero.name} />
         <p className="p-stretch">{body}</p>
