@@ -7,10 +7,12 @@ import { useState } from "react";
 type FormProps = {
   values: { [key: string]: string };
   submit: (e: any) => void;
+  hideLabels: boolean;
+  name?: string;
   type?: string;
 };
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, values } = props;
+  const { submit, type, values, hideLabels, name } = props;
   const [value, setValue] = useState<{ [key: string]: string }>(values);
 
   const handleChange = (e: any) => {
@@ -27,17 +29,19 @@ const Form: React.FC<FormProps> = (props) => {
     submit(value);
   };
   return (
-    <form className="form no-capcha-form" onSubmit={handleSubmit}>
+    <form className={`form ${name ? name : ""}`} onSubmit={handleSubmit}>
       <div className="form-fields">
         {Object.keys(values).map((v) => (
           <div key={v} className="input-wrapper">
-            <label htmlFor={v} className="label">
-              <strong>
-                {" "}
-                {labels[v]}: <br />
-              </strong>
-              {/* {errors[v] && <span className="required">{errors[v]}</span>} */}
-            </label>
+            {!hideLabels && (
+              <label htmlFor={v} className="label">
+                <strong>
+                  {" "}
+                  {labels[v]}: <br />
+                </strong>
+                {/* {errors[v] && <span className="required">{errors[v]}</span>} */}
+              </label>
+            )}
             <input
               type={types[typeof labels[v]]}
               autoComplete="on"
