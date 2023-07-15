@@ -7,7 +7,7 @@ import { useState } from "react";
 type FormProps = {
   values: { [key: string]: string };
   submit: (e: any) => void;
-  hideLabels: boolean;
+  hideLabels?: boolean;
   name?: string;
   type?: string;
 };
