@@ -2,19 +2,19 @@ import { LinkProp } from "@nxs-helpers/types";
 
 type Links = {
   links: { word: string; link: string }[];
-  response: string;
+  body: string;
 };
 /**
  * TODO
  * @param param0
  * @returns
  */
-export const getLinks = ({ links, response }: Links): LinkProp[] => {
+export const getLinks = ({ links, body }: Links): LinkProp[] => {
   let arr: LinkProp[] = [];
-  if (response) {
+  if (body) {
     for (let i = 0; i < links.length; i++) {
       const { word } = links[i];
-      let split = response.split(word);
+      let split = body.split(word);
       if (arr.some((a) => a.data.includes(word))) {
         const res = arr.filter((a) => a.data.includes(word));
         const idx = arr.indexOf(res[0]);

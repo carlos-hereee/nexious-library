@@ -9,14 +9,15 @@ export type CardProps = {
   header: CardHeaderProps;
   body: CardBodyProps;
   footer?: CardFooterProps;
+  click?: (e: any) => void;
 };
 /**
  * Component - Card
  *
  * --header
- * @param header.title string; heading of the card
- * @param header.hero.name string; heading of the card
- * @param header.hero.url string; heading of the card
+ * @param title string; heading of the card
+ * @param hero.name string; heading of the card
+ * @param hero.url string; heading of the card
  * @param click   callback to be fired when button is click
  * --body 
  * @param response string; the text to manipulate
@@ -29,12 +30,18 @@ export type CardProps = {
  * @param data.buttons string[]; display any number of buttons
  * @returns Card
  */
-const Card: React.FC<CardProps> = ({ header, body, footer }) => {
+const Card: React.FC<CardProps> = (props) => {
+  const { header, body, footer, click } = props;
   return (
     <div className="card">
       <CardHeader data={header} />
       <CardBody data={body} />
-      {footer && <CardFooter data={footer} />}
+      {footer && (
+        <CardFooter
+          data={{ cta: footer.cta }}
+          click={() => click && click(header)}
+        />
+      )}
     </div>
   );
 };

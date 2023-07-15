@@ -30,19 +30,23 @@ export type CardHeaderProps = {
   hasHero?: boolean;
 };
 export type CardBodyProps = {
-  response: string;
+  body: string;
+  features?: {
+    hasList: boolean;
+    list: string[];
+    title: string;
+  }[];
   hyperlink: { word: string; link: string }[];
   hasLink?: boolean;
   uid: string;
 };
 export type CardFooterProps = {
-  data?: string;
-  buttons?: {
+  body?: string;
+  cta?: {
     uid: string;
     name: string;
     icon: string;
   }[];
-  click: React.MouseEventHandler<HTMLButtonElement>;
 };
 export type IconItemProp = {
   uid: string;

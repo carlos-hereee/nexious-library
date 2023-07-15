@@ -15,16 +15,28 @@ type Props = {
  * @returns
  */
 const CardBody: React.FC<Props> = ({ data }) => {
-  const { hyperlink, response, hasLink } = data;
-  const links = getLinks({ links: hyperlink, response });
+  const { hyperlink, body, hasLink, features } = data;
+  const links = getLinks({ links: hyperlink, body });
 
   return (
     <div className="card-body">
       <p className="card-body-p">
-        {hasLink
-          ? links.map((l) => <Hyperlink data={l} key={l.data} />)
-          : response}
+        {hasLink ? links.map((l) => <Hyperlink data={l} key={l.data} />) : body}
       </p>
+      {features && (
+        <div className="flex-w card">
+          {features?.map((f) => (
+            <div key={f.title}>
+              <h3 className="heading">{f.title}</h3>
+              <ul>
+                {f.list.map((l) => (
+                  <li key={l}>{l}</li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

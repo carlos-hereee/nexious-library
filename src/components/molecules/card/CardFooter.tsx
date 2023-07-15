@@ -3,6 +3,7 @@ import { IconButton } from "@nxs-molecules";
 
 type Props = {
   data: CardFooterProps;
+  click?: React.MouseEventHandler<HTMLButtonElement>;
 };
 /**
  * Component - Card Footer
@@ -10,14 +11,15 @@ type Props = {
  * @param data.buttons string[]; display any number of buttons
  * @returns
  */
-const CardFooter: React.FC<Props> = ({ data }) => {
+const CardFooter: React.FC<Props> = (props) => {
+  const { data, click } = props;
   return (
     <div className="card-footer">
-      {data.data && <p className="card-footer-p">{data.data}</p>}
+      {data.body && <p className="card-footer-p">{data.body}</p>}
       <div className="flex-center">
-        {data.buttons &&
-          data.buttons.map((b) => (
-            <IconButton icon={b} click={data.click} key={b.uid} />
+        {data.cta &&
+          data.cta.map((b) => (
+            <IconButton icon={b} click={click} key={b.uid} />
           ))}
       </div>
     </div>
