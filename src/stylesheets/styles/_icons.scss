@@ -12,6 +12,12 @@
 .icon-hero {
   width: 150px;
 }
+.icon-star {
+  color: #{$star};
+}
+.icon-star-filled {
+  color: #{$star-filled};
+}
 .socials {
   display: flex;
   flex-direction: column;

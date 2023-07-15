@@ -1,4 +1,4 @@
-import { Hero, Btn } from "@nxs-atoms/index";
+import { Hero } from "@nxs-atoms/index";
 
 type UserCardProps = {
   user: {
