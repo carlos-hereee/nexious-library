@@ -16,7 +16,7 @@ const HeroCardAlt: React.FC<HeroCardProps> = (props) => {
       <h1 className="heading">{heading}</h1>
       <div className="hero-card-alt-body">
         <Hero hero={hero} name={hero.name} />
-        <p>{body}</p>
+        <p className="p-stretch">{body}</p>
       </div>
     </div>
   );

@@ -15,22 +15,18 @@ type CardHeaderProp = {
  * @returns
  */
 const CardHeader: React.FC<CardHeaderProp> = ({ data, isRow }) => {
-  return (
+  return isRow ? (
     <div className="card-header">
-      {isRow ? (
-        <>
-          {data.title && <h3 className="heading">{data.title}</h3>}
-          {data.hasHero && data.hero && <Hero hero={data.hero} />}
-        </>
-      ) : (
-        <div>
-          <div>
-            {data.title && <h3 className="heading">{data.title}</h3>}
-            {data.hasHero && data.hero && <Hero hero={data.hero} />}
-          </div>
-          {data.subtitle && <Subtitle data={data.subtitle} />}
-        </div>
-      )}
+      {data.title && <h3 className="heading">{data.title}</h3>}
+      {data.hasHero && data.hero && <Hero hero={data.hero} />}
+    </div>
+  ) : (
+    <div className="card-header">
+      <>
+        {data.title && <h3 className="heading">{data.title}</h3>}
+        {data.hasHero && data.hero && <Hero hero={data.hero} />}
+      </>
+      {data.subtitle && <Subtitle data={data.subtitle} />}
     </div>
   );
 };

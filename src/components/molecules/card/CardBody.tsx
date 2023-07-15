@@ -17,6 +17,7 @@ type Props = {
 const CardBody: React.FC<Props> = ({ data }) => {
   const { hyperlink, body, hasLink, features } = data;
   const links = getLinks({ links: hyperlink, body });
+  console.log("body", body);
 
   return (
     <div className="card-body">
