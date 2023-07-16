@@ -95,13 +95,9 @@
 }
 .event-list {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   gap: #{$rem025};
   width: 100%;
-  .btn-item {
-    width: 100%;
-    max-width: 100%;
-  }
   @include devices(mobile) {
     width: 100%;
     align-items: center;

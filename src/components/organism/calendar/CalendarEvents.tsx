@@ -12,57 +12,42 @@ type CalendarEventProps = {
   events: any[];
 };
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
-  const {
-    selectedDay,
-    active,
-    meeting,
-    events,
-    setMeeting,
-    setActive,
-    removeFromCart,
-    handleCheckout,
-  } = props;
+  const { selectedDay, active, meeting, setMeeting, handleCheckout } = props;
+  console.log("meeting", meeting);
   return (
     <div className="calendar-events" id="calendar-events">
-      <h2>Package</h2>
-      <div className="calendar-event-cart">
-        <CardHeader data={active} />
-        {active.body && <ReadMore data={active.body} />}
-      </div>
-
       <div className="event-wrapper">
-        <h3 className="heading">
+        <h2 className="heading">
           {`${selectedDay.date} ${meeting.uid ? `@ ${meeting.response}` : ""}`}
-        </h3>
+        </h2>
         {meeting.uid ? (
           <div className="flex-d-column">
-            <button type="button" className="btn btn-main" onClick={setMeeting}>
+            <button
+              type="button"
+              className="btn btn-list-item"
+              onClick={setMeeting}
+            >
               <Icon icon="x" />
               {meeting.time.startTime} {meeting.time.endTime}
             </button>
-            {active.uid ? (
-              <>
-                <MeetingDetails active={active} meeting={meeting} />
-                <button
-                  type="button"
-                  className="btn btn-main"
-                  onClick={handleCheckout}
-                >
-                  Proceed to checkout
-                </button>
-              </>
-            ) : (
-              <h4 className="heading text-center">
-                Make a selection and proceed to checkout
-              </h4>
-            )}
+            <MeetingDetails active={active} meeting={meeting} />
+            <button
+              type="button"
+              className="btn btn-main"
+              onClick={handleCheckout}
+            >
+              Proceed to checkout
+            </button>
           </div>
         ) : selectedDay.list?.length > 0 ? (
-          <CalendarEventList
-            list={selectedDay.list}
-            click={(e) => setMeeting(e)}
-            meeting={meeting}
-          />
+          <>
+            <CalendarEventList
+              list={selectedDay.list}
+              click={(e) => setMeeting(e)}
+              meeting={meeting}
+            />
+            <MeetingDetails active={active} meeting={meeting} />
+          </>
         ) : (
           <strong>All booked up, please try a different day</strong>
         )}

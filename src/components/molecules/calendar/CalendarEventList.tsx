@@ -13,7 +13,7 @@ const CalendarEventList: React.FC<CalendarEventListProps> = (props) => {
         <button
           key={d.uid}
           onClick={() => click(d)}
-          className="btn btn-item"
+          className="btn btn-list-item"
           title={d.response}
         >
           {meeting ? (
