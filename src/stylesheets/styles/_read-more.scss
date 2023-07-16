@@ -2,34 +2,10 @@
 .message-success {
   border-radius: #{$rem05};
 }
-// .read-more-state {
-//   display: none;
-// }
-// .read-more-target {
-//   opacity: 0;
-//   font-size: 0;
-//   max-height: 0;
-//   transition: 0.25s ease;
-// }
-// .read-more-state:checked ~ .read-more-wrap .read-more-target {
-//   opacity: 1;
-//   font-size: inherit;
-//   max-height: max-content;
-// }
-// .read-more-state ~ .read-more-trigger:before {
-//   content: "Show more";
-// }
-// .read-more-state:checked ~ .read-more-trigger:before {
-//   content: "Show less";
-// }
-// .read-more-trigger {
-//   cursor: pointer;
-//   display: inline-block;
-//   padding: 0 0.5rem;
-//   border: 1px solid #{$dark};
-//   border-radius: #{$border-radius};
-//   padding: #{$rem05};
-// }
+.read-more-wrapper {
+  display: flex;
+  flex-direction: column;
+}
 .read-more-state {
   display: none;
 }
@@ -55,6 +31,8 @@
   cursor: pointer;
   display: inline-block;
   padding: 0 0.5em;
+  margin-left: auto;
+  width: max-content;
   color: #666;
   font-size: 0.9em;
   line-height: 2;
