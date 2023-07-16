@@ -7,7 +7,7 @@ type Props = {
 };
 const Label: React.FC<Props> = ({ children, name }) => {
   return (
-    <label htmlFor={name} className="label">
+    <label htmlFor={name.toString()} className="label">
       <span className="label-name">
         {labels[name].charAt(0).toUpperCase() + labels[name].slice(1)}
       </span>

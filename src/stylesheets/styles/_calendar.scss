@@ -10,14 +10,13 @@
   width: 100%;
   gap: #{$rem05};
 }
-.calendar-events-wrapper {
+.calendar-event-cart {
   display: flex;
-  gap: #{$rem05};
-  @include devices(mobile) {
-    flex-direction: column;
+  width: 100%;
+  .hero {
+    max-height: 15vh;
   }
 }
-
 .btn-calendar-tile--today {
   background-color: #{$action-color};
 }
@@ -106,9 +105,7 @@
     align-items: center;
   }
 }
-.calendar-event-cart {
-  width: 100%;
-}
+
 // .react-calendar {
 //   display: flex;
 //   flex-direction: column;

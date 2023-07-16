@@ -2,14 +2,16 @@ type ReadMoreProps = {
   data: string;
 };
 const ReadMore: React.FC<ReadMoreProps> = ({ data }) => {
-  // if (lines > 2) {
-  //   const element = document.querySelector(".read-more");
-  //   element && element?.style.setProperty("--max-lines", lines);
-  // }
+  const show = data.split(".");
+  const target = show.map((s, idx) => (idx >= 1 ? s : "")).join(".");
   return (
-    <div className="read-more-wrapper">
-      <p className="read-more">{data}</p>
-      <input type="checkbox" className="read-more-toggle" />
+    <div>
+      <input type="checkbox" className="read-more-state" id="post" />
+      <p className="read-more-wrap">
+        {show[0]}
+        <span className="read-more-target">{target}</span>
+      </p>
+      <label htmlFor="post" className="read-more-trigger"></label>
     </div>
   );
 };

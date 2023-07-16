@@ -1,46 +1,63 @@
-@import "../vars/variables.scss";
-
-.read-more-wrapper {
-  position: relative;
-}
-.read-more {
-  --max-lines: 1;
-  --line-height: 1.1;
-  text-align: left;
-  max-height: calc(var(--max-lines) * 1em * var(--line-height));
-  line-height: var(--line-height);
-  position: relative;
-  overflow: hidden;
-  &:has(+ .read-more-toggle:not(:checked))::before {
-    content: "";
-    position: absolute;
-    height: calc(1em * var(--line-height));
-    width: 100%;
-    bottom: 0;
-    pointer-events: none;
-    // background: linear-gradient(to bottom, transparent, #{$secondary-color2});
-  }
-  &:has(+ .read-more-toggle:checked) {
-    max-height: none;
-  }
-}
-
-.read-more-toggle {
-  appearance: none;
-  cursor: pointer;
-  text-align: right;
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  width: 100%;
-  border-radius: 0.25rem;
-  &::before {
-    content: "...Read More";
-  }
-  &:checked::before {
-    content: "Collapse";
-  }
-}
+@import "../vars/_variables.scss";
 .message-success {
   border-radius: #{$rem05};
+}
+// .read-more-state {
+//   display: none;
+// }
+// .read-more-target {
+//   opacity: 0;
+//   font-size: 0;
+//   max-height: 0;
+//   transition: 0.25s ease;
+// }
+// .read-more-state:checked ~ .read-more-wrap .read-more-target {
+//   opacity: 1;
+//   font-size: inherit;
+//   max-height: max-content;
+// }
+// .read-more-state ~ .read-more-trigger:before {
+//   content: "Show more";
+// }
+// .read-more-state:checked ~ .read-more-trigger:before {
+//   content: "Show less";
+// }
+// .read-more-trigger {
+//   cursor: pointer;
+//   display: inline-block;
+//   padding: 0 0.5rem;
+//   border: 1px solid #{$dark};
+//   border-radius: #{$border-radius};
+//   padding: #{$rem05};
+// }
+.read-more-state {
+  display: none;
+}
+.read-more-target {
+  opacity: 0;
+  max-height: 0;
+  font-size: 0;
+  transition: 0.25s ease;
+}
+.read-more-state:checked ~ .read-more-wrap .read-more-target {
+  opacity: 1;
+  font-size: inherit;
+  max-height: 999em;
+}
+.read-more-state ~ .read-more-trigger:before {
+  content: "Show more";
+}
+.read-more-state:checked ~ .read-more-trigger:before {
+  content: "Show less";
+}
+
+.read-more-trigger {
+  cursor: pointer;
+  display: inline-block;
+  padding: 0 0.5em;
+  color: #666;
+  font-size: 0.9em;
+  line-height: 2;
+  border: 1px solid #ddd;
+  border-radius: 0.25em;
 }
