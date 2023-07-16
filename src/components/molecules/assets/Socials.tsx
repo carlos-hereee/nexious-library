@@ -16,7 +16,7 @@ const Socials: React.FC<SocialsProps> = (props) => {
       <div className="socials-icons">
         {data.length > 0 &&
           data.map((d) => (
-            <Icon key={d.uid} icon={d.name} name={d.name} size="4x" />
+            <Icon key={d.uid} icon={d.name} name={d.name} size="3x" />
           ))}
       </div>
     </div>
