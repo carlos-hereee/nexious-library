@@ -3,7 +3,7 @@ import { CalendarEventList, CardHeader, CartRow } from "@nxs-molecules";
 import { UserCard } from "..";
 
 type CalendarEventProps = {
-  currentDay: { date: string; list: any[] };
+  selectedDay: { date: string; list: any[] };
   setMeeting: (value: any) => void;
   setActive: (value: any) => void;
   removeFromCart: (value: any) => void;
@@ -14,14 +14,14 @@ type CalendarEventProps = {
   events: any[];
 };
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
-  const { currentDay, active, meeting, setMeeting, handleCheckout, user } =
+  const { selectedDay, active, meeting, setMeeting, handleCheckout, user } =
     props;
   return (
     <div className="calendar-events" id="calendar-events">
       <MeetingDetails active={active} meeting={meeting} user={user} />
       <div className="event-wrapper">
         <h2 className="heading">
-          {`${currentDay.date} ${meeting.uid ? `@ ${meeting.response}` : ""}`}
+          {`${selectedDay.date} ${meeting.uid ? `@ ${meeting.response}` : ""}`}
         </h2>
         {meeting.uid ? (
           <div className="flex-d-column">
@@ -48,9 +48,9 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
               <div></div>
             )}
           </div>
-        ) : currentDay.list?.length > 0 ? (
+        ) : selectedDay.list?.length > 0 ? (
           <CalendarEventList
-            list={currentDay.list}
+            list={selectedDay.list}
             click={(e) => setMeeting(e)}
             meeting={meeting}
           />

@@ -24,10 +24,10 @@
   flex: 1;
 }
 .btn-calendar-tile--today {
-  background-color: #{$action-color-accent};
+  background-color: #{$action-color};
 }
 .btn-calendar-tile--selected {
-  background-color: #{$action-color};
+  background-color: #{$action-color-accent};
 }
 .calendar-week .day,
 .btn-calendar-tile {

@@ -9,9 +9,9 @@ import {
 
 type CalendarProps = {
   value: Date;
+  selectedDay: { date: Date; list: { [a: string]: string | number }[] };
   minDate?: Date;
   events?: CalendarDayEventProp[];
-  selectedDay?: { date: Date };
   setSelectedDay?: (a: any) => void;
   onDayClick: (e: any) => void;
 };
@@ -24,7 +24,8 @@ type CalendarProps = {
  * @returns
  */
 const Calendar: React.FC<CalendarProps> = (props) => {
-  const { value, events, onDayClick, minDate, selectedDay } = props;
+  const { value, events, onDayClick, minDate, selectedDay, setSelectedDay } =
+    props;
   const [current, setCurrent] = useState<CalendarDayProps>();
   const [today, setToday] = useState<CalendarDayProps>();
   const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
@@ -40,14 +41,20 @@ const Calendar: React.FC<CalendarProps> = (props) => {
 
   useEffect(() => {
     if (value) {
-      console.log("value", value);
+      const currentCalendarValues = calendarValues(value);
+      const calendarMatch = findMatch(currentCalendarValues);
+      if (setSelectedDay) {
+        calendarMatch?.date
+          ? setSelectedDay(calendarMatch)
+          : setSelectedDay({ date: currentCalendarValues.day, list: [] });
+      }
       setToday(calendarValues(new Date()));
-      setCurrent(calendarValues(value));
+      setCurrent(currentCalendarValues);
     }
     if (minDate) {
       setMininumDate(calendarValues(minDate));
     }
-  }, [value, minDate]);
+  }, []);
 
   const findMatch = (calDay: CalendarDayProps) => {
     return events?.filter((e) => {
@@ -70,21 +77,22 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     }
   };
   const dayChange = (e: CalendarDayProps) => {
+    console.log("e", e);
     if (current) {
       if (e.date <= 0) prevMonth(current, setCurrent);
-      if (e.date > 0 && e.date < current.maxDays) {
+      if (e.date > 0 && e.date <= current.maxDays) {
         const filter = findMatch(e);
-        console.log("e", e);
-        console.log("filter", filter);
         filter
           ? onDayClick(filter)
           : onDayClick({
               date: new Date(e.year, e.month, e.date).toDateString(),
+              list: [],
             });
       }
       if (e.date > current.maxDays) nextMonth(current, setCurrent);
     }
   };
+  console.log("selectedDay", selectedDay);
   return (
     <div className="calendar flex-d-column">
       <div className="calendar-icon-container flex-j-end">
@@ -104,7 +112,11 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           <CalendarView
             data={current}
             today={today}
-            selectedDay={selectedDay && calendarValues(selectedDay.date)}
+            selectedDay={
+              selectedDay?.date
+                ? calendarValues(new Date(selectedDay.date))
+                : current
+            }
             minDate={mininumDate}
             click={dayChange}
             events={events?.map((e) => {

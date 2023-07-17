@@ -7,7 +7,7 @@ import { isTileMatch } from "@nxs-utils/calendar/calendarValues";
 
 type CalendarViewProps = {
   data: CalendarDayProps;
-  selectedDay?: CalendarDayProps;
+  selectedDay: CalendarDayProps;
   click: (e: CalendarDayProps) => void;
   today?: CalendarDayProps;
   minDate?: CalendarDayProps;
@@ -38,9 +38,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
                 tile: tileDay,
                 isToday: isTileMatch(data, tileDay, today ? today : data),
                 isMuted: isTileMute({ day: tileDay, minDate, data }),
-                isSelected: selectedDay
-                  ? isTileMatch(selectedDay, tileDay, data)
-                  : false,
+                isSelected: isTileMatch(selectedDay, tileDay, data),
               }}
             />
           ) : (
