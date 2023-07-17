@@ -24,6 +24,9 @@
   flex: 1;
 }
 .btn-calendar-tile--today {
+  background-color: #{$action-color-accent};
+}
+.btn-calendar-tile--selected {
   background-color: #{$action-color};
 }
 .calendar-week .day,

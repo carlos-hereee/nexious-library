@@ -4,9 +4,10 @@ import ReadMore from "./ReadMore";
 type MeetingDetailsProp = {
   active: any;
   meeting: any;
+  user?: any;
 };
 const MeetingDetails: React.FC<MeetingDetailsProp> = (props) => {
-  const { active, meeting } = props;
+  const { active, meeting, user } = props;
   return (
     <div className="calendar-meeting-details">
       <h2 className="heading">Package</h2>
