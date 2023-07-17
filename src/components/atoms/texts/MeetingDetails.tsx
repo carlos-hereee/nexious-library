@@ -8,21 +8,23 @@ type MeetingDetailsProp = {
 const MeetingDetails: React.FC<MeetingDetailsProp> = (props) => {
   const { active, meeting } = props;
   return (
-    <>
+    <div className="calendar-meeting-details">
       <h2 className="heading">Package</h2>
       <div className="calendar-event-cart">
         <CardHeader data={active} />
         {active.body && <ReadMore data={active.body} />}
       </div>
       {meeting.uid && (
-        <p className="p-stretch">
-          Appointment set for{" "}
-          <strong>
-            {`${meeting.date} @ ${meeting.time.startTime} - ${meeting.time.endTime}`}
-          </strong>
-        </p>
+        <>
+          <p>
+            Appointment set for{" "}
+            <strong>
+              {`${meeting.date} @ ${meeting.time.startTime} - ${meeting.time.endTime}`}
+            </strong>
+          </p>{" "}
+        </>
       )}
-    </>
+    </div>
   );
 };
 export default MeetingDetails;

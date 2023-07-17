@@ -6,7 +6,7 @@
 }
 .calendar-events {
   display: flex;
-  flex-direction: column;
+  flex-wrap: wrap;
   width: 100%;
   gap: #{$rem05};
 }
@@ -15,9 +15,13 @@
   width: 100%;
   gap: #{$rem};
   .hero {
-    min-width: 15vw;
+    min-width: 100px;
     max-height: 15vh;
   }
+}
+.calendar-meeting-details {
+  width: 100%;
+  flex: 1;
 }
 .btn-calendar-tile--today {
   background-color: #{$action-color};
@@ -88,14 +92,18 @@
 }
 .event-wrapper {
   width: 100%;
+  flex: 1;
   @include devices(mobile) {
     display: flex;
+    min-width: 300px;
+    flex-wrap: wrap;
     justify-content: center;
   }
 }
 .event-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: space-around;
   gap: #{$rem025};
   width: 100%;
   @include devices(mobile) {
@@ -103,73 +111,3 @@
     align-items: center;
   }
 }
-
-// .react-calendar {
-//   display: flex;
-//   flex-direction: column;
-//   flex: 1;
-//   min-width: 200px;
-//   max-width: 700px;
-//   gap: #{$rem};
-//   border-radius: #{$rem05};
-//   @include devices(mobile) {
-//     width: 100%;
-//     flex: auto;
-//   }
-// }
-// #calendar-events {
-//   display: flex;
-//   flex-direction: column;
-//   flex: 1;
-//   border-radius: #{$rem05};
-//   gap: #{$rem};
-// }
-// .react-calendar__navigation {
-//   display: flex;
-//   .react-calendar__navigation__prev-button {
-//     border-top-left-radius: 0.5rem;
-//     border-right: none;
-//     border-bottom-left-radius: 0.5rem;
-//   }
-//   .react-calendar__navigation__next-button {
-//     border-top-right-radius: 0.5rem;
-//     border-left: none;
-//     border-bottom-right-radius: 0.5rem;
-//   }
-// }
-// .react-calendar__tile {
-//   border: none;
-//   position: relative;
-//   cursor: pointer;
-//   max-width: 100px;
-//   min-height: 45px;
-//   min-width: 40px;
-//   .match {
-//     display: flex;
-//     align-items: center;
-//     justify-content: center;
-//     background-color: var(--ping);
-//     color: var(--primary-light-color);
-//     position: absolute;
-//     aspect-ratio: 1/1;
-//     width: 1rem;
-//     height: 1rem;
-//     right: 5px;
-//     top: 1px;
-//     border-radius: #{$rem05};
-//     padding: 0.25rem;
-//   }
-// }
-// .react-calendar__month-view__weekdays {
-//   text-align: center;
-// }
-// .react-calendar__navigation__label {
-//   border-right: none;
-//   border-left: none;
-//   &:disabled {
-//     cursor: default;
-//   }
-// }
-// .react-calendar__viewContainer {
-//   border-radius: #{$rem05};
-// }

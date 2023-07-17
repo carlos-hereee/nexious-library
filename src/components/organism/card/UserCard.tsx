@@ -1,7 +1,7 @@
 import { Hero } from "@nxs-atoms/index";
 
 type UserCardProps = {
-  hideLabels: boolean;
+  hideLabels?: boolean;
   user: {
     name: string;
     hero: {
