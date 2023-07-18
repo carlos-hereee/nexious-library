@@ -38,3 +38,6 @@ export { default as CalendarEventList } from "./calendar/CalendarEventList";
 // tables
 export { default as ColumnGroup } from "./table/ColumnGroup";
 export { default as TableRow } from "./table/TableRow";
+
+// texts
+export { default as Total } from "./texts/Total";
