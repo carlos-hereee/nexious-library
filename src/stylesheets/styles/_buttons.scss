@@ -68,3 +68,8 @@
 .btn-list-item {
   border: 1px solid #{$dark};
 }
+.btn-danger {
+  border: none;
+  color: white;
+  background-color: #{$danger};
+}

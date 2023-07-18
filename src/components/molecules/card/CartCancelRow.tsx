@@ -9,14 +9,14 @@ const CartCancel: React.FC<CancelRowProps> = ({ click }) => {
       <div className="cancel-row-footer">
         <button
           type="button"
-          className="btn btn-back"
+          className="btn btn-main"
           onClick={() => click(false)}
         >
           Back
         </button>
         <button
           type="button"
-          className="btn btn-danger"
+          className="btn btn-main btn-danger"
           onClick={() => click(true)}
         >
           Confirm
