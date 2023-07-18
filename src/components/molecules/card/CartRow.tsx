@@ -18,7 +18,7 @@ const CartRow: React.FC<CartRowProps> = (props) => {
       className={
         active === service.uid
           ? "flex-d-column card-row--active"
-          : "flex-d-column"
+          : "flex-d-column card-row-container"
       }
     >
       <button className="card-row" type="button" onClick={setActive}>
