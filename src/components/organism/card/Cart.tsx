@@ -16,7 +16,10 @@ const Cart: React.FC<CartProps> = (props) => {
     isConfirm ? removeFromCart(e) : setCancel("");
   };
   console.log("data", data);
-
+  console.log("name", name);
+  const handleEditDetails = (e: any) => {
+    console.log("e", e);
+  };
   return (
     <div className="flex-d-column">
       <Heading data={heading} />
@@ -30,6 +33,7 @@ const Cart: React.FC<CartProps> = (props) => {
             service={c.service}
             setCancel={() => setCancel(c.service.uid)}
             setActive={() => setActive(c.service.uid)}
+            editDetails={() => handleEditDetails(c)}
             active={active}
           />
         )

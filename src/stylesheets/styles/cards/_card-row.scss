@@ -1,8 +1,8 @@
 @import "../../vars/mixins.scss", "../../vars/variables.scss";
 
 .card-row-wrapper {
-  position: relative;
   display: flex;
+  flex-direction: column;
 }
 
 .card-row {
@@ -13,10 +13,15 @@
   width: 100%;
   max-width: none;
   border-radius: #{$rem05};
+  padding: #{$rem05};
+  text-align: left;
   .card-header {
     flex: 1;
   }
   .card-row-body {
+    display: flex;
+    align-items: space-between;
+    height: 100%;
     flex: 3;
     .read-more-wrapper {
       width: 100%;
@@ -33,7 +38,9 @@
   }
 }
 .card-row--active {
+  padding: 1rem 0;
   background-color: #{$action-color};
+  border-radius: #{$border-radius};
 }
 .card-row-body {
   display: flex;
@@ -45,6 +52,8 @@
   }
 }
 .card-row-footer {
+  display: flex;
+  gap: #{$rem};
   margin: auto;
 }
 .user-card-row {
