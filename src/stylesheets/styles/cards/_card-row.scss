@@ -41,3 +41,10 @@
 .card-row-footer {
   margin: auto;
 }
+.user-card-row {
+  display: flex;
+  flex-direction: row;
+  gap: #{$rem};
+  max-width: 100%;
+  width: 100%;
+}

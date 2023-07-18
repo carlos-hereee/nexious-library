@@ -1,9 +1,11 @@
+import { ReadMore } from "@nxs-atoms/index";
 import { CardHeaderProps } from "@nxs-helpers/types";
 import { CardHeader } from "@nxs-molecules";
 
 export type CardProps = {
   header: CardHeaderProps;
   body: string;
+  hideReadMore?: boolean;
   name?: string;
 };
 /**
@@ -26,11 +28,15 @@ export type CardProps = {
  * @returns Card
  */
 const CardSection: React.FC<CardProps> = (props) => {
-  const { header, body, name } = props;
+  const { header, body, name, hideReadMore } = props;
   return (
     <div className={`card-section ${name ? name : ""}`}>
       <CardHeader data={header} />
-      <p className="text-center">{body}</p>
+      {body && hideReadMore ? (
+        <p className="text-center">{body}</p>
+      ) : (
+        <ReadMore data={body} />
+      )}
     </div>
   );
 };

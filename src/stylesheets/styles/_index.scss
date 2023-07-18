@@ -1,7 +1,6 @@
 @import "./_app.scss";
 @import "./_background.scss";
 @import "./_buttons.scss";
-@import "./_calendar.scss";
 @import "./_container.scss";
 @import "./_custom.scss";
 @import "./_flex.scss";
@@ -17,7 +16,4 @@
 @import "./texts.scss";
 @import "./cards/_index.scss";
 
-// @import "./buttons.scss", "./calendar.scss", "./container.scss",
-//   "./navigation.scss", "./icons.scss", "./cards/index.scss", "./read-more.scss",
-//   "./custom.scss", "./flex.scss", "./icons.scss", "./text.scss",
-//   "./background.scss", "./padding.scss", "./grid.scss", "./link.scss";
+@import "./_calendar.scss";

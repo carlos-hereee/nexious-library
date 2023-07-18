@@ -1,6 +1,6 @@
 import { Icon, MeetingDetails, ReadMore } from "@nxs-atoms/index";
 import { CalendarEventList, CardHeader, CartRow } from "@nxs-molecules";
-import { UserCard } from "..";
+import { CardSection, UserCard } from "@nxs-organism";
 
 type CalendarEventProps = {
   selectedDay: { date: string; list: any[] };
@@ -18,7 +18,10 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
     props;
   return (
     <div className="calendar-events" id="calendar-events">
-      <MeetingDetails active={active} meeting={meeting} user={user} />
+      <div className="calendar-package-details">
+        <h2 className="heading">Selected package</h2>
+        <CardSection body={active.body} header={active} />
+      </div>
       <div className="event-wrapper">
         <h2 className="heading">
           {`${selectedDay.date} ${meeting.uid ? `@ ${meeting.response}` : ""}`}
@@ -35,10 +38,12 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
             </button>
             {user && user.uid ? (
               <div>
-                <UserCard user={user} />
+                <h2 className="heading">User Information</h2>
+                <UserCard user={user} isRow hideHero />
+                <MeetingDetails meeting={meeting} />
                 <button
                   type="button"
-                  className="btn btn-main"
+                  className="btn btn-cta"
                   onClick={handleCheckout}
                 >
                   Proceed to checkout

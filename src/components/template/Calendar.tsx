@@ -77,7 +77,6 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     }
   };
   const dayChange = (e: CalendarDayProps) => {
-    console.log("e", e);
     if (current) {
       if (e.date <= 0) prevMonth(current, setCurrent);
       if (e.date > 0 && e.date <= current.maxDays) {
@@ -92,7 +91,6 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       if (e.date > current.maxDays) nextMonth(current, setCurrent);
     }
   };
-  console.log("selectedDay", selectedDay);
   return (
     <div className="calendar flex-d-column">
       <div className="calendar-icon-container flex-j-end">

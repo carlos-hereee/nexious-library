@@ -19,9 +19,22 @@
     max-height: 15vh;
   }
 }
-.calendar-meeting-details {
+.calendar-package-details {
   width: 100%;
   flex: 1;
+  max-width: 100%;
+  text-align: left;
+  align-items: flex-start;
+  .card-section {
+    flex-direction: row;
+    min-width: 100%;
+    .card-header {
+      flex: 1;
+    }
+    .read-more-wrapper {
+      flex: 3;
+    }
+  }
 }
 .btn-calendar-tile--today {
   background-color: #{$action-color};
