@@ -1,10 +1,20 @@
-import { MessageProp } from "@nxs-helpers/types";
-
-const EmptySection: React.FC<MessageProp> = ({ message }) => {
+type MessageProp = {
+  heading?: string;
+  message?: string;
+  click: (a: any) => void;
+};
+const EmptySection: React.FC<MessageProp> = (props) => {
+  const { message, click, heading } = props;
   return (
     <div className="container-empty">
-      <h2>Nothing to see here</h2>
-      <p className="empty">{message}</p>
+      {heading ? (
+        <h2 className="heading">{heading}</h2>
+      ) : (
+        <h2 className="heading">Nothing to see here</h2>
+      )}
+      <button className="btn btn-cta" type="button" onClick={click}>
+        <p className="empty">{message}</p>
+      </button>
     </div>
   );
 };

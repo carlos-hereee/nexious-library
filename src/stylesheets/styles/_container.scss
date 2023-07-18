@@ -45,15 +45,17 @@
 .container-empty {
   display: flex;
   flex-direction: column;
-  text-align: center;
+  align-items: center;
+  justify-content: center;
   flex: 1;
   min-width: 200px;
+  min-height: 80vh;
   gap: #{$rem};
   border-radius: #{$rem05};
-  .fa-left-long {
-    @include devices(mobile) {
-      transform: rotate(90deg);
-    }
+  .btn-cta {
+    max-height: 50px;
+    max-width: 500px;
+    min-width: auto;
   }
 }
 .section-container {

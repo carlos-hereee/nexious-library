@@ -21,10 +21,10 @@ const Cart: React.FC<CartProps> = (props) => {
       <Heading data={heading} />
       {data.map((c) =>
         cancel && cancel.uid === c.uid ? (
-          <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
+          <CartCancel key={c.meeting.uid} click={(e) => cancelReq(c, e)} />
         ) : (
           <CartRow
-            key={c.uid}
+            key={c.meeting.uid}
             data={c}
             setCancel={() => setCancel(c)}
             setActive={setActive}
