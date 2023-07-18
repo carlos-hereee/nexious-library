@@ -6,13 +6,23 @@
 }
 
 .card-row {
+  border: none;
   display: flex;
   align-items: flex-start;
-  flex-direction: column;
   gap: #{$rem05};
   width: 100%;
   max-width: none;
   border-radius: #{$rem05};
+  .card-header {
+    flex: 1;
+  }
+  .card-row-body {
+    flex: 3;
+    .read-more-wrapper {
+      width: 100%;
+      text-align: left;
+    }
+  }
   @include devices(mobile) {
     padding: #{$rem025};
     .card-header {
@@ -23,11 +33,7 @@
   }
 }
 .card-row--active {
-  background-color: #{$dark};
-  color: #{$light};
-  .read-more-toggle {
-    color: #{$light};
-  }
+  background-color: #{$action-color};
 }
 .card-row-body {
   display: flex;

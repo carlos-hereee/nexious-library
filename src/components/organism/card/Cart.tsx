@@ -5,29 +5,31 @@ import { CartRow, CartCancel } from "@nxs-molecules";
 type CartProps = {
   data: any[];
   heading: string;
-  active: any;
   removeFromCart: (e: any) => void;
-  setActive: (value: any) => void;
 };
 const Cart: React.FC<CartProps> = (props) => {
-  const { data, heading, removeFromCart, setActive, active } = props;
-  const [cancel, setCancel] = useState<{ uid?: string }>();
+  const { data, heading, removeFromCart } = props;
+  const [cancel, setCancel] = useState<string>();
+  const [active, setActive] = useState<string>();
   const cancelReq = (e: any, isConfirm: boolean) => {
-    isConfirm ? removeFromCart(e) : setCancel({});
+    console.log("e, ", e);
+    isConfirm ? removeFromCart(e) : setCancel("");
   };
+  console.log("data", data);
 
   return (
-    <div className="flex-d-column scroll-y">
+    <div className="flex-d-column">
       <Heading data={heading} />
       {data.map((c) =>
-        cancel && cancel.uid === c.uid ? (
-          <CartCancel key={c.meeting.uid} click={(e) => cancelReq(c, e)} />
+        cancel && cancel === c.service.uid ? (
+          <CartCancel key={c.service.uid} click={(e) => cancelReq(c, e)} />
         ) : (
           <CartRow
-            key={c.meeting.uid}
+            key={c.service.uid}
             data={c}
-            setCancel={() => setCancel(c)}
-            setActive={setActive}
+            service={c.service}
+            setCancel={() => setCancel(c.service.uid)}
+            setActive={() => setActive(c.service.uid)}
             active={active}
           />
         )
