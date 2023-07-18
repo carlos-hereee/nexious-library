@@ -8,7 +8,7 @@
 .card-row {
   border: none;
   display: flex;
-  align-items: flex-start;
+  align-items: stretch;
   gap: #{$rem05};
   width: 100%;
   max-width: none;
@@ -17,16 +17,6 @@
   text-align: left;
   .card-header {
     flex: 1;
-  }
-  .card-row-body {
-    display: flex;
-    align-items: space-between;
-    height: 100%;
-    flex: 3;
-    .read-more-wrapper {
-      width: 100%;
-      text-align: left;
-    }
   }
   @include devices(mobile) {
     padding: #{$rem025};
@@ -45,8 +35,15 @@
 .card-row-body {
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
+  justify-content: space-between;
+  gap: #{$rem};
+  flex: 3;
+  .read-more-wrapper {
+    width: 100%;
+    text-align: left;
+  }
   .cost {
+    min-width: 100%;
     margin-top: auto;
     text-align: right;
   }
