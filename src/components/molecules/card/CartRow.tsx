@@ -1,16 +1,18 @@
-import { ButtonCancel, ReadMore, Cost } from "@nxs-atoms";
+import { ButtonCancel, ReadMore, Cost, MeetingDetails } from "@nxs-atoms";
 import CardHeader from "./CardHeader";
 
 type CartRowProps = {
   data: any;
   active?: string;
-  service: any;
+  service?: any;
+  meeting?: any;
   setCancel: () => void;
   setActive: (value: any) => void;
   editDetails: () => void;
 };
 const CartRow: React.FC<CartRowProps> = (props) => {
-  const { data, setCancel, setActive, active, service, editDetails } = props;
+  const { data, setCancel, setActive, active, service, editDetails, meeting } =
+    props;
   return (
     <div
       className={
@@ -23,6 +25,7 @@ const CartRow: React.FC<CartRowProps> = (props) => {
         <CardHeader data={service} isRow />
         <div className="card-row-body">
           {service.body && <ReadMore data={service.body} />}
+          {meeting.uid && <MeetingDetails meeting={meeting} />}
           {service.cost && <Cost data={service.cost} />}
         </div>
       </button>

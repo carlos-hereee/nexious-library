@@ -16,7 +16,6 @@ const Cart: React.FC<CartProps> = (props) => {
     isConfirm ? removeFromCart(e) : setCancel("");
   };
   console.log("data", data);
-  console.log("name", name);
   const handleEditDetails = (e: any) => {
     console.log("e", e);
   };
@@ -31,6 +30,7 @@ const Cart: React.FC<CartProps> = (props) => {
             key={c.service.uid}
             data={c}
             service={c.service}
+            meeting={c.meeting}
             setCancel={() => setCancel(c.service.uid)}
             setActive={() => setActive(c.service.uid)}
             editDetails={() => handleEditDetails(c)}
