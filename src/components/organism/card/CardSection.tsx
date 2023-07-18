@@ -35,7 +35,10 @@ const CardSection: React.FC<CardProps> = (props) => {
       {body && hideReadMore ? (
         <p className="text-center">{body}</p>
       ) : (
-        <ReadMore data={body} />
+        <ReadMore
+          data={body}
+          uid={header.uid || header.title.split(" ").join("")}
+        />
       )}
     </div>
   );

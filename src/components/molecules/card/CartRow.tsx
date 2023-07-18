@@ -24,7 +24,7 @@ const CartRow: React.FC<CartRowProps> = (props) => {
       <button className="card-row" type="button" onClick={setActive}>
         <CardHeader data={service} isRow />
         <div className="card-row-body">
-          {service.body && <ReadMore data={service.body} />}
+          {service.body && <ReadMore data={service.body} uid={service.uid} />}
           {meeting.uid && <MeetingDetails meeting={meeting} />}
           {service.cost && <Cost data={service.cost} />}
         </div>

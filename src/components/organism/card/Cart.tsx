@@ -6,19 +6,16 @@ type CartProps = {
   data: any[];
   heading: string;
   removeFromCart: (e: any) => void;
+  onEditDetails: (e: any) => void;
 };
 const Cart: React.FC<CartProps> = (props) => {
-  const { data, heading, removeFromCart } = props;
+  const { data, heading, removeFromCart, onEditDetails } = props;
   const [cancel, setCancel] = useState<string>();
   const [active, setActive] = useState<string>();
   const cancelReq = (e: any, isConfirm: boolean) => {
-    console.log("e, ", e);
     isConfirm ? removeFromCart(e) : setCancel("");
   };
-  console.log("data", data);
-  const handleEditDetails = (e: any) => {
-    console.log("e", e);
-  };
+
   return (
     <div className="flex-d-column">
       <Heading data={heading} />
@@ -33,7 +30,7 @@ const Cart: React.FC<CartProps> = (props) => {
             meeting={c.meeting}
             setCancel={() => setCancel(c.service.uid)}
             setActive={() => setActive(c.service.uid)}
-            editDetails={() => handleEditDetails(c)}
+            editDetails={() => onEditDetails(c)}
             active={active}
           />
         )

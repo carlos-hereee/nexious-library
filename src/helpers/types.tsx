@@ -28,6 +28,7 @@ export type CardHeaderProps = {
   subtitle?: string;
   hero?: { name: string; url: string; alt: string };
   hasHero?: boolean;
+  uid?: string;
 };
 export type CardBodyProps = {
   body: string;
