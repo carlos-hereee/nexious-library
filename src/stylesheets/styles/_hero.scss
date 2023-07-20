@@ -26,11 +26,6 @@
 .hero-container {
   display: flex;
   align-items: center;
-  // padding: 1rem 0;
-  // .hero-main {
-  //   height: 100%;
-  //   margin: auto 0;
-  // }
 }
 .hero-card-header {
   display: flex;
@@ -46,4 +41,12 @@
   display: flex;
   align-items: center;
   gap: #{$rem025};
+}
+.hero-user {
+  border-radius: 100%;
+  max-width: 100px;
+}
+.hero-icon {
+  max-width: 150px;
+  max-height: 40px;
 }

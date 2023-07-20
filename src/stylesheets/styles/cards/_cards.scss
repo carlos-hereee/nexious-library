@@ -5,13 +5,12 @@
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
-  // overflow: hidden;
   gap: #{$rem};
   min-width: 200px;
   max-width: 400px;
   .hero {
     border-radius: 1rem;
-    max-width: 10rem;
+    max-width: 120px;
     max-height: 10rem;
   }
   &:has(> div > .ribbon) {

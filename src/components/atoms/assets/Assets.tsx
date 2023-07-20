@@ -1,6 +1,8 @@
 import {
+  faCcMastercard,
   faCcVisa,
   faInstagram,
+  faPaypal,
   faTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -91,6 +93,8 @@ const svg: SVGProp = {
   instagram: faInstagram,
   left: faLeftLong,
   manicure: faHands,
+  mastercard: faCcMastercard,
+  paypal: faPaypal,
   pedicure: faShoePrints,
   promotion: faBullseye,
   pricing: faUsd,

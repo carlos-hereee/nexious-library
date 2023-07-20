@@ -30,3 +30,12 @@
   display: flex;
   gap: #{$rem05};
 }
+.icon-visa {
+  color: #{$visa};
+}
+.icon-mastercard {
+  color: #{$mastercard-red};
+}
+.visa-credit {
+  display: flex;
+}

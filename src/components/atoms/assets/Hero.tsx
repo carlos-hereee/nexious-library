@@ -12,7 +12,7 @@ type Props = { hero: HeroProp; name?: string };
 const Hero: React.FC<Props> = ({ hero, name }) => {
   return (
     <img
-      className={name ? `hero ${name}` : "hero"}
+      className={name ? `hero hero-${name}` : "hero"}
       src={hero.url}
       alt={hero.alt}
     />

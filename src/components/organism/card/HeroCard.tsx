@@ -1,4 +1,4 @@
-import { Hero, Btn } from "@nxs-atoms/index";
+import { Hero, Btn, Icon } from "@nxs-atoms/index";
 
 type HeroCardProps = {
   heading: string;
@@ -19,6 +19,7 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
         {tagline && <h2 className="tagline">{tagline}</h2>}
         {cta && (
           <Btn name="cta" title={cta}>
+            <Icon icon="checkout" />
             {cta}
           </Btn>
         )}

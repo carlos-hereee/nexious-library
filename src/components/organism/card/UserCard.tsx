@@ -19,7 +19,7 @@ const UserCard: React.FC<UserCardProps> = (props) => {
   const { user, hideLabels, isRow, hideHero } = props;
   return (
     <div className={isRow ? "user-card user-card-row" : "user-card"}>
-      {!hideHero && <Hero hero={user.hero} name={user.name} />}
+      {!hideHero && <Hero hero={user.hero} name="user" />}
       {!hideLabels && (
         <div className="flex-d-column">
           {user.name && <p className="p-stretch">Name: {user.name}</p>}
