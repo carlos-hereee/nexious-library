@@ -14,4 +14,8 @@ export const labels: { [key: string]: string } = {
   confirmPassword: "Confirm Password",
   search: "Search",
   message: "Message",
+  cardHolderName: "Card holder name",
+  cardNumber: "Card number",
+  expiration: "Expiration date",
+  cvc: "CVC",
 };

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Hero, Icon } from "@nxs-atoms/index";
 import { HeroProp } from "@nxs-helpers/types";
+import { Form } from "@nxs-organism";
 
 type PaymentType = {
   uid?: string;
@@ -15,11 +16,12 @@ type PaymentMethodsProps = {
     icon: string;
     hero: HeroProp;
   }[];
+  submit: (a: any) => void;
 };
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
-  const { data } = props;
-  const [active, setActive] = useState<PaymentType>();
-  console.log("active", data);
+  const { data, submit } = props;
+  const [active, setActive] = useState<PaymentType>(data[0]);
+
   return (
     <div className="flex-d-column">
       <h2 className="heading">Enter Payment Details</h2>
@@ -41,7 +43,18 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           </button>
         ))}
       </div>
-      <button className="btn btn-cta">Pay now</button>
+      {active?.type === "visa/credit" && (
+        <Form
+          values={{
+            cardHolderName: "",
+            cardNumber: "",
+            expiration: "",
+            cvc: "",
+          }}
+          submit={submit}
+        />
+      )}
+      {/* <button className="btn btn-cta">Pay now</button> */}
     </div>
   );
 };

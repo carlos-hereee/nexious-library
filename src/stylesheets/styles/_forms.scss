@@ -81,3 +81,10 @@
 #contact-user-form {
   width: 100%;
 }
+.label {
+  display: flex;
+  gap: #{$rem};
+  .required {
+    color: #{$danger};
+  }
+}
