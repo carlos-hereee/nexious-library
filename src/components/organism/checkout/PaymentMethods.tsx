@@ -12,11 +12,12 @@ type PaymentType = {
 };
 type PaymentMethodsProps = {
   data: PaymentType[];
-  submit: (a: any) => void;
+  visaPayment?: (a: any) => void;
   paypalPayment?: (e: any) => void;
+  inStorePayment?: (a: any) => void;
 };
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
-  const { data, submit, paypalPayment } = props;
+  const { data, visaPayment, paypalPayment, inStorePayment } = props;
   const [active, setActive] = useState<PaymentType>(data[1]);
   console.log("active", active);
   return (
@@ -25,7 +26,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       <div className="flex-j-between">
         {data.map((d) => (
           <button
-            className="btn btn-main flex-1"
+            className="btn btn-main btn-payment"
             type="button"
             key={d.uid}
             onClick={() => setActive(d)}
@@ -35,8 +36,12 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
             ) : (
               <Icon icon="uncheck" />
             )}
-            {d.hero && <Hero hero={d.hero} name={`icon hero-${d.icon}`} />}
-            {d.name}
+            {d.hero ? (
+              <Hero hero={d.hero} name={`icon hero-${d.icon}`} />
+            ) : (
+              d.icon && <Icon icon={d.icon} size="3x" name={d.icon} />
+            )}
+            <span> {d.name}</span>
           </button>
         ))}
       </div>
@@ -48,19 +53,27 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
             expiration: "",
             cvc: "",
           }}
-          submit={submit}
+          submit={(e) => visaPayment && visaPayment(e)}
         />
       )}
       {active.type === "paypal" && (
         <button
-          className="btn btn-cta btn-payment"
+          className="btn btn-cta"
           onClick={() => paypalPayment && paypalPayment(active)}
         >
           {active.hero && <Hero hero={active.hero} name="icon" />}
           <p>Pay with paypal</p>
         </button>
       )}
-      {/* <button className="btn btn-cta">Pay now</button> */}
+      {active.type === "in-store" && (
+        <button
+          className="btn btn-cta"
+          onClick={() => inStorePayment && inStorePayment(active)}
+        >
+          {active.hero && <Hero hero={active.hero} name="icon" />}
+          <p>Complete Checkout</p>
+        </button>
+      )}
     </div>
   );
 };

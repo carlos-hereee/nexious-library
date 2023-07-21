@@ -1,6 +1,7 @@
 import {
   faCcMastercard,
   faCcVisa,
+  faFacebook,
   faInstagram,
   faPaypal,
   faTwitter,
@@ -86,6 +87,7 @@ const svg: SVGProp = {
   dashboard: faUser,
   flag: faGlobe,
   FAQ: faQuestion,
+  facebook: faFacebook,
   first: faCircleChevronLeft,
   games: faGamepad,
   heart: faHeart,

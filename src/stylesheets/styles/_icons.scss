@@ -28,7 +28,7 @@
 .socials-icons {
   margin: 1rem auto;
   display: flex;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .icon-visa {
   color: #{$visa};
@@ -38,4 +38,10 @@
 }
 .visa-credit {
   display: flex;
+}
+.icon-store {
+  color: brown;
+}
+.icon-facebook {
+  color: #{$facebook};
 }

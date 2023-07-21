@@ -6,6 +6,7 @@
 }
 .btn-main {
   max-width: 100%;
+  min-width: 150px;
   border: 1px solid #{$dark};
 }
 .btn-cta {
@@ -62,4 +63,12 @@
   border: none;
   color: white;
   background-color: #{$danger};
+}
+.btn-payment {
+  flex: 1;
+  gap: #{$rem};
+  justify-content: flex-start;
+  .icon-store {
+    min-width: 150px;
+  }
 }
