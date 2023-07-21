@@ -19,7 +19,6 @@ type PaymentMethodsProps = {
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
   const { data, visaPayment, paypalPayment, inStorePayment } = props;
   const [active, setActive] = useState<PaymentType>(data[1]);
-  console.log("active", active);
   return (
     <div className="flex-d-column">
       <h2 className="heading">Enter Payment Details</h2>
