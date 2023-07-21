@@ -5,23 +5,20 @@ import { Form } from "@nxs-organism";
 
 type PaymentType = {
   uid?: string;
-  name?: string;
   type?: string;
+  name?: string;
+  icon?: string;
+  hero?: HeroProp;
 };
 type PaymentMethodsProps = {
-  data: {
-    uid: string;
-    name: string;
-    type: string;
-    icon: string;
-    hero: HeroProp;
-  }[];
+  data: PaymentType[];
   submit: (a: any) => void;
+  paypalPayment?: (e: any) => void;
 };
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
-  const { data, submit } = props;
-  const [active, setActive] = useState<PaymentType>(data[0]);
-
+  const { data, submit, paypalPayment } = props;
+  const [active, setActive] = useState<PaymentType>(data[1]);
+  console.log("active", active);
   return (
     <div className="flex-d-column">
       <h2 className="heading">Enter Payment Details</h2>
@@ -38,7 +35,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
             ) : (
               <Icon icon="uncheck" />
             )}
-            <Hero hero={d.hero} name={`icon hero-${d.icon}`} />
+            {d.hero && <Hero hero={d.hero} name={`icon hero-${d.icon}`} />}
             {d.name}
           </button>
         ))}
@@ -53,6 +50,15 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           }}
           submit={submit}
         />
+      )}
+      {active.type === "paypal" && (
+        <button
+          className="btn btn-cta btn-payment"
+          onClick={() => paypalPayment && paypalPayment(active)}
+        >
+          {active.hero && <Hero hero={active.hero} name="icon" />}
+          <p>Pay with paypal</p>
+        </button>
       )}
       {/* <button className="btn btn-cta">Pay now</button> */}
     </div>
