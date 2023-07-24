@@ -5,13 +5,11 @@
   border-radius: 0.5rem;
   width: 100%;
   max-width: 450px;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   border-radius: #{$border-radius};
 }
 .hero-main {
-  min-height: 50vh;
-  max-height: 60vh;
   max-width: 600px;
   min-width: #{$min-width};
 }
@@ -23,10 +21,12 @@
   @include devices(mobile) {
     flex-wrap: wrap;
     flex-direction: column-reverse;
-    .hero-card-heading {
-      width: 100%;
-    }
   }
+}
+.hero-card-heading {
+  width: 100%;
+  min-width: #{$min-width};
+  max-width: 28ch;
 }
 .hero-card-body-alt {
   display: flex;
@@ -66,6 +66,7 @@
 }
 
 .blur-load {
+  width: 100%;
   background-size: cover;
   background-position: center;
 }
@@ -75,4 +76,7 @@
 .blur-load--loaded > .hero {
   opacity: 1;
   transition: opacity 200ms ease-in-out;
+}
+.feature-hero {
+  aspect-ratio: 1/1;
 }
