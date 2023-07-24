@@ -15,11 +15,10 @@
   gap: #{$rem05};
   justify-content: space-between;
   @include devices(mobile) {
-    text-align: center;
     flex-wrap: wrap;
     flex-direction: column-reverse;
     .hero-card-heading {
-      margin: auto;
+      width: 100%;
     }
   }
 }

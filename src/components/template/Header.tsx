@@ -30,6 +30,8 @@ const Header: React.FC<HeaderProps> = (props) => {
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
+    // setClose(!isClose);
+    setActive(!isActive);
     if (e.icon === "flag") setLan(e);
   };
   const setLan = (item: MenuItemProp) => {
@@ -48,7 +50,10 @@ const Header: React.FC<HeaderProps> = (props) => {
     document.addEventListener("animationend", initClose, true);
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
-
+  const handleClick = (e: MenuItemProp) => {
+    setActive(!isActive);
+    navigate(`${e.icon}`);
+  };
   return (
     <header>
       <Link to="/" className="navlink">
@@ -59,7 +64,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           show={{ isActive, isClose }}
           menu={menu}
           toggle={handleToggle}
-          click={(e) => navigate(`${e.icon}`)}
+          click={handleClick}
         />
       </nav>
       <nav className="mobile-navigation">
@@ -72,7 +77,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           show={{ isActive, isClose }}
           menu={menu}
           toggle={handleToggle}
-          click={(e) => navigate(`${e.icon}`)}
+          click={handleClick}
         />
       </nav>
     </header>

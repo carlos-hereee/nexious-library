@@ -6,6 +6,7 @@ export type NavbarProps = {
   toggle: (e: MenuItemProp) => void;
   click: (e: MenuItemProp) => void;
   menu: MenuItemProp[];
+  theme?: string;
 };
 /**
  * Component - Navbar
@@ -26,10 +27,11 @@ export type NavbarProps = {
  * @param click   callback to be fired when button is click
  * @returns navbar
  */
-const Navbar: React.FC<NavbarProps> = ({ show, toggle, click, menu }) => {
+const Navbar: React.FC<NavbarProps> = (props) => {
+  const { show, toggle, click, menu, theme } = props;
   return (
     <ul
-      className={show.isActive ? "navigation bg-dark" : "navigation"}
+      className={theme ? `navigation ${theme}` : "navigation bg-light"}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) =>
