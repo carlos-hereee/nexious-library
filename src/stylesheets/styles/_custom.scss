@@ -1,10 +1,5 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
-.children {
-  display: flex;
-  flex-wrap: wrap;
-  gap: #{$rem};
-}
 .p-sm {
   padding: 0.5rem;
 }
@@ -41,4 +36,10 @@
 }
 .w-100 {
   width: 100%;
+}
+.m-tb {
+  margin: 1rem 0;
+}
+.m-horizontal {
+  margin: 0 1rem;
 }
