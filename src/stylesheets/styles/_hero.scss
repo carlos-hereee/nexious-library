@@ -2,12 +2,14 @@
 
 .hero {
   display: block;
-  border-radius: 0.5rem;
   width: 100%;
   max-width: 450px;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   border-radius: #{$border-radius};
+}
+.hero-card-header {
+  object-fit: contain;
 }
 .hero-main {
   max-width: 600px;
@@ -66,17 +68,21 @@
 }
 
 .blur-load {
-  width: 100%;
   background-size: cover;
   background-position: center;
+  border-radius: #{$border-radius};
+}
+.blur-load--loaded {
+  background-image: none !important;
+  & > .hero {
+    opacity: 1;
+  }
 }
 .blur-load > .hero {
   opacity: 0;
-}
-.blur-load--loaded > .hero {
-  opacity: 1;
   transition: opacity 200ms ease-in-out;
 }
+
 .feature-hero {
   aspect-ratio: 1/1;
 }

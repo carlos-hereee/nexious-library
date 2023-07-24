@@ -18,13 +18,17 @@ const CardHeader: React.FC<CardHeaderProp> = ({ data, isRow }) => {
   return isRow ? (
     <div className="card-header">
       {data.title && <h3 className="heading">{data.title}</h3>}
-      {data.hasHero && data.hero && <Hero hero={data.hero} />}
+      {data.hasHero && data.hero && (
+        <Hero hero={data.hero} name="hero-card-header" />
+      )}
     </div>
   ) : (
     <div className="card-header">
       <>
         {data.title && <h3 className="heading">{data.title}</h3>}
-        {data.hasHero && data.hero && <Hero hero={data.hero} />}
+        {data.hasHero && data.hero && (
+          <Hero hero={data.hero} name="hero-card-header" />
+        )}
       </>
       {data.subtitle && <Subtitle data={data.subtitle} />}
     </div>

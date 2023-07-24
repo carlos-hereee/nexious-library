@@ -8,6 +8,7 @@ export type HeroProp = {
   name?: string;
   isIcon?: boolean;
   icon?: string;
+  small?: string;
   credit?: { artistName: string; artistUrl: string; assetUrl: string };
 };
 export type LabelValueProps = { key: string | number; value: string | number };

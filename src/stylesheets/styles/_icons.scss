@@ -11,6 +11,8 @@
 }
 .icon-hero {
   min-width: #{$min-width-sm};
+  object-fit: cover;
+  object-position: center;
   // width: 150px;
 }
 .icon-star {

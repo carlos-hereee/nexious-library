@@ -24,7 +24,7 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
           </Btn>
         )}
       </div>
-      <div className="hero-container">
+      <div className="hero-container flex-1">
         <Hero hero={hero} name={hero.name} />
       </div>
     </div>

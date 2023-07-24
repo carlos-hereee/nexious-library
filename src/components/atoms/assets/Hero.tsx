@@ -20,27 +20,33 @@ const Hero: React.FC<Props> = ({ hero, name }) => {
     .join(" ");
 
   return isCreditNeeded ? (
-    <div
-      className={
-        load
-          ? "credit-unsplash blur-load blur-load--loaded"
-          : "credit-unsplash blur-load"
-      }
-    >
-      <img
-        loading="lazy"
-        className={name ? `hero ${name}` : "hero"}
-        src={hero.url}
-        alt={hero.alt}
-        onLoad={() => setLoad(true)}
-      />
+    <div className="container">
+      <div
+        className={
+          load
+            ? "credit-unsplash blur-load--loaded"
+            : "credit-unsplash blur-load"
+        }
+        style={{ backgroundImage: `url(${hero.small})` }}
+      >
+        <img
+          loading="lazy"
+          className={name ? `hero ${name}` : "hero"}
+          src={hero.url}
+          alt={hero.alt}
+          onLoad={() => setLoad(true)}
+        />
+      </div>
       <p className="credit-to">
         Photo by <a href={hero.credit?.artistUrl}>{artistName}</a> on{" "}
         <a href={hero.credit?.assetUrl}>Unsplash</a>
       </p>
     </div>
   ) : (
-    <div className={load ? "blur-load blur-load--loaded" : "blur-load"}>
+    <div
+      className={load ? "blur-load--loaded" : "blur-load"}
+      style={{ backgroundImage: `url(${hero.small})` }}
+    >
       <img
         loading="lazy"
         className={name ? `hero ${name}` : "hero"}
