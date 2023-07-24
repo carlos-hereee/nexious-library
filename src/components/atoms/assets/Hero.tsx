@@ -29,7 +29,7 @@ const Hero: React.FC<Props> = ({ hero, name }) => {
     >
       <img
         loading="lazy"
-        className={name ? `hero hero-${name}` : "hero"}
+        className={name ? `hero ${name}` : "hero"}
         src={hero.url}
         alt={hero.alt}
         onLoad={() => setLoad(true)}
@@ -43,7 +43,7 @@ const Hero: React.FC<Props> = ({ hero, name }) => {
     <div className={load ? "blur-load blur-load--loaded" : "blur-load"}>
       <img
         loading="lazy"
-        className={name ? `hero hero-${name}` : "hero"}
+        className={name ? `hero ${name}` : "hero"}
         src={hero.url}
         alt={hero.alt}
         onLoad={() => setLoad(true)}

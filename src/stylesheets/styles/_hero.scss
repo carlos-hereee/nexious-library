@@ -1,3 +1,5 @@
+@import "../vars/_variables";
+
 .hero {
   display: block;
   border-radius: 0.5rem;
@@ -5,12 +7,13 @@
   max-width: 450px;
   object-fit: cover;
   object-position: center;
+  border-radius: #{$border-radius};
 }
 .hero-main {
   min-height: 50vh;
   max-height: 60vh;
   max-width: 600px;
-  min-width: 400px;
+  min-width: #{$min-width};
 }
 .hero-card {
   position: relative;
@@ -35,6 +38,7 @@
 .hero-container {
   display: flex;
   align-items: center;
+  justify-content: center;
 }
 .hero-card-header {
   display: flex;
@@ -59,12 +63,6 @@
 .hero-icon {
   max-width: 150px;
   max-height: 40px;
-}
-.credit-unsplash {
-  .hero {
-    min-width: 100%;
-    width: 100%;
-  }
 }
 
 .blur-load {

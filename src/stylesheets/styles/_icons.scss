@@ -10,7 +10,8 @@
   color: #{$twitter};
 }
 .icon-hero {
-  width: 150px;
+  min-width: #{$min-width-sm};
+  // width: 150px;
 }
 .icon-star {
   color: white;
