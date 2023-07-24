@@ -31,7 +31,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, toggle, click, menu, theme } = props;
   return (
     <ul
-      className={theme ? `navigation ${theme}` : "navigation bg-light"}
+      className={theme ? `navigation ${theme}` : "navigation bg-default"}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) =>

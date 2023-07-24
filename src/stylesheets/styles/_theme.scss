@@ -5,9 +5,6 @@
 .bg-dark {
   background-color: #{$dark-primary};
   color: #{$light-primary};
-  .btn {
-    color: #{$light-primary};
-  }
 }
 .bg-light-alt {
   background-color: #{$light};
@@ -16,8 +13,8 @@
 .bg-dark-alt {
   background-color: #{$dark};
   color: #{$light};
-  border-radius: #{$rem025};
-  .btn {
-    color: #{$light};
-  }
+}
+.bg-default {
+  background-color: #{$default-bg-color};
+  color: #{$default-text};
 }
