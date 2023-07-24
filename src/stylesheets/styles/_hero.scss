@@ -1,7 +1,10 @@
 .hero {
+  display: block;
   border-radius: 0.5rem;
   width: 100%;
   max-width: 450px;
+  object-fit: cover;
+  object-position: center;
 }
 .hero-main {
   min-height: 50vh;
@@ -62,4 +65,16 @@
     min-width: 100%;
     width: 100%;
   }
+}
+
+.blur-load {
+  background-size: cover;
+  background-position: center;
+}
+.blur-load > .hero {
+  opacity: 0;
+}
+.blur-load--loaded > .hero {
+  opacity: 1;
+  transition: opacity 200ms ease-in-out;
 }
