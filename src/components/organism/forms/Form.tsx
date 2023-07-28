@@ -11,9 +11,11 @@ type FormProps = {
   stretchInput?: boolean;
   name?: string;
   type?: string;
+  isAuth?: boolean;
 };
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, values, hideLabels, name, stretchInput } = props;
+  const { submit, type, values, hideLabels, name, stretchInput, isAuth } =
+    props;
   const [value, setValue] = useState<{ [key: string]: string | number }>(
     values
   );
