@@ -30,7 +30,6 @@ const Header: React.FC<HeaderProps> = (props) => {
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
-    // setClose(!isClose);
     setActive(!isActive);
     if (e.icon === "flag") setLan(e);
   };
@@ -56,7 +55,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   };
   return (
     <header>
-      <Link to="/" className="navlink">
+      <Link to="/" className="logo-link">
         <Logo logo={logo} />
       </Link>
       <nav className="primary-navigation">

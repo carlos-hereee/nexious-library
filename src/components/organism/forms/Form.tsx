@@ -44,32 +44,35 @@ const Form: React.FC<FormProps> = (props) => {
     isValidated ? submit(value) : setErros(errors);
   };
   return (
-    <form className={`form ${name ? name : ""}`} onSubmit={handleSubmit}>
-      <div className={`form-fields ${stretchInput ? "w-100" : ""}`}>
-        {Object.keys(values).map((v) => (
-          <div key={v} className="input-wrapper">
-            {!hideLabels && (
-              <label htmlFor={v} className="label">
-                {" "}
-                {labels[v]}: <br />
-                {errors && errors[v] && (
-                  <span className="required">{errors[v]}</span>
-                )}
-              </label>
-            )}
-            <input
-              type={types[typeof labels[v]]}
-              autoComplete="on"
-              name={v}
-              value={value[v] || ""}
-              placeholder={placeholders[v]}
-              onChange={handleChange}
-              // onBlur={handleBlur}
-              className="input"
-            />
-          </div>
-        ))}
-      </div>
+    <form
+      className={`form${name ? ` ${name}` : ""} ${
+        stretchInput ? " w-100" : ""
+      }`}
+      onSubmit={handleSubmit}
+    >
+      {Object.keys(values).map((v) => (
+        <div key={v} className="form-field">
+          {!hideLabels && (
+            <label htmlFor={v} className="label">
+              {" "}
+              {labels[v]}: <br />
+              {errors && errors[v] && (
+                <span className="required">{errors[v]}</span>
+              )}
+            </label>
+          )}
+          <input
+            type={types[typeof labels[v]]}
+            autoComplete="on"
+            name={v}
+            value={value[v] || ""}
+            placeholder={placeholders[v]}
+            onChange={handleChange}
+            // onBlur={handleBlur}
+            className="input"
+          />
+        </div>
+      ))}
       <button type="submit" className="btn btn-main">
         {type === "search" ? (
           <span>

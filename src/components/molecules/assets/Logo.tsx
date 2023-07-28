@@ -23,11 +23,11 @@ const Logo: React.FC<LogoProps> = ({ logo, name, logoName }) => {
 
   return (
     <div className={name ? `logo ${name}` : "logo"}>
-      <Heading data={heading.join(" ")} />
       <Hero
         hero={logo}
         name={logoName ? `hero-logo ${logoName}` : "hero-logo"}
       />
+      <Heading data={heading.join(" ")} />
     </div>
   );
 };
