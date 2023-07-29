@@ -32,13 +32,14 @@ const Form: React.FC<FormProps> = (props) => {
   };
 
   const validateForm = (e: any) => {
-    let isValidated = false;
+    let isValidated: boolean = true;
     let errors: { [key: string]: string } = {};
-    const values = Object.values(e);
-    const exclude = ["submit", "form", undefined];
-    values.forEach((a: any) => {
+    // exclude buttons submit/button and form plus undefined for other error
+    const exclude = ["submit", "button", "form", undefined];
+    Object.values(e).forEach((a: any) => {
       if (exclude.includes(a.type)) return;
       if (!a.value) {
+        isValidated = false;
         errors[a.name] = labels[a.name] + " is a required field";
       }
     });
@@ -47,6 +48,7 @@ const Form: React.FC<FormProps> = (props) => {
   const handleSubmit = (e: any) => {
     e.preventDefault();
     const { isValidated, errors } = validateForm(e.target);
+    console.log("isValidated, errors", isValidated, errors);
     isValidated ? submit(value) : setErros(errors);
   };
 
