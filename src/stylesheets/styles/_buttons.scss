@@ -19,9 +19,7 @@
   flex: 1;
 }
 .btn-secondary {
-  position: absolute;
-  right: 0;
-  bottom: 3rem;
+  border: 1px solid #{$dark};
 }
 
 .custom-btn-link {
