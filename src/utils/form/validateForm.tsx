@@ -15,9 +15,9 @@ const validateEmail = (mail: string) => {
 const matchingPassword = (password: string, confirmPassword: string) => {
   return password === confirmPassword;
 };
-const isPasswordStrong = (password: string) => {
+const checkPasswordStrength = (password: string) => {
   let strength = 0;
-  let tips = [""];
+  let tips = [];
   // check length
   if (password.length < 8) {
     const len = 8 - password.length;
@@ -40,7 +40,7 @@ const isPasswordStrong = (password: string) => {
 
   return { strength, tips };
 };
-export const validateForm = (values: ValidateFormProps) => {
+export const validateForm = (values: ValidateFormProps, cb: any) => {
   let isValidated: boolean = true;
   let errors: { [key: string]: string } = {};
   Object.keys(values).forEach((key: string) => {
@@ -59,8 +59,15 @@ export const validateForm = (values: ValidateFormProps) => {
     }
     // check password strength
     if (key === "password") {
-      if (isPasswordStrong(values[key])) {
-        console.log("name");
+      const { strength, tips } = checkPasswordStrength(values[key]);
+      const data: { [num: number]: string } = {
+        0: "Easy to guess",
+        1: "Moderate difficulty",
+        2: "Difficult",
+        3: "No contest",
+      };
+      if (strength < 2) {
+        cb({ strength, tips, ease: data[strength], key });
       }
     }
     // confirm matching passwords

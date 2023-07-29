@@ -13,6 +13,12 @@ type FormProps = {
   name?: string;
   type?: string;
 };
+type TipsProp = {
+  key: string;
+  strength: number;
+  tips: string[];
+  ease: string;
+};
 const Form: React.FC<FormProps> = (props) => {
   const { submit, type, values, hideLabels, name, stretchInput } = props;
   const [value, setValue] = useState<{ [key: string]: string }>(values);
@@ -21,6 +27,7 @@ const Form: React.FC<FormProps> = (props) => {
     password: false,
     confirmPassword: false,
   });
+  const [tips, setTips] = useState<TipsProp>();
   const auth = ["password", "confirmPassword"];
 
   const handleChange = (e: any) => {
@@ -32,10 +39,11 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const { isValidated, errors } = validateForm(value);
+    const { isValidated, errors } = validateForm(value, setTips);
     isValidated ? submit(value) : setErros(errors);
     e.target.reset();
   };
+  console.log("tips", tips);
 
   return (
     <form
@@ -92,6 +100,19 @@ const Form: React.FC<FormProps> = (props) => {
           )}
         </div>
       ))}
+      {tips && (
+        <div className={`form-field password-checker `}>
+          <h3>Your password is at {tips.ease}</h3>
+          <p>Increase your password's security by:</p>
+          <ol>
+            {tips.tips.map((t) => (
+              <li key={t} className="p-stretch">
+                {t}{" "}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
       <button type="submit" className="btn btn-main">
         {type === "search" ? (
           <span>
