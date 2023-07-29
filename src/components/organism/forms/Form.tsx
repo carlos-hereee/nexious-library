@@ -3,9 +3,10 @@ import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
+import { validateForm } from "@nxs-utils/form/validateForm";
 
 type FormProps = {
-  values: { [key: string]: string | number };
+  values: { [key: string]: string };
   submit: (e: any) => void;
   hideLabels?: boolean;
   stretchInput?: boolean;
@@ -14,10 +15,8 @@ type FormProps = {
 };
 const Form: React.FC<FormProps> = (props) => {
   const { submit, type, values, hideLabels, name, stretchInput } = props;
-  const [value, setValue] = useState<{ [key: string]: string | number }>(
-    values
-  );
-  const [errors, setErros] = useState<{ [key: string]: string | number }>();
+  const [value, setValue] = useState<{ [key: string]: string }>(values);
+  const [errors, setErros] = useState<{ [key: string]: string }>();
   const [seePassword, setSeePassword] = useState<{ [key: string]: boolean }>({
     password: false,
     confirmPassword: false,
@@ -31,25 +30,11 @@ const Form: React.FC<FormProps> = (props) => {
     setValue(change);
   };
 
-  const validateForm = (e: any) => {
-    let isValidated: boolean = true;
-    let errors: { [key: string]: string } = {};
-    // exclude buttons submit/button and form plus undefined for other error
-    const exclude = ["submit", "button", "form", undefined];
-    Object.values(e).forEach((a: any) => {
-      if (exclude.includes(a.type)) return;
-      if (!a.value) {
-        isValidated = false;
-        errors[a.name] = labels[a.name] + " is a required field";
-      }
-    });
-    return { isValidated, errors };
-  };
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const { isValidated, errors } = validateForm(e.target);
-    console.log("isValidated, errors", isValidated, errors);
+    const { isValidated, errors } = validateForm(value);
     isValidated ? submit(value) : setErros(errors);
+    e.target.reset();
   };
 
   return (
@@ -72,9 +57,10 @@ const Form: React.FC<FormProps> = (props) => {
           {auth.includes(v) ? (
             <div className="flex">
               <input
-                type={seePassword[v] ? "password" : "text"}
+                type={seePassword[v] ? "text" : "password"}
                 autoComplete="on"
                 name={v}
+                value={value[v] || ""}
                 placeholder={placeholders[v]}
                 onChange={handleChange}
                 className="password"
@@ -87,9 +73,9 @@ const Form: React.FC<FormProps> = (props) => {
                 }
               >
                 {seePassword[v] ? (
-                  <Icon icon="eye" />
-                ) : (
                   <Icon icon="eyeSlash" />
+                ) : (
+                  <Icon icon="eye" />
                 )}
               </button>
             </div>
