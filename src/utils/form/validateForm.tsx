@@ -19,7 +19,7 @@ const checkPasswordStrength = (password: string) => {
   let passwordStrength: number = 0;
   let tipsMessage: string[] = [];
 
-  const len = 8 - password.length;
+  const len = password.length;
   const hasLowercaseLetters = password.match(/[a-z]/);
   const hasUppercaseLetters = password.match(/[A-Z]/);
   const hasSpecialLetters = password.match(/[^a-zA-Z\d]/);
@@ -27,7 +27,9 @@ const checkPasswordStrength = (password: string) => {
   // check length
   if (len < 8) {
     tipsMessage.push(
-      `The length of strong passwords start at 8 characters long! ${len} character(s) left`
+      `The length of strong passwords start at 8 characters long! ${
+        8 - len
+      } character(s) left`
     );
   } else passwordStrength += 1;
   // check for caps case
@@ -42,7 +44,6 @@ const checkPasswordStrength = (password: string) => {
   if (hasSpecialLetters) {
     passwordStrength += 1;
   } else tipsMessage.push("Include at least one special charater.");
-
   return { passwordStrength, tipsMessage };
 };
 export const validateForm = (values: ValidateFormProps) => {
@@ -71,7 +72,7 @@ export const validateForm = (values: ValidateFormProps) => {
       const { passwordStrength, tipsMessage } = checkPasswordStrength(
         values[key]
       );
-      if (passwordStrength === 0 || passwordStrength < 2) {
+      if (passwordStrength === 0 || passwordStrength < 4) {
         isTipsRequired = true;
         strength = passwordStrength;
         tips = tipsMessage;

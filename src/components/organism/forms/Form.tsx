@@ -115,11 +115,19 @@ const Form: React.FC<FormProps> = (props) => {
           <div className="flex-center">
             <button
               type="button"
-              className="btn btn-main"
+              className="btn btn-main btn-cancel"
               onClick={() => submit(value)}
             >
               <Icon icon="submit" />
               Continue anyway
+            </button>
+            <button
+              type="submit"
+              className="btn btn-main"
+              onClick={() => submit(value)}
+            >
+              <Icon icon="submit" />
+              Try again
             </button>
           </div>
         </div>
