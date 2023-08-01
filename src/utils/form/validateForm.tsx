@@ -16,33 +16,42 @@ const matchingPassword = (password: string, confirmPassword: string) => {
   return password === confirmPassword;
 };
 const checkPasswordStrength = (password: string) => {
-  let strength = 0;
-  let tips = [];
+  let passwordStrength: number = 0;
+  let tipsMessage: string[] = [];
+
+  const len = 8 - password.length;
+  const hasLowercaseLetters = password.match(/[a-z]/);
+  const hasUppercaseLetters = password.match(/[A-Z]/);
+  const hasSpecialLetters = password.match(/[^a-zA-Z\d]/);
+  const hasNumbers = password.match(/\d/);
   // check length
-  if (password.length < 8) {
-    const len = 8 - password.length;
-    tips.push(
+  if (len < 8) {
+    tipsMessage.push(
       `The length of strong passwords start at 8 characters long! ${len} character(s) left`
     );
-  } else strength += 1;
+  } else passwordStrength += 1;
   // check for caps case
-  if (password.match(/[a-z]/) && password.match(/[A-Z]/)) {
-    tips.push("Use lowercase and uppercase letters.");
-  } else strength += 1;
+  if (!hasLowercaseLetters || !hasUppercaseLetters) {
+    tipsMessage.push("Use lowercase and uppercase letters.");
+  } else passwordStrength += 1;
   // check numbers
-  if (password.match(/\d/)) {
-    strength += 1;
-  } else tips.push("Include at least one number.");
+  if (hasNumbers) {
+    passwordStrength += 1;
+  } else tipsMessage.push("Include at least one number.");
   // check for special characters
-  if (password.match(/[^a-zA-Z\d]/)) {
-    strength += 1;
-  } else tips.push("Include at least one special charater.");
+  if (hasSpecialLetters) {
+    passwordStrength += 1;
+  } else tipsMessage.push("Include at least one special charater.");
 
-  return { strength, tips };
+  return { passwordStrength, tipsMessage };
 };
-export const validateForm = (values: ValidateFormProps, cb: any) => {
+export const validateForm = (values: ValidateFormProps) => {
   let isValidated: boolean = true;
+  let isTipsRequired: boolean = false;
   let errors: { [key: string]: string } = {};
+  let strength: number = 0;
+  let tips: string[] = [];
+
   Object.keys(values).forEach((key: string) => {
     // check if empty
     if (!values[key]) {
@@ -59,15 +68,13 @@ export const validateForm = (values: ValidateFormProps, cb: any) => {
     }
     // check password strength
     if (key === "password") {
-      const { strength, tips } = checkPasswordStrength(values[key]);
-      const data: { [num: number]: string } = {
-        0: "Easy to guess",
-        1: "Moderate difficulty",
-        2: "Difficult",
-        3: "No contest",
-      };
-      if (strength < 2) {
-        cb({ strength, tips, ease: data[strength], key });
+      const { passwordStrength, tipsMessage } = checkPasswordStrength(
+        values[key]
+      );
+      if (passwordStrength === 0 || passwordStrength < 2) {
+        isTipsRequired = true;
+        strength = passwordStrength;
+        tips = tipsMessage;
       }
     }
     // confirm matching passwords
@@ -78,5 +85,5 @@ export const validateForm = (values: ValidateFormProps, cb: any) => {
       }
     }
   });
-  return { isValidated, errors };
+  return { isValidated, errors, isTipsRequired, strength, tips };
 };

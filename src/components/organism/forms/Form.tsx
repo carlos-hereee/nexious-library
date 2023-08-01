@@ -9,18 +9,17 @@ type FormProps = {
   values: { [key: string]: string };
   submit: (e: any) => void;
   hideLabels?: boolean;
-  stretchInput?: boolean;
+  showAuthTips?: boolean;
   name?: string;
   type?: string;
 };
 type TipsProp = {
-  key: string;
   strength: number;
   tips: string[];
   ease: string;
 };
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, values, hideLabels, name, stretchInput } = props;
+  const { submit, type, values, hideLabels, name, showAuthTips } = props;
   const [value, setValue] = useState<{ [key: string]: string }>(values);
   const [errors, setErros] = useState<{ [key: string]: string }>();
   const [seePassword, setSeePassword] = useState<{ [key: string]: boolean }>({
@@ -29,7 +28,12 @@ const Form: React.FC<FormProps> = (props) => {
   });
   const [tips, setTips] = useState<TipsProp>();
   const auth = ["password", "confirmPassword"];
-
+  const errorMessage: { [num: number]: string } = {
+    0: "Easy to guess",
+    1: "Moderate difficulty",
+    2: "Difficult",
+    3: "No contest",
+  };
   const handleChange = (e: any) => {
     const key = e.target.name;
     const val = e.currentTarget.value;
@@ -39,19 +43,16 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const { isValidated, errors } = validateForm(value, setTips);
+    const { isValidated, errors, isTipsRequired, tips, strength } =
+      validateForm(value);
+    if (showAuthTips && isTipsRequired) {
+      setTips({ strength, tips, ease: errorMessage[strength] });
+    }
     isValidated ? submit(value) : setErros(errors);
-    e.target.reset();
   };
-  console.log("tips", tips);
 
   return (
-    <form
-      className={`form${name ? ` ${name}` : ""} ${
-        stretchInput ? " w-100" : ""
-      }`}
-      onSubmit={handleSubmit}
-    >
+    <form className={`form${name ? ` ${name}` : ""}`} onSubmit={handleSubmit}>
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
           {!hideLabels && (
@@ -100,9 +101,9 @@ const Form: React.FC<FormProps> = (props) => {
           )}
         </div>
       ))}
-      {tips && (
-        <div className={`form-field password-checker `}>
-          <h3>Your password is at {tips.ease}</h3>
+      {showAuthTips && tips ? (
+        <div className="form-field password-checker">
+          <h3>Your password difficulty to guess is at {tips.ease}</h3>
           <p>Increase your password's security by:</p>
           <ol>
             {tips.tips.map((t) => (
@@ -111,21 +112,32 @@ const Form: React.FC<FormProps> = (props) => {
               </li>
             ))}
           </ol>
+          <div className="flex-center">
+            <button
+              type="button"
+              className="btn btn-main"
+              onClick={() => submit(value)}
+            >
+              <Icon icon="submit" />
+              Continue anyway
+            </button>
+          </div>
         </div>
+      ) : (
+        <button type="submit" className="btn btn-main">
+          {type === "search" ? (
+            <span>
+              <Icon icon="save" />
+              Save
+            </span>
+          ) : (
+            <span>
+              <Icon icon="submit" />
+              Confirm
+            </span>
+          )}
+        </button>
       )}
-      <button type="submit" className="btn btn-main">
-        {type === "search" ? (
-          <span>
-            <Icon icon="save" />
-            Save
-          </span>
-        ) : (
-          <span>
-            <Icon icon="submit" />
-            Confirm
-          </span>
-        )}
-      </button>
     </form>
   );
 };
