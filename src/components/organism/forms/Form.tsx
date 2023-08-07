@@ -3,8 +3,10 @@ import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
-import { validateForm } from "@nxs-utils/form/validateForm";
-import { usePasswordTips } from "@nxs-utils/useTips";
+import {
+  checkPasswordStrength,
+  validateForm,
+} from "@nxs-utils/form/validateForm";
 
 type FormProps = {
   values: { [key: string]: string };
@@ -41,12 +43,7 @@ const Form: React.FC<FormProps> = (props) => {
     e.preventDefault();
     const { isValidated, errors } = validateForm(value);
     if (showAuthTips) {
-      // const tips = usePasswordTips();
-      setTips(usePasswordTips(value["password"]));
-      // isTipsRequired ? setTips({ strength, tips, ease }) : setTips(null);
-      // const tips = useTips(tip);
-      console.log("tips", tips);
-      // isTipsRequired ?
+      const tips = checkPasswordStrength(value["password"]);
       setTips(tips);
     } else isValidated ? submit(value) : setErros(errors);
   };
@@ -96,7 +93,6 @@ const Form: React.FC<FormProps> = (props) => {
               value={value[v] || ""}
               placeholder={placeholders[v]}
               onChange={handleChange}
-              // onBlur={handleBlur}
             />
           )}
         </div>

@@ -6,7 +6,7 @@ import { useState } from "react";
 type AuthFieldProp = {
   label: string;
   value: { [key: string]: string };
-  errors?: { [key: string]: string };
+  errors?: { [key: string]: string | null };
   onChange: (key: any) => void;
 };
 const AuthField: React.FC<AuthFieldProp> = (props) => {
@@ -17,7 +17,9 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
     <div className="flex-row">
       <label htmlFor={label} className="label flex-1">
         {labels[label]}:
-        {errors && errors[label] && <span>{errors[label]}</span>}
+        {errors && errors[label] && (
+          <span className="error-message">{errors[label]}</span>
+        )}
       </label>
       <div className="flex-row flex-2">
         <input

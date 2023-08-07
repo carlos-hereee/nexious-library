@@ -3,7 +3,12 @@ import { labels } from "@nxs-atoms/forms/labels";
 type ValidateFormProps = {
   [key: string]: string;
 };
-
+const errorMessage: { [num: number]: string } = {
+  0: "Easy to guess",
+  1: "Moderate difficulty",
+  2: "Difficult",
+  3: "No contest",
+};
 const validateEmail = (mail: string) => {
   let isMailValidated = false;
   const regex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -44,7 +49,11 @@ export const checkPasswordStrength = (password: string) => {
   if (hasSpecialLetters) {
     passwordStrength += 1;
   } else tipsMessage.push("Include at least one special charater.");
-  return { passwordStrength, tipsMessage };
+  return {
+    strength: passwordStrength,
+    tips: tipsMessage,
+    ease: errorMessage[passwordStrength],
+  };
 };
 export const validateForm = (values: ValidateFormProps) => {
   let isValidated: boolean = true;
