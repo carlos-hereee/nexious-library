@@ -15,7 +15,7 @@ const validateEmail = (mail: string) => {
 const matchingPassword = (password: string, confirmPassword: string) => {
   return password === confirmPassword;
 };
-const checkPasswordStrength = (password: string) => {
+export const checkPasswordStrength = (password: string) => {
   let passwordStrength: number = 0;
   let tipsMessage: string[] = [];
 
@@ -48,10 +48,7 @@ const checkPasswordStrength = (password: string) => {
 };
 export const validateForm = (values: ValidateFormProps) => {
   let isValidated: boolean = true;
-  let isTipsRequired: boolean = false;
   let errors: { [key: string]: string } = {};
-  let strength: number = 0;
-  let tips: string[] = [];
 
   Object.keys(values).forEach((key: string) => {
     // check if empty
@@ -67,17 +64,6 @@ export const validateForm = (values: ValidateFormProps) => {
         errors[key] = labels[key] + " please provide a valid email address";
       }
     }
-    // check password strength
-    if (key === "password") {
-      const { passwordStrength, tipsMessage } = checkPasswordStrength(
-        values[key]
-      );
-      if (passwordStrength === 0 || passwordStrength < 4) {
-        isTipsRequired = true;
-        strength = passwordStrength;
-        tips = tipsMessage;
-      }
-    }
     // confirm matching passwords
     if (key === "confirmPassword") {
       if (!matchingPassword(values["password"], values[key])) {
@@ -86,5 +72,5 @@ export const validateForm = (values: ValidateFormProps) => {
       }
     }
   });
-  return { isValidated, errors, isTipsRequired, strength, tips };
+  return { isValidated, errors };
 };

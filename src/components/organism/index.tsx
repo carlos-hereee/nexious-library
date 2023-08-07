@@ -25,5 +25,6 @@ export { default as CalendarEvents } from "./calendar/CalendarEvents";
 export { default as Cart } from "./card/Cart";
 // forms
 export { default as Form } from "./forms/Form";
+export { default as ChangePassword } from "./forms/ChangePassword";
 // checkout
 export { default as PaymentMethods } from "./checkout/PaymentMethods";

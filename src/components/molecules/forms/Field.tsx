@@ -4,7 +4,7 @@ import { placeholders } from "@nxs-atoms/forms/placeholders";
 type FieldProp = {
   label: string;
   value: { [key: string]: string };
-  errors: { [key: string]: string };
+  errors?: { [key: string]: string };
   onChange: (key: any) => void;
 };
 const Field: React.FC<FieldProp> = (props) => {

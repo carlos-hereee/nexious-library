@@ -4,6 +4,7 @@ import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
 import { validateForm } from "@nxs-utils/form/validateForm";
+import { usePasswordTips } from "@nxs-utils/useTips";
 
 type FormProps = {
   values: { [key: string]: string };
@@ -28,12 +29,7 @@ const Form: React.FC<FormProps> = (props) => {
   });
   const [tips, setTips] = useState<TipsProp | null>();
   const auth = ["password", "confirmPassword"];
-  const errorMessage: { [num: number]: string } = {
-    0: "Easy to guess",
-    1: "Moderate difficulty",
-    2: "Difficult",
-    3: "No contest",
-  };
+
   const handleChange = (e: any) => {
     const key = e.target.name;
     const val = e.currentTarget.value;
@@ -43,12 +39,15 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const { isValidated, errors, isTipsRequired, tips, strength } =
-      validateForm(value);
+    const { isValidated, errors } = validateForm(value);
     if (showAuthTips) {
-      isTipsRequired
-        ? setTips({ strength, tips, ease: errorMessage[strength] })
-        : setTips(null);
+      // const tips = usePasswordTips();
+      setTips(usePasswordTips(value["password"]));
+      // isTipsRequired ? setTips({ strength, tips, ease }) : setTips(null);
+      // const tips = useTips(tip);
+      console.log("tips", tips);
+      // isTipsRequired ?
+      setTips(tips);
     } else isValidated ? submit(value) : setErros(errors);
   };
 

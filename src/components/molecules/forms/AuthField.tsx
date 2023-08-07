@@ -6,7 +6,7 @@ import { useState } from "react";
 type AuthFieldProp = {
   label: string;
   value: { [key: string]: string };
-  errors: { [key: string]: string };
+  errors?: { [key: string]: string };
   onChange: (key: any) => void;
 };
 const AuthField: React.FC<AuthFieldProp> = (props) => {
@@ -29,7 +29,7 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
           placeholder={placeholders[label]}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
-        <Button click={() => setSeePassword(!seePassword)}>
+        <Button name="secondary" click={() => setSeePassword(!seePassword)}>
           {seePassword ? <Icon icon="eyeSlash" /> : <Icon icon="eye" />}
         </Button>
       </div>
