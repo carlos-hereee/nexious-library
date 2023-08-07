@@ -28,6 +28,7 @@ export { default as Spinner } from "./errors/Spinner";
 // forms
 export { default as FieldQuantity } from "./forms/FieldQuantity";
 export { default as InputSelect } from "./forms/Select";
+export { default as Field } from "./forms/Field";
 
 // calendar
 export { default as CalendarNavigation } from "./calendar/CalendarNavigation";

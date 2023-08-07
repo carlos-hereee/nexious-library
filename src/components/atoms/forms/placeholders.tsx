@@ -9,8 +9,10 @@ export const placeholders: { [key: string]: string } = {
   state: "State ..",
   postalCode: "56789",
   phone: "987-654-3210",
-  username: "enter username ..",
-  password: "enter password ..",
-  confirmPassword: "enter password ..",
+  username: "Enter username ..",
+  password: "Enter password ..",
+  oldPassword: "Enter old password",
+  newPassword: "Enter new password",
+  confirmPassword: "confirm matching password ..",
   search: "search ..",
 };

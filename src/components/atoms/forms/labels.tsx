@@ -18,4 +18,6 @@ export const labels: { [key: string]: string } = {
   cardNumber: "Card number",
   expiration: "Expiration date",
   cvc: "CVC",
+  oldPassword: "Old password",
+  newPassword: "New password",
 };

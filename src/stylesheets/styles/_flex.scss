@@ -11,6 +11,11 @@
   display: flex;
   gap: #{$rem05};
 }
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  gap: #{$rem05};
+}
 .flex-d-row {
   display: flex;
   flex-direction: row;

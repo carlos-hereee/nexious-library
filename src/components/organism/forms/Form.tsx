@@ -26,7 +26,7 @@ const Form: React.FC<FormProps> = (props) => {
     password: false,
     confirmPassword: false,
   });
-  const [tips, setTips] = useState<TipsProp>();
+  const [tips, setTips] = useState<TipsProp | null>();
   const auth = ["password", "confirmPassword"];
   const errorMessage: { [num: number]: string } = {
     0: "Easy to guess",
@@ -45,10 +45,11 @@ const Form: React.FC<FormProps> = (props) => {
     e.preventDefault();
     const { isValidated, errors, isTipsRequired, tips, strength } =
       validateForm(value);
-    if (showAuthTips && isTipsRequired) {
-      setTips({ strength, tips, ease: errorMessage[strength] });
-    }
-    isValidated ? submit(value) : setErros(errors);
+    if (showAuthTips) {
+      isTipsRequired
+        ? setTips({ strength, tips, ease: errorMessage[strength] })
+        : setTips(null);
+    } else isValidated ? submit(value) : setErros(errors);
   };
 
   return (
@@ -112,7 +113,7 @@ const Form: React.FC<FormProps> = (props) => {
               </li>
             ))}
           </ol>
-          <div className="flex-center">
+          <div className="flex-center m-tb">
             <button
               type="button"
               className="btn btn-main btn-cancel"
@@ -121,11 +122,7 @@ const Form: React.FC<FormProps> = (props) => {
               <Icon icon="submit" />
               Continue anyway
             </button>
-            <button
-              type="submit"
-              className="btn btn-main"
-              onClick={() => submit(value)}
-            >
+            <button type="submit" className="btn btn-main">
               <Icon icon="submit" />
               Try again
             </button>
