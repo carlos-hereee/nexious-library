@@ -15,8 +15,9 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   const { values, error, onSubmit, showAuthTips } = props;
   const [username, setUsername] = useState(values.username || "");
   const [oldPassword, setOldPassword] = useState(values.password || "");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("secretPassword1");
+  const [confirmNewPassword, setConfirmNewPassword] =
+    useState("secretPassword1");
   const [err, setErr] = useState<{ [key: string]: string }>();
   const [tips, setTips] = useState<any>();
 
@@ -24,13 +25,14 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
     e.preventDefault();
     const cred = { username, oldPassword, newPassword, confirmNewPassword };
     const { isValidated, errors } = validateForm(cred);
-    if (showAuthTips) {
+    if (!isValidated) {
+      setErr(errors);
+    } else if (showAuthTips) {
       const tips = checkPasswordStrength(newPassword);
-      setTips(tips);
-    }
-    isValidated
-      ? onSubmit({ username, oldPassword, newPassword })
-      : setErr(errors);
+      tips.strength <= 2
+        ? setTips(tips)
+        : onSubmit({ username, oldPassword, newPassword });
+    } else onSubmit({ username, oldPassword, newPassword });
   };
   return (
     <div className="container">

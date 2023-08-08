@@ -39,11 +39,12 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const { isValidated, errors } = validateForm(value);
+    const { errors } = validateForm(value);
+    setErros(errors);
     if (showAuthTips) {
       const tips = checkPasswordStrength(value["password"]);
       setTips(tips);
-    } else isValidated ? submit(value) : setErros(errors);
+    }
   };
 
   return (
