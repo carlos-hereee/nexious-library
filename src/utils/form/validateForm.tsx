@@ -61,7 +61,11 @@ export const validateForm = (values: ValidateFormProps) => {
 
   Object.keys(values).forEach((key: string) => {
     // check if empty
+    if (key === "oldPassword") {
+      console.log("old", key, values);
+    }
     if (!values[key]) {
+      console.log("key", key);
       isValidated = false;
       errors[key] = labels[key] + " is a required field";
     }

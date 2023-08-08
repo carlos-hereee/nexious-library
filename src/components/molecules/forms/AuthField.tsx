@@ -23,7 +23,7 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
       </label>
       <div className="flex-row flex-2">
         <input
-          type={seePassword ? "password" : "text"}
+          type={seePassword ? "text" : "password"}
           className="input"
           autoComplete="on"
           name={label}
@@ -31,7 +31,11 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
           placeholder={placeholders[label]}
           onChange={(e) => onChange(e.currentTarget.value)}
         />
-        <Button name="secondary" click={() => setSeePassword(!seePassword)}>
+        <Button
+          name="secondary"
+          title={seePassword ? "hide password" : "show password"}
+          click={() => setSeePassword(!seePassword)}
+        >
           {seePassword ? <Icon icon="eyeSlash" /> : <Icon icon="eye" />}
         </Button>
       </div>

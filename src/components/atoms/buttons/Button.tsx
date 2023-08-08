@@ -2,6 +2,7 @@ export type ButtonProps = {
   click: React.MouseEventHandler<HTMLButtonElement>;
   children?: React.ReactNode;
   name?: string;
+  title?: string;
 };
 /**
  * Component - Button
@@ -10,12 +11,13 @@ export type ButtonProps = {
  * @param click Callback fired when button is click
  * @returns
  */
-const Button: React.FC<ButtonProps> = ({ children, name, click }) => {
+const Button: React.FC<ButtonProps> = (props) => {
+  const { children, name, click, title } = props;
   return (
     <button
       type="button"
       className={`btn${name ? ` btn-${name}` : ""}`}
-      title={name ? name : ""}
+      title={title ? title : ""}
       onClick={click}
     >
       {children}

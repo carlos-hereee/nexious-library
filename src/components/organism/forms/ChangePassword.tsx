@@ -5,7 +5,7 @@ import {
   checkPasswordStrength,
   validateForm,
 } from "@nxs-utils/form/validateForm";
-import { usePasswordTips } from "@nxs-utils/useTips";
+import PasswordChecker from "@nxs-molecules/forms/PasswordChecker";
 
 type ChangePasswordProps = {
   values: { [key: string]: string };
@@ -29,7 +29,6 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
       const tips = checkPasswordStrength(newPassword);
       setTips(tips);
     }
-    console.log("errors", errors, isValidated);
     isValidated
       ? onSubmit({ username, oldPassword, newPassword })
       : setErr(errors);
@@ -45,23 +44,31 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
         errors={err}
       />
       <AuthField
-        value={{ password: oldPassword }}
+        value={{ oldPassword }}
         label="oldPassword"
         onChange={setOldPassword}
         errors={err}
       />
       <AuthField
-        value={{ password: newPassword }}
+        value={{ newPassword }}
         label="newPassword"
         onChange={setNewPassword}
         errors={err}
       />
-      <div className="flex-center">
-        <button type="button" className="btn btn-main" onClick={handleSubmit}>
-          <Icon icon="submit" />
-          Confirm
-        </button>
-      </div>
+      {tips ? (
+        <PasswordChecker
+          ease={tips.ease}
+          tips={tips.tips}
+          submit={() => onSubmit({ username, oldPassword, newPassword })}
+        />
+      ) : (
+        <div className="flex-center">
+          <button type="submit" className="btn btn-main" onClick={handleSubmit}>
+            <Icon icon="submit" />
+            Confirm
+          </button>
+        </div>
+      )}
     </div>
   );
 };
