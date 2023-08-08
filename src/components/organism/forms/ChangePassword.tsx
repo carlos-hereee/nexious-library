@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { Field, AuthField } from "@nxs-molecules";
-import { Button, Icon } from "@nxs-atoms";
-import {
-  checkPasswordStrength,
-  validateForm,
-} from "@nxs-utils/form/validateForm";
+import { Icon } from "@nxs-atoms";
+import { validateForm } from "@nxs-utils/form/validateForm";
 import PasswordChecker from "@nxs-molecules/forms/PasswordChecker";
+import { checkPasswordStrength } from "@nxs-utils/form/checkPasswordStrength";
 
 type ChangePasswordProps = {
   values: { [key: string]: string };

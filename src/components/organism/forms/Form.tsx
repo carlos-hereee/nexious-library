@@ -3,10 +3,8 @@ import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
-import {
-  checkPasswordStrength,
-  validateForm,
-} from "@nxs-utils/form/validateForm";
+import { validateForm } from "@nxs-utils/form/validateForm";
+import { checkPasswordStrength } from "@nxs-utils/form/checkPasswordStrength";
 
 type FormProps = {
   values: { [key: string]: string };
