@@ -12,7 +12,6 @@ type AuthFieldProp = {
 const AuthField: React.FC<AuthFieldProp> = (props) => {
   const { label, value, onChange, errors } = props;
   const [seePassword, setSeePassword] = useState(false);
-
   return (
     <div className="flex-row">
       <label htmlFor={label} className="label flex-1">

@@ -4,5 +4,5 @@ export const validateEmail = (mail: string) => {
   if (regex.test(mail)) {
     isMailValidated = true;
   }
-  return { isMailValidated };
+  return isMailValidated;
 };

@@ -12,26 +12,41 @@ export const validateForm = (values: ValidateFormProps) => {
 
   Object.keys(values).forEach((key: string) => {
     // check if empty
-    if (key === "oldPassword") {
-      console.log("old", key, values);
-    }
     if (!values[key]) {
       isValidated = false;
       errors[key] = labels[key] + " is a required field";
+      return;
     }
     // validate email
     if (key === "email") {
-      const { isMailValidated } = validateEmail(values[key]);
-      if (!isMailValidated) {
+      if (!validateEmail(values[key])) {
         isValidated = false;
         errors[key] = labels[key] + " please provide a valid email address";
+        return;
       }
     }
     // confirm matching passwords
+    if (key === "newPassword") {
+      if (matchingPassword(values["oldPassword"], values["newPassword"])) {
+        isValidated = false;
+        errors[key] = labels[key] + " must be different than previous password";
+        return;
+      }
+    }
+    if (key === "confirmNewPassword") {
+      const newPassword = values["newPassword"];
+      const confirmNewPassword = values["confirmNewPassword"];
+      if (!matchingPassword(newPassword, confirmNewPassword)) {
+        isValidated = false;
+        errors[key] = labels[key] + " must match new password";
+        return;
+      }
+    }
     if (key === "confirmPassword") {
       if (!matchingPassword(values["password"], values[key])) {
         isValidated = false;
         errors[key] = labels[key] + " must match password";
+        return;
       }
     }
   });

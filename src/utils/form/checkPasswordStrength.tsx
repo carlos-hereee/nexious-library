@@ -2,7 +2,7 @@ const errorMessage: { [num: number]: string } = {
   0: "Easy to guess",
   1: "Moderate difficulty",
   2: "Difficult",
-  3: "No contest",
+  3: "Very Difficult",
 };
 
 export const checkPasswordStrength = (password: string) => {

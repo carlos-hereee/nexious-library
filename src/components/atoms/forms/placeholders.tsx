@@ -13,6 +13,7 @@ export const placeholders: { [key: string]: string } = {
   password: "Enter password ..",
   oldPassword: "Enter old password",
   newPassword: "Enter new password",
-  confirmPassword: "confirm matching password ..",
+  confirmPassword: "Confirm matching password ..",
+  confirmNewPassword: "Confirm new password must match new password ..",
   search: "search ..",
 };

@@ -16,12 +16,13 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   const [username, setUsername] = useState(values.username || "");
   const [oldPassword, setOldPassword] = useState(values.password || "");
   const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [err, setErr] = useState<{ [key: string]: string }>();
   const [tips, setTips] = useState<any>();
 
   const handleSubmit = (e: any) => {
     e.preventDefault();
-    const cred = { username, oldPassword, newPassword };
+    const cred = { username, oldPassword, newPassword, confirmNewPassword };
     const { isValidated, errors } = validateForm(cred);
     if (showAuthTips) {
       const tips = checkPasswordStrength(newPassword);
@@ -35,38 +36,46 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
     <div className="container">
       <h2 className="heading">Change password</h2>
       {error && <p className="error-message">{error}</p>}
-      <Field
-        value={{ username }}
-        label="username"
-        onChange={setUsername}
-        errors={err}
-      />
-      <AuthField
-        value={{ oldPassword }}
-        label="oldPassword"
-        onChange={setOldPassword}
-        errors={err}
-      />
-      <AuthField
-        value={{ newPassword }}
-        label="newPassword"
-        onChange={setNewPassword}
-        errors={err}
-      />
-      {tips ? (
-        <PasswordChecker
-          ease={tips.ease}
-          tips={tips.tips}
-          submit={() => onSubmit({ username, oldPassword, newPassword })}
+      <form className="form-secondary" onSubmit={handleSubmit}>
+        <Field
+          value={{ username }}
+          label="username"
+          onChange={setUsername}
+          errors={err}
         />
-      ) : (
-        <div className="flex-center">
-          <button type="submit" className="btn btn-main" onClick={handleSubmit}>
-            <Icon icon="submit" />
-            Confirm
-          </button>
-        </div>
-      )}
+        <AuthField
+          value={{ oldPassword }}
+          label="oldPassword"
+          onChange={setOldPassword}
+          errors={err}
+        />
+        <AuthField
+          value={{ newPassword }}
+          label="newPassword"
+          onChange={setNewPassword}
+          errors={err}
+        />
+        <AuthField
+          value={{ confirmNewPassword }}
+          label="confirmNewPassword"
+          onChange={setConfirmNewPassword}
+          errors={err}
+        />
+        {tips ? (
+          <PasswordChecker
+            ease={tips.ease}
+            tips={tips.tips}
+            submit={() => onSubmit({ username, oldPassword, newPassword })}
+          />
+        ) : (
+          <div className="flex-center">
+            <button type="submit" className="btn btn-main">
+              <Icon icon="submit" />
+              Confirm
+            </button>
+          </div>
+        )}
+      </form>
     </div>
   );
 };
