@@ -9,7 +9,7 @@ export const labels: { [key: string]: string } = {
   city: "City",
   state: "State",
   postalCode: "Postal code",
-  username: "Username",
+  username: "Username or email",
   password: "Password",
   confirmPassword: "Confirm Password",
   confirmNewPassword: "Confirm new password",

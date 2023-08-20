@@ -15,9 +15,8 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   const { values, error, onSubmit, showAuthTips } = props;
   const [username, setUsername] = useState(values.username || "");
   const [oldPassword, setOldPassword] = useState(values.password || "");
-  const [newPassword, setNewPassword] = useState("secretPassword1");
-  const [confirmNewPassword, setConfirmNewPassword] =
-    useState("secretPassword1");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const [err, setErr] = useState<{ [key: string]: string }>();
   const [tips, setTips] = useState<any>();
 

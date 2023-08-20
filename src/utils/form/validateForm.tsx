@@ -21,7 +21,7 @@ export const validateForm = (values: ValidateFormProps) => {
     if (key === "email") {
       if (!validateEmail(values[key])) {
         isValidated = false;
-        errors[key] = labels[key] + " please provide a valid email address";
+        errors[key] = labels[key] + " should be a valid email address";
         return;
       }
     }

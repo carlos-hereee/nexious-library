@@ -3,8 +3,8 @@ import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
-import { validateForm } from "@nxs-utils/form/validateForm";
-import { checkPasswordStrength } from "@nxs-utils/form/checkPasswordStrength";
+import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
+import { KeyStringProp } from "@nxs-helpers/types";
 
 type FormProps = {
   values: { [key: string]: string };
@@ -21,8 +21,8 @@ type TipsProp = {
 };
 const Form: React.FC<FormProps> = (props) => {
   const { submit, type, values, hideLabels, name, showAuthTips } = props;
-  const [value, setValue] = useState<{ [key: string]: string }>(values);
-  const [errors, setErros] = useState<{ [key: string]: string }>();
+  const [value, setValue] = useState<KeyStringProp>(values);
+  const [errors, setErrors] = useState<KeyStringProp | undefined>();
   const [seePassword, setSeePassword] = useState<{ [key: string]: boolean }>({
     password: false,
     confirmPassword: false,
@@ -37,18 +37,18 @@ const Form: React.FC<FormProps> = (props) => {
     setValue(change);
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
-    const { errors } = validateForm(value);
-    setErros(errors);
-    if (showAuthTips) {
-      const tips = checkPasswordStrength(value["password"]);
-      setTips(tips);
-    }
-  };
-
   return (
-    <form className={`form${name ? ` ${name}` : ""}`} onSubmit={handleSubmit}>
+    <form
+      className={`form${name ? ` ${name}` : ""}`}
+      onSubmit={(e) =>
+        handleFormSubmit({
+          formProps: e,
+          values: value,
+          setErrors,
+          onSubmit: () => submit(value),
+        })
+      }
+    >
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
           {!hideLabels && (
