@@ -1,4 +1,4 @@
-import IconButton from "./IconButton";
+import IconButton from "../buttons/IconButton";
 import { MenuItemProp } from "@nxs-helpers/types";
 
 export type NavButtonProps = {
@@ -12,13 +12,12 @@ export type NavButtonProps = {
  *
  * @returns navigation button
  */
-const NavButton: React.FC<NavButtonProps> = ({ data, click }) => {
+const NavButton: React.FC<NavButtonProps> = (props) => {
+  const { data, click } = props;
+
   return (
     <li className="nav-btn">
-      <IconButton
-        icon={{ ...data, label: data.name }}
-        click={() => click(data)}
-      />
+      <IconButton icon={data} click={() => click(data)} />
     </li>
   );
 };

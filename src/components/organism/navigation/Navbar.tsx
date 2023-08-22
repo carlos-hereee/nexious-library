@@ -1,5 +1,5 @@
 import { MenuItemProp } from "@nxs-helpers/types";
-import { NavButton } from "@nxs-molecules";
+import { NavButton, NavToggleButton } from "@nxs-molecules";
 
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
@@ -35,8 +35,8 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) =>
-        m.isToggle ? (
-          <NavButton data={m} key={m.uid} click={toggle} />
+        m.isToggle || m.isPrivate ? (
+          <NavToggleButton data={m} key={m.uid} click={toggle} />
         ) : (
           <NavButton data={m} key={m.uid} click={click} />
         )

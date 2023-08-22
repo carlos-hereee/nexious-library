@@ -6,11 +6,7 @@ export type { LogoProps } from "./assets/Logo";
 
 // buttons
 export { default as IconButton } from "./buttons/IconButton";
-export { default as BurgerButton } from "./buttons/BurgerButton";
-export type { BurgerProps } from "./buttons/BurgerButton";
 export { default as SubmitButton } from "./buttons/SubmitButton";
-export { default as NavButton } from "./buttons/NavButton";
-export type { NavButtonProps } from "./buttons/NavButton";
 
 // card
 export { default as CardHeader } from "./card/CardHeader";
@@ -43,3 +39,10 @@ export { default as TableRow } from "./table/TableRow";
 
 // texts
 export { default as Total } from "./texts/Total";
+
+// navigation
+export { default as BurgerButton } from "./navigation/BurgerButton";
+export type { BurgerProps } from "./navigation/BurgerButton";
+export { default as NavButton } from "./navigation/NavButton";
+export type { NavButtonProps } from "./navigation/NavButton";
+export { default as NavToggleButton } from "./navigation/NavToggleButton";

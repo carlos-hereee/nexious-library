@@ -1,6 +1,6 @@
 import { Hero } from "@nxs-atoms";
 
-type UserCardProps = {
+export type UserCardProps = {
   hideLabels?: boolean;
   hideHero?: boolean;
   isRow?: boolean;
