@@ -1,4 +1,4 @@
-import { Hero } from "@nxs-atoms/index";
+import { Hero } from "@nxs-atoms";
 
 type UserCardProps = {
   hideLabels?: boolean;
@@ -19,7 +19,7 @@ const UserCard: React.FC<UserCardProps> = (props) => {
   const { user, hideLabels, isRow, hideHero } = props;
   return (
     <div className={isRow ? "user-card user-card-row" : "user-card"}>
-      {!hideHero && <Hero hero={user.hero} name="hero-user" />}
+      {!hideHero && user.hero && <Hero hero={user.hero} name="hero-user" />}
       {!hideLabels && (
         <div className="flex-d-column">
           {user.name && <p className="p-stretch">Name: {user.name}</p>}
