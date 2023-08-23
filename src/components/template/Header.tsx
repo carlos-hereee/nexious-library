@@ -32,7 +32,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
-    const alternatives = findAlternatives(e);
+    const alternatives = findAlternatives(e, e.active.uid);
     console.log("alternatives", alternatives);
     setActive(!isActive);
     if (e.icon === "flag") updateLanguage(e.lang);

@@ -27,20 +27,10 @@ const Icon: React.FC<IconProps> = ({ icon, size, spin, color, name }) => {
       icon={svg[icon]}
       size={size ? size : "1x"}
       className={name ? `icon icon-${name}` : "icon"}
-      spin={icon ? spin === "spin" : true}
-      pulse={icon ? spin === "pulse" : true}
+      spin={spin ? spin === "spin" : false}
+      pulse={spin ? spin === "pulse" : false}
       color={color}
     />
   );
-  // return (
-  //   <FontAwesomeIcon
-  //     icon={icon ? svg[icon] : svg["spinner"]}
-  //     size={size}
-  //     className={name ? `icon icon-${name}` : "icon"}
-  //     spin={icon ? spin === "spin" : true}
-  //     pulse={icon ? spin === "pulse" : true}
-  //     color={color}
-  //   />
-  // );
 };
 export default Icon;

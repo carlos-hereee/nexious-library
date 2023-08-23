@@ -13,7 +13,6 @@ export type HeroProp = {
 };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };
-export type PageNotFoundProps = { message: string; hero: HeroProp };
 export type KeyStringProp = { [key: string]: string };
 export type OptionProp = {
   name: string;

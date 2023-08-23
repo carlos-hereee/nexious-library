@@ -87,3 +87,10 @@
   flex-wrap: wrap;
   justify-content: space-around;
 }
+.page-center {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  gap: #{$rem};
+}
