@@ -2,7 +2,7 @@ import {
   CardBodyProps,
   CardFooterProps,
   CardHeaderProps,
-} from "@nxs-helpers/types";
+} from "@nxs-utils/helpers/types";
 import { CardBody, CardHeader, CardFooter } from "@nxs-molecules";
 
 export type CardProps = {

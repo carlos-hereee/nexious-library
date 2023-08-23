@@ -1,5 +1,5 @@
 import IconButton from "../buttons/IconButton";
-import { MenuItemProp } from "@nxs-helpers/types";
+import { MenuItemProp } from "@nxs-utils/helpers/types";
 
 export type NavButtonProps = {
   data: MenuItemProp;

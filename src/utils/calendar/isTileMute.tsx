@@ -1,4 +1,4 @@
-import { CalendarDayProps } from "@nxs-helpers/types";
+import { CalendarDayProps } from "@nxs-utils/helpers/types";
 
 type TileMuteProps = {
   day: number;

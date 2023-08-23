@@ -1,5 +1,5 @@
 import { Hero, Subtitle } from "@nxs-atoms";
-import { CardHeaderProps } from "@nxs-helpers/types";
+import { CardHeaderProps } from "@nxs-utils/helpers/types";
 
 type CardHeaderProp = {
   data: CardHeaderProps;

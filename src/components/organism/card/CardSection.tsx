@@ -1,5 +1,5 @@
 import { ReadMore } from "@nxs-atoms/index";
-import { CardHeaderProps } from "@nxs-helpers/types";
+import { CardHeaderProps } from "@nxs-utils/helpers/types";
 import { CardHeader } from "@nxs-molecules";
 
 export type CardProps = {

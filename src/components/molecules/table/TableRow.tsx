@@ -1,5 +1,5 @@
 import { CellData, CellTitle } from "@nxs-atoms";
-import { CellDataProp } from "@nxs-helpers/types";
+import { CellDataProp } from "@nxs-utils/helpers/types";
 
 const TableRow: React.FC<CellDataProp> = ({ data, isHeader }) => {
   return (

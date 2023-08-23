@@ -1,5 +1,5 @@
 import { Option } from "@nxs-atoms";
-import { OptionProp } from "@nxs-helpers/types";
+import { OptionProp } from "@nxs-utils/helpers/types";
 
 type SelectProp = {
   name: string;

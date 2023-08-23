@@ -1,4 +1,4 @@
-import { KeyStringProp } from "@nxs-helpers/types";
+import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { validateForm } from "./validateForm";
 
 type HandleFormSubmitProps = {

@@ -1,4 +1,4 @@
-import { HeroProp } from "@nxs-helpers/types";
+import { HeroProp } from "@nxs-utils/helpers/types";
 import { capFirstChar } from "@nxs-utils/text";
 import { useState } from "react";
 

@@ -1,4 +1,4 @@
-import { DataStringProps } from "@nxs-helpers/types";
+import { DataStringProps } from "@nxs-utils/helpers/types";
 
 const Ribbon: React.FC<DataStringProps> = ({ data, name }) => {
   return <strong className={`ribbon${name ? ` ${name}` : ""}`}>{data}</strong>;

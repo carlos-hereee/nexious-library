@@ -1,4 +1,4 @@
-import { DataStringProps } from "@nxs-helpers/types";
+import { DataStringProps } from "@nxs-utils/helpers/types";
 
 /**
  * Component - Subtitle

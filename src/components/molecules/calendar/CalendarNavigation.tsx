@@ -1,4 +1,4 @@
-import { months } from "@nxs-helpers/data";
+import { months } from "@nxs-utils/helpers/data";
 import { Heading } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 

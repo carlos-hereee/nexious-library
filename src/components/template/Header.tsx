@@ -2,7 +2,8 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BurgerButton, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import { MenuItemProp } from "@nxs-helpers/types";
+import { MenuItemProp } from "@nxs-utils/helpers/types";
+import { updateLanguage } from "@nxs-utils/navigation/updateLanguage";
 
 export type HeaderProps = {
   logo: { url: string; alt?: string; name: string };
@@ -30,20 +31,11 @@ const Header: React.FC<HeaderProps> = (props) => {
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
+    console.log("e", e);
     setActive(!isActive);
-    if (e.icon === "flag") setLan(e);
+    if (e.icon === "flag") updateLanguage(e.lang);
   };
-  const setLan = (item: MenuItemProp) => {
-    if (setLanguage) {
-      if (item.name === "espanol") {
-        document.documentElement.setAttribute("lang", "en-US");
-      }
-      if (item.name === "english") {
-        document.documentElement.setAttribute("lang", "es-US");
-      }
-      return setLanguage(item.name);
-    }
-  };
+
   useEffect(() => {
     const initClose = () => setClose(true);
     document.addEventListener("animationend", initClose, true);

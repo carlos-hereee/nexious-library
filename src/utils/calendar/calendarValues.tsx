@@ -1,4 +1,4 @@
-import { CalendarDayProps, CalendarEventProp } from "@nxs-helpers/types";
+import { CalendarDayProps, CalendarEventProp } from "@nxs-utils/helpers/types";
 
 export const calendarValues = (e: Date): CalendarDayProps => {
   // get max days for current.month

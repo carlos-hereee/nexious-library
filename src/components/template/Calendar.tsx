@@ -1,6 +1,9 @@
 import { CalendarView, CalendarNavigation, IconButton } from "@nxs-molecules";
 import { useEffect, useState } from "react";
-import { CalendarDayEventProp, CalendarDayProps } from "@nxs-helpers/types";
+import {
+  CalendarDayEventProp,
+  CalendarDayProps,
+} from "@nxs-utils/helpers/types";
 import {
   calendarValues,
   nextMonth,

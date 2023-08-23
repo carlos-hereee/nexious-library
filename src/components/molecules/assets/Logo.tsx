@@ -1,4 +1,4 @@
-import { HeroProp } from "@nxs-helpers/types";
+import { HeroProp } from "@nxs-utils/helpers/types";
 import { Heading, Hero } from "@nxs-atoms";
 import { capFirstChar } from "utils/text";
 

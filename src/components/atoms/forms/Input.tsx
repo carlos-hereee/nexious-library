@@ -1,6 +1,6 @@
 // import { InputProps } from "@nxs-helpers/interface";
 
-import { InputProps } from "@nxs-helpers/interface";
+import { InputProps } from "@nxs-utils/helpers/interface";
 
 const Input: React.FC<InputProps> = ({ type, value, change, blur }) => {
   return (

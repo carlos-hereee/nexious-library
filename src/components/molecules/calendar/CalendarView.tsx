@@ -1,6 +1,6 @@
-import { sundayFirst, monthWeeks } from "@nxs-helpers/data";
+import { sundayFirst, monthWeeks } from "@nxs-utils/helpers/data";
 import { Button } from "@nxs-atoms";
-import { CalendarDayProps } from "@nxs-helpers/types";
+import { CalendarDayProps } from "@nxs-utils/helpers/types";
 import { CalendarTile } from "@nxs-molecules";
 import { isTileMute } from "@nxs-utils/calendar/isTileMute";
 import { isTileMatch } from "@nxs-utils/calendar/calendarValues";

@@ -1,5 +1,5 @@
 import { Icon, PingCount } from "@nxs-atoms";
-import { IconButtonProps } from "@nxs-helpers/interface";
+import { IconButtonProps } from "@nxs-utils/helpers/interface";
 
 /**
  * Icon Button

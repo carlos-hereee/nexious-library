@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Hero, Icon } from "@nxs-atoms/index";
-import { HeroProp } from "@nxs-helpers/types";
+import { HeroProp } from "@nxs-utils/helpers/types";
 import { Form } from "@nxs-organism";
 
 type PaymentType = {

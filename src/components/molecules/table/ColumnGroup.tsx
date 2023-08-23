@@ -1,5 +1,5 @@
 import { Column } from "@nxs-atoms";
-import { TableColumnProp } from "@nxs-helpers/types";
+import { TableColumnProp } from "@nxs-utils/helpers/types";
 
 type CoulmnGroup = {
   data: TableColumnProp[];

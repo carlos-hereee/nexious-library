@@ -62,11 +62,17 @@ export type MenuItemProp = {
   uid: string;
   name: string;
   icon: string;
+  lang: string;
   label?: string;
   isToggle?: boolean;
   isPrivate?: boolean;
   active?: string;
-  alternatives?: { name: string; label: string; icon: string; uid: string }[];
+  alternatives?: {
+    name: string;
+    label: string;
+    icon: string;
+    uid: string;
+  }[];
 };
 export type CalendarDayProps = {
   dayIdx: number;

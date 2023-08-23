@@ -1,4 +1,4 @@
-import { CardFooterProps } from "@nxs-helpers/types";
+import { CardFooterProps } from "@nxs-utils/helpers/types";
 import { IconButton } from "@nxs-molecules";
 
 type Props = {

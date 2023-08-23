@@ -1,4 +1,4 @@
-import { MenuItemProp } from "@nxs-helpers/types";
+import { MenuItemProp } from "@nxs-utils/helpers/types";
 import { IconButton } from "@nxs-molecules";
 
 export type NavButtonProps = {

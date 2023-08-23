@@ -4,7 +4,7 @@ import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
 import { useState } from "react";
 import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
-import { KeyStringProp } from "@nxs-helpers/types";
+import { KeyStringProp } from "@nxs-utils/helpers/types";
 
 type FormProps = {
   values: { [key: string]: string };

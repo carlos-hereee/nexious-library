@@ -1,6 +1,6 @@
 // import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "@nxs-helpers/types";
+import { CellDataProp } from "@nxs-utils/helpers/types";
 import { TableRow } from "@nxs-molecules";
 
 type TableHeaderProp = {
