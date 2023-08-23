@@ -1,5 +1,7 @@
 import { Hero, Icon } from "@nxs-atoms/index";
 import { HeroProp } from "@nxs-utils/helpers/types";
+import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export type PageNotFoundProps = {
   hero?: HeroProp;
@@ -8,6 +10,10 @@ export type PageNotFoundProps = {
 
 const PageNotFound: React.FC<PageNotFoundProps> = (props) => {
   const { hero, message } = props;
+  const navigate = useNavigate();
+  useEffect(() => {
+    setTimeout(() => navigate("/"), 1000);
+  }, []);
   return (
     <div className="page-center">
       {hero && <Hero hero={hero} />}
