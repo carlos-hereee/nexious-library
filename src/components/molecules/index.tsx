@@ -43,6 +43,4 @@ export { default as Total } from "./texts/Total";
 // navigation
 export { default as BurgerButton } from "./navigation/BurgerButton";
 export type { BurgerProps } from "./navigation/BurgerButton";
-export { default as NavButton } from "./navigation/NavButton";
-export type { NavButtonProps } from "./navigation/NavButton";
-export { default as NavToggleButton } from "./navigation/NavToggleButton";
+export { default as NavToggle } from "./navigation/NavToggle";

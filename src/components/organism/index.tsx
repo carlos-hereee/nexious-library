@@ -4,7 +4,8 @@ export { default as Loading } from "./errors/Loading";
 // navigation
 export { default as Navbar } from "./navigation/Navbar";
 export type { NavbarProps } from "./navigation/Navbar";
-
+export { default as Navigation } from "./navigation/Navigation";
+export type { NavigationProps } from "./navigation/Navigation";
 // tables
 export { default as TableBody } from "./table/TableBody";
 export { default as TableHeader } from "./table/TableHeader";

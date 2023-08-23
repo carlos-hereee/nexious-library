@@ -4,6 +4,7 @@ import { BurgerButton, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { MenuItemProp } from "@nxs-utils/helpers/types";
 import { updateLanguage } from "@nxs-utils/navigation/updateLanguage";
+import { findAlternatives } from "@nxs-utils/navigation/findAlternative";
 
 export type HeaderProps = {
   logo: { url: string; alt?: string; name: string };
@@ -31,7 +32,8 @@ const Header: React.FC<HeaderProps> = (props) => {
   const navigate = useNavigate();
 
   const handleToggle = (e: MenuItemProp) => {
-    console.log("e", e);
+    const alternatives = findAlternatives(e);
+    console.log("alternatives", alternatives);
     setActive(!isActive);
     if (e.icon === "flag") updateLanguage(e.lang);
   };
