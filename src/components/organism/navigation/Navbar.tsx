@@ -3,8 +3,8 @@ import { IconButton, NavToggle } from "@nxs-molecules";
 
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
-  toggle: (e: MenuItemProp) => void;
-  click: (e: MenuItemProp) => void;
+  toggle: (a: MenuItemProp[]) => void;
+  click: (a: MenuItemProp) => void;
   menu: MenuItemProp[];
   theme?: string;
 };
@@ -30,6 +30,11 @@ export type NavbarProps = {
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, toggle, click, menu, theme } = props;
   const handleClick = (e: any) => click(e);
+  const handleToggle = (a: any) => {
+    const idx = menu.findIndex((item) => item.uid === a.uid);
+    if (idx) menu[idx] = a;
+    toggle(menu);
+  };
   return (
     <ul
       className={theme ? `navigation ${theme}` : "navigation bg-default"}
@@ -38,7 +43,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       {menu.map((m) => (
         <li className="nav-btn" key={m.uid}>
           {m.isToggle ? (
-            <NavToggle data={m} active={m.active.uid} click={toggle} />
+            <NavToggle data={m} onSelect={handleToggle} />
           ) : m.isPrivate ? (
             <IconButton icon={m.active} click={handleClick} />
           ) : (

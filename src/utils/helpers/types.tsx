@@ -57,22 +57,23 @@ export type IconItemProp = {
   isAlt?: boolean;
   alt?: string;
 };
+export type MenuItemAltProp = {
+  name: string;
+  label: string;
+  icon: string;
+  uid: string;
+  language?: string;
+};
 export type MenuItemProp = {
   uid: string;
   name: string;
   icon: string;
-  lang: string;
+  lang?: string;
   label?: string;
   isToggle?: boolean;
   isPrivate?: boolean;
   active: { name: string; label: string; icon: string; uid: string };
-  alternatives: {
-    name: string;
-    label: string;
-    icon: string;
-    uid: string;
-    language: string;
-  }[];
+  alternatives: MenuItemAltProp[];
 };
 export type CalendarDayProps = {
   dayIdx: number;

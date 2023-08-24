@@ -3,14 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { BurgerButton, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { MenuItemProp } from "@nxs-utils/helpers/types";
-import { updateLanguage } from "@nxs-utils/navigation/updateLanguage";
-import { findAlternatives } from "@nxs-utils/navigation/findAlternative";
 
 export type HeaderProps = {
   logo: { url: string; alt?: string; name: string };
   menu: MenuItemProp[];
   ping?: number;
-  setLanguage?: (e: string) => void;
+  updateMenu: (e: MenuItemProp[]) => void;
 };
 /**
  * Component - Header
@@ -26,17 +24,10 @@ export type HeaderProps = {
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, setLanguage } = props;
+  const { menu, logo, ping, updateMenu } = props;
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
-
-  const handleToggle = (e: MenuItemProp) => {
-    const alternatives = findAlternatives(e, e.active.uid);
-    console.log("alternatives", alternatives);
-    setActive(!isActive);
-    if (e.icon === "flag") updateLanguage(e.lang);
-  };
 
   useEffect(() => {
     const initClose = () => setClose(true);
@@ -56,7 +47,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         <Navbar
           show={{ isActive, isClose }}
           menu={menu}
-          toggle={handleToggle}
+          toggle={updateMenu}
           click={handleClick}
         />
       </nav>
@@ -69,7 +60,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         <Navbar
           show={{ isActive, isClose }}
           menu={menu}
-          toggle={handleToggle}
+          toggle={updateMenu}
           click={handleClick}
         />
       </nav>

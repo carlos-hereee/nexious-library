@@ -3,8 +3,7 @@ import { MenuItemProp } from "@nxs-utils/helpers/types";
 
 export type NavButtonProps = {
   data: MenuItemProp;
-  active: string;
-  click: (e: MenuItemProp) => void;
+  onSelect: (e: MenuItemProp) => void;
 };
 /**
  *  Component - NavButton
@@ -14,14 +13,22 @@ export type NavButtonProps = {
  * @returns navigation button
  */
 const NavToggle: React.FC<NavButtonProps> = (props) => {
-  const { data, click, active } = props;
+  const { data, onSelect } = props;
+  const handleSelect = (value: string) => {
+    const idx = data.alternatives.findIndex((alt) => alt.uid === value);
+    if (data.alternatives[idx].language) {
+      data.lang = data.alternatives[idx].language;
+    }
+    data.active = data.alternatives[idx];
+    onSelect(data);
+  };
   return (
     <div className="select-wrapper">
       <Icon icon={data.active.icon} />
-      <select>
+      <select onChange={(e) => handleSelect(e.target.value)}>
         {data.alternatives?.map((alt) => (
-          <option key={alt.uid} value={alt.name} title={alt.name}>
-            <span>{alt.label}</span>
+          <option key={alt.uid} value={alt.uid} title={alt.name}>
+            {alt.label}
           </option>
         ))}
       </select>
