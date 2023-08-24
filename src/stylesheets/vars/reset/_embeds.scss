@@ -1,0 +1,53 @@
+/* Embeds
+    - block display is usually what we want 
+    - vertical-align removes space-below in case overwrite display values
+    - responsive by default 
+    - audio without [controls] remain hidden  
+*/
+img,
+svg,
+video,
+canvas,
+audio,
+iframe,
+embed,
+object {
+  display: block;
+  vertical-align: middle;
+  max-width: 100%;
+}
+audio:not([controls]) {
+  display: none;
+}
+
+// Reponsive images remove unnesessary wrapping
+picture {
+  display: contents;
+}
+// has nothing to display so hide them
+source {
+  display: none;
+}
+
+// heigh needs to set explicitly
+img,
+svg,
+video,
+canvas {
+  height: auto;
+}
+
+// audio
+audio {
+  width: 100%;
+}
+
+// remove the border on images inse links
+img {
+  border-style: none;
+}
+
+// hide svg overflow
+svg {
+  overflow: hidden;
+}

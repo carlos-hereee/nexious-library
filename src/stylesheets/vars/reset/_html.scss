@@ -1,0 +1,36 @@
+// consistent line-spacing even when element have different line-heights
+html {
+  height: 100%;
+  line-sizing: normal;
+}
+
+//  Remove the tiny space around the edge of the page.
+body {
+  margin: 0;
+}
+
+// Maintain `hidden` behaviour when overriding `display` values.
+[hidden] {
+  display: none;
+}
+
+*,
+::before,
+::after {
+  box-sizing: border-box;
+}
+
+// legacy browsers
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+main,
+nav,
+section {
+  display: block;
+}

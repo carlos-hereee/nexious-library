@@ -1,0 +1,20 @@
+// add basic styling
+select {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  padding: #{$rem05};
+  margin: 0;
+  width: 100%;
+  font-family: inherit;
+  font-size: inherit;
+  cursor: inherit;
+  line-height: inherit;
+}
+
+// add correct box sixing and remove padding
+[type="checkbox"],
+[type="radio"] {
+  box-sizing: border-box;
+  padding: 0;
+}

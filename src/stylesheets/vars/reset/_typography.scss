@@ -1,0 +1,51 @@
+h1 {
+  font-size: 2rem;
+  line-height: 2.25;
+  // keep h1 margins consistent, even when nested
+  margin: 0.67em 0;
+}
+h2 {
+  font-size: 1.5rem;
+  line-height: 2;
+}
+h3 {
+  font-size: 1.17rem;
+  line-height: 1.5;
+}
+h4 {
+  font-size: 1rem;
+  line-height: 1.4;
+}
+h5 {
+  font-size: 0.83rem;
+  line-height: 1.25;
+}
+h6 {
+  font-size: 0.67rem;
+  line-height: 1;
+}
+
+p {
+  max-width: 400px;
+  min-width: 150px;
+  line-height: 1.6;
+}
+
+// pre wrapping overflow by default is bad
+pre {
+  white-space: pre-wrap;
+}
+
+/* horizontal rule 
+    - solid, thin horizontal rules, 
+    - Firefox -- remove color: gray 
+    - Remove default 1px height and common - overflow: hidden
+
+*/
+hr {
+  border-style: solid;
+  border-width: 1px 0 0;
+  color: inherit;
+  height: 0;
+  overflow: visible;
+}

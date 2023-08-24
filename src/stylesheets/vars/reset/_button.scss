@@ -1,0 +1,15 @@
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  padding: #{$rem05} #{$rem};
+  max-width: 250px;
+  min-width: 100px;
+  border: 1px solid #{$dark};
+  gap: #{$rem05};
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
