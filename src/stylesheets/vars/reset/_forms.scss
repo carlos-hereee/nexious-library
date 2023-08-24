@@ -1,4 +1,19 @@
 // add basic styling
+form {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+  gap: #{$rem};
+}
+input,
+textarea {
+  padding: #{$rem05} #{$rem};
+  width: 100%;
+  min-width: 200px;
+  border-radius: #{$rem05};
+}
+
+// add basic styling
 select {
   appearance: none;
   background-color: transparent;
