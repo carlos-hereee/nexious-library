@@ -1,6 +1,6 @@
 import { HeroProp } from "@nxs-utils/helpers/types";
 import { Heading, Hero } from "@nxs-atoms";
-import { capFirstChar } from "utils/text";
+import { capFirstChar } from "@nxs-utils/custom/text";
 
 export type LogoProps = {
   logo: HeroProp;

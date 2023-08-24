@@ -29,29 +29,23 @@ export type NavbarProps = {
  */
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, toggle, click, menu, theme } = props;
+  const handleClick = (e: any) => click(e);
   return (
     <ul
       className={theme ? `navigation ${theme}` : "navigation bg-default"}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
-      {menu.map((m) =>
-        m.isToggle ? (
-          <NavToggle
-            data={m}
-            key={m.uid}
-            active={m.active.uid}
-            click={toggle}
-          />
-        ) : m.isPrivate ? (
-          <li className="nav-btn" key={m.uid}>
-            <IconButton icon={m.active} click={() => click(m)} />
-          </li>
-        ) : (
-          <li className="nav-btn" key={m.uid}>
-            <IconButton icon={m} click={() => click(m)} />
-          </li>
-        )
-      )}
+      {menu.map((m) => (
+        <li className="nav-btn" key={m.uid}>
+          {m.isToggle ? (
+            <NavToggle data={m} active={m.active.uid} click={toggle} />
+          ) : m.isPrivate ? (
+            <IconButton icon={m.active} click={handleClick} />
+          ) : (
+            <IconButton icon={m} click={handleClick} />
+          )}
+        </li>
+      ))}
     </ul>
   );
 };

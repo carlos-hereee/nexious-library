@@ -1,5 +1,5 @@
 import { HeroProp } from "@nxs-utils/helpers/types";
-import { capFirstChar } from "@nxs-utils/text";
+import { capFirstChar } from "@nxs-utils/custom/text";
 import { useState } from "react";
 
 type Props = { hero: HeroProp; name?: string };

@@ -1,3 +1,4 @@
+import { Icon } from "@nxs-atoms/index";
 import { MenuItemProp } from "@nxs-utils/helpers/types";
 
 export type NavButtonProps = {
@@ -26,7 +27,7 @@ const NavToggle: React.FC<NavButtonProps> = (props) => {
             title={alt.name}
             className="nav-btn"
           >
-            {alt.label}
+            <span>{alt.label}</span>
           </option>
         ))}
       </select>

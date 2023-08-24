@@ -1,6 +1,6 @@
 import { Hyperlink } from "@nxs-atoms";
 import { CardBodyProps } from "@nxs-utils/helpers/types";
-import { getLinks } from "@nxs-utils/getLinks";
+import { getLinks } from "@nxs-utils/custom/getLinks";
 
 type Props = {
   data: CardBodyProps;
