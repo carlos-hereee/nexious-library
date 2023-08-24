@@ -18,13 +18,17 @@ $default-bg-color: white;
 $default-bg-color-alt: #000000;
 $default-text: #000000;
 $default-text-alt: white;
-$light: #fafafa;
+$light: #f2f2f2;
 $light-primary: #e4e5f1;
+$light-secondary: #fafafa;
+// todo update action color
 $action-color: #ffee99;
 $action-color-accent: #ffd87d;
 $dark: #9394a5;
 $dark-primary: #484b6a;
 $cta-color: #ffa500;
+$dark-gray: #2c3e50;
+
 /* readmore lines */
 $max-lines: 2;
 $line-height: 1.4;
@@ -40,7 +44,7 @@ $rem05: 0.5rem;
 $rem025: 0.25rem;
 // border-radius :circle
 $rounded-full: 100%;
-$border-radius: 10px;
+$border-radius: 5px;
 $min-width: 200px;
 $min-width-sm: 100px;
 $max-width-sm: 350px;

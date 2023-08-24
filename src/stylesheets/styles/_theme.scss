@@ -7,7 +7,7 @@
   color: #{$light-primary};
 }
 .bg-light-alt {
-  background-color: #{$light};
+  background-color: #{$light-secondary};
   color: #{$dark};
 }
 .bg-dark-alt {
@@ -15,6 +15,6 @@
   color: #{$light};
 }
 .bg-default {
-  background-color: #{$default-bg-color};
+  background-color: #{$light};
   color: #{$default-text};
 }

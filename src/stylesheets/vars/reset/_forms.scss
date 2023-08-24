@@ -14,17 +14,48 @@ textarea {
 }
 
 // add basic styling
+.select {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  min-width: 100px;
+  width: 100%;
+  // add arrow
+  &::after {
+    content: "\25bc";
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    transition: 0.2s all ease;
+    pointer-events: none;
+  }
+  &:hover::after {
+    color: #{$action-color};
+  }
+}
 select {
+  border-radius: #{$border-radius};
   appearance: none;
+  background-image: none;
   background-color: transparent;
-  border: none;
+  flex: 1;
   padding: #{$rem05};
   margin: 0;
   width: 100%;
   font-family: inherit;
   font-size: inherit;
-  cursor: inherit;
+  cursor: pointer;
   line-height: inherit;
+  &::-ms-expand {
+    display: none;
+  }
+}
+
+option {
+  color: inherit;
+  background-color: inherit;
 }
 
 // add correct box sixing and remove padding

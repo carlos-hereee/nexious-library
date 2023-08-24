@@ -19,18 +19,20 @@ const NavToggle: React.FC<NavButtonProps> = (props) => {
     const idx = data.alternatives?.findIndex((a) => a.uid === active);
     console.log("data", data.alternatives[idx]);
     return (
-      <select>
-        {data.alternatives?.map((alt) => (
-          <option
-            key={alt.uid}
-            value={alt.name}
-            title={alt.name}
-            className="nav-btn"
-          >
-            <span>{alt.label}</span>
-          </option>
-        ))}
-      </select>
+      <div className="select">
+        <select>
+          {data.alternatives?.map((alt) => (
+            <option
+              key={alt.uid}
+              value={alt.name}
+              title={alt.name}
+              className="nav-btn"
+            >
+              <span>{alt.label}</span>
+            </option>
+          ))}
+        </select>
+      </div>
     );
   }
 };
