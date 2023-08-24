@@ -15,25 +15,17 @@ export type NavButtonProps = {
  */
 const NavToggle: React.FC<NavButtonProps> = (props) => {
   const { data, click, active } = props;
-  if (data.alternatives) {
-    const idx = data.alternatives?.findIndex((a) => a.uid === active);
-    console.log("data", data.alternatives[idx]);
-    return (
-      <div className="select">
-        <select>
-          {data.alternatives?.map((alt) => (
-            <option
-              key={alt.uid}
-              value={alt.name}
-              title={alt.name}
-              className="nav-btn"
-            >
-              <span>{alt.label}</span>
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }
+  return (
+    <div className="select-wrapper">
+      <Icon icon={data.active.icon} />
+      <select>
+        {data.alternatives?.map((alt) => (
+          <option key={alt.uid} value={alt.name} title={alt.name}>
+            <span>{alt.label}</span>
+          </option>
+        ))}
+      </select>
+    </div>
+  );
 };
 export default NavToggle;

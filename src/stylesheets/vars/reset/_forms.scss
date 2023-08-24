@@ -12,47 +12,41 @@ textarea {
   min-width: 200px;
   border-radius: #{$rem05};
 }
-
-// add basic styling
-.select {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  overflow: hidden;
-  min-width: 100px;
-  width: 100%;
-  // add arrow
-  &::after {
-    content: "\25bc";
-    position: absolute;
-    top: 25%;
-    right: 5%;
-    transition: 0.2s all ease;
-    pointer-events: none;
-  }
-  &:hover::after {
-    color: #{$action-color};
-  }
-}
+// replace default styling
 select {
-  border-radius: #{$border-radius};
-  appearance: none;
+  box-shadow: none;
+  border: none;
   background-image: none;
   background-color: transparent;
-  flex: 1;
-  padding: #{$rem05};
-  margin: 0;
-  width: 100%;
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
   line-height: inherit;
+  min-width: 100px;
+  width: 100%;
+  outline: none;
   &::-ms-expand {
     display: none;
   }
 }
+// add basic styling
+.select-wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  outline: 1px solid gray;
+  border-radius: #{$border-radius};
+  padding: #{$rem05};
+  gap: #{$rem05};
+  &:focus {
+    outline: 1px solid #{$dark-gray};
+  }
+  &:hover {
+    outline: 1px solid #{$dark-gray};
+  }
+}
 
+// can only update colors
 option {
   color: inherit;
   background-color: inherit;
