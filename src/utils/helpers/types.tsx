@@ -7,6 +7,7 @@ export type UnsplashProps = {
 };
 export type DataStringProps = { data: string; name?: string };
 export type LinkProp = { data: string; isLink: boolean };
+export type SocialMedia = { name: string; link: string; uid: string };
 export type HeroProp = {
   url: string;
   alt?: string;

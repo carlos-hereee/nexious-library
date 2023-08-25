@@ -5,8 +5,6 @@ import { Link } from "react-router-dom";
 
 export type LogoProps = {
   logo: HeroProp;
-  name?: string;
-  logoName?: string;
 };
 
 /**
@@ -17,16 +15,14 @@ export type LogoProps = {
  * @param logoName string; add an optional classname for logo asset
  * @returns image component
  */
-const Logo: React.FC<LogoProps> = ({ logo, name, logoName }) => {
+const Logo: React.FC<LogoProps> = ({ logo }) => {
+  const { label, name } = logo;
   return (
     <div className={name ? `logo ${name}` : "logo"}>
       <Link to="/" className="logo-link">
-        <Hero
-          hero={logo}
-          name={logoName ? `hero-logo ${logoName}` : "hero-logo"}
-        />
+        <Hero hero={logo} name={name} />
       </Link>
-      {name && <Heading data={name} />}
+      {label && <Heading data={label} />}
     </div>
   );
 };

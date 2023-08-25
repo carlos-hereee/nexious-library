@@ -25,6 +25,7 @@ select {
   min-width: 100px;
   width: 100%;
   outline: none;
+  padding: #{$rem05};
   &::-ms-expand {
     display: none;
   }
@@ -34,10 +35,9 @@ select {
   display: flex;
   align-items: center;
   position: relative;
-  outline: 1px solid gray;
+  outline: 1px solid #{$faded};
   border-radius: #{$border-radius};
-  padding: #{$rem05};
-  gap: #{$rem05};
+  padding-left: #{$rem05};
   &:focus {
     outline: 1px solid #{$dark-gray};
   }
