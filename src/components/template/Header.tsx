@@ -2,12 +2,17 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BurgerButton, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import { HeroProp, MenuItemProp } from "@nxs-utils/helpers/types";
+import {
+  HeroProp,
+  MenuItemAltProp,
+  MenuItemProp,
+} from "@nxs-utils/helpers/types";
 
 export type HeaderProps = {
   menu: MenuItemProp[];
   ping?: number;
   logo?: HeroProp;
+  language?: MenuItemAltProp;
   updateMenu: (e: MenuItemProp[]) => void;
 };
 /**
@@ -24,7 +29,7 @@ export type HeaderProps = {
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, updateMenu } = props;
+  const { menu, logo, ping, updateMenu, language } = props;
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
@@ -47,6 +52,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           menu={menu}
           toggle={updateMenu}
           click={handleClick}
+          language={language}
         />
       </nav>
       <nav className="mobile-navigation">
@@ -60,6 +66,7 @@ const Header: React.FC<HeaderProps> = (props) => {
           menu={menu}
           toggle={updateMenu}
           click={handleClick}
+          language={language}
         />
       </nav>
     </header>

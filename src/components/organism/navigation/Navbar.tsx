@@ -1,4 +1,4 @@
-import { MenuItemProp } from "@nxs-utils/helpers/types";
+import { MenuItemAltProp, MenuItemProp } from "@nxs-utils/helpers/types";
 import { IconButton, NavToggle } from "@nxs-molecules";
 
 export type NavbarProps = {
@@ -7,6 +7,7 @@ export type NavbarProps = {
   click: (a: MenuItemProp) => void;
   menu: MenuItemProp[];
   theme?: string;
+  language?: MenuItemAltProp;
 };
 /**
  * Component - Navbar
@@ -28,13 +29,14 @@ export type NavbarProps = {
  * @returns navbar
  */
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const { show, toggle, click, menu, theme } = props;
+  const { show, toggle, click, menu, theme, language } = props;
   const handleClick = (e: any) => click(e);
   const handleToggle = (a: any) => {
     const idx = menu.findIndex((item) => item.uid === a.uid);
     if (idx) menu[idx] = a;
     toggle(menu);
   };
+
   return (
     <ul
       className={theme ? `navigation ${theme}` : "navigation bg-default"}
@@ -43,9 +45,15 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       {menu.map((m) => (
         <li className="nav-btn" key={m.uid}>
           {m.isToggle ? (
-            <NavToggle data={m} onSelect={handleToggle} />
+            <NavToggle data={m} onSelect={handleToggle} language={language} />
           ) : m.isPrivate ? (
-            <IconButton icon={m.active} click={handleClick} />
+            m.active &&
+            m.active.icon && (
+              <IconButton
+                icon={{ ...m.active, icon: m.active.icon }}
+                click={handleClick}
+              />
+            )
           ) : (
             <IconButton icon={m} click={handleClick} />
           )}

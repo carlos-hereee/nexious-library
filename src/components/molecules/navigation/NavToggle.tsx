@@ -1,9 +1,11 @@
 import { Icon } from "@nxs-atoms/index";
-import { MenuItemProp } from "@nxs-utils/helpers/types";
+import { MenuItemAltProp, MenuItemProp } from "@nxs-utils/helpers/types";
+import { Hero } from "@nxs-molecules";
 
 export type NavButtonProps = {
   data: MenuItemProp;
   onSelect: (e: MenuItemProp) => void;
+  language?: MenuItemAltProp;
 };
 /**
  *  Component - NavButton
@@ -13,7 +15,8 @@ export type NavButtonProps = {
  * @returns navigation button
  */
 const NavToggle: React.FC<NavButtonProps> = (props) => {
-  const { data, onSelect } = props;
+  const { data, onSelect, language } = props;
+
   const handleSelect = (value: string) => {
     const idx = data.alternatives.findIndex((alt) => alt.uid === value);
     if (data.alternatives[idx].locale) {
@@ -24,7 +27,11 @@ const NavToggle: React.FC<NavButtonProps> = (props) => {
   };
   return (
     <div className="select-wrapper">
-      <Icon icon={data.active.icon} />
+      {language && language.icon ? (
+        <Icon icon={language.icon} />
+      ) : (
+        language && language.url && <Hero hero={{ url: language.url }} />
+      )}
       <select onChange={(e) => handleSelect(e.target.value)}>
         {data.alternatives?.map((alt) => (
           <option key={alt.uid} value={alt.uid} title={alt.name}>
