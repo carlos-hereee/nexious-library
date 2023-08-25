@@ -62,13 +62,13 @@ export type MenuItemAltProp = {
   label: string;
   icon: string;
   uid: string;
-  language?: string;
+  locale?: string;
 };
 export type MenuItemProp = {
   uid: string;
   name: string;
   icon: string;
-  lang?: string;
+  locale?: string;
   label?: string;
   isToggle?: boolean;
   isPrivate?: boolean;

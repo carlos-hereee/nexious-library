@@ -16,8 +16,8 @@ const NavToggle: React.FC<NavButtonProps> = (props) => {
   const { data, onSelect } = props;
   const handleSelect = (value: string) => {
     const idx = data.alternatives.findIndex((alt) => alt.uid === value);
-    if (data.alternatives[idx].language) {
-      data.lang = data.alternatives[idx].language;
+    if (data.alternatives[idx].locale) {
+      data.locale = data.alternatives[idx].locale;
     }
     data.active = data.alternatives[idx];
     onSelect(data);
