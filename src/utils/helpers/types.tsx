@@ -76,6 +76,7 @@ export type MenuItemProp = {
   uid: string;
   name: string;
   icon: string;
+  link: string;
   locale?: string;
   label?: string;
   isToggle?: boolean;

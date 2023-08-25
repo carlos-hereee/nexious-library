@@ -30,7 +30,6 @@ export type NavbarProps = {
  */
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, toggle, click, menu, theme, language } = props;
-  const handleClick = (e: any) => click(e);
   const handleToggle = (a: any) => {
     const idx = menu.findIndex((item) => item.uid === a.uid);
     if (idx) menu[idx] = a;
@@ -51,11 +50,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             m.active.icon && (
               <IconButton
                 icon={{ ...m.active, icon: m.active.icon }}
-                click={handleClick}
+                click={() => click(m)}
               />
             )
           ) : (
-            <IconButton icon={m} click={handleClick} />
+            <IconButton icon={m} click={() => click(m)} />
           )}
         </li>
       ))}

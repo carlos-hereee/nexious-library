@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   }, []);
   const handleClick = (e: MenuItemProp) => {
     setActive(!isActive);
-    navigate(`${e.icon}`);
+    navigate(`${e.link}`);
   };
   return (
     <header>
