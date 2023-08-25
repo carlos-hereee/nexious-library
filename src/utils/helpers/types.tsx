@@ -1,5 +1,10 @@
 import { labels } from "@nxs-atoms/forms/labels";
 
+export type UnsplashProps = {
+  artistName: string;
+  artistUrl: string;
+  assetUrl: string;
+};
 export type DataStringProps = { data: string; name?: string };
 export type LinkProp = { data: string; isLink: boolean };
 export type HeroProp = {
@@ -10,7 +15,7 @@ export type HeroProp = {
   icon?: string;
   small?: string;
   label?: string;
-  credit?: { artistName: string; artistUrl: string; assetUrl: string };
+  credit?: UnsplashProps;
 };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };

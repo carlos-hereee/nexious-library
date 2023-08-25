@@ -1,9 +1,7 @@
+import { UnsplashProps } from "@nxs-utils/helpers/types";
+
 type Prop = {
-  creditTo: {
-    artistUrl: string;
-    artistName: string;
-    assetUrl: string;
-  };
+  creditTo: UnsplashProps;
 };
 
 const UnsplashCredit: React.FC<Prop> = ({ creditTo }) => {

@@ -1,6 +1,7 @@
 import { HeroProp } from "@nxs-utils/helpers/types";
 import { Heading } from "@nxs-atoms";
 import { Hero } from "@nxs-molecules";
+import { Link } from "react-router-dom";
 
 export type LogoProps = {
   logo: HeroProp;
@@ -19,10 +20,12 @@ export type LogoProps = {
 const Logo: React.FC<LogoProps> = ({ logo, name, logoName }) => {
   return (
     <div className={name ? `logo ${name}` : "logo"}>
-      <Hero
-        hero={logo}
-        name={logoName ? `hero-logo ${logoName}` : "hero-logo"}
-      />
+      <Link to="/" className="logo-link">
+        <Hero
+          hero={logo}
+          name={logoName ? `hero-logo ${logoName}` : "hero-logo"}
+        />
+      </Link>
       {name && <Heading data={name} />}
     </div>
   );

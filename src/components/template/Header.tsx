@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { BurgerButton, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { HeroProp, MenuItemProp } from "@nxs-utils/helpers/types";
 
 export type HeaderProps = {
-  logo: HeroProp;
   menu: MenuItemProp[];
   ping?: number;
+  logo?: HeroProp;
   updateMenu: (e: MenuItemProp[]) => void;
 };
 /**
@@ -40,9 +40,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   };
   return (
     <header>
-      <Link to="/" className="logo-link">
-        <Logo logo={logo} />
-      </Link>
+      {logo && <Logo logo={logo} />}
       <nav className="primary-navigation">
         <Navbar
           show={{ isActive, isClose }}
