@@ -1,4 +1,5 @@
-import { Hero } from "@nxs-atoms";
+import { Hero } from "@nxs-molecules";
+import { HeroProp } from "@nxs-utils/helpers/types";
 
 export type UserCardProps = {
   hideLabels?: boolean;
@@ -8,11 +9,7 @@ export type UserCardProps = {
     name: string;
     email?: string;
     phone?: string;
-    hero: {
-      url: string;
-      alt: string;
-      name: string;
-    };
+    hero: HeroProp;
   };
 };
 const UserCard: React.FC<UserCardProps> = (props) => {

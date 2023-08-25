@@ -1,6 +1,6 @@
 import { HeroProp } from "@nxs-utils/helpers/types";
-import { Heading, Hero } from "@nxs-atoms";
-import { capFirstChar } from "@nxs-utils/custom/text";
+import { Heading } from "@nxs-atoms";
+import { Hero } from "@nxs-molecules";
 
 export type LogoProps = {
   logo: HeroProp;
@@ -17,17 +17,13 @@ export type LogoProps = {
  * @returns image component
  */
 const Logo: React.FC<LogoProps> = ({ logo, name, logoName }) => {
-  let heading = logo.name
-    ? logo.name.split(" ").map((t) => capFirstChar(t))
-    : [""];
-
   return (
     <div className={name ? `logo ${name}` : "logo"}>
       <Hero
         hero={logo}
         name={logoName ? `hero-logo ${logoName}` : "hero-logo"}
       />
-      <Heading data={heading.join(" ")} />
+      {name && <Heading data={name} />}
     </div>
   );
 };

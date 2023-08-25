@@ -2,10 +2,10 @@ import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BurgerButton, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import { MenuItemProp } from "@nxs-utils/helpers/types";
+import { HeroProp, MenuItemProp } from "@nxs-utils/helpers/types";
 
 export type HeaderProps = {
-  logo: { url: string; alt?: string; name: string };
+  logo: HeroProp;
   menu: MenuItemProp[];
   ping?: number;
   updateMenu: (e: MenuItemProp[]) => void;

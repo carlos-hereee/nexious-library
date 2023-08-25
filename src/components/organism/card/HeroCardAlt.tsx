@@ -1,4 +1,4 @@
-import { Hero } from "@nxs-atoms/index";
+import { Hero } from "@nxs-molecules";
 
 type HeroCardProps = {
   heading?: string;

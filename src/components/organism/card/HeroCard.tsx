@@ -1,13 +1,11 @@
-import { Hero, Btn, Icon } from "@nxs-atoms/index";
+import { Btn, Icon } from "@nxs-atoms/index";
+import { Hero } from "@nxs-molecules";
+import { HeroProp } from "@nxs-utils/helpers/types";
 
 type HeroCardProps = {
   heading: string;
   tagline?: string;
-  hero: {
-    url: string;
-    alt: string;
-    name: string;
-  };
+  hero: HeroProp;
   cta?: string;
 };
 const HeroCard: React.FC<HeroCardProps> = (props) => {

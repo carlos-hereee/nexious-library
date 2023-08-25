@@ -1,7 +1,8 @@
-import { Hero, Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms/index";
 import { HeroProp } from "@nxs-utils/helpers/types";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { Hero } from "@nxs-molecules";
 
 export type PageNotFoundProps = {
   hero?: HeroProp;

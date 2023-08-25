@@ -1,5 +1,6 @@
-import { Hero, Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms/index";
 import { HeroProp } from "@nxs-utils/helpers/types";
+import { Hero } from "@nxs-molecules";
 
 type FeatureCardProps = {
   feature: {

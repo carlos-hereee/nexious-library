@@ -3,6 +3,7 @@ export { default as Logo } from "./assets/Logo";
 export { default as Socials } from "./assets/Socials";
 export { default as Rating } from "./assets/Rating";
 export type { LogoProps } from "./assets/Logo";
+export { default as Hero } from "./assets/Hero";
 
 // buttons
 export { default as IconButton } from "./buttons/IconButton";
