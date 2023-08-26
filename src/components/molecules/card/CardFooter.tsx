@@ -1,8 +1,8 @@
-import { CardFooterProps } from "@nxs-utils/helpers/types";
 import { IconButton } from "@nxs-molecules";
+import { CTOProps } from "@nxs-utils/helpers/types";
 
 type Props = {
-  data: CardFooterProps;
+  data: CTOProps[];
   click?: React.MouseEventHandler<HTMLButtonElement>;
 };
 /**
@@ -13,19 +13,11 @@ type Props = {
  */
 const CardFooter: React.FC<Props> = (props) => {
   const { data, click } = props;
+  console.log("data", data);
   return (
-    <div className="card-footer">
-      {data.body && <p className="card-footer-p">{data.body}</p>}
-      <div className="flex-center">
-        {data.cta &&
-          data.cta.map((b) => (
-            <IconButton
-              icon={{ ...b, name: "cta" }}
-              click={click}
-              key={b.uid}
-            />
-          ))}
-      </div>
+    <div className="flex-center">
+      {data &&
+        data.map((b) => <IconButton icon={b} click={click} key={b.uid} />)}
     </div>
   );
 };

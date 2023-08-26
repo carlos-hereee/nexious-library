@@ -1,15 +1,9 @@
-import {
-  CardBodyProps,
-  CardFooterProps,
-  CardHeaderProps,
-} from "@nxs-utils/helpers/types";
+import { CardProp } from "@nxs-utils/helpers/types";
 import { CardBody, CardHeader, CardFooter } from "@nxs-molecules";
 
 export type CardProps = {
-  header: CardHeaderProps;
-  body: CardBodyProps;
-  footer?: CardFooterProps;
-  name?: string;
+  data: CardProp;
+  theme?: string;
   click?: (e: any) => void;
 };
 /**
@@ -17,7 +11,7 @@ export type CardProps = {
  *
  * --header
  * @param title string; heading of the card
- * @param hero.name string; heading of the card
+ * @param hero.theme string; heading of the card
  * @param hero.url string; heading of the card
  * @param click   callback to be fired when button is click
  * --body 
@@ -32,17 +26,13 @@ export type CardProps = {
  * @returns Card
  */
 const Card: React.FC<CardProps> = (props) => {
-  const { header, body, footer, click, name } = props;
+  const { click, theme, data } = props;
+
   return (
-    <div className={`card ${name ? name : ""}`}>
-      <CardHeader data={header} />
-      <CardBody data={body} />
-      {footer && (
-        <CardFooter
-          data={{ cta: footer.cta }}
-          click={() => click && click(header)}
-        />
-      )}
+    <div className={`card ${theme ? theme : ""}`}>
+      <CardHeader data={data} />
+      <CardBody data={data} />
+      {data.cta && <CardFooter data={data.cta} click={click} />}
     </div>
   );
 };

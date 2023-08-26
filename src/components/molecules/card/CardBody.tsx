@@ -1,9 +1,9 @@
 import { Hyperlink } from "@nxs-atoms";
-import { CardBodyProps } from "@nxs-utils/helpers/types";
+import { CardProp } from "@nxs-utils/helpers/types";
 import { getLinks } from "@nxs-utils/custom/getLinks";
 
 type Props = {
-  data: CardBodyProps;
+  data: CardProp;
 };
 /**
  * Component - Card Body
@@ -14,14 +14,14 @@ type Props = {
  *                          hyperlink
  * @returns
  */
-const CardBody: React.FC<Props> = ({ data }) => {
-  const { hyperlink, body, hasLink, features } = data;
-  const links = getLinks({ links: hyperlink, body });
+const CardBody: React.FC<Props> = (props) => {
+  const { hyperlink, body, features } = props.data;
+  const links = hyperlink && getLinks(hyperlink, body);
 
   return (
     <div className="card-body">
       <p className="card-body-p">
-        {hasLink ? links.map((l) => <Hyperlink data={l} key={l.data} />) : body}
+        {links ? links.map((l) => <Hyperlink data={l} key={l.data} />) : body}
       </p>
       {features && (
         <div className="flex-w card">

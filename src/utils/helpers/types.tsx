@@ -1,5 +1,36 @@
 import { labels } from "@nxs-atoms/forms/labels";
 
+export type DefaultPageComponent = {
+  title: string;
+  subtitle?: string;
+  body: string;
+  hasIcon?: boolean;
+  hasHero?: boolean;
+  hero?: HeroProp;
+};
+export type CTOProps = {
+  name: string;
+  icon: string;
+  uid: string;
+  label: string;
+};
+export type CardProp = {
+  title: string;
+  body: string;
+  uid: string;
+  subtitle?: string;
+  hasIcon?: boolean;
+  hasHero?: boolean;
+  hasFeatures?: boolean;
+  isForSale?: boolean;
+  isBookable?: boolean;
+  isAccessory?: boolean;
+  count?: number;
+  cost?: number;
+  hyperlink?: { word: string; link: string }[];
+  features?: { title: string; hasList: boolean; list: string[] }[];
+  cta?: CTOProps[];
+};
 export type UnsplashProps = {
   artistName: string;
   artistUrl: string;
@@ -38,25 +69,7 @@ export type CardHeaderProps = {
   hasHero?: boolean;
   uid?: string;
 };
-export type CardBodyProps = {
-  body: string;
-  features?: {
-    hasList: boolean;
-    list: string[];
-    title: string;
-  }[];
-  hyperlink: { word: string; link: string }[];
-  hasLink?: boolean;
-  uid: string;
-};
-export type CardFooterProps = {
-  body?: string;
-  cta?: {
-    uid: string;
-    name: string;
-    icon: string;
-  }[];
-};
+
 export type IconItemProp = {
   uid: string;
   name: string;
