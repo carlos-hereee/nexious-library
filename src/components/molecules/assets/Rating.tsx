@@ -13,7 +13,7 @@ const Rating: React.FC<RatingProps> = (props) => {
       {ratings.map((r) => (
         <button
           key={r}
-          className="btn btn-rating"
+          className="btn-rating"
           type="button"
           onClick={() => click && click(r)}
         >

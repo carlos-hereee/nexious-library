@@ -1,4 +1,4 @@
-import { Icon, MeetingDetails, ReadMore } from "@nxs-atoms/index";
+import { Icon, MeetingDetails } from "@nxs-atoms/index";
 import { CalendarEventList, CardHeader, CartRow } from "@nxs-molecules";
 import { CardSection, UserCard } from "@nxs-organism";
 
@@ -30,7 +30,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
           <div className="flex-d-column">
             <button
               type="button"
-              className="btn btn-list-item"
+              className="btn-list-item"
               onClick={setMeeting}
             >
               <Icon icon="x" />
@@ -43,7 +43,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
                 <MeetingDetails meeting={meeting} />
                 <button
                   type="button"
-                  className="btn btn-cta"
+                  className="btn-cta"
                   onClick={handleCheckout}
                 >
                   Proceed to checkout

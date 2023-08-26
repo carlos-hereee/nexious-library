@@ -8,11 +8,7 @@ type BackButtonProp = {
  */
 const BackButton: React.FC<BackButtonProp> = ({ children }) => {
   return (
-    <button
-      type="button"
-      className="btn btn-back"
-      onClick={() => history.back()}
-    >
+    <button type="button" className="btn-back" onClick={() => history.back()}>
       {children}
     </button>
   );

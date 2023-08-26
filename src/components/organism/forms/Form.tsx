@@ -72,7 +72,7 @@ const Form: React.FC<FormProps> = (props) => {
               />
               <button
                 type="button"
-                className="btn btn-secondary"
+                className="btn-secondary"
                 onClick={() =>
                   setSeePassword({ ...seePassword, [v]: !seePassword[v] })
                 }
@@ -110,20 +110,20 @@ const Form: React.FC<FormProps> = (props) => {
           <div className="flex-center m-tb">
             <button
               type="button"
-              className="btn btn-main btn-cancel"
+              className="btn-main btn-cancel"
               onClick={() => submit(value)}
             >
               <Icon icon="submit" />
               Continue anyway
             </button>
-            <button type="submit" className="btn btn-main">
+            <button type="submit" className="btn-main">
               <Icon icon="submit" />
               Try again
             </button>
           </div>
         </div>
       ) : (
-        <button type="submit" className="btn btn-main">
+        <button type="submit" className="btn-main">
           {type === "search" ? (
             <span>
               <Icon icon="save" />

@@ -19,7 +19,7 @@ const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click, ping }) => {
     <button
       type="button"
       onClick={click}
-      className={`btn-${isBurger ? "x" : "burger"} btn btn-icon`}
+      className={`btn-${isBurger ? "x" : "burger"}`}
       aria-controls="primary-navigation"
       aria-expanded={isBurger}
       aria-label={isBurger ? "open menu" : "close menu"}

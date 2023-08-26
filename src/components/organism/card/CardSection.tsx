@@ -37,11 +37,9 @@ const CardSection: React.FC<CardProps> = (props) => {
   return (
     <div className={`card-section ${name ? name : ""}`}>
       {hero && <Hero hero={hero} theme={hero.theme} />}
-      {body && hideReadMore ? (
-        <p className="text-center">{body}</p>
-      ) : (
-        <ReadMore data={body} uid="header.uid" />
-      )}
+      {hideReadMore
+        ? body && <p className="text-center">{body}</p>
+        : body && <ReadMore data={body} uid="header.uid" />}
     </div>
   );
 };

@@ -12,7 +12,7 @@ const EmptySection: React.FC<MessageProp> = (props) => {
       ) : (
         <h2 className="heading">Nothing to see here</h2>
       )}
-      <button className="btn btn-cta" type="button" onClick={click}>
+      <button className="btn-cta" type="button" onClick={click}>
         <p className="empty">{message}</p>
       </button>
     </div>

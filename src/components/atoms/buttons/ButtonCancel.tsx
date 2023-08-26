@@ -5,7 +5,7 @@ type ButtonCancelProps = {
 const ButtonCancel: React.FC<ButtonCancelProps> = (props) => {
   const { click, data } = props;
   return (
-    <button type="button" className="btn btn-cancel" onClick={click}>
+    <button type="button" className="btn-cancel" onClick={click}>
       {data}
     </button>
   );

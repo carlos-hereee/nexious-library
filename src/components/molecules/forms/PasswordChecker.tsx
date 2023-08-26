@@ -19,15 +19,11 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = (props) => {
         ))}
       </ol>
       <div className="flex-center m-tb">
-        <button
-          type="button"
-          className="btn btn-main btn-cancel"
-          onClick={submit}
-        >
+        <button type="button" className="btn-main btn-cancel" onClick={submit}>
           <Icon icon="submit" />
           Continue anyway
         </button>
-        <button type="submit" className="btn btn-main">
+        <button type="submit" className="btn-main">
           <Icon icon="submit" />
           Try again
         </button>

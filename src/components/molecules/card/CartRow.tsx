@@ -31,7 +31,7 @@ const CartRow: React.FC<CartRowProps> = (props) => {
       </button>
       <div className="card-row-footer">
         <ButtonCancel click={setCancel} data="Cancel" />
-        <button className="btn btn-main" type="button" onClick={editDetails}>
+        <button className="btn-main" type="button" onClick={editDetails}>
           Edit Details
         </button>
       </div>

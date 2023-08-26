@@ -26,7 +26,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       <div className="flex-j-between">
         {data.map((d) => (
           <button
-            className="btn btn-main btn-payment"
+            className="btn-main btn-payment"
             type="button"
             key={d.uid}
             onClick={() => setActive(d)}
@@ -58,7 +58,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       )}
       {active.type === "paypal" && (
         <button
-          className="btn btn-cta"
+          className="btn-cta"
           onClick={() => paypalPayment && paypalPayment(active)}
         >
           {active.hero && <Hero hero={active.hero} theme="icon" />}
@@ -67,7 +67,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       )}
       {active.type === "in-store" && (
         <button
-          className="btn btn-cta"
+          className="btn-cta"
           onClick={() => inStorePayment && inStorePayment(active)}
         >
           {active.hero && <Hero hero={active.hero} theme="icon" />}

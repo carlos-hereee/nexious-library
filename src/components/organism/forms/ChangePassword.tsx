@@ -70,7 +70,7 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
           />
         ) : (
           <div className="flex-center">
-            <button type="submit" className="btn btn-main">
+            <button type="submit" className="btn-main">
               <Icon icon="submit" />
               Confirm
             </button>

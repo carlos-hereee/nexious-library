@@ -15,7 +15,7 @@ import { IconButtonProps } from "@nxs-utils/helpers/interface";
 const IconButton: React.FC<IconButtonProps> = ({ icon, ping, click }) => {
   return (
     <button
-      className={icon.name ? `btn btn-icon btn-${icon.name}` : `btn btn-icon`}
+      className={icon.name ? `btn btn-${icon.name}` : `btn`}
       onClick={click}
       title={icon.name || icon.icon}
       type="button"
@@ -26,7 +26,7 @@ const IconButton: React.FC<IconButtonProps> = ({ icon, ping, click }) => {
         spin={icon.spin}
         color={icon.color}
       />
-      {icon.label && <span className="icon-label">{icon.label}</span>}
+      {icon.label && icon.label}
       {ping && ping > 0 && <PingCount count={ping} />}
     </button>
   );
