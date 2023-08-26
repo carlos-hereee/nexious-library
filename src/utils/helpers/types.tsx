@@ -45,6 +45,7 @@ export type HeroProp = {
   small?: string;
   label?: string;
   credit?: UnsplashProps;
+  theme?: string;
 };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };
@@ -62,7 +63,7 @@ export type NavlinkProp = { data: string; link: string };
 export type CardHeaderProps = {
   title: string;
   subtitle?: string;
-  hero?: { name: string; url: string; alt: string };
+  hero?: HeroProp;
   hasHero?: boolean;
   uid?: string;
 };

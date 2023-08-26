@@ -20,7 +20,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
     <div className="calendar-events" id="calendar-events">
       <div className="calendar-package-details">
         <h2 className="heading">Selected package</h2>
-        <CardSection body={active.body} header={active} />
+        <CardSection data={active} />
       </div>
       <div className="event-wrapper">
         <h2 className="heading">

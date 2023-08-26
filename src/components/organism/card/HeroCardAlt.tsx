@@ -1,14 +1,11 @@
 import { Hero } from "@nxs-molecules";
+import { HeroProp } from "@nxs-utils/helpers/types";
 
 type HeroCardProps = {
   data: {
     heading?: string;
     body: string;
-    hero: {
-      url: string;
-      alt: string;
-      name: string;
-    };
+    hero: HeroProp;
   };
 };
 const HeroCardAlt: React.FC<HeroCardProps> = (props) => {
@@ -17,7 +14,7 @@ const HeroCardAlt: React.FC<HeroCardProps> = (props) => {
     <div className="hero-card-alt">
       {heading && <h1 className="heading">{heading}</h1>}
       <div className="hero-card-body-alt">
-        <Hero hero={hero} theme={hero.name} />
+        <Hero hero={hero} theme={hero.theme} />
         <p className="p-stretch">{body}</p>
       </div>
     </div>

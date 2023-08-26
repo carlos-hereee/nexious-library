@@ -20,7 +20,7 @@ const CardHeader: React.FC<CardHeaderProp> = ({ data, isRow }) => {
     <div className="card-header">
       {data.title && <h3 className="heading">{data.title}</h3>}
       {data.hasHero && data.hero && (
-        <Hero hero={data.hero} theme="hero-card-header" />
+        <Hero hero={data.hero} theme={data.hero.theme} />
       )}
     </div>
   ) : (
@@ -28,7 +28,7 @@ const CardHeader: React.FC<CardHeaderProp> = ({ data, isRow }) => {
       <>
         {data.title && <h3 className="heading">{data.title}</h3>}
         {data.hasHero && data.hero && (
-          <Hero hero={data.hero} theme="hero-card-header" />
+          <Hero hero={data.hero} theme={data.hero.theme} />
         )}
       </>
       {data.subtitle && <Subtitle data={data.subtitle} />}

@@ -1,12 +1,15 @@
 import { ReadMore } from "@nxs-atoms/index";
-import { CardHeaderProps } from "@nxs-utils/helpers/types";
-import { CardHeader } from "@nxs-molecules";
+import { CardHeaderProps, HeroProp } from "@nxs-utils/helpers/types";
+import { CardHeader, Hero } from "@nxs-molecules";
 
 export type CardProps = {
-  header: CardHeaderProps;
-  body: string;
+  data: {
+    hero: HeroProp;
+    body: string;
+    name?: string;
+    uid?: string;
+  };
   hideReadMore?: boolean;
-  name?: string;
 };
 /**
  * Component - Card
@@ -28,17 +31,16 @@ export type CardProps = {
  * @returns Card
  */
 const CardSection: React.FC<CardProps> = (props) => {
-  const { header, body, name, hideReadMore } = props;
+  const { hideReadMore } = props;
+  const { hero, body, name } = props.data;
+
   return (
     <div className={`card-section ${name ? name : ""}`}>
-      <CardHeader data={header} />
+      {hero && <Hero hero={hero} theme={hero.theme} />}
       {body && hideReadMore ? (
         <p className="text-center">{body}</p>
       ) : (
-        <ReadMore
-          data={body}
-          uid={header.uid || header.title.split(" ").join("")}
-        />
+        <ReadMore data={body} uid="header.uid" />
       )}
     </div>
   );
