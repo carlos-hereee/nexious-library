@@ -4,7 +4,6 @@ export type DefaultPageComponent = {
   title: string;
   subtitle?: string;
   body: string;
-  hasIcon?: boolean;
   hasHero?: boolean;
   hero?: HeroProp;
 };
@@ -19,7 +18,6 @@ export type CardProp = {
   body: string;
   uid: string;
   subtitle?: string;
-  hasIcon?: boolean;
   hasHero?: boolean;
   hasFeatures?: boolean;
   isForSale?: boolean;
@@ -43,7 +41,6 @@ export type HeroProp = {
   url: string;
   alt?: string;
   name?: string;
-  isIcon?: boolean;
   icon?: string;
   small?: string;
   label?: string;
@@ -81,9 +78,9 @@ export type MenuItemAltProp = {
   name: string;
   label: string;
   uid: string;
+  url: string;
   icon?: string;
   locale?: string;
-  url?: string;
 };
 export type MenuItemProp = {
   uid: string;

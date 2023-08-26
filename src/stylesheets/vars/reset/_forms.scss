@@ -45,7 +45,7 @@ select {
   position: relative;
   outline: 1px solid #{$faded};
   border-radius: #{$border-radius};
-  padding-left: #{$rem05};
+  // padding-left: #{$rem05};
   &:focus {
     outline: 1px solid #{$dark-gray};
   }

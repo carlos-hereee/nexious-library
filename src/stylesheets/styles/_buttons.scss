@@ -1,13 +1,8 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
-.btn {
-  border-radius: #{$rem025};
-  border: none;
-}
 .btn-main {
   width: 100%;
   min-width: 150px;
-  border: 1px solid #{$dark};
 }
 .btn-cta {
   background-color: #{$cta-color};

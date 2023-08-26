@@ -4,24 +4,25 @@ import { Hero } from "@nxs-molecules";
 
 type FeatureCardProps = {
   data: {
-    feature: { heading: string; body: string };
+    title: string;
+    body: string;
     hero: HeroProp;
-    name?: string;
   };
+  theme?: string;
 };
 const FeatureCard: React.FC<FeatureCardProps> = (props) => {
-  const { hero, feature, name } = props.data;
+  const { data, theme } = props;
   return (
-    <div className={`card feature-card ${name ? name : ""}`}>
+    <div className={`card feature-card ${theme ? theme : ""}`}>
       <div className="card-hero-header">
-        {hero.isIcon && hero.icon ? (
-          <Icon icon={hero.icon} size="6x" name={hero.name} />
+        {data.hero.icon ? (
+          <Icon icon={data.hero.icon} size="6x" name={data.hero.name} />
         ) : (
-          <Hero hero={hero} name={hero.name} />
+          <Hero hero={data.hero} />
         )}
-        <h2 className="heading">{feature.heading}</h2>
+        {data.title && <h2 className="heading">{data.title}</h2>}
       </div>
-      <p>{feature.body}</p>
+      {data.body && <p>{data.body}</p>}
     </div>
   );
 };

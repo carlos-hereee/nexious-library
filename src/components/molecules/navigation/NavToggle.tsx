@@ -18,6 +18,7 @@ const NavToggle: React.FC<NavButtonProps> = (props) => {
   const { data, onSelect, language } = props;
 
   const handleSelect = (value: string) => {
+    // find selected and update values
     const idx = data.alternatives.findIndex((alt) => alt.uid === value);
     if (data.alternatives[idx].locale) {
       data.locale = data.alternatives[idx].locale;
@@ -30,7 +31,7 @@ const NavToggle: React.FC<NavButtonProps> = (props) => {
       {language && language.icon ? (
         <Icon icon={language.icon} />
       ) : (
-        language && language.url && <Hero hero={{ url: language.url }} />
+        language && <Hero hero={language} />
       )}
       <select onChange={(e) => handleSelect(e.target.value)}>
         {data.alternatives?.map((alt) => (
