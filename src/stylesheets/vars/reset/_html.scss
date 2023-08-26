@@ -36,3 +36,19 @@ nav,
 section {
   display: block;
 }
+
+// add basic styling
+header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: #{$rem};
+}
+footer {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  margin-top: auto;
+  gap: #{$rem};
+}

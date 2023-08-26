@@ -1,6 +1,7 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .primary-navigation {
+  overflow-x: auto;
   @include devices(tablet) {
     display: none;
   }

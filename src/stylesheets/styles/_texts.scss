@@ -1,9 +1,6 @@
 .heading-container {
   display: flex;
   flex: 1;
-  .heading {
-    width: 100%;
-  }
 }
 .text-overflow {
   overflow: hidden;
@@ -54,4 +51,7 @@
 .error-message {
   color: #{$danger};
   max-width: 100%;
+}
+.heading {
+  min-width: 150px;
 }

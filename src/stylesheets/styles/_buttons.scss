@@ -3,6 +3,15 @@
 .btn-main {
   width: 100%;
   min-width: 150px;
+  border: 1px solid #{$faded};
+  display: flex;
+  justify-content: center;
+  &:hover {
+    border: 1px solid #{$dark-gray};
+  }
+  &:focus {
+    border: 1px solid #{$dark-gray};
+  }
 }
 .btn-cta {
   background-color: #{$cta-color};
@@ -27,10 +36,10 @@
   position: relative;
   justify-content: flex-start;
   gap: 0.5rem;
-  flex: 1;
+  // flex: 1;
   .icon-label {
-    flex: 1;
-    text-align: left;
+    // flex: 1;
+    // text-align: left;
   }
   .ping-count {
     top: -0.5rem;
