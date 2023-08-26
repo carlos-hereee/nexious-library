@@ -38,7 +38,7 @@
   display: flex;
   flex-wrap: wrap;
   position: relative;
-  gap: #{$rem05};
+  gap: #{$rem};
   justify-content: center;
 }
 .container-empty {
@@ -50,7 +50,7 @@
   min-width: 200px;
   min-height: 80vh;
   gap: #{$rem};
-  border-radius: #{$rem05};
+  border-radius: #{$border-radius};
   .btn-cta {
     max-height: 50px;
     max-width: 500px;
@@ -60,7 +60,7 @@
 .section-container {
   flex-direction: column;
   display: flex;
-  border-radius: #{$rem05};
+  border-radius: #{$border-radius};
   gap: 0.5rem;
 }
 .secondary-section-container {
@@ -76,14 +76,14 @@
   gap: 0.5rem;
 }
 .alt-container {
-  border-radius: #{$rem05};
+  border-radius: #{$border-radius};
   flex: 1;
   overflow-y: auto;
   overflow-x: hidden;
 }
 .feature-card-container {
   display: flex;
-  gap: #{$rem05};
+  gap: #{$rem};
   flex-wrap: wrap;
   justify-content: space-around;
 }

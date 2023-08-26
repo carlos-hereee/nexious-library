@@ -19,7 +19,7 @@
 .hero-card {
   position: relative;
   display: flex;
-  gap: #{$rem05};
+  gap: #{$rem};
   justify-content: space-between;
   @include devices(mobile) {
     flex-wrap: wrap;

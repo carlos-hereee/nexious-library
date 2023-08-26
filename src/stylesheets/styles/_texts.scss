@@ -16,6 +16,9 @@
 .sub-title {
   text-align: left;
 }
+.credit-to {
+  min-width: auto;
+}
 .p-stretch {
   max-width: 100%;
   width: 100%;
@@ -23,7 +26,7 @@
 .text-bubble {
   height: fit-content;
   background-color: #{$text-bubble};
-  padding: #{$rem05};
+  padding: #{$rem};
   border-radius: #{$rem} 0;
 }
 .rating {

@@ -20,7 +20,7 @@
 .card-header {
   display: flex;
   flex-direction: column;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .card-body {
   display: flex;
@@ -72,7 +72,7 @@
 }
 .card-hero-header {
   display: flex;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .feature-card {
   max-width: 300px;

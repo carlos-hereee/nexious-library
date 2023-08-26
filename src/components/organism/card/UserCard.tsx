@@ -4,19 +4,19 @@ import { HeroProp } from "@nxs-utils/helpers/types";
 export type UserCardProps = {
   hideLabels?: boolean;
   hideHero?: boolean;
-  isRow?: boolean;
+  theme?: boolean;
   user: {
-    name: string;
+    hero: HeroProp;
+    name?: string;
     email?: string;
     phone?: string;
-    hero: HeroProp;
   };
 };
 const UserCard: React.FC<UserCardProps> = (props) => {
-  const { user, hideLabels, isRow, hideHero } = props;
+  const { user, hideLabels, theme, hideHero } = props;
   return (
-    <div className={isRow ? "user-card user-card-row" : "user-card"}>
-      {!hideHero && user.hero && <Hero hero={user.hero} name="hero-user" />}
+    <div className={theme ? `user-card ${theme}` : "user-card"}>
+      {!hideHero && <Hero hero={user.hero} name="hero-user" />}
       {!hideLabels && (
         <div className="flex-d-column">
           {user.name && <p className="p-stretch">Name: {user.name}</p>}

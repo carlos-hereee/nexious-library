@@ -43,8 +43,8 @@
   align-items: center;
   list-style: none;
   list-style-type: none;
-  gap: #{$rem05};
-  border-radius: #{$rem05};
+  gap: #{$rem};
+  border-radius: #{$border-radius};
 }
 .navbar {
   display: flex;
@@ -70,7 +70,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: #{$rem05};
+  border-radius: #{$border-radius};
   padding: 0.35rem;
 }
 .checkout-navigation {

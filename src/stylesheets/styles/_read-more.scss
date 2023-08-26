@@ -1,6 +1,6 @@
 @import "../vars/_variables.scss";
 .message-success {
-  border-radius: #{$rem05};
+  border-radius: #{$border-radius};
 }
 .read-more-wrapper {
   display: flex;

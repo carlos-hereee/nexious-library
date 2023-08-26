@@ -1,8 +1,8 @@
 import { IconButton } from "@nxs-molecules";
-import { CTOProps } from "@nxs-utils/helpers/types";
+import { CTAProps } from "@nxs-utils/helpers/types";
 
 type Props = {
-  data: CTOProps[];
+  data: CTAProps[];
   click?: React.MouseEventHandler<HTMLButtonElement>;
 };
 /**
@@ -13,7 +13,6 @@ type Props = {
  */
 const CardFooter: React.FC<Props> = (props) => {
   const { data, click } = props;
-  console.log("data", data);
   return (
     <div className="flex-center">
       {data &&

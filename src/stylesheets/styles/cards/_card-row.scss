@@ -12,11 +12,11 @@
   border: none;
   display: flex;
   align-items: stretch;
-  gap: #{$rem05};
+  gap: #{$rem};
   width: 100%;
   max-width: none;
-  border-radius: #{$rem05};
-  padding: #{$rem05};
+  border-radius: #{$border-radius};
+  padding: #{$rem};
   text-align: left;
   .card-header {
     flex: 1;
@@ -26,7 +26,7 @@
     .card-header {
       text-align: left;
       flex-direction: column;
-      gap: #{$rem05};
+      gap: #{$rem};
     }
   }
 }

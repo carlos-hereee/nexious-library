@@ -9,17 +9,17 @@
 }
 .flex-g {
   display: flex;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-row {
   display: flex;
   flex-direction: row;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-d-row {
   display: flex;
   flex-direction: row;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-d-column {
   display: flex;
@@ -30,7 +30,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-j-end {
   display: flex;
@@ -42,22 +42,22 @@
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-w {
   display: flex;
   flex-wrap: wrap;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: #{$rem05};
+  gap: #{$rem};
 }
 .flex-start {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: #{$rem05};
+  gap: #{$rem};
 }

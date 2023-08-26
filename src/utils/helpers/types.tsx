@@ -7,7 +7,7 @@ export type DefaultPageComponent = {
   hasHero?: boolean;
   hero?: HeroProp;
 };
-export type CTOProps = {
+export type CTAProps = {
   name: string;
   icon: string;
   uid: string;
@@ -27,7 +27,7 @@ export type CardProp = {
   cost?: number;
   hyperlink?: { word: string; link: string }[];
   features?: { title: string; hasList: boolean; list: string[] }[];
-  cta?: CTOProps[];
+  cta?: CTAProps[];
 };
 export type UnsplashProps = {
   artistName: string;

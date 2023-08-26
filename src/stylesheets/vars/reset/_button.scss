@@ -8,7 +8,7 @@ button {
   min-width: 100px;
   border: none;
   border-radius: #{$border-radius};
-  gap: #{$rem05};
+  gap: #{$rem};
   cursor: pointer;
   &:disabled {
     cursor: not-allowed;
