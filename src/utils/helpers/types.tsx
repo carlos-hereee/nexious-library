@@ -26,7 +26,7 @@ export type CardProp = {
   count?: number;
   cost?: number;
   hyperlink?: { word: string; link: string }[];
-  features?: { title: string; hasList: boolean; list: string[] }[];
+  features?: { uid: string; title: string; hasList: boolean; list: string[] }[];
   cta?: CTAProps[];
 };
 export type UnsplashProps = {

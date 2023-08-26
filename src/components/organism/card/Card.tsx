@@ -32,7 +32,9 @@ const Card: React.FC<CardProps> = (props) => {
     <div className={`card ${theme ? theme : ""}`}>
       <CardHeader data={data} />
       <CardBody data={data} />
-      {data.cta && <CardFooter data={data.cta} click={click} />}
+      {data.cta && (
+        <CardFooter data={data.cta} click={() => click && click(data)} />
+      )}
     </div>
   );
 };

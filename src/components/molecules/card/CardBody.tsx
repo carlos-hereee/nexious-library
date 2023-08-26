@@ -21,12 +21,14 @@ const CardBody: React.FC<Props> = (props) => {
   return (
     <div className="card-body">
       <p className="card-body-p">
-        {links ? links.map((l) => <Hyperlink data={l} key={l.data} />) : body}
+        {links
+          ? links.map((l) => l.data && <Hyperlink data={l} key={l.data} />)
+          : body}
       </p>
       {features && (
         <div className="flex-w card">
           {features?.map((f) => (
-            <div key={f.title}>
+            <div key={f.uid}>
               <h3 className="heading">{f.title}</h3>
               <ul>
                 {f.list.map((l) => (
