@@ -14,7 +14,7 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
         {cta && <CardFooter data={cta} />}
       </div>
       <div className="hero-container flex-1">
-        <Hero hero={hero} name={hero.name} />
+        <Hero hero={hero} theme={hero.name} />
       </div>
     </div>
   );

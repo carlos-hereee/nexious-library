@@ -39,7 +39,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
             {user && user.uid ? (
               <div>
                 <h2 className="heading">User Information</h2>
-                <UserCard user={user} isRow hideHero />
+                <UserCard user={user} hideHero />
                 <MeetingDetails meeting={meeting} />
                 <button
                   type="button"

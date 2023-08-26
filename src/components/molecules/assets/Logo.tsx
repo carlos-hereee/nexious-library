@@ -20,7 +20,7 @@ const Logo: React.FC<LogoProps> = ({ logo }) => {
   return (
     <div className={name ? `logo ${name}` : "logo"}>
       <Link to="/" className="logo-link">
-        <Hero hero={logo} name={name} />
+        <Hero hero={logo} theme={name} />
       </Link>
       {label && <Heading data={label} />}
     </div>

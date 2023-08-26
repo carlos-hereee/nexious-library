@@ -37,7 +37,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
               <Icon icon="uncheck" />
             )}
             {d.hero ? (
-              <Hero hero={d.hero} name={`icon hero-${d.icon}`} />
+              <Hero hero={d.hero} theme={`icon hero-${d.icon}`} />
             ) : (
               d.icon && <Icon icon={d.icon} size="3x" name={d.icon} />
             )}
@@ -61,7 +61,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           className="btn btn-cta"
           onClick={() => paypalPayment && paypalPayment(active)}
         >
-          {active.hero && <Hero hero={active.hero} name="icon" />}
+          {active.hero && <Hero hero={active.hero} theme="icon" />}
           <p>Pay with paypal</p>
         </button>
       )}
@@ -70,7 +70,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           className="btn btn-cta"
           onClick={() => inStorePayment && inStorePayment(active)}
         >
-          {active.hero && <Hero hero={active.hero} name="icon" />}
+          {active.hero && <Hero hero={active.hero} theme="icon" />}
           <p>Complete Checkout</p>
         </button>
       )}

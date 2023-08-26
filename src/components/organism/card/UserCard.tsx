@@ -16,7 +16,7 @@ const UserCard: React.FC<UserCardProps> = (props) => {
   const { user, hideLabels, theme, hideHero } = props;
   return (
     <div className={theme ? `user-card ${theme}` : "user-card"}>
-      {!hideHero && <Hero hero={user.hero} name="hero-user" />}
+      {!hideHero && <Hero hero={user.hero} theme="hero-user" />}
       {!hideLabels && (
         <div className="flex-d-column">
           {user.name && <p className="p-stretch">Name: {user.name}</p>}
