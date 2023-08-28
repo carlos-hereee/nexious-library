@@ -1,5 +1,10 @@
 import { Icon, MeetingDetails } from "@nxs-atoms/index";
-import { CalendarEventList, CardHeader, CartRow } from "@nxs-molecules";
+import {
+  CalendarEventList,
+  CardHeader,
+  CartRow,
+  IconButton,
+} from "@nxs-molecules";
 import { CardSection, UserCard } from "@nxs-organism";
 
 type CalendarEventProps = {
@@ -28,14 +33,13 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         </h2>
         {meeting.uid ? (
           <div className="flex-d-column">
-            <button
-              type="button"
-              className="btn-list-item"
-              onClick={setMeeting}
-            >
-              <Icon icon="x" />
-              {meeting.time.startTime} {meeting.time.endTime}
-            </button>
+            <IconButton
+              click={setMeeting}
+              icon={{
+                icon: "x",
+                label: `${meeting.time.startTime} ${meeting.time.endTime}`,
+              }}
+            />
             {user && user.uid ? (
               <div>
                 <h2 className="heading">User Information</h2>

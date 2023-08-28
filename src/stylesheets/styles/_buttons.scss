@@ -1,8 +1,7 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
 .btn-main {
-  width: 100%;
-  min-width: 150px;
+  // width: 100%;
   border: 1px solid #{$faded};
   display: flex;
   justify-content: center;
@@ -15,13 +14,10 @@
 }
 .btn-cta {
   background-color: #{$cta-color};
-  min-width: 100%;
   width: 100%;
   font-size: large;
 }
-.btn-primary {
-  flex: 1;
-}
+
 .btn-secondary {
   border: 1px solid #{$dark};
 }
@@ -55,10 +51,6 @@
   background-color: #{$danger};
 }
 .btn-payment {
-  flex: 1;
   gap: #{$rem};
   justify-content: flex-start;
-  .icon-store {
-    min-width: 150px;
-  }
 }

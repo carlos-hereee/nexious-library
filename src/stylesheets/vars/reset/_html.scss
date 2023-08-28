@@ -49,6 +49,7 @@ footer {
   align-items: flex-start;
   justify-content: space-around;
   flex-wrap: wrap;
-  margin-top: auto;
+  padding-top: #{$rem};
   gap: #{$rem};
+  min-height: #{$min-height};
 }

@@ -15,7 +15,6 @@
   width: 100%;
   gap: #{$rem};
   .hero {
-    min-width: 100px;
     max-height: 15vh;
   }
 }
@@ -27,7 +26,6 @@
   align-items: flex-start;
   .card-section {
     flex-direction: row;
-    min-width: 100%;
     .card-header {
       flex: 1;
     }
@@ -46,7 +44,6 @@
 .btn-calendar-tile {
   flex: 1 0 13%;
   max-width: 100%;
-  min-width: auto;
   @include devices(mobile) {
     width: 40px;
   }
@@ -61,7 +58,6 @@
   flex-wrap: wrap;
   gap: #{$rem};
   .btn-icon {
-    min-width: auto;
     max-width: auto;
   }
   @include devices(mobile) {
@@ -111,7 +107,6 @@
   flex: 1;
   @include devices(mobile) {
     display: flex;
-    min-width: 300px;
     flex-wrap: wrap;
     justify-content: center;
   }

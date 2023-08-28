@@ -15,6 +15,10 @@
   font-size: 0;
   transition: 0.25s ease;
 }
+.read-more-wrap {
+  // width: 100%;
+  min-width: 220px;
+}
 .read-more-state:checked ~ .read-more-wrap .read-more-target {
   opacity: 1;
   font-size: inherit;

@@ -9,7 +9,7 @@ const ReadMore: React.FC<ReadMoreProps> = (props) => {
   return (
     <div className="read-more-wrapper">
       <input type="checkbox" className="read-more-state" id={uid} />
-      <p className="read-more-wrap p-stretch">
+      <p className="read-more-wrap">
         {show[0]}
         <span className="read-more-target">{target}</span>
       </p>
