@@ -7,7 +7,7 @@ export { default as Hero } from "./assets/Hero";
 
 // buttons
 export { default as IconButton } from "./buttons/IconButton";
-export { default as SubmitButton } from "./buttons/SubmitButton";
+export { default as SubmitButton } from "../atoms/buttons/SubmitButton";
 
 // card
 export { default as CardHeader } from "./card/CardHeader";

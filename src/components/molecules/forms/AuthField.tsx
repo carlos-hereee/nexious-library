@@ -1,6 +1,6 @@
 import { labels } from "@nxs-atoms/forms/labels";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
-import { Button, Icon } from "@nxs-atoms/index";
+import { Button, Icon } from "@nxs-atoms";
 import { useState } from "react";
 
 type AuthFieldProp = {

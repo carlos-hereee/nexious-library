@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms";
 import { HeroProp } from "@nxs-utils/helpers/types";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";

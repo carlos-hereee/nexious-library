@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms";
 import { SocialMedia } from "@nxs-utils/helpers/types";
 
 type SocialsProps = {

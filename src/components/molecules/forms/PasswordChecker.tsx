@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms";
 
 type PasswordCheckerProps = {
   ease: string;

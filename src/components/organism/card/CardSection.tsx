@@ -1,6 +1,6 @@
-import { ReadMore } from "@nxs-atoms/index";
-import { CardHeaderProps, HeroProp } from "@nxs-utils/helpers/types";
-import { CardHeader, Hero } from "@nxs-molecules";
+import { ReadMore } from "@nxs-atoms";
+import { HeroProp } from "@nxs-utils/helpers/types";
+import { Hero } from "@nxs-molecules";
 
 export type CardProps = {
   data: {

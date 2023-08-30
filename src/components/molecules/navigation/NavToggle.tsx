@@ -1,6 +1,6 @@
-import { Icon } from "@nxs-atoms/index";
 import { MenuItemAltProp, MenuItemProp } from "@nxs-utils/helpers/types";
 import { Hero } from "@nxs-molecules";
+import { Icon } from "@nxs-atoms";
 
 export type NavButtonProps = {
   data: MenuItemProp;

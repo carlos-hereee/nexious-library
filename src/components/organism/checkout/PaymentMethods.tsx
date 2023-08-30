@@ -1,8 +1,8 @@
 import { useState } from "react";
-import { Icon } from "@nxs-atoms/index";
 import { HeroProp } from "@nxs-utils/helpers/types";
 import { Form } from "@nxs-organism";
 import { Hero } from "@nxs-molecules";
+import { Icon } from "@nxs-atoms";
 
 type PaymentType = {
   uid?: string;
@@ -31,10 +31,8 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
             key={d.uid}
             onClick={() => setActive(d)}
           >
-            {active && active.uid === d.uid ? (
-              <Icon icon="check" />
-            ) : (
-              <Icon icon="uncheck" />
+            {active && (
+              <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />
             )}
             {d.hero ? (
               <Hero hero={d.hero} theme={`icon hero-${d.icon}`} />

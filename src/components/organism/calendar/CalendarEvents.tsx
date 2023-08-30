@@ -1,10 +1,5 @@
-import { Icon, MeetingDetails } from "@nxs-atoms/index";
-import {
-  CalendarEventList,
-  CardHeader,
-  CartRow,
-  IconButton,
-} from "@nxs-molecules";
+import { MeetingDetails } from "@nxs-atoms";
+import { CalendarEventList, IconButton } from "@nxs-molecules";
 import { CardSection, UserCard } from "@nxs-organism";
 
 type CalendarEventProps = {
@@ -54,7 +49,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
                 </button>
               </div>
             ) : (
-              <div></div>
+              <div>Enter details</div>
             )}
           </div>
         ) : selectedDay.list?.length > 0 ? (
@@ -64,7 +59,10 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
             meeting={meeting}
           />
         ) : (
-          <strong>All booked up, please try a different day</strong>
+          <div className="flex-d-column">
+            <strong>All booked up, please try a different day</strong>
+            <button className="btn-main">Find next availible</button>
+          </div>
         )}
       </div>
     </div>

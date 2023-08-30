@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms";
 import { reverseCount } from "@nxs-atoms/texts/PingCount";
 
 type TileProps = {

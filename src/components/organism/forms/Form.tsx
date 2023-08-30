@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms/index";
+import { Icon } from "@nxs-atoms";
 import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
