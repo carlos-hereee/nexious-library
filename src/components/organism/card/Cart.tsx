@@ -23,16 +23,7 @@ const Cart: React.FC<CartProps> = (props) => {
         cancel && cancel === c.service.uid ? (
           <CartCancel key={c.service.uid} click={(e) => cancelReq(c, e)} />
         ) : (
-          <CartRow
-            key={c.service.uid}
-            data={c}
-            service={c.service}
-            meeting={c.meeting}
-            setCancel={() => setCancel(c.service.uid)}
-            setActive={() => setActive(c.service.uid)}
-            editDetails={() => onEditDetails(c)}
-            active={active}
-          />
+          <CartRow key={c.service.uid} data={c} />
         )
       )}
     </div>

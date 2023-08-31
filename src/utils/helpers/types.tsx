@@ -4,7 +4,6 @@ export type DefaultPageComponent = {
   title: string;
   subtitle?: string;
   body: string;
-  hasHero?: boolean;
   hero?: HeroProp;
 };
 export type CTAProps = {
@@ -64,7 +63,6 @@ export type CardHeaderProps = {
   title: string;
   subtitle?: string;
   hero?: HeroProp;
-  hasHero?: boolean;
   uid?: string;
 };
 

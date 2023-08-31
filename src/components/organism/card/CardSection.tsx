@@ -31,13 +31,12 @@ export type CardProps = {
  * @returns Card
  */
 const CardSection: React.FC<CardProps> = (props) => {
-  const { hideReadMore } = props;
   const { hero, body, name } = props.data;
 
   return (
     <div className={`card-section ${name ? name : ""}`}>
       {hero && <Hero hero={hero} theme={hero.theme} />}
-      {hideReadMore
+      {props.hideReadMore
         ? body && <p className="text-center">{body}</p>
         : body && <ReadMore data={body} uid="header.uid" />}
     </div>
