@@ -1,0 +1,9 @@
+.cart-row {
+  max-width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: #{$rem};
+  .hero {
+    max-width: 200px;
+  }
+}
