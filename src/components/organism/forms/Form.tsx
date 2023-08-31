@@ -72,7 +72,7 @@ const Form: React.FC<FormProps> = (props) => {
               />
               <button
                 type="button"
-                className="btn-secondary"
+                className="btn-main btn-small"
                 onClick={() =>
                   setSeePassword({ ...seePassword, [v]: !seePassword[v] })
                 }

@@ -45,6 +45,7 @@ export type HeroProp = {
   label?: string;
   credit?: UnsplashProps;
   theme?: string;
+  uid: string;
 };
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };

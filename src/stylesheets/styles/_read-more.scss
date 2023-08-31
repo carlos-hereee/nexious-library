@@ -17,7 +17,7 @@
 }
 .read-more-wrap {
   text-align: left;
-  min-width: 220px;
+  min-width: 100%;
 }
 .read-more-state:checked ~ .read-more-wrap .read-more-target {
   opacity: 1;

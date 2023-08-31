@@ -16,7 +16,9 @@ const CardFooter: React.FC<Props> = (props) => {
   return (
     <div className="flex-center">
       {data &&
-        data.map((b) => <IconButton icon={b} click={click} key={b.uid} />)}
+        data.map((b) => (
+          <IconButton icon={b} theme="cta" click={click} key={b.uid} />
+        ))}
     </div>
   );
 };

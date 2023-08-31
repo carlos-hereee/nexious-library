@@ -12,10 +12,11 @@ import { IconButtonProps } from "@nxs-utils/helpers/interface";
  * @returns button with icon label
  */
 
-const IconButton: React.FC<IconButtonProps> = ({ icon, ping, click }) => {
+const IconButton: React.FC<IconButtonProps> = (props) => {
+  const { icon, ping, click, theme } = props;
   return (
     <button
-      className={icon.name ? `btn btn-${icon.name}` : `btn`}
+      className={theme ? `btn-${theme}` : ""}
       onClick={click}
       title={icon.name || icon.icon}
       type="button"

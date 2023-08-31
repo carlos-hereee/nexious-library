@@ -5,6 +5,7 @@ export interface IconButtonProps {
   icon: IconProps;
   label?: string;
   ping?: number;
+  theme?: string;
   click?: React.MouseEventHandler<HTMLButtonElement>;
 }
 export interface CardButtonProps {

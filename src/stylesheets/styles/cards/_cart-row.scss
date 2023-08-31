@@ -1,9 +1,14 @@
 .cart-row {
-  max-width: 100%;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
   gap: #{$rem};
-  .hero {
-    max-width: 200px;
+  grid-template-columns: 1fr 2fr;
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
   }
+}
+.cart-column {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+  padding-top: #{$rem};
 }

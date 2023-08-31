@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   };
   return (
     <header>
-      {logo && <Logo logo={logo} />}
+      {logo && logo.uid && <Logo logo={logo} />}
       <nav className="primary-navigation">
         <Navbar
           show={{ isActive, isClose }}
