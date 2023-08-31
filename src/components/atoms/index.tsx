@@ -1,7 +1,7 @@
 // assets
 export { default as Icon } from "./assets/Icon";
 export type { IconProps } from "./assets/Icon";
-
+export { default as Spinner } from "./assets/Spinner";
 // buttons
 export { default as Btn } from "./buttons/Btn";
 export { default as Button } from "./buttons/Button";

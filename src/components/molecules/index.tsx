@@ -20,7 +20,7 @@ export { default as CartCancel } from "./card/CartCancelRow";
 export { default as EmptySection } from "./errors/EmptySection";
 export { default as MessageRequired } from "./errors/MessageRequired";
 export { default as PageNotFound } from "./errors/PageNotFound";
-export { default as Spinner } from "./errors/Spinner";
+export { default as Loading } from "./errors/Loading";
 
 // forms
 export { default as FieldQuantity } from "./forms/FieldQuantity";

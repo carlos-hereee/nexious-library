@@ -1,6 +1,3 @@
-// errors
-export { default as Loading } from "./errors/Loading";
-
 // navigation
 export { default as Navbar } from "./navigation/Navbar";
 export type { NavbarProps } from "./navigation/Navbar";
