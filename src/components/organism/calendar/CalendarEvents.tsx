@@ -59,9 +59,11 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
             meeting={meeting}
           />
         ) : (
-          <div className="flex-d-column">
+          <div className="flex-d-column flex-center">
             <strong>All booked up, please try a different day</strong>
-            <button className="btn-main">Find next availible</button>
+            <button className="btn-main flex-center">
+              Find next availible
+            </button>
           </div>
         )}
       </div>

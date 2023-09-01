@@ -51,10 +51,11 @@ const Navbar: React.FC<NavbarProps> = (props) => {
               <IconButton
                 icon={{ ...m.active, icon: m.active.icon }}
                 click={() => click(m)}
+                theme="nav-item"
               />
             )
           ) : (
-            <IconButton icon={m} click={() => click(m)} />
+            <IconButton icon={m} click={() => click(m)} theme="nav-item" />
           )}
         </li>
       ))}

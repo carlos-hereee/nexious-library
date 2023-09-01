@@ -1,10 +1,15 @@
 @import "../vars/_variables.scss", "../vars/_mixins.scss";
 
+.calendar {
+  width: 100%;
+}
 .calendar-events {
   display: flex;
-  flex-wrap: wrap;
   width: 100%;
   gap: #{$rem};
+  @include devices(mobile) {
+    flex-direction: column;
+  }
 }
 .calendar-event-cart {
   display: flex;

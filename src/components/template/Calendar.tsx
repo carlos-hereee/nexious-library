@@ -103,7 +103,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     }
   };
   return (
-    <div className="container">
+    <div className="container calendar">
       <div className="flex-j-end">
         <IconButton
           click={() => setCurrent(calendarValues(value))}
