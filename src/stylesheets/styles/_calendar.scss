@@ -1,9 +1,5 @@
 @import "../vars/_variables.scss", "../vars/_mixins.scss";
 
-.calendar {
-  display: flex;
-  overflow: hidden;
-}
 .calendar-events {
   display: flex;
   flex-wrap: wrap;
@@ -24,15 +20,10 @@
   max-width: 100%;
   text-align: left;
   align-items: flex-start;
-  .card-section {
-    flex-direction: row;
-    .card-header {
-      flex: 1;
-    }
-    .read-more-wrapper {
-      flex: 3;
-    }
-  }
+}
+.btn-calendar-tile {
+  min-width: auto;
+  padding: 0;
 }
 .btn-calendar-tile--today {
   background-color: #{$action-color};
@@ -40,26 +31,13 @@
 .btn-calendar-tile--selected {
   background-color: #{$action-color-accent};
 }
-.calendar-week .day,
-.btn-calendar-tile {
-  flex: 1 0 13%;
-  max-width: 100%;
-  @include devices(mobile) {
-    width: 40px;
-  }
-}
+
 .btn-calendar-tile--muted {
   cursor: not-allowed;
 }
 .calendar-navigation {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: #{$rem};
-  .btn-icon {
-    max-width: auto;
-  }
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
   @include devices(mobile) {
     .btn-start,
     .btn-last {
@@ -67,25 +45,20 @@
     }
   }
 }
+
+.calendar-week,
 .calendar-view-month {
-  display: flex;
-  flex-wrap: wrap;
-  gap: #{$rem025};
-  @include devices(mobile) {
-    gap: #{$rem025};
-  }
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
 }
 
 .calendar-navigation .heading {
   text-align: center;
 }
-.calendar-navigation-next-buttons .btn-icon {
+.calendar-navigation-next-buttons {
   justify-content: flex-end;
 }
-.calendar-icon-container .btn-icon {
-  max-width: fit-content;
-  min-width: fit-content;
-}
+
 .btn-calendar-tile {
   position: relative;
   min-height: 50px;

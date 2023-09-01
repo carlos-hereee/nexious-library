@@ -19,24 +19,24 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
   const { date, previous, next, click } = props;
   return (
     <div className="calendar-navigation">
-      <div className="flex-d-row">
+      <div className="flex">
         {previous.map((p) => (
           <IconButton
             key={p.label}
             click={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
+            theme="btn-small"
           />
         ))}
       </div>
-      <div className="heading-container">
-        <Heading data={`${months[date.month]} ${date.year}`} />
-      </div>
-      <div className="calendar-navigation-next-buttons flex-d-row">
+      <Heading data={`${months[date.month]} ${date.year}`} />
+      <div className="calendar-navigation-next-buttons flex">
         {next.map((p) => (
           <IconButton
             key={p.label}
             click={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
+            theme="btn-small"
           />
         ))}
       </div>

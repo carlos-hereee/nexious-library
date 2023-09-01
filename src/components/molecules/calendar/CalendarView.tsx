@@ -18,7 +18,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today, selectedDay } = props;
 
   return (
-    <div className="calendar-view">
+    <div>
       <div className="calendar-week flex-g">
         {sundayFirst.map((w) => (
           <span key={w} className="day text-overflow">

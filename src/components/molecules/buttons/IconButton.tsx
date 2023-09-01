@@ -16,7 +16,7 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
   const { icon, ping, click, theme } = props;
   return (
     <button
-      className={theme ? `btn-${theme}` : ""}
+      className={theme ? theme : ""}
       onClick={click}
       title={icon.name || icon.icon}
       type="button"

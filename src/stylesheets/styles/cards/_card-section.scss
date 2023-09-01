@@ -1,13 +1,9 @@
 @import "../../vars/mixins.scss", "../../vars/variables.scss";
 
 .card-section {
-  display: flex;
-  flex-direction: column;
-  min-width: 150px;
+  display: grid;
+  grid-template-columns: 1fr 2fr;
   gap: #{$rem};
-  .read-more {
-    text-align: left;
-  }
 }
 
 .card-section-title {

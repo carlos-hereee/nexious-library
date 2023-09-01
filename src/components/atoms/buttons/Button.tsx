@@ -16,7 +16,7 @@ const Button: React.FC<ButtonProps> = (props) => {
   return (
     <button
       type="button"
-      className={`btn${name ? ` btn-${name}` : ""}`}
+      className={name ? `btn-${name}` : ""}
       title={title ? title : ""}
       onClick={click}
     >

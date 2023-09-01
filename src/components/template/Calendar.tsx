@@ -14,6 +14,7 @@ type CalendarProps = {
   value: Date;
   selectedDay: { date: Date; list: { [a: string]: string | number }[] };
   minDate?: Date;
+  theme?: string;
   events?: CalendarDayEventProp[];
   setSelectedDay?: (a: any) => void;
   onDayClick: (e: any) => void;
@@ -27,8 +28,15 @@ type CalendarProps = {
  * @returns
  */
 const Calendar: React.FC<CalendarProps> = (props) => {
-  const { value, events, onDayClick, minDate, selectedDay, setSelectedDay } =
-    props;
+  const {
+    value,
+    events,
+    onDayClick,
+    minDate,
+    selectedDay,
+    setSelectedDay,
+    theme,
+  } = props;
   const [current, setCurrent] = useState<CalendarDayProps>();
   const [today, setToday] = useState<CalendarDayProps>();
   const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
@@ -95,11 +103,12 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     }
   };
   return (
-    <div className="calendar flex-d-column">
-      <div className="calendar-icon-container flex-j-end">
+    <div className="container">
+      <div className="flex-j-end">
         <IconButton
           click={() => setCurrent(calendarValues(value))}
           icon={{ icon: "refresh" }}
+          theme="btn-small"
         />
       </div>
       {current && (
