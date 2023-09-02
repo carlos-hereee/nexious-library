@@ -15,6 +15,7 @@ type CalendarProps = {
   theme?: string;
   events?: CalendarDayEventProp[];
   onDayClick?: (e: any) => void;
+  setDay?: (a: any) => void;
 };
 
 /**
@@ -25,7 +26,7 @@ type CalendarProps = {
  * @returns
  */
 const Calendar: React.FC<CalendarProps> = (props) => {
-  const { value, events, minDate, theme, onDayClick } = props;
+  const { value, events, minDate, theme, onDayClick, setDay } = props;
   // keep track of today, min date, and which calenday is active
   const [active, setActive] = useState<CalendarDayProps>(calendarValues(value));
   const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
@@ -36,7 +37,13 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       setMininumDate(calendarValues(minDate));
     }
   }, [minDate]);
-  console.log("active", active);
+
+  useEffect(() => {
+    // programatically setDay when new day is chosen
+    if (active.date) {
+      setDay && setDay(active);
+    }
+  }, [active]);
 
   return (
     <div className={theme ? `${theme} calendar` : "calendar"}>
@@ -60,9 +67,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           data={active}
           today={today}
           minDate={mininumDate}
-          click={(e) =>
-            dayChange({ today, active: e, setActive, onDayClick, events })
-          }
+          click={(e) => dayChange({ today, active: e, setActive, events })}
           events={events?.map((e) => {
             const values = calendarValues(new Date(e.date));
             return { ...values, ping: e.list.length };
