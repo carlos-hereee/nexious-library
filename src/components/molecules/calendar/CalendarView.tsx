@@ -3,19 +3,18 @@ import { Button } from "@nxs-atoms";
 import { CalendarDayProps } from "@nxs-utils/helpers/types";
 import { CalendarTile } from "@nxs-molecules";
 import { isTileMute } from "@nxs-utils/calendar/isTileMute";
-import { isTileMatch } from "@nxs-utils/calendar/calendarValues";
+import { isTileMatch } from "@nxs-utils/calendar/isTileMatch";
 
 type CalendarViewProps = {
   data: CalendarDayProps;
-  selectedDay: CalendarDayProps;
   click: (e: CalendarDayProps) => void;
-  today?: CalendarDayProps;
+  today: CalendarDayProps;
   minDate?: CalendarDayProps;
   events?: any[];
 };
 
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
-  const { data, click, events, minDate, today, selectedDay } = props;
+  const { data, click, events, minDate, today } = props;
 
   return (
     <div>
@@ -27,25 +26,29 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
         ))}
       </div>
       <div className="calendar-view-month">
-        {monthWeeks[data.weeks].map((mday) => {
-          const tileDay = mday - data.start;
-          return mday > data.start && mday <= data.maxDays + data.start ? (
+        {monthWeeks[data.weeks].map((d) => {
+          const date = d - data.start;
+          return d > data.start && d <= data.maxDays + data.start ? (
             <CalendarTile
-              key={mday}
-              click={() => click({ ...data, date: tileDay })}
-              events={events?.filter((e) => isTileMatch(e, tileDay, data))[0]}
+              key={d}
+              click={() => click({ ...data, date })}
+              events={
+                events?.filter((e) =>
+                  isTileMatch({ day1: e, date, day2: data })
+                )[0]
+              }
               data={{
-                tile: tileDay,
-                isToday: isTileMatch(data, tileDay, today ? today : data),
-                isMuted: isTileMute({ day: tileDay, minDate, data }),
-                isSelected: isTileMatch(selectedDay, tileDay, data),
+                tile: date,
+                isToday: isTileMatch({ day1: today, date, day2: data }),
+                isMuted: isTileMute({ day: date, minDate, data }),
+                isSelected: isTileMatch({ day1: data, date, day2: data }),
               }}
             />
           ) : (
             <Button
-              key={mday}
+              key={d}
               name="calendar-tile btn-calendar-tile--muted"
-              click={() => click({ ...data, date: tileDay })}
+              click={() => click({ ...data, date: date })}
             />
           );
         })}

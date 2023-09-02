@@ -4,7 +4,7 @@ import { calendarValues, nextMonth, prevMonth } from "./calendarValues";
 type MonthChageProps = {
   label: string;
   active?: CalendarDayProps;
-  setActive: React.Dispatch<React.SetStateAction<CalendarDayProps | undefined>>;
+  setActive: React.Dispatch<React.SetStateAction<CalendarDayProps>>;
 };
 export const monthChange = (props: MonthChageProps) => {
   const { label, active, setActive } = props;

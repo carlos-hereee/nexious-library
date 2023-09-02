@@ -3,7 +3,7 @@ import { Heading } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 
 type CalendarNavProps = {
-  date: { month: number; year: number };
+  data: { month: number; year: number };
   click: (e: string) => void;
   previous: { label: string; icon: string }[];
   next: { label: string; icon: string }[];
@@ -16,7 +16,7 @@ type CalendarNavProps = {
  * @returns
  */
 const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
-  const { date, previous, next, click } = props;
+  const { data, previous, next, click } = props;
   return (
     <div className="calendar-navigation">
       <div className="flex">
@@ -29,7 +29,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
           />
         ))}
       </div>
-      <Heading data={`${months[date.month]} ${date.year}`} />
+      <Heading data={`${months[data.month]} ${data.year}`} />
       <div className="calendar-navigation-next-buttons flex">
         {next.map((p) => (
           <IconButton

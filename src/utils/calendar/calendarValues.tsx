@@ -17,13 +17,6 @@ export const calendarValues = (e: Date): CalendarDayProps => {
     yyyyddmm: e.toISOString().substring(0, 10),
   };
 };
-export const isTileMatch = (
-  a: CalendarDayProps,
-  day: number,
-  b: CalendarDayProps
-): boolean => {
-  return a.date === day && a.month === b.month && a.year === b.year;
-};
 
 export const prevMonth = (c: CalendarDayProps, cb: (a: any) => void) => {
   if (c.month === 0) {
