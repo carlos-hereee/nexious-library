@@ -9,15 +9,18 @@ import {
   nextMonth,
   prevMonth,
 } from "@nxs-utils/calendar/calendarValues";
+import { next, previous } from "@nxs-utils/calendar/navLabels";
+import { monthChange } from "@nxs-utils/calendar/monthChange";
+import { dayChange, findMatch } from "@nxs-utils/calendar/dayChange";
 
 type CalendarProps = {
-  value: Date;
-  selectedDay: { date: Date; list: { [a: string]: string | number }[] };
+  value?: Date;
+  selectedDay?: { date: Date; list: { [a: string]: string | number }[] };
   minDate?: Date;
   theme?: string;
   events?: CalendarDayEventProp[];
   setSelectedDay?: (a: any) => void;
-  onDayClick: (e: any) => void;
+  onDayClick?: (e: any) => void;
 };
 
 /**
@@ -28,115 +31,93 @@ type CalendarProps = {
  * @returns
  */
 const Calendar: React.FC<CalendarProps> = (props) => {
-  const {
-    value,
-    events,
-    onDayClick,
-    minDate,
-    selectedDay,
-    setSelectedDay,
-    theme,
-  } = props;
-  const [current, setCurrent] = useState<CalendarDayProps>();
+  const { value, events, minDate, selectedDay, theme } = props;
+  const { onDayClick, setSelectedDay } = props;
+  // keep track of today, min date, and which calenday is active
+  const [active, setActive] = useState<CalendarDayProps>();
   const [today, setToday] = useState<CalendarDayProps>();
   const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
 
-  const previous: { label: string; icon: string }[] = [
-    { label: "start", icon: "first" },
-    { label: "prev", icon: "left" },
-  ];
-  const next: { label: string; icon: string }[] = [
-    { label: "next", icon: "right" },
-    { label: "last", icon: "last" },
-  ];
-
   useEffect(() => {
+    if (!value) {
+      const todayValues = calendarValues(new Date());
+      setToday(todayValues);
+      setActive(todayValues);
+    }
     if (value) {
       const currentCalendarValues = calendarValues(value);
-      const calendarMatch = findMatch(currentCalendarValues);
+      const calendarMatch = findMatch({
+        calDay: currentCalendarValues,
+        events: events ? events : [],
+      });
       if (setSelectedDay) {
         calendarMatch?.date
           ? setSelectedDay(calendarMatch)
           : setSelectedDay({ date: currentCalendarValues.day, list: [] });
       }
       setToday(calendarValues(new Date()));
-      setCurrent(currentCalendarValues);
+      setActive(currentCalendarValues);
     }
     if (minDate) {
       setMininumDate(calendarValues(minDate));
     }
   }, []);
 
-  const findMatch = (calDay: CalendarDayProps) => {
-    return events?.filter((e) => {
-      const values = calendarValues(new Date(e.date));
-      return (
-        values.date === calDay.date &&
-        values.year === calDay.year &&
-        values.month === calDay.month
-      );
-    })[0];
-  };
-  const monthChange = (e: string) => {
-    if (current) {
-      if (e === "start")
-        setCurrent(calendarValues(new Date(current.year, 0, 1)));
-      if (e === "last")
-        setCurrent(calendarValues(new Date(current.year, 12, 1)));
-      if (e === "prev") prevMonth(current, setCurrent);
-      if (e === "next") nextMonth(current, setCurrent);
-    }
-  };
-  const dayChange = (e: CalendarDayProps) => {
-    if (current) {
-      if (e.date <= 0) prevMonth(current, setCurrent);
-      if (e.date > 0 && e.date <= current.maxDays) {
-        const filter = findMatch(e);
-        filter
-          ? onDayClick(filter)
-          : onDayClick({
-              date: new Date(e.year, e.month, e.date).toDateString(),
-              list: [],
-            });
-      }
-      if (e.date > current.maxDays) nextMonth(current, setCurrent);
-    }
-  };
   return (
-    <div className="container calendar">
-      <div className="flex-j-end">
-        <IconButton
-          click={() => setCurrent(calendarValues(value))}
-          icon={{ icon: "refresh" }}
-          theme="btn-small"
+    active && (
+      <div
+        className={theme ? `${theme} container calendar` : "container calendar"}
+      >
+        {value && (
+          <div className="flex-j-end">
+            <IconButton
+              click={() => setActive(calendarValues(value))}
+              icon={{ icon: "refresh" }}
+              theme="btn-small"
+            />
+          </div>
+        )}
+        <CalendarNavigation
+          date={active}
+          click={(e) =>
+            monthChange({
+              e,
+              current: active,
+              setCurrent: setActive,
+              prevMonth,
+              nextMonth,
+            })
+          }
+          previous={previous}
+          next={next}
+        />
+        <CalendarView
+          data={active}
+          today={today}
+          selectedDay={
+            selectedDay?.date
+              ? calendarValues(new Date(selectedDay.date))
+              : active
+          }
+          minDate={mininumDate}
+          click={(e) =>
+            dayChange({
+              e,
+              current: active,
+              setCurrent: setActive,
+              prevMonth,
+              onDayClick,
+              nextMonth,
+              events,
+            })
+          }
+          events={events?.map((e) => {
+            const values = calendarValues(new Date(e.date));
+            return { ...values, ping: e.list.length };
+          })}
         />
       </div>
-      {current && (
-        <>
-          <CalendarNavigation
-            date={current}
-            click={monthChange}
-            previous={previous}
-            next={next}
-          />
-          <CalendarView
-            data={current}
-            today={today}
-            selectedDay={
-              selectedDay?.date
-                ? calendarValues(new Date(selectedDay.date))
-                : current
-            }
-            minDate={mininumDate}
-            click={dayChange}
-            events={events?.map((e) => {
-              const values = calendarValues(new Date(e.date));
-              return { ...values, ping: e.list.length };
-            })}
-          />
-        </>
-      )}
-    </div>
+    )
   );
 };
 export default Calendar;

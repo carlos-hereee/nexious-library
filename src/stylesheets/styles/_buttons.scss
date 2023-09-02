@@ -1,5 +1,9 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
+.btn {
+  padding: #{$rem};
+  border-radius: #{$border-radius};
+}
 .btn-main {
   border: 1px solid #{$faded};
   display: flex;

@@ -7,13 +7,14 @@ import { Hero } from "@nxs-molecules";
 export type PageNotFoundProps = {
   hero?: HeroProp;
   message?: string;
+  to?: string;
 };
 
 const PageNotFound: React.FC<PageNotFoundProps> = (props) => {
-  const { hero, message } = props;
+  const { hero, message, to } = props;
   const navigate = useNavigate();
   useEffect(() => {
-    setTimeout(() => navigate("/"), 1000);
+    setTimeout(() => navigate(to ? to : "/"), 1800);
   }, []);
   return (
     <div className="page-center">
