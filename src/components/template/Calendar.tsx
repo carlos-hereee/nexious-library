@@ -10,7 +10,7 @@ import { monthChange } from "@nxs-utils/calendar/monthChange";
 import { dayChange } from "@nxs-utils/calendar/dayChange";
 
 type CalendarProps = {
-  value?: Date;
+  value: Date;
   minDate?: Date;
   theme?: string;
   events?: CalendarDayEventProp[];
@@ -27,9 +27,7 @@ type CalendarProps = {
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, minDate, theme, onDayClick } = props;
   // keep track of today, min date, and which calenday is active
-  const [active, setActive] = useState<CalendarDayProps>(
-    value ? calendarValues(value) : calendarValues(new Date())
-  );
+  const [active, setActive] = useState<CalendarDayProps>(calendarValues(value));
   const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
   const today: CalendarDayProps = calendarValues(new Date());
 
@@ -37,7 +35,8 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (minDate) {
       setMininumDate(calendarValues(minDate));
     }
-  }, []);
+  }, [minDate]);
+  console.log("active", active);
 
   return (
     <div className={theme ? `${theme} calendar` : "calendar"}>
@@ -48,24 +47,28 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           theme="btn-small"
         />
       </div>
-      <CalendarNavigation
-        data={active}
-        click={(label) => monthChange({ label, active, setActive })}
-        previous={previous}
-        next={next}
-      />
-      <CalendarView
-        data={active}
-        today={today}
-        minDate={mininumDate}
-        click={(e) =>
-          dayChange({ today, active: e, setActive, onDayClick, events })
-        }
-        events={events?.map((e) => {
-          const values = calendarValues(new Date(e.date));
-          return { ...values, ping: e.list.length };
-        })}
-      />
+      {active && (
+        <CalendarNavigation
+          data={active}
+          click={(label) => monthChange({ label, active, setActive })}
+          previous={previous}
+          next={next}
+        />
+      )}
+      {active && (
+        <CalendarView
+          data={active}
+          today={today}
+          minDate={mininumDate}
+          click={(e) =>
+            dayChange({ today, active: e, setActive, onDayClick, events })
+          }
+          events={events?.map((e) => {
+            const values = calendarValues(new Date(e.date));
+            return { ...values, ping: e.list.length };
+          })}
+        />
+      )}
     </div>
   );
 };

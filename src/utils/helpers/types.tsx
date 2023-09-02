@@ -98,11 +98,11 @@ export type CalendarDayProps = {
   dayIdx: number;
   month: number;
   year: number;
-  date: number;
+  date: string;
   maxDays: number;
   weeks: number;
   start: number;
-  day: string;
+  day: number;
   yyyyddmm: string;
 };
 export type CalendarEventProp = {

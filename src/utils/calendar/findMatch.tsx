@@ -19,5 +19,5 @@ export const findMatch = (props: FindMatchProps) => {
           values.month === calDay.month
         );
       })[0]
-    : null;
+    : [null];
 };

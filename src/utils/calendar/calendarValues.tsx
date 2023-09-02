@@ -9,11 +9,11 @@ export const calendarValues = (e: Date): CalendarDayProps => {
     dayIdx: e.getDay(),
     month: e.getMonth(),
     year: e.getFullYear(),
-    date: e.getDate(),
+    day: e.getDate(),
     maxDays: maxDays,
     weeks: maxWeeks,
     start: startIdx,
-    day: e.toDateString(),
+    date: e.toDateString(),
     yyyyddmm: e.toISOString().substring(0, 10),
   };
 };

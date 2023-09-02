@@ -3,7 +3,7 @@ import {
   CalendarDayProps,
 } from "@nxs-utils/helpers/types";
 import { findMatch } from "./findMatch";
-import { calendarValues, nextMonth, prevMonth } from "./calendarValues";
+import { nextMonth, prevMonth } from "./calendarValues";
 
 type DayChangeProps = {
   today: CalendarDayProps;
@@ -14,18 +14,23 @@ type DayChangeProps = {
 };
 export const dayChange = (props: DayChangeProps) => {
   const { today, active, setActive, onDayClick, events } = props;
-
-  if (!events || !events.length) {
-    return setActive(active);
-  }
-  // if click previous month
-  if (active.date <= 0) prevMonth(active, setActive);
+  console.log("active", active);
+  // click previous month
+  if (active.day <= 0) prevMonth(active, setActive);
   // current calendar view
-  if (active.date > 0 && active.date <= today.maxDays) {
-    const filter = findMatch({ events, calDay: active });
-    if (!filter) setActive(calendarValues(new Date(active.day)));
-    else onDayClick && onDayClick(filter);
+  if (active.day > 0 && active.day <= today.maxDays) {
+    // events found
+    if (events && events.length) {
+      const match = findMatch({ events, calDay: active });
+      console.log("filter", match);
+      // if (!match) {
+      //   setActive(calendarValues(new Date(active.date)));
+      // } else onDayClick && onDayClick(match);
+    }
+    // no events found
+    setActive(active);
+    if (onDayClick) return onDayClick({ date: active.date, list: [] });
   }
   // next month
-  if (active.date > today.maxDays) nextMonth(active, setActive);
+  if (active.day > today.maxDays) nextMonth(active, setActive);
 };
