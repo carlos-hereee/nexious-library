@@ -4,14 +4,11 @@ import {
   CalendarDayEventProp,
   CalendarDayProps,
 } from "@nxs-utils/helpers/types";
-import {
-  calendarValues,
-  nextMonth,
-  prevMonth,
-} from "@nxs-utils/calendar/calendarValues";
+import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import { next, previous } from "@nxs-utils/calendar/navLabels";
 import { monthChange } from "@nxs-utils/calendar/monthChange";
-import { dayChange, findMatch } from "@nxs-utils/calendar/dayChange";
+import { dayChange } from "@nxs-utils/calendar/dayChange";
+import { findMatch } from "@nxs-utils/calendar/findMatch";
 
 type CalendarProps = {
   value?: Date;
@@ -79,15 +76,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
         )}
         <CalendarNavigation
           date={active}
-          click={(e) =>
-            monthChange({
-              e,
-              current: active,
-              setCurrent: setActive,
-              prevMonth,
-              nextMonth,
-            })
-          }
+          click={(label) => monthChange({ label, active, setActive })}
           previous={previous}
           next={next}
         />
@@ -102,12 +91,10 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           minDate={mininumDate}
           click={(e) =>
             dayChange({
-              e,
-              current: active,
-              setCurrent: setActive,
-              prevMonth,
+              today: today ? today : calendarValues(new Date()),
+              active: e,
+              setActive,
               onDayClick,
-              nextMonth,
               events,
             })
           }
