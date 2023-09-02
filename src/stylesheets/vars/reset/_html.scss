@@ -39,9 +39,9 @@ section {
 
 // add basic styling
 header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  display: grid;
+  align-content: center;
+  grid-template-columns: 1fr 4fr;
   gap: #{$rem};
 }
 footer {
@@ -68,4 +68,9 @@ button {
   &:disabled {
     cursor: not-allowed;
   }
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
 }

@@ -15,6 +15,7 @@ export { default as HeroCard } from "./card/HeroCard";
 export { default as FeatureCard } from "./card/FeatureCard";
 export { default as HeroCardAlt } from "./card/HeroCardAlt";
 export { default as CardSection } from "./card/CardSection";
+export { default as CardTextBubble } from "./card/CardTextBubble";
 
 // calendar
 export { default as CalendarEvents } from "./calendar/CalendarEvents";

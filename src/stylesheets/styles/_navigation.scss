@@ -2,6 +2,9 @@
 
 .primary-navigation {
   overflow-x: auto;
+  display: flex;
+  align-items: center;
+  padding: 0 #{$rem};
   @include devices(tablet) {
     display: none;
   }
@@ -13,6 +16,7 @@
 }
 .mobile-navigation {
   display: none;
+  justify-content: flex-end;
   .navigation {
     flex-direction: column;
     position: absolute;
@@ -44,7 +48,6 @@
   display: flex;
   align-items: center;
   list-style: none;
-  list-style-type: none;
   gap: #{$rem};
   border-radius: #{$border-radius};
 }
@@ -80,7 +83,10 @@
 }
 
 .logo-link {
+  display: flex;
+  align-items: center;
   text-decoration: none;
+  gap: #{$rem};
   color: #{$default-text};
 }
 .nav-btn {

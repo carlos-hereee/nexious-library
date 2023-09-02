@@ -73,3 +73,11 @@
   display: flex;
   gap: #{$rem};
 }
+.card-text-bubble {
+  background-color: #{$light-secondary};
+  border-radius: #{$border-radius};
+  display: grid;
+  align-content: center;
+  grid-template-columns: 1fr 5fr;
+  gap: #{$rem};
+}

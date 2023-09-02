@@ -24,20 +24,23 @@
   height: fit-content;
   background-color: #{$text-bubble};
   padding: #{$rem};
-  border-radius: #{$rem} 0;
+  border-radius: #{$border-radius};
+  max-width: 100%;
 }
 .rating {
-  display: flex;
-  gap: #{$rem025};
-  padding: #{$rem};
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  align-items: center;
+  padding: #{$rem} 0;
+  width: max-content;
 }
 .btn-rating {
   min-width: fit-content;
   padding: 0;
   .icon-star,
   .icon-star-filled {
-    min-width: 35px;
-    min-height: 35px;
+    min-width: 30px;
+    min-height: 30px;
   }
 }
 .total {
