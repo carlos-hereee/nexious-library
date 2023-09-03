@@ -20,7 +20,7 @@ const FieldQuantity: React.FC<FieldQuantityProps> = ({
 }) => {
   return (
     <div className="field">
-      <Label name={name}>
+      <Label label={name}>
         {/* TO DO: schema validation for errors
             {errors[name] && <span className="required">{errors[name]}</span>} */}
       </Label>

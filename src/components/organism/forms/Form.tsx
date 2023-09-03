@@ -1,4 +1,4 @@
-import { ErrorMessage, Icon } from "@nxs-atoms";
+import { ErrorMessage, Icon, Label } from "@nxs-atoms";
 import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
@@ -32,28 +32,17 @@ const Form: React.FC<FormProps> = (props) => {
     const change = { ...values, [key]: val };
     setValues(change);
   };
+  const onSubmit = () => submit(values);
   return values ? (
     <form
       className={theme ? `form ${theme}` : "form"}
-      onSubmit={(e) =>
-        handleFormSubmit({
-          formProps: e,
-          values: values,
-          setErrors,
-          onSubmit: () => submit(values),
-        })
+      onSubmit={(formProps) =>
+        handleFormSubmit({ formProps, values, setErrors, onSubmit })
       }
     >
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
-          {!hideLabels && (
-            <label htmlFor={v} className="label">
-              {labels[v]}: <br />
-              {errors && errors[v] && (
-                <span className="required">{errors[v]}</span>
-              )}
-            </label>
-          )}
+          {!hideLabels && <Label label={v} errors={errors[v]} />}
           {auth.includes(v) ? (
             <div className="flex">
               <input

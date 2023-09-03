@@ -8,8 +8,8 @@ form {
 input,
 textarea {
   padding: #{$rem05} #{$rem};
-  width: 100%;
-  min-width: 150px;
+  // width: 100%;
+  min-width: #{$min-width};
   border-radius: #{$border-radius};
   border: none;
   outline: 1px solid #{$faded};

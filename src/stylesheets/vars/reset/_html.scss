@@ -1,7 +1,8 @@
 // consistent line-spacing even when element have different line-heights
 html {
   height: 100%;
-  line-sizing: normal;
+  // line-sizing is an unknown value in scss
+  // line-sizing: normal;
 }
 
 //  Remove the tiny space around the edge of the page.

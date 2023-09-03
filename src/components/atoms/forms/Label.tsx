@@ -2,16 +2,17 @@ import { LabelKeys } from "@nxs-utils/helpers/types";
 import { labels } from "./labels";
 
 type Props = {
-  children: JSX.Element[] | JSX.Element;
-  name: LabelKeys;
+  label: LabelKeys;
+  errors?: string;
 };
-const Label: React.FC<Props> = ({ children, name }) => {
+const Label: React.FC<Props> = (props) => {
+  const { label, errors } = props;
   return (
-    <label htmlFor={name.toString()} className="label">
+    <label htmlFor={label.toString()} className="label">
       <span className="label-name">
-        {labels[name].charAt(0).toUpperCase() + labels[name].slice(1)}
-      </span>
-      <span className="label-children">{children}</span>
+        {labels[label].charAt(0).toUpperCase() + labels[label].slice(1)}
+      </span>{" "}
+      {errors && <span className="required">{errors}</span>}
     </label>
   );
 };
