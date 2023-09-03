@@ -2,16 +2,15 @@ import { ErrorMessage, Icon } from "@nxs-atoms";
 import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
-import { useState } from "react";
 import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
 import { useTips } from "@nxs-utils/hooks/useTips";
 import { auth } from "@nxs-utils/form/authTypes";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
-import { useInitialValues } from "@nxs-utils/hooks/useInitialValues";
 import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
+import { useValues } from "@nxs-utils/hooks/useValues";
 
 type FormProps = {
-  values: { [key: string]: string };
+  initialValues: { [key: string]: string };
   submit: (e: any) => void;
   hideLabels?: boolean;
   showAuthTips?: boolean;
@@ -20,8 +19,9 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, values, hideLabels, theme, showAuthTips } = props;
-  const { initialValues, setInitialValues } = useInitialValues(values);
+  const { submit, type, initialValues, hideLabels, theme, showAuthTips } =
+    props;
+  const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
   const { seePassword, setSeePassword } = useSeePassword();
   const { tips, setTips } = useTips();
@@ -29,22 +29,22 @@ const Form: React.FC<FormProps> = (props) => {
   const handleChange = (e: any) => {
     const key = e.target.name;
     const val = e.currentTarget.value;
-    const change = { ...initialValues, [key]: val };
-    setInitialValues(change);
+    const change = { ...values, [key]: val };
+    setValues(change);
   };
-  return initialValues ? (
+  return values ? (
     <form
       className={theme ? `form ${theme}` : "form"}
       onSubmit={(e) =>
         handleFormSubmit({
           formProps: e,
-          values: initialValues,
+          values: values,
           setErrors,
-          onSubmit: () => submit(initialValues),
+          onSubmit: () => submit(values),
         })
       }
     >
-      {Object.keys(initialValues).map((v) => (
+      {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
           {!hideLabels && (
             <label htmlFor={v} className="label">
@@ -60,7 +60,7 @@ const Form: React.FC<FormProps> = (props) => {
                 type={seePassword[v] ? "text" : "password"}
                 autoComplete="on"
                 name={v}
-                value={initialValues[v] || ""}
+                value={values[v] || ""}
                 placeholder={placeholders[v]}
                 onChange={handleChange}
                 className="password"
@@ -84,7 +84,7 @@ const Form: React.FC<FormProps> = (props) => {
               type={types[typeof labels[v]]}
               autoComplete="on"
               name={v}
-              value={initialValues[v] || ""}
+              value={values[v] || ""}
               placeholder={placeholders[v]}
               onChange={handleChange}
             />
@@ -106,7 +106,7 @@ const Form: React.FC<FormProps> = (props) => {
             <button
               type="button"
               className="btn-main btn-cancel"
-              onClick={() => submit(initialValues)}
+              onClick={() => submit(values)}
             >
               <Icon icon="submit" />
               Continue anyway
