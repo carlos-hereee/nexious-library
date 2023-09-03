@@ -6,5 +6,8 @@ export const useSeePassword = () => {
     confirmPassword: false,
   });
 
-  return { seePassword, setSeePassword };
+  const togglePassword = (key: string) => {
+    setSeePassword({ ...seePassword, [key]: !seePassword[key] });
+  };
+  return { seePassword, togglePassword };
 };

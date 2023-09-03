@@ -1,4 +1,4 @@
-import { ErrorMessage, Icon, Label } from "@nxs-atoms";
+import { ErrorMessage, Icon, Input, Label } from "@nxs-atoms";
 import { labels } from "@nxs-atoms/forms/labels";
 import { types } from "@nxs-atoms/forms/types";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
@@ -8,6 +8,7 @@ import { auth } from "@nxs-utils/form/authTypes";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { useValues } from "@nxs-utils/hooks/useValues";
+import { IconButton } from "@nxs-molecules/index";
 
 type FormProps = {
   initialValues: { [key: string]: string };
@@ -23,7 +24,7 @@ const Form: React.FC<FormProps> = (props) => {
     props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
-  const { seePassword, setSeePassword } = useSeePassword();
+  const { seePassword, togglePassword } = useSeePassword();
   const { tips, setTips } = useTips();
 
   const handleChange = (e: any) => {
@@ -45,28 +46,17 @@ const Form: React.FC<FormProps> = (props) => {
           {!hideLabels && <Label label={v} errors={errors[v]} />}
           {auth.includes(v) ? (
             <div className="flex">
-              <input
-                type={seePassword[v] ? "text" : "password"}
-                autoComplete="on"
+              <Input
+                value={values[v]}
+                change={handleChange}
                 name={v}
-                value={values[v] || ""}
-                placeholder={placeholders[v]}
-                onChange={handleChange}
-                className="password"
+                type={seePassword[v] ? "text" : "password"}
+                theme="password"
               />
-              <button
-                type="button"
-                className="btn-main btn-small"
-                onClick={() =>
-                  setSeePassword({ ...seePassword, [v]: !seePassword[v] })
-                }
-              >
-                {seePassword[v] ? (
-                  <Icon icon="eyeSlash" />
-                ) : (
-                  <Icon icon="eye" />
-                )}
-              </button>
+              <IconButton
+                icon={{ icon: seePassword[v] ? "eyeSlash" : "eye" }}
+                theme="btn-main btn-small"
+              />
             </div>
           ) : (
             <input

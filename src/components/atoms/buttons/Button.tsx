@@ -3,6 +3,7 @@ export type ButtonProps = {
   children?: React.ReactNode;
   name?: string;
   title?: string;
+  theme?: string;
 };
 /**
  * Component - Button
@@ -12,11 +13,11 @@ export type ButtonProps = {
  * @returns
  */
 const Button: React.FC<ButtonProps> = (props) => {
-  const { children, name, click, title } = props;
+  const { children, name, click, title, theme } = props;
   return (
     <button
       type="button"
-      className={name ? `btn-${name}` : ""}
+      className={theme ? `btn-${theme}` : ""}
       title={title ? title : ""}
       onClick={click}
     >

@@ -4,13 +4,15 @@ import { labels } from "./labels";
 type Props = {
   label: LabelKeys;
   errors?: string;
+  theme?: string;
 };
 const Label: React.FC<Props> = (props) => {
-  const { label, errors } = props;
+  const { label, errors, theme } = props;
+  const title = labels[label] ? labels[label] : "Enter Details";
   return (
-    <label htmlFor={label.toString()} className="label">
+    <label htmlFor={label.toString()} className={theme ? theme : "label"}>
       <span className="label-name">
-        {labels[label].charAt(0).toUpperCase() + labels[label].slice(1)}
+        {title.charAt(0).toUpperCase() + title.slice(1)}
       </span>{" "}
       {errors && <span className="required">{errors}</span>}
     </label>

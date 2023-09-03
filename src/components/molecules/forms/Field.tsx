@@ -1,5 +1,6 @@
 import { labels } from "@nxs-atoms/forms/labels";
 import { placeholders } from "@nxs-atoms/forms/placeholders";
+import { Label } from "@nxs-atoms/index";
 
 type FieldProp = {
   label: string;
@@ -11,10 +12,7 @@ const Field: React.FC<FieldProp> = (props) => {
   const { label, value, onChange, errors } = props;
   return (
     <div className="flex-row">
-      <label htmlFor={label} className="label flex-1">
-        {labels[label]}:
-        {errors && errors[label] && <span>{errors[label]}</span>}
-      </label>
+      <Label label={label} errors={errors ? errors[label] : ""} />
       <div className="flex-2">
         <input
           type="text"

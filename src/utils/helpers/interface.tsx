@@ -19,10 +19,11 @@ export interface RequiredProps {
 }
 export interface InputProps {
   value: string;
+  name: string;
+  change: (key: any) => void;
+  theme?: string;
   type?: string;
   min?: number;
   max?: number;
-  change: () => void;
-  blur: () => void;
-  submit?: () => void;
+  blur?: () => void;
 }
