@@ -4,7 +4,7 @@ import { validateForm } from "./validateForm";
 type HandleFormSubmitProps = {
   formProps: React.FormEvent<HTMLFormElement>;
   values: { [key: string]: string };
-  setErrors: React.Dispatch<React.SetStateAction<KeyStringProp | undefined>>;
+  setErrors: React.Dispatch<React.SetStateAction<KeyStringProp>>;
   onSubmit: () => void;
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
