@@ -41,7 +41,7 @@ const Form: React.FC<FormProps> = (props) => {
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
           {!hideLabels && (
-            <Label label={labels ? labels[v] : v} errors={errors[v]} />
+            <Label name={v} label={labels && labels[v]} errors={errors[v]} />
           )}
           {auth.includes(v) ? (
             <AuthField
