@@ -23,6 +23,7 @@ export { default as CalendarEvents } from "./calendar/CalendarEvents";
 // cart
 export { default as Cart } from "./card/Cart";
 // forms
+export { default as UploadFile } from "./forms/UploadFile";
 export { default as Form } from "./forms/Form";
 export { default as ChangePassword } from "./forms/ChangePassword";
 // checkout

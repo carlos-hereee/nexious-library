@@ -8,3 +8,4 @@ export const types: { [key: string]: string } = {
 };
 export const auth: [string, string] = ["password", "confirmPassword"];
 export const select: [string] = ["theme"];
+export const fileUpload: [string] = ["logo"];

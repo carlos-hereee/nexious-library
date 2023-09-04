@@ -30,8 +30,8 @@ select {
   font-size: inherit;
   cursor: pointer;
   line-height: inherit;
-  min-width: 100px;
-  width: 100%;
+  min-width: #{$min-width};
+  // width: 100%;
   outline: none;
   padding: #{$rem05};
   &::-ms-expand {
