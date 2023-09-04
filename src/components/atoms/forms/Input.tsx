@@ -1,5 +1,5 @@
 import { InputProps } from "@nxs-utils/helpers/interface";
-import { placeholders } from "./placeholders";
+import { placeholders } from "@nxs-utils/form/placeholders";
 
 const Input: React.FC<InputProps> = (props) => {
   const { type, value, change, blur, name, theme } = props;
@@ -8,7 +8,7 @@ const Input: React.FC<InputProps> = (props) => {
       className={theme ? theme : ""}
       autoComplete="on"
       name={name}
-      type={type}
+      type={type ? type : "text"}
       value={value}
       placeholder={placeholders[name]}
       onChange={change}

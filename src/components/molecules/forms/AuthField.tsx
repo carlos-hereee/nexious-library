@@ -10,7 +10,6 @@ type AuthFieldProp = {
 const AuthField: React.FC<AuthFieldProp> = (props) => {
   const { value, onChange, name } = props;
   const { seePassword, togglePassword } = useSeePassword();
-
   return (
     <div className="flex-row">
       <Input

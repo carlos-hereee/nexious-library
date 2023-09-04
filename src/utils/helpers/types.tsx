@@ -1,4 +1,4 @@
-import { labels } from "@nxs-atoms/forms/labels";
+import { labels } from "@nxs-utils/form/labels";
 
 export type DefaultPageComponent = {
   title: string;

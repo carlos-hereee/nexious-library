@@ -1,4 +1,4 @@
-import { labels } from "@nxs-atoms/forms/labels";
+import { labels } from "@nxs-utils/form/labels";
 import { validateEmail } from "./validateEmail";
 import { matchingPassword } from "./matchingPassword";
 

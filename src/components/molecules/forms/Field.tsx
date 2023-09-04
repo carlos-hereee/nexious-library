@@ -7,6 +7,6 @@ type FieldProp = {
 };
 const Field: React.FC<FieldProp> = (props) => {
   const { name, value, onChange } = props;
-  return <Input value={value} change={onChange} name={name} type="text" />;
+  return <Input value={value} change={onChange} name={name} />;
 };
 export default Field;

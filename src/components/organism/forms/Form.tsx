@@ -1,14 +1,10 @@
-import { ErrorMessage, Icon, Input, Label } from "@nxs-atoms";
-import { labels } from "@nxs-atoms/forms/labels";
-import { types } from "@nxs-atoms/forms/types";
-import { placeholders } from "@nxs-atoms/forms/placeholders";
+import { ErrorMessage, Icon, Label } from "@nxs-atoms";
 import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
 import { useTips } from "@nxs-utils/hooks/useTips";
 import { auth } from "@nxs-utils/form/authTypes";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
-import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { useValues } from "@nxs-utils/hooks/useValues";
-import { AuthField, Field, IconButton } from "@nxs-molecules/index";
+import { AuthField, Field } from "@nxs-molecules/index";
 
 type FormProps = {
   initialValues: { [key: string]: string };
@@ -24,7 +20,6 @@ const Form: React.FC<FormProps> = (props) => {
     props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
-  const { seePassword, togglePassword } = useSeePassword();
   const { tips, setTips } = useTips();
 
   const handleChange = (e: any) => {

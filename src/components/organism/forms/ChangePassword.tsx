@@ -13,10 +13,10 @@ type ChangePasswordProps = {
 };
 const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
   const { values, error, onSubmit, showAuthTips } = props;
-  const [username, setUsername] = useState(values.username || "");
-  const [oldPassword, setOldPassword] = useState(values.password || "");
-  const [newPassword, setNewPassword] = useState("");
-  const [confirmNewPassword, setConfirmNewPassword] = useState("");
+  const [username, setUsername] = useState<string>(values.username || "");
+  const [oldPassword, setOldPassword] = useState<string>(values.password || "");
+  const [newPassword, setNewPassword] = useState<string>("");
+  const [confirmNewPassword, setConfirmNewPassword] = useState<string>("");
   const [err, setErr] = useState<{ [key: string]: string }>();
   const [tips, setTips] = useState<any>();
 
@@ -38,29 +38,21 @@ const ChangePassword: React.FC<ChangePasswordProps> = (props) => {
       <h2 className="heading">Change password</h2>
       {error && <p className="error-message">{error}</p>}
       <form className="form-secondary" onSubmit={handleSubmit}>
-        <Field
-          value={{ username }}
-          label="username"
-          onChange={setUsername}
-          errors={err}
-        />
+        <Field value={username} name="username" onChange={setUsername} />
         <AuthField
-          value={{ oldPassword }}
-          label="oldPassword"
+          value={oldPassword}
+          name="oldPassword"
           onChange={setOldPassword}
-          errors={err}
         />
         <AuthField
-          value={{ newPassword }}
-          label="newPassword"
+          value={newPassword}
+          name="newPassword"
           onChange={setNewPassword}
-          errors={err}
         />
         <AuthField
-          value={{ confirmNewPassword }}
-          label="confirmNewPassword"
+          value={confirmNewPassword}
+          name="confirmNewPassword"
           onChange={setConfirmNewPassword}
-          errors={err}
         />
         {tips ? (
           <PasswordChecker

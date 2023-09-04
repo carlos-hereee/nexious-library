@@ -1,5 +1,5 @@
 import { LabelKeys } from "@nxs-utils/helpers/types";
-import { labels } from "./labels";
+import { labels } from "@nxs-utils/form/labels";
 
 type Props = {
   label: LabelKeys;

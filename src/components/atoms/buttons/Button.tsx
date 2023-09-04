@@ -13,7 +13,7 @@ export type ButtonProps = {
  * @returns
  */
 const Button: React.FC<ButtonProps> = (props) => {
-  const { children, name, click, title, theme } = props;
+  const { children, click, title, theme } = props;
   return (
     <button
       type="button"
