@@ -1,10 +1,10 @@
 import { ErrorMessage, Icon, Label } from "@nxs-atoms";
 import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
-import { useTips } from "@nxs-utils/hooks/useTips";
 import { auth } from "@nxs-utils/form/authTypes";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useValues } from "@nxs-utils/hooks/useValues";
 import { AuthField, Field } from "@nxs-molecules/index";
+import ShowAuthTips from "@nxs-atoms/forms/ShowAuthTips";
 
 type FormProps = {
   initialValues: { [key: string]: string };
@@ -12,17 +12,16 @@ type FormProps = {
   hideLabels?: boolean;
   showAuthTips?: boolean;
   theme?: string;
-  type?: string;
   labels?: { [key: string]: string };
   placeholders?: { [key: string]: string };
+  types?: { [key: string]: string };
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, initialValues, hideLabels, theme } = props;
-  const { showAuthTips, labels, placeholders } = props;
+  const { submit, initialValues, hideLabels, theme } = props;
+  const { showAuthTips, labels, placeholders, types } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
-  const { tips, setTips } = useTips();
 
   const handleChange = (e: any) => {
     const key = e.target.name;
@@ -48,59 +47,24 @@ const Form: React.FC<FormProps> = (props) => {
               name={v}
               value={values[v]}
               onChange={handleChange}
-              placeholder={placeholders ? placeholders[v] : v}
+              placeholder={placeholders && placeholders[v]}
             />
           ) : (
             <Field
               name={v}
+              type={types && types[v]}
               value={values[v]}
               onChange={handleChange}
-              placeholder={placeholders ? placeholders[v] : v}
+              placeholder={placeholders && placeholders[v]}
             />
           )}
         </div>
       ))}
-      {showAuthTips && tips ? (
-        <div className="form-field password-checker">
-          <h3>Your password difficulty to guess is at {tips.ease}</h3>
-          <p>Increase your password's security by:</p>
-          <ol>
-            {tips.tips.map((t) => (
-              <li key={t} className="p-stretch">
-                {t}{" "}
-              </li>
-            ))}
-          </ol>
-          <div className="flex-center m-tb">
-            <button
-              type="button"
-              className="btn-main btn-cancel"
-              onClick={() => submit(values)}
-            >
-              <Icon icon="submit" />
-              Continue anyway
-            </button>
-            <button type="submit" className="btn-main">
-              <Icon icon="submit" />
-              Try again
-            </button>
-          </div>
-        </div>
-      ) : (
-        <button type="submit" className="btn-main">
-          {type === "search" ? (
-            <span>
-              <Icon icon="save" />
-              Save
-            </span>
-          ) : (
-            <span>
-              <Icon icon="submit" />
-              Confirm
-            </span>
-          )}
-        </button>
-      )}
+      {showAuthTips && <ShowAuthTips onSubmit={() => submit(values)} />}
+      <button type="submit" className="btn-main">
+        <Icon icon="submit" />
+        Confirm
+      </button>
     </form>
   ) : (
     <ErrorMessage code="missingFormInitialValues" />

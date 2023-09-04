@@ -14,7 +14,8 @@ const Label: React.FC<Props> = (props) => {
       <span className="label-name">
         {label
           ? label.charAt(0).toUpperCase() + label.slice(1)
-          : labels.label.charAt(0).toUpperCase() + labels.label.slice(1)}
+          : labels.label &&
+            labels.label.charAt(0).toUpperCase() + labels.label.slice(1)}
       </span>{" "}
       {errors && <span className="required">{errors}</span>}
     </label>
