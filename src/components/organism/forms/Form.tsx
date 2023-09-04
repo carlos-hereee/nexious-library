@@ -13,11 +13,13 @@ type FormProps = {
   showAuthTips?: boolean;
   theme?: string;
   type?: string;
+  labels?: { [key: string]: string };
+  placeholders?: { [key: string]: string };
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, type, initialValues, hideLabels, theme, showAuthTips } =
-    props;
+  const { submit, type, initialValues, hideLabels, theme } = props;
+  const { showAuthTips, labels, placeholders } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
   const { tips, setTips } = useTips();
@@ -38,11 +40,23 @@ const Form: React.FC<FormProps> = (props) => {
     >
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
-          {!hideLabels && <Label label={v} errors={errors[v]} />}
+          {!hideLabels && (
+            <Label label={labels ? labels[v] : v} errors={errors[v]} />
+          )}
           {auth.includes(v) ? (
-            <AuthField name={v} value={values[v]} onChange={handleChange} />
+            <AuthField
+              name={v}
+              value={values[v]}
+              onChange={handleChange}
+              placeholder={placeholders ? placeholders[v] : v}
+            />
           ) : (
-            <Field name={v} value={values[v]} onChange={handleChange} />
+            <Field
+              name={v}
+              value={values[v]}
+              onChange={handleChange}
+              placeholder={placeholders ? placeholders[v] : v}
+            />
           )}
         </div>
       ))}

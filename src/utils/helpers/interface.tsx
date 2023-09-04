@@ -21,6 +21,7 @@ export interface InputProps {
   value: string;
   name: string;
   change: (key: any) => void;
+  placeholder?: string;
   theme?: string;
   type?: string;
   min?: number;

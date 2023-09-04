@@ -4,11 +4,12 @@ import { IconButton } from "@nxs-molecules";
 
 type AuthFieldProp = {
   name: string;
-  value: string;
   onChange: (key: any) => void;
+  value: string;
+  placeholder?: string;
 };
 const AuthField: React.FC<AuthFieldProp> = (props) => {
-  const { value, onChange, name } = props;
+  const { value, onChange, name, placeholder } = props;
   const { seePassword, togglePassword } = useSeePassword();
   return (
     <div className="flex-row">
@@ -17,6 +18,7 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
         change={onChange}
         name={name}
         type={seePassword[name] ? "text" : "password"}
+        placeholder={placeholder}
         theme="password"
       />
       <IconButton
