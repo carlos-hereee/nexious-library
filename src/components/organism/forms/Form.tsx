@@ -8,7 +8,7 @@ import { auth } from "@nxs-utils/form/authTypes";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { useValues } from "@nxs-utils/hooks/useValues";
-import { IconButton } from "@nxs-molecules/index";
+import { AuthField, Field, IconButton } from "@nxs-molecules/index";
 
 type FormProps = {
   initialValues: { [key: string]: string };
@@ -45,28 +45,9 @@ const Form: React.FC<FormProps> = (props) => {
         <div key={v} className="form-field">
           {!hideLabels && <Label label={v} errors={errors[v]} />}
           {auth.includes(v) ? (
-            <div className="flex">
-              <Input
-                value={values[v]}
-                change={handleChange}
-                name={v}
-                type={seePassword[v] ? "text" : "password"}
-                theme="password"
-              />
-              <IconButton
-                icon={{ icon: seePassword[v] ? "eyeSlash" : "eye" }}
-                theme="btn-main btn-small"
-              />
-            </div>
+            <AuthField name={v} value={values[v]} onChange={handleChange} />
           ) : (
-            <input
-              type={types[typeof labels[v]]}
-              autoComplete="on"
-              name={v}
-              value={values[v] || ""}
-              placeholder={placeholders[v]}
-              onChange={handleChange}
-            />
+            <Field name={v} value={values[v]} onChange={handleChange} />
           )}
         </div>
       ))}

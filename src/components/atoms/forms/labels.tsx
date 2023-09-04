@@ -21,4 +21,5 @@ export const labels: { [key: string]: string } = {
   cvc: "CVC",
   oldPassword: "Old password",
   newPassword: "New password",
+  date: "Date",
 };
