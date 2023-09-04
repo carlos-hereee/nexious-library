@@ -53,7 +53,7 @@ export type KeyStringProp = { [key: string]: string };
 export type OptionProp = {
   name: string;
   value: string;
-  isDisabled: boolean;
+  isDisabled?: boolean;
   uid?: string;
 };
 export type CellDataProp = { data: string; isHeader?: boolean; uid?: string };

@@ -4,8 +4,9 @@ import { OptionProp } from "@nxs-utils/helpers/types";
 type SelectProp = {
   name: string;
   list: OptionProp[];
-  main: OptionProp;
-  change: () => void;
+  active?: string;
+  theme?: string;
+  onChange?: (key: any) => void;
 };
 /**
  *
@@ -16,19 +17,20 @@ type SelectProp = {
  *        main: { uid, value, name }
  * @returns
  */
-const Select: React.FC<SelectProp> = ({ name, list, change, main }) => {
+const Select: React.FC<SelectProp> = (props) => {
+  const { name, list, onChange, theme, active } = props;
   return (
     <select
-      className={`dropdown-select dropdown-${name}`}
-      value={name}
-      onChange={change}
+      className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
+      value={active ? active : name}
+      onChange={onChange}
     >
       {list.map((l) => (
         <Option
           key={l.uid}
           name={l.name}
           value={l.value}
-          isDisabled={main.uid == l.uid}
+          isDisabled={l.name === active}
         />
       ))}
     </select>

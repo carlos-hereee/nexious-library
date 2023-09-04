@@ -1,6 +1,7 @@
 import { OptionProp } from "@nxs-utils/helpers/types";
 
-const Option: React.FC<OptionProp> = ({ name, value, isDisabled }) => {
+const Option: React.FC<OptionProp> = (props) => {
+  const { name, value, isDisabled } = props;
   return (
     <option value={name} className="dropdown-option" disabled={isDisabled}>
       {value

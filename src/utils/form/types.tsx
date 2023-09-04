@@ -6,3 +6,5 @@ export const types: { [key: string]: string } = {
   phone: "number",
   string: "text",
 };
+export const auth: [string, string] = ["password", "confirmPassword"];
+export const select: [string] = ["theme"];
