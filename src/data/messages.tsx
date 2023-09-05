@@ -1,4 +1,5 @@
 export const messages: { [key: string]: string } = {
-  missingHeroProps: "Hero image is missing required hero props",
+  missingProps: "is missing required props",
+  missingLogo: "Logo image is missing required props",
   missingFormInitialValues: "Form is missing required initial value props",
 };

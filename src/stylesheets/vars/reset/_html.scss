@@ -9,7 +9,7 @@ html {
 body {
   margin: 0;
   // use dimmer color - no blinding light
-  background-color: #{$light};
+  background-color: #{$dim-color};
 }
 
 // Maintain `hidden` behaviour when overriding `display` values.

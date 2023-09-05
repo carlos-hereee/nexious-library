@@ -13,7 +13,7 @@ type Props = { hero: HeroProp; theme?: string };
  */
 const Hero: React.FC<Props> = ({ hero, theme }) => {
   const [load, setLoad] = useState<boolean>();
-  if (!hero) return <ErrorMessage code="missingHeroProps" />;
+  if (!hero) return <ErrorMessage code="missingProps" from="hero" />;
   return hero?.small ? (
     <div
       className={load ? "blur-load--loaded" : "blur-load"}

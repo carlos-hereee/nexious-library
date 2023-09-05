@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { BurgerButton, Logo } from "@nxs-molecules";
+import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import {
   HeroProp,
   MenuItemAltProp,
   MenuItemProp,
 } from "@nxs-utils/helpers/types";
+import { ErrorMessage } from "@nxs-atoms/index";
+import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 
 export type HeaderProps = {
   menu: MenuItemProp[];
@@ -30,6 +32,7 @@ export type HeaderProps = {
  */
 const Header: React.FC<HeaderProps> = (props) => {
   const { menu, logo, ping, updateMenu, language } = props;
+  const { lightColor, errors } = usePropErrorHandling({ menu, logo });
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
@@ -39,36 +42,50 @@ const Header: React.FC<HeaderProps> = (props) => {
     document.addEventListener("animationend", initClose, true);
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
+
   const handleClick = (e: MenuItemProp) => {
     setActive(!isActive);
     navigate(`${e.link}`);
   };
+  if (lightColor === "red") {
+    return <ErrorMessages errors={errors} isProp component="header" />;
+  }
   return (
     <header>
-      {logo && logo.uid && <Logo logo={logo} />}
-      <nav className="primary-navigation">
-        <Navbar
-          show={{ isActive, isClose }}
-          menu={menu}
-          toggle={updateMenu}
-          click={handleClick}
-          language={language}
-        />
-      </nav>
-      <nav className="mobile-navigation">
-        <BurgerButton
-          isBurger={isActive}
-          click={() => setActive(!isActive)}
-          ping={ping}
-        />
-        <Navbar
-          show={{ isActive, isClose }}
-          menu={menu}
-          toggle={updateMenu}
-          click={handleClick}
-          language={language}
-        />
-      </nav>
+      {logo ? (
+        <Logo logo={logo} />
+      ) : (
+        <ErrorMessage code="missingProps" from="logo" />
+      )}
+      {menu ? (
+        <>
+          <nav className="primary-navigation">
+            <Navbar
+              show={{ isActive, isClose }}
+              menu={menu}
+              toggle={updateMenu}
+              click={handleClick}
+              language={language}
+            />
+          </nav>
+          <nav className="mobile-navigation">
+            <BurgerButton
+              isBurger={isActive}
+              click={() => setActive(!isActive)}
+              ping={ping}
+            />
+            <Navbar
+              show={{ isActive, isClose }}
+              menu={menu}
+              toggle={updateMenu}
+              click={handleClick}
+              language={language}
+            />
+          </nav>
+        </>
+      ) : (
+        <ErrorMessage code="missingProps" from="header" />
+      )}
     </header>
   );
 };

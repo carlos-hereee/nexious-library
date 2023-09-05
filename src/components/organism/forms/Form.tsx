@@ -83,7 +83,7 @@ const Form: React.FC<FormProps> = (props) => {
       </button>
     </form>
   ) : (
-    <ErrorMessage code="missingFormInitialValues" />
+    <ErrorMessage code="missingFormInitialValues" from="form" />
   );
 };
 export default Form;

@@ -13,7 +13,7 @@ const FieldQuantity: React.FC<FieldQuantityProps> = (props) => {
   const { min, max, value, change, blur, name } = props;
   return (
     <div className="field">
-      <Label label={name} />
+      <Label label={name} name={name} />
       <InputQuantity
         name={name}
         min={min}
