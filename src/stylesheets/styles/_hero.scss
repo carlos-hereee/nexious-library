@@ -86,3 +86,9 @@
 .thumbnail {
   aspect-ratio: 16/9;
 }
+.preview-hero {
+  aspect-ratio: 1/1;
+  object-fit: contain;
+  max-height: #{$min-width};
+  max-width: #{$max-width-sm};
+}

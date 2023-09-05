@@ -1,4 +1,3 @@
-import { Icon } from "@nxs-atoms";
 import { HeroProp } from "@nxs-utils/helpers/types";
 import { Hero } from "@nxs-molecules";
 
