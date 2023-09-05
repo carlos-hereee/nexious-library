@@ -49,7 +49,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   return (
     <header>
-      {logo.uid && <Logo logo={logo} />}
+      {logo?.uid && <Logo logo={logo} />}
       {menu && (
         <>
           {" "}

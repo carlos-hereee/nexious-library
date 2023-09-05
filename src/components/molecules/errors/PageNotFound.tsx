@@ -13,9 +13,13 @@ export type PageNotFoundProps = {
 const PageNotFound: React.FC<PageNotFoundProps> = (props) => {
   const { hero, message, to } = props;
   const navigate = useNavigate();
+
   useEffect(() => {
-    setTimeout(() => navigate(to ? to : "/"), 1800);
+    if (to) {
+      setTimeout(() => navigate(`/${to}`), 1800);
+    }
   }, []);
+
   return (
     <div className="page-center">
       {hero && <Hero hero={hero} />}

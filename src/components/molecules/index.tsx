@@ -22,6 +22,7 @@ export { default as MessageRequired } from "./errors/MessageRequired";
 export { default as PageNotFound } from "./errors/PageNotFound";
 export { default as Loading } from "./errors/Loading";
 export { default as ErrorMessages } from "./errors/ErrorMessages";
+export { default as ComingSoon } from "./errors/ComingSoon";
 
 // forms
 export { default as FieldQuantity } from "./forms/FieldQuantity";

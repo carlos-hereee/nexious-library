@@ -15,25 +15,21 @@ export const usePropErrorHandling = (props: PropHandling, isProp: boolean) => {
   const [errors, setErrors] = useState<ErrorHandlingMessages[]>([]);
   const [warnings, setWarningsHandling] = useState<ErrorHandlingMessages[]>([]);
 
+  const missingProps = (key: string) => {
+    setLightColor("red");
+    setErrors((prev) => [
+      ...prev,
+      { prop: key, code: "missingProps", isProp, value: props[key], key },
+    ]);
+  };
   useEffect(() => {
     // use light system to determine danger levels
     setLightColor("green");
     Object.keys(props).forEach((key) => {
       // check values is valid
-      if (!props[key]) {
-        setLightColor("red");
-        setErrors((prev) => [
-          ...prev,
-          { prop: key, code: "missingProps", isProp, value: props[key], key },
-        ]);
-      } else if (typeof props[key] === "object") {
-        if (!props[key].length) {
-          setLightColor("red");
-          setErrors((prev) => [
-            ...prev,
-            { prop: key, code: "missingProps", isProp, value: props[key], key },
-          ]);
-        }
+      if (!props[key]) missingProps(key);
+      if (typeof props[key] === "object" && !props[key].length) {
+        missingProps(key);
       }
     });
   }, []);
