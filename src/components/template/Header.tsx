@@ -12,7 +12,7 @@ import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 export type HeaderProps = {
   menu: MenuItemProp[];
   ping?: number;
-  logo?: HeroProp;
+  logo: HeroProp;
   language?: MenuItemAltProp;
   updateMenu: (e: MenuItemProp[]) => void;
 };
@@ -31,7 +31,7 @@ export type HeaderProps = {
  */
 const Header: React.FC<HeaderProps> = (props) => {
   const { menu, logo, ping, updateMenu, language } = props;
-  const { lightColor, errors } = usePropErrorHandling({ menu, logo }, true);
+  const { lightColor, errors } = usePropErrorHandling({ logo, menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
@@ -49,10 +49,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   return (
     <header>
-      {lightColor === "red" && (
-        <ErrorMessages errors={errors} component="header" />
-      )}
-      {logo && <Logo logo={logo} />}
+      {logo.uid && <Logo logo={logo} />}
       {menu && (
         <>
           {" "}
@@ -80,6 +77,9 @@ const Header: React.FC<HeaderProps> = (props) => {
             />
           </nav>
         </>
+      )}{" "}
+      {lightColor === "red" && (
+        <ErrorMessages errors={errors} component="header" />
       )}
     </header>
   );

@@ -2,15 +2,15 @@ import { messages } from "data/messages";
 
 type ErrorMessageProp = {
   code: string;
-  from: string;
+  prop: string;
   component?: string;
   error?: any;
 };
 const ErrorMessage: React.FC<ErrorMessageProp> = (props) => {
-  const { from, code, component, error } = props;
+  const { prop, code, component, error } = props;
 
   const handleClick = () => {
-    console.log("error occurred in component/prop ", from);
+    console.log("error occurred in prop ", prop);
     console.log("failed with code  ", code);
     console.log("error : ", error);
   };
@@ -19,8 +19,8 @@ const ErrorMessage: React.FC<ErrorMessageProp> = (props) => {
     <div className="error-message-container">
       <p className="error-message">
         {error.isProp
-          ? `Prop ${from} from ${component} component `
-          : `Component ${from} `}
+          ? `Prop ${prop} from ${component} component `
+          : `Component ${prop} `}
         {messages[code]}
       </p>
       <button className="btn-main" onClick={handleClick}>
