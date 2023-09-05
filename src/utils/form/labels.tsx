@@ -22,4 +22,7 @@ export const labels: { [key: string]: string } = {
   oldPassword: "Old password",
   newPassword: "New password",
   date: "Date",
+  theme: "App theme",
+  logo: "App logo",
+  appName: "App name",
 };

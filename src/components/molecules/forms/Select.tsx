@@ -2,7 +2,6 @@ import { Option } from "@nxs-atoms";
 import { OptionProp } from "@nxs-utils/helpers/types";
 
 type SelectProp = {
-  name: string;
   list: OptionProp[];
   active?: string;
   theme?: string;
@@ -18,13 +17,14 @@ type SelectProp = {
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { name, list, onChange, theme, active } = props;
+  const { list, onChange, theme, active } = props;
   return (
     <select
       className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
-      value={active ? active : name}
+      value={active ? active : ""}
       onChange={onChange}
     >
+      <Option name="" value="" isDisabled />
       {list.map((l) => (
         <Option
           key={l.uid}

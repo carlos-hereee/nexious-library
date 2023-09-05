@@ -20,13 +20,11 @@ type FormProps = {
   placeholders?: { [key: string]: string };
   types?: { [key: string]: string };
   setPreviewImage?: (key: any) => void;
-  // previewImage:
 };
 
 const Form: React.FC<FormProps> = (props) => {
   const { submit, initialValues, hideLabels, theme } = props;
   const { showAuthTips, labels, placeholders, types } = props;
-  const { setPreviewImage } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<{ [key: string]: string }>({});
@@ -67,7 +65,6 @@ const Form: React.FC<FormProps> = (props) => {
             />
           ) : select.includes(v) ? (
             <Select
-              name={v}
               list={themeList}
               active={selection[v]}
               onChange={(e) => updateSelection(e.target.value, v)}
