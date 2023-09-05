@@ -7,7 +7,6 @@ import {
   MenuItemAltProp,
   MenuItemProp,
 } from "@nxs-utils/helpers/types";
-import { ErrorMessage } from "@nxs-atoms/index";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 
 export type HeaderProps = {
@@ -32,7 +31,7 @@ export type HeaderProps = {
  */
 const Header: React.FC<HeaderProps> = (props) => {
   const { menu, logo, ping, updateMenu, language } = props;
-  const { lightColor, errors } = usePropErrorHandling({ menu, logo });
+  const { lightColor, errors } = usePropErrorHandling({ menu, logo }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
@@ -47,18 +46,16 @@ const Header: React.FC<HeaderProps> = (props) => {
     setActive(!isActive);
     navigate(`${e.link}`);
   };
-  if (lightColor === "red") {
-    return <ErrorMessages errors={errors} isProp component="header" />;
-  }
+
   return (
     <header>
-      {logo ? (
-        <Logo logo={logo} />
-      ) : (
-        <ErrorMessage code="missingProps" from="logo" />
+      {lightColor === "red" && (
+        <ErrorMessages errors={errors} component="header" />
       )}
-      {menu ? (
+      {logo && <Logo logo={logo} />}
+      {menu && (
         <>
+          {" "}
           <nav className="primary-navigation">
             <Navbar
               show={{ isActive, isClose }}
@@ -83,8 +80,6 @@ const Header: React.FC<HeaderProps> = (props) => {
             />
           </nav>
         </>
-      ) : (
-        <ErrorMessage code="missingProps" from="header" />
       )}
     </header>
   );

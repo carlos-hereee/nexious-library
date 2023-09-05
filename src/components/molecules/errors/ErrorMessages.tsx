@@ -4,17 +4,16 @@ import { ErrorHandlingMessages } from "@nxs-utils/hooks/usePropErrorHandling";
 export type ErrorMessagesProps = {
   errors: ErrorHandlingMessages[];
   component?: string;
-  isProp?: boolean;
 };
 const ErrorMessages: React.FC<ErrorMessagesProps> = (props) => {
-  const { errors, component, isProp } = props;
-  return errors.map(({ from, code }) => (
+  const { errors, component } = props;
+  return errors.map((err) => (
     <ErrorMessage
-      key={from}
-      from={from}
-      code={code}
+      key={err.from}
+      from={err.from}
+      code={err.code}
       component={component}
-      isProp={isProp}
+      error={err}
     />
   ));
 };

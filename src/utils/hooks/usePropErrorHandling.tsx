@@ -1,10 +1,14 @@
 import { useEffect, useState } from "react";
 
 export type PropHandling = { [key: string]: any };
-export type ErrorHandlingMessages = { from: string; code: string };
+export type ErrorHandlingMessages = {
+  from: string;
+  code: string;
+  isProp: boolean;
+};
 export type LightSystem = "green" | "yellow" | "red";
 
-export const usePropErrorHandling = (props: PropHandling) => {
+export const usePropErrorHandling = (props: PropHandling, isProp: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrorHandling] = useState<ErrorHandlingMessages[]>([]);
 
@@ -17,7 +21,7 @@ export const usePropErrorHandling = (props: PropHandling) => {
         setLightColor("red");
         setErrorHandling((prev) => [
           ...prev,
-          { from: key, code: "missingProps" },
+          { from: key, code: "missingProps", isProp },
         ]);
       }
     });
