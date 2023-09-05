@@ -20,10 +20,11 @@ type FormProps = {
   placeholders?: { [key: string]: string };
   types?: { [key: string]: string };
   setPreviewImage?: (key: any) => void;
+  submitLabel?: string;
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, initialValues, hideLabels, theme } = props;
+  const { submit, initialValues, hideLabels, theme, submitLabel } = props;
   const { showAuthTips, labels, placeholders, types } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
@@ -88,7 +89,7 @@ const Form: React.FC<FormProps> = (props) => {
       {showAuthTips && <ShowAuthTips onSubmit={() => submit(values)} />}
       <button type="submit" className="btn-main">
         <Icon icon="submit" />
-        Confirm
+        {submitLabel ? submitLabel : "Confirm"}
       </button>
     </form>
   ) : (
