@@ -6,6 +6,7 @@
 }
 .btn-main {
   border: 1px solid #{$faded};
+  max-width: #{$max-width-sm};
   display: flex;
   justify-content: center;
   &:hover {

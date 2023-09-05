@@ -45,6 +45,7 @@ select {
   position: relative;
   outline: 1px solid #{$faded};
   border-radius: #{$border-radius};
+  max-width: #{$max-width-sm};
   &:focus {
     outline: 1px solid #{$dark-gray};
   }
