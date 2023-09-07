@@ -14,6 +14,7 @@ export { default as Input } from "./forms/Input";
 export { default as InputQuantity } from "./forms/InputQuantity";
 export { default as Label } from "./forms/Label";
 export { default as Option } from "./forms/Option";
+export { default as ShowAuthTips } from "./forms/ShowAuthTips";
 
 // table
 export { default as CellData } from "./table/CellData";

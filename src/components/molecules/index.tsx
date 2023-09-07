@@ -28,7 +28,9 @@ export { default as ComingSoon } from "./errors/ComingSoon";
 export { default as FieldQuantity } from "./forms/FieldQuantity";
 export { default as InputSelect } from "./forms/Select";
 export { default as AuthField } from "./forms/AuthField";
+export { default as Select } from "./forms/Select";
 export { default as Field } from "./forms/Field";
+export { default as UploadFile } from "./forms/UploadFile";
 
 // calendar
 export { default as CalendarNavigation } from "./calendar/CalendarNavigation";

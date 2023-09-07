@@ -1,9 +1,14 @@
 import { Icon } from "@nxs-atoms";
 
-const SubmitButton: React.FC = () => {
+type SubmitButtonProps = {
+  label?: string;
+};
+
+const SubmitButton: React.FC<SubmitButtonProps> = (props) => {
+  const { label } = props;
   return (
     <button type="submit" className="btn-submit">
-      <Icon icon="submit" /> Submit
+      <Icon icon="submit" /> {label ? label : "Confirm"}
     </button>
   );
 };

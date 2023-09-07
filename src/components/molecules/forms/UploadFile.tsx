@@ -35,7 +35,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         hidden
       />
       <button className="btn-main" type="button" onClick={imageClick}>
-        Choose a file
+        Upload a file
       </button>
       {currentImage && (
         <div className="flex-d-column">
