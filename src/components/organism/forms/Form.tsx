@@ -36,11 +36,11 @@ const Form: React.FC<FormProps> = (props) => {
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const [mediaValues, setMediaValues] = useState<FormMediaProps[]>([]);
 
-  useEffect(() => {
-    if (mediaValues.length > 0) {
-      // addTouched(key)
-    }
-  }, [mediaValues]);
+  // useEffect(() => {
+  //   if (mediaValues.length > 0) {
+  //     // addTouched(key)
+  //   }
+  // }, [mediaValues]);
 
   const handleChange = (event: any) => {
     const key = event.target.name;
