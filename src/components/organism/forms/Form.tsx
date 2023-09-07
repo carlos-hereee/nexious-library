@@ -9,41 +9,46 @@ import { themeList } from "@nxs-utils/app/themeList";
 import { useState } from "react";
 import { handleFormChange } from "@nxs-utils/form/handleFormChange";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
-import { objLength } from "@nxs-utils/app/objLength";
 
 type FormProps = {
+  // required props
   initialValues: { [key: string]: string };
   submit: (e: any) => void;
+  // optional
   hideLabels?: boolean;
   showAuthTips?: boolean;
   theme?: string;
   labels?: { [key: string]: string };
   placeholders?: { [key: string]: string };
   types?: { [key: string]: string };
-  setPreviewImage?: (key: any) => void;
   submitLabel?: string;
   requireAllFields?: boolean;
+  useMedia?: boolean;
 };
 
 const Form: React.FC<FormProps> = (props) => {
   const { submit, initialValues, hideLabels, theme, submitLabel } = props;
-  const { showAuthTips, labels, placeholders, types, requireAllFields } = props;
+  const { labels, placeholders, types } = props;
+  const { showAuthTips, useMedia, requireAllFields } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<KeyStringProp>({});
-  const [touched, setTouched] = useState<string[]>([]);
+  const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
   const handleChange = (event: any) => {
     const key = event.target.name;
-    // add to touched if not already
-    // if (!touched.includes(key)) setTouched((prev) => [...prev, key]);
     addTouched(key);
-    handleFormChange({ values, setErrors, setValues, touched, event });
+    handleFormChange({
+      values,
+      setErrors,
+      setValues,
+      touched: touchSchema,
+      event,
+    });
   };
   const onSubmit = () => submit(values);
 
   const updateSelection = (value: string, name: string) => {
-    // if (!touched.includes(name)) setTouched((prev) => [...prev, name]);
     addTouched(name);
     setValues({ ...values, [name]: value });
     setSelection({ [name]: value });
@@ -53,14 +58,23 @@ const Form: React.FC<FormProps> = (props) => {
     setValues({ ...values, [key]: file });
   };
   const addTouched = (key: string) => {
-    if (!touched.includes(key)) setTouched((prev) => [...prev, key]);
+    if (!touchSchema.includes(key)) setTouchSchema((prev) => [...prev, key]);
   };
+  const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
+    handleFormSubmit({
+      formProps,
+      values,
+      setErrors,
+      onSubmit,
+      schema: { requireAllFields },
+    });
+  };
+
   return values ? (
     <form
-      className={theme ? `form ${theme}` : "form"}
-      onSubmit={(formProps) =>
-        handleFormSubmit({ formProps, values, setErrors, onSubmit })
-      }
+      className={theme ? theme : ""}
+      onSubmit={handleSubmit}
+      encType={useMedia ? "multipart/form-data" : ""}
     >
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
@@ -97,13 +111,7 @@ const Form: React.FC<FormProps> = (props) => {
         </div>
       ))}
       {showAuthTips && <ShowAuthTips onSubmit={() => submit(values)} />}
-      {requireAllFields ? (
-        touched.length === objLength(values) && (
-          <SubmitButton label={submitLabel} />
-        )
-      ) : (
-        <SubmitButton label={submitLabel} />
-      )}
+      <SubmitButton label={submitLabel} />
     </form>
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" />

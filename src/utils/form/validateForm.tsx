@@ -3,10 +3,13 @@ import { validateEmail } from "./validateEmail";
 import { matchingPassword } from "./matchingPassword";
 
 type ValidateFormProps = {
-  [key: string]: string;
+  [key: string]: any;
 };
 
-export const validateForm = (values: ValidateFormProps) => {
+export const validateForm = (
+  values: ValidateFormProps,
+  schema?: ValidateFormProps
+) => {
   let isValidated: boolean = true;
   let errors: { [key: string]: string } = {};
 

@@ -19,9 +19,11 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFiles = event.target.files as FileList;
     const file = selectedFiles?.[0];
-    setCurrentImage(file);
-    setPreviewImage(URL.createObjectURL(file));
-    upload(file);
+    if (file) {
+      setCurrentImage(file);
+      setPreviewImage(URL.createObjectURL(file));
+      upload(file);
+    }
   };
 
   return (

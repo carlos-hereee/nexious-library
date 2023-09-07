@@ -1,8 +1,5 @@
 @import "../vars/_mixins.scss", "../vars/_variables.scss";
 
-.form {
-  gap: #{$rem};
-}
 .form-secondary {
   display: flex;
   flex-direction: column;

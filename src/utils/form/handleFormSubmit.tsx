@@ -6,10 +6,14 @@ type HandleFormSubmitProps = {
   values: { [key: string]: string };
   setErrors: React.Dispatch<React.SetStateAction<KeyStringProp>>;
   onSubmit: (key: any) => void;
+  schema?: { [key: string]: any };
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
-  const { formProps, values, setErrors, onSubmit } = props;
+  const { formProps, values, setErrors, onSubmit, schema } = props;
+
   formProps.preventDefault();
-  const { isValidated, errors } = validateForm(values);
-  isValidated ? onSubmit(values) : setErrors(errors);
+  if (schema?.requireAllFields) {
+    const { isValidated, errors } = validateForm(values, schema);
+    isValidated ? onSubmit(values) : setErrors(errors);
+  } else onSubmit(values);
 };
