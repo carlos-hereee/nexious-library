@@ -1,12 +1,12 @@
 import { ErrorMessage, Label, ShowAuthTips } from "@nxs-atoms";
 import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
-import { auth, select, files } from "@nxs-utils/form/types";
+import { auth, select, files, FormMediaProps } from "@nxs-utils/form/types";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useValues } from "@nxs-utils/hooks/useValues";
 import { AuthField, Field, SubmitButton } from "@nxs-molecules/index";
 import { Select, UploadFile } from "@nxs-molecules";
 import { themeList } from "@nxs-utils/app/themeList";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { handleFormChange } from "@nxs-utils/form/handleFormChange";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
 
@@ -34,6 +34,13 @@ const Form: React.FC<FormProps> = (props) => {
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
+  const [mediaValues, setMediaValues] = useState<FormMediaProps[]>([]);
+
+  useEffect(() => {
+    if (mediaValues.length > 0) {
+      // addTouched(key)
+    }
+  }, [mediaValues]);
 
   const handleChange = (event: any) => {
     const key = event.target.name;
@@ -53,10 +60,10 @@ const Form: React.FC<FormProps> = (props) => {
     setValues({ ...values, [name]: value });
     setSelection({ [name]: value });
   };
-  const handleImageUpload = (file: string, key: string) => {
-    addTouched(key);
-    setValues({ ...values, [key]: file });
-  };
+  // const handleImageUpload = (file: string, key: string) => {
+  //   addTouched(key);
+  //   setValues({ ...values, [key]: file });
+  // };
   const addTouched = (key: string) => {
     if (!touchSchema.includes(key)) setTouchSchema((prev) => [...prev, key]);
   };
@@ -67,9 +74,13 @@ const Form: React.FC<FormProps> = (props) => {
       setErrors,
       onSubmit,
       schema: { requireAllFields },
+      mediaValues,
     });
   };
-
+  const handleMediaValues = (data: FormMediaProps) => {
+    addTouched(data.name);
+    setMediaValues((prev) => [...prev, data]);
+  };
   return values ? (
     <form
       className={theme ? theme : ""}
@@ -95,10 +106,7 @@ const Form: React.FC<FormProps> = (props) => {
               onChange={(e) => updateSelection(e.target.value, v)}
             />
           ) : files.includes(v) ? (
-            <UploadFile
-              name={v}
-              upload={(file) => handleImageUpload(file, v)}
-            />
+            <UploadFile name={v} setMedia={handleMediaValues} />
           ) : (
             <Field
               name={v}

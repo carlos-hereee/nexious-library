@@ -7,13 +7,19 @@ type HandleFormSubmitProps = {
   setErrors: React.Dispatch<React.SetStateAction<KeyStringProp>>;
   onSubmit: (key: any) => void;
   schema?: { [key: string]: any };
+  useMedia?: string;
+  mediaValues?: { name: string; file: any }[];
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
-  const { formProps, values, setErrors, onSubmit, schema } = props;
+  const { formProps, setErrors, onSubmit, schema } = props;
+  const { values, mediaValues, useMedia } = props;
 
   formProps.preventDefault();
+  // validate schema
   if (schema?.requireAllFields) {
     const { isValidated, errors } = validateForm(values, schema);
-    isValidated ? onSubmit(values) : setErrors(errors);
-  } else onSubmit(values);
+    !isValidated && setErrors(errors);
+  }
+  // add media name for uploading files to db
+  return useMedia ? onSubmit({ ...values, ...mediaValues }) : onSubmit(values);
 };

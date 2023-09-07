@@ -2,11 +2,11 @@ import { useRef, useState } from "react";
 
 type UploadFileProps = {
   name: string;
-  upload: (e: any) => void;
+  setMedia: (e: any) => void;
 };
 // TODO: UPload files
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { name, upload } = props;
+  const { name, setMedia } = props;
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);
@@ -20,12 +20,11 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     const selectedFiles = event.target.files as FileList;
     const file = selectedFiles?.[0];
     if (file) {
+      setMedia({ name: event.target.name, file });
       setCurrentImage(file);
       setPreviewImage(URL.createObjectURL(file));
-      upload(file);
     }
   };
-
   return (
     <div className="field-upload">
       <input
