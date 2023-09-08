@@ -13,6 +13,7 @@ type Props = { hero: HeroProp; theme?: string };
  */
 const Hero: React.FC<Props> = ({ hero, theme }) => {
   const [load, setLoad] = useState<boolean>();
+  console.log("hero", hero);
   if (!hero) return <ErrorMessage code="missingProps" prop="hero" />;
   return hero?.small ? (
     <div
@@ -21,6 +22,7 @@ const Hero: React.FC<Props> = ({ hero, theme }) => {
     >
       <img
         loading="lazy"
+        crossOrigin="anonymous"
         className={theme ? `hero ${theme}` : "hero"}
         src={hero.url}
         alt={hero.alt}
@@ -32,10 +34,10 @@ const Hero: React.FC<Props> = ({ hero, theme }) => {
     <div>
       <img
         loading="lazy"
+        crossOrigin="anonymous"
         className={theme ? `hero ${theme}` : "hero"}
         src={hero.url}
         alt={hero.alt}
-        onLoad={() => setLoad(true)}
       />
       {hero.credit && <UnsplashCredit creditTo={hero.credit} />}
     </div>

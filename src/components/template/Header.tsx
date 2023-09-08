@@ -46,10 +46,10 @@ const Header: React.FC<HeaderProps> = (props) => {
     setActive(!isActive);
     navigate(`${e.link}`);
   };
-
+  // console.log("errors", errors);
   return (
     <header>
-      {logo?.uid && <Logo logo={logo} />}
+      {logo?.logoId && <Logo logo={logo} />}
       {menu && (
         <>
           {" "}

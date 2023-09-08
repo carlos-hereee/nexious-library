@@ -1,3 +1,4 @@
+import { objLength } from "@nxs-utils/app/objLength";
 import { useEffect, useState } from "react";
 
 export type PropHandling = { [key: string]: any };
@@ -28,7 +29,7 @@ export const usePropErrorHandling = (props: PropHandling, isProp: boolean) => {
     Object.keys(props).forEach((key) => {
       // check values is valid
       if (!props[key]) missingProps(key);
-      if (typeof props[key] === "object" && !props[key].length) {
+      if (typeof props[key] === "object" && !objLength(props[key])) {
         missingProps(key);
       }
     });
