@@ -74,11 +74,11 @@ const Form: React.FC<FormProps> = (props) => {
       setErrors,
       onSubmit,
       schema: { requireAllFields },
-      mediaValues,
     });
   };
   const handleMediaValues = (data: FormMediaProps) => {
     addTouched(data.name);
+    setValues({ ...values, [data.name]: data.file });
     setMediaValues((prev) => [...prev, data]);
   };
   return values ? (
