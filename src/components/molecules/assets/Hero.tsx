@@ -13,7 +13,6 @@ type Props = { hero: HeroProp; theme?: string };
  */
 const Hero: React.FC<Props> = ({ hero, theme }) => {
   const [load, setLoad] = useState<boolean>();
-  console.log("hero", hero);
   if (!hero) return <ErrorMessage code="missingProps" prop="hero" />;
   return hero?.small ? (
     <div

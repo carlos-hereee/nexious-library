@@ -35,7 +35,6 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     if (idx) menu[idx] = a;
     toggle(menu);
   };
-  console.log("menu", menu);
 
   return (
     <ul

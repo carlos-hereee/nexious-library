@@ -18,7 +18,6 @@ export type LogoProps = {
  */
 const Logo: React.FC<LogoProps> = ({ logo }) => {
   const { label, theme } = logo;
-  // console.log("logo", logo);
   return (
     <Link to="/" className={theme ? `logo-link ${theme}` : "logo-link"}>
       <Hero hero={logo} />
