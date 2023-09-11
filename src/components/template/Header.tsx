@@ -44,42 +44,47 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const handleClick = (e: MenuItemProp) => {
     setActive(!isActive);
-    navigate(`${e.link}`);
+    e.active && e.active.link
+      ? navigate(`/${e.active.link}`)
+      : navigate(`/${e.active?.name}`);
   };
-  // console.log("errors", errors);
+  console.log("errors", errors);
   return (
     <header>
-      {logo?.logoId && <Logo logo={logo} />}
-      {menu && (
-        <>
-          {" "}
-          <nav className="primary-navigation">
-            <Navbar
-              show={{ isActive, isClose }}
-              menu={menu}
-              toggle={updateMenu}
-              click={handleClick}
-              language={language}
-            />
-          </nav>
-          <nav className="mobile-navigation">
-            <BurgerButton
-              isBurger={isActive}
-              click={() => setActive(!isActive)}
-              ping={ping}
-            />
-            <Navbar
-              show={{ isActive, isClose }}
-              menu={menu}
-              toggle={updateMenu}
-              click={handleClick}
-              language={language}
-            />
-          </nav>
-        </>
-      )}{" "}
-      {lightColor === "red" && (
+      {lightColor === "red" ? (
         <ErrorMessages errors={errors} component="header" />
+      ) : (
+        <>
+          {logo?.logoId && <Logo logo={logo} />}
+          {menu && (
+            <>
+              {" "}
+              <nav className="primary-navigation">
+                <Navbar
+                  show={{ isActive, isClose }}
+                  menu={menu}
+                  toggle={updateMenu}
+                  click={handleClick}
+                  language={language}
+                />
+              </nav>
+              <nav className="mobile-navigation">
+                <BurgerButton
+                  isBurger={isActive}
+                  click={() => setActive(!isActive)}
+                  ping={ping}
+                />
+                <Navbar
+                  show={{ isActive, isClose }}
+                  menu={menu}
+                  toggle={updateMenu}
+                  click={handleClick}
+                  language={language}
+                />
+              </nav>
+            </>
+          )}
+        </>
       )}
     </header>
   );

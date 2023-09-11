@@ -42,7 +42,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) => (
-        <li className="nav-btn" key={m.uid}>
+        <li className="nav-btn" key={m.menuId}>
           {m.isToggle ? (
             <NavToggle data={m} onSelect={handleToggle} language={language} />
           ) : m.isPrivate ? (

@@ -77,13 +77,16 @@ export type IconItemProp = {
 export type MenuItemAltProp = {
   name: string;
   label: string;
-  uid: string;
+  uid?: string;
+  menuItemId?: string;
   url: string;
   icon?: string;
   locale?: string;
+  link?: string;
 };
 export type MenuItemProp = {
-  uid: string;
+  uid?: string;
+  menuId?: string;
   name: string;
   icon: string;
   link: string;
