@@ -1,12 +1,16 @@
+import { Label } from "@nxs-atoms/index";
 import { useRef, useState } from "react";
 
 type UploadFileProps = {
   name: string;
   setMedia: (e: any) => void;
+  hideLabels?: boolean;
+  labels?: string;
+  errors?: string;
 };
 // TODO: UPload files
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { name, setMedia } = props;
+  const { name, setMedia, labels, errors, hideLabels } = props;
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);
@@ -27,6 +31,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   };
   return (
     <div className="field-upload">
+      {!hideLabels && <Label name={name} label={labels} errors={errors} />}
       <input
         type="file"
         onChange={selectImage}

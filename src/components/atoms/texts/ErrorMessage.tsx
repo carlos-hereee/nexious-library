@@ -18,7 +18,7 @@ const ErrorMessage: React.FC<ErrorMessageProp> = (props) => {
   return (
     <div className="error-message-container">
       <p className="error-message">
-        {error.isProp
+        {error?.isProp
           ? `Prop ${prop} from ${component} component `
           : `Component ${prop} `}
         {messages[code]}

@@ -40,22 +40,16 @@
   gap: #{$rem};
 }
 
-.label {
-  display: flex;
-  gap: 0.5rem;
-  align-items: center;
-  .required {
-    flex-shrink: 1;
-    margin-left: auto;
-    color: #{$danger};
-  }
-}
-.input {
-  padding: 0.5rem 1rem;
-  width: 100%;
-  min-width: 150px;
-  border-radius: #{$border-radius};
-}
 .password-checker {
   max-width: 100%;
+}
+.form-field {
+  &:has(> .input-checkbox) {
+    display: flex;
+    flex-direction: row-reverse;
+    .input-checkbox {
+      min-width: #{$min-width-icons};
+      width: fit-content;
+    }
+  }
 }

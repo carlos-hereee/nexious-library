@@ -43,3 +43,15 @@
 .m-horizontal {
   margin: 0 1rem;
 }
+.highlight {
+  outline: 1px solid #{$faded};
+  &:focus {
+    outline: 1px solid #{$dark-gray};
+  }
+  &:hover {
+    outline: 1px solid #{$dark-gray};
+  }
+}
+.required {
+  color: #{$danger};
+}

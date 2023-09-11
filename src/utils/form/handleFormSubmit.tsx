@@ -6,7 +6,7 @@ type HandleFormSubmitProps = {
   values: { [key: string]: any };
   setErrors: React.Dispatch<React.SetStateAction<KeyStringProp>>;
   onSubmit: (key: any) => void;
-  schema?: { [key: string]: any };
+  schema?: { [key: string]: any }[];
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
   const { formProps, setErrors, onSubmit, schema } = props;
@@ -16,17 +16,18 @@ export const handleFormSubmit = (props: HandleFormSubmitProps) => {
   formProps.preventDefault();
 
   // validate schema
-  if (schema?.requireAllFields) {
+  if (schema) {
     const { isValidated, errors } = validateForm(payload, schema);
     !isValidated && setErrors(errors);
-  }
-  // save file uploads on a form data
-  const formData = new FormData();
-  for (let idx = 0; idx < Object.keys(values).length; idx++) {
-    const value = Object.values(values)[idx];
-    const key = Object.keys(values)[idx];
-    formData.append(key, value);
-  }
+  } else {
+    // save file uploads on a form data
+    const formData = new FormData();
+    for (let idx = 0; idx < Object.keys(values).length; idx++) {
+      const value = Object.values(values)[idx];
+      const key = Object.keys(values)[idx];
+      formData.append(key, value);
+    }
 
-  return onSubmit(formData);
+    return onSubmit(formData);
+  }
 };

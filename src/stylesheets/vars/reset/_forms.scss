@@ -8,17 +8,9 @@ form {
 input,
 textarea {
   padding: #{$rem05} #{$rem};
-  // width: 100%;
   min-width: #{$min-width};
   border-radius: #{$border-radius};
   border: none;
-  outline: 1px solid #{$faded};
-  &:focus {
-    outline: 1px solid #{$dark-gray};
-  }
-  &:hover {
-    outline: 1px solid #{$dark-gray};
-  }
 }
 // replace default styling
 select {

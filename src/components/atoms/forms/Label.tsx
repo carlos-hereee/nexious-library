@@ -10,7 +10,7 @@ type Props = {
 const Label: React.FC<Props> = (props) => {
   const { label, errors, theme, name } = props;
   return (
-    <label htmlFor={name} className={theme ? theme : "label"}>
+    <label htmlFor={name} className={theme ? theme : ""}>
       <span className="label-name">
         {label
           ? label.charAt(0).toUpperCase() + label.slice(1)
