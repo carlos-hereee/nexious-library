@@ -1,28 +1,29 @@
 import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { validateForm } from "./validateForm";
+import { initLabels } from "./labels";
 
 type HandleFormChangeProps = {
   values: { [key: string]: string };
   touched: string[];
-  setErrors: React.Dispatch<React.SetStateAction<KeyStringProp>>;
-  setValues: React.Dispatch<React.SetStateAction<KeyStringProp>>;
   event: any;
+  schema?: { required: string[] };
+  label?: { [key: string]: string };
 };
 
 export const handleFormChange = (props: HandleFormChangeProps) => {
-  const { setErrors, setValues, values, touched, event } = props;
+  const { values, touched, event, schema, label } = props;
   // key variables
   const key = event.target.name;
   const value = event.currentTarget.value;
-  const payload = { ...values, [key]: value };
+  // const payload = { ...values, [key]: value };
+  let labels = label ? label : initLabels;
   // validate touched
   const validate: KeyStringProp = {};
-  Object.keys(payload).forEach((p) => {
+  Object.keys(values).forEach((p) => {
     if (touched.includes(p) || p === key) {
       validate[key] = value;
     }
   });
-  const { isValidated, errors } = validateForm(validate);
-  !isValidated && setErrors(errors);
-  setValues(payload);
+  const { isValidated, errors } = validateForm({ values, schema, labels });
+  return { isValidated, errors };
 };

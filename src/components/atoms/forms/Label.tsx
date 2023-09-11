@@ -1,5 +1,4 @@
-// import { LabelKeys } from "@nxs-utils/helpers/types";
-import { labels } from "@nxs-utils/form/labels";
+import { initLabels } from "@nxs-utils/form/labels";
 
 type Props = {
   name: string;
@@ -9,14 +8,14 @@ type Props = {
 };
 const Label: React.FC<Props> = (props) => {
   const { label, errors, theme, name } = props;
+  const labelCap = label
+    ? label.charAt(0).toUpperCase() + label.slice(1)
+    : initLabels.label &&
+      initLabels.label.charAt(0).toUpperCase() + initLabels.label.slice(1);
+
   return (
     <label htmlFor={name} className={theme ? theme : ""}>
-      <span className="label-name">
-        {label
-          ? label.charAt(0).toUpperCase() + label.slice(1)
-          : labels.label &&
-            labels.label.charAt(0).toUpperCase() + labels.label.slice(1)}
-      </span>{" "}
+      <span className="label-name">{labelCap}</span>{" "}
       {errors && <span className="required">{errors}</span>}
     </label>
   );

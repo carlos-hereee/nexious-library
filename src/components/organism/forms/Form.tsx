@@ -22,7 +22,7 @@ type FormProps = {
   placeholders?: { [key: string]: string };
   types?: { [key: string]: string };
   submitLabel?: string;
-  schema?: { [key: string]: any }[];
+  schema?: { required: string[] };
   useMedia?: boolean;
 };
 
@@ -36,15 +36,20 @@ const Form: React.FC<FormProps> = (props) => {
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
   const handleChange = (event: any) => {
+    // key variables
     const key = event.target.name;
+    const value = event.currentTarget.value;
+    const payload = { ...values, [key]: value };
+    setValues(payload);
     addTouched(key);
-    handleFormChange({
-      values,
-      setErrors,
-      setValues,
-      touched: touchSchema,
-      event,
-    });
+
+    // const { isValidated, errors } = handleFormChange({
+    //   values,
+    //   touched: touchSchema,
+    //   event,
+    //   schema,
+    //   label: labels,
+    // });
   };
   const onSubmit = () => submit(values);
 
@@ -57,7 +62,15 @@ const Form: React.FC<FormProps> = (props) => {
     if (!touchSchema.includes(key)) setTouchSchema((prev) => [...prev, key]);
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
-    handleFormSubmit({ formProps, values, setErrors, onSubmit, schema });
+    const { formData, isValidated, errors } = handleFormSubmit({
+      formProps,
+      values,
+      schema,
+      label: labels,
+    });
+    if (!isValidated) {
+      setErrors(errors);
+    } else submit(formData);
   };
   const handleMediaValues = (data: FormMediaProps) => {
     addTouched(data.name);

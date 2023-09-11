@@ -1,4 +1,4 @@
-import { labels } from "@nxs-utils/form/labels";
+import { initLabels } from "@nxs-utils/form/labels";
 
 export type DefaultPageComponent = {
   title: string;
@@ -58,7 +58,7 @@ export type OptionProp = {
 };
 export type CellDataProp = { data: string; isHeader?: boolean; uid?: string };
 export type TableColumnProp = { span: number; name: string; uid?: string };
-export type LabelKeys = keyof typeof labels;
+export type LabelKeys = keyof typeof initLabels;
 export type NavlinkProp = { data: string; link: string };
 export type CardHeaderProps = {
   title: string;
