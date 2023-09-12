@@ -77,17 +77,17 @@ export type IconItemProp = {
   isAlt?: boolean;
   alt?: string;
 };
-export type MenuItemAltProp = {
+export type MenuItemProp = {
   name: string;
   label: string;
   uid?: string;
   menuItemId?: string;
   url: string;
-  icon?: string;
+  icon: string;
   locale?: string;
   link?: string;
 };
-export type MenuItemProp = {
+export type MenuProp = {
   uid?: string;
   menuId?: string;
   name: string;
@@ -97,8 +97,8 @@ export type MenuItemProp = {
   label?: string;
   isToggle?: boolean;
   isPrivate?: boolean;
-  active?: MenuItemAltProp;
-  alternatives: MenuItemAltProp[];
+  active: MenuItemProp;
+  alternatives: MenuItemProp[];
 };
 export type CalendarDayProps = {
   dayIdx: number;

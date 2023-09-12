@@ -1,9 +1,9 @@
-import { MenuItemProp } from "@nxs-utils/helpers/types";
+import { MenuProp } from "@nxs-utils/helpers/types";
 import { IconButton } from "@nxs-molecules";
 
 export type NavigationProps = {
-  click: (e: MenuItemProp) => void;
-  menu: MenuItemProp[];
+  click: (e: MenuProp) => void;
+  menu: MenuProp[];
   theme?: string;
 };
 /**

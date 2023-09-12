@@ -83,6 +83,7 @@ const svg: SVGProp = {
   eyeSlash: faEyeSlash,
   flag: faGlobe,
   FAQ: faQuestion,
+  faq: faQuestion,
   facebook: faFacebook,
   flagEnglish: faFlagUsa,
   // flagSpanish: ,

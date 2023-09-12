@@ -1,13 +1,13 @@
-import { MenuItemAltProp, MenuItemProp } from "@nxs-utils/helpers/types";
+import { MenuItemProp, MenuProp } from "@nxs-utils/helpers/types";
 import { IconButton, NavToggle } from "@nxs-molecules";
 
 export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
-  toggle: (a: MenuItemProp[]) => void;
-  click: (a: MenuItemProp) => void;
-  menu: MenuItemProp[];
+  toggle: (a: MenuProp[]) => void;
+  click: (a: MenuProp) => void;
+  menu: MenuProp[];
   theme?: string;
-  language?: MenuItemAltProp;
+  language?: MenuItemProp;
 };
 /**
  * Component - Navbar
@@ -38,7 +38,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
 
   return (
     <ul
-      className={theme ? `navigation ${theme}` : "navigation bg-default"}
+      className={theme ? `navigation ${theme}` : "navigation"}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) => (
@@ -46,16 +46,17 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           {m.isToggle ? (
             <NavToggle data={m} onSelect={handleToggle} language={language} />
           ) : m.isPrivate ? (
-            m.active &&
-            m.active.icon && (
-              <IconButton
-                icon={{ ...m.active, icon: m.active.icon }}
-                click={() => click(m)}
-                theme="nav-item"
-              />
-            )
+            <IconButton
+              icon={m.active}
+              click={() => click(m)}
+              theme="nav-item highlight"
+            />
           ) : (
-            <IconButton icon={m} click={() => click(m)} theme="nav-item" />
+            <IconButton
+              icon={m.active}
+              click={() => click(m)}
+              theme="nav-item highlight"
+            />
           )}
         </li>
       ))}

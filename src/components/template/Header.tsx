@@ -2,19 +2,15 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import {
-  HeroProp,
-  MenuItemAltProp,
-  MenuItemProp,
-} from "@nxs-utils/helpers/types";
+import { HeroProp, MenuItemProp, MenuProp } from "@nxs-utils/helpers/types";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 
 export type HeaderProps = {
-  menu: MenuItemProp[];
+  menu: MenuProp[];
   ping?: number;
   logo: HeroProp;
-  language?: MenuItemAltProp;
-  updateMenu: (e: MenuItemProp[]) => void;
+  language?: MenuItemProp;
+  updateMenu: (e: MenuProp[]) => void;
 };
 /**
  * Component - Header
@@ -42,7 +38,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     return () => document.removeEventListener("animationend", initClose, true);
   }, []);
 
-  const handleClick = (e: MenuItemProp) => {
+  const handleClick = (e: MenuProp) => {
     setActive(!isActive);
     e.active && e.active.link
       ? navigate(`/${e.active.link}`)

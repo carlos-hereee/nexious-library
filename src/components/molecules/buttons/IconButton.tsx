@@ -1,6 +1,19 @@
 import { Icon, PingCount } from "@nxs-atoms";
-import { IconButtonProps } from "@nxs-utils/helpers/interface";
+import { SizeProp } from "@fortawesome/fontawesome-svg-core";
 
+type IconButtonProps = {
+  icon: {
+    icon: string;
+    size?: SizeProp;
+    spin?: string;
+    color?: string;
+    label?: string;
+    name?: string;
+  };
+  ping?: number;
+  theme?: string;
+  click: (key: any) => void;
+};
 /**
  * Icon Button
  * @param icon.name string to specify the name of an icon
