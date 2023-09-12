@@ -6,18 +6,14 @@
   gap: #{$rem};
 }
 .form-field {
-  max-width: #{$tablet};
   width: 100%;
+  max-width: #{$tablet};
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
   * {
+    // fill white spaces
     width: 100%;
-  }
-  @include devices(mobile) {
-    display: flex;
-    flex-direction: column;
-    gap: #{$rem};
-    * {
-      max-width: 100%;
-    }
   }
 }
 .field-upload {

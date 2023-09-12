@@ -16,22 +16,24 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
   const { hideLabels, labels, errors } = props;
   const { seePassword, togglePassword } = useSeePassword();
   return (
-    <div className="flex-row">
+    <>
       {!hideLabels && <Label name={name} label={labels} errors={errors} />}
-      <Input
-        value={value}
-        change={onChange}
-        name={name}
-        type={seePassword[name] ? "text" : "password"}
-        placeholder={placeholder}
-        theme="highlight password"
-      />
-      <IconButton
-        icon={{ icon: seePassword[name] ? "eyeSlash" : "eye" }}
-        theme="btn-main btn-small highlight"
-        click={() => togglePassword(name)}
-      />
-    </div>
+      <div className="flex-row">
+        <Input
+          value={value}
+          change={onChange}
+          name={name}
+          type={seePassword[name] ? "text" : "password"}
+          placeholder={placeholder}
+          theme="highlight password"
+        />
+        <IconButton
+          icon={{ icon: seePassword[name] ? "eyeSlash" : "eye" }}
+          theme="btn-main btn-small highlight"
+          click={() => togglePassword(name)}
+        />
+      </div>
+    </>
   );
 };
 export default AuthField;
