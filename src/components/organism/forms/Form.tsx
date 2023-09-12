@@ -1,13 +1,13 @@
 import { ErrorMessage, ShowAuthTips } from "@nxs-atoms";
 import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
 import { auth, select, files, FormMediaProps } from "@nxs-utils/form/types";
+import { textarea } from "@nxs-utils/form/types";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useValues } from "@nxs-utils/hooks/useValues";
-import { AuthField, Field, SubmitButton } from "@nxs-molecules/index";
+import { AuthField, Field, SubmitButton, TextArea } from "@nxs-molecules/index";
 import { Select, UploadFile } from "@nxs-molecules";
 import { themeList } from "@nxs-utils/app/themeList";
 import { useState } from "react";
-import { handleFormChange } from "@nxs-utils/form/handleFormChange";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
 
 type FormProps = {
@@ -34,6 +34,7 @@ const Form: React.FC<FormProps> = (props) => {
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
+  const [media, setMedia] = useState<FormMediaProps[]>([]);
 
   const handleChange = (event: any) => {
     // key variables
@@ -42,16 +43,7 @@ const Form: React.FC<FormProps> = (props) => {
     const payload = { ...values, [key]: value };
     setValues(payload);
     addTouched(key);
-
-    // const { isValidated, errors } = handleFormChange({
-    //   values,
-    //   touched: touchSchema,
-    //   event,
-    //   schema,
-    //   label: labels,
-    // });
   };
-  const onSubmit = () => submit(values);
 
   const updateSelection = (value: string, name: string) => {
     addTouched(name);
@@ -67,6 +59,7 @@ const Form: React.FC<FormProps> = (props) => {
       values,
       schema,
       label: labels,
+      media,
     });
     if (!isValidated) {
       setErrors(errors);
@@ -74,7 +67,7 @@ const Form: React.FC<FormProps> = (props) => {
   };
   const handleMediaValues = (data: FormMediaProps) => {
     addTouched(data.name);
-    setValues({ ...values, [data.name]: data.file });
+    setMedia((prev) => [...prev, { name: data.name, file: data.file }]);
   };
   return values ? (
     <form
@@ -111,6 +104,17 @@ const Form: React.FC<FormProps> = (props) => {
               hideLabels={hideLabels}
               labels={labels && labels[v]}
               errors={errors && errors[v]}
+            />
+          ) : textarea.includes(v) ? (
+            <TextArea
+              name={v}
+              onChange={handleChange}
+              value={values[v]}
+              placeholder={placeholders && placeholders[v]}
+              hideLabels={hideLabels}
+              labels={labels && labels[v]}
+              errors={errors && errors[v]}
+              theme="highlight"
             />
           ) : (
             <Field

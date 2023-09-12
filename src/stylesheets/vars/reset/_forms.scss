@@ -7,6 +7,7 @@ form {
 }
 input,
 textarea {
+  font-family: sans-serif;
   padding: #{$rem05} #{$rem};
   min-width: #{$min-width};
   border-radius: #{$border-radius};

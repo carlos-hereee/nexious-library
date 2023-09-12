@@ -1,9 +1,10 @@
 import { Label } from "@nxs-atoms/index";
+import { FormMediaProps } from "@nxs-utils/form/types";
 import { useRef, useState } from "react";
 
 type UploadFileProps = {
   name: string;
-  setMedia: (e: any) => void;
+  setMedia: (e: FormMediaProps) => void;
   hideLabels?: boolean;
   labels?: string;
   errors?: string;

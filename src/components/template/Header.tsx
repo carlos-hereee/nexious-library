@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       ? navigate(`/${e.active.link}`)
       : navigate(`/${e.active?.name}`);
   };
-  console.log("errors", errors);
+  // console.log("errors", errors);
   return (
     <header>
       {lightColor === "red" ? (

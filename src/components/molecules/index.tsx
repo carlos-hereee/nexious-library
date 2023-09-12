@@ -31,6 +31,7 @@ export { default as AuthField } from "./forms/AuthField";
 export { default as Select } from "./forms/Select";
 export { default as Field } from "./forms/Field";
 export { default as UploadFile } from "./forms/UploadFile";
+export { default as TextArea } from "./forms/TextArea";
 
 // calendar
 export { default as CalendarNavigation } from "./calendar/CalendarNavigation";
