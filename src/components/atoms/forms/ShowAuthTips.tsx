@@ -14,7 +14,7 @@ const ShowAuthTips: React.FC<ClickProp> = (props) => {
       <p>Increase your password's security by:</p>
       <ol>
         {tips.tips.map((t) => (
-          <li key={t} className="p-stretch">
+          <li key={t} className="text-max">
             {t}{" "}
           </li>
         ))}

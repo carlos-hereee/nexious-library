@@ -7,7 +7,7 @@ const TextBubble: React.FC<TextBubbleProps> = (props) => {
   return (
     <div className="text-bubble">
       <h3>{title}</h3>
-      <p className="text-body p-stretch">{body}</p>
+      <p className="text-body text-max">{body}</p>
     </div>
   );
 };

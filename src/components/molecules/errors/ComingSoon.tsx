@@ -12,7 +12,7 @@ const ComingSoon: React.FC<CommingSoonProps> = (props) => {
   return (
     <div className="text-center">
       {hero && <Hero hero={hero} />}
-      <p className="p-stretch">
+      <p className="text-max">
         {message
           ? message
           : "This is the lastest of the greats, more coming soon"}

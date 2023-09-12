@@ -15,7 +15,7 @@ const HeroCardAlt: React.FC<HeroCardProps> = (props) => {
       {heading && <h1 className="heading">{heading}</h1>}
       <div className="hero-card-body-alt">
         <Hero hero={hero} theme={hero.theme} />
-        <p className="p-stretch">{body}</p>
+        <p className="text-max">{body}</p>
       </div>
     </div>
   );

@@ -19,9 +19,9 @@ const UserCard: React.FC<UserCardProps> = (props) => {
       {!hideHero && <Hero hero={user.hero} theme="hero-user" />}
       {!hideLabels && (
         <div className="flex-d-column">
-          {user.name && <p className="p-stretch">Name: {user.name}</p>}
-          {user.email && <p className="p-stretch">Email: {user.email}</p>}
-          {user.phone && <p className="p-stretch">Phone: {user.phone}</p>}
+          {user.name && <p className="text-max">Name: {user.name}</p>}
+          {user.email && <p className="text-max">Email: {user.email}</p>}
+          {user.phone && <p className="text-max">Phone: {user.phone}</p>}
         </div>
       )}
     </div>
