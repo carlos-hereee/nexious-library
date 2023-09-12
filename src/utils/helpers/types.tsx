@@ -1,7 +1,7 @@
 import { initLabels } from "@nxs-utils/form/labels";
 
 export type FormDataProps = {
-  [key: string]: string | number | File | undefined;
+  [key: string]: string | number | File;
 };
 export type DefaultPageComponent = {
   title: string;

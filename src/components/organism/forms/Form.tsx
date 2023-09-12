@@ -9,6 +9,7 @@ import { Select, UploadFile } from "@nxs-molecules";
 import { themeList } from "@nxs-utils/app/themeList";
 import { useState } from "react";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
+import { initLabels } from "@nxs-utils/form/labels";
 
 type FormProps = {
   // required props
@@ -60,6 +61,7 @@ const Form: React.FC<FormProps> = (props) => {
       schema,
       label: labels,
       media,
+      useMedia,
     });
     if (!isValidated) {
       setErrors(errors);
@@ -69,6 +71,7 @@ const Form: React.FC<FormProps> = (props) => {
     addTouched(data.name);
     setMedia((prev) => [...prev, { name: data.name, file: data.file }]);
   };
+  console.log("values", values);
   return values ? (
     <form
       className={theme ? theme : ""}
@@ -84,7 +87,7 @@ const Form: React.FC<FormProps> = (props) => {
               onChange={handleChange}
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
-              labels={labels && labels[v]}
+              labels={labels ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           ) : select.includes(v) ? (
@@ -94,7 +97,7 @@ const Form: React.FC<FormProps> = (props) => {
               active={selection[v]}
               onChange={(e) => updateSelection(e.target.value, v)}
               hideLabels={hideLabels}
-              labels={labels && labels[v]}
+              labels={labels ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           ) : files.includes(v) ? (
@@ -102,7 +105,7 @@ const Form: React.FC<FormProps> = (props) => {
               name={v}
               setMedia={handleMediaValues}
               hideLabels={hideLabels}
-              labels={labels && labels[v]}
+              labels={labels ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           ) : textarea.includes(v) ? (
@@ -112,7 +115,7 @@ const Form: React.FC<FormProps> = (props) => {
               value={values[v]}
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
-              labels={labels && labels[v]}
+              labels={labels ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
               theme="highlight"
             />
@@ -124,7 +127,7 @@ const Form: React.FC<FormProps> = (props) => {
               onChange={handleChange}
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
-              labels={labels && labels[v]}
+              labels={labels ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           )}
@@ -134,7 +137,7 @@ const Form: React.FC<FormProps> = (props) => {
       <SubmitButton label={submitLabel} />
     </form>
   ) : (
-    <ErrorMessage code="missingFormInitialValues" prop="form" />
+    <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
   );
 };
 export default Form;

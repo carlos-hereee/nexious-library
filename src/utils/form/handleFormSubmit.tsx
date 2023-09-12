@@ -8,15 +8,17 @@ type HandleFormSubmitProps = {
   schema?: { required: string[] };
   label?: { [key: string]: string };
   media: FormMediaProps[];
+  useMedia?: boolean;
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
-  const { formProps, schema, label, values, media } = props;
+  const { formProps, schema, label, values, media, useMedia } = props;
   // avoid mutating values
   let labels = label ? label : initLabels;
   formProps.preventDefault();
 
   // validate schema
   const { isValidated, errors } = validateForm({ values, schema, labels });
+  if (!useMedia) return { formData: values, isValidated, errors };
   /*  
     - save file uploads on a form data
     formData is tricky because values will not show up on your console
