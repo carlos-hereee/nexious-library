@@ -29,8 +29,7 @@ type FormProps = {
 
 const Form: React.FC<FormProps> = (props) => {
   const { onSubmit, initialValues, hideLabels, theme, submitLabel } = props;
-  const { labels, placeholders, types } = props;
-  const { showAuthTips, useMedia, schema } = props;
+  const { labels, placeholders, types, showAuthTips, useMedia, schema } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<KeyStringProp>({});
@@ -86,7 +85,7 @@ const Form: React.FC<FormProps> = (props) => {
               onChange={handleChange}
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
-              labels={labels ? labels[v] : initLabels[v]}
+              labels={labels && labels[v] ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           ) : select.includes(v) ? (
@@ -96,7 +95,7 @@ const Form: React.FC<FormProps> = (props) => {
               active={selection[v]}
               onChange={(e) => updateSelection(e.target.value, v)}
               hideLabels={hideLabels}
-              labels={labels ? labels[v] : initLabels[v]}
+              labels={labels && labels[v] ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           ) : files.includes(v) ? (
@@ -104,7 +103,7 @@ const Form: React.FC<FormProps> = (props) => {
               name={v}
               setMedia={handleMediaValues}
               hideLabels={hideLabels}
-              labels={labels ? labels[v] : initLabels[v]}
+              labels={labels && labels[v] ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
             />
           ) : textarea.includes(v) ? (
@@ -114,7 +113,7 @@ const Form: React.FC<FormProps> = (props) => {
               value={values[v]}
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
-              labels={labels ? labels[v] : initLabels[v]}
+              labels={labels && labels[v] ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
               theme="highlight"
             />
@@ -126,7 +125,7 @@ const Form: React.FC<FormProps> = (props) => {
               onChange={handleChange}
               placeholder={placeholders && placeholders[v]}
               hideLabel={hideLabels}
-              label={labels ? labels[v] : initLabels[v]}
+              label={labels && labels[v] ? labels[v] : initLabels[v]}
               error={errors && errors[v]}
             />
           )}

@@ -25,4 +25,5 @@ export const initLabels: { [key: string]: string } = {
   theme: "App theme",
   logo: "App logo",
   appName: "App name",
+  nickname: "Nickname:",
 };

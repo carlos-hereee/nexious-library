@@ -16,4 +16,5 @@ export const placeholders: { [key: string]: string } = {
   confirmPassword: "Confirm matching password ..",
   confirmNewPassword: "Confirm new password must match new password ..",
   search: "search ..",
+  nickname: "What would you like everyone to call?",
 };
