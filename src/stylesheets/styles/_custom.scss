@@ -55,3 +55,7 @@
 .required {
   color: #{$danger};
 }
+.active {
+  background-color: #{$dark};
+  color: #{$light};
+}

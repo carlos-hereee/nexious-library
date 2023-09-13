@@ -9,6 +9,7 @@ export { default as Hero } from "./assets/Hero";
 export { default as IconButton } from "./buttons/IconButton";
 export { default as GoBackButton } from "./buttons/GoBackButton";
 export { default as SubmitButton } from "./buttons/SubmitButton";
+export { default as CalendarTile } from "./buttons/CalendarTile";
 
 // card
 export { default as CardHeader } from "./card/CardHeader";
@@ -37,7 +38,6 @@ export { default as TextArea } from "./forms/TextArea";
 // calendar
 export { default as CalendarNavigation } from "./calendar/CalendarNavigation";
 export { default as CalendarView } from "./calendar/CalendarView";
-export { default as CalendarTile } from "./calendar/CalendarTile";
 export { default as CalendarEventList } from "./calendar/CalendarEventList";
 
 // tables

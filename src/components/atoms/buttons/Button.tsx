@@ -1,9 +1,9 @@
 export type ButtonProps = {
-  click: React.MouseEventHandler<HTMLButtonElement>;
-  children?: React.ReactNode;
+  handleClick?: React.MouseEventHandler<HTMLButtonElement>;
   name?: string;
   title?: string;
   theme?: string;
+  label?: string;
 };
 /**
  * Component - Button
@@ -13,15 +13,15 @@ export type ButtonProps = {
  * @returns
  */
 const Button: React.FC<ButtonProps> = (props) => {
-  const { children, click, title, theme } = props;
+  const { handleClick, title, theme, label } = props;
   return (
     <button
       type="button"
-      className={theme ? `btn-${theme}` : ""}
-      title={title ? title : ""}
-      onClick={click}
+      className={theme ? `btn-main ${theme}` : "btn-main"}
+      title={title ? title : undefined}
+      onClick={handleClick}
     >
-      {children}
+      {label}
     </button>
   );
 };

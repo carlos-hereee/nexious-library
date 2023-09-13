@@ -71,69 +71,91 @@ const Form: React.FC<FormProps> = (props) => {
     setMedia((prev) => [...prev, { name: data.name, file: data.file }]);
   };
   return values ? (
-    <form
-      className={theme ? theme : ""}
-      onSubmit={handleSubmit}
-      encType={useMedia ? "multipart/form-data" : ""}
-    >
-      {Object.keys(values).map((v) => (
-        <div key={v} className="form-field">
-          {auth.includes(v) ? (
-            <AuthField
-              name={v}
-              value={values[v]}
-              onChange={handleChange}
-              placeholder={placeholders && placeholders[v]}
-              hideLabels={hideLabels}
-              labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
-            />
-          ) : select.includes(v) ? (
-            <Select
-              name={v}
-              list={themeList}
-              active={selection[v]}
-              onChange={(e) => updateSelection(e.target.value, v)}
-              hideLabels={hideLabels}
-              labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
-            />
-          ) : files.includes(v) ? (
-            <UploadFile
-              name={v}
-              setMedia={handleMediaValues}
-              hideLabels={hideLabels}
-              labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
-            />
-          ) : textarea.includes(v) ? (
-            <TextArea
-              name={v}
-              onChange={handleChange}
-              value={values[v]}
-              placeholder={placeholders && placeholders[v]}
-              hideLabels={hideLabels}
-              labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
-              theme="highlight"
-            />
-          ) : (
-            <Field
-              name={v}
-              type={types && types[v]}
-              value={values[v]}
-              onChange={handleChange}
-              placeholder={placeholders && placeholders[v]}
-              hideLabel={hideLabels}
-              label={labels && labels[v] ? labels[v] : initLabels[v]}
-              error={errors && errors[v]}
-            />
-          )}
-        </div>
-      ))}
-      {/* {showAuthTips && <ShowAuthTips onSubmit={() => submit(values)} />} */}
-      <SubmitButton label={submitLabel} />
-    </form>
+    useMedia ? (
+      <form
+        className={theme ? theme : undefined}
+        onSubmit={handleSubmit}
+        encType="multipart/form-data"
+      >
+        {Object.keys(values).map((v) => (
+          <div key={v} className="form-field">
+            {files.includes(v) ? (
+              <UploadFile
+                name={v}
+                setMedia={handleMediaValues}
+                hideLabels={hideLabels}
+                labels={labels && labels[v] ? labels[v] : initLabels[v]}
+                errors={errors && errors[v]}
+              />
+            ) : (
+              // always have a back up plan
+              <Field
+                name={v}
+                type={types && types[v]}
+                value={values[v]}
+                onChange={handleChange}
+                placeholder={placeholders && placeholders[v]}
+                hideLabel={hideLabels}
+                label={labels && labels[v] ? labels[v] : initLabels[v]}
+                error={errors && errors[v]}
+              />
+            )}
+          </div>
+        ))}
+        <SubmitButton label={submitLabel} />
+      </form>
+    ) : (
+      <form className={theme ? theme : undefined} onSubmit={handleSubmit}>
+        {Object.keys(values).map((v) => (
+          <div key={v} className="form-field">
+            {auth.includes(v) ? (
+              <AuthField
+                name={v}
+                value={values[v]}
+                onChange={handleChange}
+                placeholder={placeholders && placeholders[v]}
+                hideLabels={hideLabels}
+                labels={labels && labels[v] ? labels[v] : initLabels[v]}
+                errors={errors && errors[v]}
+              />
+            ) : select.includes(v) ? (
+              <Select
+                name={v}
+                list={themeList}
+                active={selection[v]}
+                onChange={(e) => updateSelection(e.target.value, v)}
+                hideLabels={hideLabels}
+                labels={labels && labels[v] ? labels[v] : initLabels[v]}
+                errors={errors && errors[v]}
+              />
+            ) : textarea.includes(v) ? (
+              <TextArea
+                name={v}
+                onChange={handleChange}
+                value={values[v]}
+                placeholder={placeholders && placeholders[v]}
+                hideLabels={hideLabels}
+                labels={labels && labels[v] ? labels[v] : initLabels[v]}
+                errors={errors && errors[v]}
+                theme="highlight"
+              />
+            ) : (
+              <Field
+                name={v}
+                type={types && types[v]}
+                value={values[v]}
+                onChange={handleChange}
+                placeholder={placeholders && placeholders[v]}
+                hideLabel={hideLabels}
+                label={labels && labels[v] ? labels[v] : initLabels[v]}
+                error={errors && errors[v]}
+              />
+            )}
+          </div>
+        ))}
+        <SubmitButton label={submitLabel} />
+      </form>
+    )
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
   );
