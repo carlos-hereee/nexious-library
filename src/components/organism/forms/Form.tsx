@@ -54,8 +54,8 @@ const Form: React.FC<FormProps> = (props) => {
     if (!touchSchema.includes(key)) setTouchSchema((prev) => [...prev, key]);
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
+    formProps.preventDefault();
     const { formData, isValidated, errors } = handleFormSubmit({
-      formProps,
       values,
       schema,
       label: labels,

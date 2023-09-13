@@ -1,7 +1,7 @@
 import { InputProps } from "@nxs-utils/helpers/interface";
 
 const InputQuantity: React.FC<InputProps> = (props) => {
-  const { min, max, value, change, blur } = props;
+  const { min, max, value, onChange, blur } = props;
   return (
     <input
       className="input-quantity"
@@ -9,7 +9,7 @@ const InputQuantity: React.FC<InputProps> = (props) => {
       min={min}
       max={max}
       value={value}
-      onChange={change}
+      onChange={onChange}
       onBlur={blur}
     />
   );

@@ -5,12 +5,12 @@ export type FieldQuantityProps = {
   max: number;
   value: string;
   name: string;
-  change: () => void;
+  onChange: () => void;
   blur?: () => void;
 };
 
 const FieldQuantity: React.FC<FieldQuantityProps> = (props) => {
-  const { min, max, value, change, blur, name } = props;
+  const { min, max, value, onChange, blur, name } = props;
   return (
     <div className="field">
       <Label label={name} name={name} />
@@ -19,7 +19,7 @@ const FieldQuantity: React.FC<FieldQuantityProps> = (props) => {
         min={min}
         max={max}
         value={value}
-        change={change}
+        onChange={onChange}
         blur={blur}
       />
     </div>

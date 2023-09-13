@@ -51,7 +51,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
             expiration: "",
             cvc: "",
           }}
-          submit={(e) => visaPayment && visaPayment(e)}
+          onSubmit={(e) => visaPayment && visaPayment(e)}
         />
       )}
       {active.type === "paypal" && (

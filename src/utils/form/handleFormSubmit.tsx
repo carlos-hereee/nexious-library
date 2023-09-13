@@ -3,7 +3,6 @@ import { initLabels } from "./labels";
 import { FormMediaProps } from "./types";
 
 type HandleFormSubmitProps = {
-  formProps: React.FormEvent<HTMLFormElement>;
   values: { [key: string]: any };
   schema?: { required: string[] };
   label?: { [key: string]: string };
@@ -11,10 +10,9 @@ type HandleFormSubmitProps = {
   useMedia?: boolean;
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
-  const { formProps, schema, label, values, media, useMedia } = props;
+  const { schema, label, values, media, useMedia } = props;
   // avoid mutating values
   let labels = label ? label : initLabels;
-  formProps.preventDefault();
 
   // validate schema
   const { isValidated, errors } = validateForm({ values, schema, labels });
