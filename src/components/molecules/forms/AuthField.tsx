@@ -30,7 +30,7 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
         <IconButton
           icon={{ icon: seePassword[name] ? "eyeSlash" : "eye" }}
           theme="btn-main btn-small highlight"
-          click={() => togglePassword(name)}
+          onClick={() => togglePassword(name)}
         />
       </div>
     </>

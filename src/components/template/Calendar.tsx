@@ -49,7 +49,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     <div className={theme ? `${theme} calendar` : "calendar"}>
       <div className="flex-j-end">
         <IconButton
-          click={() => setActive(today)}
+          onClick={() => setActive(today)}
           icon={{ icon: "refresh" }}
           theme="btn-small"
         />

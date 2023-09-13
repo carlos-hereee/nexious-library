@@ -1,12 +1,12 @@
 import { Input, Label } from "@nxs-atoms/index";
-import { useErrors } from "@nxs-utils/hooks/useErrors";
+// import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { ErrorMessages } from "..";
 
 type FieldProp = {
   name: string;
   value: string;
-  onChange: (key: any) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   type?: string;
   hideLabel?: boolean;
@@ -25,7 +25,7 @@ const Field: React.FC<FieldProp> = (props) => {
       {!hideLabel && <Label name={name} label={label} errors={error} />}
       <Input
         value={value}
-        change={onChange}
+        onChange={onChange}
         name={name}
         theme={type === "checkbox" ? "input-checkbox" : "highlight"}
         placeholder={placeholder}

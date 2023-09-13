@@ -48,13 +48,13 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           ) : m.isPrivate ? (
             <IconButton
               icon={m.active}
-              click={() => click(m)}
+              onClick={() => click(m)}
               theme="nav-item highlight"
             />
           ) : (
             <IconButton
               icon={m.active}
-              click={() => click(m)}
+              onClick={() => click(m)}
               theme="nav-item highlight"
             />
           )}

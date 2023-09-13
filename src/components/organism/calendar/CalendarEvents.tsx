@@ -29,7 +29,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         {meeting.uid ? (
           <div className="flex-d-column">
             <IconButton
-              click={setMeeting}
+              onClick={setMeeting}
               icon={{
                 icon: "x",
                 label: `${meeting.time.startTime} ${meeting.time.endTime}`,

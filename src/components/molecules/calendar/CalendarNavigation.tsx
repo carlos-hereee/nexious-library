@@ -23,7 +23,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
         {previous.map((p) => (
           <IconButton
             key={p.label}
-            click={() => click(p.label)}
+            onClick={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
             theme="btn-small"
           />
@@ -34,7 +34,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
         {next.map((p) => (
           <IconButton
             key={p.label}
-            click={() => click(p.label)}
+            onClick={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
             theme="btn-small"
           />

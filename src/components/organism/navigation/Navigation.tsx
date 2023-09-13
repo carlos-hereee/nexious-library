@@ -18,7 +18,7 @@ const Navigation: React.FC<NavigationProps> = (props) => {
     <ul className={theme ? `navigation ${theme}` : "navigation bg-default"}>
       {menu.map((m) => (
         <li className="nav-btn">
-          <IconButton icon={m} click={() => click(m)} />
+          <IconButton icon={m} onClick={() => click(m)} />
         </li>
       ))}
     </ul>

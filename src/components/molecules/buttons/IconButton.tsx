@@ -12,7 +12,7 @@ type IconButtonProps = {
   };
   ping?: number;
   theme?: string;
-  click: (key: any) => void;
+  onClick?: (key: any) => void;
 };
 /**
  * Icon Button
@@ -26,11 +26,11 @@ type IconButtonProps = {
  */
 
 const IconButton: React.FC<IconButtonProps> = (props) => {
-  const { icon, ping, click, theme } = props;
+  const { icon, ping, onClick, theme } = props;
   return (
     <button
       className={theme ? theme : ""}
-      onClick={click}
+      onClick={onClick}
       title={icon.name || icon.icon}
       type="button"
     >
