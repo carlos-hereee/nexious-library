@@ -6,6 +6,5 @@ type FormValueProps = {
 
 export const useValues = (initialValues: FormValueProps) => {
   const [values, setValues] = useState<FormValueProps>(initialValues);
-  console.log("initialValues", initialValues);
   return { values, setValues };
 };

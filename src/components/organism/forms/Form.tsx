@@ -14,7 +14,7 @@ import { initLabels } from "@nxs-utils/form/labels";
 type FormProps = {
   // required props
   initialValues: { [key: string]: any };
-  submit: (e: any) => void;
+  onSubmit: (e: any) => void;
   // optional
   hideLabels?: boolean;
   showAuthTips?: boolean;
@@ -28,7 +28,7 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { submit, initialValues, hideLabels, theme, submitLabel } = props;
+  const { onSubmit, initialValues, hideLabels, theme, submitLabel } = props;
   const { labels, placeholders, types } = props;
   const { showAuthTips, useMedia, schema } = props;
   const { values, setValues } = useValues(initialValues);
@@ -65,13 +65,12 @@ const Form: React.FC<FormProps> = (props) => {
     });
     if (!isValidated) {
       setErrors(errors);
-    } else submit(formData);
+    } else onSubmit(formData);
   };
   const handleMediaValues = (data: FormMediaProps) => {
     addTouched(data.name);
     setMedia((prev) => [...prev, { name: data.name, file: data.file }]);
   };
-  console.log("values", values);
   return values ? (
     <form
       className={theme ? theme : ""}
@@ -126,14 +125,14 @@ const Form: React.FC<FormProps> = (props) => {
               value={values[v]}
               onChange={handleChange}
               placeholder={placeholders && placeholders[v]}
-              hideLabels={hideLabels}
-              labels={labels ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
+              hideLabel={hideLabels}
+              label={labels ? labels[v] : initLabels[v]}
+              error={errors && errors[v]}
             />
           )}
         </div>
       ))}
-      {showAuthTips && <ShowAuthTips onSubmit={() => submit(values)} />}
+      {/* {showAuthTips && <ShowAuthTips onSubmit={() => submit(values)} />} */}
       <SubmitButton label={submitLabel} />
     </form>
   ) : (

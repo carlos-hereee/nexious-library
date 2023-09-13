@@ -1,4 +1,7 @@
 import { Input, Label } from "@nxs-atoms/index";
+import { useErrors } from "@nxs-utils/hooks/useErrors";
+import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { ErrorMessages } from "..";
 
 type FieldProp = {
   name: string;
@@ -6,16 +9,20 @@ type FieldProp = {
   onChange: (key: any) => void;
   placeholder?: string;
   type?: string;
-  hideLabels?: boolean;
-  labels?: string;
-  errors?: string;
+  hideLabel?: boolean;
+  label?: string;
+  error?: string;
 };
 const Field: React.FC<FieldProp> = (props) => {
   const { name, value, onChange, placeholder, type } = props;
-  const { hideLabels, labels, errors } = props;
-  return (
+  const { hideLabel, label, error } = props;
+  const { lightColor, errors } = usePropErrorHandling({ name }, true);
+  // console.log("errors", errors);
+  return lightColor === "red" ? (
+    <ErrorMessages errors={errors} component="field" />
+  ) : (
     <>
-      {!hideLabels && <Label name={name} label={labels} errors={errors} />}
+      {!hideLabel && <Label name={name} label={label} errors={error} />}
       <Input
         value={value}
         change={onChange}
