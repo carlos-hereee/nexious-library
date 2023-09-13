@@ -92,3 +92,15 @@
   max-height: #{$min-width};
   max-width: #{$max-width-sm};
 }
+.preview-hero-empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: xx-large;
+  font-weight: bolder;
+  aspect-ratio: 1/1;
+  max-height: #{$min-width};
+  max-width: #{$max-width-sm};
+  border-radius: #{$border-radius};
+  border: 1px solid #{$dark};
+}

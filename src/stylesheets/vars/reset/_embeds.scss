@@ -13,7 +13,8 @@ iframe,
 embed,
 object {
   display: block;
-  vertical-align: middle;
+  // vertical align should not be used becuase of display block
+  // vertical-align: middle;
   max-width: 100%;
 }
 audio:not([controls]) {
