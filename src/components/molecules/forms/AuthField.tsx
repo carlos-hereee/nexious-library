@@ -4,7 +4,7 @@ import { IconButton } from "@nxs-molecules";
 
 type AuthFieldProp = {
   name: string;
-  onChange: (key: any) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   value: string;
   placeholder?: string;
   hideLabels?: boolean;
@@ -21,7 +21,7 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
       <div className="flex-row">
         <Input
           value={value}
-          change={onChange}
+          onChange={onChange}
           name={name}
           type={seePassword[name] ? "text" : "password"}
           placeholder={placeholder}

@@ -1,3 +1,5 @@
+import { KeyStringProp } from "@nxs-utils/helpers/types";
+
 export const initLabels: { [key: string]: string } = {
   firstName: "First name",
   lastName: "Last name",
@@ -26,4 +28,7 @@ export const initLabels: { [key: string]: string } = {
   logo: "App logo",
   appName: "App name",
   nickname: "Nickname:",
+};
+export const getLabel = (key: string, labels?: KeyStringProp) => {
+  return labels && labels[key] ? labels[key] : initLabels[key];
 };

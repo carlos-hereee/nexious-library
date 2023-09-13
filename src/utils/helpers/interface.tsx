@@ -20,7 +20,7 @@ export interface RequiredProps {
 export interface InputProps {
   value: string;
   name: string;
-  change: (key: any) => void;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
   theme?: string;
   type?: string;

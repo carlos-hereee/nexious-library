@@ -2,7 +2,7 @@ import { InputProps } from "@nxs-utils/helpers/interface";
 import { placeholders } from "@nxs-utils/form/placeholders";
 
 const Input: React.FC<InputProps> = (props) => {
-  const { type, value, change, blur, name, theme, placeholder } = props;
+  const { type, value, onChange, blur, name, theme, placeholder } = props;
   return (
     <input
       className={theme ? theme : ""}
@@ -11,7 +11,7 @@ const Input: React.FC<InputProps> = (props) => {
       type={type ? type : "text"}
       value={value}
       placeholder={placeholder ? placeholder : placeholders[name]}
-      onChange={change}
+      onChange={onChange}
       onBlur={blur}
     />
   );

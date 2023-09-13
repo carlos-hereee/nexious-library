@@ -1,3 +1,3 @@
-export const matchingPassword = (password: string, confirmPassword: string) => {
+export const isMatch = (password: string, confirmPassword: string) => {
   return password === confirmPassword;
 };

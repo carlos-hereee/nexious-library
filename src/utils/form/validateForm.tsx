@@ -1,59 +1,51 @@
 import { validateEmail } from "./validateEmail";
-import { matchingPassword } from "./matchingPassword";
+import { isMatch } from "./matchingPassword";
+import { getLabel } from "./labels";
+import { KeyStringProp } from "@nxs-utils/helpers/types";
+// import { objLength } from "@nxs-utils/app/objLength";
 
 type ValidateProps = {
   values: { [key: string]: any };
   schema?: { required: string[] };
-  labels: { [key: string]: string };
+  labels?: KeyStringProp;
 };
 
 export const validateForm = (props: ValidateProps) => {
   const { values, labels, schema } = props;
   let isValidated: boolean = true;
-  let errors: { [key: string]: string } = {};
+  let err: { [key: string]: string } = {};
 
+  const updateError = (key: string, message: string) => {
+    if (isValidated) isValidated = false;
+    err[key] = getLabel(key, labels) + " " + message;
+  };
   Object.keys(values).forEach((key: string) => {
     if (schema?.required.includes(key)) {
       // check if empty
       if (!values[key]) {
-        isValidated = false;
-        errors[key] = labels[key] + " is a required field";
-        return;
+        return updateError(key, "is a required field");
       }
       // validate email
-      if (key === "email") {
-        if (!validateEmail(values[key])) {
-          isValidated = false;
-          errors[key] = labels[key] + " should be a valid email address";
-          return;
-        }
+      if (key === "email" && !validateEmail(values[key])) {
+        return updateError(key, "should be a valid email address");
       }
       // confirm matching passwords
       if (key === "newPassword") {
-        if (matchingPassword(values["oldPassword"], values["newPassword"])) {
-          isValidated = false;
-          errors[key] =
-            labels[key] + " must be different than previous password";
-          return;
+        if (isMatch(values["oldPassword"], values["newPassword"])) {
+          return updateError(key, "must be different than previous password");
         }
       }
       if (key === "confirmNewPassword") {
-        const newPassword = values["newPassword"];
-        const confirmNewPassword = values["confirmNewPassword"];
-        if (!matchingPassword(newPassword, confirmNewPassword)) {
-          isValidated = false;
-          errors[key] = labels[key] + " must match new password";
-          return;
+        if (!isMatch(values["newPassword"], values["confirmNewPassword"])) {
+          return updateError(key, "must match new password");
         }
       }
       if (key === "confirmPassword") {
-        if (!matchingPassword(values["password"], values[key])) {
-          isValidated = false;
-          errors[key] = labels[key] + " must match password";
-          return;
+        if (!isMatch(values["password"], values[key])) {
+          return updateError(key, " must match password");
         }
       }
     }
   });
-  return { isValidated, errors };
+  return { isValidated, errors: err };
 };
