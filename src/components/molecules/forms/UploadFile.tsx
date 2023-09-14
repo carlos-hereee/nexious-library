@@ -1,7 +1,6 @@
 import { Label } from "@nxs-atoms/index";
-import { FormMediaProps } from "@nxs-utils/form/types";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { ErrorMessages } from "@nxs-molecules";
 import { initLabels } from "@nxs-utils/form/labels";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
@@ -12,17 +11,18 @@ type UploadFileProps = {
   theme?: string;
   hideLabels?: boolean;
   label?: KeyStringProp;
+  selectLabel?: string;
   error?: string;
 };
 // TODO: UPload files
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { name, label, error, hideLabels, onSelect, theme } = props;
+  const { name, theme, error, onSelect } = props;
+  const { selectLabel, label, hideLabels } = props;
   const { lightColor, errors } = usePropErrorHandling({ onSelect, name }, true);
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef(null);
-  const [media, setMedia] = useState<FormMediaProps[]>([]);
   const labels = label ? label : initLabels;
 
   const imageClick = () => {
@@ -33,15 +33,12 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     const selectedFiles = event.target.files as FileList;
     const file = selectedFiles?.[0];
     if (file) {
-      setMedia((prev) => [...prev, { name: event.target.name, file }]);
+      onSelect({ name, filename: file.name, file: file });
       setCurrentImage(file);
       setPreviewImage(URL.createObjectURL(file));
     }
   };
 
-  useEffect(() => {
-    if (media.length > 0) onSelect(media);
-  }, [media]);
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="Upload file" />;
   }
@@ -60,7 +57,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         hidden
       />
       <button className="btn-main" type="button" onClick={imageClick}>
-        Upload a file
+        {selectLabel ? selectLabel : "Choose a file"}
       </button>
       <div className="flex-d-column">
         <span>Image Preview</span>

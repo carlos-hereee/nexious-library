@@ -1,5 +1,4 @@
 import { ErrorMessage } from "@nxs-atoms";
-import { handleFormSubmit } from "@nxs-utils/form/handleFormSubmit";
 import { auth, select } from "@nxs-utils/form/types";
 import { textarea } from "@nxs-utils/form/types";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
@@ -17,6 +16,7 @@ type FormProps = {
   // required props
   initialValues: { [key: string]: any };
   onSubmit: (e: any) => void;
+  onChange?: (e: any) => void;
   // optional
   hideLabels?: boolean;
   hideSubmit?: boolean;
@@ -30,8 +30,8 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { onSubmit, initialValues, hideLabels, theme } = props;
-  const { labels, placeholders, types, showAuthTips, schema } = props;
+  const { onSubmit, onChange, initialValues, hideLabels, theme } = props;
+  const { labels, placeholders, types, schema } = props;
   const { submitLabel, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
@@ -46,6 +46,7 @@ const Form: React.FC<FormProps> = (props) => {
     const payload = { ...values, [key]: value };
     setValues(payload);
     addTouched(key);
+    if (onChange) onChange(payload);
   };
 
   const updateSelection = (value: string, name: string) => {
