@@ -7,17 +7,15 @@ import { KeyStringProp } from "@nxs-utils/helpers/types";
 type ValidateProps = {
   values: { [key: string]: any };
   schema?: { required: string[] };
-  labels?: KeyStringProp;
+  label?: KeyStringProp;
 };
 
 export const validateForm = (props: ValidateProps) => {
-  const { values, labels, schema } = props;
-  let isValidated: boolean = true;
+  const { values, label, schema } = props;
   let err: { [key: string]: string } = {};
 
   const updateError = (key: string, message: string) => {
-    if (isValidated) isValidated = false;
-    err[key] = getLabel(key, labels) + " " + message;
+    err[key] = getLabel(key, label) + " " + message;
   };
   Object.keys(values).forEach((key: string) => {
     if (schema?.required.includes(key)) {
@@ -47,5 +45,5 @@ export const validateForm = (props: ValidateProps) => {
       }
     }
   });
-  return { isValidated, errors: err };
+  return err;
 };

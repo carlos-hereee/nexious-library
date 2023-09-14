@@ -15,15 +15,10 @@ export const handleFormChange = (props: HandleFormChangeProps) => {
   // key variables
   const key = event.target.name;
   const value = event.currentTarget.value;
-  // const payload = { ...values, [key]: value };
-  let labels = label ? label : initLabels;
   // validate touched
   const validate: KeyStringProp = {};
   Object.keys(values).forEach((p) => {
-    if (touched.includes(p) || p === key) {
-      validate[key] = value;
-    }
+    if (touched.includes(p) || p === key) validate[key] = value;
   });
-  const { isValidated, errors } = validateForm({ values, schema, labels });
-  return { isValidated, errors };
+  return validateForm({ values, schema, label });
 };
