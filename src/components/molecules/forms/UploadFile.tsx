@@ -1,23 +1,29 @@
 import { Label } from "@nxs-atoms/index";
 import { FormMediaProps } from "@nxs-utils/form/types";
-import { useRef, useState } from "react";
+import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { useEffect, useRef, useState } from "react";
+import { ErrorMessages } from "@nxs-molecules";
+import { initLabels } from "@nxs-utils/form/labels";
+import { KeyStringProp } from "@nxs-utils/helpers/types";
 
 type UploadFileProps = {
   name: string;
+  onSelect: (e: any) => void;
   theme?: string;
   hideLabels?: boolean;
-  labels?: string;
-  errors?: string;
-  onSubmit: (e: any) => void;
+  label?: KeyStringProp;
+  error?: string;
 };
 // TODO: UPload files
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { name, labels, errors, hideLabels, onSubmit, theme } = props;
+  const { name, label, error, hideLabels, onSelect, theme } = props;
+  const { lightColor, errors } = usePropErrorHandling({ onSelect, name }, true);
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef(null);
   const [media, setMedia] = useState<FormMediaProps[]>([]);
+  const labels = label ? label : initLabels;
 
   const imageClick = () => {
     imageUpLoaderRef.current && imageUpLoaderRef.current.click();
@@ -32,21 +38,19 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
       setPreviewImage(URL.createObjectURL(file));
     }
   };
-  const handleSubmit = () => {
-    /*  
-    - save file uploads on a form data
-    formData is tricky because values will not show up on your console
-    BUT everything is working check data when sending request.
-    Everything is there!! 
-  */ const formData = new FormData();
-    media.forEach((m) => {
-      formData.set(m.name, m.file, m.file.name);
-    });
-    onSubmit(formData);
-  };
+
+  useEffect(() => {
+    if (media.length > 0) onSelect(media);
+  }, [media]);
+  if (lightColor === "red") {
+    return <ErrorMessages errors={errors} component="Upload file" />;
+  }
   return (
-    <form onSubmit={handleSubmit} className={theme ? theme : "field-upload"}>
-      {!hideLabels && <Label name={name} label={labels} errors={errors} />}
+    <form
+      encType="multipart/form-data"
+      className={theme ? `field-upload ${theme}` : "field-upload"}
+    >
+      {!hideLabels && <Label name={name} label={labels[name]} errors={error} />}
       <input
         type="file"
         onChange={selectImage}
@@ -69,7 +73,13 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
             onClick={imageClick}
           />
         ) : (
-          <div className="preview-hero-empty">?</div>
+          <button
+            type="button"
+            className="preview-hero-empty"
+            onClick={imageClick}
+          >
+            ?
+          </button>
         )}
       </div>
     </form>

@@ -7,11 +7,11 @@ export type ErrorHandlingMessages = {
   code: string;
   key: string;
   value: string | undefined;
-  isProp: boolean;
+  isAProp: boolean;
 };
 export type LightSystem = "green" | "yellow" | "red";
 
-export const usePropErrorHandling = (props: PropHandling, isProp: boolean) => {
+export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorHandlingMessages[]>([]);
   const [warnings, setWarningsHandling] = useState<ErrorHandlingMessages[]>([]);
@@ -20,7 +20,7 @@ export const usePropErrorHandling = (props: PropHandling, isProp: boolean) => {
     setLightColor("red");
     setErrors((prev) => [
       ...prev,
-      { prop: key, code: "missingProps", isProp, value: props[key], key },
+      { prop: key, code: "missingProps", isAProp, value: props[key], key },
     ]);
   };
   useEffect(() => {

@@ -4,6 +4,7 @@ form {
   flex-direction: column;
   text-align: left;
   gap: #{$rem};
+  max-width: #{$max-width-lg};
 }
 input,
 textarea {

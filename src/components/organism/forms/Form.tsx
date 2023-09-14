@@ -19,6 +19,7 @@ type FormProps = {
   onSubmit: (e: any) => void;
   // optional
   hideLabels?: boolean;
+  hideSubmit?: boolean;
   showAuthTips?: boolean;
   theme?: string;
   labels?: { [key: string]: string };
@@ -29,8 +30,9 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = (props) => {
-  const { onSubmit, initialValues, hideLabels, theme, submitLabel } = props;
+  const { onSubmit, initialValues, hideLabels, theme } = props;
   const { labels, placeholders, types, showAuthTips, schema } = props;
+  const { submitLabel, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<KeyStringProp>({});
@@ -111,7 +113,7 @@ const Form: React.FC<FormProps> = (props) => {
           )}
         </div>
       ))}
-      <SubmitButton label={submitLabel} />
+      {!hideSubmit && <SubmitButton label={submitLabel} />}
     </form>
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
