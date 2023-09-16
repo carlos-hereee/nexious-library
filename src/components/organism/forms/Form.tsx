@@ -86,8 +86,8 @@ const Form: React.FC<FormProps> = (props) => {
               active={selection[v]}
               onChange={(e) => updateSelection(e.target.value, v)}
               hideLabels={hideLabels}
-              labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
+              label={labels && labels[v] ? labels[v] : initLabels[v]}
+              error={errors && errors[v]}
             />
           ) : textarea.includes(v) ? (
             <TextArea

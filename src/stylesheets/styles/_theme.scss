@@ -19,3 +19,10 @@
   background-color: #{$light};
   color: #{$default-text};
 }
+.light-mode {
+  background-color: #{$light-mode};
+}
+.dark-mode {
+  background-color: #{$dark-mode};
+  color: #{$light-mode};
+}

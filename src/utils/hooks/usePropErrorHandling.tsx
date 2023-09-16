@@ -27,9 +27,13 @@ export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
     // use light system to determine danger levels
     setLightColor("green");
     Object.keys(props).forEach((key) => {
+      const propType = typeof props[key];
       // check values is valid
       if (!props[key]) missingProps(key);
-      if (typeof props[key] === "object" && !objLength(props[key])) {
+      if (propType === "object" && !objLength(props[key])) {
+        missingProps(key);
+      }
+      if (props[key].length === 0) {
         missingProps(key);
       }
     });

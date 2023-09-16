@@ -9,23 +9,15 @@
   border-bottom: 1px solid #{$dark};
 }
 .card-row {
-  border: none;
   display: flex;
-  align-items: stretch;
   gap: #{$rem};
   width: 100%;
   max-width: none;
   border-radius: #{$border-radius};
-  padding: #{$rem};
   text-align: left;
-
   @include devices(mobile) {
-    padding: #{$rem025};
-    .card-header {
-      text-align: left;
-      flex-direction: column;
-      gap: #{$rem};
-    }
+    flex-direction: column;
+    align-items: center;
   }
 }
 .card-row--active {

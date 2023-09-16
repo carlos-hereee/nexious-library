@@ -26,6 +26,7 @@
   flex-direction: row;
   gap: #{$rem};
 }
+.flex-column,
 .flex-d-column {
   display: flex;
   flex-direction: column;
@@ -49,6 +50,7 @@
   flex-wrap: wrap;
   gap: #{$rem};
 }
+.flex-wrap,
 .flex-w {
   display: flex;
   flex-wrap: wrap;

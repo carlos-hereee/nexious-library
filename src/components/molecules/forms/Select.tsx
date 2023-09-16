@@ -1,15 +1,17 @@
 import { Label, Option } from "@nxs-atoms";
 import { OptionProp } from "@nxs-utils/helpers/types";
+import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { ErrorMessages } from "..";
 
 type SelectProp = {
+  name: string;
   list: OptionProp[];
   active?: string;
   theme?: string;
-  name: string;
   onChange?: (key: any) => void;
   hideLabels?: boolean;
-  labels?: string;
-  errors?: string;
+  label?: string;
+  error?: string;
 };
 /**
  *
@@ -22,10 +24,14 @@ type SelectProp = {
  */
 const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, active, name } = props;
-  const { hideLabels, labels, errors } = props;
+  const { hideLabels, label, error } = props;
+  const { lightColor, errors } = usePropErrorHandling({ name, list }, true);
+  if (lightColor === "red") {
+    return <ErrorMessages errors={errors} component="select" />;
+  }
   return (
     <>
-      {!hideLabels && <Label name={name} label={labels} errors={errors} />}
+      {!hideLabels && <Label name={name} label={label} errors={error} />}
       <select
         className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
         value={active ? active : ""}
