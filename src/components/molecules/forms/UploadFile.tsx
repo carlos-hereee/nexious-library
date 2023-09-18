@@ -54,6 +54,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         accept="image/*"
         name={name}
         ref={imageUpLoaderRef}
+        id={name}
         hidden
       />
       <button className="btn-main" type="button" onClick={imageClick}>

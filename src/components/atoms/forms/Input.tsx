@@ -13,6 +13,8 @@ const Input: React.FC<InputProps> = (props) => {
       placeholder={placeholder ? placeholder : placeholders[name]}
       onChange={onChange}
       onBlur={blur}
+      // give lavels a reason to be there give inputs id
+      id={name}
     />
   );
 };
