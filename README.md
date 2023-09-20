@@ -11,39 +11,33 @@ npm i nexious-library
 
 Yarn:
 yarn add nexious-library
-
-
-
-
-
 ```
+# Usage
 1. Works out of the box with following initial props:
- - value is the only as required prop used to tell the component 
-      currentdate value
- - Calendar Usage: 
-  <Calendar
+  * value is the only as required prop used to tell the component currentdate value
+  * Calendar Usage: 
+    <Calendar
       <!-- required props -->
-      value: Date; for initial date use today = new Date();  
+        value: Date; for initial date use today = new Date();  
       <!-- optional props -->
-      minDate?: Date; the mininum date the calendar will go back 
-      onDayClick?: (e: any) => void; when day is clicked 
-      setDay?: (a: any) => void; set new current date 
-      theme?: string;
-      events?: [
-        {
-        date: string; 
-        list: [{
-                date: string; 
-                start: number, 
-                end: number, 
-                isOpen:boolean,
-                uid: string 
-          }]}];  
-                - display calendar events on calendar
-                - use 
-    />
-  - Output
-  - Calendar with month as default view
+        minDate?: Date; the mininum date the calendar will go back 
+        onDayClick?: (e: any) => void; when day is clicked 
+        setDay?: (a: any) => void; set new current date 
+        theme?: string;
+        events?: [
+          <!-- display calendar events on calendar -->
+          {
+          date: string; 
+          list: [{
+                  date: string; 
+                  start: number, 
+                  end: number, 
+                  isOpen:boolean,
+                  uid: string 
+            }]}];  
+      />
+  * Output
+    - Calendar with month as default view
 
 
 2. Works out of the box with following initial props:
@@ -95,6 +89,8 @@ yarn add nexious-library
   * Outputs Paginated Form 
 
 # MORE COMING SOON!
+<!-- 
+TODO: 
 ## Rename files in directory
 
 Auto rename files from .js to jsx run on terminal:
@@ -103,7 +99,7 @@ Auto rename files from .js to jsx run on terminal:
   
 Auto rename files from .jsx to tsx run on terminal:
 
-- npx nexious-library renameToTsx.sh
+- npx nexious-library renameToTsx.sh -->
 
 ## Style guide
 
