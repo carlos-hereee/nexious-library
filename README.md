@@ -16,7 +16,8 @@ yarn add nexious-library
 1. Works out of the box with following initial props:
   * value is the only as required prop used to tell the component currentdate value
   * Calendar Usage: 
-    - ```<Calendar
+    ```
+    <Calendar
       <!-- required props -->
         value: Date; for initial date use today = new Date();  
       <!-- optional props -->
@@ -35,7 +36,8 @@ yarn add nexious-library
                   isOpen:boolean,
                   uid: string 
             }]}];  
-      />```
+    />
+    ```
   * Output
     - Calendar with month as default view
 
@@ -43,7 +45,8 @@ yarn add nexious-library
 2. Works out of the box with following initial props:
   * initialValues and onSubmit as required props
   * Form Usage: 
-    - ```<Form
+    ```
+    <Form
     <!-- required props -->
         initialValues: { [key: string]: any };
         onSubmit: (e: any) => void;
@@ -57,14 +60,16 @@ yarn add nexious-library
         submitLabel?: string;
         schema?: { required: string[] };
         theme?: string;
-        />```
+    />
+    ```
   * Output
   - Form with initial values as fields with a submit button for form submition
 
 3. Works out of the box with following initial props:
   * paginate is array with initialValues and onSubmit as required props
   * PaginatedForm Usage:   
-    - ```<PaginateForm  
+    ```
+    <PaginateForm  
     <!-- required props -->
       paginate: [
         {
@@ -87,7 +92,8 @@ yarn add nexious-library
       startPage?: number; default is 0
       pageNumber?: number; default is 0
       totalPages?: number; default is paginate length
-    /> ```
+    /> 
+    ```
   * Outputs Paginated Form 
 
 # MORE COMING SOON!
