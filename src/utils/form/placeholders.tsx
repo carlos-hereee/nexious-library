@@ -1,6 +1,7 @@
-export const placeholders: { [key: string]: string } = {
+export const initPlaceholders: { [key: string]: string } = {
   firstName: "Peter ..",
   lastName: "Griffin ..",
+  appName: "App name ..",
   name: "enter your name ..",
   streetAddress: "123 Street..",
   email: "email@example.com",

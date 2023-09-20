@@ -11,6 +11,7 @@ import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { initLabels } from "@nxs-utils/form/labels";
 import { objLength } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
+import { initPlaceholders } from "@nxs-utils/form/placeholders";
 
 type FormProps = {
   // required props
@@ -37,7 +38,8 @@ const Form: React.FC<FormProps> = (props) => {
   const { errors, setErrors } = useErrors();
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
-  const label = labels ? labels : initLabels;
+  const label = objLength(labels) ? labels : initLabels;
+  const placeholder = objLength(placeholders) ? placeholders : initPlaceholders;
 
   const handleChange = (event: any) => {
     // key variables
@@ -74,7 +76,7 @@ const Form: React.FC<FormProps> = (props) => {
               name={v}
               value={values[v]}
               onChange={handleChange}
-              placeholder={placeholders && placeholders[v]}
+              placeholder={placeholder ? placeholder[v] : initPlaceholders[v]}
               hideLabels={hideLabels}
               labels={labels && labels[v] ? labels[v] : initLabels[v]}
               errors={errors && errors[v]}
