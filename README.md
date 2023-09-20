@@ -16,7 +16,7 @@ yarn add nexious-library
 1. Works out of the box with following initial props:
   * value is the only as required prop used to tell the component currentdate value
   * Calendar Usage: 
-    <Calendar
+    - <Calendar
       <!-- required props -->
         value: Date; for initial date use today = new Date();  
       <!-- optional props -->
@@ -64,7 +64,7 @@ yarn add nexious-library
 3. Works out of the box with following initial props:
   * paginate is array with initialValues and onSubmit as required props
   * PaginatedForm Usage:   
-    <PaginateForm  
+    - <PaginateForm  
     <!-- required props -->
       paginate: [
         {
