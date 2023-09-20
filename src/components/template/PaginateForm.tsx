@@ -5,7 +5,7 @@ import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { initLabels } from "@nxs-utils/form/labels";
 import { objLength } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
-import Form from "./Form";
+import Form from "../organism/forms/Form";
 
 type PaginateFormProps = {
   // required props
@@ -34,7 +34,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   let current = pageNumber ? pageNumber : 0;
   let start = startPage ? startPage : 0;
   let total = totalPages
-    ? totalPages  
+    ? totalPages
     : paginate.length > 0
     ? paginate.length
     : 0;
