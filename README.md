@@ -65,9 +65,7 @@ yarn add nexious-library
   * paginate is array with initialValues and onSubmit as required props
   * PaginatedForm Usage:   
     <PaginateForm  
-      startPage?: number; default is 0
-      pageNumber?: number; default is 0
-      totalPages?: number; default is paginate length
+    <!-- required props -->
       paginate: [
         {
           <!-- required props -->
@@ -85,6 +83,10 @@ yarn add nexious-library
           theme?: string;
         }
       ];
+    <!-- optional props -->
+      startPage?: number; default is 0
+      pageNumber?: number; default is 0
+      totalPages?: number; default is paginate length
     /> 
   * Outputs Paginated Form 
 
