@@ -28,15 +28,14 @@ export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
     setLightColor("green");
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
-      // check values is valid
-      if (!props[key]) missingProps(key);
-      if (propType === "object" && !objLength(props[key])) {
+      // proptype === undefined means no prop
+      if (!propType || !props[key]) missingProps(key);
+      else if (propType === "object" && !objLength(props[key])) {
         missingProps(key);
-      }
-      if (props[key].length === 0) {
+      } else if (props[key].length === 0) {
         missingProps(key);
       }
     });
   }, []);
-  return { lightColor, errors, warnings };
+  return { lightColor, errors, setErrors, warnings };
 };

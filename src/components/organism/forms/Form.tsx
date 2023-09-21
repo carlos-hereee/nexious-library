@@ -3,7 +3,13 @@ import { auth, select } from "@nxs-utils/form/types";
 import { textarea } from "@nxs-utils/form/types";
 import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useValues } from "@nxs-utils/hooks/useValues";
-import { AuthField, Field, SubmitButton, TextArea } from "@nxs-molecules/index";
+import {
+  AuthField,
+  ErrorMessages,
+  Field,
+  SubmitButton,
+  TextArea,
+} from "@nxs-molecules/index";
 import { Select } from "@nxs-molecules";
 import { themeList } from "@nxs-utils/app/themeList";
 import { useState } from "react";
@@ -12,13 +18,15 @@ import { initLabels } from "@nxs-utils/form/labels";
 import { objLength } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
+import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 
 type FormProps = {
   // required props
   initialValues: { [key: string]: any };
   onSubmit: (e: any) => void;
-  onChange?: (e: any) => void;
+  formName: string;
   // optional
+  onChange?: (e: any) => void;
   hideLabels?: boolean;
   hideSubmit?: boolean;
   showAuthTips?: boolean;
@@ -32,10 +40,14 @@ type FormProps = {
 
 const Form: React.FC<FormProps> = (props) => {
   const { onSubmit, onChange, initialValues, hideLabels, theme } = props;
-  const { labels, placeholders, types, schema } = props;
+  const { labels, placeholders, types, schema, formName } = props;
   const { submitLabel, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
-  const { errors, setErrors } = useErrors();
+  const { lightColor, errors } = usePropErrorHandling(
+    { initialValues, formName, onSubmit },
+    true
+  );
+  const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const label = objLength(labels) ? labels : initLabels;
@@ -63,12 +75,15 @@ const Form: React.FC<FormProps> = (props) => {
     formProps.preventDefault();
     if (schema) {
       const errors = validateForm({ values, schema, label });
-      objLength(errors) > 0 ? setErrors(errors) : onSubmit(values);
+      objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
     } else onSubmit(values);
   };
-
+  if (lightColor === "red") {
+    return <ErrorMessages errors={errors} component="Form" />;
+  }
   return values ? (
     <form className={theme ? theme : undefined} onSubmit={handleSubmit}>
+      <h2 className="heading">{formName}</h2>
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
           {auth.includes(v) ? (
@@ -79,7 +94,7 @@ const Form: React.FC<FormProps> = (props) => {
               placeholder={placeholder ? placeholder[v] : initPlaceholders[v]}
               hideLabels={hideLabels}
               labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
+              errors={formErrors && formErrors[v]}
             />
           ) : select.includes(v) ? (
             <Select
@@ -89,7 +104,7 @@ const Form: React.FC<FormProps> = (props) => {
               onChange={(e) => updateSelection(e.target.value, v)}
               hideLabels={hideLabels}
               label={labels && labels[v] ? labels[v] : initLabels[v]}
-              error={errors && errors[v]}
+              error={formErrors && formErrors[v]}
             />
           ) : textarea.includes(v) ? (
             <TextArea
@@ -99,7 +114,7 @@ const Form: React.FC<FormProps> = (props) => {
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
               labels={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={errors && errors[v]}
+              errors={formErrors && formErrors[v]}
               theme="highlight"
             />
           ) : (
@@ -111,7 +126,7 @@ const Form: React.FC<FormProps> = (props) => {
               placeholder={placeholders && placeholders[v]}
               hideLabel={hideLabels}
               label={labels && labels[v] ? labels[v] : initLabels[v]}
-              error={errors && errors[v]}
+              error={formErrors && formErrors[v]}
             />
           )}
         </div>

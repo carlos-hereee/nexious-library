@@ -3,6 +3,7 @@ import { initLabels } from "@nxs-utils/form/labels";
 export type FormDataProps = {
   [key: string]: string | number | File;
 };
+export type FormInitValues = { [key: string]: any };
 export type DefaultPageComponent = {
   title: string;
   subtitle?: string;
