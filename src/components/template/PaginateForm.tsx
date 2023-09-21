@@ -74,9 +74,9 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   };
 
   const handlePaginateSubmit = (formValues: FormInitValues) => {
-    // update page number follow form oder else update count
+    // follow form oder else update page count
     if (order) {
-      // get next in the order
+      // search next in the order
       const next = order[pageOrder + 1];
       // if next is undefined its the last form
       if (!next) {
@@ -92,10 +92,16 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         setPage(nextPage);
         setPageOrder((prev) => prev + 1);
       }
-    }
-    // on last page submit form or keep track of values
-    else if (page === paginate.length) {
+      // on last page submit form or keep track of values
+    } else if (page === paginate.length - 1) {
       onFormSubmit({ ...values, [formName]: { ...formValues } });
+      //
+    } else {
+      // reset initial values to redender form component
+      setInitialValues(undefined);
+      // save form values
+      setValues({ ...values, [formName]: { ...formValues } });
+      setPage((prev) => prev + 1);
     }
   };
   if (lightColor === "red") {
@@ -108,7 +114,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         onSubmit={(event) => handlePaginateSubmit(event)}
         labels={labels}
         placeholders={placeholders}
-        submitLabel={submitLabel ? submitLabel : ""}
+        submitLabel={submitLabel}
         types={types}
         theme={theme}
         schema={schema}
