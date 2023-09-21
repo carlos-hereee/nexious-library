@@ -45,6 +45,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       </div>
       {active?.type === "visa/credit" && (
         <Form
+          formName=""
           initialValues={{
             cardHolderName: "",
             cardNumber: "",

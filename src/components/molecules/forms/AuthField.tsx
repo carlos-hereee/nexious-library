@@ -2,7 +2,6 @@ import { Input, Label } from "@nxs-atoms";
 import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { IconButton } from "@nxs-molecules";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
-import { objLength } from "@nxs-utils/app/objLength";
 
 type AuthFieldProp = {
   name: string;

@@ -9,35 +9,38 @@ type PaginateFormProps = {
   onFormSubmit: (e: any) => void;
   paginate: [
     {
+      // required
       formName: string;
       initialValues: FormInitValues;
-      // onSubmit?: (e: any) => void;
+      // optional
+      title?: string;
       labels?: KeyStringProp;
       placeholders?: KeyStringProp;
       types?: KeyStringProp;
-      // optional
-      // hideLabels?: boolean;
-      // hideSubmit?: boolean;
       theme?: string;
       submitLabel?: string;
       schema?: { required: string[] };
     }
   ];
   // optional props
-  startPage?: number; //defaults set to 0
+  order?: string[]; //defaults set to first form on list
 };
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
-  const { startPage, paginate, onFormSubmit } = props;
+  // key variables
+  const { order, paginate, onFormSubmit } = props;
   // handle required props errors
   const { errors, lightColor } = usePropErrorHandling(
     { paginate, onFormSubmit },
     true
   );
-
-  // key variables
-  const [page, setPage] = useState<number>(startPage ? startPage : 0);
-  const total = paginate.length > 0 ? paginate.length : 0;
+  const [pageOrder, setPageOrder] = useState<number>(0);
+  // locate page order default to 0
+  const firstPage = order
+    ? paginate.findIndex((form) => form.formName === order[pageOrder])
+    : 0;
+  // find total number of forms default to 0
+  const [page, setPage] = useState<number>(firstPage);
   // init form prop values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
   const [labels, setLabels] = useState<KeyStringProp>();
@@ -45,6 +48,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const [types, setTypes] = useState<KeyStringProp>();
   const [submitLabel, setSubmitLabel] = useState<string>("");
   const [theme, setTheme] = useState("");
+  const [heading, setHeading] = useState("");
   const [schema, setSchema] = useState<{ required: string[] }>();
   const [formName, setFormName] = useState<string>("");
   // store form values
@@ -58,23 +62,40 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
 
   const initForm = (formValues: FormInitValues) => {
     // validate required form props
-    formValues.initialValues && setInitialValues(formValues.initialValues);
-    formValues.theme && setTheme(formValues.theme);
-    formValues.labels && setLabels(formValues.labels);
-    formValues.placeholders && setPlaceholders(formValues.placeholders);
-    formValues.types && setTypes(formValues.types);
-    formValues.submitLabel && setSubmitLabel(formValues.submitLabel);
-    formValues.schema && setSchema(formValues.schema);
-    formValues.formName && setFormName(formValues.formName);
+    formValues?.initialValues && setInitialValues(formValues?.initialValues);
+    formValues?.theme && setTheme(formValues?.theme);
+    formValues?.labels && setLabels(formValues?.labels);
+    formValues?.placeholders && setPlaceholders(formValues?.placeholders);
+    formValues?.types && setTypes(formValues?.types);
+    formValues?.submitLabel && setSubmitLabel(formValues?.submitLabel);
+    formValues?.schema && setSchema(formValues?.schema);
+    formValues?.formName && setFormName(formValues?.formName);
+    formValues?.heading && setHeading(formValues?.heading);
   };
 
   const handlePaginateSubmit = (formValues: FormInitValues) => {
+    // update page number follow form oder else update count
+    if (order) {
+      // get next in the order
+      const next = order[pageOrder + 1];
+      // if next is undefined its the last form
+      if (!next) {
+        return onFormSubmit({ ...values, [formName]: { ...formValues } });
+      } else {
+        const nextPage = paginate.findIndex(
+          (form) => form.formName === order[pageOrder + 1]
+        );
+        // reset initial values to redender form component
+        setInitialValues(undefined);
+        // save form values
+        setValues({ ...values, [formName]: { ...formValues } });
+        setPage(nextPage);
+        setPageOrder((prev) => prev + 1);
+      }
+    }
     // on last page submit form or keep track of values
-    if (page + 1 === total) {
-      onFormSubmit({ ...values, ...formValues });
-    } else {
-      setValues({ ...values, ...formValues });
-      setPage((prev) => (prev ? prev + 1 : 0));
+    else if (page === paginate.length) {
+      onFormSubmit({ ...values, [formName]: { ...formValues } });
     }
   };
   if (lightColor === "red") {
@@ -92,6 +113,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         theme={theme}
         schema={schema}
         formName={formName}
+        heading={heading}
       />
     )
   );

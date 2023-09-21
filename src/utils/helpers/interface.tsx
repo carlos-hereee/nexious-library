@@ -26,5 +26,5 @@ export interface InputProps {
   type?: string;
   min?: number;
   max?: number;
-  blur?: () => void;
+  onBlur?: () => void;
 }

@@ -1,7 +1,6 @@
 import { ErrorMessage } from "@nxs-atoms";
 import { auth, select } from "@nxs-utils/form/types";
 import { textarea } from "@nxs-utils/form/types";
-import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { useValues } from "@nxs-utils/hooks/useValues";
 import {
   AuthField,
@@ -25,6 +24,7 @@ type FormProps = {
   initialValues: { [key: string]: any };
   onSubmit: (e: any) => void;
   formName: string;
+  heading?: string;
   // optional
   onChange?: (e: any) => void;
   hideLabels?: boolean;
@@ -40,7 +40,7 @@ type FormProps = {
 
 const Form: React.FC<FormProps> = (props) => {
   const { onSubmit, onChange, initialValues, hideLabels, theme } = props;
-  const { labels, placeholders, types, schema, formName } = props;
+  const { labels, placeholders, types, schema, formName, heading } = props;
   const { submitLabel, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
   const { lightColor, errors } = usePropErrorHandling(
@@ -83,7 +83,7 @@ const Form: React.FC<FormProps> = (props) => {
   }
   return values ? (
     <form className={theme ? theme : undefined} onSubmit={handleSubmit}>
-      <h2 className="heading">{formName}</h2>
+      {heading && <h2 className="heading">{heading}</h2>}
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
           {auth.includes(v) ? (
