@@ -28,6 +28,7 @@ export const initLabels: { [key: string]: string } = {
   logo: "App logo",
   appName: "App name",
   nickname: "Nickname:",
+  label: "Display name:",
 };
 export const getLabel = (key: string, labels?: KeyStringProp) => {
   return labels && labels[key] ? labels[key] : initLabels[key];

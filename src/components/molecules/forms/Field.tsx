@@ -16,7 +16,7 @@ const Field: React.FC<FieldProp> = (props) => {
   const { name, value, onChange, placeholder } = props;
   const { hideLabel, label, error } = props;
   const { lightColor, errors } = usePropErrorHandling({ name }, true);
-
+  // console.log("label", label, name);
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="field" />;
   }

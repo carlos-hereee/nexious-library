@@ -6,6 +6,8 @@ import { ErrorMessages } from "@nxs-molecules/index";
 
 type PaginateFormProps = {
   // required props
+  page: number;
+  setNewPage: (e: any) => void;
   onFormSubmit: (e: any) => void;
   paginate: [
     {
@@ -19,6 +21,7 @@ type PaginateFormProps = {
       types?: KeyStringProp;
       theme?: string;
       submitLabel?: string;
+      heading?: string;
       schema?: { required: string[] };
     }
   ];
@@ -27,83 +30,55 @@ type PaginateFormProps = {
 };
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
-  // key variables
-  const { order, paginate, onFormSubmit } = props;
   // handle required props errors
-  const { errors, lightColor } = usePropErrorHandling(
-    { paginate, onFormSubmit },
-    true
-  );
-  const [pageOrder, setPageOrder] = useState<number>(0);
-  // locate page order default to 0
-  const firstPage = order
-    ? paginate.findIndex((form) => form.formName === order[pageOrder])
-    : 0;
-  // find total number of forms default to 0
-  const [page, setPage] = useState<number>(firstPage);
+  const { order, paginate, onFormSubmit, setNewPage, page } = props;
+  const requiredProps = { paginate, page, setNewPage, onFormSubmit };
+  const { errors, lightColor } = usePropErrorHandling(requiredProps, true);
+
+  // key variables
+  const formOrder = order
+    ? order
+    : paginate.map((form) => (form.formName ? form.formName : ""));
+  const formName = paginate[page].formName;
+  const theme = paginate[page].theme;
+  const labels = paginate[page].labels;
+  const submitLabel = paginate[page].submitLabel;
+  const placeholders = paginate[page].placeholders;
+  const types = paginate[page].types;
+  const heading = paginate[page].heading;
+  const schema = paginate[page].schema;
   // init form prop values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
-  const [labels, setLabels] = useState<KeyStringProp>();
-  const [placeholders, setPlaceholders] = useState<KeyStringProp>();
-  const [types, setTypes] = useState<KeyStringProp>();
-  const [submitLabel, setSubmitLabel] = useState<string>("");
-  const [theme, setTheme] = useState("");
-  const [heading, setHeading] = useState("");
-  const [schema, setSchema] = useState<{ required: string[] }>();
-  const [formName, setFormName] = useState<string>("");
   // store form values
   const [values, setValues] = useState<FormInitValues>({});
 
   useEffect(() => {
     if (page >= 0) {
-      initForm(paginate[page]);
+      // reset initial values to redender form component
+      setInitialValues(undefined);
+      setInitialValues(paginate[page].initialValues);
     }
   }, [page]);
 
-  const initForm = (formValues: FormInitValues) => {
-    // validate required form props
-    formValues?.initialValues && setInitialValues(formValues?.initialValues);
-    formValues?.theme && setTheme(formValues?.theme);
-    formValues?.labels && setLabels(formValues?.labels);
-    formValues?.placeholders && setPlaceholders(formValues?.placeholders);
-    formValues?.types && setTypes(formValues?.types);
-    formValues?.submitLabel && setSubmitLabel(formValues?.submitLabel);
-    formValues?.schema && setSchema(formValues?.schema);
-    formValues?.formName && setFormName(formValues?.formName);
-    formValues?.heading && setHeading(formValues?.heading);
-  };
-
   const handlePaginateSubmit = (formValues: FormInitValues) => {
-    // follow form oder else update page count
-    if (order) {
-      // search next in the order
-      const next = order[pageOrder + 1];
-      // if next is undefined its the last form
-      if (!next) {
-        return onFormSubmit({ ...values, [formName]: { ...formValues } });
-      } else {
-        const nextPage = paginate.findIndex(
-          (form) => form.formName === order[pageOrder + 1]
-        );
-        // reset initial values to redender form component
-        setInitialValues(undefined);
-        // save form values
-        setValues({ ...values, [formName]: { ...formValues } });
-        setPage(nextPage);
-        setPageOrder((prev) => prev + 1);
-      }
-      // on last page submit form or keep track of values
-    } else if (page === paginate.length - 1) {
+    // search next in the order
+    const next = formOrder[page + 1];
+    // if next is undefined its the last form
+    if (!next) {
       onFormSubmit({ ...values, [formName]: { ...formValues } });
-      //
+      setInitialValues(undefined);
     } else {
+      const nextPage = paginate.findIndex(
+        (form) => form.formName === formOrder[page + 1]
+      );
       // reset initial values to redender form component
       setInitialValues(undefined);
+      setNewPage(nextPage);
       // save form values
       setValues({ ...values, [formName]: { ...formValues } });
-      setPage((prev) => prev + 1);
     }
   };
+
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="PaginateForm" />;
   }

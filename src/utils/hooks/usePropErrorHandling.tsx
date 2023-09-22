@@ -29,7 +29,7 @@ export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
       // proptype === undefined means no prop
-      if (!propType || !props[key]) missingProps(key);
+      if (!propType || (!props[key] && props[key] !== 0)) missingProps(key);
       else if (propType === "object" && !objLength(props[key])) {
         missingProps(key);
       } else if (props[key].length === 0) {
