@@ -14,7 +14,7 @@ const Label: React.FC<Props> = (props) => {
       initLabels.label.charAt(0).toUpperCase() + initLabels.label.slice(1);
 
   return (
-    <label htmlFor={name} className={theme ? theme : ""}>
+    <label htmlFor={name} className={theme}>
       <span className="label-name">{labelCap}</span>{" "}
       {errors && <span className="required">{errors}</span>}
     </label>

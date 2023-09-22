@@ -29,7 +29,7 @@ const Card: React.FC<CardProps> = (props) => {
   const { click, theme, data } = props;
 
   return (
-    <div className={`card ${theme ? theme : ""}`}>
+    <div className={`card ${theme}`}>
       <CardHeader data={data} />
       <CardBody data={data} />
       {data.cta && (

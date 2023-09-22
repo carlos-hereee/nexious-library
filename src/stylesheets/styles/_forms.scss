@@ -35,15 +35,14 @@
 .password-checker {
   max-width: 100%;
 }
-.form-field {
-  &:has(> .input-checkbox) {
-    display: flex;
-    flex-direction: row-reverse;
-    .input-checkbox {
-      min-width: #{$min-width-icons};
-      width: fit-content;
-    }
+.input-checkbox {
+  display: flex;
+  justify-content: flex-start;
+  input {
+    min-width: #{$min-width-sm};
+    width: fit-content;
   }
+  // flex-direction: row-reverse;
 }
 .label-name {
   padding-right: #{$rem};

@@ -7,17 +7,17 @@ type TextAreaProps = {
   value: string;
   placeholder?: string;
   hideLabels?: boolean;
-  labels?: string;
+  label?: string;
   errors?: string;
 };
 const TextArea: React.FC<TextAreaProps> = (props) => {
   const { value, onChange, name, theme, placeholder } = props;
-  const { hideLabels, labels, errors } = props;
+  const { hideLabels, label, errors } = props;
   return (
     <>
-      {!hideLabels && <Label name={name} label={labels} errors={errors} />}
+      {!hideLabels && <Label name={name} label={label} errors={errors} />}
       <textarea
-        className={theme ? theme : ""}
+        className={theme}
         name={name}
         value={value}
         placeholder={placeholder}

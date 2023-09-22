@@ -10,6 +10,7 @@ export { default as ButtonCancel } from "./buttons/ButtonCancel";
 
 // forms
 export { default as Input } from "./forms/Input";
+export { default as InputCheckbox } from "./forms/InputCheckbox";
 export { default as InputQuantity } from "./forms/InputQuantity";
 export { default as Label } from "./forms/Label";
 export { default as Option } from "./forms/Option";

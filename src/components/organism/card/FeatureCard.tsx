@@ -12,7 +12,7 @@ type FeatureCardProps = {
 const FeatureCard: React.FC<FeatureCardProps> = (props) => {
   const { data, theme } = props;
   return (
-    <div className={`card ${theme ? theme : ""}`}>
+    <div className={`card ${theme}`}>
       <div className="card-hero-header">
         {data.hero && <Hero hero={data.hero} theme={data.hero.theme} />}
         {data.title && <h2 className="heading">{data.title}</h2>}

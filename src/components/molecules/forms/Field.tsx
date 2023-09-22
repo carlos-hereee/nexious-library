@@ -8,28 +8,28 @@ type FieldProp = {
   value: string;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
   placeholder?: string;
-  type?: string;
   hideLabel?: boolean;
   label?: string;
   error?: string;
 };
 const Field: React.FC<FieldProp> = (props) => {
-  const { name, value, onChange, placeholder, type } = props;
+  const { name, value, onChange, placeholder } = props;
   const { hideLabel, label, error } = props;
   const { lightColor, errors } = usePropErrorHandling({ name }, true);
-  // console.log("errors", errors);
-  return lightColor === "red" ? (
-    <ErrorMessages errors={errors} component="field" />
-  ) : (
+
+  if (lightColor === "red") {
+    return <ErrorMessages errors={errors} component="field" />;
+  }
+
+  return (
     <>
       {!hideLabel && <Label name={name} label={label} errors={error} />}
       <Input
         value={value}
         onChange={onChange}
         name={name}
-        theme={type === "checkbox" ? "input-checkbox" : "highlight"}
+        theme="highlight"
         placeholder={placeholder}
-        type={type ? type : "text"}
       />
     </>
   );

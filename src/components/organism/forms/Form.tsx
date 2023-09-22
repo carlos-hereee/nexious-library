@@ -1,15 +1,9 @@
-import { ErrorMessage } from "@nxs-atoms";
+import { ErrorMessage, InputCheckbox } from "@nxs-atoms";
 import { auth, select } from "@nxs-utils/form/types";
 import { textarea } from "@nxs-utils/form/types";
 import { useValues } from "@nxs-utils/hooks/useValues";
-import {
-  AuthField,
-  ErrorMessages,
-  Field,
-  SubmitButton,
-  TextArea,
-} from "@nxs-molecules/index";
-import { Select } from "@nxs-molecules";
+import { AuthField, ErrorMessages, Field } from "@nxs-molecules";
+import { Select, SubmitButton, TextArea } from "@nxs-molecules";
 import { themeList } from "@nxs-utils/app/themeList";
 import { useState } from "react";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
@@ -62,6 +56,13 @@ const Form: React.FC<FormProps> = (props) => {
     addTouched(key);
     if (onChange) onChange(payload);
   };
+  const handleChecbox = (event: any) => {
+    // key variables
+    const key = event.target.name;
+    const value = event.currentTarget.checked;
+    addTouched(key);
+    setValues({ ...values, [key]: value });
+  };
 
   const updateSelection = (value: string, name: string) => {
     addTouched(name);
@@ -82,7 +83,7 @@ const Form: React.FC<FormProps> = (props) => {
     return <ErrorMessages errors={errors} component="Form" />;
   }
   return values ? (
-    <form className={theme ? theme : undefined} onSubmit={handleSubmit}>
+    <form className={theme} onSubmit={handleSubmit}>
       {heading && <h2 className="heading">{heading}</h2>}
       {Object.keys(values).map((v) => (
         <div key={v} className="form-field">
@@ -113,14 +114,21 @@ const Form: React.FC<FormProps> = (props) => {
               value={values[v]}
               placeholder={placeholders && placeholders[v]}
               hideLabels={hideLabels}
-              labels={labels && labels[v] ? labels[v] : initLabels[v]}
+              label={labels && labels[v] ? labels[v] : initLabels[v]}
               errors={formErrors && formErrors[v]}
               theme="highlight"
+            />
+          ) : types && types[v] === "checkbox" ? (
+            <InputCheckbox
+              name={v}
+              value={values[v]}
+              onChange={(e) => handleChecbox(e)}
+              error={formErrors && formErrors[v]}
+              label={labels && labels[v] ? labels[v] : initLabels[v]}
             />
           ) : (
             <Field
               name={v}
-              type={types && types[v]}
               value={values[v]}
               onChange={handleChange}
               placeholder={placeholders && placeholders[v]}

@@ -16,6 +16,7 @@ textarea {
 }
 textarea {
   min-height: #{$min-height};
+  width: 100%;
 }
 // replace default styling
 select {
