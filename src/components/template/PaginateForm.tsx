@@ -77,14 +77,24 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     }
   };
   const prevPage = () => {
-    // reset inital values to rerender component
-    setInitialValues(undefined);
-    setNewPage(page === 0 ? page : page - 1);
+    // check if its first item on list
+    if (page === 0) {
+      setNewPage(page);
+    } else {
+      // reset inital values to rerender component
+      setInitialValues(undefined);
+      setNewPage(page - 1);
+    }
   };
   const nextPage = () => {
-    // reset inital values to rerender component
-    setInitialValues(undefined);
-    setNewPage(page + 1 === total ? page : page + 1);
+    // check if last item
+    if (page + 1 === total) {
+      setNewPage(page);
+    } else {
+      // reset inital values to rerender component
+      setInitialValues(undefined);
+      setNewPage(page + 1);
+    }
   };
 
   if (lightColor === "red") {
