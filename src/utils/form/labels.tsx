@@ -31,6 +31,7 @@ export const initLabels: { [key: string]: string } = {
   label: "Display name:",
   body: "Data content:",
   title: "Title:",
+  link: "Enter page name this link points to",
 };
 export const getLabel = (key: string, labels?: KeyStringProp) => {
   return labels && labels[key] ? labels[key] : initLabels[key];
