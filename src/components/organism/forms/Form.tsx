@@ -22,7 +22,6 @@ type FormProps = {
   // optional
   onChange?: (e: any) => void;
   hideLabels?: boolean;
-  addEntry?: { initialValues: FormInitValues; label: string };
   hideSubmit?: boolean;
   showAuthTips?: boolean;
   theme?: string;
@@ -34,20 +33,19 @@ type FormProps = {
 };
 
 const Form: React.FC<FormProps> = (props) => {
+  // props
   const { onSubmit, onChange, initialValues, hideLabels, theme } = props;
   const { labels, placeholders, types, schema, formName, heading } = props;
-  const { submitLabel, hideSubmit, addEntry } = props;
+  const { submitLabel, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
-  const { lightColor, errors } = usePropErrorHandling(
-    { initialValues, formName, onSubmit },
-    true
-  );
+  // must have required props
+  const required = { initialValues, formName, onSubmit };
+  const { lightColor, errors } = usePropErrorHandling(required, true);
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const label = objLength(labels) ? labels : initLabels;
   const placeholder = objLength(placeholders) ? placeholders : initPlaceholders;
-  const entryLabel = addEntry?.label;
 
   const handleChange = (event: any) => {
     // key variables
@@ -81,7 +79,6 @@ const Form: React.FC<FormProps> = (props) => {
       objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
     } else onSubmit(values);
   };
-  const initEntry = () => {};
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="Form" />;
   }
@@ -142,12 +139,7 @@ const Form: React.FC<FormProps> = (props) => {
           )}
         </div>
       ))}
-      <div className="flex-row">
-        {!hideSubmit && <SubmitButton label={submitLabel} />}
-        {addEntry && (
-          <Button label={entryLabel} theme="btn-add" onClick={initEntry} />
-        )}
-      </div>
+      {!hideSubmit && <SubmitButton label={submitLabel} />}
     </form>
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />

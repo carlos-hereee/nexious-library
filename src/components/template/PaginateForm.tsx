@@ -4,6 +4,7 @@ import Form from "../organism/forms/Form";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Button } from "@nxs-atoms/index";
+import { FormWithEntry } from "@nxs-organism/index";
 
 type PaginateFormProps = {
   // required props
@@ -46,6 +47,8 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const total = formOrder.length;
   const formName = paginate[page].formName;
   const heading = paginate[page].heading;
+  const addEntry = paginate[page].addEntry && paginate[page].addEntry;
+
   // set initial values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
   // store form values
@@ -115,20 +118,34 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         </div>
       )}
       {heading && <h2 className="heading">{heading}</h2>}
-      {initialValues && (
-        <Form
-          initialValues={initialValues}
-          onSubmit={(event) => handlePaginateSubmit(event)}
-          labels={paginate[page].labels}
-          placeholders={paginate[page].placeholders}
-          submitLabel={paginate[page].submitLabel}
-          types={paginate[page].types}
-          theme={paginate[page].theme}
-          schema={paginate[page].schema}
-          formName={paginate[page].formName}
-          addEntry={paginate[page].addEntry}
-        />
-      )}
+      {addEntry
+        ? initialValues && (
+            <FormWithEntry
+              initialValues={initialValues}
+              onSubmit={(event) => handlePaginateSubmit(event)}
+              labels={paginate[page].labels}
+              placeholders={paginate[page].placeholders}
+              submitLabel={paginate[page].submitLabel}
+              types={paginate[page].types}
+              theme={paginate[page].theme}
+              schema={paginate[page].schema}
+              formName={paginate[page].formName}
+              addEntry={addEntry}
+            />
+          )
+        : initialValues && (
+            <Form
+              initialValues={initialValues}
+              onSubmit={(event) => handlePaginateSubmit(event)}
+              labels={paginate[page].labels}
+              placeholders={paginate[page].placeholders}
+              submitLabel={paginate[page].submitLabel}
+              types={paginate[page].types}
+              theme={paginate[page].theme}
+              schema={paginate[page].schema}
+              formName={paginate[page].formName}
+            />
+          )}
     </div>
   );
 };
