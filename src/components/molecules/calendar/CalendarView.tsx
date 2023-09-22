@@ -49,7 +49,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
             <Button
               key={d}
               name="calendar-tile btn-calendar-tile--muted"
-              handleClick={() => click({ ...data, day })}
+              onClick={() => click({ ...data, day })}
             />
           );
         })}

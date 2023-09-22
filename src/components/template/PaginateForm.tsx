@@ -16,6 +16,7 @@ type PaginateFormProps = {
       formName: string;
       initialValues: FormInitValues;
       // optional
+      addEntry?: { initialValues: FormInitValues; label: string };
       title?: string;
       labels?: KeyStringProp;
       placeholders?: KeyStringProp;
@@ -108,8 +109,8 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
             Form navigation showing {page + 1} out of {total}
           </p>
           <div className="flex-row">
-            <Button name="previous" label="previous" handleClick={prevPage} />
-            <Button name="next" label="next" handleClick={nextPage} />
+            <Button label="previous" onClick={prevPage} />
+            <Button label="next" onClick={nextPage} />
           </div>
         </div>
       )}
@@ -125,6 +126,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           theme={paginate[page].theme}
           schema={paginate[page].schema}
           formName={paginate[page].formName}
+          addEntry={paginate[page].addEntry}
         />
       )}
     </div>
