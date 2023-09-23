@@ -17,7 +17,7 @@ type FormProps = {
   // required props
   initialValues: FormInitValues;
   onSubmit: (e: any) => void;
-  formName: string;
+  formName?: string;
   heading?: string;
   // optional
   onChange?: (e: any) => void;
@@ -39,7 +39,7 @@ const Form: React.FC<FormProps> = (props) => {
   const { submitLabel, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
   // must have required props
-  const required = { initialValues, formName, onSubmit };
+  const required = { initialValues, onSubmit };
   const { lightColor, errors } = usePropErrorHandling(required, true);
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});

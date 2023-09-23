@@ -1,3 +1,4 @@
+import { findValueType } from "@nxs-utils/helpers/methods";
 import { messages } from "data/messages";
 
 type ErrorMessageProp = {
@@ -10,8 +11,15 @@ const ErrorMessage: React.FC<ErrorMessageProp> = (props) => {
   const { prop, code, component, error } = props;
 
   const handleClick = () => {
+    const { isUndefined } = findValueType(error.value);
     console.log("error occurred in prop ", prop);
     console.log("failed with code  ", code);
+    console.log(
+      "Value type",
+      isUndefined
+        ? " is undefined. \n***Hint:*** double check props"
+        : error.value
+    );
     console.log("error : ", error);
   };
 
