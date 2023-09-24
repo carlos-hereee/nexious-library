@@ -9,20 +9,25 @@ all_args="$*"
 args_array=("$@")
 # Accessing the filename
 filename="$0"
-
+# # Accessing the first argument PATH
+arg1="$1"
+# # Accessing the second argument
+arg2="$2"
+# # Accessing the third argument
+arg3="$3"
 # Define function for error handling
 require_all_args() {
-  # # Accessing the first argument
+  # # Accessing the first argument PATH
   local path="$1"
   # # Accessing the second argument
-  local oldName="$2"
+  local pattern="$2"
   # # Accessing the third argument
   local newName="$3"
   # Check if the first argument is provided and not empty
+  echo "Found arg. path is $path"
   # # -z is the test operator to check if path is empty
-  if [ -z $path ]; then
+  if [ -z "$path" ]; then
     echo "Error Occured: first argument is not provided"
-    echo "Path is $path"
     echo "Posible Fix: change value to desired schema /path/to/directory"
     # Exit Code 1: This is often used to indicate a general error.
     # If a program or script encounters an unspecified or unexpected issue,
@@ -30,15 +35,17 @@ require_all_args() {
     exit 1
   fi
   # Check if second argument is provided
-  if [ -z $oldName ]; then
+  echo "Found arg. old file extensions are $pattern "
+  if [ -z "$pattern" ]; then
     echo "Error Occured:  second argument is not provided"
-    echo "Old file extension name is $oldName"
+    echo "Old file extension name is $pattern"
     echo "Posible Fix: change value to desired schema {js,jsx} or similar"
     # Exit Code 1: This is often used to indicate a general error.
     exit 1
   fi
   # Check if third argument is provided
-  if [ -z $newName ]; then
+  echo "Found arg. new file extensions is $newName"
+  if [ -z "$newName" ]; then
     echo "Error Occured:  thrid argument is not provided"
     echo "Old file extension name is $newName"
     echo "Posible Fix: change value to desired schema {jsx} or similar"
@@ -46,20 +53,32 @@ require_all_args() {
     exit 1
   fi
   # passed all errors start next process
-  echo "Command found searching from root directory $path"
+  echo "Searching from root directory $path"
 }
-require_all_args $1 $2 $3
-# find ./src \
-# -type f
-# -name '*.js'
-# -not -name '*.jsx' -not -name '*.ejs'
-# -exec bash -c 'grep -l "</" $0' {} \;
-# -exec bash -c 'git mv "$0" "${0%.js}.jsx"' {} \;
+# Define function for searching files in a directory
+search_directory() {
+  local folder="$1"
+  local pattern="$2"
+  local newName="$3"
 
-# Search for files in the specified directory and its subdirectories
-# that match the criteria of being regular files with names ending in ".log"
-# and perform an action on each found file.
-find $path -type f -name $oldName \
-  -exec echo "Processing file: $filename" \;
+  # Check if folder exists
+  if [ ! -d "$folder" ]; then
+    echo "Folder does not exits"
+    return 1
+  fi
 
-#     # # add more stuff
+  # Search for files that match search critiria and count them
+  local count
+  count=$(find "$folder" -type f -name "$pattern" | wc -l)
+
+  # if any files were found
+  if [ "$count" -gt 0 ]; then
+    echo "Files found "$count" matching the search criteria were found"
+  else
+    echo "Files found "$count" matching the search criteria were found"
+  fi
+}
+# error handling first
+require_all_args $arg1 $arg2 $arg3
+# search directory
+search_directory $arg1 $arg2 $arg3

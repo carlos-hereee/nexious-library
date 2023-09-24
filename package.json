@@ -73,8 +73,7 @@
   },
   "scripts": {
     "nodemon": "nodemon",
-    "transform:jsx-tsx":"bash rename.sh ./src *.{js,jsx} {tsx}",
-    "renameFile":"bash renameFile.sh ./src *.{js,jsx} {tsx}",
+    "renameFile":"bash renameFile.sh",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
     "watch:3": "tsc-alias -p tsconfig.json --watch",
