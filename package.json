@@ -73,11 +73,11 @@
   },
   "scripts": {
     "nodemon": "nodemon",
-    "renameFile":"bash renameFile.sh",
+    "renameFile": "bash ./scripts/renameFile.sh",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
     "watch:3": "tsc-alias -p tsconfig.json --watch",
-    "watch:4":"npx run copyfiles -u 1 *.sh dist/esm",
+    "save:rename": "node ./scripts/save-rename.js",
     "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
     "copy:css": "node ./copy-styles.js",
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",
@@ -91,7 +91,6 @@
     "build": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
-    "transform:ts-tsx":". .renameToTsx.sh",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
