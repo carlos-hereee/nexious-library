@@ -1,6 +1,6 @@
 {
   "name": "nexious-library",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Official database for nexious.tech",
   "type": "module",
   "main": "dist/esm/main.js",
@@ -73,7 +73,9 @@
   },
   "scripts": {
     "nodemon": "nodemon",
-    "renameFile":"bash renameFile.sh",
+    "save:rename": "node ./scripts/save-rename.js",
+    "renameFile": "bash ./scripts/renameFile.sh",
+    "watch:4": "node ./scripts/watcher-rename-file.js --watch",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
     "watch:3": "tsc-alias -p tsconfig.json --watch",
@@ -90,7 +92,6 @@
     "build": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
-    "transform:ts-tsx":". .renameToTsx.sh",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"
