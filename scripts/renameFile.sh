@@ -82,9 +82,28 @@ require_new_name() {
     echo "Found arg. new file extensions is $newName"
   fi
 }
+# recersively list files and subtitles
+list_files() {
+  local dir="$1"
+  echo "  Searching directory: $dir"
+  # loop through files in path
+  for item in "$dir"/*; do
+    # check if current item is a file
+    if [ -f "$item" ]; then
+      # print its path
+      echo "    Checking file "$item""
+    # check if current item is a directory
+    elif [ -d "$item" ]; then
+      # rinse and repeat
+      echo "    Directory found "$item""
+      list_files "$item"
+    fi
+  done
+}
 
 # error handling first
 require_path ""
+list_files "$path"
 require_pattern ""
 # count_files_matching_criteria ""
 # require_new_name ""
