@@ -77,6 +77,7 @@
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
     "watch:3": "tsc-alias -p tsconfig.json --watch",
+    "watch:4":"npx run copyfiles -u 1 *.sh dist/esm",
     "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
     "copy:css": "node ./copy-styles.js",
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",

@@ -70,12 +70,14 @@ search_directory() {
   # Search for files that match search critiria and count them
   local count
   count=$(find "$folder" -type f -name "$pattern" | wc -l)
+    echo "Files found "$count" matching the search criteria were found"
 
   # if any files were found
   if [ "$count" -gt 0 ]; then
-    echo "Files found "$count" matching the search criteria were found"
+  # do things 
   else
-    echo "Files found "$count" matching the search criteria were found"
+  # No files found
+    exit 1
   fi
 }
 # error handling first
