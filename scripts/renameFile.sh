@@ -9,14 +9,9 @@ all_args="$*"
 args_array=("$@")
 # Accessing the filename
 filename="$0"
-# # Accessing the first argument PATH
-arg1="$1"
-# # Accessing the second argument
-arg2="$2"
-# # Accessing the third argument
-arg3="$3"
+
 # Define function for error handling
-require_all_args() {
+require_all_args_to_be_true() {
   # # Accessing the first argument PATH
   local path="$1"
   # # Accessing the second argument
@@ -27,23 +22,31 @@ require_all_args() {
   # # -z is the test operator to check if path is empty
   if [ -z "$path" ]; then
     echo "Error Occured: first argument is not provided"
-    echo "Posible Fix: update first arg. value to desired schema /path/to/directory"
+    echo "Posible Fix: update first arg. value to desired schema ./path/to/directory"
     # Exit Code 1: This is often used to indicate a general error.
     # If a program or script encounters an unspecified or unexpected issue,
     # it may return an exit code of 1 to signal a problem without providing specific details.
-    exit 1
+    return 1
   else
-    echo "Found arg. path is $path"
+    # first argument is path and it exists. Check if folder exists
+    # ! -d checks if the directory does not exist
+    if [ ! -d "$path" ]; then
+      echo "No directory found on path "$path""
+      return 1
+    else
+      echo "Directory found on path "$path""
+    fi
+
   fi
   # Check if second argument is provided
   if [ -z "$pattern" ]; then
     echo "Error Occured:  second argument is not provided"
     echo "Old file extension name is $pattern"
-    echo "Posible Fix: change value to desired schema {js,jsx} or similar"
+    echo "Posible Fix: change value to desired schema 'jsx' or similar"
     # Exit Code 1: This is often used to indicate a general error.
     exit 1
   else
-    echo "Found arg. old file extensions are $pattern "
+    echo "Found arg. old file extensions is $pattern "
   fi
   # Check if third argument is provided
   if [ -z "$newName" ]; then
@@ -56,7 +59,7 @@ require_all_args() {
     echo "Found arg. new file extensions is $newName"
   fi
   # passed all errors start next process
-  echo "Searching from root directory $path"
+  echo "Searching directory $path"
 }
 # Define function for searching files in a directory
 search_directory() {
@@ -64,27 +67,21 @@ search_directory() {
   local pattern="$2"
   local newName="$3"
 
-  # Check if folder exists
-  if [ ! -d "$folder" ]; then
-    echo "DIRECTORY "$folder" does not exits"
-    return 1
-  fi
-
   # Search for files that match search critiria and count them
   local count
-  count=$(find "$folder" -type f -name "$pattern" | wc -l)
+  count=$(find "$folder" -type f -name "*.{$pattern}" | wc -l)
 
   # if any files were found
   if [ "$count" -gt 0 ]; then
     # do things
     echo "Files found "$count" matching the search criteria"
   else
-    echo "No files found matching search criteria"
     # No files found
+    echo "$count files found matching search criteria"
     exit 1
   fi
 }
 # error handling first
-require_all_args "$arg1" "$arg2" "$arg3"
+require_all_args_to_be_true "$1" "$2" "$3"
 # search directory
-search_directory "$arg1" "$arg2" "$arg3"
+search_directory "$1" "$2" "$3"

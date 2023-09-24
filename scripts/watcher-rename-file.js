@@ -6,7 +6,7 @@ const executeFile = "./scripts/save-rename.js"; // Replace with the file you wan
 
 fs.watch(targetFile, (eventType, filename) => {
   if (filename && eventType === "change") {
-    console.log(`File ${filename} has changed. Executing '${executeFile}'...`);
+    console.log(`File ${filename} has changed. Executing ${executeFile}...`);
 
     // Execute the different file using child_process.spawn
     const child = spawn("node", [executeFile]);
@@ -29,4 +29,4 @@ fs.watch(targetFile, (eventType, filename) => {
   }
 });
 
-console.log(`Watching for ${targetFile} changes...`);
+console.log(`Watching for changes on path ${targetFile} ...`);
