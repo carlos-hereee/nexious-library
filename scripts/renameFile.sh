@@ -7,17 +7,19 @@ num_args="$#"
 all_args="$*"
 # All arguments as an array
 args_array=("$@")
-# Accessing the filename
+# # Accessing the filename
 filename="$0"
+# Get the current directory path
+current_dir=$(pwd)
+# # Accessing the first argument PATH
+path="$1"
+# # Accessing the second argument
+pattern="$2"
+# # Accessing the third argument
+newName="$3"
 
-# Define function for error handling
-require_all_args_to_be_true() {
-  # # Accessing the first argument PATH
-  local path="$1"
-  # # Accessing the second argument
-  local pattern="$2"
-  # # Accessing the third argument
-  local newName="$3"
+# for error handling, check if path exists, and directory
+require_path() {
   # Check if the first argument is provided and not empty
   # # -z is the test operator to check if path is empty
   if [ -z "$path" ]; then
@@ -38,16 +40,7 @@ require_all_args_to_be_true() {
     fi
 
   fi
-  # Check if second argument is provided
-  if [ -z "$pattern" ]; then
-    echo "Error Occured:  second argument is not provided"
-    echo "Old file extension name is $pattern"
-    echo "Posible Fix: change value to desired schema 'jsx' or similar"
-    # Exit Code 1: This is often used to indicate a general error.
-    exit 1
-  else
-    echo "Found arg. old file extensions is $pattern "
-  fi
+
   # Check if third argument is provided
   if [ -z "$newName" ]; then
     echo "Error Occured:  thrid argument is not provided"
@@ -63,25 +56,30 @@ require_all_args_to_be_true() {
 }
 # Define function for searching files in a directory
 search_directory() {
-  local folder="$1"
-  local pattern="$2"
-  local newName="$3"
-
-  # Search for files that match search critiria and count them
-  local count
-  count=$(find "$folder" -type f -name "*.{$pattern}" | wc -l)
-
-  # if any files were found
-  if [ "$count" -gt 0 ]; then
-    # do things
-    echo "Files found "$count" matching the search criteria"
+  # Check if second argument is provided
+  if [ -z "$pattern" ]; then
+    echo "Error Occured:  second argument is not provided"
+    echo "Old file extension name is $pattern"
+    echo "Posible Fix: change value to desired schema 'jsx' or similar"
+    # Exit Code 1: This is often used to indicate a general error.
+    return 1
   else
-    # No files found
-    echo "$count files found matching search criteria"
-    exit 1
+    # Search for files that match search critiria and count them
+    local count
+    count=$(find "$path" -type f -name "*.{$pattern}" | wc -l)
+    # if any files were found
+    if [ "$count" -gt 0 ]; then
+      # do things
+      echo "Files found "$count" matching the search criteria"
+    else
+      # No files found
+      echo ""$count" files found matching search criteria"
+      echo "You are in the directory: "$current_dir""
+      return 1
+    fi
   fi
 }
 # error handling first
-require_all_args_to_be_true "$1" "$2" "$3"
+require_path ""
 # search directory
-search_directory "$1" "$2" "$3"
+# search_directory ""
