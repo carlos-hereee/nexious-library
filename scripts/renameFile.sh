@@ -66,7 +66,7 @@ search_directory() {
 
   # Check if folder exists
   if [ ! -d "$folder" ]; then
-    echo "Folder does not exits"
+    echo "DIRECTORY "$folder" does not exits"
     return 1
   fi
 
@@ -85,6 +85,6 @@ search_directory() {
   fi
 }
 # error handling first
-require_all_args $arg1 $arg2 $arg3
+require_all_args "$arg1" "$arg2" "$arg3"
 # search directory
-search_directory $arg1 $arg2 $arg3
+search_directory "$arg1" "$arg2" "$arg3"
