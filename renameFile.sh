@@ -9,15 +9,15 @@ all_args="$*"
 args_array=("$@")
 # Accessing the filename
 filename="$0"
-# Accessing the first argument
-path="$1"
-# Accessing the second argument
-oldName="$2"
-# Accessing the third argument
-newName="$3"
 
 # Define function for error handling
 require_all_args() {
+  # # Accessing the first argument
+  local path="$1"
+  # # Accessing the second argument
+  local oldName="$2"
+  # # Accessing the third argument
+  local newName="$3"
   # Check if the first argument is provided and not empty
   # # -z is the test operator to check if path is empty
   if [ -z $path ]; then
@@ -45,15 +45,17 @@ require_all_args() {
     # Exit Code 1: This is often used to indicate a general error.
     exit 1
   fi
+  # passed all errors start next process
+  echo "Command found searching from root directory $path"
 }
-require_all_args $path $oldName $newName
+require_all_args $1 $2 $3
 # find ./src \
 # -type f
 # -name '*.js'
 # -not -name '*.jsx' -not -name '*.ejs'
 # -exec bash -c 'grep -l "</" $0' {} \;
 # -exec bash -c 'git mv "$0" "${0%.js}.jsx"' {} \;
-echo "Command found searching from root directory $path"
+
 # Search for files in the specified directory and its subdirectories
 # that match the criteria of being regular files with names ending in ".log"
 # and perform an action on each found file.
