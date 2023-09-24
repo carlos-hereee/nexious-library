@@ -100,10 +100,34 @@ list_files() {
     fi
   done
 }
+# # recersively rename files and subfiles
+rename_files() {
+  local dir="$1"
+  echo "  Searching directory: $dir"
+  # loop through files in path
+  for item in "$dir"/*; do
+    # check if current item is a file
+    if [ -f "$item" ]; then
+      # check if file path contains the pattern
+      if echo "$item" | grep -q "\<$pattern\>"; then
+        echo "    File has ."$pattern" extension "
+        rename_file $item 
+      else
+        echo "    File does not have ."$pattern" extension. So it will be left alone."
+      fi
+    # check if current item is a directory
+    elif [ -d "$item" ]; then
+      # rinse and repeat
+      echo "    Directory found "$item""
+      rename_files "$item"
+    fi
+  done
+}
 
 # error handling first
 require_path ""
-list_files "$path"
+# list_files "$path"
 require_pattern ""
+rename_files "$path"
 # count_files_matching_criteria ""
 # require_new_name ""
