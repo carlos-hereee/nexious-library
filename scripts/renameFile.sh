@@ -55,8 +55,8 @@ require_pattern() {
     return 1
   fi
 }
-# Search for files that match search critiria and count them
-search_files() {
+# count the number of files matching search critiria and count them
+count_files_matching_criteria() {
   local count
   count=$(find "$path" -type f -name "*.{$pattern}" | wc -l)
   # if any matching files were found
@@ -70,7 +70,6 @@ search_files() {
     return 1
   fi
 }
-
 require_new_name() {
   # Check if third argument is provided
   if [ -z "$newName" ]; then
@@ -87,5 +86,5 @@ require_new_name() {
 # error handling first
 require_path ""
 require_pattern ""
-search_files ""
+# count_files_matching_criteria ""
 # require_new_name ""
