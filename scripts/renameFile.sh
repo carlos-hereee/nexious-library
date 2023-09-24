@@ -24,33 +24,36 @@ require_all_args() {
   # # Accessing the third argument
   local newName="$3"
   # Check if the first argument is provided and not empty
-  echo "Found arg. path is $path"
   # # -z is the test operator to check if path is empty
   if [ -z "$path" ]; then
     echo "Error Occured: first argument is not provided"
-    echo "Posible Fix: change value to desired schema /path/to/directory"
+    echo "Posible Fix: update first arg. value to desired schema /path/to/directory"
     # Exit Code 1: This is often used to indicate a general error.
     # If a program or script encounters an unspecified or unexpected issue,
     # it may return an exit code of 1 to signal a problem without providing specific details.
     exit 1
+  else
+    echo "Found arg. path is $path"
   fi
   # Check if second argument is provided
-  echo "Found arg. old file extensions are $pattern "
   if [ -z "$pattern" ]; then
     echo "Error Occured:  second argument is not provided"
     echo "Old file extension name is $pattern"
     echo "Posible Fix: change value to desired schema {js,jsx} or similar"
     # Exit Code 1: This is often used to indicate a general error.
     exit 1
+  else
+    echo "Found arg. old file extensions are $pattern "
   fi
   # Check if third argument is provided
-  echo "Found arg. new file extensions is $newName"
   if [ -z "$newName" ]; then
     echo "Error Occured:  thrid argument is not provided"
     echo "Old file extension name is $newName"
     echo "Posible Fix: change value to desired schema {jsx} or similar"
     # Exit Code 1: This is often used to indicate a general error.
     exit 1
+  else
+    echo "Found arg. new file extensions is $newName"
   fi
   # passed all errors start next process
   echo "Searching from root directory $path"
@@ -70,13 +73,14 @@ search_directory() {
   # Search for files that match search critiria and count them
   local count
   count=$(find "$folder" -type f -name "$pattern" | wc -l)
-    echo "Files found "$count" matching the search criteria were found"
 
   # if any files were found
   if [ "$count" -gt 0 ]; then
-  # do things 
+    # do things
+    echo "Files found "$count" matching the search criteria"
   else
-  # No files found
+    echo "No files found matching search criteria"
+    # No files found
     exit 1
   fi
 }
