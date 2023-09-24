@@ -73,8 +73,7 @@
   },
   "scripts": {
     "nodemon": "nodemon",
-    "dev:ts-node": "ts-node -r tsconfig-paths/register -r src/main.ts",
-    "dev:webpack": "webpack-dev-server --stats-error-details",
+    "transform:jsx-tsx":"bash rename.sh /src/",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
     "watch:3": "tsc-alias -p tsconfig.json --watch",
@@ -88,12 +87,10 @@
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
     "compile:css": "npx sass src/stylesheets:dist/css",
     "compile:paths": "node -r tsconfig-paths/register dist/esm/main.js",
-    "compile:webpack": "webpack --mode production --stats-error-details",
     "build": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
-    "build:webpack": "npm run clean && npm run compile && npm run",
-    "build:serve": "webpack serve --stats-error-details",
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
+    "transform:ts-tsx":". .renameToTsx.sh",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish"

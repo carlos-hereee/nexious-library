@@ -4,5 +4,8 @@
   "editor.formatOnSave": false, 
   "editor.formatOnPaste": false, 
   // "editor.wordWrap": "on", 
-  "git.ignoreLimitWarning": true
+  "git.ignoreLimitWarning": true,
+  "[shellscript]": {
+    "editor.defaultFormatter": "foxundermoon.shell-format"
+  }
 }
