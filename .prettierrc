@@ -8,5 +8,5 @@
   "arrowParens": "always",
   "endOfLine": "lf",
   "htmlWhitespaceSensitivity": "strict",
-  "printWidth": 80
+  "printWidth": 90
 }
