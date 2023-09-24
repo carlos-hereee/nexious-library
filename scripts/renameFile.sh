@@ -55,6 +55,17 @@ require_pattern() {
     return 1
   fi
 }
+require_new_name() {
+  # Check if third argument is provided
+  if [ -z "$newName" ]; then
+    echo "Error Occured:  thrid argument is not provided"
+    echo "Old file extension name is $newName"
+    echo "Posible Fix: change value to desired schema {jsx} or similar"
+    # Exit Code 1: This is often used to indicate a general error.
+    exit 1
+  fi
+}
+
 # count the number of files matching search critiria and count them
 count_files_matching_criteria() {
   local count
@@ -70,17 +81,16 @@ count_files_matching_criteria() {
     return 1
   fi
 }
-require_new_name() {
-  # Check if third argument is provided
-  if [ -z "$newName" ]; then
-    echo "Error Occured:  thrid argument is not provided"
-    echo "Old file extension name is $newName"
-    echo "Posible Fix: change value to desired schema {jsx} or similar"
-    # Exit Code 1: This is often used to indicate a general error.
-    exit 1
-  else
-    echo "Found arg. new file extensions is $newName"
-  fi
+rename_file() {
+  local current_filename="$1"
+  # # remove string from the original string if exists
+  # local filename_with_extension="$current_filename"""$pattern""
+  local clip_filename_extension="${current_filename//${pattern}/}"
+  local file_with_new_extension="$clip_filename_extension"""$newName""
+  # echo "current filename "$current_filename""
+  # echo "newfilename "$file_with_new_extension""
+  mv "$current_filename" "$file_with_new_extension"
+  echo "        Success! Renaming current filename to:  "$file_with_new_extension""
 }
 # recersively list files and subtitles
 list_files() {
@@ -105,29 +115,28 @@ rename_files() {
   local dir="$1"
   echo "  Searching directory: $dir"
   # loop through files in path
-  for item in "$dir"/*; do
-    # check if current item is a file
-    if [ -f "$item" ]; then
+  for dir_path in "$dir"/*; do
+    # check if current dir_path is a file
+    if [ -f "$dir_path" ]; then
       # check if file path contains the pattern
-      if echo "$item" | grep -q "\<$pattern\>"; then
+      if echo "$dir_path" | grep -q "\<$pattern\>"; then
         echo "    File has ."$pattern" extension "
-        rename_file $item 
+        rename_file $dir_path
       else
         echo "    File does not have ."$pattern" extension. So it will be left alone."
       fi
-    # check if current item is a directory
-    elif [ -d "$item" ]; then
+    # check if current dir_path is a directory
+    elif [ -d "$dir_path" ]; then
       # rinse and repeat
-      echo "    Directory found "$item""
-      rename_files "$item"
+      echo "    Directory found "$dir_path""
+      rename_files "$dir_path"
     fi
   done
 }
 
 # error handling first
 require_path ""
-# list_files "$path"
+require_new_name ""
 require_pattern ""
 rename_files "$path"
 # count_files_matching_criteria ""
-# require_new_name ""
