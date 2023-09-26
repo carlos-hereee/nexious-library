@@ -42,8 +42,12 @@
           "include": ["src/*"],
           "exclude": ["node_modules"]
         }
+
       ```
-3. update scripts in package.json file
+3. update index.html script tag to point to new ts file
+    - old index.html = ```text <script type="module" src="/src/main.jsx"></script>```
+    - new index.html = ```text <script type="module" src="/src/main.tsx"></script>```
+4. update scripts in package.json file to include a watch file to watch for changes
     - add command ```text "watch": "tsc -p tsconfig.json -w"```
 
 ## Techstack
@@ -106,7 +110,7 @@ Works out of the box with following initial props:
 
 3. PaginatedForm Usage
 
-- paginate is array with initialValues and onSubmit as required props
+    - paginate is array with initialValues and onSubmit as required props
 
     ```text
     <PaginateForm  

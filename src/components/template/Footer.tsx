@@ -1,6 +1,5 @@
-export type FooterProps = {
-  appName: string;
-};
+import { FooterProps } from "types/TemplateTypes";
+
 /**
  * Component - Footer
  * @param appName string;

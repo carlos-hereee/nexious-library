@@ -2,16 +2,10 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import { HeroProp, MenuItemProp, MenuProp } from "@nxs-utils/helpers/types";
+import { MenuProp } from "@nxs-utils/helpers/types";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { HeaderProps } from "types/TemplateTypes";
 
-export type HeaderProps = {
-  menu: MenuProp[];
-  ping?: number;
-  logo: HeroProp;
-  language?: MenuItemProp;
-  updateMenu: (e: MenuProp[]) => void;
-};
 /**
  * Component - Header
  * @param logo.url string; url pointing to asset

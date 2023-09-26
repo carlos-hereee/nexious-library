@@ -1,22 +1,11 @@
 import { CalendarView, CalendarNavigation, IconButton } from "@nxs-molecules";
 import { useEffect, useState } from "react";
-import {
-  CalendarDayEventProp,
-  CalendarDayProps,
-} from "@nxs-utils/helpers/types";
+import { CalendarDayEventProp, CalendarDayProps } from "@nxs-utils/helpers/types";
 import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import { next, previous } from "@nxs-utils/calendar/navLabels";
 import { monthChange } from "@nxs-utils/calendar/monthChange";
 import { dayChange } from "@nxs-utils/calendar/dayChange";
-
-type CalendarProps = {
-  value: Date;
-  minDate?: Date;
-  theme?: string;
-  events?: CalendarDayEventProp[];
-  onDayClick?: (e: any) => void;
-  setDay?: (a: any) => void;
-};
+import { CalendarProps } from "types/TemplateTypes";
 
 /**
  *

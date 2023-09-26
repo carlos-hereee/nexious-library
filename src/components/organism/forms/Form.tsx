@@ -1,4 +1,4 @@
-import { Button, ErrorMessage, InputCheckbox } from "@nxs-atoms";
+import { ErrorMessage, InputCheckbox } from "@nxs-atoms";
 import { auth, select } from "@nxs-utils/form/types";
 import { textarea } from "@nxs-utils/form/types";
 import { useValues } from "@nxs-utils/hooks/useValues";
@@ -13,7 +13,7 @@ import { validateForm } from "@nxs-utils/form/validateForm";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 
-type FormProps = {
+export type FormProps = {
   // required props
   initialValues: FormInitValues;
   onSubmit: (e: any) => void;

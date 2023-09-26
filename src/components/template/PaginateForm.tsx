@@ -1,37 +1,10 @@
 import { useEffect, useState } from "react";
-import { FormInitValues, KeyStringProp } from "@nxs-utils/helpers/types";
-import Form from "../organism/forms/Form";
+import { FormInitValues } from "@nxs-utils/helpers/types";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Button } from "@nxs-atoms/index";
-import { FormWithEntry } from "@nxs-organism/index";
-
-type PaginateFormProps = {
-  // required props
-  page: number;
-  setNewPage: (e: number) => void;
-  onFormSubmit: (e: any) => void;
-  paginate: [
-    {
-      // required
-      formName: string;
-      initialValues: FormInitValues;
-      // optional
-      addEntry?: { initialValues: FormInitValues; label: string };
-      title?: string;
-      labels?: KeyStringProp;
-      placeholders?: KeyStringProp;
-      types?: KeyStringProp;
-      theme?: string;
-      submitLabel?: string;
-      heading?: string;
-      schema?: { required: string[] };
-    }
-  ];
-  // optional props
-  order?: string[]; //defaults set to first form on list
-  hideNavigation?: boolean;
-};
+import { FormWithEntry, Form } from "@nxs-organism/index";
+import { PaginateFormProps } from "@nxs-types/TemplateTypes";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors

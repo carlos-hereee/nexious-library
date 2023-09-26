@@ -59,6 +59,17 @@
         "default": "./dist/cjs/components/template/index.cjs"
       }
     },
+    "./@nxs-types":{
+      "import": {
+        "types": "./dist/esm/types/index.d.ts",
+        "default": "./dist/esm/types/index.js"
+      },
+      "require": {
+        "types": "./dist/cjs/types/index.d.ts",
+        "default": "./dist/cjs/types/index.cjs"
+      }
+    }
+    , 
     "./@nxs-math": {
       "import": {
         "types": "./dist/esm/math/index.d.ts",

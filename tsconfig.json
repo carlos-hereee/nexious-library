@@ -31,6 +31,7 @@
       "@nxs-math/*": ["math/*"],
       "@nxs-math": ["math"],
       "@nxs-helpers/*": ["helpers/*"],
+      "@nxs-types/*": ["types/*"],
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "forceConsistentCasingInFileNames": true,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
