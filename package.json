@@ -83,10 +83,11 @@
     },
     "./@index.css": "./dist/css/index.css"
   },
-  "scripts": {
+  "scripts": { 
     "nodemon": "nodemon",
     "save:rename": "node ./scripts/save-rename.js",
     "renameFile": "bash ./scripts/renameFile.sh",
+    "watch:add-types": "node ./scripts/watcher-add-types.js --watch",
     "watch:4": "node ./scripts/watcher-rename-file.js --watch",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
@@ -100,7 +101,6 @@
     "compile:js": "tsc --module commonjs --outDir dist/cjs",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
     "compile:css": "npx sass src/stylesheets:dist/css",
-    "compile:paths": "node -r tsconfig-paths/register dist/esm/main.js",
     "build": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
@@ -122,7 +122,8 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist"
+    "dist", 
+    "src/**/*.d.ts"
   ],
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"

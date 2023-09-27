@@ -16,7 +16,7 @@ const PageNotFound: React.FC<PageNotFoundProps> = (props) => {
 
   useEffect(() => {
     if (to) {
-      setTimeout(() => navigate(`/${to}`), 1800);
+      setTimeout(() => navigate(`/${to}`), 2300);
     }
   }, []);
 
