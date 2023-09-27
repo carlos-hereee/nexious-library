@@ -1,4 +1,4 @@
-import { FooterProps } from "@nxs-types/TemplateTypes";
+import { FooterProps } from "@nxs-utils/types/organism/FooterProps";
 
 /**
  * Component - Footer

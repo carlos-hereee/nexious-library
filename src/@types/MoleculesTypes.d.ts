@@ -1,5 +1,5 @@
-import { PaginateFormProps } from "@nxs-utils/types/template/PaginateForm";
+import { OnClickProps } from "@nxs-types/custom/OnClickProps";
 
-declare module "PaginateForm" {
-  export type Props = PaginateFormProps;
+declare module "GoBackButton" {
+  export type Props = OnClickProps;
 }

@@ -4,7 +4,7 @@ import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Button } from "@nxs-atoms/index";
 import { FormWithEntry, Form } from "@nxs-organism/index";
-import { PaginateFormProps } from "@nxs-types/TemplateTypes";
+import { PaginateFormProps } from "@nxs-utils/types/template/PaginateForm";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
