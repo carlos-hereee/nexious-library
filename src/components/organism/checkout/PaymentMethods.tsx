@@ -4,14 +4,14 @@ import { Form } from "@nxs-organism";
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
 
-type PaymentType = {
+export type PaymentType = {
   uid?: string;
   type?: string;
   name?: string;
   icon?: string;
   hero?: HeroProp;
 };
-type PaymentMethodsProps = {
+export type PaymentMethodsProps = {
   data: PaymentType[];
   visaPayment?: (a: any) => void;
   paypalPayment?: (e: any) => void;
@@ -31,9 +31,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
             key={d.uid}
             onClick={() => setActive(d)}
           >
-            {active && (
-              <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />
-            )}
+            {active && <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />}
             {d.hero ? (
               <Hero hero={d.hero} theme={`icon hero-${d.icon}`} />
             ) : (

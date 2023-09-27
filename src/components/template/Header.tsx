@@ -4,7 +4,7 @@ import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { MenuProp } from "@nxs-utils/helpers/types";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { HeaderProps } from "types/TemplateTypes";
+import { HeaderProps } from "@nxs-types/TemplateTypes";
 
 /**
  * Component - Header

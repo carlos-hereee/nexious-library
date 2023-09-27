@@ -5,7 +5,7 @@ import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import { next, previous } from "@nxs-utils/calendar/navLabels";
 import { monthChange } from "@nxs-utils/calendar/monthChange";
 import { dayChange } from "@nxs-utils/calendar/dayChange";
-import { CalendarProps } from "types/TemplateTypes";
+import { CalendarProps } from "@nxs-types/TemplateTypes";
 
 /**
  *

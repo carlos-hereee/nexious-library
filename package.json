@@ -3,6 +3,7 @@
   "version": "1.4.1",
   "description": "Official database for nexious.tech",
   "type": "module",
+  "types":"dist/esm/@types",
   "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",

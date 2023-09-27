@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Heading } from "@nxs-atoms";
 import { CartRow, CartCancel } from "@nxs-molecules";
 
-type CartProps = {
+export type CartProps = {
   data: any[];
   heading: string;
   removeFromCart: (e: any) => void;

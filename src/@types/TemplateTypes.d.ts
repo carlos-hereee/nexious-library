@@ -7,25 +7,25 @@ import {
   MenuProp,
 } from "@nxs-utils/helpers/types";
 
-export type CalendarProps = {
+export interface CalendarProps {
   value: Date;
   minDate?: Date;
   theme?: string;
   events?: CalendarDayEventProp[];
   onDayClick?: (e: any) => void;
   setDay?: (a: any) => void;
-};
-export type HeaderProps = {
+}
+export interface HeaderProps {
   menu: MenuProp[];
   ping?: number;
   logo: HeroProp;
   language?: MenuItemProp;
   updateMenu: (e: MenuProp[]) => void;
-};
-export type FooterProps = {
+}
+export interface FooterProps {
   appName: string;
-};
-export type PaginateFormProps = {
+}
+export interface PaginateFormProps {
   // required props
   page: number;
   setNewPage: (e: number) => void;
@@ -50,6 +50,4 @@ export type PaginateFormProps = {
   // optional props
   order?: string[]; //defaults set to first form on list
   hideNavigation?: boolean;
-};
-// export type { HeaderProps } from "@template/";
-// export type { FooterProps } from "@template/";
+}

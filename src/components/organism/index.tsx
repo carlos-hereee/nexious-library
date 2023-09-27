@@ -11,23 +11,25 @@ export { default as TableFooter } from "./table/TableFooter";
 
 // card
 export { default as Card } from "./card/Card";
+
 export { default as UserCard } from "./card/UserCard";
+export type { UserCardProps } from "./card/UserCard";
 export { default as HeroCard } from "./card/HeroCard";
 export { default as FeatureCard } from "./card/FeatureCard";
 export { default as HeroCardAlt } from "./card/HeroCardAlt";
 export { default as CardSection } from "./card/CardSection";
 export { default as CardTextBubble } from "./card/CardTextBubble";
+// cart
+export { default as Cart } from "./card/Cart";
+export type { CartProps } from "./card/Cart";
 
 // calendar
 export { default as CalendarEvents } from "./calendar/CalendarEvents";
 
-// cart
-export { default as Cart } from "./card/Cart";
-
 // forms
 export { default as Form } from "./forms/Form";
-export type { FormProps } from "./forms/Form";
 export { default as FormWithEntry } from "./forms/FormWithEntry";
 
 // checkout
 export { default as PaymentMethods } from "./checkout/PaymentMethods";
+export type { PaymentMethodsProps } from "./checkout/PaymentMethods";

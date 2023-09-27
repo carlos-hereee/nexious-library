@@ -1,4 +1,4 @@
-import { FooterProps } from "types/TemplateTypes";
+import { FooterProps } from "@nxs-types/TemplateTypes";
 
 /**
  * Component - Footer

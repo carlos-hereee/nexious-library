@@ -6,31 +6,13 @@ import { AuthField, ErrorMessages, Field } from "@nxs-molecules";
 import { Select, SubmitButton, TextArea } from "@nxs-molecules";
 import { themeList } from "@nxs-utils/app/themeList";
 import { useState } from "react";
-import { FormInitValues, KeyStringProp } from "@nxs-utils/helpers/types";
+import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { initLabels } from "@nxs-utils/form/labels";
 import { objLength } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-
-export type FormProps = {
-  // required props
-  initialValues: FormInitValues;
-  onSubmit: (e: any) => void;
-  formName?: string;
-  heading?: string;
-  // optional
-  onChange?: (e: any) => void;
-  hideLabels?: boolean;
-  hideSubmit?: boolean;
-  showAuthTips?: boolean;
-  theme?: string;
-  labels?: { [key: string]: string };
-  placeholders?: { [key: string]: string };
-  types?: { [key: string]: string };
-  submitLabel?: string;
-  schema?: { required: string[] };
-};
+import { FormProps } from "@nxs-types/FormProps";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
