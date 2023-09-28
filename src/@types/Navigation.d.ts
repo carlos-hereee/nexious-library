@@ -1,7 +1,7 @@
-/**
- * syntax - "my-module" is the name you want to use when importing the
- *           module and should match the name used in import statements
- * */
+// /**
+//  * syntax - "my-module" is the name you want to use when importing the
+//  *           module and should match the name used in import statements
+//  * */
 type MenuItemProp = {
   name: string;
   label: string;
@@ -43,5 +43,18 @@ declare module "nxs-header" {
     };
     language?: MenuItemProp;
     updateMenu: (e: MenuProp[]) => void;
+  }
+}
+/**
+ * Component - Navigation
+ * @param menu    array to be iterated
+ * @param click   callback to be fired when button is click
+ * @returns navbar
+ */
+declare module "nxs-navigation" {
+  export interface NavigationProps {
+    onClick?: (key: MenuProp) => void;
+    menu: MenuProp[];
+    theme?: string;
   }
 }
