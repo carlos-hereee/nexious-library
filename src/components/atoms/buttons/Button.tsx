@@ -1,10 +1,5 @@
-export type ButtonProps = {
-  onClick?: React.MouseEventHandler<HTMLButtonElement>;
-  name?: string;
-  title?: string;
-  theme?: string;
-  label?: string;
-};
+import { ButtonProps } from "@nxs-utils/types/atoms/Button";
+
 /**
  * Component - Button
  * @param children children props

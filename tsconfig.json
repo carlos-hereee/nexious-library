@@ -56,15 +56,15 @@
     // "noLib": true,                                    /* Disable including any library files, including the default lib.d.ts. */
     // "useDefineForClassFields": true,                  /* Emit ECMAScript-standard-compliant class fields. */
     // "moduleDetection": "auto",                        /* Control what method is used to detect module-format JS files. */
-    /* Modules */
     /*
+    * Modules 
      When you set "module" to "commonjs" TS will emit commonjs files and browers
      don't support the commonjs syntax, so its likey to cause an error
     */
     // "moduleResolution": "node16" /* Specify how TypeScript looks up a file from a given module specifier. */,
     // "rootDirs": [],                                   /* Allow multiple folders to be treated as one when resolving modules. */
-    // "typeRoots": [],                                  /* Specify multiple folders that act like './node_modules/@types'. */
-    // "types": ["helpers/"],                                      /* Specify type package names to be included without being referenced in a source file. */
+    "typeRoots": ["./src/@types"],                                  /* Specify multiple folders that act like './node_modules/@types'. */
+    // "types": ["/dist/@types"],                                      /* Specify type package names to be included without being referenced in a source file. */
     // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
     // "moduleSuffixes": [],                             /* List of file name suffixes to search when resolving a module. */
     // "allowImportingTsExtensions": true,               /* Allow imports to include TypeScript file extensions. Requires '--moduleResolution bundler' and either '--noEmit' or '--emitDeclarationOnly' to be set. */
@@ -82,7 +82,7 @@
     "declarationMap": true,                           /* Create sourcemaps for d.ts files. */
     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
     // "inlineSourceMap": true,                          /* Include sourcemap files inside the emitted JavaScript. */
-    // "outFile": "./",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
+    // "outFile": "./dist/main",                                  /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
     // "noEmit": true,                                   /* Disable emitting files from a compilation. */
     // "importHelpers": true,                            /* Allow importing helper functions from tslib once per project, instead of including them per-file. */
     // "importsNotUsedAsValues": "remove",               /* Specify emit/checking behavior for imports that are only used for types. */
@@ -96,7 +96,7 @@
     // "noEmitHelpers": true,                            /* Disable generating custom helper functions like '__extends' in compiled output. */
     // "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
     // "preserveConstEnums": true,                       /* Disable erasing 'const enum' declarations in generated code. */
-    // "declarationDir": "./",                           /* Specify the output directory for generated declaration files. */
+    "declarationDir": "./dist/@types",                           /* Specify the output directory for generated declaration files. */
     // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
     /* Interop Constraints */
     // "isolatedModules": true,                          /* Ensure that each file can be safely transpiled without relying on other imports. */
@@ -111,7 +111,7 @@
     // "strictPropertyInitialization": true /* Check for class properties that are declared but not set in the constructor. */,
     // "noImplicitThis": true /* Enable error reporting when 'this' is given the type 'any'. */,
     // // "useUnknownInCatchVariables": true /* Default catch clause variables as 'unknown' instead of 'any'. */,
-    // // "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
+    "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
     // "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
     // "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
     // // "exactOptionalPropertyTypes": true /* Interpret optional property types as written, rather than adding 'undefined'. */,
@@ -122,13 +122,11 @@
     // "noPropertyAccessFromIndexSignature": true /* Enforces using indexed accessors for keys declared using an indexed type. */,
     // "allowUnusedLabels": true /* Disable error reporting for unused labels. */,
     // "allowUnreachableCode": true ,/* Disable error reporting for unreachable code. */
-    // "allowImportingTsExtensions": true
-    // "emitDeclarationOnly": true
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     // "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src"],
+  "include": ["src/**/*"],
   "exclude": [
     "node_modules",
     "dist"

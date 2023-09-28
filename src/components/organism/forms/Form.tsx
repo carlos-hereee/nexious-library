@@ -12,7 +12,7 @@ import { objLength } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { FormProps } from "@nxs-utils/types/organism/FormProps";
+import { FormProps } from "nxs-form";
 
 const Form: React.FC<FormProps> = (props) => {
   // props

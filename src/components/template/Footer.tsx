@@ -1,11 +1,12 @@
-import { FooterProps } from "@nxs-utils/types/organism/FooterProps";
+import { FooterProps } from "nxs-footer";
 
 /**
  * Component - Footer
  * @param appName string;
  * @returns
  */
-const Footer: React.FC<FooterProps> = ({ appName }) => {
+const Footer: React.FC<FooterProps> = (props) => {
+  const { appName } = props;
   return (
     <footer>
       <span className="text-center">
