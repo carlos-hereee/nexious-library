@@ -1,6 +1,6 @@
+// export types here so they get included when ts compiles
 // navigation
 export { default as Navbar } from "./navigation/Navbar";
-// export type
 export type { NavbarProps } from "./navigation/Navbar";
 export { default as Navigation } from "./navigation/Navigation";
 export type { NavigationProps } from "./navigation/Navigation";

@@ -4,27 +4,31 @@ import path from "path";
 const sourceFolder = "./src/@types";
 const targetFolder = "./dist/esm/@types";
 
-// Create the target folder if it doesn't exist
-if (!fs.existsSync(targetFolder)) {
-  fs.mkdirSync(targetFolder);
-}
-
-// Function to copy a file from source to target folder if it doesn't already exist
-function copyFileIfNotExists(filename) {
-  const sourceFilePath = path.join(sourceFolder, filename);
-  const targetFilePath = path.join(targetFolder, filename);
-
-  if (!fs.existsSync(targetFilePath)) {
-    // Copy the file to the target folder
-    fs.copyFileSync(sourceFilePath, targetFilePath);
-    console.log(`Copied: ${sourceFilePath} to ${targetFilePath}`);
+// add files if not included already no files left behind
+const noFileLeftBehid = () => {
+  const filesInFolder1 = fs.readdirSync(sourceFolder);
+  const filesInFolder2 = fs.readdirSync(targetFolder);
+  // Create the target folder if it doesn't exist
+  if (!fs.existsSync(targetFolder)) {
+    fs.mkdirSync(targetFolder);
   }
-}
+  // Iterate through files in folder1
+  filesInFolder1.forEach((filename) => {
+    const sourceFilePath = path.join(sourceFolder, filename);
+    const targetFilePath = path.join(targetFolder, filename);
+    //  copy a file if it doesn't already exist
+    if (!filesInFolder2.includes(filename)) {
+      fs.copyFileSync(sourceFilePath, targetFilePath);
+      console.log(`Copied: ${sourceFilePath} to ${targetFilePath}`);
+    }
+  });
+  console.log("Sync complete.");
+};
 
+noFileLeftBehid();
 fs.watch(sourceFolder, (eventType, filename) => {
   if ((eventType = "rename" || eventType === "change")) {
     console.log(`File ${filename} has changed. Executing `);
-    copyFileIfNotExists(filename);
   } else if (eventType === "unlink") {
     // handle file deletion
     const targetFilePath = path.join(targetFolder, filename);

@@ -2,8 +2,8 @@
   "name": "nexious-library",
   "version": "1.4.1",
   "description": "Official database for nexious.tech",
-  "type": "module",
-  "types":"dist/@types",
+  "type": "module", 
+  "types": "dist/esm/@types/components/template/index.d.ts",
   "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
@@ -12,81 +12,65 @@
   "exports": {
     ".": {
       "import": {
-        "types": "./dist/esm/main.d.ts",
+        "types": "./dist/esm/@types/main.d.ts",
         "default": "./dist/esm/main.js"
-      },
-      "require": {
-        "types": "./dist/cjs/main.d.ts",
-        "default": "./dist/cjs/main.js"
       }
     },
     "./@nxs-atoms": {
       "import": {
-        "types": "./dist/esm/components/atoms/index.d.ts",
+        "types": "./dist/esm/@types/components/atoms/index.d.ts",
         "default": "./dist/esm/components/atoms/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/components/atoms/index.d.ts",
-        "default": "./dist/cjs/components/atoms/index.cjs"
       }
     },
     "./@nxs-molecules": {
       "import": {
-        "types": "./dist/esm/components/molecules/index.d.ts",
+        "types": "./dist/esm/@types/components/molecules/index.d.ts",
         "default": "./dist/esm/components/molecules/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/components/molecules/index.d.ts",
-        "default": "./dist/cjs/components/molecules/index.cjs"
       }
     },
     "./@nxs-organism": {
       "import": {
-        "types": "./dist/esm/components/organism/index.d.ts",
+        "types": "./dist/esm/@types/@types/components/organism/index.d.ts",
         "default": "./dist/esm/components/organism/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/components/organism/index.d.ts",
-        "default": "./dist/cjs/components/organism/index.cjs"
       }
     },
-    "./@nxs-template": {
+    "./@nxs-header": {
       "import": {
-        "types": "./dist/esm/components/template/index.d.ts",
-        "default": "./dist/esm/components/template/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/components/template/index.d.ts",
-        "default": "./dist/cjs/components/template/index.cjs"
+        "default": "./dist/esm/components/template/Header.js",
+        "types": "./dist/esm/@types/@types/components/template/Header.d.ts"
       }
     },
-    "./@nxs-types":{
+    "./@nxs-calendar": {
       "import": {
-        "types": "./dist/esm/types/index.d.ts",
-        "default": "./dist/esm/types/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/types/index.d.ts",
-        "default": "./dist/cjs/types/index.cjs"
+        "default": "./dist/esm/components/template/Calendar.js",
+        "types": "./dist/esm/@types/@types/components/template/Calendar.d.ts"
       }
-    }
-    , 
+    },
+    "./@nxs-footer": {
+      "import": {
+        "default": "./dist/esm/components/template/Footer.js",
+        "types": "./dist/esm/@types/@types/components/template/Footer.d.ts"
+      }
+    },
+    "./@nxs-paginate-form": {
+      "import": {
+        "default": "./dist/esm/components/template/PaginateForm.js",
+        "types": "./dist/esm/@types/components/template/PaginateForm.d.ts"
+      }
+    },
     "./@nxs-math": {
       "import": {
-        "types": "./dist/esm/math/index.d.ts",
+        "types": "./dist/esm/@types/math/index.d.ts",
         "default": "./dist/esm/math/index.js"
-      },
-      "require": {
-        "types": "./dist/cjs/math/index.d.ts",
-        "default": "./dist/cjs/math/index.cjs"
       }
     },
     "./@index.css": "./dist/css/index.css"
   },
-  "scripts": { 
+  "scripts": {
     "nodemon": "nodemon",
     "save:rename": "node ./scripts/save-rename.js",
     "renameFile": "bash ./scripts/renameFile.sh",
+    "dev":"node ./scripts/run-all-watchers.js",
     "watch:add-types": "node ./scripts/watcher-add-types.js --watch",
     "watch:4": "node ./scripts/watcher-rename-file.js --watch",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
@@ -122,7 +106,7 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist", 
+    "dist",
     "src/**/*.d.ts"
   ],
   "bugs": {
