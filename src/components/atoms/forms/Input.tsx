@@ -1,4 +1,4 @@
-import { InputProps } from "@nxs-utils/helpers/interface";
+import { InputProps } from "nxs-form";
 
 const Input: React.FC<InputProps> = (props) => {
   const { value, onChange, onBlur, name, theme, placeholder } = props;

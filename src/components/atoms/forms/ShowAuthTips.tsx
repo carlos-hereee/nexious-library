@@ -1,11 +1,8 @@
 import { useTips } from "@nxs-utils/hooks/useTips";
-import { Icon } from "..";
+import { Icon } from "@nxs-atoms";
+import { ButtonProps } from "nxs-button";
 
-type ClickProp = {
-  onSubmit: () => void;
-};
-
-const ShowAuthTips: React.FC<ClickProp> = (props) => {
+const ShowAuthTips: React.FC<ButtonProps> = (props) => {
   const { onSubmit } = props;
   const { tips, setTips } = useTips();
   return (
@@ -20,11 +17,7 @@ const ShowAuthTips: React.FC<ClickProp> = (props) => {
         ))}
       </ol>
       <div className="flex-center m-tb">
-        <button
-          type="button"
-          className="btn-main btn-cancel"
-          onClick={onSubmit}
-        >
+        <button type="button" className="btn-main btn-cancel" onClick={onSubmit}>
           <Icon icon="submit" />
           Continue anyway
         </button>

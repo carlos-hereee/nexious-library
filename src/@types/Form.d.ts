@@ -26,12 +26,15 @@ interface FormProp {
 type InputProp = {
   name: string;
   value: string;
-  placeholder?: string;
-  hideLabel?: boolean;
   label?: string;
+  theme?: string;
   error?: string;
+  placeholder?: string;
   min?: number;
   max?: number;
+  hideLabel?: boolean;
+  checked?: boolean;
+  isDisabled?: boolean;
   onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onBlur?: () => void;
 };
@@ -40,6 +43,12 @@ declare module "nxs-form" {
   // Type declarations go here
   export type FormProps = FormProp;
   export type InputProps = InputProp;
+  export interface LabelProps {
+    label: string;
+    name: string;
+    theme?: string;
+    errors?: string;
+  }
   export interface UploadFileProps {
     input: InputProp;
     label: string;

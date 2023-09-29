@@ -1,12 +1,7 @@
 import { initLabels } from "@nxs-utils/form/labels";
+import { LabelProps } from "nxs-form";
 
-type Props = {
-  name: string;
-  errors?: string;
-  label?: string;
-  theme?: string;
-};
-const Label: React.FC<Props> = (props) => {
+const Label: React.FC<LabelProps> = (props) => {
   const { label, errors, theme, name } = props;
   const labelCap = label
     ? label.charAt(0).toUpperCase() + label.slice(1)

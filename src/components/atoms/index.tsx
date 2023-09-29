@@ -14,12 +14,14 @@ export { default as InputQuantity } from "./forms/InputQuantity";
 export { default as Label } from "./forms/Label";
 export { default as Option } from "./forms/Option";
 export { default as ShowAuthTips } from "./forms/ShowAuthTips";
+export type { InputProps } from "nxs-form";
 
-// table
-export { default as CellData } from "./table/CellData";
-export { default as CellTitle } from "./table/CellTitle";
-export { default as TableCaption } from "./table/TableCaption";
-export { default as Column } from "./table/Column";
+// // save tables components for future update
+// // table
+// export { default as CellData } from "./table/CellData";
+// export { default as CellTitle } from "./table/CellTitle";
+// export { default as TableCaption } from "./table/TableCaption";
+// export { default as Column } from "./table/Column";
 
 // texts
 export { default as Capitalize } from "./texts/Capitalize";
