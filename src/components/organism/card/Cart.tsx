@@ -1,13 +1,8 @@
 import { useState } from "react";
 import { Heading } from "@nxs-atoms";
 import { CartRow, CartCancel } from "@nxs-molecules";
+import { CartProps } from "nxs-cart";
 
-export type CartProps = {
-  data: any[];
-  heading: string;
-  removeFromCart: (e: any) => void;
-  onEditDetails: (e: any) => void;
-};
 const Cart: React.FC<CartProps> = (props) => {
   const { data, heading, removeFromCart, onEditDetails } = props;
   const [cancel, setCancel] = useState<string>();

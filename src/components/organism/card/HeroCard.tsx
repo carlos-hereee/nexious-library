@@ -1,9 +1,6 @@
 import { CardFooter, Hero } from "@nxs-molecules";
-import { CTAProps, HeroProp } from "@nxs-utils/helpers/types";
+import { HeroCardProps } from "nxs-hero-card";
 
-type HeroCardProps = {
-  data: { title: string; tagline?: string; hero: HeroProp; cta?: CTAProps[] };
-};
 const HeroCard: React.FC<HeroCardProps> = (props) => {
   const { title, tagline, hero, cta } = props.data;
   return (
@@ -11,7 +8,7 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
       <div className="hero-card-header">
         <h1 className="hero-card-heading">{title}</h1>
         {tagline && <h2 className="tagline">{tagline}</h2>}
-        {cta && <CardFooter data={cta} />}
+        {cta && <CardFooter cta={cta} />}
       </div>
       <div className="hero-container flex-1">
         <Hero hero={hero} theme={hero.theme} />

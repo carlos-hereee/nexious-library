@@ -1,7 +1,7 @@
 import { IconButton } from "@nxs-molecules";
-import { CardFooterProps } from "nxs-card-footer";
+import { CTAProps } from "nxs-card-cta";
 
-const CardFooter: React.FC<CardFooterProps> = (props) => {
+const CTA: React.FC<CTAProps> = (props) => {
   const { cta, onClick } = props;
   return (
     <div className="flex-center">
@@ -12,4 +12,4 @@ const CardFooter: React.FC<CardFooterProps> = (props) => {
     </div>
   );
 };
-export default CardFooter;
+export default CTA;

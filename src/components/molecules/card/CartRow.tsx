@@ -14,7 +14,7 @@ const CartRow: React.FC<CartRowProps> = (props) => {
       <CardHeader data={data} isRow />
       <div className="cart-column">
         {data.body && <ReadMore data={data.body} uid={data.uid} />}
-        {data.cta && <CardFooter data={data.cta} click={click} />}
+        {data.cta && <CardFooter cta={data.cta} onClick={click} />}
       </div>
     </div>
   );
