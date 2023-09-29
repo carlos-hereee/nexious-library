@@ -97,13 +97,15 @@ const FormWithEntry: React.FC<FormProps> = (props) => {
               />
             ) : textarea.includes(v) ? (
               <TextArea
-                name={v}
-                onChange={(e) => handleChange(e, idx)}
-                value={allValues[idx][v]}
-                placeholder={placeholders && placeholders[v]}
+                input={{
+                  name: v,
+                  value: allValues[idx][v],
+                  onChange: (e) => handleChange(e, idx),
+                  placeholder: placeholders && placeholders[v],
+                  label: labels && labels[v] ? labels[v] : initLabels[v],
+                  error: formErrors && formErrors[v],
+                }}
                 hideLabels={hideLabels}
-                label={labels && labels[v] ? labels[v] : initLabels[v]}
-                errors={formErrors && formErrors[v]}
                 theme="highlight"
               />
             ) : types && types[v] === "checkbox" ? (

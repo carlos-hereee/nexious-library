@@ -16,9 +16,8 @@ import { FormProps } from "nxs-form";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
-  const { onSubmit, onChange, initialValues, hideLabels, theme } = props;
-  const { labels, placeholders, types, schema, formName, heading } = props;
-  const { submitLabel, hideSubmit } = props;
+  const { onSubmit, onChange, initialValues, hideLabels, theme, submitLabel } = props;
+  const { labels, placeholders, types, schema, formName, heading, hideSubmit } = props;
   const { values, setValues } = useValues(initialValues);
   // must have required props
   const required = { initialValues, onSubmit };
@@ -61,9 +60,7 @@ const Form: React.FC<FormProps> = (props) => {
       objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
     } else onSubmit(values);
   };
-  if (lightColor === "red") {
-    return <ErrorMessages errors={errors} component="Form" />;
-  }
+  if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
     <form className={theme} onSubmit={handleSubmit}>
       {heading && <h2 className="heading">{heading}</h2>}
@@ -91,13 +88,15 @@ const Form: React.FC<FormProps> = (props) => {
             />
           ) : textarea.includes(v) ? (
             <TextArea
-              name={v}
-              onChange={handleChange}
-              value={values[v]}
-              placeholder={placeholders && placeholders[v]}
+              input={{
+                name: v,
+                value: values[v],
+                onChange: (e) => handleChange(e),
+                placeholder: placeholders && placeholders[v],
+                label: labels && labels[v] ? labels[v] : initLabels[v],
+                error: formErrors && formErrors[v],
+              }}
               hideLabels={hideLabels}
-              label={labels && labels[v] ? labels[v] : initLabels[v]}
-              errors={formErrors && formErrors[v]}
               theme="highlight"
             />
           ) : types && types[v] === "checkbox" ? (

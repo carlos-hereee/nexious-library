@@ -1,19 +1,11 @@
 import { InputQuantity, Label } from "@nxs-atoms";
+import { InputProps } from "nxs-form";
 
-export type FieldQuantityProps = {
-  min: number;
-  max: number;
-  value: string;
-  name: string;
-  onChange: () => void;
-  onBlur?: () => void;
-};
-
-const FieldQuantity: React.FC<FieldQuantityProps> = (props) => {
-  const { min, max, value, onChange, onBlur, name } = props;
+const FieldQuantity: React.FC<InputProps> = (props) => {
+  const { min, max, value, onChange, onBlur, name, label } = props;
   return (
     <div className="field">
-      <Label label={name} name={name} />
+      <Label label={label} name={name} />
       <InputQuantity
         name={name}
         min={min}

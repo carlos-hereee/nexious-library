@@ -3,27 +3,18 @@ import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { useRef, useState } from "react";
 import { ErrorMessages } from "@nxs-molecules";
 import { initLabels } from "@nxs-utils/form/labels";
-import { KeyStringProp } from "@nxs-utils/helpers/types";
+import { UploadFileProps } from "nxs-form";
 
-type UploadFileProps = {
-  name: string;
-  onSelect: (e: any) => void;
-  theme?: string;
-  hideLabels?: boolean;
-  label?: KeyStringProp;
-  selectLabel?: string;
-  error?: string;
-};
-// TODO: UPload files
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { name, theme, error, onSelect } = props;
-  const { selectLabel, label, hideLabels } = props;
+  const { name, error } = props.input;
+  const { selectLabel, label, hideLabels, onSelect, theme } = props;
+  // required props
   const { lightColor, errors } = usePropErrorHandling({ onSelect, name }, true);
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef(null);
-  const labels = label ? label : initLabels;
+  const labels = label ? label : initLabels[name];
 
   const imageClick = () => {
     imageUpLoaderRef.current && imageUpLoaderRef.current.click();
@@ -47,7 +38,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
       encType="multipart/form-data"
       className={theme ? `field-upload ${theme}` : "field-upload"}
     >
-      {!hideLabels && <Label name={name} label={labels[name]} errors={error} />}
+      {!hideLabels && <Label name={name} label={labels} errors={error} />}
       <input
         type="file"
         onChange={selectImage}
@@ -71,11 +62,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
             onClick={imageClick}
           />
         ) : (
-          <button
-            type="button"
-            className="preview-hero-empty"
-            onClick={imageClick}
-          >
+          <button type="button" className="preview-hero-empty" onClick={imageClick}>
             ?
           </button>
         )}

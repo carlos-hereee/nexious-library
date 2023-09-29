@@ -1,26 +1,14 @@
 import { Input, Label } from "@nxs-atoms/index";
-// import { useErrors } from "@nxs-utils/hooks/useErrors";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { ErrorMessages } from "..";
+import { ErrorMessages } from "@nxs-molecules";
+import { InputProps } from "nxs-form";
 
-type FieldProp = {
-  name: string;
-  value: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  placeholder?: string;
-  hideLabel?: boolean;
-  label?: string;
-  error?: string;
-};
-const Field: React.FC<FieldProp> = (props) => {
-  const { name, value, onChange, placeholder } = props;
-  const { hideLabel, label, error } = props;
+const Field: React.FC<InputProps> = (props) => {
+  const { name, value, onChange, placeholder, hideLabel, label, error } = props;
+  // required props
   const { lightColor, errors } = usePropErrorHandling({ name }, true);
-  // console.log("label", label, name);
-  if (lightColor === "red") {
-    return <ErrorMessages errors={errors} component="field" />;
-  }
 
+  if (lightColor === "red") return <ErrorMessages errors={errors} component="field" />;
   return (
     <>
       {!hideLabel && <Label name={name} label={label} errors={error} />}

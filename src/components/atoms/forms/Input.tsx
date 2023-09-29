@@ -1,5 +1,4 @@
 import { InputProps } from "@nxs-utils/helpers/interface";
-import { initPlaceholders } from "@nxs-utils/form/placeholders";
 
 const Input: React.FC<InputProps> = (props) => {
   const { value, onChange, onBlur, name, theme, placeholder } = props;
@@ -10,10 +9,10 @@ const Input: React.FC<InputProps> = (props) => {
       name={name}
       type="text"
       value={value}
-      placeholder={placeholder ? placeholder : initPlaceholders[name]}
+      placeholder={placeholder}
       onChange={onChange}
       onBlur={onBlur}
-      // give lavels a reason to be there give inputs id
+      // give labels a reason to be there give inputs id
       id={name}
     />
   );

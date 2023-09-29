@@ -1,18 +1,8 @@
 import { Label, Option } from "@nxs-atoms";
-import { OptionProp } from "@nxs-utils/helpers/types";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { ErrorMessages } from "..";
+import { ErrorMessages } from "@nxs-molecules";
+import { SelectProp } from "nxs-form";
 
-type SelectProp = {
-  name: string;
-  list: OptionProp[];
-  active?: string;
-  theme?: string;
-  onChange?: (key: any) => void;
-  hideLabels?: boolean;
-  label?: string;
-  error?: string;
-};
 /**
  *
  * @param name the title of the selection tag
@@ -23,12 +13,10 @@ type SelectProp = {
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, active, name } = props;
-  const { hideLabels, label, error } = props;
+  const { list, onChange, theme, active, name, hideLabels, label, error } = props;
+  // required props
   const { lightColor, errors } = usePropErrorHandling({ name, list }, true);
-  if (lightColor === "red") {
-    return <ErrorMessages errors={errors} component="select" />;
-  }
+  if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
       {!hideLabels && <Label name={name} label={label} errors={error} />}

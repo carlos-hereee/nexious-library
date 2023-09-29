@@ -1,21 +1,12 @@
 import { Label } from "@nxs-atoms/index";
+import { TextAreaProps } from "nxs-form";
 
-type TextAreaProps = {
-  name: string;
-  theme?: string;
-  onChange: (key: any) => void;
-  value: string;
-  placeholder?: string;
-  hideLabels?: boolean;
-  label?: string;
-  errors?: string;
-};
 const TextArea: React.FC<TextAreaProps> = (props) => {
-  const { value, onChange, name, theme, placeholder } = props;
-  const { hideLabels, label, errors } = props;
+  const { value, name, placeholder, error, label, onChange } = props.input;
+  const { hideLabels, theme } = props;
   return (
     <>
-      {!hideLabels && <Label name={name} label={label} errors={errors} />}
+      {!hideLabels && <Label name={name} label={label} errors={error} />}
       <textarea
         className={theme}
         name={name}
