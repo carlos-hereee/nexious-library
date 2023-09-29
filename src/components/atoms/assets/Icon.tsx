@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { svg } from "./Assets";
-import { SizeProp } from "@fortawesome/fontawesome-svg-core";
-import { ErrorMessage } from "..";
+import { ErrorMessage } from "@nxs-atoms";
+import { IconProps } from "nxs-button";
 
 /**
  * Component - Icon
@@ -12,17 +12,8 @@ import { ErrorMessage } from "..";
  * @param label optional specify the color for icon
  * @returns JSX.Element
  */
-
-export interface IconProps {
-  icon?: string;
-  size?: SizeProp;
-  spin?: string;
-  color?: string;
-  label?: string;
-  name?: string;
-}
-
-const Icon: React.FC<IconProps> = ({ icon, size, spin, color, name }) => {
+const Icon: React.FC<IconProps> = (props) => {
+  const { icon, size, spin, color, name } = props;
   if (!icon) return <ErrorMessage code="missingProps" prop="icon" />;
   return (
     <FontAwesomeIcon

@@ -6,15 +6,26 @@
 
 type SizeProp = "2xs" | "xs" | "sm" | "lg" | "xl" | "2xl";
 type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9x" | "10x";
+type IconProp = {
+  icon: string;
+  size?: SizeProp | NumSize;
+  spin?: string;
+  color?: string;
+  label?: string;
+  name?: string;
+};
 declare module "nxs-button" {
+  export type IconProps = IconProp;
   export interface ButtonProps {
     // optional
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    children?: React.ReactNode;
     name?: string;
     title?: string;
     theme?: string;
     isDisable?: boolean;
     label?: string;
+    data?: string;
   }
   export interface IconButtonProps {
     // all of button props
@@ -27,14 +38,7 @@ declare module "nxs-button" {
     // notification count
     ping?: number;
     // icon props
-    icon?: {
-      icon: string;
-      size?: SizeProp | NumSize;
-      spin?: string;
-      color?: string;
-      label?: string;
-      name?: string;
-    };
+    icon?: IconProp;
     // optional onclick event handler
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
   }

@@ -1,11 +1,9 @@
-type ButtonCancelProps = {
-  click: () => void;
-  data: string;
-};
-const ButtonCancel: React.FC<ButtonCancelProps> = (props) => {
-  const { click, data } = props;
+import { ButtonProps } from "nxs-button";
+
+const ButtonCancel: React.FC<ButtonProps> = (props) => {
+  const { onClick, data } = props;
   return (
-    <button type="button" className="btn-cancel" onClick={click}>
+    <button type="button" className="btn-cancel" onClick={onClick}>
       {data}
     </button>
   );

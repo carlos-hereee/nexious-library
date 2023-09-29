@@ -1,4 +1,4 @@
-import { ButtonProps } from "@nxs-utils/types/atoms/Button";
+import { ButtonProps } from "nxs-button";
 
 /**
  * Component - Button
