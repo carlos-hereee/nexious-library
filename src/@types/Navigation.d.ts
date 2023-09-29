@@ -25,7 +25,13 @@ type MenuProp = {
   active: MenuItemProp;
   alternatives: MenuItemProp[];
 };
-declare module "nxs-header" {
+type UnsplashAsset = {
+  artistName: string;
+  artistUrl: string;
+  assetUrl: string;
+};
+
+declare module "nxs-navigation" {
   // Define your exported types here
   export interface HeaderProps {
     menu: MenuProp[];
@@ -37,47 +43,21 @@ declare module "nxs-header" {
       icon?: string;
       small?: string;
       label?: string;
-      credit?: { artistName: string; artistUrl: string; assetUrl: string };
+      credit?: UnsplashAsset;
       theme?: string;
       logoId?: string;
     };
     language?: MenuItemProp;
     updateMenu: (e: MenuProp[]) => void;
   }
-}
-/**
- * Component - Navigation
- * @param menu    array to be iterated
- * @param click   callback to be fired when button is click
- * @returns navbar
- */
-declare module "nxs-navigation" {
+  export interface FooterProps {
+    appName: string;
+  }
   export interface NavigationProps {
     onClick?: (key: MenuProp) => void;
     menu: MenuProp[];
     theme?: string;
   }
-}
-/**
- * Component - Navbar
- * @param show    display navigation
- *                  show: {
- *                            isActive: boolean,
- *                            isClose: boolean
- *                        }
- * @param menu    array tobe iterated
- *                  menu: [{
- *                            uid: string,
- *                            isToggle: boolean,
- *                            isAlt: boolean,
- *                            name: string,
- *                            alt?: string, optional param
- *                         }]
- * @param toggle  callback to be fired when button is click
- * @param click   callback to be fired when button is click
- * @returns navbar
- */
-declare module "nxs-navbar" {
   export type NavbarProps = {
     show: { isActive: boolean; isClose: boolean };
     toggle: (a: MenuProp[]) => void;

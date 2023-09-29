@@ -1,8 +1,7 @@
 // components
 export { default as Navbar } from "@nxs-organism/navigation/Navbar";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
-export type { NavbarProps } from "nxs-navbar";
-export type { NavigationProps } from "nxs-navigation";
+export type { NavigationProps, NavbarProps } from "nxs-navigation";
 // TODO: add table types
 // export { default as TableBody } from "@nxs-organism/table/TableBody";
 // export { default as TableHeader } from "@nxs-organism/table/TableHeader";

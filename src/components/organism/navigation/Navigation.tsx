@@ -1,6 +1,12 @@
 import { IconButton } from "@nxs-molecules";
 import { NavigationProps } from "nxs-navigation";
 
+/**
+ * Component - Navigation
+ * @param menu    array to be iterated
+ * @param click   callback to be fired when button is click
+ * @returns navbar
+ */
 const Navigation: React.FC<NavigationProps> = (props) => {
   const { onClick, menu, theme } = props;
 

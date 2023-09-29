@@ -1,12 +1,11 @@
-import { MenuItemProp, MenuProp } from "@nxs-utils/helpers/types";
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
 
-export type NavButtonProps = {
-  data: MenuProp;
-  onSelect: (e: MenuProp) => void;
-  language?: MenuItemProp;
-};
+// export type NavButtonProps = {
+//   data: MenuProp;
+//   onSelect: (e: MenuProp) => void;
+//   language?: MenuItemProp;
+// };
 /**
  *  Component - NavButton
  * @param data navigation menu item
