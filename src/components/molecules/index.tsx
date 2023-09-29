@@ -11,6 +11,7 @@ export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
 export { default as GoBackButton } from "@nxs-molecules/buttons/GoBackButton";
 export { default as SubmitButton } from "@nxs-molecules/buttons/SubmitButton";
 export { default as CalendarTile } from "@nxs-molecules/buttons/CalendarTile";
+export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
 export type { ButtonProps, IconButtonProps } from "nxs-button";
 
 // card
@@ -52,6 +53,4 @@ export type { CalendarNavProps } from "nxs-calendar";
 // export { default as TableRow } from "@nxs-molecules/table/TableRow";
 
 // navigation
-export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
 export { default as NavToggle } from "@nxs-molecules/navigation/NavToggle";
-// export type { BurgerProps } from "@nxs-molecules/navigation/BurgerButton";

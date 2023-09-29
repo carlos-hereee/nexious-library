@@ -1,11 +1,7 @@
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
+import { NavigationToggleProps } from "nxs-navigation";
 
-// export type NavButtonProps = {
-//   data: MenuProp;
-//   onSelect: (e: MenuProp) => void;
-//   language?: MenuItemProp;
-// };
 /**
  *  Component - NavButton
  * @param data navigation menu item
@@ -13,7 +9,7 @@ import { Icon } from "@nxs-atoms";
  *
  * @returns navigation button
  */
-const NavToggle: React.FC<NavButtonProps> = (props) => {
+const NavToggle: React.FC<NavigationToggleProps> = (props) => {
   const { data, onSelect, language } = props;
 
   const handleSelect = (value: string) => {
