@@ -16,9 +16,7 @@ const ErrorMessage: React.FC<ErrorMessageProp> = (props) => {
     console.log("failed with code  ", code);
     console.log(
       "Value type",
-      isUndefined
-        ? " is undefined. \n***Hint:*** double check props"
-        : error.value
+      isUndefined ? " is undefined. \n***Hint:*** double check props" : error.value
     );
     console.log("error : ", error);
   };

@@ -1,8 +1,9 @@
 import { Spinner } from "@nxs-atoms";
+import { ErrorProps } from "nxs-errors";
 
-type LoadingProps = { message: string };
+// type ErrorProps = { message: string };
 
-const Loading: React.FC<LoadingProps> = (props) => {
+const Loading: React.FC<ErrorProps> = (props) => {
   const { message } = props;
   return (
     <div className="container loading">

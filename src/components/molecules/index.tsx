@@ -17,14 +17,17 @@ export { default as CardBody } from "./card/CardBody";
 export { default as CTA } from "./card/CTA";
 export { default as CartRow } from "./card/CartRow";
 export { default as CartCancel } from "./card/CartCancelRow";
+export type { CardProps } from "nxs-card";
 
 // errors
 export { default as EmptySection } from "./errors/EmptySection";
-export { default as MessageRequired } from "./errors/MessageRequired";
+// TODO: remove message required. same result with classname theme
+// export { default as MessageRequired } from "./errors/MessageRequired";
 export { default as PageNotFound } from "./errors/PageNotFound";
 export { default as Loading } from "./errors/Loading";
 export { default as ErrorMessages } from "./errors/ErrorMessages";
 export { default as ComingSoon } from "./errors/ComingSoon";
+export type { ErrorProps } from "nxs-errors";
 
 // forms
 export { default as FieldQuantity } from "./forms/FieldQuantity";

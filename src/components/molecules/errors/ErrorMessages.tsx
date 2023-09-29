@@ -1,12 +1,9 @@
 import { ErrorMessage } from "@nxs-atoms/index";
-import { ErrorHandlingMessages } from "@nxs-utils/hooks/usePropErrorHandling";
+import { ErrorProps } from "nxs-errors";
 
-export type ErrorMessagesProps = {
-  errors: ErrorHandlingMessages[];
-  component?: string;
-};
-const ErrorMessages: React.FC<ErrorMessagesProps> = (props) => {
+const ErrorMessages: React.FC<ErrorProps> = (props) => {
   const { errors, component } = props;
+  if (!errors) return <ErrorMessage prop="errors" code="missingProps" />;
   return errors.map((err) => (
     <ErrorMessage
       key={err.key}

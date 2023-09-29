@@ -1,23 +1,16 @@
 import { Icon } from "@nxs-atoms";
-import { HeroProp } from "@nxs-utils/helpers/types";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Hero } from "@nxs-molecules";
+import { ErrorProps } from "nxs-errors";
 
-export type PageNotFoundProps = {
-  hero?: HeroProp;
-  message?: string;
-  to?: string;
-};
-
-const PageNotFound: React.FC<PageNotFoundProps> = (props) => {
+const PageNotFound: React.FC<ErrorProps> = (props) => {
   const { hero, message, to } = props;
   const navigate = useNavigate();
 
   useEffect(() => {
-    if (to) {
-      setTimeout(() => navigate(`/${to}`), 2300);
-    }
+    // let client read error message and reroute to page
+    if (to) setTimeout(() => navigate(`/${to}`), 2300);
   }, []);
 
   return (

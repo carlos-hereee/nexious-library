@@ -1,8 +1,6 @@
-type MessageProp = {
-  heading?: string;
-  message?: string;
-};
-const EmptySection: React.FC<MessageProp> = (props) => {
+import { ErrorProps } from "nxs-errors";
+
+const EmptySection: React.FC<ErrorProps> = (props) => {
   const { message, heading } = props;
   return (
     <p>
