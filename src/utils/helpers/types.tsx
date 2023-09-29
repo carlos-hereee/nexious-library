@@ -10,28 +10,7 @@ export type DefaultPageComponent = {
   body: string;
   hero?: HeroProp;
 };
-export type CTAProps = {
-  name: string;
-  icon: string;
-  uid: string;
-  label: string;
-};
-export type CardProp = {
-  title: string;
-  body: string;
-  uid: string;
-  subtitle?: string;
-  hasHero?: boolean;
-  hasFeatures?: boolean;
-  isForSale?: boolean;
-  isBookable?: boolean;
-  isAccessory?: boolean;
-  count?: number;
-  cost?: number;
-  hyperlink?: { word: string; link: string }[];
-  features?: { uid: string; title: string; hasList: boolean; list: string[] }[];
-  cta?: CTAProps[];
-};
+
 export type UnsplashProps = {
   artistName: string;
   artistUrl: string;

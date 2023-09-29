@@ -12,17 +12,17 @@ export type { PaginateFormProps } from "nxs-paginate-form";
 
 // components
 export { default as Navbar } from "@nxs-organism/navigation/Navbar";
-export type { NavbarProps } from "@nxs-organism/navigation/Navbar";
+export type { NavbarProps } from "nxs-navbar";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
 export type { NavigationProps } from "nxs-navigation";
-// tables
-export { default as TableBody } from "@nxs-organism/table/TableBody";
-export { default as TableHeader } from "@nxs-organism/table/TableHeader";
-export { default as TableFooter } from "@nxs-organism/table/TableFooter";
+// TODO: add table types
+// export { default as TableBody } from "@nxs-organism/table/TableBody";
+// export { default as TableHeader } from "@nxs-organism/table/TableHeader";
+// export { default as TableFooter } from "@nxs-organism/table/TableFooter";
 
 // card
 export { default as Card } from "@nxs-organism/card/Card";
-
+export type { CardProps } from "nxs-card";
 export { default as UserCard } from "@nxs-organism/card/UserCard";
 export type { UserCardProps } from "@nxs-organism/card/UserCard";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";

@@ -1,33 +1,6 @@
-import { MenuItemProp, MenuProp } from "@nxs-utils/helpers/types";
 import { IconButton, NavToggle } from "@nxs-molecules";
+import { NavbarProps } from "nxs-navbar";
 
-export type NavbarProps = {
-  show: { isActive: boolean; isClose: boolean };
-  toggle: (a: MenuProp[]) => void;
-  click: (a: MenuProp) => void;
-  menu: MenuProp[];
-  theme?: string;
-  language?: MenuItemProp;
-};
-/**
- * Component - Navbar
- * @param show    display navigation
- *                  show: {
- *                            isActive: boolean,
- *                            isClose: boolean
- *                        }
- * @param menu    array tobe iterated
- *                  menu: [{
- *                            uid: string,
- *                            isToggle: boolean,
- *                            isAlt: boolean,
- *                            name: string,
- *                            alt?: string, optional param
- *                         }]
- * @param toggle  callback to be fired when button is click
- * @param click   callback to be fired when button is click
- * @returns navbar
- */
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, toggle, click, menu, theme, language } = props;
   const handleToggle = (a: any) => {

@@ -1,23 +1,13 @@
 import { IconButton } from "@nxs-molecules";
-import { CTAProps } from "@nxs-utils/helpers/types";
+import { CardFooterProps } from "nxs-card-footer";
 
-type Props = {
-  data: CTAProps[];
-  click?: React.MouseEventHandler<HTMLButtonElement>;
-};
-/**
- * Component - Card Footer
- * @param data.data string; display content on page
- * @param data.buttons string[]; display any number of buttons
- * @returns
- */
-const CardFooter: React.FC<Props> = (props) => {
-  const { data, click } = props;
+const CardFooter: React.FC<CardFooterProps> = (props) => {
+  const { cta, onClick } = props;
   return (
     <div className="flex-center">
-      {data &&
-        data.map((b) => (
-          <IconButton icon={b} theme="btn-cta" onClick={click} key={b.uid} />
+      {cta &&
+        cta.map((b) => (
+          <IconButton icon={b} theme="btn-cta" onClick={onClick} key={b.uid} />
         ))}
     </div>
   );

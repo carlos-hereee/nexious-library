@@ -58,3 +58,32 @@ declare module "nxs-navigation" {
     theme?: string;
   }
 }
+/**
+ * Component - Navbar
+ * @param show    display navigation
+ *                  show: {
+ *                            isActive: boolean,
+ *                            isClose: boolean
+ *                        }
+ * @param menu    array tobe iterated
+ *                  menu: [{
+ *                            uid: string,
+ *                            isToggle: boolean,
+ *                            isAlt: boolean,
+ *                            name: string,
+ *                            alt?: string, optional param
+ *                         }]
+ * @param toggle  callback to be fired when button is click
+ * @param click   callback to be fired when button is click
+ * @returns navbar
+ */
+declare module "nxs-navbar" {
+  export type NavbarProps = {
+    show: { isActive: boolean; isClose: boolean };
+    toggle: (a: MenuProp[]) => void;
+    click: (a: MenuProp) => void;
+    menu: MenuProp[];
+    theme?: string;
+    language?: MenuItemProp;
+  };
+}
