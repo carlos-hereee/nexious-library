@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = (props) => {
         <ErrorMessages errors={errors} component="header" />
       ) : (
         <>
-          {logo?.logoId && <Logo logo={logo} />}
+          {logo?.logoId && <Logo hero={logo} />}
           {menu && (
             <>
               {" "}

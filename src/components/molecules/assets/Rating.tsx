@@ -1,11 +1,8 @@
 import { Icon } from "@nxs-atoms";
+import { RatingProps } from "nxs-assets-medias";
 
-type RatingProps = {
-  star: number;
-  click?: (e: any) => void;
-};
 const Rating: React.FC<RatingProps> = (props) => {
-  const { star, click } = props;
+  const { star, onClick } = props;
   const ratings = [1, 2, 3, 4, 5];
   return (
     <div className="rating">
@@ -15,7 +12,7 @@ const Rating: React.FC<RatingProps> = (props) => {
           key={r}
           className="btn-rating"
           type="button"
-          onClick={() => click && click(r)}
+          onClick={() => onClick && onClick(r)}
         >
           <Icon icon="star" name={star < r ? "star" : "star-filled"} />
         </button>

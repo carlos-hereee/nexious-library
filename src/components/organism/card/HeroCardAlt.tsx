@@ -1,5 +1,5 @@
 import { Hero } from "@nxs-molecules";
-import { HeroProp } from "@nxs-utils/helpers/types";
+// import { HeroProp } from "@nxs-utils/helpers/types";
 
 type HeroCardProps = {
   data: {

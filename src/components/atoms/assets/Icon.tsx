@@ -1,6 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { svg } from "./Assets";
 import { SizeProp } from "@fortawesome/fontawesome-svg-core";
+import { ErrorMessage } from "..";
 
 /**
  * Component - Icon
@@ -13,7 +14,7 @@ import { SizeProp } from "@fortawesome/fontawesome-svg-core";
  */
 
 export interface IconProps {
-  icon: string;
+  icon?: string;
   size?: SizeProp;
   spin?: string;
   color?: string;
@@ -22,6 +23,7 @@ export interface IconProps {
 }
 
 const Icon: React.FC<IconProps> = ({ icon, size, spin, color, name }) => {
+  if (!icon) return <ErrorMessage code="missingProps" prop="icon" />;
   return (
     <FontAwesomeIcon
       icon={svg[icon]}

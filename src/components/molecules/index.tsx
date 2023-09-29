@@ -2,8 +2,9 @@
 export { default as Logo } from "./assets/Logo";
 export { default as Socials } from "./assets/Socials";
 export { default as Rating } from "./assets/Rating";
-export type { LogoProps } from "./assets/Logo";
 export { default as Hero } from "./assets/Hero";
+export type { MediaProps, RatingProps } from "nxs-assets-medias";
+export type { HeroProps } from "nxs-assets";
 
 // buttons
 export { default as IconButton } from "./buttons/IconButton";

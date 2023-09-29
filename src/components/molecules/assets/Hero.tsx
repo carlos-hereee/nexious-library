@@ -1,12 +1,6 @@
-import { HeroProp } from "@nxs-utils/helpers/types";
 import { useState } from "react";
 import { ErrorMessage, UnsplashCredit } from "@nxs-atoms";
-
-type Props = {
-  hero: HeroProp;
-  theme?: string;
-  onImageClick?: (e: any) => void;
-};
+import { HeroProps } from "nxs-assets";
 
 /**
  * Component Hero
@@ -15,7 +9,7 @@ type Props = {
  * @param theme string; add an optional classname
  * @returns image component
  */
-const Hero: React.FC<Props> = ({ hero, theme, onImageClick }) => {
+const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick }) => {
   const [load, setLoad] = useState<boolean>();
   if (!hero) return <ErrorMessage code="missingProps" prop="hero" />;
   return hero?.small ? (
@@ -33,11 +27,7 @@ const Hero: React.FC<Props> = ({ hero, theme, onImageClick }) => {
           onLoad={() => setLoad(true)}
         />
       ) : (
-        <button
-          type="button"
-          className="preview-hero-empty"
-          onClick={onImageClick}
-        >
+        <button type="button" className="preview-hero-empty" onClick={onImageClick}>
           ?
         </button>
       )}
@@ -55,11 +45,7 @@ const Hero: React.FC<Props> = ({ hero, theme, onImageClick }) => {
           onLoad={() => setLoad(true)}
         />
       ) : (
-        <button
-          type="button"
-          className="preview-hero-empty"
-          onClick={onImageClick}
-        >
+        <button type="button" className="preview-hero-empty" onClick={onImageClick}>
           ?
         </button>
       )}

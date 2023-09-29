@@ -18,18 +18,6 @@ export type UnsplashProps = {
 };
 export type DataStringProps = { data: string; name?: string };
 export type LinkProp = { data: string; isLink: boolean };
-export type SocialMedia = { name: string; link: string; uid: string };
-export type HeroProp = {
-  url: string;
-  alt?: string;
-  name?: string;
-  icon?: string;
-  small?: string;
-  label?: string;
-  credit?: UnsplashProps;
-  theme?: string;
-  logoId?: string;
-};
 export type LabelValueProps = { key: string | number; value: string | number };
 export type MessageProp = { message: string };
 export type KeyStringProp = { [key: string]: string };

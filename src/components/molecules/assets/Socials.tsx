@@ -1,20 +1,14 @@
 import { Icon } from "@nxs-atoms";
-import { SocialMedia } from "@nxs-utils/helpers/types";
+import { MediaProps } from "nxs-assets-medias";
 
-type SocialsProps = {
-  socials: SocialMedia[];
-  heading?: string;
-};
-const Socials: React.FC<SocialsProps> = (props) => {
-  const { heading, socials } = props;
+const Socials: React.FC<MediaProps> = (props) => {
+  const { label, medias } = props;
   return (
     <div className="flex-d-column text-center">
-      {heading && <h2 className="heading">{heading}</h2>}
+      {label && <h2 className="heading">{label}</h2>}
       <div className="socials-icons">
-        {socials.length > 0 &&
-          socials.map((d) => (
-            <Icon key={d.uid} icon={d.name} name={d.name} size="3x" />
-          ))}
+        {medias.length > 0 &&
+          medias.map((d) => <Icon key={d.uid} icon={d.name} name={d.name} size="3x" />)}
       </div>
     </div>
   );

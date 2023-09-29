@@ -1,5 +1,5 @@
 import { IconProps } from "@nxs-atoms/assets/Icon";
-import { HeroProp } from "@nxs-utils/helpers/types";
+// import { HeroProp } from "@nxs-utils/helpers/types";
 
 export interface IconButtonProps {
   icon: IconProps;

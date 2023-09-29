@@ -1,4 +1,4 @@
-import { HeroProp } from "@nxs-utils/helpers/types";
+// import { HeroProp } from "@nxs-utils/helpers/types";
 import { Hero } from "@nxs-molecules";
 import { ErrorProps } from "nxs-errors";
 
