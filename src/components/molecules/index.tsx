@@ -11,6 +11,7 @@ export { default as IconButton } from "./buttons/IconButton";
 export { default as GoBackButton } from "./buttons/GoBackButton";
 export { default as SubmitButton } from "./buttons/SubmitButton";
 export { default as CalendarTile } from "./buttons/CalendarTile";
+export type { ButtonProps, IconButtonProps } from "nxs-button";
 
 // card
 export { default as CardHeader } from "./card/CardHeader";

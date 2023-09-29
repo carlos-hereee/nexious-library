@@ -1,7 +1,7 @@
-import { OnClickProps } from "@nxs-utils/types/custom/OnClickProps";
+import { ButtonProps } from "nxs-button";
 import IconButton from "./IconButton";
 
-const GoBackButton: React.FC<OnClickProps> = ({ onClick }) => (
+const GoBackButton: React.FC<ButtonProps> = ({ onClick }) => (
   <IconButton
     icon={{ icon: "leftArrow", label: "Go back", name: "Go back" }}
     theme="btn-main"
