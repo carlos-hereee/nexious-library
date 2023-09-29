@@ -42,30 +42,31 @@ type CTAProp = {
  */
 
 declare module "nxs-card" {
-  export interface CardProps {
-    data: {
-      title: string;
-      body: string;
+  export interface CardProp {
+    title: string;
+    body: string;
+    uid: string;
+    subtitle?: string;
+    hasHero?: boolean;
+    hasFeatures?: boolean;
+    isForSale?: boolean;
+    isBookable?: boolean;
+    isAccessory?: boolean;
+    count?: number;
+    cost?: number;
+    hyperlink?: { word: string; link: string }[];
+    features?: { uid: string; title: string; hasList: boolean; list: string[] }[];
+    cta?: {
+      name: string;
+      icon: string;
       uid: string;
-      subtitle?: string;
-      hasHero?: boolean;
-      hasFeatures?: boolean;
-      isForSale?: boolean;
-      isBookable?: boolean;
-      isAccessory?: boolean;
-      count?: number;
-      cost?: number;
-      hyperlink?: { word: string; link: string }[];
-      features?: { uid: string; title: string; hasList: boolean; list: string[] }[];
-      cta?: {
-        name: string;
-        icon: string;
-        uid: string;
-        label: string;
-      }[];
-    };
+      label: string;
+    }[];
+  }
+  export interface CardProps {
+    data: CardProp;
     theme?: string;
-    onClick: (key: any) => void;
+    onClick?: (key: any) => void;
   }
 }
 /**

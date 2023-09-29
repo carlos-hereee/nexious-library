@@ -1,20 +1,16 @@
 import { ReadMore } from "@nxs-atoms";
 import CardHeader from "./CardHeader";
-// import { CardProp } from "@nxs-utils/helpers/types";
-import { CardFooter } from "..";
+import { CTA } from "@nxs-molecules";
+import { CardProps } from "nxs-card";
 
-type CartRowProps = {
-  data: CardProp;
-  click?: (value: any) => void;
-};
-const CartRow: React.FC<CartRowProps> = (props) => {
-  const { data, click } = props;
+const CartRow: React.FC<CardProps> = (props) => {
+  const { data, onClick, theme } = props;
   return (
-    <div className="cart-row">
+    <div className={`cart-row ${theme ? theme : ""}`}>
       <CardHeader data={data} isRow />
       <div className="cart-column">
         {data.body && <ReadMore data={data.body} uid={data.uid} />}
-        {data.cta && <CardFooter cta={data.cta} onClick={click} />}
+        {data.cta && <CTA cta={data.cta} onClick={onClick} />}
       </div>
     </div>
   );

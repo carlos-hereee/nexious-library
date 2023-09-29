@@ -1,10 +1,7 @@
 import { Hyperlink } from "@nxs-atoms";
-import { CardProp } from "@nxs-utils/helpers/types";
 import { getLinks } from "@nxs-utils/app/getLinks";
+import { CardProps } from "nxs-card";
 
-type Props = {
-  data: CardProp;
-};
 /**
  * Component - Card Body
  * @param response string; the text to manipulate
@@ -14,16 +11,14 @@ type Props = {
  *                          hyperlink
  * @returns
  */
-const CardBody: React.FC<Props> = (props) => {
+const CardBody: React.FC<CardProps> = (props) => {
   const { hyperlink, body, features } = props.data;
   const links = hyperlink && getLinks(hyperlink, body);
 
   return (
     <div className="card-body">
       <p className="card-body-p">
-        {links
-          ? links.map((l) => l.data && <Hyperlink data={l} key={l.data} />)
-          : body}
+        {links ? links.map((l) => l.data && <Hyperlink data={l} key={l.data} />) : body}
       </p>
       {features && (
         <div className="flex-w card">
