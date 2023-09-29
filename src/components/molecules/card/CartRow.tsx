@@ -1,6 +1,6 @@
 import { ReadMore } from "@nxs-atoms";
 import CardHeader from "./CardHeader";
-import { CardProp } from "@nxs-utils/helpers/types";
+// import { CardProp } from "@nxs-utils/helpers/types";
 import { CardFooter } from "..";
 
 type CartRowProps = {

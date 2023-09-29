@@ -22,5 +22,6 @@ declare module "nxs-form" {
     types?: { [key: string]: string };
     submitLabel?: string;
     schema?: { required: string[] };
+    addEntry?: { initialValues: { [key: string]: any }; label: string };
   }
 }

@@ -101,7 +101,7 @@ declare module "nxs-card-cta" {
  */
 declare module "nxs-card-section" {
   export interface CardSectionProps {
-    hero: HeroProp;
+    hero?: HeroProp;
     hideReadMore?: boolean;
     data?: string;
     theme?: string;

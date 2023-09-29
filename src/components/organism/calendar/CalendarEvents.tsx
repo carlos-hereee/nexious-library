@@ -1,21 +1,10 @@
 import { MeetingDetails } from "@nxs-atoms";
 import { CalendarEventList, IconButton } from "@nxs-molecules";
 import { CardSection, UserCard } from "@nxs-organism";
+import { CalendarEventProps } from "nxs-calendar-events";
 
-type CalendarEventProps = {
-  selectedDay: { date: string; list: any[] };
-  setMeeting: (value: any) => void;
-  setActive: (value: any) => void;
-  removeFromCart: (value: any) => void;
-  handleCheckout: (value: any) => void;
-  user?: any;
-  active?: any;
-  meeting?: any;
-  events: any[];
-};
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
-  const { selectedDay, active, meeting, setMeeting, handleCheckout, user } =
-    props;
+  const { selectedDay, active, meeting, setMeeting, handleCheckout, user } = props;
   return (
     <div className="calendar-events" id="calendar-events">
       <div className="calendar-package-details">
@@ -40,11 +29,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
                 <h2 className="heading">User Information</h2>
                 <UserCard user={user} hideHero />
                 <MeetingDetails meeting={meeting} />
-                <button
-                  type="button"
-                  className="btn-cta"
-                  onClick={handleCheckout}
-                >
+                <button type="button" className="btn-cta" onClick={handleCheckout}>
                   Proceed to checkout
                 </button>
               </div>
@@ -61,9 +46,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         ) : (
           <div className="flex-d-column flex-center">
             <strong>All booked up, please try a different day</strong>
-            <button className="btn-main flex-center">
-              Find next availible
-            </button>
+            <button className="btn-main flex-center">Find next availible</button>
           </div>
         )}
       </div>

@@ -1,25 +1,13 @@
 import { useState } from "react";
-import { HeroProp } from "@nxs-utils/helpers/types";
 import { Form } from "@nxs-organism";
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
+import { PaymentMethodsProps, PaymentType } from "nxs-payment-methods";
 
-export type PaymentType = {
-  uid?: string;
-  type?: string;
-  name?: string;
-  icon?: string;
-  hero?: HeroProp;
-};
-export type PaymentMethodsProps = {
-  data: PaymentType[];
-  visaPayment?: (a: any) => void;
-  paypalPayment?: (e: any) => void;
-  inStorePayment?: (a: any) => void;
-};
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
   const { data, visaPayment, paypalPayment, inStorePayment } = props;
-  const [active, setActive] = useState<PaymentType>(data[1]);
+  const [active, setActive] = useState<PaymentType>(data[0]);
+
   return (
     <div className="flex-d-column">
       <h2 className="heading">Enter Payment Details</h2>

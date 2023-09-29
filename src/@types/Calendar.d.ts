@@ -23,3 +23,16 @@ declare module "nxs-calendar" {
     setDay?: (a: any) => void;
   }
 }
+declare module "nxs-calendar-events" {
+  export interface CalendarEventProps {
+    selectedDay: { date: string; list: any[] };
+    setMeeting: (value: any) => void;
+    setActive: (value: any) => void;
+    removeFromCart: (value: any) => void;
+    handleCheckout: (value: any) => void;
+    user?: any;
+    active?: any;
+    meeting?: any;
+    events: any[];
+  }
+}

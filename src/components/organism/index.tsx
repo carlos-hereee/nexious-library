@@ -30,11 +30,13 @@ export type { CartProps } from "nxs-cart";
 
 // calendar
 export { default as CalendarEvents } from "@nxs-organism/calendar/CalendarEvents";
+export type { CalendarEventProps } from "nxs-calendar-events";
 
 // forms
 export { default as Form } from "@nxs-organism/forms/Form";
+export type { FormProps } from "nxs-form";
 export { default as FormWithEntry } from "@nxs-organism/forms/FormWithEntry";
 
 // checkout
 export { default as PaymentMethods } from "@nxs-organism/checkout/PaymentMethods";
-export type { PaymentMethodsProps } from "@nxs-organism/checkout/PaymentMethods";
+export type { PaymentMethodsProps, PaymentType } from "nxs-payment-methods";

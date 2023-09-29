@@ -13,26 +13,7 @@ import { validateForm } from "@nxs-utils/form/validateForm";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { clearFormEntry } from "@nxs-utils/form/clearFormEntry";
-
-type FormProps = {
-  // required props
-  initialValues: FormInitValues;
-  onSubmit: (e: any) => void;
-  formName: string;
-  heading?: string;
-  // optional
-  onChange?: (e: any) => void;
-  hideLabels?: boolean;
-  addEntry: { initialValues: FormInitValues; label: string };
-  hideSubmit?: boolean;
-  showAuthTips?: boolean;
-  theme?: string;
-  labels?: { [key: string]: string };
-  placeholders?: { [key: string]: string };
-  types?: { [key: string]: string };
-  submitLabel?: string;
-  schema?: { required: string[] };
-};
+import { FormProps } from "nxs-form";
 
 const FormWithEntry: React.FC<FormProps> = (props) => {
   // props
@@ -90,8 +71,10 @@ const FormWithEntry: React.FC<FormProps> = (props) => {
   };
   const initEntry = () => {
     // incase of data mutations add empty form data
-    const payload = clearFormEntry(addEntry.initialValues);
-    setAllValues((prev) => [...prev, payload]);
+    if (addEntry) {
+      const payload = clearFormEntry(addEntry.initialValues);
+      setAllValues((prev) => [...prev, payload]);
+    }
   };
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="Form" />;
@@ -147,9 +130,7 @@ const FormWithEntry: React.FC<FormProps> = (props) => {
       ))}
       <div className="flex-row">
         {!hideSubmit && <SubmitButton label={submitLabel} />}
-        {addEntry && (
-          <Button label={entryLabel} theme="btn-add" onClick={initEntry} />
-        )}
+        {addEntry && <Button label={entryLabel} theme="btn-add" onClick={initEntry} />}
       </div>
     </form>
   );
