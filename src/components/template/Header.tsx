@@ -61,7 +61,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               <nav className="mobile-navigation">
                 <BurgerButton
                   isBurger={isActive}
-                  click={() => setActive(!isActive)}
+                  onClick={() => setActive(!isActive)}
                   ping={ping}
                 />
                 <Navbar

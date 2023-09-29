@@ -8,6 +8,9 @@ export type { NavigationProps } from "nxs-navigation";
 // export { default as TableHeader } from "@nxs-organism/table/TableHeader";
 // export { default as TableFooter } from "@nxs-organism/table/TableFooter";
 
+// TODO: Potential template
+// export { default as Total } from "@nxs-organism/table/Total";
+
 // card
 export { default as Card } from "@nxs-organism/card/Card";
 export { default as UserCard } from "@nxs-organism/card/UserCard";

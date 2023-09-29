@@ -22,11 +22,12 @@ declare module "nxs-button" {
     title?: string;
     theme?: string;
     isDisable?: boolean;
+    isBurger?: boolean;
     label?: string;
     // notification count
     ping?: number;
     // icon props
-    icon: {
+    icon?: {
       icon: string;
       size?: SizeProp | NumSize;
       spin?: string;

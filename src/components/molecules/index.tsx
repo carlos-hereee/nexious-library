@@ -43,15 +43,15 @@ export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
 export { default as CalendarNavigation } from "@nxs-molecules/calendar/CalendarNavigation";
 export { default as CalendarView } from "@nxs-molecules/calendar/CalendarView";
 export { default as CalendarEventList } from "@nxs-molecules/calendar/CalendarEventList";
+export type { CalendarEventListProps, CalendarViewProps } from "nxs-calendar";
+export type { CalendarNavProps } from "nxs-calendar";
 
-// tables
-export { default as ColumnGroup } from "@nxs-molecules/table/ColumnGroup";
-export { default as TableRow } from "@nxs-molecules/table/TableRow";
-
-// texts
-export { default as Total } from "@nxs-molecules/texts/Total";
+// TODO: ADD Tables types
+// // tables
+// export { default as ColumnGroup } from "@nxs-molecules/table/ColumnGroup";
+// export { default as TableRow } from "@nxs-molecules/table/TableRow";
 
 // navigation
-export { default as BurgerButton } from "@nxs-molecules/navigation/BurgerButton";
-export type { BurgerProps } from "@nxs-molecules/navigation/BurgerButton";
+export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
 export { default as NavToggle } from "@nxs-molecules/navigation/NavToggle";
+// export type { BurgerProps } from "@nxs-molecules/navigation/BurgerButton";

@@ -1,24 +1,24 @@
-// import { TableColumnProp } from "types/types";
+// // import { TableColumnProp } from "types/types";
 
-import { CellDataProp } from "@nxs-utils/helpers/types";
-import { TableRow } from "@nxs-molecules";
+// import { CellDataProp } from "@nxs-utils/helpers/types";
+// import { TableRow } from "@nxs-molecules";
 
-type TableHeaderProp = {
-  data: CellDataProp[];
-};
-/**
- * element is used in conjunction with the <thead> and <tfoot>
- * elements to specify each part of a table (body, header, footer).
- * @param span array for each section
- * @returns
- */
-const TableHeader: React.FC<TableHeaderProp> = ({ data }) => {
-  return (
-    <thead>
-      {data.map((d) => (
-        <TableRow key={d.uid} data={d.data} isHeader={d.isHeader} />
-      ))}
-    </thead>
-  );
-};
-export default TableHeader;
+// type TableHeaderProp = {
+//   data: CellDataProp[];
+// };
+// /**
+//  * element is used in conjunction with the <thead> and <tfoot>
+//  * elements to specify each part of a table (body, header, footer).
+//  * @param span array for each section
+//  * @returns
+//  */
+// const TableHeader: React.FC<TableHeaderProp> = ({ data }) => {
+//   return (
+//     <thead>
+//       {data.map((d) => (
+//         <TableRow key={d.uid} data={d.data} isHeader={d.isHeader} />
+//       ))}
+//     </thead>
+//   );
+// };
+// export default TableHeader;

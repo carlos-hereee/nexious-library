@@ -1,10 +1,5 @@
 import { Icon, PingCount } from "@nxs-atoms";
-
-export type BurgerProps = {
-  click: React.MouseEventHandler<HTMLButtonElement>;
-  isBurger: boolean;
-  ping?: number;
-};
+import { IconButtonProps } from "nxs-button";
 
 /**
  * Component Burger button
@@ -13,12 +8,12 @@ export type BurgerProps = {
  * @param ping number; set notification count
  * @returns
  */
-
-const BurgerButton: React.FC<BurgerProps> = ({ isBurger, click, ping }) => {
+const BurgerButton: React.FC<IconButtonProps> = (props) => {
+  const { isBurger, onClick, ping } = props;
   return (
     <button
       type="button"
-      onClick={click}
+      onClick={onClick}
       className={`btn-${isBurger ? "x" : "burger"}`}
       aria-controls="primary-navigation"
       aria-expanded={isBurger}
