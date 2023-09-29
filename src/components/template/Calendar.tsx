@@ -45,7 +45,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       </div>
       {active && (
         <CalendarNavigation
-          data={active}
+          date={active}
           click={(label) => monthChange({ label, active, setActive })}
           previous={previous}
           next={next}

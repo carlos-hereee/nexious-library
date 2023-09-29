@@ -30,7 +30,7 @@ export type { CartProps } from "nxs-cart";
 
 // calendar
 export { default as CalendarEvents } from "@nxs-organism/calendar/CalendarEvents";
-export type { CalendarEventProps } from "nxs-calendar-events";
+export type { CalendarEventProps } from "nxs-calendar";
 
 // forms
 export { default as Form } from "@nxs-organism/forms/Form";

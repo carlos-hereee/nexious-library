@@ -1,7 +1,7 @@
 import { MeetingDetails } from "@nxs-atoms";
 import { CalendarEventList, IconButton } from "@nxs-molecules";
 import { CardSection, UserCard } from "@nxs-organism";
-import { CalendarEventProps } from "nxs-calendar-events";
+import { CalendarEventProps } from "nxs-calendar";
 
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
   const { selectedDay, active, meeting, setMeeting, handleCheckout, user } = props;
@@ -40,7 +40,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         ) : selectedDay.list?.length > 0 ? (
           <CalendarEventList
             list={selectedDay.list}
-            click={(e) => setMeeting(e)}
+            onClick={(e) => setMeeting(e)}
             meeting={meeting}
           />
         ) : (

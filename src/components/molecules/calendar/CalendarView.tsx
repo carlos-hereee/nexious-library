@@ -1,18 +1,10 @@
 import { sundayFirst, monthWeeks } from "@nxs-utils/helpers/data";
 import { Button } from "@nxs-atoms";
-import { CalendarDayProps } from "@nxs-utils/helpers/types";
 import { CalendarTile } from "@nxs-molecules";
 import { isTileMute } from "@nxs-utils/calendar/isTileMute";
 import { isTileMatch } from "@nxs-utils/calendar/isTileMatch";
 import { calendarValues } from "@nxs-utils/calendar/calendarValues";
-
-type CalendarViewProps = {
-  data: CalendarDayProps;
-  click: (e: CalendarDayProps) => void;
-  today: CalendarDayProps;
-  minDate?: CalendarDayProps;
-  events?: any[];
-};
+import { CalendarViewProps } from "nxs-calendar";
 
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today } = props;
@@ -33,11 +25,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
             <CalendarTile
               key={d}
               click={() => click(date)}
-              events={
-                events?.filter((e) =>
-                  isTileMatch({ day1: e, day, day2: data })
-                )[0]
-              }
+              events={events?.filter((e) => isTileMatch({ day1: e, day, day2: data }))[0]}
               data={{
                 tile: day,
                 isToday: isTileMatch({ day1: today, day, day2: data }),
