@@ -1,17 +1,6 @@
 import { Hero } from "@nxs-molecules";
-import { HeroProp } from "@nxs-utils/helpers/types";
+import { UserCardProps } from "nxs-user-card";
 
-export type UserCardProps = {
-  hideLabels?: boolean;
-  hideHero?: boolean;
-  theme?: boolean;
-  user: {
-    hero: HeroProp;
-    name?: string;
-    email?: string;
-    phone?: string;
-  };
-};
 const UserCard: React.FC<UserCardProps> = (props) => {
   const { user, hideLabels, theme, hideHero } = props;
   return (

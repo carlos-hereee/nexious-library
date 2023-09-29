@@ -1,3 +1,20 @@
+// shared typings
+type HeroProp = {
+  url: string;
+  alt?: string;
+  name?: string;
+  icon?: string;
+  small?: string;
+  label?: string;
+  credit?: {
+    artistName: string;
+    artistUrl: string;
+    assetUrl: string;
+  };
+  theme?: string;
+  logoId?: string;
+};
+
 /**
  * Component - Card
  *
@@ -61,5 +78,19 @@ declare module "nxs-card-footer" {
       label: string;
     }[];
     onClick: React.MouseEventHandler<HTMLButtonElement>;
+  }
+}
+
+declare module "nxs-user-card" {
+  export interface UserCardProps {
+    hideLabels?: boolean;
+    hideHero?: boolean;
+    theme?: boolean;
+    user: {
+      hero: HeroProp;
+      name?: string;
+      email?: string;
+      phone?: string;
+    };
   }
 }

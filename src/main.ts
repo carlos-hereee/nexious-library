@@ -24,7 +24,7 @@ export type { NavigationProps } from "nxs-navigation";
 export { default as Card } from "@nxs-organism/card/Card";
 export type { CardProps } from "nxs-card";
 export { default as UserCard } from "@nxs-organism/card/UserCard";
-export type { UserCardProps } from "@nxs-organism/card/UserCard";
+export type { UserCardProps } from "nxs-user-card";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as FeatureCard } from "@nxs-organism/card/FeatureCard";
 export { default as HeroCardAlt } from "@nxs-organism/card/HeroCardAlt";
