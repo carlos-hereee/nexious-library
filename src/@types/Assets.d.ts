@@ -1,3 +1,8 @@
+type UnplashAsset = {
+  artistName: string;
+  artistUrl: string;
+  assetUrl: string;
+};
 type AssetProp = {
   url: string;
   alt?: string;
@@ -18,6 +23,7 @@ type AssetProp = {
 };
 declare module "nxs-assets" {
   export type AssetProps = AssetProp;
+  export type UnsplashProps = { creditTo: UnsplashAsset };
   export interface HeroProps {
     hero: AssetProp;
     theme?: string;

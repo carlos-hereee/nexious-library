@@ -1,13 +1,8 @@
 import { findValueType } from "@nxs-utils/helpers/methods";
-import { messages } from "data/messages";
+import { messages } from "@nxs-utils/data/messages";
+import { ErrorMessageProps } from "nxs-errors";
 
-type ErrorMessageProp = {
-  code: string;
-  prop: string;
-  component?: string;
-  error?: any;
-};
-const ErrorMessage: React.FC<ErrorMessageProp> = (props) => {
+const ErrorMessage: React.FC<ErrorMessageProps> = (props) => {
   const { prop, code, component, error } = props;
 
   const handleClick = () => {

@@ -20,11 +20,8 @@ export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 // export { default as HeroCardAlt } from "@nxs-organism/card/HeroCardAlt";
 export { default as CardSection } from "@nxs-organism/card/CardSection";
 export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
-export type { HeroCardProps } from "nxs-hero-card";
-export type { UserCardProps } from "nxs-user-card";
-export type { CardProps } from "nxs-card";
-export type { CardSectionProps } from "nxs-card-section";
-export type { TextBubbleProps } from "nxs-text-bubble";
+export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps } from "nxs-card";
+export type { TextBubbleProps } from "nxs-assets";
 
 // cart
 export { default as Cart } from "@nxs-organism/card/Cart";

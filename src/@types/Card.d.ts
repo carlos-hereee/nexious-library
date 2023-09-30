@@ -68,47 +68,19 @@ declare module "nxs-card" {
     theme?: string;
     onClick?: (key: any) => void;
   }
-}
-/**
- * Component - Card Footer
- * @param data.data string; display content on page
- * @param data.buttons string[]; display any number of buttons
- * @returns
- */
-declare module "nxs-card-cta" {
+  export interface HeroCardProps {
+    data: { title: string; tagline?: string; hero: HeroProp; cta?: CTAProp[] };
+  }
   export interface CTAProps {
     cta?: CTAProp[];
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
   }
-}
-/**
- * Component - Card
- *
- * --header
- * @param title string; heading of the card
- * @param hero.name string; heading of the card
- * @param hero.url string; heading of the card
- * @param click   callback to be fired when button is click
- * --body 
- * @param response string; the text to manipulate
- * @param hyperlink.word; string; the word that's to become a hyperlink
- * @param hyperlink.link; string; link url
- * @param hasLink: boolean; the separator to notify component its working with
- *                          hyperlink
- --footer 
- * @param data.data string; display content on page
- * @param data.buttons string[]; display any number of buttons
- * @returns Card
- */
-declare module "nxs-card-section" {
   export interface CardSectionProps {
     hero?: HeroProp;
     hideReadMore?: boolean;
     data?: string;
     theme?: string;
   }
-}
-declare module "nxs-user-card" {
   export interface UserCardProps {
     hideLabels?: boolean;
     hideHero?: boolean;
@@ -121,12 +93,7 @@ declare module "nxs-user-card" {
     };
   }
 }
-declare module "nxs-hero-card" {
-  export interface HeroCardProps {
-    data: { title: string; tagline?: string; hero: HeroProp; cta?: CTAProp[] };
-  }
-}
-declare module "nxs-text-bubble" {}
+
 declare module "nxs-cart" {
   export interface CartProps {
     data: any[];
