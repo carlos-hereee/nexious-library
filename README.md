@@ -10,7 +10,7 @@
 - Yarn:
   - yarn add nexious-library
 
-## Setting up TS
+## Setting up TS its a starter guide
 
 1. download typescript and associated types as dev dependency
 2. create ts.config.json for ts linting
@@ -44,16 +44,28 @@
         }
 
       ```
+
 3. update index.html script tag to point to new ts file
     - old index.html = ```text <script type="module" src="/src/main.jsx"></script>```
     - new index.html = ```text <script type="module" src="/src/main.tsx"></script>```
 4. update scripts in package.json file to include a watch file to watch for changes
     - add command ```text "watch": "tsc -p tsconfig.json -w"```
+5. if you are adding typescript to an existing application dont rename files manually. 
+    - run terminal on root ```text cd node_modules/nexious-library && npm run renameFile src 'jsx' 'tsx'```
+    - this command takes 3 required arguments:
+        1. first is the path usually src
+        2. second is the file extension of the files you want to rename probably 'jsx'
+        3. third is the desired file extension name
+    - this will run a shell script.  that will:
+        - rename all files to desired the extention name in the desired path
 
 ## Techstack
 
   <!-- 1. Style guide used [Eslint + Airbnb + Prettier configuration guide]( https://medium.com/@ErikKyleNielsen/setting-up-eslint-prettier-airbnb-base-and-typescript-27b3f9538f0d) -->
   1. This app was built using typescript scss and compiles to js and css
+  2. Typescript
+  3. Javascript
+  4. Vite + React
 
 ## Usage
 
@@ -139,7 +151,12 @@ Works out of the box with following initial props:
     /> 
     ```
 
+Visit <www.nexious.tech/docs> for more advanced settings
+
 ## MORE COMING SOON
+
+With more comming soon
+
 <!-- 
 TODO: 
 ## Rename files in directory
