@@ -22,7 +22,7 @@ type CalendarDayProp = {
   start: number;
   day: number;
   yyyyddmm: string;
-  // ping: number;
+  ping?: number;
 };
 
 declare module "nxs-calendar" {
@@ -57,7 +57,7 @@ declare module "nxs-calendar" {
       isToday: boolean;
       isSelected: boolean;
     };
-    events?: CalendarDayProp[];
+    events?: CalendarDayProp;
     click: (key: any) => void;
   }
   export interface CalendarNavProps {
@@ -79,7 +79,7 @@ declare module "nxs-calendar" {
     click: (e: CalendarDayProp) => void;
     today: CalendarDayProp;
     minDate?: CalendarDayProp;
-    events?: { date: string; list: EventProp[] }[];
+    events: CalendarDayProp[];
   }
   export interface DayChangeProps {
     today: CalendarDayProp;

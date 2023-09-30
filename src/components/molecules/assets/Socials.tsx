@@ -8,7 +8,9 @@ const Socials: React.FC<MediaProps> = (props) => {
       {label && <h2 className="heading">{label}</h2>}
       <div className="socials-icons">
         {medias.length > 0 &&
-          medias.map((d) => <Icon key={d.uid} icon={d.name} name={d.name} size="3x" />)}
+          medias.map(
+            (d) => d.icon && <Icon key={d.uid} icon={d.icon} name={d.name} size="3x" />
+          )}
       </div>
     </div>
   );

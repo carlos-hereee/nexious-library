@@ -1,5 +1,5 @@
 import { Icon, PingCount } from "@nxs-atoms";
-import { IconButtonProps } from "nxs-button";
+import { BurgerButtonProps } from "nxs-button";
 
 /**
  * Component Burger button
@@ -8,7 +8,7 @@ import { IconButtonProps } from "nxs-button";
  * @param ping number; set notification count
  * @returns
  */
-const BurgerButton: React.FC<IconButtonProps> = (props) => {
+const BurgerButton: React.FC<BurgerButtonProps> = (props) => {
   const { isBurger, onClick, ping } = props;
   return (
     <button
@@ -20,7 +20,7 @@ const BurgerButton: React.FC<IconButtonProps> = (props) => {
       aria-label={isBurger ? "open menu" : "close menu"}
     >
       <Icon icon={isBurger ? "x" : "burger"} size="2x" />
-      {ping && ping > 0 && <PingCount count={ping} />}
+      {ping && ping > 0 && <PingCount data={ping} />}
     </button>
   );
 };

@@ -39,8 +39,14 @@ declare module "nxs-button" {
     // notification count
     ping?: number;
     // icon props
-    icon?: IconProp;
+    icon: IconProp;
     // optional onclick event handler
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  }
+  export interface BurgerButtonProps {
+    isBurger?: boolean;
+    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    // notification count
+    ping?: number;
   }
 }

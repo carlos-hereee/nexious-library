@@ -25,7 +25,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
             <CalendarTile
               key={d}
               click={() => click(date)}
-              events={events?.filter((e) => isTileMatch({ day1: e, day, day2: data }))[0]}
+              events={events.filter((e) => isTileMatch({ day1: e, day, day2: data }))[0]}
               data={{
                 tile: day,
                 isToday: isTileMatch({ day1: today, day, day2: data }),
