@@ -34,10 +34,7 @@ export const nextMonth = (c: CalendarDayProps, cb: (a: any) => void) => {
     cb(calendarValues(new Date(c.year, c.month + 1, 1)));
   }
 };
-export const findMonthEvents = (
-  array: CalendarEventProp[],
-  item: CalendarDayProps
-) => {
+export const findMonthEvents = (array: CalendarEventProp[], item: CalendarDayProps) => {
   return array.filter(({ date }) => {
     const c = new Date(date);
     return c.getMonth() === item?.month && c.getFullYear() === item?.year;

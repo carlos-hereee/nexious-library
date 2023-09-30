@@ -10,11 +10,7 @@ const CartCancel: React.FC<CancelRowProps> = ({ click }) => {
         <button type="button" className="btn-main" onClick={() => click(false)}>
           Back
         </button>
-        <button
-          type="button"
-          className="btn-main btn-danger"
-          onClick={() => click(true)}
-        >
+        <button type="button" className="btn-main btn-danger" onClick={() => click(true)}>
           Confirm
         </button>
       </div>

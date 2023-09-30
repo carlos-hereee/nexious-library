@@ -7,7 +7,5 @@ type TileMatchProps = {
 };
 export const isTileMatch = (props: TileMatchProps): boolean => {
   const { day1, day, day2 } = props;
-  return (
-    day1.day === day && day1.month === day2.month && day1.year === day2.year
-  );
+  return day1.day === day && day1.month === day2.month && day1.year === day2.year;
 };
