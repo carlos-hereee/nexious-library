@@ -1,7 +1,7 @@
 import UserCard from "./UserCard";
 import { Rating } from "@nxs-molecules/index";
 import { TextBubble } from "@nxs-atoms/index";
-import { TextBubbleProps } from "nxs-text-bubble";
+import { TextBubbleProps } from "nxs-assets";
 
 const CardTextBubble: React.FC<TextBubbleProps> = (props) => {
   const { hero, data, theme } = props;
@@ -10,7 +10,7 @@ const CardTextBubble: React.FC<TextBubbleProps> = (props) => {
       <UserCard user={{ hero }} hideLabels />
       <div>
         <Rating star={data.rating} />
-        <TextBubble data={data} />
+        <TextBubble title={data.title} body={data.body} />
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import { Hero } from "@nxs-molecules";
-import { UserCardProps } from "nxs-user-card";
+import { UserCardProps } from "nxs-card";
 
 const UserCard: React.FC<UserCardProps> = (props) => {
   const { user, hideLabels, theme, hideHero } = props;

@@ -1,5 +1,5 @@
 import { IconButton } from "@nxs-molecules";
-import { CTAProps } from "nxs-card-cta";
+import { CTAProps } from "nxs-card";
 
 const CTA: React.FC<CTAProps> = (props) => {
   const { cta, onClick } = props;

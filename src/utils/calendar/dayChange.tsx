@@ -1,16 +1,7 @@
-import {
-  CalendarDayEventProp,
-  CalendarDayProps,
-} from "@nxs-utils/helpers/types";
 import { findMatch } from "./findMatch";
 import { nextMonth, prevMonth } from "./calendarValues";
+import { DayChangeProps } from "nxs-calendar";
 
-type DayChangeProps = {
-  today: CalendarDayProps;
-  active: CalendarDayProps;
-  setActive: React.Dispatch<React.SetStateAction<CalendarDayProps>>;
-  events?: CalendarDayEventProp[];
-};
 export const dayChange = (props: DayChangeProps) => {
   const { today, active, setActive, events } = props;
   // click previous month

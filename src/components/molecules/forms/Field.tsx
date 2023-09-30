@@ -11,7 +11,7 @@ const Field: React.FC<InputProps> = (props) => {
   if (lightColor === "red") return <ErrorMessages errors={errors} component="field" />;
   return (
     <>
-      {!hideLabel && <Label name={name} label={label} errors={error} />}
+      {!hideLabel && label && <Label name={name} label={label} errors={error} />}
       <Input
         value={value}
         onChange={onChange}

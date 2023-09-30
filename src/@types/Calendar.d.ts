@@ -22,6 +22,7 @@ type CalendarDayProp = {
   start: number;
   day: number;
   yyyyddmm: string;
+  // ping: number;
 };
 
 declare module "nxs-calendar" {
@@ -31,16 +32,9 @@ declare module "nxs-calendar" {
     value: Date;
     minDate?: Date;
     theme?: string;
-    events?: {
+    events: {
       date: string;
-      list: {
-        uid: string;
-        response: string;
-        isOpen: boolean;
-        date: string;
-        start: number;
-        end: number;
-      }[];
+      list: EventProp[];
     }[];
     onDayClick?: (e: any) => void;
     setDay?: (a: any) => void;
@@ -54,7 +48,17 @@ declare module "nxs-calendar" {
     user?: any;
     active?: any;
     meeting?: any;
-    events: any[];
+    events: { date: string; list: EventProp[] };
+  }
+  export interface CalendarTileProps {
+    data: {
+      tile: number;
+      isMuted: boolean;
+      isToday: boolean;
+      isSelected: boolean;
+    };
+    events?: CalendarDayProp[];
+    click: (key: any) => void;
   }
   export interface CalendarNavProps {
     date: { month: number; year: number };
@@ -75,6 +79,16 @@ declare module "nxs-calendar" {
     click: (e: CalendarDayProp) => void;
     today: CalendarDayProp;
     minDate?: CalendarDayProp;
-    events?: CalendarDayProp[];
+    events?: { date: string; list: EventProp[] }[];
+  }
+  export interface DayChangeProps {
+    today: CalendarDayProp;
+    active: CalendarDayProp;
+    setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
+    events: { date: string; list: EventProp[] }[];
+  }
+  export interface FindMatchProps {
+    events?: { date: string; list: EventProp[] }[];
+    calDay: CalendarDayProp;
   }
 }

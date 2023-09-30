@@ -19,7 +19,7 @@ const Select: React.FC<SelectProp> = (props) => {
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
-      {!hideLabels && <Label name={name} label={label} errors={error} />}
+      {!hideLabels && label && <Label name={name} label={label} errors={error} />}
       <select
         className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
         value={active ? active : ""}

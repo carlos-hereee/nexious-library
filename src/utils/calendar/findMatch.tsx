@@ -1,13 +1,6 @@
-import {
-  CalendarDayEventProp,
-  CalendarDayProps,
-} from "@nxs-utils/helpers/types";
 import { calendarValues } from "./calendarValues";
+import { FindMatchProps } from "nxs-calendar";
 
-type FindMatchProps = {
-  events?: CalendarDayEventProp[];
-  calDay: CalendarDayProps;
-};
 export const findMatch = (props: FindMatchProps) => {
   const { events, calDay } = props;
   return events

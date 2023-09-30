@@ -1,13 +1,13 @@
 import { InputProps } from "nxs-form";
 
 const Input: React.FC<InputProps> = (props) => {
-  const { value, onChange, onBlur, name, theme, placeholder } = props;
+  const { value, onChange, onBlur, name, theme, placeholder, type } = props;
   return (
     <input
       className={theme}
       autoComplete="on"
       name={name}
-      type="text"
+      type={type ? type : "text"}
       value={value}
       placeholder={placeholder}
       onChange={onChange}

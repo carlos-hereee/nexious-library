@@ -19,7 +19,7 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
   const placeholders = placeholder ? placeholder : initPlaceholders[name];
   return (
     <>
-      {!hideLabels && <Label name={name} label={labels} errors={errors} />}
+      {!hideLabels && labels && <Label name={name} label={labels} errors={errors} />}
       <div className="flex-row">
         <Input
           value={value}

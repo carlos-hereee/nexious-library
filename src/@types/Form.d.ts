@@ -29,13 +29,14 @@ type InputProp = {
   label?: string;
   theme?: string;
   error?: string;
+  type?: string;
   placeholder?: string;
   min?: number;
   max?: number;
   hideLabel?: boolean;
   checked?: boolean;
   isDisabled?: boolean;
-  onChange: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+  onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
   onBlur?: () => void;
 };
 

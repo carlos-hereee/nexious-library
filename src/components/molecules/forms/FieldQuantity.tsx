@@ -5,7 +5,7 @@ const FieldQuantity: React.FC<InputProps> = (props) => {
   const { min, max, value, onChange, onBlur, name, label } = props;
   return (
     <div className="field">
-      <Label label={label} name={name} />
+      {label && <Label label={label} name={name} />}
       <InputQuantity
         name={name}
         min={min}

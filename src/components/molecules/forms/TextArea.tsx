@@ -6,7 +6,7 @@ const TextArea: React.FC<TextAreaProps> = (props) => {
   const { hideLabels, theme } = props;
   return (
     <>
-      {!hideLabels && <Label name={name} label={label} errors={error} />}
+      {!hideLabels && label && <Label name={name} label={label} errors={error} />}
       <textarea
         className={theme}
         name={name}

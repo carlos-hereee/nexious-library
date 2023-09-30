@@ -18,7 +18,14 @@ const CardBody: React.FC<CardProps> = (props) => {
   return (
     <div className="card-body">
       <p className="card-body-p">
-        {links ? links.map((l) => l.data && <Hyperlink data={l} key={l.data} />) : body}
+        {links
+          ? links.map(
+              (l) =>
+                l.data && (
+                  <Hyperlink data={l.data} isLink={l.isLink} link={l.data} key={l.data} />
+                )
+            )
+          : body}
       </p>
       {features && (
         <div className="flex-w card">

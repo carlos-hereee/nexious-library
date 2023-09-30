@@ -1,5 +1,5 @@
 import { CTA, Hero } from "@nxs-molecules";
-import { HeroCardProps } from "nxs-hero-card";
+import { HeroCardProps } from "nxs-card";
 
 const HeroCard: React.FC<HeroCardProps> = (props) => {
   const { title, tagline, hero, cta } = props.data;
