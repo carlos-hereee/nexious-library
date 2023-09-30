@@ -1,9 +1,3 @@
-import { LinkProp } from "@nxs-utils/helpers/types";
-
-type LinkProps = {
-  data: LinkProp;
-};
-
 /**
  * Component - Hyperlink
  * @param isLink boolean; check to add link or text
@@ -13,13 +7,16 @@ type LinkProps = {
  * @returns
  */
 
-const Hyperlink: React.FC<LinkProps> = ({ data }) => {
-  return data.isLink ? (
-    <a href={data.data} className="link">
-      {data.data}
+import { HyperlinkProp } from "nxs-typography";
+
+const Hyperlink: React.FC<HyperlinkProp> = (props) => {
+  const { data, isLink } = props;
+  return isLink ? (
+    <a href={data} className="link">
+      {data}
     </a>
   ) : (
-    <span>{data.data} </span>
+    <span>{data} </span>
   );
 };
 export default Hyperlink;

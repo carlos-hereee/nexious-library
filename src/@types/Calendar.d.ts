@@ -26,6 +26,7 @@ type CalendarDayProp = {
 
 declare module "nxs-calendar" {
   // Define your exported types here
+  export type EventMeetingProps = { meeting: EventProp };
   export interface CalendarProps {
     value: Date;
     minDate?: Date;

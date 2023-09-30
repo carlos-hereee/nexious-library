@@ -1,9 +1,7 @@
 import { Icon } from "@nxs-atoms";
 import { reverseCount } from "@nxs-atoms/texts/PingCount";
+import { TileProps } from "nxs-typography";
 
-type TileProps = {
-  tile: string | number;
-};
 const TileContent: React.FC<TileProps> = ({ tile }) => {
   let ping = tile
     .toString()

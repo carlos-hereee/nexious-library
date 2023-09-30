@@ -1,4 +1,6 @@
-const Cost: React.FC<{ data: number }> = ({ data }) => (
+import { HybribDataProp } from "nxs-typography";
+
+const Cost: React.FC<HybribDataProp> = ({ data }) => (
   <div>
     <p className="cost">
       <strong>Cost: ${data}</strong>

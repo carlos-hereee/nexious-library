@@ -41,3 +41,5 @@ export { default as MeetingDetails } from "./texts/MeetingDetails";
 export { default as TextBubble } from "./texts/TextBubble";
 export { default as UnsplashCredit } from "./texts/UnsplashCredit";
 export { default as ErrorMessage } from "./texts/ErrorMessage";
+export type { DataProp, HyperlinkProp, KeyValueProps, TileProps } from "nxs-typography";
+export type { HybribDataProp, ReadMoreProps } from "nxs-typography";

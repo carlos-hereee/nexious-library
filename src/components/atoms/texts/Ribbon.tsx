@@ -1,6 +1,6 @@
-import { DataStringProps } from "@nxs-utils/helpers/types";
+import { DataProp } from "nxs-typography";
 
-const Ribbon: React.FC<DataStringProps> = ({ data, name }) => {
+const Ribbon: React.FC<DataProp> = ({ data, name }) => {
   return <strong className={`ribbon${name ? ` ${name}` : ""}`}>{data}</strong>;
 };
 export default Ribbon;

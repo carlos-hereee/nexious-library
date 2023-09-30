@@ -1,14 +1,11 @@
-type MeetingDetailsProp = {
-  meeting: any;
-};
-const MeetingDetails: React.FC<MeetingDetailsProp> = (props) => {
+import { EventMeetingProps } from "nxs-calendar";
+
+const MeetingDetails: React.FC<EventMeetingProps> = (props) => {
   const { meeting } = props;
   return (
     <p>
       Appointment set for{" "}
-      <strong>
-        {`${meeting.date} @ ${meeting.time.startTime} - ${meeting.time.endTime}`}
-      </strong>
+      <strong>{`${meeting.date} @ ${meeting.startTime} - ${meeting.endTime}`}</strong>
     </p>
   );
 };

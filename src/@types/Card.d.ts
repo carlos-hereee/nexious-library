@@ -126,13 +126,7 @@ declare module "nxs-hero-card" {
     data: { title: string; tagline?: string; hero: HeroProp; cta?: CTAProp[] };
   }
 }
-declare module "nxs-text-bubble" {
-  export interface TextBubbleProps {
-    hero: HeroProp;
-    data: { rating: number; title: string; body: string };
-    theme?: string;
-  }
-}
+declare module "nxs-text-bubble" {}
 declare module "nxs-cart" {
   export interface CartProps {
     data: any[];

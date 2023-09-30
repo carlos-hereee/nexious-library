@@ -1,11 +1,11 @@
-import { DataStringProps } from "@nxs-utils/helpers/types";
+import { DataProp } from "nxs-typography";
 
 /**
  * Component - Heading
  * @param data string
  * @returns JSX h2 with classname=heading
  */
-const Heading: React.FC<DataStringProps> = ({ data }) => {
+const Heading: React.FC<DataProp> = ({ data }) => {
   return <h2 className="heading">{data}</h2>;
 };
 

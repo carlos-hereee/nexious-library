@@ -1,9 +1,7 @@
-type TextBubbleProps = {
-  data: { title: string; body: string };
-};
-const TextBubble: React.FC<TextBubbleProps> = (props) => {
-  const { data } = props;
-  const { title, body } = data;
+import { BubbleProps } from "nxs-assets";
+
+const TextBubble: React.FC<BubbleProps> = (props) => {
+  const { title, body } = props;
   return (
     <div className="text-bubble">
       <h3>{title}</h3>

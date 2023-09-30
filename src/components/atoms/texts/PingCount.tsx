@@ -1,8 +1,6 @@
 import { Icon } from "@nxs-atoms";
+import { HybribDataProp } from "nxs-typography";
 
-type PingCountProp = {
-  count: number;
-};
 export type reverseCountProp = {
   [key: string | number]:
     | "one"
@@ -33,8 +31,8 @@ export const reverseCount: reverseCountProp = {
  * @param param0 number; set nofication count, must be greater than 0
  * @returns
  */
-const PingCount: React.FC<PingCountProp> = ({ count }) => {
-  const stringCount = count.toString().split("");
+const PingCount: React.FC<HybribDataProp> = ({ data }) => {
+  const stringCount = data.toString().split("");
 
   const nums = stringCount.map((s) => reverseCount[s]);
   return (

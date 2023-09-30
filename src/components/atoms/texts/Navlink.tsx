@@ -1,6 +1,6 @@
-import { NavlinkProp } from "@nxs-utils/helpers/types";
+import { HyperlinkProp } from "nxs-typography";
 
-export const Navlink: React.FC<NavlinkProp> = ({ data, link }) => {
+export const Navlink: React.FC<HyperlinkProp> = ({ data, link }) => {
   return (
     <a href={link} className="nav-link">
       {data}

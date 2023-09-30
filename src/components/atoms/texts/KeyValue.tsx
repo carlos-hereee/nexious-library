@@ -1,6 +1,6 @@
-import { LabelValueProps } from "@nxs-utils/helpers/types";
+import { KeyValueProps } from "nxs-typography";
 
-const KeyValue: React.FC<LabelValueProps> = ({ key, value }) => {
+const KeyValue: React.FC<KeyValueProps> = ({ key, value }) => {
   return (
     <p>
       <strong>{key}</strong> : {value}

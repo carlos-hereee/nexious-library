@@ -24,6 +24,15 @@ declare module "nxs-assets" {
     label?: string;
     onImageClick?: (e: any) => void;
   }
+  export interface TextBubbleProps {
+    hero: HeroProp;
+    data: { rating: number; title: string; body: string };
+    theme?: string;
+  }
+  export interface BubbleProps {
+    title: string;
+    body: string;
+  }
 }
 /**
  * Component Hero Logo
