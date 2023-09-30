@@ -1,8 +1,8 @@
 {
   "name": "nexious-library",
-  "version": "1.4.1",
+  "version": "2.0.0",
   "description": "Official database for nexious.tech",
-  "type": "module", 
+  "type": "module",
   "types": "dist/esm/@types/main.d.ts",
   "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
@@ -58,7 +58,7 @@
         "default": "./dist/esm/math/index.js"
       }
     },
-    "./@index.css": "./dist/css/index.css", 
+    "./@index.css": "./dist/css/index.css",
     ".": {
       "import": {
         "types": "./dist/esm/@types/main.d.ts",
@@ -70,7 +70,7 @@
     "nodemon": "nodemon",
     "save:rename": "node ./scripts/save-rename.js",
     "renameFile": "bash ./scripts/renameFile.sh",
-    "dev":"node ./scripts/run-all-watchers.js",
+    "dev": "node ./scripts/run-all-watchers.js",
     "watch:add-types": "node ./scripts/watcher-add-types.js --watch",
     "watch:4": "node ./scripts/watcher-rename-file.js --watch",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",

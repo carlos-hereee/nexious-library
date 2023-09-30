@@ -1,8 +1,6 @@
 import { Spinner } from "@nxs-atoms";
 import { ErrorProps } from "nxs-errors";
 
-// type ErrorProps = { message: string };
-
 const Loading: React.FC<ErrorProps> = (props) => {
   const { message } = props;
   return (

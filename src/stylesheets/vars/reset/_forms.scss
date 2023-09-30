@@ -5,6 +5,7 @@ form {
   text-align: left;
   gap: #{$rem};
   max-width: #{$max-width-lg};
+  width: 100%;
 }
 input,
 textarea {
