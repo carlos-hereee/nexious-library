@@ -20,8 +20,8 @@ import { HeaderProps } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, updateMenu, language } = props;
-  const { lightColor, errors } = usePropErrorHandling({ logo, menu }, true);
+  const { menu, logo, ping, updateMenu, language, heading } = props;
+  const { lightColor, errors } = usePropErrorHandling({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
@@ -38,41 +38,36 @@ const Header: React.FC<HeaderProps> = (props) => {
       ? navigate(`/${e.active.link}`)
       : navigate(`/${e.active?.name}`);
   };
+  if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (
     <header>
-      {lightColor === "red" ? (
-        <ErrorMessages errors={errors} component="header" />
-      ) : (
+      <Logo hero={logo} label={heading} />
+      {menu && (
         <>
-          {logo?.logoId && <Logo hero={logo} />}
-          {menu && (
-            <>
-              {" "}
-              <nav className="primary-navigation">
-                <Navbar
-                  show={{ isActive, isClose }}
-                  menu={menu}
-                  toggle={updateMenu}
-                  click={handleClick}
-                  language={language}
-                />
-              </nav>
-              <nav className="mobile-navigation">
-                <BurgerButton
-                  isBurger={isActive}
-                  onClick={() => setActive(!isActive)}
-                  ping={ping}
-                />
-                <Navbar
-                  show={{ isActive, isClose }}
-                  menu={menu}
-                  toggle={updateMenu}
-                  click={handleClick}
-                  language={language}
-                />
-              </nav>
-            </>
-          )}
+          {" "}
+          <nav className="primary-navigation">
+            <Navbar
+              show={{ isActive, isClose }}
+              menu={menu}
+              toggle={updateMenu}
+              click={handleClick}
+              language={language}
+            />
+          </nav>
+          <nav className="mobile-navigation">
+            <BurgerButton
+              isBurger={isActive}
+              onClick={() => setActive(!isActive)}
+              ping={ping}
+            />
+            <Navbar
+              show={{ isActive, isClose }}
+              menu={menu}
+              toggle={updateMenu}
+              click={handleClick}
+              language={language}
+            />
+          </nav>
         </>
       )}
     </header>

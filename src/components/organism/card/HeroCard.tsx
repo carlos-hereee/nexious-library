@@ -10,9 +10,11 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
         {tagline && <h2 className="tagline">{tagline}</h2>}
         {cta && <CTA cta={cta} />}
       </div>
-      <div className="hero-container flex-1">
-        <Hero hero={hero} theme={hero.theme} />
-      </div>
+      {hero && (
+        <div className="hero-container flex-1">
+          <Hero hero={hero} theme={hero?.theme} />
+        </div>
+      )}
     </div>
   );
 };

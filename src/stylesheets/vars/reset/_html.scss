@@ -44,6 +44,7 @@ header {
   align-content: center;
   grid-template-columns: 1fr 4fr;
   gap: #{$rem};
+  min-height: #{$min-height};
 }
 footer {
   display: flex;

@@ -7,7 +7,7 @@ const Logo: React.FC<HeroProps> = (props) => {
   const { hero, theme, label } = props;
   return (
     <Link to="/" className={theme ? `logo-link ${theme}` : "logo-link"}>
-      <Hero hero={hero} />
+      {hero && <Hero hero={hero} />}
       {label && <Heading data={label} />}
     </Link>
   );

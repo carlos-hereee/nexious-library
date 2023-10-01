@@ -36,6 +36,7 @@ declare module "nxs-navigation" {
   export interface HeaderProps {
     menu: MenuProp[];
     ping?: number;
+    heading?: string;
     logo: {
       url: string;
       alt?: string;

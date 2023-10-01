@@ -69,7 +69,7 @@ declare module "nxs-card" {
     onClick?: (key: any) => void;
   }
   export interface HeroCardProps {
-    data: { title: string; tagline?: string; hero: HeroProp; cta?: CTAProp[] };
+    data: { title: string; tagline?: string; hero?: HeroProp; cta?: CTAProp[] };
   }
   export interface CTAProps {
     cta?: CTAProp[];
