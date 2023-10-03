@@ -1,20 +1,16 @@
-import { ErrorMessage, InputCheckbox } from "@nxs-atoms";
-import { auth, select } from "@nxs-utils/form/types";
-import { textarea } from "@nxs-utils/form/types";
-import { useValues } from "@nxs-utils/hooks/useValues";
-import { AuthField, ErrorMessages, Field } from "@nxs-molecules";
-import { Select, SubmitButton, TextArea } from "@nxs-molecules";
 import { useState } from "react";
+import { ErrorMessage } from "@nxs-atoms";
+import { useValues } from "@nxs-utils/hooks/useValues";
+import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { initLabels } from "@nxs-utils/form/labels";
-import { objLength } from "@nxs-utils/app/objLength";
+import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
 import { FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 
-// import { themeList } from "@nxs-utils/app/themeList";
 const Form: React.FC<FormProps> = (props) => {
   // props
   const { onSubmit, onChange, initialValues, hideLabels, theme, submitLabel } = props;
@@ -27,15 +23,8 @@ const Form: React.FC<FormProps> = (props) => {
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
-  // const [label, setLabel] = useState(objLength(labels) ? labels : initLabels);
-  // const [placeholder, setPlaceholder] = useState(
-  //   objLength(placeholders) ? placeholders : initPlaceholders
-  // );
   const label = objLength(labels) ? labels : initLabels;
   const placeholder = objLength(placeholders) ? placeholders : initPlaceholders;
-  // const type = objLength(types) && types;
-
-  // console.log("types", type);
 
   const handleChange = (event: any) => {
     // key variables
@@ -43,25 +32,28 @@ const Form: React.FC<FormProps> = (props) => {
     const value = event.currentTarget.value;
     const payload = { ...values, [key]: value };
     setValues(payload);
-    addTouched(key);
+    // addTouched(key);
     if (onChange) onChange(payload);
   };
   const handleCheckbox = (event: any) => {
     // key variables
     const key: string = event.target.name;
     const value = event.currentTarget.checked;
-    addTouched(key);
-    setValues({ ...values, [key]: value });
+    // addTouched(key);
     // if form has an entry value
-    // if (addEntry && addEntry[key]) {
-    //   // let
-    //   setTypes({ ...label, ...addEntry[key].types });
-    //   setPlaceholder({ ...label, ...addEntry[key].placeholders });
-    //   setLabel({ ...label, ...addEntry[key].labels });
-    //   setValues({ ...values, ...addEntry[key].initialValues });
-    // }
+    if (addEntry && addEntry[key] && value) {
+      // console.log("addEntry[key]", addEntry[key].initialValues);
+      const entryValues = objToArray(addEntry[key].initialValues);
+      console.log("entryValues", entryValues);
+      // setValues((prev) => [...prev, { [key]: value }]);
+      // let
+      // setTypes({ ...label, ...addEntry[key].types });
+      // setPlaceholder({ ...label, ...addEntry[key].placeholders });
+      // setLabel({ ...label, ...addEntry[key].labels });
+      // setValues({ ...values, ...addEntry[key].initialValues });
+    }
   };
-  console.log("values", values);
+  // console.log("values", values);
   const updateSelection = (value: string, name: string) => {
     addTouched(name);
     setValues({ ...values, [name]: value });
@@ -84,7 +76,7 @@ const Form: React.FC<FormProps> = (props) => {
       // setAllValues((prev) => [...prev, payload]);
     }
   };
-  // {values[v] &&addEntry && addEntry[v] &&
+  // {values[name] &&addEntry && addEntry[name] &&
   // <Field
   // name={}
   // />}
@@ -92,21 +84,26 @@ const Form: React.FC<FormProps> = (props) => {
   return values ? (
     <form className={theme} onSubmit={handleSubmit}>
       {heading && <h2 className="heading">{heading}</h2>}
-      {Object.keys(values).map((v) => (
-        <FormField
-          key={v}
-          name={v}
-          type={types && types[v] ? types[v] : "text" || "text"}
-          value={values[v]}
-          placeholder={placeholder ? placeholder[v] : initPlaceholders[v]}
-          hideLabels={hideLabels}
-          label={labels && labels[v] ? labels[v] : initLabels[v]}
-          formError={formErrors && formErrors[v]}
-          handleChange={handleChange}
-          handleCheckbox={(e) => handleCheckbox(e)}
-          updateSelection={(e) => updateSelection(e.target.value, v)}
-        />
-      ))}
+      {values.map((v, idx) => {
+        const name = Object.keys(v)[0];
+        return (
+          <FormField
+            key={idx}
+            name={name}
+            type={(types && types[name]) || "text"}
+            value={values[idx][name]}
+            placeholder={placeholder ? placeholder[name] : initPlaceholders[name]}
+            hideLabels={hideLabels}
+            selected={selection[name]}
+            selectList={selectList}
+            label={labels && labels[name] ? labels[name] : initLabels[name]}
+            formError={formErrors && formErrors[name]}
+            handleChange={handleChange}
+            handleCheckbox={(e) => handleCheckbox(e)}
+            updateSelection={(e) => updateSelection(e.target.value, name)}
+          />
+        );
+      })}
       {!hideSubmit && <SubmitButton label={submitLabel} />}
     </form>
   ) : (

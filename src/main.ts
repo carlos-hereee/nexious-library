@@ -41,7 +41,6 @@ export type { CalendarEventProps } from "nxs-calendar";
 
 // forms
 export { default as Form } from "@nxs-organism/forms/Form";
-export { default as FormWithEntry } from "@nxs-organism/forms/FormWithEntry";
 export { default as UploadFile } from "@nxs-organism/forms/UploadFile";
 export type { FormProps } from "nxs-form";
 

@@ -1,3 +1,4 @@
+import { objToArray } from "@nxs-utils/app/objLength";
 import { useState } from "react";
 
 type FormValueProps = {
@@ -5,6 +6,6 @@ type FormValueProps = {
 };
 
 export const useValues = (initialValues: FormValueProps) => {
-  const [values, setValues] = useState<FormValueProps>(initialValues);
+  const [values, setValues] = useState<FormValueProps[]>(objToArray(initialValues));
   return { values, setValues };
 };
