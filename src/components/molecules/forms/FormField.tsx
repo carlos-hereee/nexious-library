@@ -6,8 +6,11 @@ import { FormFieldProps } from "nxs-form";
 const FormField: React.FC<FormFieldProps> = (props) => {
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
+  const { fieldHeading } = props;
+  console.log("fieldHeading", fieldHeading);
   return (
     <div className="form-field">
+      {fieldHeading && <h2 className="heading">{fieldHeading}</h2>}
       {auth.includes(name) ? (
         <AuthField
           name={name}

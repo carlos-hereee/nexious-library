@@ -24,17 +24,23 @@ const Form: React.FC<FormProps> = (props) => {
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const [entryData, setEntryData] = useState<{ [key: string]: number[] }[]>([]);
-  const label = objLength(labels) ? labels : initLabels;
-  const placeholder = objLength(placeholders) ? placeholders : initPlaceholders;
+  const [label, setLabel] = useState(objLength(labels) ? labels : initLabels);
+  // const [fieldHeading, setFieldHeading] = useState<{ [key: number]: string }>({});
+  const [placeholder, setPlaceholder] = useState(
+    objLength(placeholders) ? placeholders : initPlaceholders
+  );
 
   const handleChange = (event: any) => {
     // key variables
     const key = event.target.name;
     const value = event.currentTarget.value;
-    const payload = { ...values, [key]: value };
-    setValues(payload);
+    // const payload = { ...values, [key]: value };
+    const idx = values.findIndex((v) => Object.keys(v)[0] === key);
+    let oldValues = [...values];
+    oldValues[idx] = { ...oldValues[idx], [key]: value };
+    setValues(oldValues);
     // addTouched(key);
-    if (onChange) onChange(payload);
+    if (onChange) onChange(oldValues);
   };
   const handleCheckbox = (event: any) => {
     // addTouched(key);
@@ -49,11 +55,14 @@ const Form: React.FC<FormProps> = (props) => {
     if (addEntry && addEntry[key]) {
       const entryValues = objToArray(addEntry[key].initialValues);
       const total = values.length;
+      // setFieldHeading({ ...fieldHeading, [total]: addEntry[key].fieldHeading });
       if (value) {
         // get entry values
         const extraData = entryValues.map((v, idx) => total + idx);
         setEntryData((prev) => [...prev, { [key]: extraData }]);
         setValues([...oldValues, ...entryValues]);
+        setLabel({ ...label, ...addEntry[key].labels });
+        setPlaceholder({ ...placeholder, ...addEntry[key].placeholders });
       } else {
         const entryIdxs = entryData.findIndex((data) => Object.keys(data)[0] === key);
         const removeIdxs = entryData[entryIdxs][key];
@@ -111,6 +120,7 @@ const Form: React.FC<FormProps> = (props) => {
             handleChange={handleChange}
             handleCheckbox={(e) => handleCheckbox(e)}
             updateSelection={(e) => updateSelection(e.target.value, name)}
+            fieldHeading={fieldHeading[idx]}
           />
         );
       })}

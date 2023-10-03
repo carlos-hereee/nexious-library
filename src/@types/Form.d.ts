@@ -25,6 +25,7 @@ declare module "nxs-form" {
     addEntry?: {
       [key: string]: {
         additionLabel: string;
+        fieldHeading: string;
         initialValues: { [key: string]: any };
         labels?: { [key: string]: string };
         placeholders?: { [key: string]: string };
@@ -62,6 +63,7 @@ declare module "nxs-form" {
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     hideLabels?: boolean;
     formError?: string;
+    fieldHeading?: string;
     handleChange: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
