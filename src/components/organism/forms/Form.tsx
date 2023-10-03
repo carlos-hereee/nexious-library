@@ -23,6 +23,7 @@ const Form: React.FC<FormProps> = (props) => {
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
+  const [entryData, setEntryData] = useState<{ [key: string]: number[] }[]>([]);
   const label = objLength(labels) ? labels : initLabels;
   const placeholder = objLength(placeholders) ? placeholders : initPlaceholders;
 
@@ -36,23 +37,32 @@ const Form: React.FC<FormProps> = (props) => {
     if (onChange) onChange(payload);
   };
   const handleCheckbox = (event: any) => {
+    // addTouched(key);
     // key variables
     const key: string = event.target.name;
     const value = event.currentTarget.checked;
-    // addTouched(key);
+    // find checkbox index
+    const idx = values.findIndex((v) => Object.keys(v)[0] === key);
+    let oldValues = [...values];
+    oldValues[idx] = { [key]: value };
     // if form has an entry value
-    if (addEntry && addEntry[key] && value) {
-      // console.log("addEntry[key]", addEntry[key].initialValues);
+    if (addEntry && addEntry[key]) {
       const entryValues = objToArray(addEntry[key].initialValues);
-      console.log("entryValues", entryValues);
-      // setValues((prev) => [...prev, { [key]: value }]);
-      // let
-      // setTypes({ ...label, ...addEntry[key].types });
-      // setPlaceholder({ ...label, ...addEntry[key].placeholders });
-      // setLabel({ ...label, ...addEntry[key].labels });
-      // setValues({ ...values, ...addEntry[key].initialValues });
+      const total = values.length;
+      if (value) {
+        // get entry values
+        const extraData = entryValues.map((v, idx) => total + idx);
+        setEntryData((prev) => [...prev, { [key]: extraData }]);
+        setValues([...oldValues, ...entryValues]);
+      } else {
+        const entryIdxs = entryData.findIndex((data) => Object.keys(data)[0] === key);
+        const removeIdxs = entryData[entryIdxs][key];
+        const newData = values.filter((i, idx) => !removeIdxs.includes(idx));
+        setValues(newData);
+      }
     }
   };
+  console.log("values", values);
   // console.log("values", values);
   const updateSelection = (value: string, name: string) => {
     addTouched(name);

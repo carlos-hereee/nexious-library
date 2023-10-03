@@ -32,11 +32,11 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         <TextArea
           input={{
             name,
-            value: value,
-            onChange: (e) => handleChange(e),
+            value,
             placeholder,
             label,
             error: formError,
+            onChange: (e) => handleChange(e),
           }}
           hideLabels={hideLabels}
           theme="highlight"
