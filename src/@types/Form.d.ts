@@ -25,8 +25,8 @@ declare module "nxs-form" {
     addEntry?: {
       [key: string]: {
         additionLabel: string;
-        fieldHeading: string;
         initialValues: { [key: string]: any };
+        fieldHeading: string;
         labels?: { [key: string]: string };
         placeholders?: { [key: string]: string };
         types?: { [key: string]: string };

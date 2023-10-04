@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ErrorMessage } from "@nxs-atoms";
-import { useValues } from "@nxs-utils/hooks/useValues";
+import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { initLabels } from "@nxs-utils/form/labels";
@@ -16,16 +16,19 @@ const Form: React.FC<FormProps> = (props) => {
   const { onSubmit, onChange, initialValues, hideLabels, theme, submitLabel } = props;
   const { labels, placeholders, types, schema, formName, heading, hideSubmit } = props;
   const { addEntry, selectList } = props;
-  const { values, setValues } = useValues(initialValues);
   // must have required props
   const required = { initialValues, onSubmit };
   const { lightColor, errors } = usePropErrorHandling(required, true);
+  // key variables
+  const { values, setValues } = useValues(initialValues, labels);
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const [entryData, setEntryData] = useState<{ [key: string]: number[] }[]>([]);
-  const [label, setLabel] = useState(objLength(labels) ? labels : initLabels);
-  // const [fieldHeading, setFieldHeading] = useState<{ [key: number]: string }>({});
+  // const [label, setLabel] = useState(objLength(labels) ? labels : initLabels);
+  const [fieldHeading, setFieldHeading] = useState<{ [key: number | string]: string }>(
+    {}
+  );
   const [placeholder, setPlaceholder] = useState(
     objLength(placeholders) ? placeholders : initPlaceholders
   );
@@ -46,22 +49,22 @@ const Form: React.FC<FormProps> = (props) => {
     // addTouched(key);
     // key variables
     const key: string = event.target.name;
-    const value = event.currentTarget.checked;
+    const value: boolean = event.currentTarget.checked;
     // find checkbox index
     const idx = values.findIndex((v) => Object.keys(v)[0] === key);
     let oldValues = [...values];
-    oldValues[idx] = { [key]: value };
+    oldValues[idx] = { [idx]: { [key]: value } };
     // if form has an entry value
     if (addEntry && addEntry[key]) {
       const entryValues = objToArray(addEntry[key].initialValues);
       const total = values.length;
-      // setFieldHeading({ ...fieldHeading, [total]: addEntry[key].fieldHeading });
       if (value) {
-        // get entry values
+        // get index of entry values
         const extraData = entryValues.map((v, idx) => total + idx);
+        setFieldHeading({ ...fieldHeading, [extraData[0]]: addEntry[key].fieldHeading });
         setEntryData((prev) => [...prev, { [key]: extraData }]);
-        setValues([...oldValues, ...entryValues]);
-        setLabel({ ...label, ...addEntry[key].labels });
+        setValues([...oldValues, { [key]: entryValues }]);
+        // setLabel({ ...label, [key]: addEntry[key].labels });
         setPlaceholder({ ...placeholder, ...addEntry[key].placeholders });
       } else {
         const entryIdxs = entryData.findIndex((data) => Object.keys(data)[0] === key);
@@ -88,39 +91,30 @@ const Form: React.FC<FormProps> = (props) => {
       objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
     } else onSubmit(values);
   };
-  const initEntry = () => {
-    // incase of data mutations add empty form data
-    if (addEntry) {
-      // const payload = clearFormEntry(addEntry.initialValues);
-      // setAllValues((prev) => [...prev, payload]);
-    }
-  };
-  // {values[name] &&addEntry && addEntry[name] &&
-  // <Field
-  // name={}
-  // />}
+
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
     <form className={theme} onSubmit={handleSubmit}>
       {heading && <h2 className="heading">{heading}</h2>}
-      {values.map((v, idx) => {
-        const name = Object.keys(v)[0];
+      {values.map((value) => {
+        const keyIdx: string = Object.keys(value)[0];
+        const key: string = Object.keys(value[keyIdx])[0];
         return (
           <FormField
-            key={idx}
-            name={name}
-            type={(types && types[name]) || "text"}
-            value={values[idx][name]}
-            placeholder={placeholder ? placeholder[name] : initPlaceholders[name]}
+            key={keyIdx}
+            name={keyIdx}
+            type={(types && types[keyIdx]) || "text"}
+            value={value[keyIdx][key]}
+            placeholder={placeholder ? placeholder[keyIdx] : initPlaceholders[keyIdx]}
             hideLabels={hideLabels}
-            selected={selection[name]}
+            selected={selection[keyIdx]}
             selectList={selectList}
-            label={labels && labels[name] ? labels[name] : initLabels[name]}
-            formError={formErrors && formErrors[name]}
+            label={labels && labels[keyIdx] ? labels[keyIdx] : initLabels[keyIdx]}
+            formError={formErrors && formErrors[keyIdx]}
             handleChange={handleChange}
             handleCheckbox={(e) => handleCheckbox(e)}
-            updateSelection={(e) => updateSelection(e.target.value, name)}
-            fieldHeading={fieldHeading[idx]}
+            updateSelection={(e) => updateSelection(e.target.value, keyIdx)}
+            fieldHeading={fieldHeading[keyIdx]}
           />
         );
       })}
