@@ -1,4 +1,5 @@
 import { objToArray } from "@nxs-utils/app/objLength";
+import { initLabels } from "@nxs-utils/form/labels";
 import { FormInitValues, KeyStringProp } from "@nxs-utils/helpers/types";
 import { useEffect, useState } from "react";
 
@@ -25,16 +26,23 @@ export const useValues = (props: FormValueProps) => {
   const [values, setValues] = useState<InitValueProps>([]);
   useEffect(() => {
     const initFormValues = (values: FormInitValues[]) => {
-      console.log("labels", labels);
       values.forEach((current, idx) => {
-        const key = Object.keys(current)[0];
+        // value name
+        const name = Object.keys(current)[0];
+        // use user labels first
+        let label = labels ? (labels[name] ? labels[name] : undefined) : undefined;
+        // if user did not enter a label use app labels
+        if (!label) {
+          // incase no label was found in app use default "No label added"
+          label = initLabels[name] ? initLabels[name] : "No label added";
+        }
         setValues((prev) => [
           ...prev,
           {
             [idx]: {
-              name: key,
-              value: current[key],
-              labels: "",
+              name,
+              value: current[name],
+              label,
               placeholder: "",
               type: "",
               fieldHeading: "",

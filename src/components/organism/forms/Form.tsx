@@ -25,7 +25,6 @@ const Form: React.FC<FormProps> = (props) => {
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const [entryData, setEntryData] = useState<{ [key: string]: number[] }[]>([]);
-  // const [label, setLabel] = useState(objLength(labels) ? labels : initLabels);
   const [fieldHeading, setFieldHeading] = useState<{ [key: number | string]: string }>(
     {}
   );
@@ -108,7 +107,7 @@ const Form: React.FC<FormProps> = (props) => {
             hideLabels={hideLabels}
             selected={selection[keyIdx]}
             selectList={selectList}
-            label={labels && labels[keyIdx] ? labels[keyIdx] : initLabels[keyIdx]}
+            label={fieldValues.label}
             formError={formErrors && formErrors[keyIdx]}
             handleChange={handleChange}
             handleCheckbox={(e) => handleCheckbox(e)}
