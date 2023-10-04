@@ -20,7 +20,7 @@ const Form: React.FC<FormProps> = (props) => {
   const required = { initialValues, onSubmit };
   const { lightColor, errors } = usePropErrorHandling(required, true);
   // key variables
-  const { values, setValues } = useValues({ initialValues, labels });
+  const { values, setValues } = useValues({ initialValues, labels, types });
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
@@ -101,9 +101,9 @@ const Form: React.FC<FormProps> = (props) => {
           <FormField
             key={keyIdx}
             name={fieldValues.name}
-            type={(types && types[keyIdx]) || "text"}
-            value={value[`${keyIdx}`].value}
-            placeholder={placeholder ? placeholder[keyIdx] : initPlaceholders[keyIdx]}
+            type={fieldValues.type}
+            value={value[keyIdx].value}
+            placeholder={fieldValues.placeholder}
             hideLabels={hideLabels}
             selected={selection[keyIdx]}
             selectList={selectList}
