@@ -20,7 +20,7 @@ const Form: React.FC<FormProps> = (props) => {
   const required = { initialValues, onSubmit };
   const { lightColor, errors } = usePropErrorHandling(required, true);
   // key variables
-  const { values, setValues } = useValues(initialValues, labels);
+  const { values, setValues } = useValues({ initialValues, labels });
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
@@ -96,15 +96,14 @@ const Form: React.FC<FormProps> = (props) => {
   return values ? (
     <form className={theme} onSubmit={handleSubmit}>
       {heading && <h2 className="heading">{heading}</h2>}
-      {values.map((value) => {
-        const keyIdx: string = Object.keys(value)[0];
-        const key: string = Object.keys(value[keyIdx])[0];
+      {values.map((value, keyIdx) => {
+        const fieldValues = value[keyIdx];
         return (
           <FormField
             key={keyIdx}
-            name={keyIdx}
+            name={fieldValues.name}
             type={(types && types[keyIdx]) || "text"}
-            value={value[keyIdx][key]}
+            value={value[`${keyIdx}`].value}
             placeholder={placeholder ? placeholder[keyIdx] : initPlaceholders[keyIdx]}
             hideLabels={hideLabels}
             selected={selection[keyIdx]}
@@ -113,7 +112,7 @@ const Form: React.FC<FormProps> = (props) => {
             formError={formErrors && formErrors[keyIdx]}
             handleChange={handleChange}
             handleCheckbox={(e) => handleCheckbox(e)}
-            updateSelection={(e) => updateSelection(e.target.value, keyIdx)}
+            updateSelection={(e) => updateSelection(e.target.value, fieldValues.name)}
             fieldHeading={fieldHeading[keyIdx]}
           />
         );
