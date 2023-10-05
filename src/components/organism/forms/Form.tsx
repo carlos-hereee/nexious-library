@@ -65,6 +65,7 @@ const Form: React.FC<FormProps> = (props) => {
         }
         const entryPayload = { values: entryValues, labels, types, placeholders };
         // add properties all entrys should have
+        // console.log("name", name);
         let entriesData = addEntries({ ...entryPayload, removalBy: name });
         // set field name on first new instance
         oldValues[idx].fieldHeading = fieldHeading;
@@ -109,36 +110,38 @@ const Form: React.FC<FormProps> = (props) => {
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
-      const total = values.length;
       // if the checkbox is checked add entries to form values is true
       const { labels, types, placeholders, canMultiply } = addEntry[name];
       const { additionLabel, removalLabel } = addEntry[name];
-      let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
+      const entryPayload = { values: entryValues, labels, types, placeholders };
+      let entriesData = addEntries({ ...entryPayload, removalBy: name });
       // if additional entries are possible add them here
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
       entriesData[entriesData.length - 1].canRemove = true;
       entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
-      // get index of entry values
-      // const extraData = entryValues.map((v, idx) => ({ value: total + idx, name }));
-      // keep everything together 0 is the number of element to be deleted
       oldValues.splice(idx + 1, 0, ...entriesData);
       // entryValues
-      // setEntryData([]);
-      // setEntryData((prev) => [...prev, ...extraData]);
       setValues(oldValues);
     }
   };
   const handleRemovalClick = (e: FormFieldValues, idx: number) => {
-    if (addEntry) {
+    if (addEntry && e.onMultiply) {
       // find the number of fields to delete
-      const name = e.removalBy ? e.removalBy : e.name;
+      const name = e.removalBy ? e.removalBy : e.onMultiply.name;
       const numCount = addEntry[name] ? objToArray(addEntry[name].initialValues).length : 1;
-      // console.log("numCount", numCount);
-      // move button and down to last appropriate field
       let oldValues = [...values];
-      console.log("numCount", numCount);
+      // move button and down to last appropriate field
+      if (e.canMultiply) {
+        const multiplyProperty = oldValues[idx - numCount].onMultiply;
+        // check appropriate field has property onMulitiply and onMulitiply matches name
+        if (multiplyProperty && multiplyProperty.name === name) {
+          // its part of the same group move button
+          oldValues[idx - numCount].canMultiply = true;
+          // otherwise its the last field on group; update checkbox
+        } else oldValues[idx - numCount].value = false;
+      } else oldValues[idx - numCount].value = false;
       // use splice to remove desired field numCount is the number of elements removed
-      oldValues.splice(idx, numCount);
+      oldValues.splice(idx - 1, numCount);
       setValues(oldValues);
     }
   };

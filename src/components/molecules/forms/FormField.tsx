@@ -11,7 +11,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const { canRemove } = props;
   return (
     <div className="form-field">
-      {fieldHeading && <h2 className="heading">{fieldHeading}</h2>}
+      {fieldHeading && <h3 className="heading">{fieldHeading}</h3>}
       {auth.includes(name) ? (
         <AuthField
           name={name}
