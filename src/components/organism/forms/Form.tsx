@@ -3,12 +3,10 @@ import { ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { KeyStringProp } from "@nxs-utils/helpers/types";
-import { initLabels } from "@nxs-utils/form/labels";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
-import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { FormProps } from "nxs-form";
+import { EntryDataProps, FieldValueProp, FormInitialValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 
 const Form: React.FC<FormProps> = (props) => {
@@ -20,17 +18,16 @@ const Form: React.FC<FormProps> = (props) => {
   const required = { initialValues, onSubmit };
   const { lightColor, errors } = usePropErrorHandling(required, true);
   // key variables
-  const { values, setValues } = useValues({ initialValues, labels, types });
+  const { values, setValues, addEntries } = useValues({
+    initialValues,
+    labels,
+    types,
+    placeholders,
+  });
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
-  const [entryData, setEntryData] = useState<{ [key: string]: number[] }[]>([]);
-  const [fieldHeading, setFieldHeading] = useState<{ [key: number | string]: string }>(
-    {}
-  );
-  const [placeholder, setPlaceholder] = useState(
-    objLength(placeholders) ? placeholders : initPlaceholders
-  );
+  const [entryData, setEntryData] = useState<EntryDataProps[]>([]);
 
   const handleChange = (event: any) => {
     // key variables
@@ -44,38 +41,40 @@ const Form: React.FC<FormProps> = (props) => {
     // addTouched(key);
     if (onChange) onChange(oldValues);
   };
-  const handleCheckbox = (event: any) => {
+  const handleCheckbox = (event: any, name: string, idx: number) => {
     // addTouched(key);
     // key variables
-    const key: string = event.target.name;
-    const value: boolean = event.currentTarget.checked;
-    // find checkbox index
-    const idx = values.findIndex((v) => Object.keys(v)[0] === key);
+    const isChecked: boolean = event.currentTarget.checked;
+    // update values
     let oldValues = [...values];
-    oldValues[idx] = { [idx]: { [key]: value } };
+    oldValues[idx].value = isChecked;
     // if form has an entry value
-    if (addEntry && addEntry[key]) {
-      const entryValues = objToArray(addEntry[key].initialValues);
+    if (addEntry && addEntry[name]) {
+      const entryValues = objToArray(addEntry[name].initialValues);
       const total = values.length;
-      if (value) {
+      // if the checkbox is checked add entries to form values is true
+      if (isChecked) {
+        let entriesData = addEntries(entryValues);
+        entriesData[0].fieldHeading = addEntry[name].fieldHeading;
         // get index of entry values
-        const extraData = entryValues.map((v, idx) => total + idx);
-        setFieldHeading({ ...fieldHeading, [extraData[0]]: addEntry[key].fieldHeading });
-        setEntryData((prev) => [...prev, { [key]: extraData }]);
-        setValues([...oldValues, { [key]: entryValues }]);
-        // setLabel({ ...label, [key]: addEntry[key].labels });
-        setPlaceholder({ ...placeholder, ...addEntry[key].placeholders });
+        const extraData = entryValues.map((v, idx) => {
+          let value = total + idx;
+          if (idx === 0) return { fieldHeading: addEntry[name].fieldHeading, value };
+          return { value };
+        });
+        // entryValues
+        setEntryData((prev) => [...prev, ...extraData]);
+        setValues([...oldValues, ...entriesData]);
       } else {
-        const entryIdxs = entryData.findIndex((data) => Object.keys(data)[0] === key);
-        const removeIdxs = entryData[entryIdxs][key];
+        const entryIdxs = entryData.findIndex((data) => Object.keys(data)[0] === name);
+        const removeIdxs = entryData[entryIdxs][name];
         const newData = values.filter((i, idx) => !removeIdxs.includes(idx));
         setValues(newData);
       }
-    }
+      // otherwise save values
+    } else setValues(oldValues);
   };
-  console.log("values", values);
-  // console.log("values", values);
-  const updateSelection = (value: string, name: string) => {
+  const handleSelection = (value: string, name: string) => {
     addTouched(name);
     setValues({ ...values, [name]: value });
     setSelection({ [name]: value });
@@ -96,23 +95,22 @@ const Form: React.FC<FormProps> = (props) => {
     <form className={theme} onSubmit={handleSubmit}>
       {heading && <h2 className="heading">{heading}</h2>}
       {values.map((value, keyIdx) => {
-        const fieldValues = value[keyIdx];
         return (
           <FormField
             key={keyIdx}
-            name={fieldValues.name}
-            type={fieldValues.type}
-            value={value[keyIdx].value}
-            placeholder={fieldValues.placeholder}
+            name={value.name}
+            type={value.type}
+            value={value.value}
+            placeholder={value.placeholder}
             hideLabels={hideLabels}
             selected={selection[keyIdx]}
             selectList={selectList}
-            label={fieldValues.label}
+            label={value.label}
             formError={formErrors && formErrors[keyIdx]}
             handleChange={handleChange}
-            handleCheckbox={(e) => handleCheckbox(e)}
-            updateSelection={(e) => updateSelection(e.target.value, fieldValues.name)}
-            fieldHeading={fieldHeading[keyIdx]}
+            handleCheckbox={(e) => handleCheckbox(e, value.name, keyIdx)}
+            updateSelection={(e) => handleSelection(e.target.value, value.name)}
+            fieldHeading={value.fieldHeading}
           />
         );
       })}

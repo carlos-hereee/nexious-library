@@ -4,9 +4,10 @@
 //  * */
 
 declare module "nxs-form" {
-  interface FormProp {
-    // initialValues: FormInitValues; this is invalid you must declare types
-    initialValues: { [key: string]: any };
+  import { FormInitValues, KeyStringProp } from "custom-props";
+
+  type FormProp = {
+    initialValues: FormInitValues;
     // required props
     onSubmit: (e: any) => void;
     formName: string;
@@ -17,23 +18,23 @@ declare module "nxs-form" {
     hideSubmit?: boolean;
     showAuthTips?: boolean;
     theme?: string;
-    labels?: { [key: string]: string };
-    placeholders?: { [key: string]: string };
-    types?: { [key: string]: string };
+    labels?: KeyStringProp;
+    placeholders?: KeyStringProp;
+    types?: KeyStringProp;
     submitLabel?: string;
     schema?: { required: string[] };
     addEntry?: {
       [key: string]: {
         additionLabel: string;
-        initialValues: { [key: string]: any };
+        initialValues: FormInitValues;
         fieldHeading: string;
-        labels?: { [key: string]: string };
-        placeholders?: { [key: string]: string };
-        types?: { [key: string]: string };
+        labels?: KeyStringProp;
+        placeholders?: KeyStringProp;
+        types?: KeyStringProp;
       };
     };
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
-  }
+  };
   type InputProp = {
     name: string;
     value: string;
@@ -50,9 +51,27 @@ declare module "nxs-form" {
     onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onBlur?: () => void;
   };
+  type FormFieldValues = {
+    value: any;
+    label: string;
+    name: string;
+    placeholder: string;
+    type: string;
+    fieldHeading?: string;
+  };
   // Type declarations go here
   export type FormProps = FormProp;
   export type InputProps = InputProp;
+  export type FieldValueProp = FormFieldValues;
+  export type EntryDataProps = { value: number; fieldHeading?: string };
+  export type FormValueProps = {
+    initialValues: FormInitValues;
+    labels?: KeyStringProp;
+    types?: KeyStringProp;
+    placeholders?: KeyStringProp;
+    fieldHeading?: string;
+  };
+  export type FormInitialValueProps = FormFieldValues;
   export interface FormFieldProps {
     name: string;
     value: string;
