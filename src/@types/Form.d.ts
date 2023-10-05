@@ -63,7 +63,7 @@ declare module "nxs-form" {
   export type FormProps = FormProp;
   export type InputProps = InputProp;
   export type FieldValueProp = FormFieldValues;
-  export type EntryDataProps = { value: number; fieldHeading?: string };
+  export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
   export type FormValueProps = {
     initialValues: FormInitValues;
     labels?: KeyStringProp;

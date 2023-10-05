@@ -2,12 +2,12 @@ import { useState } from "react";
 import { ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
-import { KeyStringProp } from "@nxs-utils/helpers/types";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { EntryDataProps, FieldValueProp, FormInitialValueProps, FormProps } from "nxs-form";
+import { EntryDataProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
+import { KeyStringProp } from "custom-props";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
@@ -59,17 +59,24 @@ const Form: React.FC<FormProps> = (props) => {
         // get index of entry values
         const extraData = entryValues.map((v, idx) => {
           let value = total + idx;
-          if (idx === 0) return { fieldHeading: addEntry[name].fieldHeading, value };
-          return { value };
+          if (idx === 0) return { fieldHeading: addEntry[name].fieldHeading, value, name };
+          return { value, name };
         });
         // entryValues
         setEntryData((prev) => [...prev, ...extraData]);
         setValues([...oldValues, ...entriesData]);
       } else {
-        const entryIdxs = entryData.findIndex((data) => Object.keys(data)[0] === name);
-        const removeIdxs = entryData[entryIdxs][name];
-        const newData = values.filter((i, idx) => !removeIdxs.includes(idx));
-        setValues(newData);
+        // // remove entry data if checkbox is unclicked
+        const removalList = entryData.filter((data) => data.name === name);
+        const removedData = values.filter((v, idx) => {
+          let isLeftAlone = true;
+          removalList.forEach((data) => {
+            // check index and name if they match removel list
+            if (data.value === idx && data.name === name) isLeftAlone = false;
+          });
+          return isLeftAlone;
+        });
+        setValues(removedData);
       }
       // otherwise save values
     } else setValues(oldValues);
@@ -85,7 +92,7 @@ const Form: React.FC<FormProps> = (props) => {
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
     if (schema) {
-      const errors = validateForm({ values, schema, label });
+      const errors = validateForm({ values, schema });
       objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
     } else onSubmit(values);
   };
