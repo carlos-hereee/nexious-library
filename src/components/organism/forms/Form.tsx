@@ -4,7 +4,7 @@ import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
-import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { EntryDataProps, FormFieldValues, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
@@ -16,7 +16,7 @@ const Form: React.FC<FormProps> = (props) => {
   const { addEntry, selectList } = props;
   // must have required props
   const required = { initialValues, onSubmit };
-  const { lightColor, errors } = usePropErrorHandling(required, true);
+  const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
   // key variables
   const { values, setValues, addEntries } = useValues({
     initialValues,
@@ -27,7 +27,6 @@ const Form: React.FC<FormProps> = (props) => {
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
-  const [entryData, setEntryData] = useState<EntryDataProps[]>([]);
 
   const handleChange = (event: any, idx: number) => {
     // addTouched(key);
@@ -38,7 +37,8 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
     if (onChange) onChange(oldValues);
   };
-  const handleCheckbox = (event: any, name: string, idx: number) => {
+  const handleCheckbox = (event: any, field: FormFieldValues, idx: number) => {
+    const { name } = field;
     // addTouched(key);
     // key variables
     const isChecked: boolean = event.currentTarget.checked;
@@ -48,45 +48,42 @@ const Form: React.FC<FormProps> = (props) => {
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
-      const total = values.length;
+      // const total = values.length;
       // if the checkbox is checked add entries to form values is true
       if (isChecked) {
-        const { fieldHeading, labels, types, placeholders, canMultiply, additionLabel } =
-          addEntry[name];
-        let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
+        const { fieldHeading, labels, types, placeholders, canMultiply } = addEntry[name];
+        const { additionLabel, removalLabel } = addEntry[name];
+        // require key variables
+        if (!removalLabel || !additionLabel) {
+          const value = additionLabel ? removalLabel : additionLabel;
+          const key = additionLabel ? "removalLabel" : "additionLabel";
+          setLightColor("red");
+          setErrors((prev) => [
+            ...prev,
+            { prop: key, code: "missingProps", isAProp: true, value, key },
+          ]);
+        }
+        const entryPayload = { values: entryValues, labels, types, placeholders };
+        // add properties all entrys should have
+        let entriesData = addEntries({ ...entryPayload, removalBy: name });
         // set field name on first new instance
-        // entriesData[0].fieldHeading = fieldHeading;
         oldValues[idx].fieldHeading = fieldHeading;
         // if additional entries are possible add them here
         entriesData[entriesData.length - 1].canMultiply = canMultiply;
-        entriesData[entriesData.length - 1].onMultiply = { label: additionLabel, name };
-        // get index of entry values
-        const extraData = entryValues.map((v, idx) => {
-          let value = total + idx;
-          if (idx === 0) return { fieldHeading, value, name };
-          return { value, name };
-        });
+        entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
+        entriesData[entriesData.length - 1].canRemove = true;
         // keep everything together 0 is the number of element to be deleted
         oldValues.splice(idx + 1, 0, ...entriesData);
-        // entryValues
-        setEntryData((prev) => [...prev, ...extraData]);
         setValues(oldValues);
       } else {
-        // // remove entry data if checkbox is unclicked
-        const removalList = entryData.filter((data) => data.name === name);
-        const removedData = values.filter((v, idx) => {
-          let isLeftAlone = true;
-          removalList.forEach((data) => {
-            // check index and name if they match removel list
-            if (data.value === idx && data.name === name) isLeftAlone = false;
-          });
-          return isLeftAlone;
-        });
-        setValues(removedData);
+        // when button is unchecked removed all field created by checkbox
+        const removalList = oldValues.filter((val) => val.removalBy !== name);
+        setValues(removalList);
       }
       // otherwise save values
     } else setValues(oldValues);
   };
+  console.log("values", values);
   const handleSelection = (value: string, name: string) => {
     addTouched(name);
     setValues({ ...values, [name]: value });
@@ -114,17 +111,34 @@ const Form: React.FC<FormProps> = (props) => {
       const entryValues = objToArray(addEntry[name].initialValues);
       const total = values.length;
       // if the checkbox is checked add entries to form values is true
-      const { labels, types, placeholders, canMultiply, additionLabel } = addEntry[name];
+      const { labels, types, placeholders, canMultiply } = addEntry[name];
+      const { additionLabel, removalLabel } = addEntry[name];
       let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
       // if additional entries are possible add them here
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
-      entriesData[entriesData.length - 1].onMultiply = { label: additionLabel, name };
+      entriesData[entriesData.length - 1].canRemove = true;
+      entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
       // get index of entry values
-      const extraData = entryValues.map((v, idx) => ({ value: total + idx, name }));
+      // const extraData = entryValues.map((v, idx) => ({ value: total + idx, name }));
       // keep everything together 0 is the number of element to be deleted
       oldValues.splice(idx + 1, 0, ...entriesData);
       // entryValues
-      setEntryData((prev) => [...prev, ...extraData]);
+      // setEntryData([]);
+      // setEntryData((prev) => [...prev, ...extraData]);
+      setValues(oldValues);
+    }
+  };
+  const handleRemovalClick = (e: FormFieldValues, idx: number) => {
+    if (addEntry) {
+      // find the number of fields to delete
+      const name = e.removalBy ? e.removalBy : e.name;
+      const numCount = addEntry[name] ? objToArray(addEntry[name].initialValues).length : 1;
+      // console.log("numCount", numCount);
+      // move button and down to last appropriate field
+      let oldValues = [...values];
+      console.log("numCount", numCount);
+      // use splice to remove desired field numCount is the number of elements removed
+      oldValues.splice(idx, numCount);
       setValues(oldValues);
     }
   };
@@ -147,12 +161,14 @@ const Form: React.FC<FormProps> = (props) => {
             label={value.label}
             formError={formErrors && formErrors[keyIdx]}
             handleChange={(e) => handleChange(e, keyIdx)}
-            handleCheckbox={(e) => handleCheckbox(e, value.name, keyIdx)}
+            handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
             fieldHeading={value.fieldHeading}
-            canMultiply={value.canMultiply}
             onMultiply={value.onMultiply}
+            canMultiply={value.canMultiply}
+            canRemove={value.canRemove}
             onMultiplyClick={() => handleMultiplyClick(value, keyIdx)}
+            onRemovalClick={() => handleRemovalClick(value, keyIdx)}
           />
         );
       })}

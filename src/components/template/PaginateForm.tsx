@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Button } from "@nxs-atoms/index";
 import { Form } from "@nxs-organism/index";
@@ -10,7 +10,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation } = props;
   const requiredProps = { paginate, onFormSubmit };
-  const { errors, lightColor } = usePropErrorHandling(requiredProps, true);
+  const { errors, lightColor } = useRequiredProps(requiredProps, true);
   // key variables
   const [pageNumber, setPageNumber] = useState<number>(page ? page : 0);
   const formOrder = order ? order : paginate.map((f) => f.formName);

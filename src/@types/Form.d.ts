@@ -26,6 +26,7 @@ declare module "nxs-form" {
     addEntry?: {
       [key: string]: {
         additionLabel: string;
+        removalLabel: string;
         initialValues: FormInitValues;
         fieldHeading: string;
         labels?: KeyStringProp;
@@ -60,7 +61,9 @@ declare module "nxs-form" {
     type: string;
     fieldHeading?: string;
     canMultiply?: boolean;
-    onMultiply?: { label: string; name: string };
+    canRemove?: boolean;
+    removalBy?: string;
+    onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
   // Type declarations go here
   export type FormProps = FormProp;
@@ -80,6 +83,7 @@ declare module "nxs-form" {
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
     fieldHeading?: string;
+    removalBy?: string;
   };
   export type FormInitialValueProps = FormFieldValues;
   export interface FormFieldProps {
@@ -91,9 +95,12 @@ declare module "nxs-form" {
     selected?: string;
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     hideLabels?: boolean;
+    canRemove?: boolean;
+    removalBy?: string;
     canMultiply?: boolean;
-    onMultiply?: { label: string; name: string };
+    onMultiply?: { additionLabel: string; name: string; removalLabel: string };
     onMultiplyClick?: () => void;
+    onRemovalClick?: () => void;
     formError?: string;
     fieldHeading?: string;
     handleChange: (key: any) => void;

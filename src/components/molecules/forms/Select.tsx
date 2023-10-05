@@ -1,5 +1,5 @@
 import { Label, Option } from "@nxs-atoms";
-import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules";
 import { SelectProp } from "nxs-form";
 
@@ -15,7 +15,7 @@ import { SelectProp } from "nxs-form";
 const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, active, name, hideLabels, label, error } = props;
   // required props
-  const { lightColor, errors } = usePropErrorHandling({ name, list }, true);
+  const { lightColor, errors } = useRequiredProps({ name, list }, true);
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
@@ -27,12 +27,7 @@ const Select: React.FC<SelectProp> = (props) => {
       >
         <Option name="" value="" isDisabled />
         {list.map((l) => (
-          <Option
-            key={l.uid}
-            name={l.name}
-            value={l.value}
-            isDisabled={l.name === active}
-          />
+          <Option key={l.uid} name={l.name} value={l.value} isDisabled={l.name === active} />
         ))}
       </select>
     </>

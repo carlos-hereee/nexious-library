@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { MenuProp } from "@nxs-utils/helpers/types";
-import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { HeaderProps } from "nxs-navigation";
 
 /**
@@ -21,7 +21,7 @@ import { HeaderProps } from "nxs-navigation";
  */
 const Header: React.FC<HeaderProps> = (props) => {
   const { menu, logo, ping, updateMenu, language, heading } = props;
-  const { lightColor, errors } = usePropErrorHandling({ menu }, true);
+  const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const navigate = useNavigate();
@@ -34,9 +34,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const handleClick = (e: MenuProp) => {
     setActive(!isActive);
-    e.active && e.active.link
-      ? navigate(`/${e.active.link}`)
-      : navigate(`/${e.active?.name}`);
+    e.active && e.active.link ? navigate(`/${e.active.link}`) : navigate(`/${e.active?.name}`);
   };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (

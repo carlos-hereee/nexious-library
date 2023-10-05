@@ -1,5 +1,5 @@
 import { Label } from "@nxs-atoms/index";
-import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
+import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { useRef, useState } from "react";
 import { ErrorMessages } from "@nxs-molecules";
 import { initLabels } from "@nxs-utils/form/labels";
@@ -9,7 +9,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { name, error } = props.input;
   const { selectLabel, label, hideLabels, onSelect, theme } = props;
   // required props
-  const { lightColor, errors } = usePropErrorHandling({ onSelect, name }, true);
+  const { lightColor, errors } = useRequiredProps({ onSelect, name }, true);
   const [currentImage, setCurrentImage] = useState<File>();
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);

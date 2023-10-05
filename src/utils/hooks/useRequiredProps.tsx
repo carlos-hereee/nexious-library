@@ -11,7 +11,7 @@ export type ErrorHandlingMessages = {
 };
 export type LightSystem = "green" | "yellow" | "red";
 
-export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
+export const useRequiredProps = (props: PropHandling, isAProp: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorHandlingMessages[]>([]);
   const [warnings, setWarningsHandling] = useState<ErrorHandlingMessages[]>([]);
@@ -26,6 +26,8 @@ export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
   useEffect(() => {
     // use light system to determine danger levels
     setLightColor("green");
+    // reset errors to avoid redundant data
+    setErrors([]);
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
       // console.log("propType", propType);
@@ -38,5 +40,5 @@ export const usePropErrorHandling = (props: PropHandling, isAProp: boolean) => {
       }
     });
   }, []);
-  return { lightColor, errors, setErrors, warnings };
+  return { lightColor, errors, setErrors, warnings, setLightColor };
 };

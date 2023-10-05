@@ -4,9 +4,11 @@ import { Button, InputCheckbox } from "@nxs-atoms";
 import { FormFieldProps } from "nxs-form";
 
 const FormField: React.FC<FormFieldProps> = (props) => {
+  // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
-  const { fieldHeading, canMultiply, onMultiply, onMultiplyClick } = props;
+  const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
+  const { canRemove } = props;
   return (
     <div className="form-field">
       {fieldHeading && <h2 className="heading">{fieldHeading}</h2>}
@@ -63,7 +65,17 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         />
       )}
       <div className="flex-end">
-        {canMultiply && <Button label={onMultiply?.label} onClick={onMultiplyClick} />}
+        {canRemove && onMultiply && (
+          <Button
+            label={onMultiply.removalLabel}
+            onClick={onRemovalClick}
+            // todo add confirmation removal
+            theme="btn-cancel"
+          />
+        )}
+        {canMultiply && onMultiply && (
+          <Button label={onMultiply?.additionLabel} onClick={onMultiplyClick} />
+        )}
       </div>
     </div>
   );
