@@ -5,8 +5,7 @@ const Label: React.FC<LabelProps> = (props) => {
   const { label, errors, theme, name } = props;
   const labelCap = label
     ? label.charAt(0).toUpperCase() + label.slice(1)
-    : initLabels.label &&
-      initLabels.label.charAt(0).toUpperCase() + initLabels.label.slice(1);
+    : initLabels.label && initLabels.label.charAt(0).toUpperCase() + initLabels.label.slice(1);
 
   return (
     <label htmlFor={name} className={theme}>

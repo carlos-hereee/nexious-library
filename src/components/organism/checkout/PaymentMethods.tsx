@@ -42,19 +42,13 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
         />
       )}
       {active.type === "paypal" && (
-        <button
-          className="btn-cta"
-          onClick={() => paypalPayment && paypalPayment(active)}
-        >
+        <button className="btn-cta" onClick={() => paypalPayment && paypalPayment(active)}>
           {active.hero && <Hero hero={active.hero} theme="icon" />}
           <p>Pay with paypal</p>
         </button>
       )}
       {active.type === "in-store" && (
-        <button
-          className="btn-cta"
-          onClick={() => inStorePayment && inStorePayment(active)}
-        >
+        <button className="btn-cta" onClick={() => inStorePayment && inStorePayment(active)}>
           {active.hero && <Hero hero={active.hero} theme="icon" />}
           <p>Complete Checkout</p>
         </button>

@@ -6,9 +6,7 @@ const CTA: React.FC<CTAProps> = (props) => {
   return (
     <div className="flex-center">
       {cta &&
-        cta.map((b) => (
-          <IconButton icon={b} theme="btn-cta" onClick={onClick} key={b.uid} />
-        ))}
+        cta.map((b) => <IconButton icon={b} theme="btn-cta" onClick={onClick} key={b.uid} />)}
     </div>
   );
 };

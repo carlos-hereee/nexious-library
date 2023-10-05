@@ -19,9 +19,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = (props) => {
   return (
     <div className="error-message-container">
       <p className="error-message">
-        {error?.isAProp
-          ? `Prop ${prop} from ${component} component `
-          : `Component ${prop} `}
+        {error?.isAProp ? `Prop ${prop} from ${component} component ` : `Component ${prop} `}
         {messages[code]}
       </p>
       <button className="btn-main" onClick={handleClick}>

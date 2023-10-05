@@ -19,17 +19,9 @@ const Navbar: React.FC<NavbarProps> = (props) => {
           {m.isToggle ? (
             <NavToggle data={m} onSelect={handleToggle} language={language} />
           ) : m.isPrivate ? (
-            <IconButton
-              icon={m.active}
-              onClick={() => click(m)}
-              theme="nav-item highlight"
-            />
+            <IconButton icon={m.active} onClick={() => click(m)} theme="nav-item highlight" />
           ) : (
-            <IconButton
-              icon={m.active}
-              onClick={() => click(m)}
-              theme="nav-item highlight"
-            />
+            <IconButton icon={m.active} onClick={() => click(m)} theme="nav-item highlight" />
           )}
         </li>
       ))}
