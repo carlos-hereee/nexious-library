@@ -54,8 +54,9 @@ const Form: React.FC<FormProps> = (props) => {
       const total = values.length;
       // if the checkbox is checked add entries to form values is true
       if (isChecked) {
-        let entriesData = addEntries(entryValues);
-        entriesData[0].fieldHeading = addEntry[name].fieldHeading;
+        const { fieldHeading, labels, types, placeholders } = addEntry[name];
+        let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
+        entriesData[0].fieldHeading = fieldHeading;
         // get index of entry values
         const extraData = entryValues.map((v, idx) => {
           let value = total + idx;

@@ -2,14 +2,15 @@ import { objToArray } from "@nxs-utils/app/objLength";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
 import { FormInitValues } from "custom-props";
-import { FormInitialValueProps, FormValueProps } from "nxs-form";
+import { FormInitialValueProps, FormValueProps, AddEntryValueProps } from "nxs-form";
 import { useEffect, useState } from "react";
 
 export const useValues = (props: FormValueProps) => {
-  const { initialValues, labels, types, placeholders: holder, fieldHeading } = props;
+  const { initialValues, labels, types, placeholders, fieldHeading } = props;
   const [values, setValues] = useState<FormInitialValueProps[]>([]);
 
-  const addEntries = (values: FormInitValues[], heading?: string): FormInitialValueProps[] => {
+  const addEntries = (props: AddEntryValueProps): FormInitialValueProps[] => {
+    const { values, fieldHeading, labels, types, placeholders: holder } = props;
     return values.map((current) => {
       // value name
       const name = Object.keys(current)[0];
@@ -28,21 +29,14 @@ export const useValues = (props: FormValueProps) => {
       let placeholder = holder ? (holder[name] ? holder[name] : undefined) : undefined;
       // incase no placeholer found use in app placeholder else default should empty string
       if (!placeholder) placeholder = initHolder[name] ? initHolder[name] : "";
-      return {
-        value,
-        name,
-        label,
-        placeholder,
-        type,
-        fieldHeading: heading ? heading : fieldHeading,
-      };
+      return { value, name, label, placeholder, type, fieldHeading };
     });
   };
   useEffect(() => {
     const data = objToArray(initialValues);
     // clear prev values if any; avoid redundant data
     setValues([]);
-    setValues(addEntries(data));
+    setValues(addEntries({ values: data, labels, types, placeholders, fieldHeading }));
   }, []);
 
   return { values, setValues, addEntries };
