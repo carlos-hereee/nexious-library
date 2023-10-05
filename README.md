@@ -67,6 +67,10 @@
   3. Javascript
   4. Vite + React
 
+## Import CSS
+
+- find your index file and add ```import "nexious-library/@index.css"```
+
 ## Usage
 
 Works out of the box with following initial props:
