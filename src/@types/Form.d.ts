@@ -31,6 +31,7 @@ declare module "nxs-form" {
         labels?: KeyStringProp;
         placeholders?: KeyStringProp;
         types?: KeyStringProp;
+        canMultiply?: boolean;
       };
     };
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
@@ -58,6 +59,8 @@ declare module "nxs-form" {
     placeholder: string;
     type: string;
     fieldHeading?: string;
+    canMultiply?: boolean;
+    onMultiply?: { label: string; name: string };
   };
   // Type declarations go here
   export type FormProps = FormProp;
@@ -88,6 +91,9 @@ declare module "nxs-form" {
     selected?: string;
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     hideLabels?: boolean;
+    canMultiply?: boolean;
+    onMultiply?: { label: string; name: string };
+    onMultiplyClick?: () => void;
     formError?: string;
     fieldHeading?: string;
     handleChange: (key: any) => void;

@@ -1,12 +1,12 @@
 import { auth, select, textarea } from "@nxs-utils/form/types";
 import { AuthField, Field, Select, TextArea } from "@nxs-molecules";
-import { InputCheckbox } from "main";
+import { Button, InputCheckbox } from "@nxs-atoms";
 import { FormFieldProps } from "nxs-form";
 
 const FormField: React.FC<FormFieldProps> = (props) => {
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
-  const { fieldHeading } = props;
+  const { fieldHeading, canMultiply, onMultiply, onMultiplyClick } = props;
   return (
     <div className="form-field">
       {fieldHeading && <h2 className="heading">{fieldHeading}</h2>}
@@ -62,6 +62,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           error={formError}
         />
       )}
+      {canMultiply && <Button label={onMultiply?.label} onClick={onMultiplyClick} />}
     </div>
   );
 };

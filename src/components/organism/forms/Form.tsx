@@ -5,7 +5,7 @@ import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { usePropErrorHandling } from "@nxs-utils/hooks/usePropErrorHandling";
-import { EntryDataProps, FormProps } from "nxs-form";
+import { EntryDataProps, FormFieldValues, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
 
@@ -54,13 +54,18 @@ const Form: React.FC<FormProps> = (props) => {
       const total = values.length;
       // if the checkbox is checked add entries to form values is true
       if (isChecked) {
-        const { fieldHeading, labels, types, placeholders } = addEntry[name];
+        const { fieldHeading, labels, types, placeholders, canMultiply, additionLabel } =
+          addEntry[name];
         let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
+        // set field name on first new instance
         entriesData[0].fieldHeading = fieldHeading;
+        // if additional entries are possible add them here
+        entriesData[entriesData.length - 1].canMultiply = canMultiply;
+        entriesData[entriesData.length - 1].onMultiply = { label: additionLabel, name };
         // get index of entry values
         const extraData = entryValues.map((v, idx) => {
           let value = total + idx;
-          if (idx === 0) return { fieldHeading: addEntry[name].fieldHeading, value, name };
+          if (idx === 0) return { fieldHeading, value, name };
           return { value, name };
         });
         // entryValues
@@ -97,6 +102,31 @@ const Form: React.FC<FormProps> = (props) => {
       objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
     } else onSubmit(values);
   };
+  const handleMultiplyClick = (e: FormFieldValues, idx: number) => {
+    const { onMultiply } = e;
+    const name = onMultiply?.name ? onMultiply.name : e.name;
+    // console.log("name", name);
+    // move button and down to last appropriate field
+    let oldValues = [...values];
+    oldValues[idx].canMultiply = false;
+    // if form has an entry value
+    if (addEntry && addEntry[name]) {
+      const entryValues = objToArray(addEntry[name].initialValues);
+      const total = values.length;
+      // if the checkbox is checked add entries to form values is true
+      const { labels, types, placeholders, canMultiply, additionLabel } = addEntry[name];
+      let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
+      // if additional entries are possible add them here
+      entriesData[entriesData.length - 1].canMultiply = canMultiply;
+      entriesData[entriesData.length - 1].onMultiply = { label: additionLabel, name };
+      // get index of entry values
+      const extraData = entryValues.map((v, idx) => ({ value: total + idx, name }));
+      // entryValues
+      setEntryData((prev) => [...prev, ...extraData]);
+      setValues([...oldValues, ...entriesData]);
+    }
+  };
+  console.log("values", values);
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
@@ -119,6 +149,9 @@ const Form: React.FC<FormProps> = (props) => {
             handleCheckbox={(e) => handleCheckbox(e, value.name, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
             fieldHeading={value.fieldHeading}
+            canMultiply={value.canMultiply}
+            onMultiply={value.onMultiply}
+            onMultiplyClick={() => handleMultiplyClick(value, keyIdx)}
           />
         );
       })}

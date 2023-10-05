@@ -1,7 +1,6 @@
 import { objToArray } from "@nxs-utils/app/objLength";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
-import { FormInitValues } from "custom-props";
 import { FormInitialValueProps, FormValueProps, AddEntryValueProps } from "nxs-form";
 import { useEffect, useState } from "react";
 
