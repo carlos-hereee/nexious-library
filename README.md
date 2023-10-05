@@ -46,12 +46,12 @@
       ```
 
 3. update index.html script tag to point to new ts file
-    - old index.html = ```text <script type="module" src="/src/main.jsx"></script>```
-    - new index.html = ```text <script type="module" src="/src/main.tsx"></script>```
+    - old index.html = ```<script type="module" src="/src/main.jsx"></script>```
+    - new index.html = ```<script type="module" src="/src/main.tsx"></script>```
 4. update scripts in package.json file to include a watch file to watch for changes
-    - add command ```text "watch": "tsc -p tsconfig.json -w"```
-5. if you are adding typescript to an existing application dont rename files manually. 
-    - run terminal on root ```text cd node_modules/nexious-library && npm run renameFile src 'jsx' 'tsx'```
+    - add command ```"watch": "tsc -p tsconfig.json -w"```
+5. if you are adding typescript to an existing application dont rename files manually.
+    - run terminal on root ```cd node_modules/nexious-library && npm run renameFile src 'jsx' 'tsx'```
     - this command takes 3 required arguments:
         1. first is the path usually src
         2. second is the file extension of the files you want to rename probably 'jsx'
@@ -103,21 +103,42 @@ Works out of the box with following initial props:
     - initialValues and onSubmit as required props
 
     ```text
-    <Form
-    <!-- required props -->
-        initialValues: { [key: string]: any };
-        onSubmit: (e: any) => void;
-        <!-- optional with app init defaults -->
-        placeholders?: { [key: string]: string };
-        labels?: { [key: string]: string; default is labels on (Link to init form labels) };
-        types?: { [key: string]: string; default is text on form input fields };
-        <!-- optional no defaults -->
-        hideLabels?: boolean;
-        hideSubmit?: boolean;
-        submitLabel?: string;
-        schema?: { required: string[] };
-        theme?: string;
-    />
+      <Form
+        <!-- required props -->
+        initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
+        onSubmit: (e: any) => void;            // create your custom submit function 
+        formName: string;                      // give your form any name 
+        <!-- optional -->
+        heading?: string;                      // title of the form 
+        onChange?: (e: any) => void;           // create your custom onChange event handlers  
+        hideLabels?: boolean;                  // hide form labels 
+        hideSubmit?: boolean;                  // hide submit button
+        theme?: string;                        // use your custom classname to overwrite app theme
+        labels?:  {[key: string]: string} ;    // use your custom labels for your form field 
+                                               // e.g. { appName:"enter new app name " }
+        placeholders?:  {[key: string]: string}; // use your custom placeholders 
+        types?:  {[key: string]: string};       // use your custom field types 
+        submitLabel?: string;                  // use your custom submit button label 
+        schema?: { required: string[] };       // enter your desired schema for 
+        fieldHeading?: { [key: string]: string }; // enter custom field heading 
+        selectList?: {                          // this is required if type = "select"
+          name: string;                         
+          value: string; 
+          isDisabled?: boolean; 
+          uid?: string }[];                    
+        addEntry?: {                           // works with type ="checkbox" and adds new field values when a 
+          [key: string]: {                      // checkbox is checked 
+            additionLabel: string;
+            removalLabel: string;
+            initialValues: {[key:string]:any};
+            fieldHeading: string;
+            labels?:  {[key: string]: string} ;
+            placeholders?:  {[key: string]: string} ;
+            types?:  {[key: string]: string} ;
+            canMultiply?: boolean;
+          };
+        };
+      />
     ```
 
 3. PaginatedForm Usage
@@ -125,30 +146,53 @@ Works out of the box with following initial props:
     - paginate is array with initialValues and onSubmit as required props
 
     ```text
-    <PaginateForm  
-    <!-- required props -->
-      paginate: [
-        {
-          <!-- required props -->
-          initialValues: { [key: string]: any };
-          onSubmit: (e: any) => void;
-          <!-- optional with app init defaults -->
-          placeholders?: { [key: string]: string };
-          labels?: { [key: string]: string; default is labels on (Link to init form labels) };
-          types?: { [key: string]: string; default is text on form input fields };
-          <!-- optional no defaults -->
-          hideLabels?: boolean;
-          hideSubmit?: boolean;
-          submitLabel?: string;
-          schema?: { required: string[] };
-          theme?: string;
-        }
-      ];
-    <!-- optional props -->
-      startPage?: number; default is 0
-      pageNumber?: number; default is 0
-      totalPages?: number; default is paginate length
-    /> 
+      <PaginateForm  
+        <!-- required props -->
+          paginate: [
+            {
+            <!-- required props -->
+        initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
+        onSubmit: (e: any) => void;            // create your custom submit function 
+        formName: string;                      // give your form any name 
+        <!-- optional -->
+        heading?: string;                      // title of the form 
+        onChange?: (e: any) => void;           // create your custom onChange event handlers  
+        hideLabels?: boolean;                  // hide form labels 
+        hideSubmit?: boolean;                  // hide submit button
+        theme?: string;                        // use your custom classname to overwrite app theme
+        labels?:  {[key: string]: string} ;    // use your custom labels for your form field 
+                                               // e.g. { appName:"enter new app name " }
+        placeholders?:  {[key: string]: string}; // use your custom placeholders 
+        types?:  {[key: string]: string};       // use your custom field types 
+        submitLabel?: string;                  // use your custom submit button label 
+        schema?: { required: string[] };       // enter your desired schema for 
+        fieldHeading?: { [key: string]: string }; // enter custom field heading 
+        selectList?: {                          // this is required if type = "select"
+          name: string;                         
+          value: string; 
+          isDisabled?: boolean; 
+          uid?: string }[];                    
+        addEntry?: {                           // works with type ="checkbox" and adds new field values when a 
+          [key: string]: {                      // checkbox is checked 
+            additionLabel: string;
+            removalLabel: string;
+            initialValues: {[key:string]:any};
+            fieldHeading: string;
+            labels?:  {[key: string]: string} ;
+            placeholders?:  {[key: string]: string} ;
+            types?:  {[key: string]: string} ;
+            canMultiply?: boolean;
+          };
+        };
+            }
+          ];
+          onFormSumbit={(e:any)=>void }                     // create your custom onFormSubmit function 
+        <!-- optional props -->
+          setNewPage={(e:any)=>void }                     // create your custom setNewPage function 
+          page?: number; default is 0
+          order?: string[]; default is orginal order      // use your custom order to traverse form
+          hideNavigation?: boolean;                     //  hide paginated navigation 
+      /> 
     ```
 
 Visit <www.nexious.tech/docs> for more advanced settings

@@ -7,12 +7,12 @@ declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
 
   type FormProp = {
-    initialValues: FormInitValues;
     // required props
+    initialValues: FormInitValues;
     onSubmit: (e: any) => void;
     formName: string;
-    heading?: string;
     // optional
+    heading?: string;
     onChange?: (e: any) => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
@@ -24,6 +24,7 @@ declare module "nxs-form" {
     submitLabel?: string;
     schema?: { required: string[] };
     fieldHeading?: { [key: string]: string };
+    selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     addEntry?: {
       [key: string]: {
         additionLabel: string;
@@ -36,7 +37,6 @@ declare module "nxs-form" {
         canMultiply?: boolean;
       };
     };
-    selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
   };
   type InputProp = {
     name: string;
