@@ -29,16 +29,13 @@ const Form: React.FC<FormProps> = (props) => {
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
   const [entryData, setEntryData] = useState<EntryDataProps[]>([]);
 
-  const handleChange = (event: any) => {
-    // key variables
-    const key = event.target.name;
-    const value = event.currentTarget.value;
-    // const payload = { ...values, [key]: value };
-    const idx = values.findIndex((v) => Object.keys(v)[0] === key);
-    let oldValues = [...values];
-    oldValues[idx] = { ...oldValues[idx], [key]: value };
-    setValues(oldValues);
+  const handleChange = (event: any, idx: number) => {
     // addTouched(key);
+    // key variables
+    const value = event.currentTarget.value;
+    let oldValues = [...values];
+    oldValues[idx].value = value;
+    setValues(oldValues);
     if (onChange) onChange(oldValues);
   };
   const handleCheckbox = (event: any, name: string, idx: number) => {
@@ -58,7 +55,8 @@ const Form: React.FC<FormProps> = (props) => {
           addEntry[name];
         let entriesData = addEntries({ values: entryValues, labels, types, placeholders });
         // set field name on first new instance
-        entriesData[0].fieldHeading = fieldHeading;
+        // entriesData[0].fieldHeading = fieldHeading;
+        oldValues[idx].fieldHeading = fieldHeading;
         // if additional entries are possible add them here
         entriesData[entriesData.length - 1].canMultiply = canMultiply;
         entriesData[entriesData.length - 1].onMultiply = { label: additionLabel, name };
@@ -130,7 +128,6 @@ const Form: React.FC<FormProps> = (props) => {
       setValues(oldValues);
     }
   };
-  console.log("values", values);
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
@@ -149,7 +146,7 @@ const Form: React.FC<FormProps> = (props) => {
             selectList={selectList}
             label={value.label}
             formError={formErrors && formErrors[keyIdx]}
-            handleChange={handleChange}
+            handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value.name, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
             fieldHeading={value.fieldHeading}

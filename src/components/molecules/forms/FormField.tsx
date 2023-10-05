@@ -62,7 +62,9 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           error={formError}
         />
       )}
-      {canMultiply && <Button label={onMultiply?.label} onClick={onMultiplyClick} />}
+      <div className="flex-end">
+        {canMultiply && <Button label={onMultiply?.label} onClick={onMultiplyClick} />}
+      </div>
     </div>
   );
 };
