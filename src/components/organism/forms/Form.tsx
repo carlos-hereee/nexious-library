@@ -68,9 +68,11 @@ const Form: React.FC<FormProps> = (props) => {
           if (idx === 0) return { fieldHeading, value, name };
           return { value, name };
         });
+        // keep everything together 0 is the number of element to be deleted
+        oldValues.splice(idx + 1, 0, ...entriesData);
         // entryValues
         setEntryData((prev) => [...prev, ...extraData]);
-        setValues([...oldValues, ...entriesData]);
+        setValues(oldValues);
       } else {
         // // remove entry data if checkbox is unclicked
         const removalList = entryData.filter((data) => data.name === name);
@@ -121,9 +123,11 @@ const Form: React.FC<FormProps> = (props) => {
       entriesData[entriesData.length - 1].onMultiply = { label: additionLabel, name };
       // get index of entry values
       const extraData = entryValues.map((v, idx) => ({ value: total + idx, name }));
+      // keep everything together 0 is the number of element to be deleted
+      oldValues.splice(idx + 1, 0, ...entriesData);
       // entryValues
       setEntryData((prev) => [...prev, ...extraData]);
-      setValues([...oldValues, ...entriesData]);
+      setValues(oldValues);
     }
   };
   console.log("values", values);
