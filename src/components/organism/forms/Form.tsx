@@ -5,7 +5,7 @@ import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { EntryDataProps, FormFieldValues, FormProps } from "nxs-form";
+import { FormFieldValues, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
 
@@ -13,17 +13,13 @@ const Form: React.FC<FormProps> = (props) => {
   // props
   const { onSubmit, onChange, initialValues, hideLabels, theme, submitLabel } = props;
   const { labels, placeholders, types, schema, formName, heading, hideSubmit } = props;
-  const { addEntry, selectList } = props;
+  const { addEntry, selectList, fieldHeading } = props;
   // must have required props
   const required = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
   // key variables
-  const { values, setValues, addEntries } = useValues({
-    initialValues,
-    labels,
-    types,
-    placeholders,
-  });
+  const valuePayload = { initialValues, labels, types, placeholders };
+  const { values, setValues, addEntries } = useValues(valuePayload);
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
@@ -51,7 +47,7 @@ const Form: React.FC<FormProps> = (props) => {
       // const total = values.length;
       // if the checkbox is checked add entries to form values is true
       if (isChecked) {
-        const { fieldHeading, labels, types, placeholders, canMultiply } = addEntry[name];
+        const { labels, types, placeholders, canMultiply } = addEntry[name];
         const { additionLabel, removalLabel } = addEntry[name];
         // require key variables
         if (!removalLabel || !additionLabel) {
@@ -65,10 +61,7 @@ const Form: React.FC<FormProps> = (props) => {
         }
         const entryPayload = { values: entryValues, labels, types, placeholders };
         // add properties all entrys should have
-        // console.log("name", name);
         let entriesData = addEntries({ ...entryPayload, removalBy: name });
-        // set field name on first new instance
-        oldValues[idx].fieldHeading = fieldHeading;
         // if additional entries are possible add them here
         entriesData[entriesData.length - 1].canMultiply = canMultiply;
         entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
@@ -84,7 +77,6 @@ const Form: React.FC<FormProps> = (props) => {
       // otherwise save values
     } else setValues(oldValues);
   };
-  console.log("values", values);
   const handleSelection = (value: string, name: string) => {
     addTouched(name);
     setValues({ ...values, [name]: value });
@@ -103,7 +95,6 @@ const Form: React.FC<FormProps> = (props) => {
   const handleMultiplyClick = (e: FormFieldValues, idx: number) => {
     const { onMultiply } = e;
     const name = onMultiply?.name ? onMultiply.name : e.name;
-    // console.log("name", name);
     // move button and down to last appropriate field
     let oldValues = [...values];
     oldValues[idx].canMultiply = false;
@@ -166,7 +157,7 @@ const Form: React.FC<FormProps> = (props) => {
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
-            fieldHeading={value.fieldHeading}
+            fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}
             canMultiply={value.canMultiply}
             canRemove={value.canRemove}

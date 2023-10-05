@@ -9,6 +9,7 @@ import { FormInitValues } from "custom-props";
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation } = props;
+  // const { fieldHeading } = props;
   const requiredProps = { paginate, onFormSubmit };
   const { errors, lightColor } = useRequiredProps(requiredProps, true);
   // key variables
@@ -23,13 +24,12 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const types = paginate[pageNumber]?.types;
   const submitLabel = paginate[pageNumber]?.submitLabel;
   const schema = paginate[pageNumber]?.schema;
+  const fieldHeading = paginate[pageNumber]?.fieldHeading;
   // set initial values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
   // store form values
   const [values, setValues] = useState<FormInitValues>({});
 
-  // console.log("initialValues", initialValues);
-  // console.log("pageNumber", paginate[pageNumber]);
   useEffect(() => {
     if (pageNumber >= 0) {
       // reset initial values to redender form component
@@ -89,11 +89,21 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       {!hideNavigation && (
         <div>
           <p>
-            Form navigation showing {pageNumber + 1} out of {total}
+            Form navigation showing {formName} {pageNumber + 1} out of {total}
           </p>
           <div className="flex-row">
-            <Button label="previous" onClick={prevPage} />
-            <Button label="next" onClick={nextPage} />
+            <Button
+              label="previous"
+              onClick={prevPage}
+              title={paginate[pageNumber - 1]?.formName}
+              isDisable={paginate[pageNumber - 1]?.formName ? false : true}
+            />
+            <Button
+              label="next"
+              onClick={nextPage}
+              isDisable={paginate[pageNumber + 1]?.formName ? false : true}
+              title={paginate[pageNumber + 1]?.formName}
+            />
           </div>
         </div>
       )}
@@ -110,6 +120,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           // theme={theme}
           schema={schema}
           addEntry={addEntry}
+          fieldHeading={fieldHeading}
         />
       )}
     </div>

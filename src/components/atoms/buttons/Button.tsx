@@ -8,13 +8,14 @@ import { ButtonProps } from "nxs-button";
  * @returns
  */
 const Button: React.FC<ButtonProps> = (props) => {
-  const { onClick, title, theme, label } = props;
+  const { onClick, title, theme, label, isDisable } = props;
   return (
     <button
       type="button"
       className={theme ? `btn-main ${theme}` : "btn-main"}
       title={title ? title : undefined}
       onClick={onClick}
+      disabled={isDisable}
     >
       {label}
     </button>

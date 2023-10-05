@@ -23,6 +23,7 @@ declare module "nxs-form" {
     types?: KeyStringProp;
     submitLabel?: string;
     schema?: { required: string[] };
+    fieldHeading?: { [key: string]: string };
     addEntry?: {
       [key: string]: {
         additionLabel: string;
@@ -102,7 +103,7 @@ declare module "nxs-form" {
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
     formError?: string;
-    fieldHeading?: string;
+    fieldHeading?: { [key: string]: string };
     handleChange: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
