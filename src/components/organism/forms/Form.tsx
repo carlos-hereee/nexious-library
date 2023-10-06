@@ -101,9 +101,9 @@ const Form: React.FC<FormProps> = (props) => {
           // if not checked add to uniqueGroups; create new instance
           uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
           // if grouping already exists include it in payload
-          payload[group].group = [...payload[group].group, { value, name, sharedKey }];
+          payload[group].group = [...payload[group].group, { value, name, sharedKey, group }];
         } else {
-          payload[group].group = [...payload[group].group, { value, name, sharedKey }];
+          payload[group].group = [...payload[group].group, { value, name, sharedKey, group }];
         }
       } else payload[name] = { value, name, group: [] };
     });
