@@ -1,26 +1,18 @@
 import { objLength } from "@nxs-utils/app/objLength";
+import { ErrorDataProp, ErrorMessageProp, LightSystem } from "nxs-errors";
 import { useEffect, useState } from "react";
 
-export type PropHandling = { [key: string]: any };
-export type ErrorHandlingMessages = {
-  prop: string;
-  code: string;
-  key: string;
-  value: string | undefined;
-  isAProp: boolean;
-};
-export type LightSystem = "green" | "yellow" | "red";
-
-export const useRequiredProps = (props: PropHandling, isAProp: boolean) => {
+export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
-  const [errors, setErrors] = useState<ErrorHandlingMessages[]>([]);
-  const [warnings, setWarningsHandling] = useState<ErrorHandlingMessages[]>([]);
+  const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
+  const [warnings, setWarningsHandling] = useState<ErrorMessageProp[]>([]);
 
-  const missingProps = (key: string) => {
+  const missingProps = (name: string) => {
+    const isProp = isAProp ? true : false;
     setLightColor("red");
     setErrors((prev) => [
       ...prev,
-      { prop: key, code: "missingProps", isAProp, value: props[key], key },
+      { prop: name, code: "missingProps", isAProp: isProp, value: props[name], name },
     ]);
   };
   useEffect(() => {

@@ -6,7 +6,7 @@ const ErrorMessages: React.FC<ErrorProps> = (props) => {
   if (!errors) return <ErrorMessage prop="errors" code="missingProps" />;
   return errors.map((err) => (
     <ErrorMessage
-      key={err.key}
+      key={err.name}
       prop={err.prop}
       code={err.code}
       component={component}

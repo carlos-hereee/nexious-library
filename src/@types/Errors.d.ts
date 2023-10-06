@@ -1,9 +1,11 @@
 declare module "nxs-errors" {
+  export type LightSystem = "green" | "yellow" | "red";
+  export type ErrorDataProp = { [key: string]: any };
   export interface ErrorMessageProp {
     prop: string;
     code: string;
-    key: string;
-    value: string | undefined;
+    name: string;
+    value?: string;
     isAProp: boolean;
   }
   export interface ErrorProps {

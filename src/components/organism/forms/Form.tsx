@@ -38,7 +38,7 @@ const Form: React.FC<FormProps> = (props) => {
         setLightColor("red");
         setErrors((prev) => [
           ...prev,
-          { prop: key, code: "missingProps", isAProp: true, value, key },
+          { prop: key, code: "missingProps", isAProp: true, value, name: key },
         ]);
       }
       const entryPayload = { values: entryValues, labels, types, placeholders };
