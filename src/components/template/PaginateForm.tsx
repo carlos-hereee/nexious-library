@@ -31,8 +31,8 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
 
   useEffect(() => {
     if (pageNumber >= 0) {
-      // reset initial values to redender form component
-      setInitialValues(undefined);
+      if (setNewPage) setNewPage(pageNumber);
+
       setInitialValues(paginate[pageNumber].initialValues);
     }
   }, [pageNumber]);
@@ -43,19 +43,19 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     // if next is undefined its the last form
     if (!next) {
       // save values just incase
-      setValues({ ...values, [formName]: formValues });
       onFormSubmit({ ...values, [formName]: formValues });
     } else {
-      const nextPage = paginate.findIndex(
-        (form) => form.formName === formOrder[pageNumber + 1]
-      );
-      // reset initial values to rerender form component
-      setInitialValues(undefined);
-      if (setNewPage) setNewPage(nextPage);
-      else setPageNumber(nextPage);
+      const nextPage = formOrder.findIndex((form) => form === next);
+      handlePageClick(nextPage);
       // save form values
       setValues({ ...values, [formName]: formValues });
     }
+  };
+
+  const handlePageClick = (nextPage: number) => {
+    //  reset initial values to redender form component
+    setInitialValues(undefined);
+    setPageNumber(nextPage);
   };
 
   if (lightColor === "red") {
@@ -68,14 +68,13 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           heading={`Form navigation showing ${formName}, ${pageNumber + 1} out of ${total}`}
           formOrder={formOrder}
           pageNumber={pageNumber}
-          onClick={(idx) => (setNewPage ? setNewPage(idx) : setPageNumber(idx))}
+          onClick={(idx) => handlePageClick(idx)}
         />
       )}
-      {heading && <h2 className="heading">{heading}</h2>}
       {initialValues && (
         <Form
           initialValues={initialValues}
-          onSubmit={(event) => handlePaginateSubmit(event)}
+          onSubmit={handlePaginateSubmit}
           formName={formName}
           labels={labels}
           placeholders={placeholders}
@@ -85,6 +84,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           schema={schema}
           addEntry={addEntry}
           fieldHeading={fieldHeading}
+          heading={heading}
         />
       )}
     </div>
