@@ -5,7 +5,7 @@ export { default as Header } from "@nxs-template/Header";
 export { default as Footer } from "@nxs-template/Footer";
 export { default as Calendar } from "@nxs-template/Calendar";
 export { default as PaginateForm } from "@nxs-template/PaginateForm";
-export type { PaginateFormProps } from "nxs-paginate-form";
+export type { PaginateFormProps } from "nxs-form";
 // components
 export { default as Navbar } from "@nxs-organism/navigation/Navbar";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
@@ -18,6 +18,7 @@ export type { NavigationProps, NavbarProps } from "nxs-navigation";
 // TODO: Potential template
 // export { default as Total } from "@nxs-organism/table/Total";
 
+// TODO: only include template and organism on main export lighten the load
 // card
 export { default as Card } from "@nxs-organism/card/Card";
 export { default as UserCard } from "@nxs-organism/card/UserCard";

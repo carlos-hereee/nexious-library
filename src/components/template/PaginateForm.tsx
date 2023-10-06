@@ -1,15 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
-import { Button } from "@nxs-atoms/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
-import { PaginateFormProps } from "nxs-paginate-form";
 import { FormInitValues } from "custom-props";
+import { PaginateFormProps } from "nxs-form";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation } = props;
-  // const { fieldHeading } = props;
   const requiredProps = { paginate, onFormSubmit };
   const { errors, lightColor } = useRequiredProps(requiredProps, true);
   // key variables
@@ -24,6 +22,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const types = paginate[pageNumber]?.types;
   const submitLabel = paginate[pageNumber]?.submitLabel;
   const schema = paginate[pageNumber]?.schema;
+  const theme = paginate[pageNumber]?.theme;
   const fieldHeading = paginate[pageNumber]?.fieldHeading;
   // set initial values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
@@ -43,7 +42,8 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     const next = formOrder[pageNumber + 1];
     // if next is undefined its the last form
     if (!next) {
-      // setInitialValues(undefined);
+      // save values just incase
+      setValues({ ...values, [formName]: formValues });
       onFormSubmit({ ...values, [formName]: formValues });
     } else {
       const nextPage = paginate.findIndex(
@@ -81,7 +81,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           placeholders={placeholders}
           submitLabel={submitLabel}
           types={types}
-          // theme={theme}
+          theme={theme}
           schema={schema}
           addEntry={addEntry}
           fieldHeading={fieldHeading}

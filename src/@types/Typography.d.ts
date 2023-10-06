@@ -4,6 +4,8 @@ declare module "nxs-typography" {
     message?: string;
     theme?: string;
     name?: string;
+    uid?: string;
+    value?: string;
   }
   export interface HyperlinkProp {
     isLink?: boolean;
