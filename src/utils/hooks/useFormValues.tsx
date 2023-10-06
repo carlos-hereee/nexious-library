@@ -10,7 +10,7 @@ export const useValues = (props: FormValueProps) => {
 
   const addEntries = (props: AddEntryValueProps): FormInitialValueProps[] => {
     const { values, fieldHeading, labels, types, placeholders: holder } = props;
-    const { removalBy } = props;
+    const { group, sharedKey } = props;
     return values.map((current) => {
       // value name
       const name = Object.keys(current)[0];
@@ -29,7 +29,7 @@ export const useValues = (props: FormValueProps) => {
       let placeholder = holder ? (holder[name] ? holder[name] : undefined) : undefined;
       // incase no placeholer found use in app placeholder else default should empty string
       if (!placeholder) placeholder = initHolder[name] ? initHolder[name] : "";
-      return { value, name, label, placeholder, type, fieldHeading, removalBy };
+      return { value, name, label, placeholder, type, fieldHeading, group, sharedKey };
     });
   };
   useEffect(() => {

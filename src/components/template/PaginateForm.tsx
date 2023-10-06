@@ -43,8 +43,8 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     const next = formOrder[pageNumber + 1];
     // if next is undefined its the last form
     if (!next) {
-      onFormSubmit({ ...values, [formName]: { ...formValues } });
-      setInitialValues(undefined);
+      // setInitialValues(undefined);
+      onFormSubmit({ ...values, [formName]: formValues });
     } else {
       const nextPage = paginate.findIndex(
         (form) => form.formName === formOrder[pageNumber + 1]
@@ -54,11 +54,12 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       if (setNewPage) setNewPage(nextPage);
       else setPageNumber(nextPage);
       // save form values
-      setValues({ ...values, [formName]: { ...formValues } });
+      setValues({ ...values, [formName]: formValues });
     }
   };
   const prevPage = () => {
     // check if its first item on list
+    // setValues({ ...values, [formName]: { ...formValues } });
     if (pageNumber === 0) {
       if (setNewPage) setNewPage(pageNumber);
       else setPageNumber(pageNumber);

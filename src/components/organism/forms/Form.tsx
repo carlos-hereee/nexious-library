@@ -18,12 +18,41 @@ const Form: React.FC<FormProps> = (props) => {
   const required = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
   // key variables
-  const valuePayload = { initialValues, labels, types, placeholders };
+  const valuePayload = { initialValues, labels, types, placeholders, addEntry };
   const { values, setValues, addEntries } = useValues(valuePayload);
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
+  const addNewEntry = (name: string, oldValues: FormFieldValues[], originIdx: number) => {
+    // if form has an entry value
+    if (addEntry && addEntry[name]) {
+      const entryValues = objToArray(addEntry[name].initialValues);
+      const { labels, types, placeholders, canMultiply } = addEntry[name];
+      const { additionLabel, removalLabel } = addEntry[name];
+      // require key variables
+      if (!removalLabel || !additionLabel) {
+        const value = additionLabel ? removalLabel : additionLabel;
+        const key = additionLabel ? "removalLabel" : "additionLabel";
+        setLightColor("red");
+        setErrors((prev) => [
+          ...prev,
+          { prop: key, code: "missingProps", isAProp: true, value, key },
+        ]);
+      }
+      const entryPayload = { values: entryValues, labels, types, placeholders };
+      // add properties all entrys should have
+      let entriesData = addEntries({ ...entryPayload, group: name, sharedKey: originIdx + 1 });
+      // if additional entries are possible add them here
+      entriesData[entriesData.length - 1].canMultiply = canMultiply;
+      entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
+      entriesData[entriesData.length - 1].canRemove = true;
+      // keep everything together; 0 is the number of element to be deleted
+      oldValues.splice(originIdx + 1, 0, ...entriesData);
+      setValues(oldValues);
+      // otherwise save values
+    } else setValues(oldValues);
+  };
   const handleChange = (event: any, idx: number) => {
     // addTouched(key);
     // key variables
@@ -41,41 +70,14 @@ const Form: React.FC<FormProps> = (props) => {
     // update values
     let oldValues = [...values];
     oldValues[idx].value = isChecked;
-    // if form has an entry value
-    if (addEntry && addEntry[name]) {
-      const entryValues = objToArray(addEntry[name].initialValues);
-      // const total = values.length;
-      // if the checkbox is checked add entries to form values is true
-      if (isChecked) {
-        const { labels, types, placeholders, canMultiply } = addEntry[name];
-        const { additionLabel, removalLabel } = addEntry[name];
-        // require key variables
-        if (!removalLabel || !additionLabel) {
-          const value = additionLabel ? removalLabel : additionLabel;
-          const key = additionLabel ? "removalLabel" : "additionLabel";
-          setLightColor("red");
-          setErrors((prev) => [
-            ...prev,
-            { prop: key, code: "missingProps", isAProp: true, value, key },
-          ]);
-        }
-        const entryPayload = { values: entryValues, labels, types, placeholders };
-        // add properties all entrys should have
-        let entriesData = addEntries({ ...entryPayload, removalBy: name });
-        // if additional entries are possible add them here
-        entriesData[entriesData.length - 1].canMultiply = canMultiply;
-        entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
-        entriesData[entriesData.length - 1].canRemove = true;
-        // keep everything together 0 is the number of element to be deleted
-        oldValues.splice(idx + 1, 0, ...entriesData);
-        setValues(oldValues);
-      } else {
-        // when button is unchecked removed all field created by checkbox
-        const removalList = oldValues.filter((val) => val.removalBy !== name);
-        setValues(removalList);
-      }
-      // otherwise save values
-    } else setValues(oldValues);
+    // const total = values.length;
+    // if the checkbox is checked add entries
+    if (isChecked) addNewEntry(name, oldValues, idx);
+    else {
+      // when button is unchecked removed all field created by checkbox
+      const removalList = oldValues.filter((val) => val.group !== name);
+      setValues(removalList);
+    }
   };
   const handleSelection = (value: string, name: string) => {
     addTouched(name);
@@ -93,47 +95,31 @@ const Form: React.FC<FormProps> = (props) => {
     } else onSubmit(values);
   };
   const handleMultiplyClick = (e: FormFieldValues, idx: number) => {
-    const { onMultiply } = e;
-    const name = onMultiply?.name ? onMultiply.name : e.name;
-    // move button and down to last appropriate field
+    const name = e.group ? e.group : e.onMultiply?.name || e.name;
+    // move button to last appropriate field
     let oldValues = [...values];
     oldValues[idx].canMultiply = false;
     // if form has an entry value
-    if (addEntry && addEntry[name]) {
-      const entryValues = objToArray(addEntry[name].initialValues);
-      // if the checkbox is checked add entries to form values is true
-      const { labels, types, placeholders, canMultiply } = addEntry[name];
-      const { additionLabel, removalLabel } = addEntry[name];
-      const entryPayload = { values: entryValues, labels, types, placeholders };
-      let entriesData = addEntries({ ...entryPayload, removalBy: name });
-      // if additional entries are possible add them here
-      entriesData[entriesData.length - 1].canMultiply = canMultiply;
-      entriesData[entriesData.length - 1].canRemove = true;
-      entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
-      oldValues.splice(idx + 1, 0, ...entriesData);
-      // entryValues
-      setValues(oldValues);
-    }
+    addNewEntry(name, oldValues, idx);
   };
   const handleRemovalClick = (e: FormFieldValues, idx: number) => {
     if (addEntry && e.onMultiply) {
       // find the number of fields to delete
-      const name = e.removalBy ? e.removalBy : e.onMultiply.name;
+      const name = e.group ? e.group : e.onMultiply.name;
       const numCount = addEntry[name] ? objToArray(addEntry[name].initialValues).length : 1;
+      const groupList = values.filter((val) => val.group === name);
+      const neglectedKeys = groupList.filter((list) => list.sharedKey !== e.sharedKey);
       let oldValues = [...values];
-      // move button and down to last appropriate field
+      // if where add entry button is stored move button and down to last appropriate field
       if (e.canMultiply) {
-        const multiplyProperty = oldValues[idx - numCount].onMultiply;
-        // check appropriate field has property onMulitiply and onMulitiply matches name
-        if (multiplyProperty && multiplyProperty.name === name) {
-          // its part of the same group move button
-          oldValues[idx - numCount].canMultiply = true;
-          // otherwise its the last field on group; update checkbox
-        } else oldValues[idx - numCount].value = false;
-      } else oldValues[idx - numCount].value = false;
-      // use splice to remove desired field numCount is the number of elements removed
-      oldValues.splice(idx - 1, numCount);
-      setValues(oldValues);
+        // if theres only been one entry; update checkbox
+        if (neglectedKeys.length === 0) oldValues[idx - numCount].value = false;
+        // otherwise move new entry button
+        else oldValues[idx - numCount].canMultiply = true;
+      }
+      // get removal list with the get shared key
+      const removalList = oldValues.filter((val) => val.sharedKey !== e.sharedKey);
+      setValues(removalList);
     }
   };
 
