@@ -5,7 +5,11 @@
 
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
-
+  export type SubmitPayload = {
+    value: string;
+    name: string;
+    group: { value?: string; name?: string; sharedKey?: string }[];
+  };
   type FormProp = {
     // required props
     initialValues: FormInitValues;
@@ -64,7 +68,7 @@ declare module "nxs-form" {
     canMultiply?: boolean;
     canRemove?: boolean;
     group?: string;
-    sharedKey?: number;
+    sharedKey?: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
   // Type declarations go here
@@ -98,7 +102,7 @@ declare module "nxs-form" {
     placeholders?: KeyStringProp;
     fieldHeading?: string;
     group?: string;
-    sharedKey?: number;
+    sharedKey?: string;
   };
   export type FormInitialValueProps = FormFieldValues;
   export interface FormFieldProps {
@@ -112,7 +116,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     canRemove?: boolean;
     group?: string;
-    sharedKey?: number;
+    sharedKey?: string;
     canMultiply?: boolean;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
     onMultiplyClick?: () => void;

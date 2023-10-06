@@ -5,9 +5,10 @@ import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { FormFieldValues, FormProps } from "nxs-form";
+import { FormFieldValues, FormProps, SubmitPayload } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
+import { uniqueId } from "@nxs-utils/data/uniqueId";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
@@ -42,7 +43,7 @@ const Form: React.FC<FormProps> = (props) => {
       }
       const entryPayload = { values: entryValues, labels, types, placeholders };
       // add properties all entrys should have
-      let entriesData = addEntries({ ...entryPayload, group: name, sharedKey: originIdx + 1 });
+      let entriesData = addEntries({ ...entryPayload, group: name, sharedKey: uniqueId() });
       // if additional entries are possible add them here
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
       entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
@@ -89,10 +90,27 @@ const Form: React.FC<FormProps> = (props) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
+    let payload: { [key: string]: SubmitPayload } = {};
+    const uniqueGroups: { [key: string]: string[] } = {};
+    values.forEach((val) => {
+      const { group, sharedKey, name, value } = val;
+      // check if value is part of a group
+      if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
+        // check if the group has not been checked
+        if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
+          // if not checked add to uniqueGroups; create new instance
+          uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
+          // if grouping already exists include it in payload
+          payload[group].group = [...payload[group].group, { value, name, sharedKey }];
+        } else {
+          payload[group].group = [...payload[group].group, { value, name, sharedKey }];
+        }
+      } else payload[name] = { value, name, group: [] };
+    });
     if (schema) {
       const errors = validateForm({ values, schema });
-      objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(values);
-    } else onSubmit(values);
+      objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
+    } else onSubmit(payload);
   };
   const handleMultiplyClick = (e: FormFieldValues, idx: number) => {
     const name = e.group ? e.group : e.onMultiply?.name || e.name;
