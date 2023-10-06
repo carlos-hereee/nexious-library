@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Button } from "@nxs-atoms/index";
-import { Form } from "@nxs-organism/index";
+import { Form, FormNavigation } from "@nxs-organism/index";
 import { PaginateFormProps } from "nxs-paginate-form";
 import { FormInitValues } from "custom-props";
 
@@ -57,56 +57,19 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       setValues({ ...values, [formName]: formValues });
     }
   };
-  const prevPage = () => {
-    // check if its first item on list
-    // setValues({ ...values, [formName]: { ...formValues } });
-    if (pageNumber === 0) {
-      if (setNewPage) setNewPage(pageNumber);
-      else setPageNumber(pageNumber);
-    } else {
-      // reset inital values to rerender component
-      setInitialValues(undefined);
-      if (setNewPage) setNewPage(pageNumber - 1);
-      setPageNumber(pageNumber - 1);
-    }
-  };
-  const nextPage = () => {
-    // check if last item
-    if (pageNumber + 1 === total) {
-      if (setNewPage) setNewPage(pageNumber);
-      else setPageNumber(pageNumber);
-    } else {
-      // reset inital values to rerender component
-      setInitialValues(undefined);
-      if (setNewPage) setNewPage(pageNumber + 1);
-      else setPageNumber(pageNumber + 1);
-    }
-  };
+
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="PaginateForm" />;
   }
   return (
     <div className="container">
       {!hideNavigation && (
-        <div>
-          <p>
-            Form navigation showing {formName} {pageNumber + 1} out of {total}
-          </p>
-          <div className="flex-row">
-            <Button
-              label="previous"
-              onClick={prevPage}
-              title={paginate[pageNumber - 1]?.formName}
-              isDisable={paginate[pageNumber - 1]?.formName ? false : true}
-            />
-            <Button
-              label="next"
-              onClick={nextPage}
-              isDisable={paginate[pageNumber + 1]?.formName ? false : true}
-              title={paginate[pageNumber + 1]?.formName}
-            />
-          </div>
-        </div>
+        <FormNavigation
+          heading={`Form navigation showing ${formName}, ${pageNumber + 1} out of ${total}`}
+          formOrder={formOrder}
+          pageNumber={pageNumber}
+          onClick={(idx) => (setNewPage ? setNewPage(idx) : setPageNumber(idx))}
+        />
       )}
       {heading && <h2 className="heading">{heading}</h2>}
       {initialValues && (

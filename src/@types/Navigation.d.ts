@@ -72,4 +72,10 @@ declare module "nxs-navigation" {
     onSelect: (a: any) => void;
     language?: MenuItemProp;
   }
+  export interface FormNavigationProps {
+    formOrder: string[];
+    pageNumber: number;
+    heading?: string;
+    onClick: (key: number) => void;
+  }
 }
