@@ -16,7 +16,7 @@ const FormNavigation: React.FC<FormNavigationProps> = (props) => {
           if (idx === total - 1 && pageNumber === total - 1) isDisable = true;
           return (
             <Button
-              key={name}
+              key={idx}
               label={formName}
               onClick={() => onClick(idx)}
               title={formName}

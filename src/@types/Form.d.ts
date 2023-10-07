@@ -157,9 +157,16 @@ declare module "nxs-form" {
     theme?: string;
     hideLabels?: boolean;
   }
+  export interface ListProp {
+    name: string;
+    value: string;
+    isDisabled?: boolean;
+    uid?: string;
+    listId?: string;
+  }
   export interface SelectProp {
     name: string;
-    list: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
+    list: ListProp[];
     active?: string;
     theme?: string;
     hideLabels?: boolean;

@@ -26,8 +26,14 @@ const Select: React.FC<SelectProp> = (props) => {
         onChange={onChange}
       >
         <Option name="" value="" isDisabled />
-        {list.map((l) => (
-          <Option key={l.uid} name={l.name} value={l.value} isDisabled={l.name === active} />
+        {list.map((l, idx) => (
+          <Option
+            // incase no id is provided use idx
+            key={l.uid || l.listId || idx}
+            name={l.name}
+            value={l.value}
+            isDisabled={l.name === active}
+          />
         ))}
       </select>
     </>

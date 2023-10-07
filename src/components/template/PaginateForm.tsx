@@ -31,7 +31,6 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const schema = current?.schema;
   const theme = current?.theme;
   const fieldHeading = current?.fieldHeading;
-
   useEffect(() => {
     if (pageNumber >= 0) {
       if (setNewPage) setNewPage(pageNumber);
