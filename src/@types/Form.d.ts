@@ -77,7 +77,7 @@ declare module "nxs-form" {
   export type FieldValueProp = FormFieldValues;
   export interface PaginateFormProps {
     // required props
-    paginate: [FormProps];
+    paginate: FormProps[];
     page?: number;
     onFormSubmit?: (e: any) => void;
     setNewPage?: (e: number) => void;

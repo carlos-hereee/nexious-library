@@ -4,6 +4,7 @@ import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
 import { FormInitValues } from "custom-props";
 import { PaginateFormProps } from "nxs-form";
+import { makeStrReadable } from "@nxs-utils/app/text";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
@@ -31,6 +32,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const schema = current?.schema;
   const theme = current?.theme;
   const fieldHeading = current?.fieldHeading;
+
   useEffect(() => {
     if (pageNumber >= 0) {
       if (setNewPage) setNewPage(pageNumber);
@@ -60,6 +62,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       setValues({ ...values, [formName]: formValues });
     }
   };
+  const onSubmit = () => (current.onSubmit ? current.onSubmit : handlePaginateSubmit);
 
   const handlePageClick = (nextPage: number) => {
     //  reset initial values to redender form component
@@ -74,7 +77,9 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     <div className="container">
       {!hideNavigation && (
         <FormNavigation
-          heading={`Form navigation showing ${formName}, ${pageNumber + 1} out of ${total}`}
+          heading={`Form navigation showing ${makeStrReadable(formName)}, ${
+            pageNumber + 1
+          } out of ${total}`}
           formOrder={formOrder}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
@@ -83,7 +88,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       {initialValues && (
         <Form
           initialValues={initialValues}
-          onSubmit={current?.onSubmit ? current.onSubmit : handlePaginateSubmit}
+          onSubmit={onSubmit()}
           formName={formName}
           labels={labels}
           placeholders={placeholders}
