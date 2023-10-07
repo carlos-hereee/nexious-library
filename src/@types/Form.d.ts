@@ -35,6 +35,7 @@ declare module "nxs-form" {
         removalLabel: string;
         initialValues: FormInitValues;
         fieldHeading: string;
+        skipIfFalse?: string;
         labels?: KeyStringProp;
         placeholders?: KeyStringProp;
         types?: KeyStringProp;
@@ -69,6 +70,7 @@ declare module "nxs-form" {
     canRemove?: boolean;
     group?: string;
     sharedKey?: string;
+    groupName?: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
   // Type declarations go here
@@ -113,6 +115,7 @@ declare module "nxs-form" {
     fieldHeading?: string;
     group?: string;
     sharedKey?: string;
+    groupName?: string;
   };
   export type FormInitialValueProps = FormFieldValues;
   export interface FormFieldProps {

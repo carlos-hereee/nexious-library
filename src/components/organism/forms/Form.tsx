@@ -29,7 +29,7 @@ const Form: React.FC<FormProps> = (props) => {
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
-      const { labels, types, placeholders, canMultiply } = addEntry[name];
+      const { labels, types, placeholders, canMultiply, skipIfFalse } = addEntry[name];
       const { additionLabel, removalLabel } = addEntry[name];
       // require key variables
       if (!removalLabel || !additionLabel) {
@@ -41,10 +41,11 @@ const Form: React.FC<FormProps> = (props) => {
           { prop: key, code: "missingProps", isAProp: true, value, name: key },
         ]);
       }
-      const entryPayload = { values: entryValues, labels, types, placeholders };
       // add properties all entrys should have
-      let entriesData = addEntries({ ...entryPayload, group: name, sharedKey: uniqueId() });
+      const groupName = skipIfFalse;
+      const entryPayload = { values: entryValues, labels, types, placeholders, groupName };
       // if additional entries are possible add them here
+      let entriesData = addEntries({ ...entryPayload, group: name, sharedKey: uniqueId() });
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
       entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
       entriesData[entriesData.length - 1].canRemove = true;
@@ -93,18 +94,17 @@ const Form: React.FC<FormProps> = (props) => {
     let payload: { [key: string]: SubmitPayload } = {};
     const uniqueGroups: { [key: string]: string[] } = {};
     values.forEach((val) => {
-      const { group, sharedKey, name, value } = val;
+      const { group, sharedKey, name, value, groupName } = val;
       // check if value is part of a group
       if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
+        const groupPayload = { value, name, sharedKey, group, groupName };
         // check if the group has not been checked
         if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
           // if not checked add to uniqueGroups; create new instance
           uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
-          // if grouping already exists include it in payload
-          payload[group].group = [...payload[group].group, { value, name, sharedKey, group }];
-        } else {
-          payload[group].group = [...payload[group].group, { value, name, sharedKey, group }];
         }
+        payload[group].group = [...payload[group].group, groupPayload];
+        // otherwise its not part of a group
       } else payload[name] = { value, name, group: [] };
     });
     if (schema) {
