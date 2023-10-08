@@ -5,7 +5,7 @@ import { FormInitialValueProps, FormValueProps, AddEntryValueProps } from "nxs-f
 import { useEffect, useState } from "react";
 
 export const useValues = (props: FormValueProps) => {
-  const { initialValues, labels, types, placeholders, fieldHeading } = props;
+  const { initialValues, labels, types, placeholders, fieldHeading, addEntry } = props;
   const [values, setValues] = useState<FormInitialValueProps[]>([]);
 
   const addEntries = (props: AddEntryValueProps): FormInitialValueProps[] => {
@@ -37,6 +37,38 @@ export const useValues = (props: FormValueProps) => {
     const data = objToArray(initialValues);
     // clear prev values if any; avoid redundant data
     setValues([]);
+    if (addEntry) {
+      const entryData = objToArray(addEntry);
+      for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
+        const current = entryData[entryIdx];
+        const key = Object.keys(current)[0];
+        // continue if initial value's checkbox is true
+        if (initialValues[key]) {
+          const { canMultiply, initialValues: value, skipIfFalse } = addEntry[key];
+          const numCount = Object.keys(value).length;
+          // were not skipping the march continues
+          if (skipIfFalse) {
+            initialValues[skipIfFalse].forEach((v: { [key: string]: any }) => {
+              const keys = Object.keys(v);
+              const total = initialValues[skipIfFalse].length;
+              let payload: { [key: string]: any } = {};
+              keys.forEach((k, idx) => {
+                const isMulty = canMultiply && total === idx ? true : false;
+                payload = { value: v[k], name: k, canMultiply: isMulty };
+              });
+              const valueIdx = data.findIndex((d) => d[key]);
+              // add payload to data values
+              data.splice(valueIdx + numCount, 0, payload);
+            });
+            // console.log("skipIfFalse", skipIfFalse);
+            // const removalIdx = data.findIndex((d) => d[skipIfFalse]);
+            // data.splice(removalIdx + numCount, 1);
+            // console.log("removalIdx", removalIdx);
+          }
+        }
+      }
+    }
+    console.log("data", data);
     setValues(addEntries({ values: data, labels, types, placeholders, fieldHeading }));
   }, []);
 

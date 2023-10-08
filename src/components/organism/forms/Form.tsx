@@ -140,6 +140,7 @@ const Form: React.FC<FormProps> = (props) => {
       setValues(removalList);
     }
   };
+  console.log("values", values);
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (

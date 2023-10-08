@@ -101,6 +101,7 @@ declare module "nxs-form" {
         initialValues: FormInitValues;
         fieldHeading: string;
         labels?: KeyStringProp;
+        skipIfFalse?: string;
         placeholders?: KeyStringProp;
         types?: KeyStringProp;
         canMultiply?: boolean;
