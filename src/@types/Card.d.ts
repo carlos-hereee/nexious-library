@@ -16,9 +16,10 @@ type HeroProp = {
 };
 type CTAProp = {
   name: string;
-  icon: string;
-  uid: string;
   label: string;
+  icon?: string;
+  uid?: string;
+  heroId?: string;
 };
 
 /**
