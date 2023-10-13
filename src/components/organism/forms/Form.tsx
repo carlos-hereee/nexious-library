@@ -26,7 +26,6 @@ const Form: React.FC<FormProps> = (props) => {
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
   const addNewEntry = (name: string, oldValues: FormFieldValues[], originIdx: number) => {
-    console.log("name", name);
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
@@ -49,21 +48,20 @@ const Form: React.FC<FormProps> = (props) => {
       // if additional entries are possible add them here
       let entriesData = formatEntry({ ...payload, group, sharedKey: uniqueId() });
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
+      entriesData[entriesData.length - 1].canRemove = true;
       entriesData[entriesData.length - 1].onMultiply = {
         additionLabel,
         name: group,
         removalLabel,
       };
-      entriesData[entriesData.length - 1].canRemove = true;
+      const newIdx = oldValues.findIndex((d) => d.name === groupName);
+      const numCount = oldValues.filter((d) => d.groupName === groupName);
       // keep everything together; 0 is the number of element to be deleted
-      oldValues.splice(originIdx + entriesData.length, 0, ...entriesData);
-      console.log("oldValues", oldValues);
+      oldValues.splice(newIdx + numCount.length + 1, 0, ...entriesData);
       setValues(oldValues);
-      // otherwise save values
-    } else {
-      console.log("add entry not found", oldValues);
-      // else setValues(oldValues);
     }
+    // otherwise save values
+    else setValues(oldValues);
   };
   const handleChange = (event: any, idx: number) => {
     // addTouched(key);
@@ -87,7 +85,7 @@ const Form: React.FC<FormProps> = (props) => {
     if (isChecked) addNewEntry(name, oldValues, idx);
     else {
       // when button is unchecked removed all field created by checkbox
-      const removalList = oldValues.filter((val) => val.group !== name);
+      const removalList = oldValues.filter((val) => val.groupName !== name);
       setValues(removalList);
     }
   };
@@ -125,7 +123,6 @@ const Form: React.FC<FormProps> = (props) => {
   const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;
     // move button to last appropriate field
-    console.log("groupName", groupName);
     let oldValues = [...values];
     oldValues[fieldIndex].canMultiply = false;
     // if form has an entry value
@@ -134,21 +131,23 @@ const Form: React.FC<FormProps> = (props) => {
   const handleRemovalClick = (e: FormFieldValues, idx: number) => {
     if (addEntry && e.onMultiply) {
       // find the number of fields to delete
-      const name = e.group ? e.group : e.onMultiply.name;
-      const numCount = addEntry[name] ? objToArray(addEntry[name].initialValues).length : 1;
-      const groupList = values.filter((val) => val.group === name);
-      const neglectedKeys = groupList.filter((list) => list.sharedKey !== e.sharedKey);
-      let oldValues = [...values];
-      // if where add entry button is stored move button and down to last appropriate field
-      if (e.canMultiply) {
-        // if theres only been one entry; update checkbox
-        if (neglectedKeys.length === 0) oldValues[idx - numCount].value = false;
-        // otherwise move new entry button
-        else oldValues[idx - numCount].canMultiply = true;
+      const groupName = e.groupName ? e.groupName : e.onMultiply.name;
+      if (addEntry[groupName]) {
+        const numCount = objToArray(addEntry[groupName].initialValues).length;
+        const groupList = values.filter((val) => val.group === groupName);
+        const neglectedKeys = groupList.filter((list) => list.sharedKey !== e.sharedKey);
+        let oldValues = [...values];
+        // if where add entry button is stored move button and down to last appropriate field
+        if (e.canMultiply) {
+          // if theres only been one entry; update checkbox
+          if (neglectedKeys.length === 0) oldValues[idx - numCount].value = false;
+          // otherwise move new entry button
+          else oldValues[idx - numCount].canMultiply = true;
+        }
+        // get removal list with the get shared key
+        const removalList = oldValues.filter((val) => val.sharedKey !== e.sharedKey);
+        setValues(removalList);
       }
-      // get removal list with the get shared key
-      const removalList = oldValues.filter((val) => val.sharedKey !== e.sharedKey);
-      setValues(removalList);
     }
   };
 
