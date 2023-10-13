@@ -134,7 +134,7 @@ const Form: React.FC<FormProps> = (props) => {
       const groupName = e.groupName ? e.groupName : e.onMultiply.name;
       if (addEntry[groupName]) {
         const numCount = objToArray(addEntry[groupName].initialValues).length;
-        const groupList = values.filter((val) => val.group === groupName);
+        const groupList = values.filter((val) => val.groupName === groupName);
         const neglectedKeys = groupList.filter((list) => list.sharedKey !== e.sharedKey);
         let oldValues = [...values];
         // if where add entry button is stored move button and down to last appropriate field
