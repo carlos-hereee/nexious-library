@@ -42,30 +42,7 @@ export const useValues = (props: FormValueProps) => {
       return { ...payload, group, sharedKey, groupName };
     });
   };
-  // const addExtraData = ({ entryValues, oldValues, originIdx, key }: ExtraValueProps) => {
-  //   if (addEntry && addEntry[key]) {
-  //     // const entryValues = objToArray(addEntry[name].initialValues);
-  //     const { labels, types, placeholders, canMultiply, skipIfFalse } = addEntry[key];
-  //     const { additionLabel, removalLabel } = addEntry[key];
-  //     oldValues[skipIfFalse];
-  //     // add properties all entrys should have
-  //     const groupName = skipIfFalse;
-  //     const entryPayload = { values: entryValues, labels, types, placeholders, groupName };
-  //     // if additional entries are possible add them here
-  //     let entriesData = formatEntry({ ...entryPayload, group: key, sharedKey: uniqueId() });
-  //     entriesData[entriesData.length - 1].canMultiply = canMultiply;
-  //     entriesData[entriesData.length - 1].onMultiply = {
-  //       additionLabel,
-  //       name: key,
-  //       removalLabel,
-  //     };
-  //     entriesData[entriesData.length - 1].canRemove = true;
-  //     // keep everything together; 0 is the number of element to be deleted
-  //     oldValues.splice(originIdx + 1, 0, ...entriesData);
-  //     //  save values
-  //     return oldValues;
-  //   }
-  // };
+
   useEffect(() => {
     const data = objToArray(initialValues);
     // clear prev values if any; avoid redundant data
@@ -115,26 +92,17 @@ export const useValues = (props: FormValueProps) => {
           data.splice(valueIdx, 1);
         }
       }
-      console.log("data", data);
-      console.log("extraData", extraData);
-      // const data = formatEntry(payload);
-      // oldValues.splice(originIdx + 1, 0, ...entriesData);
-      // keep everything together; 0 is the number of element to be deleted
-      //  save values
-      // console.log("extraData", extraData);
-      // add payload to data values
-      // const valueIdx = data.findIndex((d) => d[groupName]);
-      // dataVals.splice(valueIdx + numCount, 0, ...entryPayload);
-
-      // console.log("payload", dataVals);
-
-      // const removalIdx = data.findIndex((d) => d[skipIfFalse]);
-      // dataVals.splice(removalIdx, 1);
-      // console.log("data", dataVals);
-      // const extraVals = addExtraData({ entryValues, oldValues: dataVals, originIdx, key });
-      // const dataWithEtraValues = formatEntry({
-      //   values: data,
-      // });
+      const entry = formatEntry({ formatValues: data, labels, types, placeholders });
+      const valueData: FormInitialValueProps[] = [];
+      entry.forEach((entVal) => {
+        // add entries to appropriate groups
+        valueData.push(entVal);
+        if (entVal.type === "checkbox" && entVal.value) {
+          const extraDataToInclude = extraData.filter((ext) => ext.groupName === entVal.name);
+          valueData.push(...extraDataToInclude);
+        }
+      });
+      setValues(valueData);
     } else setValues(formatEntry({ formatValues: data, labels, types, placeholders }));
   }, []);
 

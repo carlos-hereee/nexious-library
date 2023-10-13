@@ -26,6 +26,7 @@ const Form: React.FC<FormProps> = (props) => {
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
   const addNewEntry = (name: string, oldValues: FormFieldValues[], originIdx: number) => {
+    console.log("name", name);
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
@@ -42,18 +43,27 @@ const Form: React.FC<FormProps> = (props) => {
         ]);
       }
       // add properties all entrys should have
-      const groupName = skipIfFalse;
+      const groupName = name;
+      const group = skipIfFalse;
       const payload = { formatValues: entryValues, labels, types, placeholders, groupName };
       // if additional entries are possible add them here
-      let entriesData = formatEntry({ ...payload, group: name, sharedKey: uniqueId() });
+      let entriesData = formatEntry({ ...payload, group, sharedKey: uniqueId() });
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
-      entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
+      entriesData[entriesData.length - 1].onMultiply = {
+        additionLabel,
+        name: group,
+        removalLabel,
+      };
       entriesData[entriesData.length - 1].canRemove = true;
       // keep everything together; 0 is the number of element to be deleted
-      oldValues.splice(originIdx + 1, 0, ...entriesData);
+      oldValues.splice(originIdx + entriesData.length, 0, ...entriesData);
+      console.log("oldValues", oldValues);
       setValues(oldValues);
       // otherwise save values
-    } else setValues(oldValues);
+    } else {
+      console.log("add entry not found", oldValues);
+      // else setValues(oldValues);
+    }
   };
   const handleChange = (event: any, idx: number) => {
     // addTouched(key);
@@ -112,13 +122,14 @@ const Form: React.FC<FormProps> = (props) => {
       objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
     } else onSubmit(payload);
   };
-  const handleMultiplyClick = (e: FormFieldValues, idx: number) => {
-    const name = e.group ? e.group : e.onMultiply?.name || e.name;
+  const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
+    const groupName = e.groupName || e.onMultiply?.name || e.name;
     // move button to last appropriate field
+    console.log("groupName", groupName);
     let oldValues = [...values];
-    oldValues[idx].canMultiply = false;
+    oldValues[fieldIndex].canMultiply = false;
     // if form has an entry value
-    addNewEntry(name, oldValues, idx);
+    addNewEntry(groupName, oldValues, fieldIndex);
   };
   const handleRemovalClick = (e: FormFieldValues, idx: number) => {
     if (addEntry && e.onMultiply) {
@@ -140,7 +151,6 @@ const Form: React.FC<FormProps> = (props) => {
       setValues(removalList);
     }
   };
-  console.log("values", values);
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
