@@ -20,7 +20,7 @@ const Form: React.FC<FormProps> = (props) => {
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
   // key variables
   const valuePayload = { initialValues, labels, types, placeholders, addEntry };
-  const { values, setValues, addEntries } = useValues(valuePayload);
+  const { values, setValues, formatEntry } = useValues(valuePayload);
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
@@ -43,9 +43,9 @@ const Form: React.FC<FormProps> = (props) => {
       }
       // add properties all entrys should have
       const groupName = skipIfFalse;
-      const entryPayload = { values: entryValues, labels, types, placeholders, groupName };
+      const payload = { formatValues: entryValues, labels, types, placeholders, groupName };
       // if additional entries are possible add them here
-      let entriesData = addEntries({ ...entryPayload, group: name, sharedKey: uniqueId() });
+      let entriesData = formatEntry({ ...payload, group: name, sharedKey: uniqueId() });
       entriesData[entriesData.length - 1].canMultiply = canMultiply;
       entriesData[entriesData.length - 1].onMultiply = { additionLabel, name, removalLabel };
       entriesData[entriesData.length - 1].canRemove = true;
