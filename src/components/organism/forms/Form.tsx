@@ -111,9 +111,9 @@ const Form: React.FC<FormProps> = (props) => {
           // if not checked add to uniqueGroups; create new instance
           uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
         }
-        payload[group].group = [...payload[group].group, groupPayload];
+        payload[group].group?.push(groupPayload);
         // otherwise its not part of a group
-      } else payload[name] = { value, name, group: [] };
+      } else payload[name] = { value, name };
     });
     if (schema) {
       const errors = validateForm({ values, schema });

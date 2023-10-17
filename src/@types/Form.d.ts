@@ -8,7 +8,7 @@ declare module "nxs-form" {
   export type SubmitPayload = {
     value: string;
     name: string;
-    group: { value?: string; name?: string; sharedKey?: string; group?: string }[];
+    group?: { value?: string; name?: string; sharedKey?: string; group?: string }[];
   };
   type FormProp = {
     // required props

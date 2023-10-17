@@ -1,10 +1,10 @@
 import { ButtonProps } from "nxs-button";
 
 const ButtonCancel: React.FC<ButtonProps> = (props) => {
-  const { onClick, data } = props;
+  const { onClick, label, theme } = props;
   return (
-    <button type="button" className="btn-cancel" onClick={onClick}>
-      {data}
+    <button type="button" className={`btn-cancel ${theme ? theme : ""}`} onClick={onClick}>
+      {label || "Cancel"}
     </button>
   );
 };

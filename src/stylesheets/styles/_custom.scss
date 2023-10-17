@@ -38,9 +38,15 @@
 .w-100 {
   width: 100%;
 }
-.m-tb {
+// add whitespace
+.m-tb,
+.white-space {
   margin: 1rem 0;
 }
+.mt-1 {
+  margin-top: 1rem;
+}
+.m-sides,
 .m-horizontal {
   margin: 0 1rem;
 }
