@@ -42,7 +42,7 @@ export type { CalendarEventProps } from "nxs-calendar";
 
 // forms
 export { default as Form } from "@nxs-organism/forms/Form";
-export { default as UploadFile } from "@nxs-organism/forms/UploadFile";
+export { default as UploadFile } from "@nxs-molecules/forms/UploadFile";
 export type { FormProps } from "nxs-form";
 
 // checkout

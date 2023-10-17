@@ -5,7 +5,7 @@ import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { FormFieldValues, FormProps, SubmitPayload } from "nxs-form";
+import { FormFieldValues, FormProps, SelectFileProp, SubmitPayload } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
@@ -13,9 +13,9 @@ import CancelButton from "@nxs-atoms/buttons/CancelButton";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
-  const { onSubmit, onChange, initialValues, hideLabels, theme, submitLabel } = props;
   const { labels, placeholders, types, schema, formName, heading, hideSubmit } = props;
-  const { addEntry, selectList, fieldHeading, onCancel } = props;
+  const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload } = props;
+  const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel } = props;
   // must have required props
   const required = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
@@ -100,26 +100,29 @@ const Form: React.FC<FormProps> = (props) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    let payload: { [key: string]: SubmitPayload } = {};
-    const uniqueGroups: { [key: string]: string[] } = {};
-    values.forEach((val) => {
-      const { group, sharedKey, name, value, groupName } = val;
-      // check if value is part of a group
-      if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
-        const groupPayload = { value, name, sharedKey, group, groupName };
-        // check if the group has not been checked
-        if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
-          // if not checked add to uniqueGroups; create new instance
-          uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
-        }
-        payload[group].group?.push(groupPayload);
-        // otherwise its not part of a group
-      } else payload[name] = { value, name };
-    });
-    if (schema) {
-      const errors = validateForm({ values, schema });
-      objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
-    } else onSubmit(payload);
+    if (withFileUpload) {
+    } else {
+      let payload: { [key: string]: SubmitPayload } = {};
+      const uniqueGroups: { [key: string]: string[] } = {};
+      values.forEach((val) => {
+        const { group, sharedKey, name, value, groupName } = val;
+        // check if value is part of a group
+        if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
+          const groupPayload = { value, name, sharedKey, group, groupName };
+          // check if the group has not been checked
+          if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
+            // if not checked add to uniqueGroups; create new instance
+            uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
+          }
+          payload[group].group?.push(groupPayload);
+          // otherwise its not part of a group
+        } else payload[name] = { value, name };
+      });
+      if (schema) {
+        const errors = validateForm({ values, schema });
+        objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
+      } else onSubmit(payload);
+    }
   };
   const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;
@@ -152,9 +155,21 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
 
+  const handleHeroChange = (selectedFile: SelectFileProp) => {
+    const name = selectedFile.name;
+    let oldValues = [...values];
+    const valIdx = oldValues.findIndex((ov) => ov.name === name);
+    oldValues[valIdx].value = selectedFile;
+    setValues(oldValues);
+  };
+
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
-    <form className={theme} onSubmit={handleSubmit}>
+    <form
+      className={theme}
+      onSubmit={handleSubmit}
+      encType={withFileUpload ? "multipart/form-data" : undefined}
+    >
       {heading && <h2 className="heading">{heading}</h2>}
       {values.map((value, keyIdx) => {
         return (
@@ -172,6 +187,7 @@ const Form: React.FC<FormProps> = (props) => {
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
+            handleHeroChange={(e) => handleHeroChange(e)}
             fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}
             canMultiply={value.canMultiply}

@@ -21,6 +21,7 @@ declare module "nxs-form" {
     onCancel?: () => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
+    withFileUpload?: boolean;
     showAuthTips?: boolean;
     theme?: string;
     labels?: KeyStringProp;
@@ -46,7 +47,7 @@ declare module "nxs-form" {
   };
   type InputProp = {
     name: string;
-    value: string;
+    value?: string;
     label?: string;
     theme?: string;
     error?: string;
@@ -73,6 +74,11 @@ declare module "nxs-form" {
     sharedKey?: string;
     groupName?: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
+  };
+  export type SelectFileProp = {
+    name: string;
+    filename: string;
+    file: File;
   };
   // Type declarations go here
   export type FormProps = FormProp;
@@ -143,6 +149,7 @@ declare module "nxs-form" {
     handleChange: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
+    handleHeroChange?: (key: SelectFileProp) => void;
   }
   export interface LabelProps {
     label: string;
@@ -157,7 +164,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     selectLabel?: string;
     error?: string;
-    onSelect: (e: any) => void;
+    onSelect: (e: SelectFileProp) => void;
   }
   export interface TextAreaProps {
     input: InputProp;

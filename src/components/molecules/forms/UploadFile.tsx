@@ -34,23 +34,22 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     return <ErrorMessages errors={errors} component="Upload file" />;
   }
   return (
-    <form
-      encType="multipart/form-data"
-      className={theme ? `field-upload ${theme}` : "field-upload"}
-    >
-      {!hideLabels && <Label name={name} label={labels} errors={error} />}
-      <input
-        type="file"
-        onChange={selectImage}
-        accept="image/*"
-        name={name}
-        ref={imageUpLoaderRef}
-        id={name}
-        hidden
-      />
-      <button className="btn-main" type="button" onClick={imageClick}>
-        {selectLabel ? selectLabel : "Choose a file"}
-      </button>
+    <div className={`field-upload ${theme ? theme : ""}`}>
+      <div className="flex-d-column flex-start">
+        {!hideLabels && <Label name={name} label={labels} errors={error} />}
+        <input
+          type="file"
+          onChange={selectImage}
+          accept="image/*"
+          name={name}
+          ref={imageUpLoaderRef}
+          id={name}
+          hidden
+        />
+        <button className="btn-main" type="button" onClick={imageClick}>
+          {selectLabel || "Choose a file"}
+        </button>
+      </div>
       <div className="flex-d-column">
         <span>Image Preview</span>
         {currentImage ? (
@@ -67,7 +66,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           </button>
         )}
       </div>
-    </form>
+    </div>
   );
 };
 

@@ -2,13 +2,14 @@ import { auth, select, textarea } from "@nxs-utils/form/types";
 import { AuthField, Field, Select, TextArea } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import { FormFieldProps } from "nxs-form";
+import { UploadFile } from "@nxs-molecules";
 
 const FormField: React.FC<FormFieldProps> = (props) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
-  const { canRemove } = props;
+  const { canRemove, handleHeroChange } = props;
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
@@ -52,6 +53,12 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           onChange={(e) => handleCheckbox && handleCheckbox(e)}
           error={formError}
           label={label}
+        />
+      ) : type === "file" ? (
+        <UploadFile
+          input={{ name, error: formError }}
+          label={label}
+          onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />
       ) : (
         <Field

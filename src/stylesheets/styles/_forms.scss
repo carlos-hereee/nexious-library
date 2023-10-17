@@ -19,11 +19,8 @@
 .field-upload {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: center;
+  align-items: start;
   gap: #{$rem};
-  .btn-main {
-    margin-left: auto;
-  }
 }
 .form-submit {
   display: flex;

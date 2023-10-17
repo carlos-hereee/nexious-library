@@ -38,6 +38,7 @@ export { default as AuthField } from "@nxs-molecules/forms/AuthField";
 export { default as Select } from "@nxs-molecules/forms/Select";
 export { default as Field } from "@nxs-molecules/forms/Field";
 export { default as TextArea } from "@nxs-molecules/forms/TextArea";
+export { default as UploadFile } from "@nxs-molecules/forms/UploadFile";
 export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
 
 // calendar
