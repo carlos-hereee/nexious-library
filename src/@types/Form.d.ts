@@ -18,6 +18,7 @@ declare module "nxs-form" {
     // optional
     heading?: string;
     onChange?: (e: any) => void;
+    onCancel?: () => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
     showAuthTips?: boolean;
@@ -82,6 +83,7 @@ declare module "nxs-form" {
     paginate: FormProps[];
     page?: number;
     onFormSubmit?: (e: any) => void;
+    onCancel?: () => void;
     setNewPage?: (e: number) => void;
     // optional props
     order?: string[]; //defaults set to first form on list

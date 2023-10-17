@@ -9,12 +9,13 @@ import { FormFieldValues, FormProps, SubmitPayload } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
+import CancelButton from "@nxs-atoms/buttons/CancelButton";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
   const { onSubmit, onChange, initialValues, hideLabels, theme, submitLabel } = props;
   const { labels, placeholders, types, schema, formName, heading, hideSubmit } = props;
-  const { addEntry, selectList, fieldHeading } = props;
+  const { addEntry, selectList, fieldHeading, onCancel } = props;
   // must have required props
   const required = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
@@ -181,6 +182,7 @@ const Form: React.FC<FormProps> = (props) => {
         );
       })}
       {!hideSubmit && <SubmitButton label={submitLabel} />}
+      {onCancel && <CancelButton />}
     </form>
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />

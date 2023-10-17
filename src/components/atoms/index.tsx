@@ -4,7 +4,7 @@ export { default as Spinner } from "@nxs-atoms/assets/Spinner";
 // buttons
 export { default as Button } from "@nxs-atoms/buttons/Button";
 export { default as BackButton } from "@nxs-atoms/buttons/BackButton";
-export { default as ButtonCancel } from "@nxs-atoms/buttons/ButtonCancel";
+export { default as ButtonCancel } from "@nxs-atoms/buttons/CancelButton";
 export type { IconProps, ButtonProps } from "nxs-button";
 
 // forms
