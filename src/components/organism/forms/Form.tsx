@@ -181,8 +181,10 @@ const Form: React.FC<FormProps> = (props) => {
           />
         );
       })}
-      {!hideSubmit && <SubmitButton label={submitLabel} />}
-      {onCancel && <CancelButton />}
+      <div className="flex-row">
+        {onCancel && <CancelButton onClick={onCancel} />}
+        {!hideSubmit && <SubmitButton label={submitLabel} />}
+      </div>
     </form>
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
