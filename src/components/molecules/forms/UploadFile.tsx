@@ -21,10 +21,10 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   };
 
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = event.target.files as FileList;
+    const selectedFiles = event.target.files;
     const file = selectedFiles?.[0];
     if (file) {
-      onSelect({ name, filename: file.name, file: file });
+      onSelect(file);
       setCurrentImage(file);
       setPreviewImage(URL.createObjectURL(file));
     }

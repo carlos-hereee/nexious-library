@@ -26,7 +26,7 @@ const Form: React.FC<FormProps> = (props) => {
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
-  const addNewEntry = (name: string, oldValues: FormFieldValues[], originIdx: number) => {
+  const addNewEntry = (name: string, oldValues: FormFieldValues[]) => {
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
@@ -83,7 +83,7 @@ const Form: React.FC<FormProps> = (props) => {
     oldValues[idx].value = isChecked;
     // const total = values.length;
     // if the checkbox is checked add entries
-    if (isChecked) addNewEntry(name, oldValues, idx);
+    if (isChecked) addNewEntry(name, oldValues);
     else {
       // when button is unchecked removed all field created by checkbox
       const removalList = oldValues.filter((val) => val.groupName !== name);
@@ -100,29 +100,33 @@ const Form: React.FC<FormProps> = (props) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    if (withFileUpload) {
-    } else {
-      let payload: { [key: string]: SubmitPayload } = {};
-      const uniqueGroups: { [key: string]: string[] } = {};
-      values.forEach((val) => {
-        const { group, sharedKey, name, value, groupName } = val;
-        // check if value is part of a group
-        if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
-          const groupPayload = { value, name, sharedKey, group, groupName };
-          // check if the group has not been checked
-          if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
-            // if not checked add to uniqueGroups; create new instance
-            uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
-          }
-          payload[group].group?.push(groupPayload);
-          // otherwise its not part of a group
-        } else payload[name] = { value, name };
-      });
-      if (schema) {
-        const errors = validateForm({ values, schema });
-        objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
-      } else onSubmit(payload);
-    }
+    // if (withFileUpload) {
+    let payload: { [key: string]: any } = {};
+    const uniqueGroups: { [key: string]: string[] } = {};
+    values.forEach((val) => {
+      const { group, sharedKey, name, value, groupName, type } = val;
+      // double check if file is there
+      if (type === "file") {
+        // const formData = new FormData(val.value);
+        payload[name] = val.value;
+      }
+      // check if value is part of a group
+      else if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
+        const groupPayload = { value, name, sharedKey, group, groupName };
+        // check if the group has not been checked
+        if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
+          // if not checked add to uniqueGroups; create new instance
+          uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
+        }
+        payload[group].group?.push(groupPayload);
+      } else payload[name] = value;
+    });
+    onSubmit(payload);
+    if (schema) {
+      const errors = validateForm({ values, schema });
+      objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
+    } else onSubmit(payload);
+    // }
   };
   const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;
@@ -130,7 +134,7 @@ const Form: React.FC<FormProps> = (props) => {
     let oldValues = [...values];
     oldValues[fieldIndex].canMultiply = false;
     // if form has an entry value
-    addNewEntry(groupName, oldValues, fieldIndex);
+    addNewEntry(groupName, oldValues);
   };
   const handleRemovalClick = (e: FormFieldValues, idx: number) => {
     if (addEntry && e.onMultiply) {
@@ -155,11 +159,9 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
 
-  const handleHeroChange = (selectedFile: SelectFileProp) => {
-    const name = selectedFile.name;
+  const handleHeroChange = (selectedFile: File, idx: number) => {
     let oldValues = [...values];
-    const valIdx = oldValues.findIndex((ov) => ov.name === name);
-    oldValues[valIdx].value = selectedFile;
+    oldValues[idx].value = selectedFile;
     setValues(oldValues);
   };
 
@@ -187,7 +189,7 @@ const Form: React.FC<FormProps> = (props) => {
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
-            handleHeroChange={(e) => handleHeroChange(e)}
+            handleHeroChange={(e) => handleHeroChange(e, keyIdx)}
             fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}
             canMultiply={value.canMultiply}

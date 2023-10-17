@@ -6,8 +6,7 @@
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
   export type SubmitPayload = {
-    value: string;
-    name: string;
+    value?: any;
     group?: { value?: string; name?: string; sharedKey?: string; group?: string }[];
   };
   type FormProp = {
@@ -149,7 +148,7 @@ declare module "nxs-form" {
     handleChange: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
-    handleHeroChange?: (key: SelectFileProp) => void;
+    handleHeroChange?: (key: File) => void;
   }
   export interface LabelProps {
     label: string;
@@ -164,7 +163,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     selectLabel?: string;
     error?: string;
-    onSelect: (e: SelectFileProp) => void;
+    onSelect: (e: File) => void;
   }
   export interface TextAreaProps {
     input: InputProp;
