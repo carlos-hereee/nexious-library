@@ -100,33 +100,41 @@ const Form: React.FC<FormProps> = (props) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    // if (withFileUpload) {
-    let payload: { [key: string]: any } = {};
-    const uniqueGroups: { [key: string]: string[] } = {};
-    values.forEach((val) => {
-      const { group, sharedKey, name, value, groupName, type } = val;
-      // double check if file is there
-      if (type === "file") {
-        // const formData = new FormData(val.value);
-        payload[name] = val.value;
+    if (withFileUpload) {
+      // form data is tricky it wont show values in console, send to db and check there
+      const formData = new FormData();
+      for (let item = 0; item < values.length; item++) {
+        const current = values[item];
+        formData.append(current.name, current.value);
       }
-      // check if value is part of a group
-      else if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
-        const groupPayload = { value, name, sharedKey, group, groupName };
-        // check if the group has not been checked
-        if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
-          // if not checked add to uniqueGroups; create new instance
-          uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
+      onSubmit(formData);
+    } else {
+      let payload: { [key: string]: any } = {};
+      const uniqueGroups: { [key: string]: string[] } = {};
+      values.forEach((val) => {
+        const { group, sharedKey, name, value, groupName, type } = val;
+        // double check if file is there
+        if (type === "file") {
+          // const formData = new FormData(val.value);
+          payload[name] = val.value;
         }
-        payload[group].group?.push(groupPayload);
-      } else payload[name] = value;
-    });
-    onSubmit(payload);
-    if (schema) {
-      const errors = validateForm({ values, schema });
-      objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
-    } else onSubmit(payload);
-    // }
+        // check if value is part of a group
+        else if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
+          const groupPayload = { value, name, sharedKey, group, groupName };
+          // check if the group has not been checked
+          if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
+            // if not checked add to uniqueGroups; create new instance
+            uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
+          }
+          payload[group].group?.push(groupPayload);
+        } else payload[name] = value;
+      });
+      onSubmit(payload);
+      if (schema) {
+        const errors = validateForm({ values, schema });
+        objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
+      } else onSubmit(payload);
+    }
   };
   const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;

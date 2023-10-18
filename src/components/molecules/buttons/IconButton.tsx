@@ -12,6 +12,7 @@ import { IconButtonProps } from "nxs-button";
  * @returns button with icon label
  */
 const IconButton: React.FC<IconButtonProps> = (props) => {
+  if (!props.icon) return <p className="error-message">Double check icon prop</p>;
   const { icon, color, label, name, size, spin } = props.icon;
   const { theme, onClick, ping } = props;
   if (!icon) return;
