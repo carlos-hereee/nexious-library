@@ -1,5 +1,5 @@
 import { KeyStringProp } from "@nxs-utils/helpers/types";
-import { validateForm } from "./validateForm";
+import { useFormValidation } from "../hooks/useFormValidation";
 import { initLabels } from "./labels";
 
 type HandleFormChangeProps = {
@@ -20,5 +20,5 @@ export const handleFormChange = (props: HandleFormChangeProps) => {
   Object.keys(values).forEach((p) => {
     if (touched.includes(p) || p === key) validate[key] = value;
   });
-  return validateForm({ values, schema, label });
+  return useFormValidation({ values, schema, label });
 };

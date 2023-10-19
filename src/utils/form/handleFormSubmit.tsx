@@ -1,12 +1,12 @@
-import { validateForm } from "./validateForm";
+import { useFormValidation } from "../hooks/useFormValidation";
 
 type HandleFormSubmitProps = {
   values: { [key: string]: any };
-  schema?: { required: string[] };
+  schema: { required: string[] };
   label?: { [key: string]: string };
 };
 export const handleFormSubmit = (props: HandleFormSubmitProps) => {
   const { schema, label, values } = props;
   // validate schema
-  return validateForm({ values, schema, label });
+  return useFormValidation({ values, schema, label });
 };
