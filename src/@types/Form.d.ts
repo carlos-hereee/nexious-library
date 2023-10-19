@@ -28,12 +28,13 @@ declare module "nxs-form" {
     hideSubmit?: boolean;
     withFileUpload?: boolean;
     showAuthTips?: boolean;
+    responseError?: string;
     theme?: string;
     labels?: KeyStringProp;
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     submitLabel?: string;
-    schema?: { required: string[] };
+    schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     addEntry?: {
@@ -90,6 +91,7 @@ declare module "nxs-form" {
     // optional props
     order?: string[]; //defaults set to first form on list
     hideNavigation?: boolean;
+    responseError?: string;
   }
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
   export type FormValueProps = {

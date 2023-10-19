@@ -14,16 +14,21 @@ import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
-  const { labels, placeholders, types, formName, heading, hideSubmit } = props;
+  const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
   const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload } = props;
   const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel } = props;
+  // init schema
   // must have required props
   const reqProps = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(reqProps, true);
-  const { formErrors, validationStatus, checkRequired, validateForm } = useFormValidation({
-    required: props.schema?.required || [],
-    labels,
-  });
+  const {
+    formErrors,
+    validationStatus,
+    checkRequired,
+    validateForm,
+    setStatus,
+    checkUniqueness,
+  } = useFormValidation({ ...props.schema, labels });
   // key variables
   const valuePayload = { initialValues, labels, types, placeholders, addEntry };
   const { values, setValues, formatEntry } = useValues(valuePayload);
@@ -32,6 +37,7 @@ const Form: React.FC<FormProps> = (props) => {
   useEffect(() => {
     if (validationStatus === "green") {
       withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
+      setStatus("red");
     }
   }, [validationStatus]);
 
@@ -76,11 +82,15 @@ const Form: React.FC<FormProps> = (props) => {
   const handleChange = (event: any, idx: number) => {
     // key variables
     const value = event.currentTarget.value;
-    const current = values[idx].name;
     let oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
-    if (validationStatus === "red") checkRequired(oldValues[idx], current);
+    if (validationStatus === "red") {
+      const current = values[idx].name;
+      // check required first and then uniqueness
+      checkRequired(oldValues[idx], current);
+      checkUniqueness(oldValues[idx], current);
+    }
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
@@ -160,6 +170,7 @@ const Form: React.FC<FormProps> = (props) => {
       encType={withFileUpload ? "multipart/form-data" : undefined}
     >
       {heading && <h2 className="heading">{heading}</h2>}
+      {responseError && <p className="error-message">{responseError}</p>}
       {values.map((value, keyIdx) => {
         return (
           <FormField

@@ -9,6 +9,7 @@ import { makeStrReadable } from "@nxs-utils/app/text";
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation, onCancel } = props;
+  const { responseError } = props;
   const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
     { paginate },
     true
@@ -97,6 +98,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           types={types}
           theme={theme}
           withFileUpload={withFileUpload}
+          responseError={responseError}
           schema={schema}
           addEntry={addEntry}
           fieldHeading={fieldHeading}

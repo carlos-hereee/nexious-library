@@ -5,20 +5,23 @@ import { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 
 type ValidateProps = {
-  required: string[];
+  required?: string[];
+  unique?: { name: string; list: string[] }[];
   labels?: KeyStringProp;
 };
 
 export const useFormValidation = (props: ValidateProps) => {
-  const { labels, required } = props;
+  const { labels, required, unique } = props;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [validationStatus, setStatus] = useState<"red" | "green">("red");
+  let require = required || [];
+  let uniqueList = unique || [{ name: "", list: [] }];
 
-  const addRequireError = (current: string) => {
-    setFormErrors({ ...formErrors, [current]: `${getLabel(current, labels)} is required` });
+  const addFormError = (current: string, message: string) => {
+    setFormErrors({ ...formErrors, [current]: `${getLabel(current, labels)} ${message}` });
     setStatus("red");
   };
-  const removeRequireError = (current: string) => {
+  const removeError = (current: string) => {
     // [current] : _ is used to capture the value associated with current key
     // _ is a throwaway variable when you dont need the value
     const { [current]: _, ...newObj } = formErrors;
@@ -26,16 +29,30 @@ export const useFormValidation = (props: ValidateProps) => {
   };
   const checkRequired = (v: FieldValueProps, current: string) => {
     // only check if its required
-    if (required.includes(current)) {
+    if (require.includes(current)) {
       // add error message based on value exists else remove error message
-      v.value ? removeRequireError(current) : addRequireError(current);
+      v.value ? removeError(current) : addFormError(current, "is required");
+    }
+  };
+  const checkUniqueness = (v: FieldValueProps, current: string) => {
+    // find list idx
+    const isUnique = uniqueList.findIndex((list) => list.name === current);
+    // check for any  unique values that match schema
+    if (isUnique >= 0) {
+      // find value in list  unique
+      const valueIdx = uniqueList[isUnique].list.findIndex((l) => l.includes(v.value));
+      // if found add error
+      valueIdx >= 0
+        ? addFormError(current, "value already exist try a different name")
+        : removeError(current);
     }
   };
   const validateForm = (values: FieldValueProps[]) => {
     let errors = {};
     for (let index = 0; index < values.length; index++) {
       const current = values[index];
-      if (required.includes(current.name)) {
+      // only check if its required
+      if (require.includes(current.name)) {
         const key = current.name;
         // if value is empty
         if (!current.value) {
@@ -54,6 +71,7 @@ export const useFormValidation = (props: ValidateProps) => {
     setStatus,
     checkRequired,
     validateForm,
+    checkUniqueness,
   };
 };
 
