@@ -5,11 +5,17 @@
 
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
-  export type SubmitPayload = {
-    value?: any;
-    group?: { value?: string; name?: string; sharedKey?: string; group?: string }[];
+  // export type SubmitPayload = {
+  //   value?: any;
+  //   group?: { value?: string; name?: string; sharedKey?: string; group?: string }[];
+  // };
+  export type SelectFileProp = {
+    name: string;
+    filename: string;
+    file: File;
   };
-  type FormProp = {
+  // Type declarations go here
+  export type FormProps = {
     // required props
     initialValues: FormInitValues;
     onSubmit: (e: any) => void;
@@ -44,7 +50,7 @@ declare module "nxs-form" {
       };
     };
   };
-  type InputProp = {
+  export type InputProps = {
     name: string;
     value?: string;
     label?: string;
@@ -60,7 +66,7 @@ declare module "nxs-form" {
     onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onBlur?: () => void;
   };
-  type FormFieldValues = {
+  export type FieldValueProps = {
     value: any;
     label: string;
     name: string;
@@ -74,15 +80,6 @@ declare module "nxs-form" {
     groupName?: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
-  export type SelectFileProp = {
-    name: string;
-    filename: string;
-    file: File;
-  };
-  // Type declarations go here
-  export type FormProps = FormProp;
-  export type InputProps = InputProp;
-  export type FieldValueProp = FormFieldValues;
   export interface PaginateFormProps {
     // required props
     paginate: FormProps[];
@@ -126,7 +123,6 @@ declare module "nxs-form" {
     sharedKey?: string;
     groupName?: string;
   };
-  export type FormInitialValueProps = FormFieldValues;
   export interface FormFieldProps {
     name: string;
     value: string;
@@ -157,7 +153,7 @@ declare module "nxs-form" {
     errors?: string;
   }
   export interface UploadFileProps {
-    input: InputProp;
+    input: InputProps;
     label: string;
     theme?: string;
     hideLabels?: boolean;
@@ -166,7 +162,7 @@ declare module "nxs-form" {
     onSelect: (e: File) => void;
   }
   export interface TextAreaProps {
-    input: InputProp;
+    input: InputProps;
     theme?: string;
     hideLabels?: boolean;
   }

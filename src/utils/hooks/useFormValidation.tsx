@@ -1,32 +1,37 @@
-import { validateEmail } from "../form/validateEmail";
-import { isMatch } from "../form/matchingPassword";
 import { getLabel } from "../form/labels";
-import { KeyStringProp } from "@nxs-utils/helpers/types";
-import { FormFieldValues } from "nxs-form";
-import { useEffect, useState } from "react";
+import { FieldValueProps } from "nxs-form";
+import { useState } from "react";
+import { KeyStringProp } from "custom-props";
 
 type ValidateProps = {
-  values: { [key: string]: any };
-  schema?: { required: string[] };
-  label?: KeyStringProp;
+  required?: string[];
+  labels?: KeyStringProp;
 };
 
 export const useFormValidation = (props: ValidateProps) => {
-  const { values, label, schema } = props;
-  const [formErrors, setFormErrors] = useState<KeyStringProp>({});
-  useEffect(() => {
-    const required = schema?.required || [];
-    // TODO: include custom labels
-    values.forEach((key: FormFieldValues) => {
-      // only check if its required
-      if (required.includes(key.name)) {
-        const current = key.name;
+  const { labels, required } = props;
+  const [formErrors, setFormErrors] = useState<KeyStringProp | undefined>(undefined);
+
+  const validateRequired = (v: FieldValueProps) => {
+    // only check if its required
+    if (required && required.includes(v.name)) {
+      const current = v.name;
+      setFormErrors({
+        ...formErrors,
         // check if empty
-        console.log("values", current, ":", values[current]);
-        if (!values[current]) {
-          return getLabel(current, label) + " " + "is a required field";
-        }
-        // validate email
+        [current]: v.value ? `${getLabel(current, labels)} is required` : "",
+      });
+    }
+  };
+
+  return { setFormErrors, formErrors, validateRequired };
+};
+
+/**
+ * 
+ * 
+ * OTHER VALIDATION
+ *  // validate email
         if (current === "email" && !validateEmail(values[current])) {
           return getLabel(current, label) + " " + "should be a valid email address";
         }
@@ -47,7 +52,4 @@ export const useFormValidation = (props: ValidateProps) => {
           }
         }
       }
-    });
-  });
-  return { setFormErrors, formErrors };
-};
+ */

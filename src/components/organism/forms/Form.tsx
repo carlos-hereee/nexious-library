@@ -1,32 +1,41 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { FormFieldValues, FormProps } from "nxs-form";
+import { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import CancelButton from "@nxs-atoms/buttons/CancelButton";
+import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
-  const { labels, placeholders, types, schema, formName, heading, hideSubmit } = props;
+  const { labels, placeholders, types, formName, heading, hideSubmit } = props;
   const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload } = props;
   const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel } = props;
+  const required = props.schema?.required || [];
   // must have required props
-  const required = { initialValues, onSubmit };
-  const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(required, true);
+  const reqProps = { initialValues, onSubmit };
+  const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(reqProps, true);
+  const { formErrors, validateRequired } = useFormValidation({ required, labels });
   // key variables
   const valuePayload = { initialValues, labels, types, placeholders, addEntry };
   const { values, setValues, formatEntry } = useValues(valuePayload);
-  const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
+  const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
 
-  const addNewEntry = (name: string, oldValues: FormFieldValues[]) => {
+  useEffect(() => {
+    if (isReadyToSubmit) {
+      withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
+    }
+  }, [isReadyToSubmit]);
+
+  const addNewEntry = (name: string, oldValues: FieldValueProps[]) => {
     // if form has an entry value
     if (addEntry && addEntry[name]) {
       const entryValues = objToArray(addEntry[name].initialValues);
@@ -68,13 +77,14 @@ const Form: React.FC<FormProps> = (props) => {
     // addTouched(key);
     // key variables
     const value = event.currentTarget.value;
-    console.log("value", value);
     let oldValues = [...values];
     oldValues[idx].value = value;
-    setValues(oldValues);
+    // check schema if value is required for validation
+    if (required.includes(oldValues[idx].name)) validateRequired(oldValues[idx]);
     if (onChange) onChange(oldValues);
+    setValues(oldValues);
   };
-  const handleCheckbox = (event: any, field: FormFieldValues, idx: number) => {
+  const handleCheckbox = (event: any, field: FieldValueProps, idx: number) => {
     const { name } = field;
     // addTouched(key);
     // key variables
@@ -103,33 +113,9 @@ const Form: React.FC<FormProps> = (props) => {
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
     // check shema for erros if theres no erros continue
-    if (withFileUpload) {
-      // form data is tricky it wont show values in console, send to db and check there
-      const formData = new FormData();
-      for (let item = 0; item < values.length; item++) {
-        const current = values[item];
-        formData.append(current.name, current.value);
-      }
-      // onSubmit(formData);
-    } else {
-      let payload: { [key: string]: any } = {};
-      const uniqueGroups: { [key: string]: string[] } = {};
-      values.forEach((val) => {
-        const { group, sharedKey, name, value, groupName } = val;
-        // check if value is part of a group
-        if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
-          const groupPayload = { value, name, sharedKey, group, groupName };
-          // check if the group has not been checked
-          if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
-            // if not checked add to uniqueGroups; create new instance
-            uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
-          }
-          payload[group].group?.push(groupPayload);
-        } else payload[name] = value;
-      });
-    }
+    if (formErrors && objLength(formErrors) === 0) setIsReadyToSubmit(true);
   };
-  const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
+  const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;
     // move button to last appropriate field
     let oldValues = [...values];
@@ -137,7 +123,7 @@ const Form: React.FC<FormProps> = (props) => {
     // if form has an entry value
     addNewEntry(groupName, oldValues);
   };
-  const handleRemovalClick = (e: FormFieldValues, idx: number) => {
+  const handleRemovalClick = (e: FieldValueProps, idx: number) => {
     if (addEntry && e.onMultiply) {
       // find the number of fields to delete
       const groupName = e.groupName ? e.groupName : e.onMultiply.name;
