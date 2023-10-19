@@ -116,7 +116,9 @@ const Form: React.FC<FormProps> = (props) => {
     formProps.preventDefault();
     // check validation status to contine
     if (validationStatus === "red") {
-      if (validateForm(values)) setIsReadyToSubmit(true);
+      const passes = validateForm(values);
+      console.log("passes", passes);
+      if (passes) setIsReadyToSubmit(true);
     } else setIsReadyToSubmit(true);
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
