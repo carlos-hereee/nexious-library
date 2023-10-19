@@ -20,7 +20,7 @@ const Form: React.FC<FormProps> = (props) => {
   // must have required props
   const reqProps = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(reqProps, true);
-  const { formErrors, validationStatus, checkRequired } = useFormValidation({
+  const { formErrors, validationStatus, checkRequired, validateForm } = useFormValidation({
     required: props.schema?.required || [],
     labels,
   });
@@ -76,13 +76,13 @@ const Form: React.FC<FormProps> = (props) => {
     else setValues(oldValues);
   };
   const handleChange = (event: any, idx: number) => {
-    // addTouched(key);
     // key variables
     const value = event.currentTarget.value;
+    const current = values[idx].name;
     let oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
-    if (validationStatus === "red") checkRequired(oldValues[idx]);
+    if (validationStatus === "red") checkRequired(oldValues[idx], current);
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
@@ -114,11 +114,9 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    // avoid if form is empty and no inivial values were added
-    if (formErrors === undefined) {
-      // validate form
-      values.forEach((val) => checkRequired(val));
-      // check shema for erros if theres no erros continue
+    // check validation status to contine
+    if (validationStatus === "red") {
+      if (validateForm(values)) setIsReadyToSubmit(true);
     } else setIsReadyToSubmit(true);
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {

@@ -13,10 +13,9 @@ export const useFormValidation = (props: ValidateProps) => {
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [lightColor, setLightColor] = useState<"red" | "green">("red");
 
-  const checkRequired = (v: FieldValueProps) => {
-    const current = v.name;
+  const checkRequired = (v: FieldValueProps, current: string) => {
     // only check if its required
-    if (required && required.includes(current)) {
+    if (required.includes(current)) {
       // check if formErrors have been added
       formErrors
         ? setFormErrors({
@@ -29,8 +28,27 @@ export const useFormValidation = (props: ValidateProps) => {
           });
     }
   };
+  const validateForm = (values: FieldValueProps[]) => {
+    let passesCheck = true;
+    for (let index = 0; index < values.length; index++) {
+      const current = values[index].name;
+      // only check if its required
+      if (required.includes(current)) {
+        // if any values are empty  it fails pass check
+        if (!values[index].value) passesCheck = false;
+      }
+    }
+    passesCheck ? setLightColor("green") : setLightColor("red");
+    return passesCheck;
+  };
 
-  return { setFormErrors, formErrors, checkRequired, validationStatus: lightColor };
+  return {
+    formErrors,
+    validationStatus: lightColor,
+    setFormErrors,
+    checkRequired,
+    validateForm,
+  };
 };
 
 /**
