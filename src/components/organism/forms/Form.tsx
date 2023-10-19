@@ -29,13 +29,12 @@ const Form: React.FC<FormProps> = (props) => {
   const { values, setValues, formatEntry } = useValues(valuePayload);
   const [selection, setSelection] = useState<KeyStringProp>({});
   const [touchSchema, setTouchSchema] = useState<string[]>([]);
-  const [isReadyToSubmit, setIsReadyToSubmit] = useState<boolean>(false);
 
   useEffect(() => {
-    if (isReadyToSubmit) {
+    if (validationStatus === "green") {
       withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
     }
-  }, [isReadyToSubmit]);
+  }, [validationStatus]);
 
   const addNewEntry = (name: string, oldValues: FieldValueProps[]) => {
     // if form has an entry value
@@ -114,12 +113,10 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
+    // if(validationStatus ==="green")
+
     // check validation status to contine
-    if (validationStatus === "red") {
-      const passes = validateForm(values);
-      console.log("passes", passes);
-      if (passes) setIsReadyToSubmit(true);
-    } else setIsReadyToSubmit(true);
+    if (validationStatus === "red") validateForm(values);
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;
@@ -179,7 +176,7 @@ const Form: React.FC<FormProps> = (props) => {
             selected={selection[keyIdx]}
             selectList={selectList}
             label={value.label}
-            formError={formErrors && formErrors[value.name]}
+            formError={formErrors[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}

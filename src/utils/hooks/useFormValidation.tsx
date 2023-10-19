@@ -2,6 +2,7 @@ import { getLabel } from "../form/labels";
 import { FieldValueProps } from "nxs-form";
 import { useState } from "react";
 import { KeyStringProp } from "custom-props";
+import { objLength } from "@nxs-utils/app/objLength";
 
 type ValidateProps = {
   required: string[];
@@ -11,37 +12,45 @@ type ValidateProps = {
 export const useFormValidation = (props: ValidateProps) => {
   const { labels, required } = props;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
-  const [lightColor, setLightColor] = useState<"red" | "green">("red");
+  const [validationStatus, setStatus] = useState<"red" | "green">("red");
 
   const addRequireError = (current: string) => {
     setFormErrors({ ...formErrors, [current]: `${getLabel(current, labels)} is required` });
+    setStatus("red");
+  };
+  const removeRequireError = (current: string) => {
+    // [current] : _ is used to capture the value associated with current key
+    // _ is a throwaway variable when you dont need the value
+    const { [current]: _, ...newObj } = formErrors;
+    setFormErrors(newObj);
+    // if newObj is empty after removal form is ready to submit
+    if (objLength(newObj) === 0) setStatus("green");
   };
   const checkRequired = (v: FieldValueProps, current: string) => {
     // only check if its required
-    if (required.includes(current)) v.value && addRequireError(current);
+    if (required.includes(current)) {
+      // add error message based on value exists else remove error message
+      v.value ? removeRequireError(current) : addRequireError(current);
+    }
   };
   const validateForm = (values: FieldValueProps[]) => {
-    let passesCheck = true;
+    let errors = {};
     for (let index = 0; index < values.length; index++) {
-      // const v = values[index]
       const current = values[index];
-      // only check if its required
       if (required.includes(current.name)) {
-        // if any values are empty  it fails pass check
-        if (!current.value) {
-          addRequireError(current.name);
-          passesCheck = false;
-        }
+        const key = current.name;
+        errors = { ...errors, [key]: `${getLabel(key, labels)} is required` };
       }
     }
-    passesCheck ? setLightColor("green") : setLightColor("red");
-    return passesCheck;
+    if (objLength(errors) === 0) setStatus("green");
+    else setFormErrors(errors);
   };
 
   return {
+    validationStatus,
     formErrors,
-    validationStatus: lightColor,
     setFormErrors,
+    setStatus,
     checkRequired,
     validateForm,
   };
