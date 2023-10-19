@@ -17,11 +17,13 @@ const Form: React.FC<FormProps> = (props) => {
   const { labels, placeholders, types, formName, heading, hideSubmit } = props;
   const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload } = props;
   const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel } = props;
-  const required = props.schema?.required || [];
   // must have required props
   const reqProps = { initialValues, onSubmit };
   const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(reqProps, true);
-  const { formErrors, validateRequired } = useFormValidation({ required, labels });
+  const { formErrors, validationStatus, checkRequired } = useFormValidation({
+    required: props.schema?.required || [],
+    labels,
+  });
   // key variables
   const valuePayload = { initialValues, labels, types, placeholders, addEntry };
   const { values, setValues, formatEntry } = useValues(valuePayload);
@@ -80,7 +82,7 @@ const Form: React.FC<FormProps> = (props) => {
     let oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
-    if (required.includes(oldValues[idx].name)) validateRequired(oldValues[idx]);
+    if (validationStatus === "red") checkRequired(oldValues[idx]);
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
@@ -112,8 +114,12 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    // check shema for erros if theres no erros continue
-    if (formErrors && objLength(formErrors) === 0) setIsReadyToSubmit(true);
+    // avoid if form is empty and no inivial values were added
+    if (formErrors === undefined) {
+      // validate form
+      values.forEach((val) => checkRequired(val));
+      // check shema for erros if theres no erros continue
+    } else setIsReadyToSubmit(true);
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
     const groupName = e.groupName || e.onMultiply?.name || e.name;

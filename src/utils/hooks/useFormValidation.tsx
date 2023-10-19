@@ -4,27 +4,33 @@ import { useState } from "react";
 import { KeyStringProp } from "custom-props";
 
 type ValidateProps = {
-  required?: string[];
+  required: string[];
   labels?: KeyStringProp;
 };
 
 export const useFormValidation = (props: ValidateProps) => {
   const { labels, required } = props;
-  const [formErrors, setFormErrors] = useState<KeyStringProp | undefined>(undefined);
+  const [formErrors, setFormErrors] = useState<KeyStringProp>({});
+  const [lightColor, setLightColor] = useState<"red" | "green">("red");
 
-  const validateRequired = (v: FieldValueProps) => {
+  const checkRequired = (v: FieldValueProps) => {
+    const current = v.name;
     // only check if its required
-    if (required && required.includes(v.name)) {
-      const current = v.name;
-      setFormErrors({
-        ...formErrors,
-        // check if empty
-        [current]: v.value ? `${getLabel(current, labels)} is required` : "",
-      });
+    if (required && required.includes(current)) {
+      // check if formErrors have been added
+      formErrors
+        ? setFormErrors({
+            ...formErrors,
+            // check if empty
+            [current]: v.value ? `${getLabel(current, labels)} is required` : "",
+          })
+        : setFormErrors({
+            [current]: v.value ? `${getLabel(current, labels)} is required` : "",
+          });
     }
   };
 
-  return { setFormErrors, formErrors, validateRequired };
+  return { setFormErrors, formErrors, checkRequired, validationStatus: lightColor };
 };
 
 /**
