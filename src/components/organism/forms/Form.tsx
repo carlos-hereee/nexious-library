@@ -5,7 +5,7 @@ import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objLength, objToArray } from "@nxs-utils/app/objLength";
 import { validateForm } from "@nxs-utils/form/validateForm";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { FormFieldValues, FormProps, SelectFileProp, SubmitPayload } from "nxs-form";
+import { FormFieldValues, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
@@ -98,42 +98,42 @@ const Form: React.FC<FormProps> = (props) => {
   const addTouched = (key: string) => {
     if (!touchSchema.includes(key)) setTouchSchema((prev) => [...prev, key]);
   };
+  const checkSchema = () => {
+    // if custom schema was entered
+    const errors = validateForm({ values, schema });
+    setFormErrors(errors);
+    // validate schema and return is its empty
+    return objLength(errors) > 0;
+  };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    if (withFileUpload) {
-      // form data is tricky it wont show values in console, send to db and check there
-      const formData = new FormData();
-      for (let item = 0; item < values.length; item++) {
-        const current = values[item];
-        formData.append(current.name, current.value);
-      }
-      onSubmit(formData);
-    } else {
-      let payload: { [key: string]: any } = {};
-      const uniqueGroups: { [key: string]: string[] } = {};
-      values.forEach((val) => {
-        const { group, sharedKey, name, value, groupName, type } = val;
-        // double check if file is there
-        if (type === "file") {
-          // const formData = new FormData(val.value);
-          payload[name] = val.value;
+    // check shema for erros if theres no erros continue
+    if (!checkSchema()) {
+      if (withFileUpload) {
+        // form data is tricky it wont show values in console, send to db and check there
+        const formData = new FormData();
+        for (let item = 0; item < values.length; item++) {
+          const current = values[item];
+          formData.append(current.name, current.value);
         }
-        // check if value is part of a group
-        else if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
-          const groupPayload = { value, name, sharedKey, group, groupName };
-          // check if the group has not been checked
-          if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
-            // if not checked add to uniqueGroups; create new instance
-            uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
-          }
-          payload[group].group?.push(groupPayload);
-        } else payload[name] = value;
-      });
-      onSubmit(payload);
-      if (schema) {
-        const errors = validateForm({ values, schema });
-        objLength(errors) > 0 ? setFormErrors(errors) : onSubmit(payload);
-      } else onSubmit(payload);
+        // onSubmit(formData);
+      } else {
+        let payload: { [key: string]: any } = {};
+        const uniqueGroups: { [key: string]: string[] } = {};
+        values.forEach((val) => {
+          const { group, sharedKey, name, value, groupName } = val;
+          // check if value is part of a group
+          if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
+            const groupPayload = { value, name, sharedKey, group, groupName };
+            // check if the group has not been checked
+            if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
+              // if not checked add to uniqueGroups; create new instance
+              uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
+            }
+            payload[group].group?.push(groupPayload);
+          } else payload[name] = value;
+        });
+      }
     }
   };
   const handleMultiplyClick = (e: FormFieldValues, fieldIndex: number) => {
@@ -173,6 +173,7 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
   };
 
+  console.log("formErrors", formErrors);
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
     <form
@@ -193,7 +194,7 @@ const Form: React.FC<FormProps> = (props) => {
             selected={selection[keyIdx]}
             selectList={selectList}
             label={value.label}
-            formError={formErrors && formErrors[keyIdx]}
+            formError={formErrors && formErrors[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
