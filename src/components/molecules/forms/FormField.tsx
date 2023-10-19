@@ -57,6 +57,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       ) : type === "file" ? (
         <UploadFile
           input={{ name, error: formError }}
+          value={value}
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />

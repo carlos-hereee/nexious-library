@@ -125,7 +125,7 @@ declare module "nxs-form" {
   };
   export interface FormFieldProps {
     name: string;
-    value: string;
+    value: any;
     placeholder: string;
     label: string;
     type: string;
@@ -155,6 +155,7 @@ declare module "nxs-form" {
   export interface UploadFileProps {
     input: InputProps;
     label: string;
+    value?: File;
     theme?: string;
     hideLabels?: boolean;
     selectLabel?: string;

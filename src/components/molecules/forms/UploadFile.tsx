@@ -1,20 +1,24 @@
 import { Label } from "@nxs-atoms/index";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ErrorMessages } from "@nxs-molecules";
-import { initLabels } from "@nxs-utils/form/labels";
 import { UploadFileProps } from "nxs-form";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { name, error } = props.input;
-  const { selectLabel, label, hideLabels, onSelect, theme } = props;
+  const { selectLabel, label, hideLabels, onSelect, theme, value } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ onSelect, name }, true);
-  const [currentImage, setCurrentImage] = useState<File>();
+  const [currentImage, setCurrentImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUpLoaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef(null);
-  const labels = label ? label : initLabels[name];
+
+  useEffect(() => {
+    // use init values
+    setCurrentImage(value || null);
+    setPreviewImage(value ? URL.createObjectURL(value) : "");
+  }, []);
 
   const imageClick = () => {
     imageUpLoaderRef.current && imageUpLoaderRef.current.click();
@@ -36,7 +40,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   return (
     <div className={`field-upload ${theme ? theme : ""}`}>
       <div className="flex-d-column flex-start">
-        {!hideLabels && <Label name={name} label={labels} errors={error} />}
+        {!hideLabels && <Label name={name} label={label} errors={error} />}
         <input
           type="file"
           onChange={selectImage}

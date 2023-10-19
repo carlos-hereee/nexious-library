@@ -23,8 +23,6 @@ export const useFormValidation = (props: ValidateProps) => {
     // _ is a throwaway variable when you dont need the value
     const { [current]: _, ...newObj } = formErrors;
     setFormErrors(newObj);
-    // if newObj is empty after removal form is ready to submit
-    if (objLength(newObj) === 0) setStatus("green");
   };
   const checkRequired = (v: FieldValueProps, current: string) => {
     // only check if its required
@@ -39,7 +37,10 @@ export const useFormValidation = (props: ValidateProps) => {
       const current = values[index];
       if (required.includes(current.name)) {
         const key = current.name;
-        errors = { ...errors, [key]: `${getLabel(key, labels)} is required` };
+        // if value is empty
+        if (!current.value) {
+          errors = { ...errors, [key]: `${getLabel(key, labels)} is required` };
+        }
       }
     }
     if (objLength(errors) === 0) setStatus("green");

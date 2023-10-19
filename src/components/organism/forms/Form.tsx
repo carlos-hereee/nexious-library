@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
-import { objLength, objToArray } from "@nxs-utils/app/objLength";
+import { objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { FieldValueProps, FormProps } from "nxs-form";
@@ -28,7 +28,6 @@ const Form: React.FC<FormProps> = (props) => {
   const valuePayload = { initialValues, labels, types, placeholders, addEntry };
   const { values, setValues, formatEntry } = useValues(valuePayload);
   const [selection, setSelection] = useState<KeyStringProp>({});
-  const [touchSchema, setTouchSchema] = useState<string[]>([]);
 
   useEffect(() => {
     if (validationStatus === "green") {
@@ -103,18 +102,12 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
   const handleSelection = (value: string, name: string) => {
-    addTouched(name);
     setValues({ ...values, [name]: value });
     setSelection({ [name]: value });
-  };
-  const addTouched = (key: string) => {
-    if (!touchSchema.includes(key)) setTouchSchema((prev) => [...prev, key]);
   };
 
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    // if(validationStatus ==="green")
-
     // check validation status to contine
     if (validationStatus === "red") validateForm(values);
   };
@@ -151,7 +144,10 @@ const Form: React.FC<FormProps> = (props) => {
 
   const handleHeroChange = (selectedFile: File, idx: number) => {
     let oldValues = [...values];
+    const current = oldValues[idx].name;
     oldValues[idx].value = selectedFile;
+    // check schema if value is required for validation
+    if (validationStatus === "red") checkRequired(oldValues[idx], current);
     setValues(oldValues);
   };
 
