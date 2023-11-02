@@ -26,3 +26,15 @@
   background-color: #{$dark-mode};
   color: #{$light-mode};
 }
+.alt-light-mode {
+  background-color: #{$dark-mode-alt};
+  color: #{$light-mode};
+}
+.alt-dark-mode {
+  background-color: #{$dark-mode-alt};
+  color: #{$light-mode};
+  &:disabled{
+    background-color: #{$dark-mode};
+    color: #{$faded};
+  }
+}

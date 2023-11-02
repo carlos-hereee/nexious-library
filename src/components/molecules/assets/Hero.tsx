@@ -42,7 +42,6 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick }) => {
           className={theme ? `hero ${theme}` : "hero"}
           src={hero.url}
           alt={hero.alt}
-          onLoad={() => setLoad(true)}
         />
       ) : (
         <button type="button" className="preview-hero-empty" onClick={onImageClick}>

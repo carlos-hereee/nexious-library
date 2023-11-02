@@ -21,15 +21,18 @@
     flex-direction: column;
     position: absolute;
     transition: clip-path ease-in-out 700ms;
+    align-items: center;
     padding: #{$rem};
     min-width: 50%;
     min-height: 70vh;
     z-index: 9999;
     right: 0;
     top: 15%;
+    // *{
+    //   width: 100%;
+    // }
   }
   .navigation[data-state="open"] {
-    background-color: #{$light-primary};
     display: flex;
     animation: circleOpen 750ms ease-in-out forwards;
   }
@@ -47,7 +50,7 @@
 .navigation {
   display: flex;
   align-items: center;
-  list-style: none;
+    list-style: none;
   gap: #{$rem};
   border-radius: #{$border-radius};
 }
@@ -87,15 +90,18 @@
   align-items: center;
   text-decoration: none;
   gap: #{$rem};
-  color: #{$default-text};
+  color: inherit;
 }
 .nav-btn {
   display: flex;
   width: 100%;
   align-items: center;
+  justify-content: center;
   gap: #{$rem};
 }
 .nav-item {
   display: flex;
   justify-content: flex-start;
+  // width: 100%;
+  flex: 1;
 }

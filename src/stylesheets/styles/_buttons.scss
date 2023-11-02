@@ -10,10 +10,10 @@
   // display: flex;
   // justify-content: center;
   &:hover {
-    border: 1px solid #{$dark-gray};
+    border: 1px solid #{$dark-mode};
   }
   &:focus {
-    border: 1px solid #{$dark-gray};
+    border: 1px solid #{$dark-mode};
   }
 }
 .btn-cta {

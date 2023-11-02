@@ -10,7 +10,7 @@ import { NavigationToggleProps } from "nxs-navigation";
  * @returns navigation button
  */
 const NavToggle: React.FC<NavigationToggleProps> = (props) => {
-  const { data, onSelect, language } = props;
+  const { data, onSelect, language, theme } = props;
   const { active, alternatives } = props.data;
   // console.log('data :>> ', data);
   // console.log("active, alternatives :>> ", active);
@@ -31,14 +31,24 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
         language && <Hero hero={language} />
       )}
       <select onChange={(e) => handleSelect(e.target.value)}>
-        <option value={active.name} title={active.name} disabled>
+        <option
+          value={active.name}
+          title={active.name}
+          disabled
+          className={theme ? "alt-" + theme : ""}
+        >
           {active.label}
         </option>
-        <option value="" hidden>
+        <option value="" hidden className={theme ? "alt-" + theme : ""}>
           {active.label}
         </option>
         {alternatives?.map((alt) => (
-          <option key={alt.uid} value={alt.uid} title={alt.name}>
+          <option
+            key={alt.uid}
+            value={alt.uid}
+            title={alt.name}
+            className={theme ? "alt-" + theme : ""}
+          >
             {alt.label}
           </option>
         ))}

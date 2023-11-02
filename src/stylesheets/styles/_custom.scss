@@ -53,10 +53,10 @@
 .highlight {
   outline: 1px solid #{$faded};
   &:focus {
-    outline: 1px solid #{$dark-gray};
+    outline: 1px solid #{$dark-mode};
   }
   &:hover {
-    outline: 1px solid #{$dark-gray};
+    outline: 1px solid #{$dark-mode};
   }
 }
 .required {

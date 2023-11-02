@@ -2,41 +2,43 @@
 //  * syntax - "my-module" is the name you want to use when importing the
 //  *           module and should match the name used in import statements
 //  * */
-type MenuItemProp = {
-  name: string;
-  label: string;
-  uid?: string;
-  menuItemId?: string;
-  url: string;
-  icon: string;
-  locale?: string;
-  link?: string;
-};
-type MenuProp = {
-  uid?: string;
-  menuId?: string;
-  name: string;
-  icon: string;
-  link: string;
-  locale?: string;
-  label?: string;
-  isToggle?: boolean;
-  isPrivate?: boolean;
-  active: MenuItemProp;
-  alternatives: MenuItemProp[];
-};
-type UnsplashAsset = {
-  artistName: string;
-  artistUrl: string;
-  assetUrl: string;
-};
 
 declare module "nxs-navigation" {
+export  type MenuItemProp = {
+    name: string;
+    label: string;
+    uid?: string;
+    menuItemId?: string;
+    url: string;
+    icon: string;
+    locale?: string;
+    link?: string;
+  };
+export  type MenuProp = {
+    uid?: string;
+    menuId?: string;
+    name: string;
+    icon: string;
+    link: string;
+    locale?: string;
+    label?: string;
+    isToggle?: boolean;
+    isPrivate?: boolean;
+    active: MenuItemProp;
+    alternatives: MenuItemProp[];
+  };
+export  type UnsplashAsset = {
+    artistName: string;
+    artistUrl: string;
+    assetUrl: string;
+  };
+  
   // Define your exported types here
   export interface HeaderProps {
     menu: MenuProp[];
     ping?: number;
     heading?: string;
+    theme?: string;
     logo: {
       url: string;
       alt?: string;
@@ -68,6 +70,7 @@ declare module "nxs-navigation" {
   };
   export interface NavigationToggleProps {
     data: MenuProp;
+    theme?:string
     onSelect: (a: any) => void;
     language?: MenuItemProp;
   }
