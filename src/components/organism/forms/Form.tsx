@@ -161,7 +161,7 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
   };
 
-  console.log("formErrors", formErrors);
+  // console.log("formErrors", formErrors);
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
     <form
