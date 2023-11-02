@@ -5,10 +5,7 @@
 
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
-  // export type SubmitPayload = {
-  //   value?: any;
-  //   group?: { value?: string; name?: string; sharedKey?: string; group?: string }[];
-  // };
+
   export type SelectFileProp = {
     name: string;
     filename: string;

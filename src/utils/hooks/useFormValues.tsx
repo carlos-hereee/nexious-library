@@ -3,7 +3,7 @@ import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
 import { FormInitValues } from "custom-props";
-import { FormInitialValueProps, FormValueProps, AddEntryValueProps } from "nxs-form";
+import { FieldValueProps, FormValueProps, AddEntryValueProps } from "nxs-form";
 import { useEffect, useState } from "react";
 
 // type ExtraValueProps = {
@@ -15,9 +15,9 @@ import { useEffect, useState } from "react";
 
 export const useValues = (props: FormValueProps) => {
   const { initialValues, labels, types, placeholders, addEntry } = props;
-  const [values, setValues] = useState<FormInitialValueProps[]>([]);
+  const [values, setValues] = useState<FieldValueProps[]>([]);
 
-  const formatEntry = (props: AddEntryValueProps): FormInitialValueProps[] => {
+  const formatEntry = (props: AddEntryValueProps): FieldValueProps[] => {
     const { formatValues, fieldHeading, labels, types, placeholders: holder } = props;
     const { group, sharedKey, groupName } = props;
     return formatValues.map((current) => {
@@ -49,7 +49,7 @@ export const useValues = (props: FormValueProps) => {
     setValues([]);
     if (addEntry) {
       const entryData = objToArray(addEntry);
-      let extraData: FormInitialValueProps[] = [];
+      let extraData: FieldValueProps[] = [];
       for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
         const groupName = Object.keys(entryData[entryIdx])[0];
         const { canMultiply, skipIfFalse } = addEntry[groupName];
@@ -93,7 +93,7 @@ export const useValues = (props: FormValueProps) => {
         }
       }
       const entry = formatEntry({ formatValues: data, labels, types, placeholders });
-      const valueData: FormInitialValueProps[] = [];
+      const valueData: FieldValueProps[] = [];
       entry.forEach((entVal) => {
         // add entries to appropriate groups
         valueData.push(entVal);
