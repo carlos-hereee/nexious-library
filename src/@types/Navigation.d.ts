@@ -49,7 +49,7 @@ declare module "nxs-navigation" {
       logoId?: string;
     };
     language?: MenuItemProp;
-    updateMenu: (e: MenuProp[]) => void;
+    updateMenu: (e: MenuProp) => void;
   }
   export interface FooterProps {
     appName: string;
@@ -61,7 +61,6 @@ declare module "nxs-navigation" {
   }
   export type NavbarProps = {
     show: { isActive: boolean; isClose: boolean };
-    toggle: (a: MenuProp[]) => void;
     click: (a: MenuProp) => void;
     menu: MenuProp[];
     theme?: string;

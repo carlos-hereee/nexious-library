@@ -2,13 +2,7 @@ import { IconButton, NavToggle } from "@nxs-molecules";
 import { NavbarProps } from "nxs-navigation";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const { show, toggle, click, menu, theme, language } = props;
-  const handleToggle = (a: any) => {
-    const idx = menu.findIndex((item) => item.uid === a.uid);
-    if (idx) menu[idx] = a;
-    toggle(menu);
-  };
-
+  const { show, click, menu, theme, language } = props;
   return (
     <ul
       className={theme ? `navigation ${theme}` : "navigation"}
@@ -17,7 +11,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       {menu.map((m) => (
         <li className="nav-btn" key={m.menuId}>
           {m.isToggle ? (
-            <NavToggle data={m} onSelect={handleToggle} language={language} />
+            <NavToggle data={m} onSelect={() => click(m)} language={language} />
           ) : m.isPrivate ? (
             <IconButton icon={m.active} onClick={() => click(m)} theme="nav-item highlight" />
           ) : (

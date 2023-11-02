@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { MenuProp } from "@nxs-utils/helpers/types";
@@ -24,7 +23,6 @@ const Header: React.FC<HeaderProps> = (props) => {
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const initClose = () => setClose(true);
@@ -34,7 +32,7 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const handleClick = (e: MenuProp) => {
     setActive(!isActive);
-    e.active && e.active.link ? navigate(`/${e.active.link}`) : navigate(`/${e.active?.name}`);
+    updateMenu(e);
   };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (
@@ -42,12 +40,10 @@ const Header: React.FC<HeaderProps> = (props) => {
       <Logo hero={logo} label={heading} />
       {menu && (
         <>
-          {" "}
           <nav className="primary-navigation">
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}
-              toggle={updateMenu}
               click={handleClick}
               language={language}
             />
@@ -61,7 +57,6 @@ const Header: React.FC<HeaderProps> = (props) => {
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}
-              toggle={updateMenu}
               click={handleClick}
               language={language}
             />
