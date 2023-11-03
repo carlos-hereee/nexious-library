@@ -19,7 +19,7 @@ import { HeaderProps } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, updateMenu, language, heading , theme} = props;
+  const { menu, logo, ping, updateMenu, language, heading, theme } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
@@ -45,7 +45,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               show={{ isActive, isClose }}
               menu={menu}
               click={handleClick}
-              language={language} 
+              language={language}
             />
           </nav>
           <nav className={"mobile-navigation"}>

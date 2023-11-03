@@ -3,6 +3,7 @@ import { FieldValueProps } from "nxs-form";
 import { useState } from "react";
 import { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
+import { emojis } from "@nxs-utils/data/emojis";
 
 type ValidateProps = {
   required?: string[];
@@ -46,7 +47,7 @@ export const useFormValidation = (props: ValidateProps) => {
       if (valueIdx >= 0) {
         addFormError(current, "value already exist try a different name");
       } else {
-        setFormMessage({ [current]: "is, unique" });
+        setFormMessage({ [current]: emojis.checkedBox + " Can be used!" });
         removeError(current);
       }
     }

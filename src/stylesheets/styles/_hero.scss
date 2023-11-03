@@ -54,9 +54,10 @@
   max-width: 70px;
 }
 .logo {
-  display: flex;
-  align-items: center;
-  gap: #{$rem025};
+  min-width: 100px;
+  max-width: 150px;
+  max-height: 150px;
+  min-height: 100px;
 }
 .hero-user {
   border-radius: 100%;
