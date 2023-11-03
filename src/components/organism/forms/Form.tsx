@@ -16,7 +16,7 @@ const Form: React.FC<FormProps> = (props) => {
   // props
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
   const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload } = props;
-  const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel } = props;
+  const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel, schema } = props;
   // init schema
   // must have required props
   const reqProps = { initialValues, onSubmit };
@@ -28,7 +28,8 @@ const Form: React.FC<FormProps> = (props) => {
     validateForm,
     setStatus,
     checkUniqueness,
-  } = useFormValidation({ ...props.schema, labels });
+    formMessage,
+  } = useFormValidation({ ...schema, labels });
   // key variables
   const valuePayload = { initialValues, labels, types, placeholders, addEntry };
   const { values, setValues, formatEntry } = useValues(valuePayload);
@@ -184,6 +185,7 @@ const Form: React.FC<FormProps> = (props) => {
             selectList={selectList}
             label={value.label}
             formError={formErrors[value.name]}
+            formMessage={formMessage[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}

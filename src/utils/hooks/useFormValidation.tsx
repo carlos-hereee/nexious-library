@@ -13,6 +13,7 @@ type ValidateProps = {
 export const useFormValidation = (props: ValidateProps) => {
   const { labels, required, unique } = props;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
+  const [formMessage, setFormMessage] = useState<KeyStringProp>({});
   const [validationStatus, setStatus] = useState<"red" | "green">("red");
   let require = required || [];
   let uniqueList = unique || [{ name: "", list: [] }];
@@ -35,16 +36,19 @@ export const useFormValidation = (props: ValidateProps) => {
     }
   };
   const checkUniqueness = (v: FieldValueProps, current: string) => {
-    // find list idx
-    const isUnique = uniqueList.findIndex((list) => list.name === current);
-    // check for any  unique values that match schema
-    if (isUnique >= 0) {
-      // find value in list  unique
-      const valueIdx = uniqueList[isUnique].list.findIndex((l) => l.includes(v.value));
+    // find requirements list
+    const isUniqueListIdx = uniqueList.findIndex((list) => list.name === current);
+    // if requirements for unique schema are found
+    if (isUniqueListIdx >= 0) {
+      // find unique list
+      const valueIdx = uniqueList[isUniqueListIdx].list.findIndex((l) => l.includes(v.value));
       // if found add error
-      valueIdx >= 0
-        ? addFormError(current, "value already exist try a different name")
-        : removeError(current);
+      if (valueIdx >= 0) {
+        addFormError(current, "value already exist try a different name");
+      } else {
+        setFormMessage({ [current]: "is, unique" });
+        removeError(current);
+      }
     }
   };
   const validateForm = (values: FieldValueProps[]) => {
@@ -72,6 +76,7 @@ export const useFormValidation = (props: ValidateProps) => {
     checkRequired,
     validateForm,
     checkUniqueness,
+    formMessage,
   };
 };
 

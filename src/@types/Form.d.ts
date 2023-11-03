@@ -5,7 +5,16 @@
 
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
-
+  export type AuthFieldProp = {
+    name: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string;
+    placeholder: string;
+    hideLabels?: boolean;
+    labels?: string;
+    errors?: string;
+    formMessage?: string;
+  };
   export type SelectFileProp = {
     name: string;
     filename: string;
@@ -63,6 +72,7 @@ declare module "nxs-form" {
     isDisabled?: boolean;
     onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onBlur?: () => void;
+    formMessage?: string;
   };
   export type FieldValueProps = {
     value: any;
@@ -139,6 +149,7 @@ declare module "nxs-form" {
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
     formError?: string;
+    formMessage?: string;
     fieldHeading?: { [key: string]: string };
     handleChange: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
@@ -150,6 +161,8 @@ declare module "nxs-form" {
     name: string;
     theme?: string;
     errors?: string;
+    message?: string;
+    formMessage?: string;
   }
   export interface UploadFileProps {
     input: InputProps;
@@ -160,11 +173,13 @@ declare module "nxs-form" {
     selectLabel?: string;
     error?: string;
     onSelect: (e: File) => void;
+    formMessage?: string;
   }
   export interface TextAreaProps {
     input: InputProps;
     theme?: string;
     hideLabels?: boolean;
+    formMessage?: string;
   }
   export interface ListProp {
     name: string;
@@ -181,6 +196,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     label?: string;
     error?: string;
+    formMessage?: string;
     onChange: React.ChangeEventHandler<HTMLSelectElement>;
   }
 }

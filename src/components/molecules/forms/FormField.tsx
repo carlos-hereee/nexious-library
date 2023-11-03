@@ -9,13 +9,15 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
-  const { canRemove, handleHeroChange } = props;
+  const { canRemove, handleHeroChange, formMessage } = props;
+  // console.log("formMessage :>> ", formMessage);
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
       {auth.includes(name) ? (
         <AuthField
           name={name}
+          formMessage={formMessage}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
@@ -26,6 +28,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       ) : select.includes(name) ? (
         <Select
           name={name}
+          formMessage={formMessage}
           list={selectList ? selectList : []}
           active={selected ? selected : ""}
           onChange={(e) => updateSelection && updateSelection(e.target.value, name)}
@@ -44,6 +47,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
             onChange: (e) => handleChange(e),
           }}
           hideLabels={hideLabels}
+          formMessage={formMessage}
           theme="highlight"
         />
       ) : type === "checkbox" ? (
@@ -51,12 +55,14 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           name={name}
           value={value}
           onChange={(e) => handleCheckbox && handleCheckbox(e)}
+          formMessage={formMessage}
           error={formError}
           label={label}
         />
       ) : type === "file" ? (
         <UploadFile
           input={{ name, error: formError }}
+          formMessage={formMessage}
           value={value}
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
@@ -65,6 +71,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         <Field
           name={name}
           value={value}
+          formMessage={formMessage}
           onChange={handleChange}
           placeholder={placeholder}
           hideLabel={hideLabels}
