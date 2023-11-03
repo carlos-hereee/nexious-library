@@ -4,7 +4,7 @@
 //  * */
 
 declare module "nxs-navigation" {
-export  type MenuItemProp = {
+  export type MenuItemProp = {
     name: string;
     label: string;
     uid?: string;
@@ -14,7 +14,7 @@ export  type MenuItemProp = {
     locale?: string;
     link?: string;
   };
-export  type MenuProp = {
+  export type MenuProp = {
     uid?: string;
     menuId?: string;
     name: string;
@@ -27,12 +27,11 @@ export  type MenuProp = {
     active: MenuItemProp;
     alternatives: MenuItemProp[];
   };
-export  type UnsplashAsset = {
+  export type UnsplashAsset = {
     artistName: string;
     artistUrl: string;
     assetUrl: string;
   };
-  
   // Define your exported types here
   export interface HeaderProps {
     menu: MenuProp[];
@@ -70,7 +69,7 @@ export  type UnsplashAsset = {
   };
   export interface NavigationToggleProps {
     data: MenuProp;
-    theme?:string
+    theme?: string;
     onSelect: (a: any) => void;
     language?: MenuItemProp;
   }

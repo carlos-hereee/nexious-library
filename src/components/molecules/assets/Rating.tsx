@@ -1,5 +1,5 @@
 import { Icon } from "@nxs-atoms";
-import { RatingProps } from "nxs-assets-medias";
+import { RatingProps } from "nxs-assets";
 
 const Rating: React.FC<RatingProps> = (props) => {
   const { star, onClick } = props;

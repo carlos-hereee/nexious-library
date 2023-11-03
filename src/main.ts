@@ -55,8 +55,7 @@ export { default as Logo } from "@nxs-molecules/assets/Logo";
 export { default as Socials } from "@nxs-molecules/assets/Socials";
 export { default as Rating } from "@nxs-molecules/assets/Rating";
 export { default as Hero } from "@nxs-molecules/assets/Hero";
-export type { MediaProps, RatingProps } from "nxs-assets-medias";
-export type { HeroProps } from "nxs-assets";
+export type { HeroProps, MediaProps, RatingProps } from "nxs-assets";
 
 // buttons
 export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
