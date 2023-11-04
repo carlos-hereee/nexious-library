@@ -15,7 +15,7 @@ import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
 const Form: React.FC<FormProps> = (props) => {
   // props
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
-  const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload, dataList } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList } = props;
   const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel, schema } = props;
   // init schema
   // must have required props
@@ -112,9 +112,10 @@ const Form: React.FC<FormProps> = (props) => {
       setValues(removalList);
     }
   };
-  const handleSelection = (value: string, name: string) => {
-    setValues({ ...values, [name]: value });
-    setSelection({ [name]: value });
+  const handleSelection = (target: any, name: string) => {
+    console.log("target, name :>> ", target, name);
+    // setValues({ ...values, [name]: value });
+    // setSelection({ [name]: value });
   };
 
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
@@ -189,10 +190,10 @@ const Form: React.FC<FormProps> = (props) => {
             name={value.name}
             type={value.type}
             value={value.value}
+            theme={theme}
             placeholder={value.placeholder}
             hideLabels={hideLabels}
             selected={selection[keyIdx]}
-            selectList={selectList}
             dataList={dataList?.[value.name]}
             label={value.label}
             changeDataList={(e) => handleChangeDataList(e, keyIdx)}
@@ -200,7 +201,7 @@ const Form: React.FC<FormProps> = (props) => {
             formMessage={formMessage[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
-            updateSelection={(e) => handleSelection(e.target.value, value.name)}
+            updateSelection={(e) => handleSelection(e.target, value.name)}
             handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}

@@ -1,4 +1,4 @@
-import { Hero } from "@nxs-molecules";
+import { Hero, Select } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
 import { NavigationToggleProps } from "nxs-navigation";
 
@@ -12,12 +12,11 @@ import { NavigationToggleProps } from "nxs-navigation";
 const NavToggle: React.FC<NavigationToggleProps> = (props) => {
   const { data, onSelect, language, theme } = props;
   const { active, alternatives } = props.data;
-  // console.log('data :>> ', data);
-  // console.log("active, alternatives :>> ", active);
+
   const handleSelect = (value: string) => {
     // find selected and update values
-    const idx = alternatives.findIndex((alt) => alt.uid === value);
-    if (alternatives[idx].locale) {
+    const idx = alternatives.findIndex((alt) => alt.name === value);
+    if (alternatives[idx]?.locale) {
       data.locale = alternatives[idx].locale;
     }
     data.active = alternatives[idx];
@@ -30,29 +29,13 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
       ) : (
         language && <Hero hero={language} />
       )}
-      <select onChange={(e) => handleSelect(e.target.value)}>
-        <option
-          value={active.name}
-          title={active.name}
-          disabled
-          className={theme ? "alt-" + theme : ""}
-        >
-          {active.label}
-        </option>
-        <option value="" hidden className={theme ? "alt-" + theme : ""}>
-          {active.label}
-        </option>
-        {alternatives?.map((alt) => (
-          <option
-            key={alt.uid}
-            value={alt.uid}
-            title={alt.name}
-            className={theme ? "alt-" + theme : ""}
-          >
-            {alt.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        list={alternatives}
+        name={active?.name || ""}
+        theme={theme}
+        onChange={(value) => handleSelect(value)}
+        active={active?.label || ""}
+      />
     </div>
   );
 };

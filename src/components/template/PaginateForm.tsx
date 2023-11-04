@@ -15,7 +15,6 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     true
   );
   // key variables
-  // set initial values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
   // store form values
   const [values, setValues] = useState<FormInitValues>({});

@@ -45,6 +45,7 @@ const DataList: React.FC<DataListProps> = (props) => {
             (v) =>
               v && (
                 <Button
+                  key={v}
                   title={"remove " + v}
                   label={"X " + v}
                   onClick={() => handleDataChange(v + ",")}

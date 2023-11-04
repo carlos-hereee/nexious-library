@@ -46,6 +46,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               menu={menu}
               click={handleClick}
               language={language}
+              theme={theme}
             />
           </nav>
           <nav className={"mobile-navigation"}>

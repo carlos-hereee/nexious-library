@@ -5,6 +5,13 @@
 
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
+  export type OptionProps = {
+    name?: string;
+    value: string;
+    label: string;
+    isDisabled?: boolean;
+    hideOption?: boolean;
+  };
   export type AuthFieldProp = {
     name: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -139,8 +146,9 @@ declare module "nxs-form" {
     placeholder: string;
     label: string;
     type: string;
+    theme?: string;
     selected?: string;
-    selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
+    // dataList?: { [key: string]: string }[];
     hideLabels?: boolean;
     canRemove?: boolean;
     group?: string;
@@ -183,23 +191,17 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     formMessage?: string;
   }
-  export interface ListProp {
-    name: string;
-    value: string;
-    isDisabled?: boolean;
-    uid?: string;
-    listId?: string;
-  }
+
   export interface SelectProp {
     name: string;
-    list: ListProp[];
+    list: { [key: string]: string }[];
     active?: string;
     theme?: string;
     hideLabels?: boolean;
     label?: string;
     error?: string;
     formMessage?: string;
-    onChange: React.ChangeEventHandler<HTMLSelectElement>;
+    onChange: (key: string) => void;
   }
   export type ValidateProps = {
     required?: string[];
