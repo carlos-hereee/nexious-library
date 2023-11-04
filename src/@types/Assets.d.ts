@@ -27,6 +27,7 @@ declare module "nxs-assets" {
     hero: AssetProps;
     theme?: string;
     label?: string;
+    imageRef?: any;
     onImageClick?: (e: any) => void;
   }
   export interface TextBubbleProps {

@@ -4,6 +4,7 @@
   overflow-x: auto;
   display: flex;
   align-items: center;
+  justify-content: flex-end;
   padding: 0 #{$rem};
   @include devices(tablet) {
     display: none;
@@ -50,7 +51,7 @@
 .navigation {
   display: flex;
   align-items: center;
-    list-style: none;
+  list-style: none;
   gap: #{$rem};
   border-radius: #{$border-radius};
 }

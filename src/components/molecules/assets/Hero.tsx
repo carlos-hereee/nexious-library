@@ -9,7 +9,7 @@ import { HeroProps } from "nxs-assets";
  * @param theme string; add an optional classname
  * @returns image component
  */
-const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick }) => {
+const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
   const [load, setLoad] = useState<boolean>();
   if (!hero) return <ErrorMessage code="missingProps" prop="hero" />;
   return hero?.small ? (
@@ -23,6 +23,7 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick }) => {
           crossOrigin="anonymous"
           className={theme ? `hero ${theme}` : "hero"}
           src={hero.url}
+          ref={imageRef}
           alt={hero.alt}
           onLoad={() => setLoad(true)}
         />
@@ -40,6 +41,7 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick }) => {
           loading="lazy"
           crossOrigin="anonymous"
           className={theme ? `hero ${theme}` : "hero"}
+          ref={imageRef}
           src={hero.url}
           alt={hero.alt}
         />

@@ -105,3 +105,18 @@
   border-radius: #{$border-radius};
   border: 1px solid #{$dark};
 }
+.preview-cancel {
+  position: absolute;
+  top: 10%;
+  left: 85%;
+  min-width: min-content;
+  width: 25px;
+  aspect-ratio: 1/1;
+  border-radius: 100%;
+}
+.preview-hero-container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}

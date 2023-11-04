@@ -153,13 +153,18 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
 
-  const handleHeroChange = (selectedFile: File, idx: number) => {
+  const handleHeroChange = (idx: number, selectedFile?: File) => {
     let oldValues = [...values];
-    const current = oldValues[idx].name;
-    oldValues[idx].value = selectedFile;
-    // check schema if value is required for validation
-    if (validationStatus === "red") checkRequired(oldValues[idx], current);
-    setValues(oldValues);
+    if (selectedFile) {
+      const current = oldValues[idx].name;
+      oldValues[idx].value = selectedFile;
+      // // check schema if value is required for validation
+      if (validationStatus === "red") checkRequired(oldValues[idx], current);
+      setValues(oldValues);
+    } else {
+      oldValues[idx].value = "";
+      setValues(oldValues);
+    }
   };
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
@@ -188,7 +193,7 @@ const Form: React.FC<FormProps> = (props) => {
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
             updateSelection={(e) => handleSelection(e.target.value, value.name)}
-            handleHeroChange={(e) => handleHeroChange(e, keyIdx)}
+            handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}
             canMultiply={value.canMultiply}
