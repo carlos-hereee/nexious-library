@@ -112,10 +112,11 @@ const Form: React.FC<FormProps> = (props) => {
       setValues(removalList);
     }
   };
-  const handleSelection = (target: any, name: string) => {
-    console.log("target, name :>> ", target, name);
-    // setValues({ ...values, [name]: value });
-    // setSelection({ [name]: value });
+  const handleSelection = (target: string, name: string, idx: number) => {
+    let oldValues = [...values];
+    oldValues[idx].value = target;
+    setValues(oldValues);
+    setSelection({ [name]: target });
   };
 
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
@@ -193,7 +194,7 @@ const Form: React.FC<FormProps> = (props) => {
             theme={theme}
             placeholder={value.placeholder}
             hideLabels={hideLabels}
-            selected={selection[keyIdx]}
+            selected={selection[value.name]}
             dataList={dataList?.[value.name]}
             label={value.label}
             changeDataList={(e) => handleChangeDataList(e, keyIdx)}
@@ -201,7 +202,7 @@ const Form: React.FC<FormProps> = (props) => {
             formMessage={formMessage[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
-            updateSelection={(e) => handleSelection(e.target, value.name)}
+            updateSelection={(e) => handleSelection(e, value.name, keyIdx)}
             handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}
