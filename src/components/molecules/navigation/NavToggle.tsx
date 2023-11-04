@@ -10,7 +10,7 @@ import { NavigationToggleProps } from "nxs-navigation";
  * @returns navigation button
  */
 const NavToggle: React.FC<NavigationToggleProps> = (props) => {
-  const { data, onSelect, language, theme } = props;
+  const { data, onSelect, theme } = props;
   const { active, alternatives } = props.data;
 
   const handleSelect = (value: string) => {
@@ -24,11 +24,11 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
   };
   return (
     <div className="select-wrapper">
-      {language && language.icon ? (
+      {/* {language && language.icon ? (
         <Icon icon={language.icon} />
       ) : (
         language && <Hero hero={language} />
-      )}
+      )} */}
       <Select
         list={alternatives}
         name={active?.name || ""}

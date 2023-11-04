@@ -26,7 +26,8 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   };
   const formatImageData = (file?: File) => {
     if (file) {
-      setPreviewImage(URL.createObjectURL(file));
+      const url = typeof file === "string" ? file : URL.createObjectURL(file);
+      setPreviewImage(url);
       onSelect(file);
     } else {
       setPreviewImage("");
