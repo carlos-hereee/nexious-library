@@ -39,7 +39,7 @@ const DataList: React.FC<DataListProps> = (props) => {
         ))}
       </div>
       <div>
-        <h3 className="heading">{capFirstCharacter(name)} selected list:</h3>
+        <p>{capFirstCharacter(name)} selected list:</p>
         <div className="list-selection-value">
           {selectList.map(
             (v) =>

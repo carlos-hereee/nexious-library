@@ -13,12 +13,12 @@ import { SelectProp } from "nxs-form";
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, active, name, hideLabels, label, error, formMessage } = props;
+  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active } = props;
   // required props
-  // const { lightColor, errors } = useRequiredProps({ name, list }, true);
-  const selected = active || list[0].label;
-  // console.log("list :>> ", list);
-  // if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
+  const { lightColor, errors } = useRequiredProps({ name, list }, true);
+  // const selected = active || list[0].label;
+
+  if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
       {!hideLabels && label && (
@@ -26,10 +26,15 @@ const Select: React.FC<SelectProp> = (props) => {
       )}
       <select
         className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
-        value={selected}
+        value={active || "Choose Selection"}
         onChange={(e) => onChange(e.target.value)}
       >
-        <Option label={selected} name={selected} value={selected} isDisabled />
+        <Option
+          label={active || "Choose Selection"}
+          name={active || "Choose Selection"}
+          value={active || "Choose Selection"}
+          isDisabled
+        />
         <Option label="" name="" value="" hideOption />
         {list.map((l) => (
           <Option key={l.uid} name={l.name} value={l.value} label={l.label} />
