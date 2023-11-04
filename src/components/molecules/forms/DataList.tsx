@@ -1,12 +1,12 @@
 import { Button, Label } from "@nxs-atoms/index";
-import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { ErrorMessages } from "@nxs-molecules";
 import { DataListProps } from "nxs-form";
 import { capFirstCharacter } from "@nxs-utils/app/text";
 import { emojis } from "@nxs-utils/data/emojis";
 
 const DataList: React.FC<DataListProps> = (props) => {
   const { name, value, onChange, hideLabel, label, error, formMessage, list } = props;
+
+  const selectList = (value && value.split(",")) || [];
 
   const handleDataChange = (v: string) => {
     // toggle item selection if appropriate
@@ -34,12 +34,24 @@ const DataList: React.FC<DataListProps> = (props) => {
             key={l.uid}
             theme={l.themeId ? l.name : ""}
             onClick={() => handleDataChange(l.value + ",")}
+            title={value.includes(l.value) ? "remove " + l.value : "add" + l.value}
           />
         ))}
       </div>
       <div>
         <h3 className="heading">{capFirstCharacter(name)} selected list:</h3>
-        <p className="list-selection-value">{value}</p>
+        <div className="list-selection-value">
+          {selectList.map(
+            (v) =>
+              v && (
+                <Button
+                  title={"remove " + v}
+                  label={"X " + v}
+                  onClick={() => handleDataChange(v + ",")}
+                />
+              )
+          )}
+        </div>
       </div>
     </>
   );

@@ -105,3 +105,11 @@
   display: flex;
   gap: #{$rem};
 }
+.list-selection-value {
+  display: flex;
+  gap: #{$rem};
+  border-radius: #{$rem025};
+  min-width: 100%;
+  width: 100%;
+  color: inherit;
+}
