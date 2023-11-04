@@ -154,7 +154,7 @@ declare module "nxs-form" {
     dataList?: { [key: string]: string }[];
     fieldHeading?: { [key: string]: string };
     handleChange: (key: any) => void;
-    changeDataList: (key: string) => void;
+    changeDataList: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
     handleHeroChange?: (key?: File) => void;
@@ -210,7 +210,7 @@ declare module "nxs-form" {
     list: { [key: string]: string }[];
     formMessage?: string;
     error?: string;
-    value?: string;
+    value: string;
     name: string;
     label?: string;
     hideLabel?: boolean;

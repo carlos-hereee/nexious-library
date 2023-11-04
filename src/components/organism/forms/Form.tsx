@@ -167,9 +167,9 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
 
-  const handleChangeDataList = (e: any, idx: number) => {
+  const handleChangeDataList = (value: string, idx: number) => {
     let oldValues = [...values];
-    oldValues[idx].value = oldValues[idx].value + e.value;
+    oldValues[idx].value = value;
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
