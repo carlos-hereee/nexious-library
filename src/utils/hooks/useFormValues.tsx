@@ -6,13 +6,6 @@ import { FormInitValues } from "custom-props";
 import { FieldValueProps, FormValueProps, AddEntryValueProps } from "nxs-form";
 import { useEffect, useState } from "react";
 
-// type ExtraValueProps = {
-//   entryValues: FormInitValues[];
-//   oldValues: FormInitValues;
-//   originIdx: number;
-//   key: string;
-// };
-
 export const useValues = (props: FormValueProps) => {
   const { initialValues, labels, types, placeholders, addEntry } = props;
   const [values, setValues] = useState<FieldValueProps[]>([]);
@@ -44,66 +37,70 @@ export const useValues = (props: FormValueProps) => {
   };
 
   useEffect(() => {
-    const data = objToArray(initialValues);
-    // clear prev values if any; avoid redundant data
-    setValues([]);
-    if (addEntry) {
-      const entryData = objToArray(addEntry);
-      let extraData: FieldValueProps[] = [];
-      for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
-        const groupName = Object.keys(entryData[entryIdx])[0];
-        const { canMultiply, skipIfFalse } = addEntry[groupName];
-        const { removalLabel, additionLabel, fieldHeading, types: t } = addEntry[groupName];
-        const { labels: l, placeholders: p } = addEntry[groupName];
-        // const numCount = Object.keys(value).length;
-        // continue if initial value's checkbox is true
-        if (initialValues[groupName] && skipIfFalse) {
-          // were not skipping the march continues
-          // find the the skippable data
-          initialValues[skipIfFalse].forEach((v: { [key: string]: any }) => {
-            const keys = Object.keys(v);
-            // const total = initialValues[skipIfFalse].length;
-            let payload: FormInitValues[] = [];
-            const sharedKey = v.sharedKey || uniqueId();
-            // const isMulty = canMultiply && total === idx ? true : false;
-            keys.forEach((k) => payload.push({ [k]: v[k], name: k }));
-            const entriesData = formatEntry({
-              formatValues: payload,
-              fieldHeading,
-              groupName,
-              group: skipIfFalse,
-              labels: l,
-              placeholders: p,
-              sharedKey,
-              types: t,
+    if (initialValues) {
+      const data = objToArray(initialValues);
+      // clear prev values if any; avoid redundant data
+      setValues([]);
+      if (addEntry) {
+        const entryData = objToArray(addEntry);
+        let extraData: FieldValueProps[] = [];
+        for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
+          const groupName = Object.keys(entryData[entryIdx])[0];
+          const { canMultiply, skipIfFalse } = addEntry[groupName];
+          const { removalLabel, additionLabel, fieldHeading, types: t } = addEntry[groupName];
+          const { labels: l, placeholders: p } = addEntry[groupName];
+          // const numCount = Object.keys(value).length;
+          // continue if initial value's checkbox is true
+          if (initialValues[groupName] && skipIfFalse) {
+            // were not skipping the march continues
+            // find the the skippable data
+            initialValues[skipIfFalse].forEach((v: { [key: string]: any }) => {
+              const keys = Object.keys(v);
+              // const total = initialValues[skipIfFalse].length;
+              let payload: FormInitValues[] = [];
+              const sharedKey = v.sharedKey || uniqueId();
+              // const isMulty = canMultiply && total === idx ? true : false;
+              keys.forEach((k) => payload.push({ [k]: v[k], name: k }));
+              const entriesData = formatEntry({
+                formatValues: payload,
+                fieldHeading,
+                groupName,
+                group: skipIfFalse,
+                labels: l,
+                placeholders: p,
+                sharedKey,
+                types: t,
+              });
+              entriesData[keys.length - 1].canMultiply = canMultiply;
+              entriesData[keys.length - 1].onMultiply = {
+                additionLabel,
+                name: groupName,
+                removalLabel,
+              };
+              entriesData[entriesData.length - 1].canRemove = true;
+              // add payload to data values
+              extraData.push(...entriesData);
             });
-            entriesData[keys.length - 1].canMultiply = canMultiply;
-            entriesData[keys.length - 1].onMultiply = {
-              additionLabel,
-              name: groupName,
-              removalLabel,
-            };
-            entriesData[entriesData.length - 1].canRemove = true;
-            // add payload to data values
-            extraData.push(...entriesData);
-          });
-          // remove from data list
-          const valueIdx = data.findIndex((d) => d[skipIfFalse]);
-          data.splice(valueIdx, 1);
+            // remove from data list
+            const valueIdx = data.findIndex((d) => d[skipIfFalse]);
+            data.splice(valueIdx, 1);
+          }
         }
-      }
-      const entry = formatEntry({ formatValues: data, labels, types, placeholders });
-      const valueData: FieldValueProps[] = [];
-      entry.forEach((entVal) => {
-        // add entries to appropriate groups
-        valueData.push(entVal);
-        if (entVal.type === "checkbox" && entVal.value) {
-          const extraDataToInclude = extraData.filter((ext) => ext.groupName === entVal.name);
-          valueData.push(...extraDataToInclude);
-        }
-      });
-      setValues(valueData);
-    } else setValues(formatEntry({ formatValues: data, labels, types, placeholders }));
+        const entry = formatEntry({ formatValues: data, labels, types, placeholders });
+        const valueData: FieldValueProps[] = [];
+        entry.forEach((entVal) => {
+          // add entries to appropriate groups
+          valueData.push(entVal);
+          if (entVal.type === "checkbox" && entVal.value) {
+            const extraDataToInclude = extraData.filter(
+              (ext) => ext.groupName === entVal.name
+            );
+            valueData.push(...extraDataToInclude);
+          }
+        });
+        setValues(valueData);
+      } else setValues(formatEntry({ formatValues: data, labels, types, placeholders }));
+    }
   }, []);
 
   return { values, setValues, formatEntry };

@@ -6,3 +6,12 @@
   color: #{$success};
   max-width: 100%;
 }
+.list-selection-value {
+  border-radius: #{$rem025};
+  min-height: 1.25lh;
+  min-width: 100%;
+  width: 100%;
+  color: inherit;
+  border: 1px solid #{$faded};
+  padding: 0 #{$rem};
+}

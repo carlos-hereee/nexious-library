@@ -1,5 +1,5 @@
-import { auth, select, textarea } from "@nxs-utils/form/types";
-import { AuthField, Field, Select, TextArea } from "@nxs-molecules";
+import { auth, textarea } from "@nxs-utils/form/types";
+import { AuthField, DataList, Field, Select, TextArea } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import { FormFieldProps } from "nxs-form";
 import { UploadFile } from "@nxs-molecules";
@@ -9,7 +9,8 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
-  const { canRemove, handleHeroChange, formMessage } = props;
+  const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
+
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
@@ -24,7 +25,16 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           labels={label}
           errors={formError}
         />
-      ) : select.includes(name) ? (
+      ) : type === "datalist" ? (
+        <DataList
+          name={name}
+          list={dataList || []}
+          formMessage={formMessage}
+          value={value}
+          label={label}
+          onChange={changeDataList}
+        />
+      ) : type === "select" ? (
         <Select
           name={name}
           formMessage={formMessage}

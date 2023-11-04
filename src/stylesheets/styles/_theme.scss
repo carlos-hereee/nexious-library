@@ -21,17 +21,16 @@
 }
 .light-mode {
   background-color: #{$light-mode};
-
+  color: #{$dark-mode};
 }
 .dark-mode {
   background-color: #{$dark-mode};
   color: #{$light-mode};
-
 }
 .alt-light-mode {
   background-color: #{$dark-mode-alt};
   color: #{$light-mode};
-  &:disabled{
+  &:disabled {
     background-color: #{$dark-mode-alt};
     color: #{$faded};
   }
@@ -39,7 +38,7 @@
 .alt-dark-mode {
   background-color: #{$dark-mode-alt};
   color: #{$light-mode};
-  &:disabled{
+  &:disabled {
     background-color: #{$dark-mode};
     color: #{$faded};
   }

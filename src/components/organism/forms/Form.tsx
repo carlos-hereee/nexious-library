@@ -15,7 +15,7 @@ import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
 const Form: React.FC<FormProps> = (props) => {
   // props
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
-  const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload } = props;
+  const { addEntry, selectList, fieldHeading, hideLabels, withFileUpload, dataList } = props;
   const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel, schema } = props;
   // init schema
   // must have required props
@@ -167,6 +167,12 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
 
+  const handleChangeDataList = (e: any, idx: number) => {
+    let oldValues = [...values];
+    oldValues[idx].value = oldValues[idx].value + e.value;
+    if (onChange) onChange(oldValues);
+    setValues(oldValues);
+  };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
     <form
@@ -187,7 +193,9 @@ const Form: React.FC<FormProps> = (props) => {
             hideLabels={hideLabels}
             selected={selection[keyIdx]}
             selectList={selectList}
+            dataList={dataList?.[value.name]}
             label={value.label}
+            changeDataList={(e) => handleChangeDataList(e, keyIdx)}
             formError={formErrors[value.name]}
             formMessage={formMessage[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}

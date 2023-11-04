@@ -101,3 +101,7 @@
   justify-content: center;
   gap: #{$rem};
 }
+.list-container {
+  display: flex;
+  gap: #{$rem};
+}

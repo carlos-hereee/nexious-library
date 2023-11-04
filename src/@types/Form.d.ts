@@ -25,7 +25,7 @@ declare module "nxs-form" {
     // required props
     initialValues: FormInitValues;
     onSubmit: (e: any) => void;
-    formName: string;
+    formId: string;
     // optional
     heading?: string;
     onChange?: (e: any) => void;
@@ -40,6 +40,7 @@ declare module "nxs-form" {
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     submitLabel?: string;
+    dataList?: { [key: string]: { [key: string]: string }[] };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
     selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
@@ -150,8 +151,10 @@ declare module "nxs-form" {
     onRemovalClick?: () => void;
     formError?: string;
     formMessage?: string;
+    dataList?: { [key: string]: string }[];
     fieldHeading?: { [key: string]: string };
     handleChange: (key: any) => void;
+    changeDataList: (key: string) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
     handleHeroChange?: (key?: File) => void;
@@ -198,4 +201,20 @@ declare module "nxs-form" {
     formMessage?: string;
     onChange: React.ChangeEventHandler<HTMLSelectElement>;
   }
+  export type ValidateProps = {
+    required?: string[];
+    unique?: { name: string; list: string[] }[];
+    labels?: KeyStringProp;
+  };
+  export type DataListProps = {
+    list: { [key: string]: string }[];
+    formMessage?: string;
+    error?: string;
+    value?: string;
+    name: string;
+    label?: string;
+    hideLabel?: boolean;
+    placeholder?: string;
+    onChange: (e: any) => void;
+  };
 }

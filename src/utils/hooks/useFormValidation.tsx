@@ -1,15 +1,9 @@
 import { getLabel } from "../form/labels";
-import { FieldValueProps } from "nxs-form";
+import { FieldValueProps, ValidateProps } from "nxs-form";
 import { useState } from "react";
 import { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
-
-type ValidateProps = {
-  required?: string[];
-  unique?: { name: string; list: string[] }[];
-  labels?: KeyStringProp;
-};
 
 export const useFormValidation = (props: ValidateProps) => {
   const { labels, required, unique } = props;
@@ -29,11 +23,11 @@ export const useFormValidation = (props: ValidateProps) => {
     const { [current]: _, ...newObj } = formErrors;
     setFormErrors(newObj);
   };
-  const checkRequired = (v: FieldValueProps, current: string) => {
+  const checkRequired = (value: FieldValueProps, current: string) => {
     // only check if its required
     if (require.includes(current)) {
       // add error message based on value exists else remove error message
-      v.value ? removeError(current) : addFormError(current, "is required");
+      value.value ? removeError(current) : addFormError(current, "is required");
     }
   };
   const checkUniqueness = (v: FieldValueProps, current: string) => {
@@ -83,8 +77,7 @@ export const useFormValidation = (props: ValidateProps) => {
 
 /**
  * 
- * 
- * OTHER VALIDATION
+ * TODO: OTHER VALIDATION
  *  // validate email
         if (current === "email" && !validateEmail(values[current])) {
           return getLabel(current, label) + " " + "should be a valid email address";

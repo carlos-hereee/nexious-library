@@ -21,9 +21,9 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const [values, setValues] = useState<FormInitValues>({});
   const [pageNumber, setPageNumber] = useState<number>(page ? page : 0);
   const current = paginate[pageNumber];
-  const formOrder = order ? order : paginate.map((f) => f.formName);
+  const formOrder = order ? order : paginate.map((f) => f.formId);
   const total = formOrder.length;
-  const formName = current?.formName;
+  const formId = current?.formId;
   const heading = current?.heading;
   const addEntry = current?.addEntry;
   const labels = current?.labels;
@@ -49,7 +49,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     if (!next) {
       if (onFormSubmit) {
         // save values just incase
-        onFormSubmit({ ...values, [formName]: formValues });
+        formId && onFormSubmit({ ...values, [formId]: formValues });
       } else {
         const prop = "onFormSubmit";
         setLightColor("red");
@@ -61,7 +61,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       const nextPage = formOrder.findIndex((form) => form === next);
       handlePageClick(nextPage);
       // save form values
-      setValues({ ...values, [formName]: formValues });
+      formId && setValues({ ...values, [formId]: formValues });
     }
   };
   const onSubmit = () => (current.onSubmit ? current.onSubmit : handlePaginateSubmit);
@@ -79,10 +79,10 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     <div className="container">
       {!hideNavigation && (
         <FormNavigation
-          heading={`Form navigation showing ${makeStrReadable(formName)}, ${
+          heading={`Form navigation showing ${makeStrReadable(formId || "")}, ${
             pageNumber + 1
           } out of ${total}`}
-          formOrder={formOrder}
+          formOrder={formOrder ? formOrder : []}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
         />
@@ -91,7 +91,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         <Form
           initialValues={initialValues}
           onSubmit={onSubmit()}
-          formName={formName}
+          formId={formId}
           labels={labels}
           placeholders={placeholders}
           submitLabel={submitLabel}
