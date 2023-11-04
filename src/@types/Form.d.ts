@@ -165,7 +165,7 @@ declare module "nxs-form" {
     changeDataList: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
-    handleHeroChange?: (key?: File) => void;
+    handleHeroChange?: (key: File | string) => void;
   }
   export interface LabelProps {
     label: string;
@@ -177,12 +177,12 @@ declare module "nxs-form" {
   export interface UploadFileProps {
     input: InputProps;
     label: string;
-    value?: File;
+    value: File | string;
     theme?: string;
     hideLabels?: boolean;
     selectLabel?: string;
     error?: string;
-    onSelect: (e?: File) => void;
+    onSelect: (e: File | string) => void;
     formMessage?: string;
   }
   export interface TextAreaProps {

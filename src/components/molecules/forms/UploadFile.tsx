@@ -24,24 +24,24 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
       imageUploaderRef.current.click();
     }
   };
-  const formatImageData = (file?: File) => {
+  const formatImageData = (file: File | string) => {
     if (file) {
       const url = typeof file === "string" ? file : URL.createObjectURL(file);
       setPreviewImage(url);
       onSelect(file);
     } else {
       setPreviewImage("");
-      onSelect();
+      onSelect(file);
     }
   };
 
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-    formatImageData(selectedFile);
+    formatImageData(selectedFile || "");
   };
 
   const handleRemoveImage = () => {
-    formatImageData();
+    formatImageData("");
     if (imageUploaderRef.current) {
       imageUploaderRef.current.value = "";
     }

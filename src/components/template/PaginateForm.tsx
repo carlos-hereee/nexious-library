@@ -33,6 +33,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const theme = current?.theme;
   const fieldHeading = current?.fieldHeading;
   const withFileUpload = current?.withFileUpload;
+  const dataList = current?.dataList;
 
   useEffect(() => {
     if (pageNumber >= 0) {
@@ -92,6 +93,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           onSubmit={onSubmit()}
           formId={formId}
           labels={labels}
+          dataList={dataList}
           placeholders={placeholders}
           submitLabel={submitLabel}
           types={types}

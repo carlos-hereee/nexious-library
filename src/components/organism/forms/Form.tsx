@@ -155,7 +155,7 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
 
-  const handleHeroChange = (idx: number, selectedFile?: File) => {
+  const handleHeroChange = (idx: number, selectedFile: File | string) => {
     let oldValues = [...values];
     if (selectedFile) {
       const current = oldValues[idx].name;
