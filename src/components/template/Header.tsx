@@ -60,7 +60,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               menu={menu}
               click={handleClick}
               language={language}
-              theme={theme}
+              theme={"alt-" + theme}
             />
           </nav>
         </>

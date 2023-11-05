@@ -120,3 +120,7 @@
   flex-direction: column;
   gap: #{$rem};
 }
+.hero-icon {
+  max-width: #{$min-width-sm};
+  color: inherit;
+}

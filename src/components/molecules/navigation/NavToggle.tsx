@@ -15,20 +15,17 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
 
   const handleSelect = (value: string) => {
     // find selected and update values
-    const idx = alternatives.findIndex((alt) => alt.name === value);
-    if (alternatives[idx]?.locale) {
-      data.locale = alternatives[idx].locale;
-    }
+    const idx = alternatives.findIndex((alt) => alt.name === value || alt.value === value);
     data.active = alternatives[idx];
     onSelect(data);
   };
   return (
-    <div className="select-wrapper">
-      {/* {language && language.icon ? (
-        <Icon icon={language.icon} />
+    <div className="nav-toggle">
+      {active?.icon ? (
+        <Icon icon={active.icon} />
       ) : (
-        language && <Hero hero={language} />
-      )} */}
+        active?.url && <Hero hero={active} theme="hero-icon" />
+      )}
       <Select
         list={alternatives}
         name={active?.name || ""}

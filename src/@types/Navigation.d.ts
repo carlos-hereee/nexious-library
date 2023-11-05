@@ -12,6 +12,7 @@ declare module "nxs-navigation" {
     url: string;
     icon: string;
     locale?: string;
+    value?: string;
     link?: string;
   };
   export type MenuProp = {
