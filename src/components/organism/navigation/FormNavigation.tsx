@@ -8,7 +8,7 @@ const FormNavigation: React.FC<FormNavigationProps> = (props) => {
   return (
     <div className="container">
       {heading && <h3 className="heading">{heading}</h3>}
-      <div className="flex-row">
+      <div className="form-nav">
         {formOrder &&
           formOrder.map((name, idx) => {
             const formName = makeStrReadable(name);

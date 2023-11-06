@@ -21,6 +21,9 @@
   grid-template-columns: 1fr 1fr;
   align-items: start;
   gap: #{$rem};
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
 }
 .form-submit {
   display: flex;
@@ -43,4 +46,28 @@
 }
 .label-name {
   padding-right: #{$rem};
+}
+.form-navigation {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}
+.form-nav {
+  display: flex;
+  gap: #{$rem};
+  @include devices(mobile) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: #{$rem};
+  }
+}
+.form-buttons {
+  display: flex;
+  gap: #{$rem};
+  @include devices(mobile) {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-content: center;
+    gap: #{$rem};
+  }
 }

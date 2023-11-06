@@ -217,7 +217,7 @@ const Form: React.FC<FormProps> = (props) => {
           />
         );
       })}
-      <div className="flex-row">
+      <div className="form-buttons">
         {onCancel && <CancelButton onClick={onCancel} />}
         {!hideSubmit && <SubmitButton label={submitLabel} />}
         {onViewPreview && <Button label={previewLabel} onClick={handleViewPreview} />}

@@ -19,7 +19,9 @@
   display: none;
   justify-content: flex-end;
   position: relative;
+  // overflow: hidden;
   .navigation {
+    float: inline-end;
     flex-direction: column;
     position: absolute;
     transition: clip-path ease-in-out 700ms;
@@ -41,6 +43,10 @@
   }
   .navigation[data-state="close"] {
     display: none;
+  }
+  &::after {
+    content: "";
+    clear: both;
   }
   @include devices(tablet) {
     display: flex;

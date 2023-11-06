@@ -38,6 +38,7 @@ declare module "nxs-navigation" {
     menu: MenuProp[];
     ping?: number;
     heading?: string;
+    uniqueId?: string;
     theme?: string;
     logo: {
       url: string;
