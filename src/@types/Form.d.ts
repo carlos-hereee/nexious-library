@@ -100,6 +100,7 @@ declare module "nxs-form" {
     // required props
     paginate: FormProps[];
     page?: number;
+    navigationHeading?: string;
     onFormSubmit?: (e: any) => void;
     onCancel?: () => void;
     setNewPage?: (e: number) => void;

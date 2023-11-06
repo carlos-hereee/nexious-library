@@ -4,12 +4,12 @@ import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
 import { FormInitValues } from "custom-props";
 import { PaginateFormProps } from "nxs-form";
-import { makeStrReadable } from "@nxs-utils/app/text";
+// import { makeStrReadable } from "@nxs-utils/app/text";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation, onCancel } = props;
-  const { responseError } = props;
+  const { responseError, navigationHeading } = props;
   const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
     { paginate },
     true
@@ -79,9 +79,10 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     <div className="container">
       {!hideNavigation && (
         <FormNavigation
-          heading={`Form navigation showing ${makeStrReadable(formId || "")}, ${
-            pageNumber + 1
-          } out of ${total}`}
+          // heading={`Form navigation showing ${makeStrReadable(formId || "")}, ${
+          //   pageNumber + 1
+          // } out of ${total}`}
+          heading={navigationHeading}
           formOrder={formOrder ? formOrder : []}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
