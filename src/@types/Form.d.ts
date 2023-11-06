@@ -35,8 +35,10 @@ declare module "nxs-form" {
     formId: string;
     // optional
     heading?: string;
+    previewLabel?: string;
     onChange?: (e: any) => void;
     onCancel?: () => void;
+    onViewPreview?: (e: any) => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
     withFileUpload?: boolean;

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { ErrorMessage } from "@nxs-atoms";
+import { Button, ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objToArray } from "@nxs-utils/app/objLength";
@@ -15,8 +15,9 @@ import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
 const Form: React.FC<FormProps> = (props) => {
   // props
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList } = props;
-  const { onSubmit, onChange, onCancel, initialValues, theme, submitLabel, schema } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
+  const { initialValues, theme, submitLabel, schema } = props;
+  const { onViewPreview, onSubmit, onChange, onCancel } = props;
   // init schema
   // must have required props
   const reqProps = { initialValues, onSubmit };
@@ -175,6 +176,9 @@ const Form: React.FC<FormProps> = (props) => {
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
+  const handleViewPreview = () => {
+    onViewPreview && onViewPreview(formatFormData(values));
+  };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (
     <form
@@ -216,6 +220,7 @@ const Form: React.FC<FormProps> = (props) => {
       <div className="flex-row">
         {onCancel && <CancelButton onClick={onCancel} />}
         {!hideSubmit && <SubmitButton label={submitLabel} />}
+        {onViewPreview && <Button label={previewLabel} onClick={handleViewPreview} />}
       </div>
     </form>
   ) : (

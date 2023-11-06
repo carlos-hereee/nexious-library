@@ -23,6 +23,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const formOrder = order ? order : paginate.map((f) => f.formId);
   const total = formOrder.length;
   const formId = current?.formId;
+  const onViewPreview = current?.onViewPreview;
   const heading = current?.heading;
   const addEntry = current?.addEntry;
   const labels = current?.labels;
@@ -34,6 +35,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const fieldHeading = current?.fieldHeading;
   const withFileUpload = current?.withFileUpload;
   const dataList = current?.dataList;
+  const previewLabel = current?.previewLabel;
 
   useEffect(() => {
     if (pageNumber >= 0) {
@@ -106,6 +108,8 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           fieldHeading={fieldHeading}
           heading={heading}
           onCancel={onCancel}
+          onViewPreview={onViewPreview}
+          previewLabel={previewLabel}
         />
       )}
     </div>
