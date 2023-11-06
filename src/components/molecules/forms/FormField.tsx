@@ -11,6 +11,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
 
+  console.log("selected :>> ", selected);
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
@@ -39,7 +40,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           name={name}
           formMessage={formMessage}
           list={dataList || []}
-          active={selected ? selected : ""}
+          active={selected || value}
           theme={theme}
           onChange={(e) => updateSelection && updateSelection(e, name)}
           hideLabels={hideLabels}

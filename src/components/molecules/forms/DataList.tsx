@@ -38,22 +38,24 @@ const DataList: React.FC<DataListProps> = (props) => {
           />
         ))}
       </div>
-      <div>
-        <p>{capFirstCharacter(name)} selected list:</p>
-        <div className="list-selection-value">
-          {selectList.map(
-            (v) =>
-              v && (
-                <Button
-                  key={v}
-                  title={"remove " + v}
-                  label={"X " + v}
-                  onClick={() => handleDataChange(v + ",")}
-                />
-              )
-          )}
+      {value && (
+        <div>
+          <p>{capFirstCharacter(name)} selected list:</p>
+          <div className="list-selection-value">
+            {selectList.map(
+              (v) =>
+                v && (
+                  <Button
+                    key={v}
+                    title={"remove " + v}
+                    label={"X " + v}
+                    onClick={() => handleDataChange(v + ",")}
+                  />
+                )
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
