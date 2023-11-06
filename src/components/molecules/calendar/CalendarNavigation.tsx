@@ -1,4 +1,4 @@
-import { months } from "@nxs-utils/helpers/data";
+import { months } from "@nxs-utils/calendar/weeks";
 import { Heading } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 import { CalendarNavProps } from "nxs-calendar";

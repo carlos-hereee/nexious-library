@@ -1,4 +1,4 @@
-export const months = [
+export const months: string[] = [
   "January",
   "February",
   "March",
@@ -12,7 +12,7 @@ export const months = [
   "November",
   "December",
 ];
-export const sundayFirst = [
+export const sundayFirst: string[] = [
   "Sunday",
   "Monday",
   "Tuesday",
@@ -21,7 +21,7 @@ export const sundayFirst = [
   "Friday",
   "Saturday",
 ];
-export const mondayFirst = [
+export const mondayFirst: string[] = [
   "Monday",
   "Tuesday",
   "Wednesday",
@@ -31,7 +31,7 @@ export const mondayFirst = [
   "Sunday",
 ];
 
-export const weekDays = [1, 2, 3, 4, 5, 6, 7];
+export const weekDays: number[] = [1, 2, 3, 4, 5, 6, 7];
 export const monthWeeks: { [key: number]: number[] } = {
   4: [
     1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25,

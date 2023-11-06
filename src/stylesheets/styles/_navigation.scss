@@ -18,6 +18,7 @@
 .mobile-navigation {
   display: none;
   justify-content: flex-end;
+  position: relative;
   .navigation {
     flex-direction: column;
     position: absolute;
@@ -25,13 +26,10 @@
     align-items: center;
     padding: #{$rem};
     min-width: 50%;
-    min-height: 70vh;
+    min-height: 200px;
     z-index: 9999;
-    right: 0;
-    top: 15%;
-    // *{
-    //   width: 100%;
-    // }
+    right: 3%;
+    top: 100%;
   }
   .navigation[data-state="open"] {
     display: flex;

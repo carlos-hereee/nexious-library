@@ -1,4 +1,4 @@
-import { sundayFirst, monthWeeks } from "@nxs-utils/helpers/data";
+import { sundayFirst, monthWeeks } from "@nxs-utils/calendar/weeks";
 import { Button } from "@nxs-atoms";
 import { CalendarTile } from "@nxs-molecules";
 import { isTileMute } from "@nxs-utils/calendar/isTileMute";

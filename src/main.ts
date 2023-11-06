@@ -153,3 +153,7 @@ export type { DataProp, HyperlinkProp, KeyValueProps, TileProps } from "nxs-typo
 export type { HybribDataProp, ReadMoreProps } from "nxs-typography";
 export type { UnsplashProps } from "nxs-assets";
 export type { ErrorMessageProps } from "nxs-errors";
+
+// custom functions
+export { uniqueId } from "@nxs-utils/data/uniqueId";
+export { capFirstCharacter, makeStrReadable } from "@nxs-utils/app/text";
