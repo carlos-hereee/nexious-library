@@ -8,8 +8,8 @@ import { PaginateFormProps } from "nxs-form";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
-  const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation, onCancel } = props;
-  const { responseError, navigationHeading } = props;
+  const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
+  const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
   const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
     { paginate },
     true
@@ -70,6 +70,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
 
   const handlePageClick = (nextPage: number) => {
     //  reset initial values to redender form component
+    onPageClick && onPageClick();
     setInitialValues(undefined);
     setPageNumber(nextPage);
   };

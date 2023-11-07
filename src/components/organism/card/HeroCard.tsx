@@ -2,11 +2,13 @@ import { CTA, Hero } from "@nxs-molecules";
 import { HeroCardProps } from "nxs-card";
 
 const HeroCard: React.FC<HeroCardProps> = (props) => {
-  const { title, tagline, hero, cta } = props.data;
+  const { hero, cta } = props;
+  const { title, tagline } = props.data;
+
   return (
     <div className="hero-card">
       <div className="hero-card-header">
-        <h1 className="hero-card-heading">{title}</h1>
+        {title && <h1 className="hero-card-heading">{title}</h1>}
         {tagline && <h2 className="tagline">{tagline}</h2>}
         {cta && <CTA cta={cta} />}
       </div>
