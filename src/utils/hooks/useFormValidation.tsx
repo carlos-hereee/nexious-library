@@ -9,7 +9,7 @@ export const useFormValidation = (props: ValidateProps) => {
   const { labels, required, unique } = props;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});
-  const [validationStatus, setStatus] = useState<"red" | "green">("red");
+  const [validationStatus, setStatus] = useState<"red" | "yellow" | "green" | null>(null);
   let require = required || [];
   let uniqueList = unique || [{ name: "", list: [] }];
 
@@ -46,7 +46,7 @@ export const useFormValidation = (props: ValidateProps) => {
       }
     }
   };
-  const validateForm = (values: FieldValueProps[]) => {
+  const validateForm = (values: FieldValueProps[], status: "red" | "yellow" | "green") => {
     let errors = {};
     for (let index = 0; index < values.length; index++) {
       const current = values[index];
@@ -59,8 +59,11 @@ export const useFormValidation = (props: ValidateProps) => {
         }
       }
     }
-    if (objLength(errors) === 0) setStatus("green");
-    else setFormErrors(errors);
+    if (objLength(errors) === 0) setStatus(status);
+    else {
+      setStatus("red");
+      setFormErrors(errors);
+    }
   };
 
   return {
