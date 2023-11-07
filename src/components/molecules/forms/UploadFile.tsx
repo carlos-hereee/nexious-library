@@ -3,6 +3,7 @@ import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { useEffect, useRef, useState } from "react";
 import { ErrorMessages, Hero } from "@nxs-molecules";
 import { UploadFileProps } from "nxs-form";
+import { urlFile } from "@nxs-utils/data/urlFile";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { name, error } = props.input;
@@ -26,7 +27,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   };
   const formatImageData = (file: File | string) => {
     if (file) {
-      const url = typeof file === "string" ? file : URL.createObjectURL(file);
+      const url = typeof file === "string" ? file : urlFile(file);
       setPreviewImage(url);
       onSelect(file);
     } else {

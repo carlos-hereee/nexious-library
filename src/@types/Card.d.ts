@@ -72,6 +72,7 @@ declare module "nxs-card" {
   export interface HeroCardProps {
     data: { title?: string; tagline?: string };
     hero: HeroProp;
+    theme?: string;
     cta?: CTAProp[];
   }
   export interface CTAProps {
