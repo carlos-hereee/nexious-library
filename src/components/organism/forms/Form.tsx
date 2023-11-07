@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Button, ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
-import { objLength, objToArray } from "@nxs-utils/app/objLength";
+import { objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { FieldValueProps, FormProps } from "nxs-form";
@@ -11,7 +11,6 @@ import { KeyStringProp } from "custom-props";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import CancelButton from "@nxs-atoms/buttons/CancelButton";
 import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
-import { scrollToId } from "@nxs-utils/app/scrollToElement";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
@@ -30,6 +29,7 @@ const Form: React.FC<FormProps> = (props) => {
     validateForm,
     setStatus,
     checkUniqueness,
+    scrollToError,
     formMessage,
   } = useFormValidation({ ...schema, labels });
   // key variables
@@ -43,11 +43,7 @@ const Form: React.FC<FormProps> = (props) => {
       setStatus("red");
     } else if (validationStatus === "yellow") {
       onViewPreview && onViewPreview(formatFormData(values));
-    } else if (validationStatus === "red") {
-      // if any errors scroll to element id
-      const errorId = Object.keys(formErrors)[0];
-      scrollToId(errorId);
-    }
+    } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
 
   const addNewEntry = (name: string, oldValues: FieldValueProps[]) => {
@@ -184,7 +180,11 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
   };
   const handleViewPreview = () => {
-    if (validationStatus === "red" || !validationStatus) validateForm(values, "yellow");
+    if (!validationStatus) validateForm(values, "yellow");
+    if (validationStatus === "red") {
+      scrollToError();
+      validateForm(values, "yellow");
+    }
   };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   return values ? (

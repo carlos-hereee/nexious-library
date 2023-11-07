@@ -111,6 +111,7 @@ declare module "nxs-form" {
     order?: string[]; //defaults set to first form on list
     hideNavigation?: boolean;
     responseError?: string;
+    previewPage?: React.JSX.Element;
   }
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
   export type FormValueProps = {

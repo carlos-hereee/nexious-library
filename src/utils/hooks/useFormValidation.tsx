@@ -4,6 +4,7 @@ import { useState } from "react";
 import { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
+import { scrollToId } from "@nxs-utils/app/scrollToElement";
 
 export const useFormValidation = (props: ValidateProps) => {
   const { labels, required, unique } = props;
@@ -65,6 +66,15 @@ export const useFormValidation = (props: ValidateProps) => {
       setFormErrors(errors);
     }
   };
+  // if any errors scroll to element id
+  const scrollToError = (idx?: number) => {
+    const errorId = Object.keys(formErrors);
+    if (idx === undefined) {
+      scrollToId(errorId[0]);
+    } else {
+      scrollToId(errorId[idx]);
+    }
+  };
 
   return {
     validationStatus,
@@ -74,6 +84,7 @@ export const useFormValidation = (props: ValidateProps) => {
     checkRequired,
     validateForm,
     checkUniqueness,
+    scrollToError,
     formMessage,
   };
 };

@@ -9,6 +9,7 @@ import { PaginateFormProps } from "nxs-form";
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
+  const { previewPage } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
   const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
     { paginate },
@@ -82,37 +83,37 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     <div className="container">
       {!hideNavigation && (
         <FormNavigation
-          // heading={`Form navigation showing ${makeStrReadable(formId || "")}, ${
-          //   pageNumber + 1
-          // } out of ${total}`}
           heading={navigationHeading}
           formOrder={formOrder ? formOrder : []}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
         />
       )}
-      {initialValues && (
-        <Form
-          initialValues={initialValues}
-          onSubmit={onSubmit()}
-          formId={formId}
-          labels={labels}
-          dataList={dataList}
-          placeholders={placeholders}
-          submitLabel={submitLabel}
-          types={types}
-          theme={theme}
-          withFileUpload={withFileUpload}
-          responseError={responseError}
-          schema={schema}
-          addEntry={addEntry}
-          fieldHeading={fieldHeading}
-          heading={heading}
-          onCancel={onCancel}
-          onViewPreview={onViewPreview}
-          previewLabel={previewLabel}
-        />
-      )}
+      <div className="preview-container">
+        {initialValues && (
+          <Form
+            initialValues={initialValues}
+            onSubmit={onSubmit()}
+            formId={formId}
+            labels={labels}
+            dataList={dataList}
+            placeholders={placeholders}
+            submitLabel={submitLabel}
+            types={types}
+            theme={theme}
+            withFileUpload={withFileUpload}
+            responseError={responseError}
+            schema={schema}
+            addEntry={addEntry}
+            fieldHeading={fieldHeading}
+            heading={heading}
+            onCancel={onCancel}
+            onViewPreview={onViewPreview}
+            previewLabel={previewLabel}
+          />
+        )}
+        {previewPage && previewPage}
+      </div>
     </div>
   );
 };
