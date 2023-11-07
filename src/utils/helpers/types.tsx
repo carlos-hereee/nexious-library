@@ -34,6 +34,7 @@ export type NavlinkProp = { data: string; link: string };
 export type CardHeaderProps = {
   title: string;
   subtitle?: string;
+  tagline?: string;
   hero?: HeroProp;
   uid?: string;
 };

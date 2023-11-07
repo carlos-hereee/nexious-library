@@ -8,7 +8,7 @@ const FormNavigation: React.FC<FormNavigationProps> = (props) => {
   return (
     <div className="container">
       {heading && <h3 className="heading">{heading}</h3>}
-      <div className="form-nav">
+      <div className="grid">
         {formOrder &&
           formOrder.map((name, idx) => {
             const formName = makeStrReadable(name);
@@ -26,6 +26,10 @@ const FormNavigation: React.FC<FormNavigationProps> = (props) => {
             );
           })}
       </div>
+      {/* <nav className="grid-start">
+        <Button label="Previous page" />
+        <Button label="Next page" />
+      </nav> */}
     </div>
   );
 };
