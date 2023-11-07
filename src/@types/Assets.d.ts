@@ -18,7 +18,9 @@ declare module "nxs-assets" {
       assetUrl: string;
     };
     theme?: string;
+    // variable id
     uid?: string;
+    title?: string;
     assetId?: string;
     logoId?: string;
   };

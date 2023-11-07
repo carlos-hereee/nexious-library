@@ -4,6 +4,7 @@
 //  * */
 
 declare module "nxs-navigation" {
+  import { AssetProps } from "nxs-assets";
   export type MenuItemProp = {
     name: string;
     label: string;
@@ -40,17 +41,7 @@ declare module "nxs-navigation" {
     heading?: string;
     uniqueId?: string;
     theme?: string;
-    logo: {
-      url: string;
-      alt?: string;
-      name?: string;
-      icon?: string;
-      small?: string;
-      label?: string;
-      credit?: UnsplashAsset;
-      theme?: string;
-      logoId?: string;
-    };
+    logo?: AssetProps;
     language?: MenuItemProp;
     updateMenu: (e: MenuProp) => void;
   }
