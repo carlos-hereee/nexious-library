@@ -1,0 +1,20 @@
+// default
+.bg-default {
+  background-color: #{$light};
+  color: #{$default-text};
+}
+// primary light-mode
+.bg-light {
+  background-color: #{$light-primary};
+  color: #{$dark-primary};
+}
+// primary dark-mode
+.bg-dark {
+  background-color: #{$dark-primary};
+  color: #{$light-primary};
+}
+.active,
+.bg-dark-alt {
+  background-color: #{$dark};
+  color: #{$light};
+}

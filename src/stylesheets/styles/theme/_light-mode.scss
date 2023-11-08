@@ -1,0 +1,17 @@
+.bg-light-alt {
+  background-color: #{$light-secondary};
+  color: #{$dark};
+}
+// theme light mode
+.light-mode {
+  background-color: #{$light-mode};
+  color: #{$dark-mode};
+}
+.alt-light-mode {
+  background-color: #{$dark-mode-alt};
+  color: #{$light-mode};
+  &:disabled {
+    background-color: #{$dark-mode-alt};
+    color: #{$faded};
+  }
+}
