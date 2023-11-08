@@ -42,7 +42,7 @@ section {
 header {
   display: grid;
   align-content: center;
-  grid-template-columns: 2fr 4fr;
+  grid-template-columns: 2fr 3fr;
   gap: #{$rem};
   min-height: #{$min-height};
 }

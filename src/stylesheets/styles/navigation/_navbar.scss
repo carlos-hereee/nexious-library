@@ -19,11 +19,14 @@
 .nav-item {
   display: flex;
   justify-content: flex-start;
-  flex: 1;
+  width: 100%;
 }
 .nav-toggle {
   display: flex;
   width: 100%;
   max-width: #{$max-width-sm};
   align-items: center;
+}
+.nav-btn {
+  width: 100%;
 }

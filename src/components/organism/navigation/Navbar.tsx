@@ -9,7 +9,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {menu.map((m) => (
-        <li key={m.menuId}>
+        <li className="nav-btn" key={m.menuId}>
           {m.isToggle ? (
             <NavToggle data={m} onSelect={(e) => click(e)} theme={theme} />
           ) : m.isPrivate ? (
