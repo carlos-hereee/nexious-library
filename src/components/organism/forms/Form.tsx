@@ -41,8 +41,8 @@ const Form: React.FC<FormProps> = (props) => {
     if (validationStatus === "green") {
       withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
       setStatus("red");
-    } else if (validationStatus === "yellow") {
-      onViewPreview && onViewPreview(formatFormData(values));
+    } else if (validationStatus === "yellow" && onViewPreview) {
+      onViewPreview(formatFormData(values));
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
 

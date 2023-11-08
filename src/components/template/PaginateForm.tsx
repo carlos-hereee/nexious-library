@@ -22,7 +22,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const [pageNumber, setPageNumber] = useState<number>(page ? page : 0);
   const current = paginate[pageNumber];
   const formOrder = order ? order : paginate.map((f) => f.formId);
-  const total = formOrder.length;
+  // const total = formOrder.length;
   const formId = current?.formId;
   const onViewPreview = current?.onViewPreview;
   const heading = current?.heading;
