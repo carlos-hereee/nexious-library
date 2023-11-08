@@ -38,23 +38,6 @@ select {
     display: none;
   }
 }
-// add basic styling
-.select-wrapper {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  position: relative;
-  outline: 1px solid #{$faded};
-  border-radius: #{$border-radius};
-  max-width: #{$max-width-sm};
-  width: 100%;
-  &:focus {
-    outline: 1px solid #{$dark-mode};
-  }
-  &:hover {
-    outline: 1px solid #{$dark-mode};
-  }
-}
 
 // can only update colors
 option {

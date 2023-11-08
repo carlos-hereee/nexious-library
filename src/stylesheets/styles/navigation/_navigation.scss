@@ -1,0 +1,24 @@
+.navigation {
+  display: flex;
+  align-items: center;
+  list-style: none;
+  gap: #{$rem};
+  border-radius: #{$border-radius};
+}
+.ping-count {
+  position: absolute;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: #{$border-radius};
+  padding: 0.35rem;
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  gap: #{$rem};
+  color: inherit;
+}

@@ -1,0 +1,29 @@
+.navbar {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  gap: #{$rem};
+  padding: 0 #{$rem};
+}
+.nav-link {
+  display: flex;
+  text-decoration: none;
+  position: relative;
+}
+.nav-link[data-state="active"] {
+  border-top-left-radius: 1rem;
+  border-bottom-left-radius: 1rem;
+  width: 100%;
+}
+
+.nav-item {
+  display: flex;
+  justify-content: flex-start;
+  flex: 1;
+}
+.nav-toggle {
+  display: flex;
+  width: 100%;
+  max-width: #{$max-width-sm};
+  align-items: center;
+}

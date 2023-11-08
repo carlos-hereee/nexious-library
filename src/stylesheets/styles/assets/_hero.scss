@@ -19,5 +19,8 @@
 }
 .hero-icon {
   max-width: #{$min-width-sm};
+  // max-height: 40px;
+  // height: min-content;
+  aspect-ratio: 16/9;
   color: inherit;
 }

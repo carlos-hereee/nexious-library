@@ -1,0 +1,37 @@
+.mobile-navigation {
+  display: none;
+  justify-content: flex-end;
+  position: relative;
+  // overflow: hidden;
+  .navigation {
+    float: inline-end;
+    flex-direction: column;
+    position: absolute;
+    transition: clip-path ease-in-out 700ms;
+    align-items: center;
+    padding: #{$rem};
+    min-width: 50%;
+    min-height: 200px;
+    z-index: 9999;
+    right: 3%;
+    top: 100%;
+  }
+  .navigation[data-state="open"] {
+    display: flex;
+    animation: circleOpen 750ms ease-in-out forwards;
+  }
+  .navigation[data-state="closing"] {
+    display: block;
+    animation: circleClose ease-in-out forwards;
+  }
+  .navigation[data-state="close"] {
+    display: none;
+  }
+  &::after {
+    content: "";
+    clear: both;
+  }
+  @include devices(tablet) {
+    display: flex;
+  }
+}
