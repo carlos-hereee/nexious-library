@@ -17,6 +17,10 @@
 .thumbnail {
   aspect-ratio: 16/9;
 }
+.hero-thumbnail {
+  object-fit: contain;
+  aspect-ratio: 16/9;
+}
 .hero-icon {
   max-width: #{$min-width-sm};
   // max-height: 40px;
