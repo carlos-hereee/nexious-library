@@ -1,6 +1,6 @@
 import { Button, Label } from "@nxs-atoms/index";
 import { DataListProps } from "nxs-form";
-import { capFirstCharacter } from "@nxs-utils/app/text";
+import { capFirstCharacter } from "@nxs-utils/data/text";
 import { emojis } from "@nxs-utils/data/emojis";
 
 const DataList: React.FC<DataListProps> = (props) => {
@@ -14,9 +14,7 @@ const DataList: React.FC<DataListProps> = (props) => {
       // remove value
       const payload = value.split(v).join("");
       onChange(payload);
-    } else {
-      onChange(value + v);
-    }
+    } else onChange(value + v);
   };
   return (
     <>

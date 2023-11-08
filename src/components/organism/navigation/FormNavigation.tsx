@@ -1,5 +1,5 @@
 import { Button } from "@nxs-atoms";
-import { makeStrReadable } from "@nxs-utils/app/text";
+import { makeStrReadable } from "@nxs-utils/data/text";
 import { FormNavigationProps } from "nxs-navigation";
 
 const FormNavigation: React.FC<FormNavigationProps> = (props) => {

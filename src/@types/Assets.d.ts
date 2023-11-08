@@ -33,7 +33,7 @@ declare module "nxs-assets" {
     onImageClick?: (e: any) => void;
   }
   export interface TextBubbleProps {
-    hero: HeroProp;
+    hero: AssetProps;
     data: { rating: number; title: string; body: string };
     theme?: string;
   }

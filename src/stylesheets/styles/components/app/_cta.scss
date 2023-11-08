@@ -1,0 +1,6 @@
+.cta-container {
+  display: grid;
+  gap: #{$rem};
+  grid-template-columns: 1fr 1fr;
+  align-items: end;
+}

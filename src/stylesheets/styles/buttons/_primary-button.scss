@@ -1,0 +1,27 @@
+.btn {
+  padding: #{$rem};
+  border-radius: #{$border-radius};
+}
+.btn-main {
+  border: 1px solid #{$faded};
+  &:hover {
+    border: 1px solid #{$dark-mode};
+  }
+  &:focus {
+    border: 1px solid #{$dark-mode};
+  }
+}
+.btn-cta {
+  background-color: #{$cta-color};
+  width: 100%;
+  font-size: large;
+}
+.btn-cancel {
+  background-color: #{$danger};
+  color: #{$light-primary};
+}
+.btn-burger,
+.btn-x {
+  min-width: #{$min-width-sm};
+  justify-content: center;
+}
