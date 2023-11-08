@@ -158,3 +158,4 @@ export type { ErrorMessageProps } from "nxs-errors";
 export { uniqueId } from "@nxs-utils/data/uniqueId";
 export { urlFile } from "@nxs-utils/data/urlFile";
 export { capFirstCharacter, makeStrReadable } from "@nxs-utils/app/text";
+export { objToArray } from "@nxs-utils/app/objLength";

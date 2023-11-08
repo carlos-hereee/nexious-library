@@ -43,6 +43,7 @@ const Form: React.FC<FormProps> = (props) => {
       setStatus("red");
     } else if (validationStatus === "yellow" && onViewPreview) {
       onViewPreview(formatFormData(values));
+      setStatus(null);
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
 
