@@ -1,0 +1,36 @@
+.event-wrapper {
+  width: 100%;
+  flex: 1;
+  @include devices(mobile) {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+.event-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: #{$rem025};
+  width: 100%;
+  @include devices(mobile) {
+    width: 100%;
+    align-items: center;
+  }
+}
+.calendar-events {
+  display: flex;
+  width: 100%;
+  gap: #{$rem};
+  @include devices(mobile) {
+    flex-direction: column;
+  }
+}
+.calendar-event-cart {
+  display: flex;
+  width: 100%;
+  gap: #{$rem};
+  .hero {
+    max-height: 15vh;
+  }
+}
