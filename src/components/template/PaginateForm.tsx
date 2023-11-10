@@ -4,7 +4,6 @@ import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
 import { FormInitValues } from "custom-props";
 import { PaginateFormProps } from "nxs-form";
-// import { makeStrReadable } from "@nxs-utils/app/text";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors

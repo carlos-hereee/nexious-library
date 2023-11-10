@@ -52,19 +52,7 @@ declare module "nxs-form" {
     dataList?: { [key: string]: { [key: string]: string }[] };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
-    addEntry?: {
-      [key: string]: {
-        additionLabel: string;
-        removalLabel: string;
-        initialValues: FormInitValues;
-        fieldHeading: string;
-        skipIfFalse: string;
-        labels?: KeyStringProp;
-        placeholders?: KeyStringProp;
-        types?: KeyStringProp;
-        canMultiply?: boolean;
-      };
-    };
+    addEntry?: { [key: string]: AddEntryProps };
   };
   export type InputProps = {
     name: string;
@@ -112,6 +100,17 @@ declare module "nxs-form" {
     responseError?: string;
     previewPage?: React.JSX.Element;
   }
+  export type AddEntryProps = {
+    additionLabel: string;
+    removalLabel: string;
+    initialValues: FormInitValues;
+    fieldHeading: string;
+    labels?: KeyStringProp;
+    groupName: string;
+    placeholders?: KeyStringProp;
+    types?: KeyStringProp;
+    canMultiply?: boolean;
+  };
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
   export type FormValueProps = {
     initialValues: FormInitValues;
@@ -119,19 +118,17 @@ declare module "nxs-form" {
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
     fieldHeading?: string;
-    addEntry?: {
-      [key: string]: {
-        additionLabel: string;
-        removalLabel: string;
-        initialValues: FormInitValues;
-        fieldHeading: string;
-        labels?: KeyStringProp;
-        skipIfFalse: string;
-        placeholders?: KeyStringProp;
-        types?: KeyStringProp;
-        canMultiply?: boolean;
-      };
-    };
+    addEntry?: { [key: string]: AddEntryProps };
+  };
+  export type FormatEntryProps = {
+    target: string;
+    oldValues: FieldValueProps[];
+    addEntry: AddEntryProps;
+  };
+  export type FormatEntraEntryProps = {
+    target: string;
+    oldValues: FormInitValues;
+    addEntry: AddEntryProps;
   };
   export type AddEntryValueProps = {
     // formatValues;
@@ -152,7 +149,6 @@ declare module "nxs-form" {
     type: string;
     theme?: string;
     selected?: string;
-    // dataList?: { [key: string]: string }[];
     hideLabels?: boolean;
     canRemove?: boolean;
     group?: string;

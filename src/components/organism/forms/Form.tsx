@@ -8,7 +8,6 @@ import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import { KeyStringProp } from "custom-props";
-import { uniqueId } from "@nxs-utils/data/uniqueId";
 import CancelButton from "@nxs-atoms/buttons/CancelButton";
 import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
 
@@ -18,10 +17,8 @@ const Form: React.FC<FormProps> = (props) => {
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
   const { initialValues, theme, submitLabel, schema } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
-  // init schema
   // must have required props
-  const reqProps = { initialValues, onSubmit };
-  const { lightColor, errors, setLightColor, setErrors } = useRequiredProps(reqProps, true);
+  const { lightColor, errors } = useRequiredProps({ initialValues, onSubmit }, true);
   const {
     formErrors,
     validationStatus,
@@ -33,10 +30,30 @@ const Form: React.FC<FormProps> = (props) => {
     formMessage,
   } = useFormValidation({ ...schema, labels });
   // key variables
-  const valuePayload = { initialValues, labels, types, placeholders, addEntry };
-  const { values, setValues, formatEntry } = useValues(valuePayload);
+  const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
   const [selection, setSelection] = useState<KeyStringProp>({});
 
+  useEffect(() => {
+    if (initialValues) {
+      const formatValues = objToArray(initialValues);
+      let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
+      // clear prev values if any; avoid redundant data
+      setValues([]);
+      if (addEntry) {
+        const entryData = objToArray(addEntry);
+        let extraData: FieldValueProps[] = [];
+        for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
+          const target = Object.keys(entryData[entryIdx])[0];
+          const current = addEntry[target];
+          extraData = addExtraEntry({ addEntry: current, target, oldValues: initialValues });
+          const valueIdx = oldValues.findIndex((d) => d.name === current.groupName);
+          oldValues.splice(valueIdx, 1, ...extraData);
+          // oldValues.splice(valueIdx, 0, );
+        }
+        setValues(oldValues);
+      } else setValues(oldValues);
+    }
+  }, []);
   useEffect(() => {
     if (validationStatus === "green") {
       withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
@@ -46,45 +63,7 @@ const Form: React.FC<FormProps> = (props) => {
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
-
-  const addNewEntry = (name: string, oldValues: FieldValueProps[]) => {
-    // if form has an entry value
-    if (addEntry && addEntry[name]) {
-      const entryValues = objToArray(addEntry[name].initialValues);
-      const { labels, types, placeholders, canMultiply, skipIfFalse } = addEntry[name];
-      const { additionLabel, removalLabel } = addEntry[name];
-      // require key variables
-      if (!removalLabel || !additionLabel) {
-        const value = additionLabel ? removalLabel : additionLabel;
-        const key = additionLabel ? "removalLabel" : "additionLabel";
-        setLightColor("red");
-        setErrors((prev) => [
-          ...prev,
-          { prop: key, code: "missingProps", isAProp: true, value, name: key },
-        ]);
-      }
-      // add properties all entrys should have
-      const groupName = name;
-      const group = skipIfFalse;
-      const payload = { formatValues: entryValues, labels, types, placeholders, groupName };
-      // if additional entries are possible add them here
-      let entriesData = formatEntry({ ...payload, group, sharedKey: uniqueId() });
-      entriesData[entriesData.length - 1].canMultiply = canMultiply;
-      entriesData[entriesData.length - 1].canRemove = true;
-      entriesData[entriesData.length - 1].onMultiply = {
-        additionLabel,
-        name: group,
-        removalLabel,
-      };
-      const newIdx = oldValues.findIndex((d) => d.name === groupName);
-      const numCount = oldValues.filter((d) => d.groupName === groupName);
-      // keep everything together; 0 is the number of element to be deleted
-      oldValues.splice(newIdx + numCount.length + 1, 0, ...entriesData);
-      setValues(oldValues);
-    }
-    // otherwise save values
-    else setValues(oldValues);
-  };
+  console.log("values :>> ", values);
   const handleChange = (event: any, idx: number) => {
     // key variables
     const value = event.currentTarget.value;
@@ -101,17 +80,21 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
   };
   const handleCheckbox = (event: any, field: FieldValueProps, idx: number) => {
-    const { name } = field;
-    // addTouched(key);
+    const { name, groupName } = field;
     // key variables
     const isChecked: boolean = event.currentTarget.checked;
     // update values
     let oldValues = [...values];
     oldValues[idx].value = isChecked;
-    // const total = values.length;
+
     // if the checkbox is checked add entries
-    if (isChecked) addNewEntry(name, oldValues);
-    else {
+    if (isChecked) {
+      if (addEntry && groupName) {
+        setValues(
+          addNewEntry({ addEntry: addEntry[groupName], target: groupName, oldValues })
+        );
+      }
+    } else {
       // when button is unchecked removed all field created by checkbox
       const removalList = oldValues.filter((val) => val.groupName !== name);
       setValues(removalList);
@@ -135,7 +118,9 @@ const Form: React.FC<FormProps> = (props) => {
     let oldValues = [...values];
     oldValues[fieldIndex].canMultiply = false;
     // if form has an entry value
-    addNewEntry(groupName, oldValues);
+    if (addEntry) {
+      setValues(addNewEntry({ addEntry: addEntry[groupName], target: groupName, oldValues }));
+    }
   };
   const handleRemovalClick = (e: FieldValueProps, idx: number) => {
     if (addEntry && e.onMultiply) {

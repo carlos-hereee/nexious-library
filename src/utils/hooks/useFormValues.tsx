@@ -2,15 +2,19 @@ import { objToArray } from "@nxs-utils/app/objLength";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
-import { FormInitValues } from "custom-props";
-import { FieldValueProps, FormValueProps, AddEntryValueProps } from "nxs-form";
-import { useEffect, useState } from "react";
+import { FormInitValues, KeyStringProp } from "custom-props";
+import {
+  FieldValueProps,
+  AddEntryValueProps,
+  FormatEntryProps,
+  FormatEntraEntryProps,
+} from "nxs-form";
+import { useState } from "react";
 
-export const useValues = (props: FormValueProps) => {
-  const { initialValues, labels, types, placeholders, addEntry } = props;
+export const useValues = () => {
   const [values, setValues] = useState<FieldValueProps[]>([]);
 
-  const formatEntry = (props: AddEntryValueProps): FieldValueProps[] => {
+  const formatFieldEntry = (props: AddEntryValueProps): FieldValueProps[] => {
     const { formatValues, fieldHeading, labels, types, placeholders: holder } = props;
     const { group, sharedKey, groupName } = props;
     return formatValues.map((current) => {
@@ -35,73 +39,97 @@ export const useValues = (props: FormValueProps) => {
       return { ...payload, group, sharedKey, groupName };
     });
   };
+  // const formatEntry = (props: FormatEntryProps) => {
+  //   const { groupName, currentValues } = props;
+  //   const { initialValues, fieldHeading, labels: l, placeholders: p } = props.entry.form;
+  //   const { types: t, removalLabel, additionLabel, canMultiply } = props.entry.form;
+  //   const { groupName } = props.entry.form;
+  //   let entriesData: FieldValueProps[] = [];
 
-  useEffect(() => {
-    if (initialValues) {
-      const data = objToArray(initialValues);
-      // clear prev values if any; avoid redundant data
-      setValues([]);
-      if (addEntry) {
-        const entryData = objToArray(addEntry);
-        let extraData: FieldValueProps[] = [];
-        for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
-          const groupName = Object.keys(entryData[entryIdx])[0];
-          const { canMultiply, skipIfFalse } = addEntry[groupName];
-          const { removalLabel, additionLabel, fieldHeading, types: t } = addEntry[groupName];
-          const { labels: l, placeholders: p } = addEntry[groupName];
-          // const numCount = Object.keys(value).length;
-          // continue if initial value's checkbox is true
-          if (initialValues[groupName] && skipIfFalse) {
-            // were not skipping the march continues
-            // find the the skippable data
-            initialValues[skipIfFalse].forEach((v: { [key: string]: any }) => {
-              const keys = Object.keys(v);
-              // const total = initialValues[skipIfFalse].length;
-              let payload: FormInitValues[] = [];
-              const sharedKey = v.sharedKey || uniqueId();
-              // const isMulty = canMultiply && total === idx ? true : false;
-              keys.forEach((k) => payload.push({ [k]: v[k], name: k }));
-              const entriesData = formatEntry({
-                formatValues: payload,
-                fieldHeading,
-                groupName,
-                group: skipIfFalse,
-                labels: l,
-                placeholders: p,
-                sharedKey,
-                types: t,
-              });
-              entriesData[keys.length - 1].canMultiply = canMultiply;
-              entriesData[keys.length - 1].onMultiply = {
-                additionLabel,
-                name: groupName,
-                removalLabel,
-              };
-              entriesData[entriesData.length - 1].canRemove = true;
-              // add payload to data values
-              extraData.push(...entriesData);
-            });
-            // remove from data list
-            const valueIdx = data.findIndex((d) => d[skipIfFalse]);
-            data.splice(valueIdx, 1);
-          }
-        }
-        const entry = formatEntry({ formatValues: data, labels, types, placeholders });
-        const valueData: FieldValueProps[] = [];
-        entry.forEach((entVal) => {
-          // add entries to appropriate groups
-          valueData.push(entVal);
-          if (entVal.type === "checkbox" && entVal.value) {
-            const extraDataToInclude = extraData.filter(
-              (ext) => ext.groupName === entVal.name
-            );
-            valueData.push(...extraDataToInclude);
-          }
-        });
-        setValues(valueData);
-      } else setValues(formatEntry({ formatValues: data, labels, types, placeholders }));
+  //   console.log("initialValues :>> ", initialValues);
+  //   if (initialValues?.[groupName]) {
+  //     initialValues[groupName].forEach((v: { [key: string]: any }) => {
+  //       const keys = Object.keys(v);
+  //       let payload: FormInitValues[] = [];
+  //       const sharedKey = v.sharedKey || uniqueId();
+  //       keys.forEach((k) => payload.push({ [k]: v[k], name: k }));
+  //       // add payload to data values
+  //       entriesData = formatFieldEntry({
+  //         formatValues: payload,
+  //         fieldHeading,
+  //         groupName,
+  //         group: groupName,
+  //         labels: l,
+  //         placeholders: p,
+  //         sharedKey,
+  //         types: t,
+  //       });
+  //       entriesData[keys.length - 1].canMultiply = canMultiply;
+  //       entriesData[keys.length - 1].onMultiply = {
+  //         additionLabel,
+  //         name: groupName,
+  //         removalLabel,
+  //       };
+  //       entriesData[entriesData.length - 1].canRemove = true;
+  //     });
+  //     return entriesData;
+  //   }
+  //   return [];
+  // };
+  const addNewEntry = (props: FormatEntryProps) => {
+    const { addEntry, target, oldValues } = props;
+    const entryValues = objToArray(addEntry.initialValues);
+    const { labels, types, placeholders, canMultiply, groupName } = addEntry;
+    const { additionLabel, removalLabel } = addEntry;
+    // add properties all entrys should have
+    const group = target;
+    const payload = { formatValues: entryValues, labels, types, placeholders, groupName };
+    // if additional entries are possible add them here
+    let entriesData = formatFieldEntry({ ...payload, group, sharedKey: uniqueId() });
+    entriesData[entriesData.length - 1].canMultiply = canMultiply;
+    entriesData[entriesData.length - 1].canRemove = true;
+    entriesData[entriesData.length - 1].onMultiply = {
+      additionLabel,
+      name: group,
+      removalLabel,
+    };
+    if (oldValues) {
+      const newIdx = oldValues.findIndex((d) => d.name === groupName);
+      const numCount = oldValues.filter((d) => d.groupName === groupName);
+      // keep everything together; 0 is the number of element to be deleted
+      oldValues.splice(newIdx + numCount.length + 1, 0, ...entriesData);
+      return oldValues;
     }
-  }, []);
-
-  return { values, setValues, formatEntry };
+    return oldValues;
+  };
+  const addExtraEntry = (props: FormatEntraEntryProps) => {
+    const { addEntry, target, oldValues } = props;
+    const { labels, types, placeholders, canMultiply, initialValues } = addEntry;
+    const { additionLabel, removalLabel } = addEntry;
+    // add properties all entrys should have
+    let entriesData: FieldValueProps[] = [];
+    const groupName = addEntry.groupName;
+    if (oldValues[groupName].length > 0) {
+      oldValues[groupName].forEach((curVal: KeyStringProp) => {
+        const { sharedKey, ...rest } = curVal;
+        const currentValues = objToArray(initialValues).map((initVal) => {
+          const key = Object.keys(initVal)[0];
+          return { [key]: rest[key] || "" };
+        });
+        const group = target;
+        const payload = { formatValues: currentValues, labels, types, placeholders, group };
+        // if additional entries are possible add them here
+        entriesData = formatFieldEntry({ ...payload, groupName, sharedKey });
+        entriesData[entriesData.length - 1].canMultiply = canMultiply;
+        entriesData[entriesData.length - 1].canRemove = true;
+        entriesData[entriesData.length - 1].onMultiply = {
+          additionLabel,
+          name: group,
+          removalLabel,
+        };
+      });
+    }
+    return entriesData;
+  };
+  return { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry };
 };
