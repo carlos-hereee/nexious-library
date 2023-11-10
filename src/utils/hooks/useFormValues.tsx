@@ -128,6 +128,19 @@ export const useValues = () => {
           removalLabel,
         };
       });
+    } else {
+      const group = target;
+      const sharedKey = uniqueId();
+      const payload = { formatValues: objToArray(initialValues), labels, types, placeholders };
+      // if additional entries are possible add them here
+      entriesData = formatFieldEntry({ ...payload, groupName, sharedKey, group });
+      entriesData[entriesData.length - 1].canMultiply = canMultiply;
+      entriesData[entriesData.length - 1].canRemove = true;
+      entriesData[entriesData.length - 1].onMultiply = {
+        additionLabel,
+        name: group,
+        removalLabel,
+      };
     }
     return entriesData;
   };
