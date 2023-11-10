@@ -1,9 +1,10 @@
 // import { HeroProp } from "@nxs-utils/helpers/types";
 import { Hero } from "@nxs-molecules";
+import { AssetProps } from "nxs-assets";
 import { ErrorProps } from "nxs-errors";
 
 export type CommingSoonProps = {
-  hero?: HeroProp;
+  hero?: AssetProps;
   message?: string;
 };
 

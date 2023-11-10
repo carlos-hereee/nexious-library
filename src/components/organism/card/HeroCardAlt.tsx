@@ -1,11 +1,11 @@
-import { Hero } from "@nxs-molecules";
-// import { HeroProp } from "@nxs-utils/helpers/types";
+import { Hero } from "main";
+import { AssetProps } from "nxs-assets";
 
 type HeroCardProps = {
   data: {
     heading?: string;
     body: string;
-    hero: HeroProp;
+    hero: AssetProps;
   };
 };
 const HeroCardAlt: React.FC<HeroCardProps> = (props) => {

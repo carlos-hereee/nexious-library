@@ -26,11 +26,12 @@ declare module "nxs-card" {
   export interface CardProps {
     data: CardProp;
     theme?: string;
+    hero?: AssetProps;
     onClick?: (key: any) => void;
   }
   export interface HeroCardProps {
-    data: { title?: string; tagline?: string };
-    hero: AssetProps;
+    data: { title?: string; tagline?: string; subtitle?: string };
+    hero?: AssetProps;
     theme?: string;
     cta?: CTAProp[];
   }

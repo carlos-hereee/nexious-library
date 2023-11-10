@@ -52,7 +52,6 @@ declare module "nxs-form" {
     dataList?: { [key: string]: { [key: string]: string }[] };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
-    selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     addEntry?: {
       [key: string]: {
         additionLabel: string;

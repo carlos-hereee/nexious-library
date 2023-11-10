@@ -10,7 +10,6 @@ const FormField: React.FC<FormFieldProps> = (props) => {
   const { formError, selected, updateSelection, handleCheckbox, theme } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
-
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}

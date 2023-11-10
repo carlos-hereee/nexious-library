@@ -16,7 +16,6 @@ const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, name, hideLabels, label, error, formMessage, active } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
-
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>

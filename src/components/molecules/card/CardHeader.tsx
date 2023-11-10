@@ -1,11 +1,7 @@
 import { Subtitle } from "@nxs-atoms";
 import { Hero } from "@nxs-molecules";
-import { CardHeaderProps } from "@nxs-utils/helpers/types";
+import { HeroCardProps } from "nxs-card";
 
-type CardHeaderProp = {
-  data: CardHeaderProps;
-  isRow?: boolean;
-};
 /**
  * Component - Card Header
  * @param title string;
@@ -15,20 +11,13 @@ type CardHeaderProp = {
  * @param hasHero boolean; check if component needs assets
  * @returns
  */
-const CardHeader: React.FC<CardHeaderProp> = ({ data, isRow }) => {
-  return isRow ? (
+const CardHeader: React.FC<HeroCardProps> = (props) => {
+  const { hero, data } = props;
+  return (
     <div className="card-header">
-      {data.title && <h3 className="heading">{data.title}</h3>}
+      {data.title && <h3 className="heading">{data.title}</h3>}{" "}
       {data.tagline && <h4 className="heading">{data.tagline}</h4>}
-      {data.hero && <Hero hero={data.hero} theme={data.hero.theme} />}
-    </div>
-  ) : (
-    <div className="card-header">
-      <>
-        {data.title && <h3 className="heading">{data.title}</h3>}{" "}
-        {data.tagline && <h4 className="heading">{data.tagline}</h4>}
-        {data.hero && <Hero hero={data.hero} theme={data.hero.theme} />}
-      </>
+      {hero && <Hero hero={hero} theme={hero.theme} />}
       {data.subtitle && <Subtitle data={data.subtitle} />}
     </div>
   );

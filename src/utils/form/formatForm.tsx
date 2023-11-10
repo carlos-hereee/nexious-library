@@ -26,7 +26,10 @@ export const formatFilesData = (values: FieldValueProps[]) => {
   const formData = new FormData();
   for (let item = 0; item < values.length; item++) {
     const current = values[item];
-    formData.append(current.name, current.value);
+    if (current.sharedKey && current.name !== "hero") {
+      const keyName = current.name + "-" + current.group + "-" + current.sharedKey;
+      formData.append(keyName, current.value);
+    } else formData.append(current.name, current.value);
   }
   return formData;
 };

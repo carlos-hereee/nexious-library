@@ -1,4 +1,5 @@
 import { initLabels } from "@nxs-utils/form/labels";
+import { AssetProps } from "nxs-assets";
 
 export type FormDataProps = {
   [key: string]: string | number | File;
@@ -7,7 +8,6 @@ export type DefaultPageComponent = {
   title: string;
   subtitle?: string;
   body: string;
-  hero?: HeroProp;
 };
 
 export type UnsplashProps = {
@@ -35,8 +35,8 @@ export type CardHeaderProps = {
   title: string;
   subtitle?: string;
   tagline?: string;
-  hero?: HeroProp;
   uid?: string;
+  hero: AssetProps;
 };
 
 export type IconItemProp = {
