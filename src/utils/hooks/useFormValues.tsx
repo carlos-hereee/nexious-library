@@ -70,7 +70,7 @@ export const useValues = () => {
     // add properties all entrys should have
     let entriesData: FieldValueProps[] = [];
     const groupName = addEntry.groupName;
-    if (oldValues[groupName].length > 0) {
+    if (oldValues[groupName]?.length > 0) {
       oldValues[groupName].forEach((curVal: KeyStringProp) => {
         const { sharedKey, ...rest } = curVal;
         const currentValues = objToArray(initialValues).map((initVal) => {

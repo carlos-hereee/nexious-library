@@ -45,10 +45,12 @@ const Form: React.FC<FormProps> = (props) => {
         for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
           const target = Object.keys(entryData[entryIdx])[0];
           const current = addEntry[target];
-          extraData = addExtraEntry({ addEntry: current, target, oldValues: initialValues });
-          const valueIdx = oldValues.findIndex((d) => d.name === current.groupName);
-          oldValues.splice(valueIdx, 1, ...extraData);
-          // oldValues.splice(valueIdx, 0, );
+          // check if checkbox is checked
+          if (initialValues[target]) {
+            extraData = addExtraEntry({ addEntry: current, target, oldValues: initialValues });
+            const valueIdx = oldValues.findIndex((d) => d.name === current.groupName);
+            oldValues.splice(valueIdx, 1, ...extraData);
+          }
         }
         setValues(oldValues);
       } else setValues(oldValues);
@@ -158,7 +160,6 @@ const Form: React.FC<FormProps> = (props) => {
       setValues(oldValues);
     }
   };
-
   const handleChangeDataList = (value: string, idx: number) => {
     let oldValues = [...values];
     oldValues[idx].value = value;
