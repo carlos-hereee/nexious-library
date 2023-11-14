@@ -57,13 +57,10 @@ export const useValues = () => {
       name: group,
       removalLabel,
     };
-    if (oldValues) {
-      const newIdx = oldValues.findIndex((d) => d.name === groupName);
-      const numCount = oldValues.filter((d) => d.groupName === groupName);
-      // keep everything together; 0 is the number of element to be deleted
-      oldValues.splice(newIdx + numCount.length + 1, 0, ...entriesData);
-      return oldValues;
-    }
+    const newIdx = oldValues.findIndex((d) => d.name === group);
+    const numCount = oldValues.filter((d) => d.groupName === groupName);
+    // keep everything together; 0 is the number of element to be deleted
+    oldValues.splice(newIdx + numCount.length + 1, 0, ...entriesData);
     return oldValues;
   };
   const addExtraEntry = (props: FormatEntraEntryProps) => {

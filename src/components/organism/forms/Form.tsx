@@ -80,24 +80,25 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
   };
   const handleCheckbox = (event: any, field: FieldValueProps, idx: number) => {
-    const { name, groupName } = field;
+    const { name } = field;
     // key variables
     const isChecked: boolean = event.currentTarget.checked;
     // update values
     let oldValues = [...values];
     oldValues[idx].value = isChecked;
-
     // if the checkbox is checked add entries
     if (isChecked) {
-      if (addEntry && groupName) {
-        setValues(
-          addNewEntry({ addEntry: addEntry[groupName], target: groupName, oldValues })
-        );
+      if (addEntry) {
+        // const groupName = addEntry[name].groupName;
+        setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
       }
     } else {
-      // when button is unchecked removed all field created by checkbox
-      const removalList = oldValues.filter((val) => val.groupName !== name);
-      setValues(removalList);
+      if (addEntry) {
+        const removalTarget = addEntry[name].groupName;
+        // when button is unchecked removed all field created by checkbox
+        const removalList = oldValues.filter((val) => val.groupName !== removalTarget);
+        setValues(removalList);
+      }
     }
   };
   const handleSelection = (target: string, name: string, idx: number) => {
