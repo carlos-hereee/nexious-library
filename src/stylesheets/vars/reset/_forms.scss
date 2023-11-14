@@ -41,6 +41,7 @@ select {
 
 // can only update colors
 option {
+  position: relative;
   color: inherit;
   background-color: inherit;
 }

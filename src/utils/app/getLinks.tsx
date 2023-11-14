@@ -1,4 +1,4 @@
-import { LinkProp } from "@nxs-utils/helpers/types";
+import { LinkProp } from "nxs-typography";
 
 type Links = { word: string; link: string }[];
 

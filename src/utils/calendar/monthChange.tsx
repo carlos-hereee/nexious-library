@@ -1,10 +1,10 @@
-import { CalendarDayProps } from "@nxs-utils/helpers/types";
+import { CalendarDayProp } from "nxs-calendar";
 import { calendarValues, nextMonth, prevMonth } from "./calendarValues";
 
 type MonthChageProps = {
   label: string;
-  active?: CalendarDayProps;
-  setActive: React.Dispatch<React.SetStateAction<CalendarDayProps>>;
+  active?: CalendarDayProp;
+  setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
 };
 export const monthChange = (props: MonthChageProps) => {
   const { label, active, setActive } = props;

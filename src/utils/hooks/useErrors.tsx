@@ -1,4 +1,4 @@
-import { KeyStringProp } from "@nxs-utils/helpers/types";
+import { KeyStringProp } from "custom-props";
 import { useState } from "react";
 
 export const useErrors = () => {

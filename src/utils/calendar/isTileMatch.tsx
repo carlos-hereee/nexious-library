@@ -1,9 +1,9 @@
-import { CalendarDayProps } from "@nxs-utils/helpers/types";
+import { CalendarDayProp } from "nxs-calendar";
 
 type TileMatchProps = {
-  day1: CalendarDayProps;
+  day1: CalendarDayProp;
   day: number;
-  day2: CalendarDayProps;
+  day2: CalendarDayProp;
 };
 export const isTileMatch = (props: TileMatchProps): boolean => {
   const { day1, day, day2 } = props;

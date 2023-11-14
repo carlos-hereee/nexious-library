@@ -1,4 +1,4 @@
-import { Label, Option } from "@nxs-atoms";
+import { Icon, Label, Option } from "@nxs-atoms";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules";
 import { SelectProp } from "nxs-form";
@@ -16,6 +16,7 @@ const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, name, hideLabels, label, error, formMessage, active } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
+  console.log("active :>> ", active);
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>

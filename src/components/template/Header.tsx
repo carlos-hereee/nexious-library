@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import { MenuProp } from "@nxs-utils/helpers/types";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { HeaderProps } from "nxs-navigation";
+import { HeaderProps, MenuProp } from "nxs-navigation";
 
 /**
  * Component - Header

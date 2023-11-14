@@ -46,3 +46,13 @@
 .icon-facebook {
   color: #{$facebook};
 }
+.option-icon {
+  position: absolute;
+  top: 0%;
+  width: 100px;
+  aspect-ratio: 1/1;
+}
+.pos {
+  position: relative;
+  // [position: ;]
+}

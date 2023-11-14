@@ -5,7 +5,7 @@ declare module "nxs-assets" {
     assetUrl: string;
   };
   export type AssetProps = {
-    url: string;
+    url?: string;
     alt?: string;
     name?: string;
     icon?: string;

@@ -8,12 +8,12 @@ declare module "nxs-navigation" {
   export type MenuItemProp = {
     name: string;
     label: string;
+    value: string;
     uid?: string;
     menuItemId?: string;
-    url: string;
-    icon: string;
+    url?: string;
+    icon?: string;
     locale?: string;
-    value?: string;
     link?: string;
   };
   export type MenuProp = {

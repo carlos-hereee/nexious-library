@@ -1,4 +1,4 @@
-import { TableColumnProp } from "@nxs-utils/helpers/types";
+import { TableColumnProp } from "custom-props";
 
 /**
  * Specifies column properties for each column within a <colgroup> element

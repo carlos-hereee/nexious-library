@@ -4,6 +4,7 @@
 //  * */
 
 declare module "nxs-form" {
+  import { MenuItemProp } from "nxs-navigation";
   import { FormInitValues, KeyStringProp } from "custom-props";
   export type OptionDataProps = {
     data: OptionProps;
@@ -55,7 +56,7 @@ declare module "nxs-form" {
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     submitLabel?: string;
-    dataList?: { [key: string]: { [key: string]: string }[] };
+    dataList?: { [key: string]: MenuItemProp[] };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
     addEntry?: { [key: string]: AddEntryProps };
@@ -166,7 +167,7 @@ declare module "nxs-form" {
     onRemovalClick?: () => void;
     formError?: string;
     formMessage?: string;
-    dataList?: { [key: string]: string }[];
+    dataList?: MenuItemProp[];
     fieldHeading?: { [key: string]: string };
     handleChange: (key: any) => void;
     changeDataList: (key: any) => void;

@@ -1,6 +1,6 @@
-import { KeyStringProp } from "@nxs-utils/helpers/types";
+import { KeyStringProp } from "custom-props";
 
-export const initLabels: { [key: string]: string } = {
+export const initLabels: KeyStringProp = {
   firstName: "First name",
   lastName: "Last name",
   name: "Enter name",
