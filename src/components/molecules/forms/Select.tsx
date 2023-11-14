@@ -28,15 +28,15 @@ const Select: React.FC<SelectProp> = (props) => {
         onChange={(e) => onChange(e.target.value)}
       >
         <Option
-          label={active || "Choose Selection"}
-          name={active || "Choose Selection"}
-          value={active || "Choose Selection"}
+          data={{
+            label: active || "Choose Selection",
+            name: active || "Choose Selection",
+            value: active || "Choose Selection",
+          }}
           isDisabled
         />
-        <Option label="" name="" value="" hideOption />
-        {list.map((l) => (
-          <Option key={l.uid} name={l.name} value={l.value} label={l.label} />
-        ))}
+        <Option data={{ label: "", name: "", value: "" }} hideOption />
+        {list && list.map((l) => <Option key={l.uid} data={l} />)}
       </select>
     </>
   );

@@ -8,7 +8,7 @@ import { PaginateFormProps } from "nxs-form";
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
-  const { previewPage } = props;
+  const { previewPage, theme } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
   const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
     { paginate },
@@ -31,7 +31,6 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const types = current?.types;
   const submitLabel = current?.submitLabel;
   const schema = current?.schema;
-  const theme = current?.theme;
   const fieldHeading = current?.fieldHeading;
   const withFileUpload = current?.withFileUpload;
   const dataList = current?.dataList;

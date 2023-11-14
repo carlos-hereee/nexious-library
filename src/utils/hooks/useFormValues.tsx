@@ -2,7 +2,7 @@ import { objToArray } from "@nxs-utils/app/objLength";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
-import { FormInitValues, KeyStringProp } from "custom-props";
+import { KeyStringProp } from "custom-props";
 import {
   FieldValueProps,
   AddEntryValueProps,
@@ -39,43 +39,7 @@ export const useValues = () => {
       return { ...payload, group, sharedKey, groupName };
     });
   };
-  // const formatEntry = (props: FormatEntryProps) => {
-  //   const { groupName, currentValues } = props;
-  //   const { initialValues, fieldHeading, labels: l, placeholders: p } = props.entry.form;
-  //   const { types: t, removalLabel, additionLabel, canMultiply } = props.entry.form;
-  //   const { groupName } = props.entry.form;
-  //   let entriesData: FieldValueProps[] = [];
 
-  //   console.log("initialValues :>> ", initialValues);
-  //   if (initialValues?.[groupName]) {
-  //     initialValues[groupName].forEach((v: { [key: string]: any }) => {
-  //       const keys = Object.keys(v);
-  //       let payload: FormInitValues[] = [];
-  //       const sharedKey = v.sharedKey || uniqueId();
-  //       keys.forEach((k) => payload.push({ [k]: v[k], name: k }));
-  //       // add payload to data values
-  //       entriesData = formatFieldEntry({
-  //         formatValues: payload,
-  //         fieldHeading,
-  //         groupName,
-  //         group: groupName,
-  //         labels: l,
-  //         placeholders: p,
-  //         sharedKey,
-  //         types: t,
-  //       });
-  //       entriesData[keys.length - 1].canMultiply = canMultiply;
-  //       entriesData[keys.length - 1].onMultiply = {
-  //         additionLabel,
-  //         name: groupName,
-  //         removalLabel,
-  //       };
-  //       entriesData[entriesData.length - 1].canRemove = true;
-  //     });
-  //     return entriesData;
-  //   }
-  //   return [];
-  // };
   const addNewEntry = (props: FormatEntryProps) => {
     const { addEntry, target, oldValues } = props;
     const entryValues = objToArray(addEntry.initialValues);

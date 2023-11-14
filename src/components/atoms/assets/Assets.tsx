@@ -81,6 +81,7 @@ const svg: SVGProp = {
   checkout: faShoppingCart,
   contact: faEnvelope,
   circle: faCircleNotch,
+  confirm: faPaperPlane,
   dot: faCircleDot,
   dashboard: faUser,
   eye: faEye,

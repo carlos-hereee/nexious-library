@@ -1,3 +1,4 @@
+import { uniqueId } from "main";
 import { FieldValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {
@@ -29,7 +30,15 @@ export const formatFilesData = (values: FieldValueProps[]) => {
     if (current.sharedKey && current.name !== "hero") {
       const keyName = current.name + "-" + current.group + "-" + current.sharedKey;
       formData.append(keyName, current.value);
-    } else formData.append(current.name, current.value);
+    } else {
+      formData.append(current.name, current.value);
+    }
+    // {
+    //   if (current.name === "hero") {
+    //     const keyName = current.name + "-" + current.sharedKey || uniqueId();
+    //     formData.append(keyName, current.value);
+    //   } else formData.append(current.name, current.value);
+    // }
   }
   return formData;
 };

@@ -15,6 +15,7 @@ import { IconProps } from "nxs-button";
 const Icon: React.FC<IconProps> = (props) => {
   const { icon, size, spin, color, name } = props;
   if (!icon) return <ErrorMessage code="missingProps" prop="icon" />;
+  if (!svg[icon]) return <ErrorMessage code="iconNotFound" prop="icon" />;
   return (
     <FontAwesomeIcon
       icon={svg[icon]}

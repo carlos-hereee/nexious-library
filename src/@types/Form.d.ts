@@ -5,12 +5,18 @@
 
 declare module "nxs-form" {
   import { FormInitValues, KeyStringProp } from "custom-props";
-  export type OptionProps = {
-    name?: string;
-    value: string;
-    label: string;
+  export type OptionDataProps = {
+    data: OptionProps;
     isDisabled?: boolean;
     hideOption?: boolean;
+  };
+  export type OptionProps = {
+    name: string;
+    value: string;
+    label: string;
+    icon?: string;
+    uid?: string;
+    listItemId?: string;
   };
   export type AuthFieldProp = {
     name: string;
@@ -98,6 +104,7 @@ declare module "nxs-form" {
     order?: string[]; //defaults set to first form on list
     hideNavigation?: boolean;
     responseError?: string;
+    theme?: string;
     previewPage?: React.JSX.Element;
   }
   export type AddEntryProps = {
@@ -194,7 +201,7 @@ declare module "nxs-form" {
 
   export interface SelectProp {
     name: string;
-    list: { [key: string]: string }[];
+    list: OptionProps[];
     active?: string;
     theme?: string;
     hideLabels?: boolean;

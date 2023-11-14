@@ -63,7 +63,7 @@ const Form: React.FC<FormProps> = (props) => {
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
-  console.log("values :>> ", values);
+
   const handleChange = (event: any, idx: number) => {
     // key variables
     const value = event.currentTarget.value;
@@ -106,7 +106,6 @@ const Form: React.FC<FormProps> = (props) => {
     setValues(oldValues);
     setSelection({ [name]: target });
   };
-
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
     // check validation status to contine
