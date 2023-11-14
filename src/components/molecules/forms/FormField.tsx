@@ -57,7 +57,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           }}
           hideLabels={hideLabels}
           formMessage={formMessage}
-          theme="highlight"
+          // theme="highlight"
         />
       ) : type === "checkbox" ? (
         <InputCheckbox

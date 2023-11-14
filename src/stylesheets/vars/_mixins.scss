@@ -1,6 +1,3 @@
-// vars/mixins.scss
-@import "./_variables.scss";
-
 // We define the mixins for two major breakpoints mobile and tablet
 // $breakpoint is the variable that can have several values
 @mixin devices($breakpoint) {

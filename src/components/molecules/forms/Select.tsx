@@ -16,30 +16,35 @@ const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, name, hideLabels, label, error, formMessage, active } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
-  console.log("active :>> ", active);
+
+  const activeLabel = active || "Choose Selection";
+  const icon = active
+    ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon
+    : undefined;
+
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
+
   return (
-    <>
+    <div className="container">
       {!hideLabels && label && (
         <Label name={name} label={label} errors={error} message={formMessage} />
       )}
-      <select
-        className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
-        value={active || "Choose Selection"}
-        onChange={(e) => onChange(e.target.value)}
-      >
-        <Option
-          data={{
-            label: active || "Choose Selection",
-            name: active || "Choose Selection",
-            value: active || "Choose Selection",
-          }}
-          isDisabled
-        />
-        <Option data={{ label: "", name: "", value: "" }} hideOption />
-        {list && list.map((l) => <Option key={l.uid} data={l} />)}
-      </select>
-    </>
+      <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
+        {active && icon && <Icon icon={icon} className="select-icon" />}
+        <select
+          className="select"
+          value={activeLabel}
+          onChange={(e) => onChange(e.target.value)}
+        >
+          <Option
+            data={{ label: activeLabel, name: activeLabel, value: activeLabel }}
+            isDisabled
+          />
+          <Option data={{ label: "", name: "", value: "" }} hideOption />
+          {list && list.map((l) => <Option key={l.uid} data={l} />)}
+        </select>
+      </div>
+    </div>
   );
 };
 

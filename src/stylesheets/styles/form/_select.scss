@@ -1,6 +1,12 @@
 // add basic styling
 .select-wrapper {
   display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+.select {
+  display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
