@@ -7,7 +7,7 @@ import { UploadFile } from "@nxs-molecules";
 const FormField: React.FC<FormFieldProps> = (props) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
-  const { formError, selected, updateSelection, handleCheckbox, theme } = props;
+  const { formError, updateSelection, handleCheckbox, theme } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
   return (
@@ -38,7 +38,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           name={name}
           formMessage={formMessage}
           list={dataList || []}
-          active={selected || value}
+          active={value}
           theme={theme}
           onChange={(e) => updateSelection && updateSelection(e, name)}
           hideLabels={hideLabels}

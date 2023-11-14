@@ -23,7 +23,6 @@ const Select: React.FC<SelectProp> = (props) => {
     : undefined;
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
-
   return (
     <div className="container">
       {!hideLabels && label && (

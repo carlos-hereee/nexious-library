@@ -31,14 +31,12 @@ const Form: React.FC<FormProps> = (props) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
-  const [selection, setSelection] = useState<KeyStringProp>({});
 
   useEffect(() => {
     if (initialValues) {
       const formatValues = objToArray(initialValues);
       let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
       // clear prev values if any; avoid redundant data
-      setValues([]);
       if (addEntry) {
         const entryData = objToArray(addEntry);
         let extraData: FieldValueProps[] = [];
@@ -91,7 +89,6 @@ const Form: React.FC<FormProps> = (props) => {
     // if the checkbox is checked add entries
     if (isChecked) {
       if (addEntry) {
-        // const groupName = addEntry[name].groupName;
         setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
       }
     } else {
@@ -103,11 +100,10 @@ const Form: React.FC<FormProps> = (props) => {
       }
     }
   };
-  const handleSelection = (target: string, name: string, idx: number) => {
+  const handleSelection = (target: string, idx: number) => {
     let oldValues = [...values];
     oldValues[idx].value = target;
     setValues(oldValues);
-    setSelection({ [name]: target });
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
@@ -115,13 +111,14 @@ const Form: React.FC<FormProps> = (props) => {
     if (validationStatus === "red" || !validationStatus) validateForm(values, "green");
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
-    const groupName = e.groupName || e.onMultiply?.name || e.name;
-    // move button to last appropriate field
-    let oldValues = [...values];
-    oldValues[fieldIndex].canMultiply = false;
-    // if form has an entry value
     if (addEntry) {
-      setValues(addNewEntry({ addEntry: addEntry[groupName], target: groupName, oldValues }));
+      const name = e.onMultiply?.name || e.name;
+      // move button to last appropriate field
+      let oldValues = [...values];
+      // if form has an entry value
+      oldValues[fieldIndex].canMultiply = false;
+      console.log("name :>> ", name);
+      setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     }
   };
   const handleRemovalClick = (e: FieldValueProps, idx: number) => {
@@ -192,7 +189,6 @@ const Form: React.FC<FormProps> = (props) => {
             theme={theme}
             placeholder={value.placeholder}
             hideLabels={hideLabels}
-            selected={selection[value.name]}
             dataList={dataList?.[value.name]}
             label={value.label}
             changeDataList={(e) => handleChangeDataList(e, keyIdx)}
@@ -200,7 +196,7 @@ const Form: React.FC<FormProps> = (props) => {
             formMessage={formMessage[value.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
-            updateSelection={(e) => handleSelection(e, value.name, keyIdx)}
+            updateSelection={(e) => handleSelection(e, keyIdx)}
             handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             onMultiply={value.onMultiply}

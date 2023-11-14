@@ -12,7 +12,7 @@ import {
 import { useState } from "react";
 
 export const useValues = () => {
-  const [values, setValues] = useState<FieldValueProps[]>([]);
+  const [values, setNewValues] = useState<FieldValueProps[]>([]);
 
   const formatFieldEntry = (props: AddEntryValueProps): FieldValueProps[] => {
     const { formatValues, fieldHeading, labels, types, placeholders: holder } = props;
@@ -104,6 +104,10 @@ export const useValues = () => {
       };
     }
     return entriesData;
+  };
+  const setValues = (oldValues: FieldValueProps[]) => {
+    setNewValues([]);
+    setNewValues(oldValues);
   };
   return { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry };
 };
