@@ -39,16 +39,11 @@ const Form: React.FC<FormProps> = (props) => {
       // clear prev values if any; avoid redundant data
       if (addEntry) {
         const entryData = objToArray(addEntry);
-        let extraData: FieldValueProps[] = [];
         for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
           const target = Object.keys(entryData[entryIdx])[0];
           const current = addEntry[target];
           // check if checkbox is checked
-          if (initialValues[target]) {
-            extraData = addExtraEntry({ addEntry: current, target, oldValues: initialValues });
-            const valueIdx = oldValues.findIndex((d) => d.name === current.groupName);
-            oldValues.splice(valueIdx, 1, ...extraData);
-          }
+          if (initialValues[target]) addExtraEntry({ addEntry: current, target, oldValues });
         }
         setValues(oldValues);
       } else setValues(oldValues);
@@ -117,7 +112,6 @@ const Form: React.FC<FormProps> = (props) => {
       let oldValues = [...values];
       // if form has an entry value
       oldValues[fieldIndex].canMultiply = false;
-      console.log("name :>> ", name);
       setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     }
   };

@@ -133,13 +133,8 @@ declare module "nxs-form" {
     oldValues: FieldValueProps[];
     addEntry: AddEntryProps;
   };
-  export type FormatEntraEntryProps = {
-    target: string;
-    oldValues: FormInitValues;
-    addEntry: AddEntryProps;
-  };
+
   export type AddEntryValueProps = {
-    // formatValues;
     formatValues: FormInitValues[];
     labels?: KeyStringProp;
     types?: KeyStringProp;

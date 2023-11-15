@@ -2,13 +2,8 @@ import { objToArray } from "@nxs-utils/app/objLength";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
-import { KeyStringProp } from "custom-props";
-import {
-  FieldValueProps,
-  AddEntryValueProps,
-  FormatEntryProps,
-  FormatEntraEntryProps,
-} from "nxs-form";
+import { FormInitValues } from "custom-props";
+import { FieldValueProps, AddEntryValueProps, FormatEntryProps } from "nxs-form";
 import { useState } from "react";
 
 export const useValues = () => {
@@ -43,67 +38,46 @@ export const useValues = () => {
   const addNewEntry = (props: FormatEntryProps) => {
     const { addEntry, target, oldValues } = props;
     const entryValues = objToArray(addEntry.initialValues);
-    const { labels, types, placeholders, canMultiply, groupName } = addEntry;
-    const { additionLabel, removalLabel } = addEntry;
+    const { groupName } = addEntry;
     // add properties all entrys should have
     const group = target;
-    const payload = { formatValues: entryValues, labels, types, placeholders, groupName };
+    const payload = { formatValues: entryValues, ...addEntry, group, sharedKey: uniqueId() };
     // if additional entries are possible add them here
-    let entriesData = formatFieldEntry({ ...payload, group, sharedKey: uniqueId() });
-    entriesData[entriesData.length - 1].canMultiply = canMultiply;
-    entriesData[entriesData.length - 1].canRemove = true;
-    entriesData[entriesData.length - 1].onMultiply = {
-      additionLabel,
-      name: group,
-      removalLabel,
-    };
+    const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
     const newIdx = oldValues.findIndex((d) => d.name === group);
     const numCount = oldValues.filter((d) => d.groupName === groupName);
     // keep everything together; 0 is the number of element to be deleted
-    oldValues.splice(newIdx + numCount.length + 1, 0, ...entriesData);
+    oldValues.splice(newIdx + numCount.length + 1, 0, ...ent);
     return oldValues;
   };
-  const addExtraEntry = (props: FormatEntraEntryProps) => {
+  const addExtraEntry = (props: FormatEntryProps) => {
     const { addEntry, target, oldValues } = props;
-    const { labels, types, placeholders, canMultiply, initialValues } = addEntry;
-    const { additionLabel, removalLabel } = addEntry;
+    const { initialValues, groupName } = addEntry;
     // add properties all entrys should have
-    let entriesData: FieldValueProps[] = [];
-    const groupName = addEntry.groupName;
-    if (oldValues[groupName]?.length > 0) {
-      oldValues[groupName].forEach((curVal: KeyStringProp) => {
-        const { sharedKey, ...rest } = curVal;
-        const currentValues = objToArray(initialValues).map((initVal) => {
-          const key = Object.keys(initVal)[0];
-          return { [key]: rest[key] || "" };
-        });
-        const group = target;
-        const payload = { formatValues: currentValues, labels, types, placeholders, group };
+    let entryData: FieldValueProps[] = [];
+    // track group
+    const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
+    if (groupingIdx >= 0) {
+      oldValues[groupingIdx].value.forEach((val: FormInitValues) => {
+        const sharedKey = val.sharedKey || uniqueId();
+        const entryFormat = Object.keys(initialValues).map((item) => ({ [item]: val[item] }));
+        // format entry
+        const payload = { formatValues: entryFormat, ...addEntry, groupName, sharedKey };
         // if additional entries are possible add them here
-        entriesData = formatFieldEntry({ ...payload, groupName, sharedKey });
-        entriesData[entriesData.length - 1].canMultiply = canMultiply;
-        entriesData[entriesData.length - 1].canRemove = true;
-        entriesData[entriesData.length - 1].onMultiply = {
-          additionLabel,
-          name: group,
-          removalLabel,
-        };
+        const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
+        entryData.push(...ent);
       });
-    } else {
-      const group = target;
-      const sharedKey = uniqueId();
-      const payload = { formatValues: objToArray(initialValues), labels, types, placeholders };
-      // if additional entries are possible add them here
-      entriesData = formatFieldEntry({ ...payload, groupName, sharedKey, group });
-      entriesData[entriesData.length - 1].canMultiply = canMultiply;
-      entriesData[entriesData.length - 1].canRemove = true;
-      entriesData[entriesData.length - 1].onMultiply = {
-        additionLabel,
-        name: group,
-        removalLabel,
-      };
+      // update list
+      oldValues.splice(groupingIdx, 1, ...entryData);
     }
-    return entriesData;
+  };
+  const formatEntry = (props: FormatEntryProps) => {
+    const { oldValues, addEntry, target } = props;
+    const { canMultiply, additionLabel, removalLabel } = addEntry;
+    oldValues[oldValues.length - 1].canMultiply = canMultiply;
+    oldValues[oldValues.length - 1].canRemove = true;
+    oldValues[oldValues.length - 1].onMultiply = { additionLabel, name: target, removalLabel };
+    return oldValues;
   };
   const setValues = (oldValues: FieldValueProps[]) => {
     setNewValues([]);
