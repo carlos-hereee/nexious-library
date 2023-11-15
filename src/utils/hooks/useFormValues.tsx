@@ -62,7 +62,7 @@ export const useValues = () => {
         const sharedKey = val.sharedKey || uniqueId();
         const entryFormat = Object.keys(initialValues).map((item) => ({ [item]: val[item] }));
         // format entry
-        const payload = { formatValues: entryFormat, ...addEntry, groupName, sharedKey };
+        const payload = { formatValues: entryFormat, ...addEntry, sharedKey, group: target };
         // if additional entries are possible add them here
         const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
         entryData.push(...ent);

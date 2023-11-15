@@ -1,3 +1,4 @@
+import { FormInitValues, KeyStringProp } from "custom-props";
 import { FieldValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {
@@ -11,6 +12,19 @@ export const formatFormData = (values: FieldValueProps[]) => {
       } else return { [val.name]: val.value };
     })
   );
+};
+export const formatPreviewData = (values: FieldValueProps[]) => {
+  let payload: FormInitValues = {};
+  values.forEach((val) => {
+    const { name, group, groupName, sharedKey, value } = val;
+    if (group && groupName) {
+      const idx = payload[groupName]?.findIndex((p: any) => p.sharedKey === sharedKey);
+      if (idx >= 0) {
+        payload[groupName][idx] = { ...payload[groupName][idx], [name]: value };
+      } else payload[groupName] = [{ [name]: value, sharedKey }];
+    } else payload[name] = value;
+  });
+  return payload;
 };
 export const formatFilesData = (values: FieldValueProps[]) => {
   // form data is tricky it wont show values in console, send to db and check there

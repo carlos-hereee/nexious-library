@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { Button, ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { ErrorMessages, SubmitButton } from "@nxs-molecules";
@@ -7,9 +7,12 @@ import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
-import { KeyStringProp } from "custom-props";
 import CancelButton from "@nxs-atoms/buttons/CancelButton";
-import { formatFilesData, formatFormData } from "@nxs-utils/form/formatForm";
+import {
+  formatFilesData,
+  formatFormData,
+  formatPreviewData,
+} from "@nxs-utils/form/formatForm";
 
 const Form: React.FC<FormProps> = (props) => {
   // props
@@ -18,7 +21,7 @@ const Form: React.FC<FormProps> = (props) => {
   const { initialValues, theme, submitLabel, schema } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
   // must have required props
-  const { lightColor, errors } = useRequiredProps({ initialValues, onSubmit }, true);
+  const { lightColor, errors } = useRequiredProps({ initialValues }, true);
   const {
     formErrors,
     validationStatus,
@@ -50,11 +53,11 @@ const Form: React.FC<FormProps> = (props) => {
     }
   }, []);
   useEffect(() => {
-    if (validationStatus === "green") {
+    if (validationStatus === "green" && onSubmit) {
       withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
       setStatus("red");
     } else if (validationStatus === "yellow" && onViewPreview) {
-      onViewPreview(formatFormData(values));
+      onViewPreview(formatPreviewData(values));
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
@@ -203,7 +206,7 @@ const Form: React.FC<FormProps> = (props) => {
       })}
       <div className="form-buttons">
         {onCancel && <CancelButton onClick={onCancel} />}
-        {!hideSubmit && <SubmitButton label={submitLabel} />}
+        {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} />}
         {onViewPreview && <Button label={previewLabel} onClick={handleViewPreview} />}
       </div>
     </form>

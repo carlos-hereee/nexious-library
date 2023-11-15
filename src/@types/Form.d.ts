@@ -38,7 +38,7 @@ declare module "nxs-form" {
   export type FormProps = {
     // required props
     initialValues: FormInitValues;
-    onSubmit: (e: any) => void;
+    onSubmit?: (e: any) => void;
     formId: string;
     // optional
     heading?: string;
