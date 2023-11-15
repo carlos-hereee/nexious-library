@@ -18,20 +18,48 @@
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     "baseUrl": "src" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      "@nxs-atoms/*": ["components/atoms/*"],
-      "@nxs-atoms": ["components/atoms"],
-      "@nxs-molecules/*": ["components/molecules/*"],
-      "@nxs-molecules": ["components/molecules"],
-      "@nxs-organism/*": ["components/organism/*"],
-      "@nxs-organism": ["components/organism"],
-      "@nxs-template/*": ["components/template/*"],
-      "@nxs-template": ["components/template"],
-      "@nxs-utils/*": ["utils/*"],
-      "@nxs-utils": ["utils"],
-      "@nxs-math/*": ["math/*"],
-      "@nxs-math": ["math"],
-      "@nxs-helpers/*": ["helpers/*"],
-      "@nxs-types/*": ["utils/types/*"]
+      "@nxs-atoms/*": [
+        "components/atoms/*"
+      ],
+      "@nxs-atoms": [
+        "components/atoms"
+      ],
+      "@nxs-molecules/*": [
+        "components/molecules/*"
+      ],
+      "@nxs-molecules": [
+        "components/molecules"
+      ],
+      "@nxs-organism/*": [
+        "components/organism/*"
+      ],
+      "@nxs-organism": [
+        "components/organism"
+      ],
+      "@nxs-template/*": [
+        "components/template/*"
+      ],
+      "@nxs-template": [
+        "components/template"
+      ],
+      "@nxs-utils/*": [
+        "utils/*"
+      ],
+      "@nxs-utils": [
+        "utils"
+      ],
+      "@nxs-math/*": [
+        "math/*"
+      ],
+      "@nxs-math": [
+        "math"
+      ],
+      "@nxs-helpers/*": [
+        "helpers/*"
+      ],
+      "@nxs-types/*": [
+        "utils/types/*"
+      ]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "forceConsistentCasingInFileNames": true,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
@@ -132,5 +160,8 @@
     "src/**/*.tsx", // include tsx files
     "dist/**/*.d.ts" // Include declaration files in 'dist'
   ],
-  "exclude": ["node_modules", "dist"]
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }

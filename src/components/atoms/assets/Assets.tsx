@@ -5,6 +5,8 @@ import {
   faInstagram,
   faPaypal,
   faTwitter,
+  // TODO: new twitter logo
+  // faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   fa0,
@@ -58,10 +60,10 @@ import {
   faUpLong,
   faUsd,
   faUser,
-  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+
 type SVGProp = {
   [key: string]: IconDefinition;
 };
@@ -91,7 +93,6 @@ const svg: SVGProp = {
   faq: faQuestion,
   facebook: faFacebook,
   flagEnglish: faFlagUsa,
-  // flagSpanish: ,
   first: faCircleChevronLeft,
   games: faGamepad,
   heart: faHeart,
@@ -128,7 +129,7 @@ const svg: SVGProp = {
   last: faCircleChevronRight,
   visa: faCcVisa,
   wig: faUser,
-  x: faX,
+  x: faTwitter,
   one: fa1,
   two: fa2,
   three: fa3,

@@ -9,6 +9,7 @@ declare module "nxs-assets" {
     alt?: string;
     name?: string;
     icon?: string;
+    media?: string;
     small?: string;
     label?: string;
     link?: string;
@@ -20,6 +21,7 @@ declare module "nxs-assets" {
     theme?: string;
     // variable id
     uid?: string;
+    sharedKey?: string;
     title?: string;
     assetId?: string;
     logoId?: string;
