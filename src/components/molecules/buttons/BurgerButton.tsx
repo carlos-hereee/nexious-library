@@ -19,7 +19,7 @@ const BurgerButton: React.FC<BurgerButtonProps> = (props) => {
       aria-expanded={isBurger}
       aria-label={isBurger ? "open menu" : "close menu"}
     >
-      <Icon icon={isBurger ? "x" : "burger"} size="2x" />
+      <Icon icon={isBurger ? "cross" : "burger"} size="2x" />
       {ping && ping > 0 && <PingCount data={ping} />}
     </button>
   );

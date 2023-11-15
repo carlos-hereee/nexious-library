@@ -34,6 +34,7 @@ declare module "nxs-card" {
     data: { title?: string; tagline?: string; subtitle?: string };
     hero?: AssetProps;
     theme?: string;
+    onClick?: (key: any) => void;
     cta?: CTAProp[];
   }
   export interface CTAProps {

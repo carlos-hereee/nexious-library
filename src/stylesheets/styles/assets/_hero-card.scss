@@ -16,14 +16,12 @@
     flex-wrap: wrap;
   }
 }
-.hero-container {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-//
 .hero-user {
   border-radius: 100%;
   max-width: 100px;
   aspect-ratio: 1/1;
+}
+.feature-hero {
+  width: 100%;
+  min-width: #{$max-width-button};
 }

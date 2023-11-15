@@ -30,6 +30,7 @@ import {
   faCircleChevronRight,
   faCircleDot,
   faCircleNotch,
+  faDoorClosed,
   faEnvelope,
   faEye,
   faEyeSlash,
@@ -60,6 +61,7 @@ import {
   faUpLong,
   faUsd,
   faUser,
+  faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
@@ -82,6 +84,7 @@ const svg: SVGProp = {
   check: faCheckCircle,
   checkout: faShoppingCart,
   contact: faEnvelope,
+  cross: faX,
   circle: faCircleNotch,
   confirm: faPaperPlane,
   dot: faCircleDot,
@@ -127,6 +130,7 @@ const svg: SVGProp = {
   refresh: faRefresh,
   next: faRightLong,
   last: faCircleChevronRight,
+  logout: faDoorClosed,
   visa: faCcVisa,
   wig: faUser,
   x: faTwitter,
