@@ -56,7 +56,7 @@ declare module "nxs-calendar" {
       isToday: boolean;
       isSelected: boolean;
     };
-    events?: CalendarDayProp;
+    events: CalendarDayProp;
     click: (key: any) => void;
   }
   export interface CalendarNavProps {
@@ -84,6 +84,7 @@ declare module "nxs-calendar" {
     today: CalendarDayProp;
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
+    onDayClick?: (e: any) => void;
     events: { date: string; list: EventProp[] }[];
   }
   export interface FindMatchProps {

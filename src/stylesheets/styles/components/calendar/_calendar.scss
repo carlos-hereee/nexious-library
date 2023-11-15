@@ -11,10 +11,6 @@
   text-align: left;
   align-items: flex-start;
 }
-.btn-calendar-tile {
-  min-width: auto;
-  padding: 0;
-}
 .btn-calendar-tile--today {
   background-color: #{$action-color};
 }
@@ -26,6 +22,8 @@
   cursor: not-allowed;
 }
 .btn-calendar-tile {
+  min-width: 0;
+  padding: 0;
   position: relative;
   min-height: 50px;
   .icon-tile-ping {

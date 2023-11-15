@@ -5,7 +5,7 @@ button {
   background-color: transparent;
   color: inherit;
   padding: #{$rem05} #{$rem};
-  max-width: 250px;
+  max-width: #{$max-width-button};
   min-width: #{$min-width};
   border: none;
   border-radius: #{$border-radius};

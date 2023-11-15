@@ -55,11 +55,15 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           data={active}
           today={today}
           minDate={mininumDate}
-          click={(e) => dayChange({ today, active: e, setActive, events })}
-          events={events?.map((e) => {
-            const values = calendarValues(new Date(e.date));
-            return { ...values, ping: e.list.length };
-          })}
+          click={(e) => dayChange({ today, active: e, setActive, events, onDayClick })}
+          events={
+            events.length > 0
+              ? events?.map((e) => {
+                  const values = calendarValues(new Date(e.date));
+                  return { ...values, ping: e.list.length };
+                })
+              : []
+          }
         />
       )}
     </div>

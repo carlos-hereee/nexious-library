@@ -19,8 +19,13 @@ export const formatPreviewData = (values: FieldValueProps[]) => {
     const { name, group, groupName, sharedKey, value } = val;
     if (group && groupName) {
       const idx = payload[groupName]?.findIndex((p: any) => p.sharedKey === sharedKey);
+      // if group has been added
       if (idx >= 0) {
         payload[groupName][idx] = { ...payload[groupName][idx], [name]: value };
+        // if group has yet to added
+      } else if (payload[groupName]?.length > 0) {
+        payload[groupName].push({ [name]: value, sharedKey });
+        // init group
       } else payload[groupName] = [{ [name]: value, sharedKey }];
     } else payload[name] = value;
   });

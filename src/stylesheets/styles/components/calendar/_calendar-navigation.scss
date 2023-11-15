@@ -18,5 +18,5 @@
 .calendar-view-month {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: #{$rem} #{$rem025};
+  padding: #{$rem} 0;
 }

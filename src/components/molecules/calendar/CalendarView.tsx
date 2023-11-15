@@ -9,7 +9,7 @@ import { CalendarViewProps } from "nxs-calendar";
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today } = props;
   return (
-    <div>
+    <div className="container">
       <div className="calendar-week flex-g">
         {sundayFirst.map((w) => (
           <span key={w} className="day text-overflow">
@@ -25,7 +25,9 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
             <CalendarTile
               key={d}
               click={() => click(date)}
-              events={events.filter((e) => isTileMatch({ day1: e, day, day2: data }))[0]}
+              events={
+                events?.filter((e) => isTileMatch({ day1: e, day, day2: data }))[0] || {}
+              }
               data={{
                 tile: day,
                 isToday: isTileMatch({ day1: today, day, day2: data }),
@@ -36,7 +38,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
           ) : (
             <Button
               key={d}
-              name="calendar-tile btn-calendar-tile--muted"
+              theme="btn-calendar-tile btn-calendar-tile--muted"
               onClick={() => click({ ...data, day })}
             />
           );
