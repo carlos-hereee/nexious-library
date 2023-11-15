@@ -1,6 +1,6 @@
 {
   "name": "nexious-library",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "Official database for nexious.tech",
   "type": "module",
   "types": "dist/esm/@types/main.d.ts",
