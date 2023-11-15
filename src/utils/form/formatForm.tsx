@@ -1,4 +1,4 @@
-import { FormInitValues, KeyStringProp } from "custom-props";
+import { FormInitValues } from "custom-props";
 import { FieldValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {

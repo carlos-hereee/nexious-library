@@ -24,7 +24,7 @@ const Select: React.FC<SelectProp> = (props) => {
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
-    <div className="container">
+    <>
       {!hideLabels && label && (
         <Label name={name} label={label} errors={error} message={formMessage} />
       )}
@@ -43,7 +43,7 @@ const Select: React.FC<SelectProp> = (props) => {
           {list && list.map((l) => <Option key={l.uid} data={l} />)}
         </select>
       </div>
-    </div>
+    </>
   );
 };
 

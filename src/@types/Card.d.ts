@@ -5,6 +5,7 @@ declare module "nxs-card" {
     label: string;
     icon?: string;
     uid?: string;
+    sharedKey?: string;
     heroId?: string;
   };
   export interface CardProp {

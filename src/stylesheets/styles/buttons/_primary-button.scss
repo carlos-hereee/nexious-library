@@ -15,6 +15,7 @@
   background-color: #{$cta-color};
   width: 100%;
   font-size: large;
+  height: min-content;
 }
 .btn-cancel {
   background-color: #{$danger};
