@@ -1,0 +1,15 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}
+.app-container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto 3fr auto;
+  min-height: 100vh;
+  gap: #{$rem};
+  @include devices(mobile) {
+    grid-template-rows: 1fr;
+  }
+}

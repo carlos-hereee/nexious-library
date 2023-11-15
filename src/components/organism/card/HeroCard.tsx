@@ -3,7 +3,7 @@ import { HeroCardProps } from "nxs-card";
 
 const HeroCard: React.FC<HeroCardProps> = (props) => {
   const { hero, cta, theme } = props;
-  const { title, tagline } = props.data;
+  const { title, tagline } = props?.data;
 
   return (
     <div className={`hero-card ${theme ? theme : ""}`}>

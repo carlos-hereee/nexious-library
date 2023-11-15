@@ -1,0 +1,28 @@
+@keyframes slide-left {
+  0% {
+    overflow: hidden;
+    transform: translateX(200px);
+  }
+  100% {
+    overflow: hidden;
+    transform: translateX(0px);
+  }
+}
+@keyframes slide-up {
+  0% {
+    transform: translateY(400px);
+    animation-timing-function: ease-out;
+  }
+  60% {
+    transform: translateY(-30px);
+    animation-timing-function: ease-in;
+  }
+  80% {
+    transform: translateY(10px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0);
+    animation-timing-function: ease-in;
+  }
+}

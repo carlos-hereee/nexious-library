@@ -1,0 +1,29 @@
+.secondary-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 60vh;
+  width: 100%;
+  gap: #{$rem};
+  @include devices(mobile) {
+    width: auto;
+  }
+}
+.alt-container {
+  border-radius: #{$border-radius};
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.feature-card-container {
+  display: flex;
+  gap: #{$rem};
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+.list-selection-value {
+  display: flex;
+  gap: #{$rem};
+  border-radius: #{$rem025};
+  min-width: 100%;
+  width: 100%;
+  color: inherit;
+}
