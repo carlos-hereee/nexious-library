@@ -4,10 +4,8 @@
   gap: #{$rem};
 }
 .form-nav {
-  // display: flex;
   display: grid;
   grid-template-columns: max-content;
-
   gap: #{$rem};
   @include devices(mobile) {
     display: grid;

@@ -20,14 +20,9 @@
   position: absolute;
   top: 10%;
   left: 85%;
-  min-width: min-content;
-  width: 25px;
+  max-width: #{$min-width-icons};
+  min-width: #{$min-width-icons};
+  width: #{$min-width-icons};
   aspect-ratio: 1/1;
   border-radius: 100%;
-}
-.preview-hero-container {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: #{$rem};
 }
