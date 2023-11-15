@@ -12,10 +12,20 @@ const CTA: React.FC<CTAProps> = (props) => {
         const uid = data.uid || data.heroId || data.sharedKey || "";
         const label = data.label || "";
         return icon ? (
-          <IconButton icon={{ icon, label }} theme="btn-cta" onClick={onClick} key={uid} />
+          <IconButton
+            icon={{ icon, label }}
+            theme="btn-cta"
+            onClick={() => onClick && onClick(data)}
+            key={uid}
+          />
         ) : (
           label && (
-            <button type="button" className="btn-main btn-cta" onClick={onClick} key={uid}>
+            <button
+              type="button"
+              className="btn-main btn-cta"
+              onClick={() => onClick && data}
+              key={uid}
+            >
               {capFirstCharacter(label)}
             </button>
           )

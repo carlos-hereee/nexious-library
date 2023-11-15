@@ -39,7 +39,7 @@ declare module "nxs-card" {
   }
   export interface CTAProps {
     cta: CTAProp[];
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    onClick?: (key: any) => void;
   }
   export interface CardSectionProps {
     hero?: AssetProps;
