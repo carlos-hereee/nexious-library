@@ -1,4 +1,4 @@
-import { Hero } from "@nxs-molecules";
+import { Hero, Select } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
 import { NavigationToggleProps } from "nxs-navigation";
 
@@ -10,31 +10,29 @@ import { NavigationToggleProps } from "nxs-navigation";
  * @returns navigation button
  */
 const NavToggle: React.FC<NavigationToggleProps> = (props) => {
-  const { data, onSelect, language } = props;
+  const { data, onSelect, theme } = props;
+  const { active, alternatives } = props.data;
 
   const handleSelect = (value: string) => {
     // find selected and update values
-    const idx = data.alternatives.findIndex((alt) => alt.uid === value);
-    if (data.alternatives[idx].locale) {
-      data.locale = data.alternatives[idx].locale;
-    }
-    data.active = data.alternatives[idx];
+    const idx = alternatives.findIndex((alt) => alt.name === value || alt.value === value);
+    data.active = alternatives[idx];
     onSelect(data);
   };
   return (
-    <div className="select-wrapper">
-      {language && language.icon ? (
-        <Icon icon={language.icon} />
+    <div className="nav-toggle">
+      {active.icon ? (
+        <Icon icon={active.icon} />
       ) : (
-        language && <Hero hero={language} />
+        active.url && <Hero hero={active} theme="hero-icon" />
       )}
-      <select onChange={(e) => handleSelect(e.target.value)}>
-        {data.alternatives?.map((alt) => (
-          <option key={alt.uid} value={alt.uid} title={alt.name}>
-            {alt.label}
-          </option>
-        ))}
-      </select>
+      <Select
+        list={alternatives}
+        name={active?.name || ""}
+        theme={theme}
+        onChange={(value) => handleSelect(value)}
+        active={active?.label || ""}
+      />
     </div>
   );
 };

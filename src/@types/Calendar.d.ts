@@ -3,29 +3,28 @@
 //  *           module and should match the name used in import statements
 //  * */
 
-type EventProp = {
-  date: string;
-  startTime: number;
-  endTime: number;
-  uid?: string;
-  eventId?: string;
-  details?: string;
-  isOpen?: boolean;
-};
-type CalendarDayProp = {
-  dayIdx: number;
-  month: number;
-  year: number;
-  date: string;
-  maxDays: number;
-  weeks: number;
-  start: number;
-  day: number;
-  yyyyddmm: string;
-  ping?: number;
-};
-
 declare module "nxs-calendar" {
+  export type EventProp = {
+    date: string;
+    startTime: number;
+    endTime: number;
+    uid?: string;
+    eventId?: string;
+    details?: string;
+    isOpen?: boolean;
+  };
+  export type CalendarDayProp = {
+    dayIdx: number;
+    month: number;
+    year: number;
+    date: string;
+    maxDays: number;
+    weeks: number;
+    start: number;
+    day: number;
+    yyyyddmm: string;
+    ping?: number;
+  };
   // Define your exported types here
   export type EventMeetingProps = { meeting: EventProp };
   export interface CalendarProps {
@@ -57,7 +56,7 @@ declare module "nxs-calendar" {
       isToday: boolean;
       isSelected: boolean;
     };
-    events?: CalendarDayProp;
+    events: CalendarDayProp;
     click: (key: any) => void;
   }
   export interface CalendarNavProps {
@@ -85,6 +84,7 @@ declare module "nxs-calendar" {
     today: CalendarDayProp;
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
+    onDayClick?: (e: any) => void;
     events: { date: string; list: EventProp[] }[];
   }
   export interface FindMatchProps {

@@ -1,0 +1,22 @@
+button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: transparent;
+  color: inherit;
+  padding: #{$rem05} #{$rem};
+  max-width: #{$max-width-button};
+  min-width: #{$min-width};
+  border: none;
+  border-radius: #{$border-radius};
+  gap: #{$rem};
+  cursor: pointer;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+.bag-btns {
+  display: flex;
+  justify-content: center;
+  gap: 0.5rem;
+}

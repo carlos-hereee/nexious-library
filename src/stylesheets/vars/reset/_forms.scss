@@ -24,37 +24,24 @@ select {
   box-shadow: none;
   border: none;
   background-image: none;
-  background-color: transparent;
+  background-color: inherit;
+  color: inherit;
   font-family: inherit;
   font-size: inherit;
   cursor: pointer;
   line-height: inherit;
   min-width: #{$min-width};
-  // width: 100%;
+  width: 100%;
   outline: none;
   padding: #{$rem05};
   &::-ms-expand {
     display: none;
   }
 }
-// add basic styling
-.select-wrapper {
-  display: flex;
-  align-items: center;
-  position: relative;
-  outline: 1px solid #{$faded};
-  border-radius: #{$border-radius};
-  max-width: #{$max-width-sm};
-  &:focus {
-    outline: 1px solid #{$dark-gray};
-  }
-  &:hover {
-    outline: 1px solid #{$dark-gray};
-  }
-}
 
 // can only update colors
 option {
+  position: relative;
   color: inherit;
   background-color: inherit;
 }

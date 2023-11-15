@@ -1,0 +1,15 @@
+.blur-load {
+  background-size: cover;
+  background-position: center;
+  border-radius: #{$border-radius};
+}
+.blur-load--loaded {
+  background-image: none !important;
+  & > .hero {
+    opacity: 1;
+  }
+}
+.blur-load > .hero {
+  opacity: 0;
+  transition: opacity 200ms ease-in-out;
+}

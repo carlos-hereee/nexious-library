@@ -1,0 +1,9 @@
+.error-message-container {
+  border: 1px dotted #{$danger};
+  // max-height: 200px;
+  width: 100%;
+  padding: #{$rem};
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}

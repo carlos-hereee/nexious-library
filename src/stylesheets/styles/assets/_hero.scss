@@ -1,0 +1,30 @@
+.hero {
+  display: block;
+  width: 100%;
+  max-width: #{$max-width};
+  min-width: #{$min-width};
+  object-fit: cover;
+  object-position: center;
+  border-radius: #{$border-radius};
+}
+.hero-main {
+  max-width: #{$max-width-lg};
+  min-width: #{$min-width};
+}
+.feature-hero {
+  aspect-ratio: 1/1;
+}
+.thumbnail {
+  aspect-ratio: 16/9;
+}
+.hero-thumbnail {
+  object-fit: contain;
+  aspect-ratio: 16/9;
+}
+.hero-icon {
+  max-width: #{$min-width-sm};
+  max-height: 35px;
+  // height: min-content;
+  aspect-ratio: 16/9;
+  color: inherit;
+}

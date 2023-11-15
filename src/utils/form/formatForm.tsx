@@ -1,19 +1,32 @@
+import { FormInitValues } from "custom-props";
 import { FieldValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {
-  let payload: { [key: string]: any } = {};
-  const uniqueGroups: { [key: string]: string[] } = {};
+  return Object.assign(
+    {},
+    ...values.map((val) => {
+      if (val.group) {
+        const { group, sharedKey, name, value, groupName } = val;
+        const groupPayload = { value, name, sharedKey, group, groupName };
+        return { [val.name]: groupPayload };
+      } else return { [val.name]: val.value };
+    })
+  );
+};
+export const formatPreviewData = (values: FieldValueProps[]) => {
+  let payload: FormInitValues = {};
   values.forEach((val) => {
-    const { group, sharedKey, name, value, groupName } = val;
-    // check if value is part of a group
-    if (group && sharedKey && !uniqueGroups[group]?.includes(sharedKey)) {
-      const groupPayload = { value, name, sharedKey, group, groupName };
-      // check if the group has not been checked
-      if (uniqueGroups[group] && !uniqueGroups[group].includes(sharedKey)) {
-        // if not checked add to uniqueGroups; create new instance
-        uniqueGroups[group] = [...uniqueGroups[group], sharedKey];
-      }
-      payload[group].group?.push(groupPayload);
+    const { name, group, groupName, sharedKey, value } = val;
+    if (group && groupName) {
+      const idx = payload[groupName]?.findIndex((p: any) => p.sharedKey === sharedKey);
+      // if group has been added
+      if (idx >= 0) {
+        payload[groupName][idx] = { ...payload[groupName][idx], [name]: value };
+        // if group has yet to added
+      } else if (payload[groupName]?.length > 0) {
+        payload[groupName].push({ [name]: value, sharedKey });
+        // init group
+      } else payload[groupName] = [{ [name]: value, sharedKey }];
     } else payload[name] = value;
   });
   return payload;
@@ -23,7 +36,12 @@ export const formatFilesData = (values: FieldValueProps[]) => {
   const formData = new FormData();
   for (let item = 0; item < values.length; item++) {
     const current = values[item];
-    formData.append(current.name, current.value);
+    if (current.sharedKey && current.name !== "hero" && current.name !== "sectionHero") {
+      const keyName = current.name + "-" + current.group + "-" + current.sharedKey;
+      formData.append(keyName, current.value);
+    } else if (current.name === "hero") formData.append("hero", current.value);
+    else if (current.name === "sectionHero") formData.append("sectionHero", current.value);
+    else formData.append(current.name, current.value);
   }
   return formData;
 };

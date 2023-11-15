@@ -1,0 +1,22 @@
+.btn-link {
+  text-decoration: underline;
+}
+.btn-small {
+  min-width: 50px;
+  max-width: 60px;
+}
+.custom-btn-link {
+  display: flex;
+  justify-content: center;
+  border-radius: #{$border-radius};
+}
+
+.btn-danger {
+  border: none;
+  color: white;
+  background-color: #{$danger};
+}
+.btn-payment {
+  gap: #{$rem};
+  justify-content: flex-start;
+}

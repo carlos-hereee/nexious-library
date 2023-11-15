@@ -13,7 +13,6 @@ export const auth: string[] = [
   "newPassword",
   "confirmNewPassword",
 ];
-export const select: [string] = ["theme"];
 export const fileUpload: [string] = ["logo"];
 export const textarea: [string] = ["body"];
 export const files: [string, string] = ["logo", "hero"];

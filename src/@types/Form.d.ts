@@ -4,11 +4,31 @@
 //  * */
 
 declare module "nxs-form" {
+  import { MenuItemProp } from "nxs-navigation";
   import { FormInitValues, KeyStringProp } from "custom-props";
-  // export type SubmitPayload = {
-  //   value?: any;
-  //   group?: { value?: string; name?: string; sharedKey?: string; group?: string }[];
-  // };
+  export type OptionDataProps = {
+    data: OptionProps;
+    isDisabled?: boolean;
+    hideOption?: boolean;
+  };
+  export type OptionProps = {
+    name: string;
+    value: string;
+    label: string;
+    icon?: string;
+    uid?: string;
+    listItemId?: string;
+  };
+  export type AuthFieldProp = {
+    name: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    value: string;
+    placeholder: string;
+    hideLabels?: boolean;
+    labels?: string;
+    errors?: string;
+    formMessage?: string;
+  };
   export type SelectFileProp = {
     name: string;
     filename: string;
@@ -18,12 +38,14 @@ declare module "nxs-form" {
   export type FormProps = {
     // required props
     initialValues: FormInitValues;
-    onSubmit: (e: any) => void;
-    formName: string;
+    onSubmit?: (e: any) => void;
+    formId: string;
     // optional
     heading?: string;
+    previewLabel?: string;
     onChange?: (e: any) => void;
     onCancel?: () => void;
+    onViewPreview?: (e: any) => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
     withFileUpload?: boolean;
@@ -34,22 +56,10 @@ declare module "nxs-form" {
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     submitLabel?: string;
+    dataList?: { [key: string]: MenuItemProp[] };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
-    selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
-    addEntry?: {
-      [key: string]: {
-        additionLabel: string;
-        removalLabel: string;
-        initialValues: FormInitValues;
-        fieldHeading: string;
-        skipIfFalse: string;
-        labels?: KeyStringProp;
-        placeholders?: KeyStringProp;
-        types?: KeyStringProp;
-        canMultiply?: boolean;
-      };
-    };
+    addEntry?: { [key: string]: AddEntryProps };
   };
   export type InputProps = {
     name: string;
@@ -66,6 +76,7 @@ declare module "nxs-form" {
     isDisabled?: boolean;
     onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
     onBlur?: () => void;
+    formMessage?: string;
   };
   export type FieldValueProps = {
     value: any;
@@ -85,14 +96,29 @@ declare module "nxs-form" {
     // required props
     paginate: FormProps[];
     page?: number;
+    navigationHeading?: string;
     onFormSubmit?: (e: any) => void;
     onCancel?: () => void;
+    onPageClick?: () => void;
     setNewPage?: (e: number) => void;
     // optional props
     order?: string[]; //defaults set to first form on list
     hideNavigation?: boolean;
     responseError?: string;
+    theme?: string;
+    previewPage?: React.JSX.Element;
   }
+  export type AddEntryProps = {
+    additionLabel: string;
+    removalLabel: string;
+    initialValues: FormInitValues;
+    fieldHeading: string;
+    labels?: KeyStringProp;
+    groupName: string;
+    placeholders?: KeyStringProp;
+    types?: KeyStringProp;
+    canMultiply?: boolean;
+  };
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
   export type FormValueProps = {
     initialValues: FormInitValues;
@@ -100,22 +126,15 @@ declare module "nxs-form" {
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
     fieldHeading?: string;
-    addEntry?: {
-      [key: string]: {
-        additionLabel: string;
-        removalLabel: string;
-        initialValues: FormInitValues;
-        fieldHeading: string;
-        labels?: KeyStringProp;
-        skipIfFalse: string;
-        placeholders?: KeyStringProp;
-        types?: KeyStringProp;
-        canMultiply?: boolean;
-      };
-    };
+    addEntry?: { [key: string]: AddEntryProps };
   };
+  export type FormatEntryProps = {
+    target: string;
+    oldValues: FieldValueProps[];
+    addEntry: AddEntryProps;
+  };
+
   export type AddEntryValueProps = {
-    // formatValues;
     formatValues: FormInitValues[];
     labels?: KeyStringProp;
     types?: KeyStringProp;
@@ -131,8 +150,8 @@ declare module "nxs-form" {
     placeholder: string;
     label: string;
     type: string;
+    theme?: string;
     selected?: string;
-    selectList?: { name: string; value: string; isDisabled?: boolean; uid?: string }[];
     hideLabels?: boolean;
     canRemove?: boolean;
     group?: string;
@@ -142,48 +161,65 @@ declare module "nxs-form" {
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
     formError?: string;
+    formMessage?: string;
+    dataList?: MenuItemProp[];
     fieldHeading?: { [key: string]: string };
     handleChange: (key: any) => void;
+    changeDataList: (key: any) => void;
     updateSelection?: (key: any, name: string) => void;
     handleCheckbox?: (key: any) => void;
-    handleHeroChange?: (key: File) => void;
+    handleHeroChange?: (key: File | string) => void;
   }
   export interface LabelProps {
     label: string;
     name: string;
     theme?: string;
     errors?: string;
+    message?: string;
   }
   export interface UploadFileProps {
     input: InputProps;
     label: string;
-    value?: File;
+    value: File | string;
     theme?: string;
     hideLabels?: boolean;
     selectLabel?: string;
     error?: string;
-    onSelect: (e: File) => void;
+    onSelect: (e: File | string) => void;
+    formMessage?: string;
   }
   export interface TextAreaProps {
     input: InputProps;
     theme?: string;
     hideLabels?: boolean;
+    formMessage?: string;
   }
-  export interface ListProp {
-    name: string;
-    value: string;
-    isDisabled?: boolean;
-    uid?: string;
-    listId?: string;
-  }
+
   export interface SelectProp {
     name: string;
-    list: ListProp[];
+    list: OptionProps[];
     active?: string;
     theme?: string;
     hideLabels?: boolean;
     label?: string;
     error?: string;
-    onChange: React.ChangeEventHandler<HTMLSelectElement>;
+    formMessage?: string;
+    onChange: (key: string) => void;
   }
+  export type ValidateProps = {
+    required?: string[];
+    unique?: { name: string; list: string[] }[];
+    labels?: KeyStringProp;
+  };
+  export type DataListProps = {
+    list: { [key: string]: string }[];
+    formMessage?: string;
+    error?: string;
+    value: string;
+    name: string;
+    label?: string;
+    hideLabel?: boolean;
+    placeholder?: string;
+    onChange: (e: any) => void;
+  };
 }

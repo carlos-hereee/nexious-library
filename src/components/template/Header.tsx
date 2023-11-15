@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
-import { MenuProp } from "@nxs-utils/helpers/types";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { HeaderProps } from "nxs-navigation";
+import { HeaderProps, MenuProp } from "nxs-navigation";
 
 /**
  * Component - Header
@@ -20,11 +18,10 @@ import { HeaderProps } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, updateMenu, language, heading } = props;
+  const { menu, logo, ping, updateMenu, language, theme, uniqueId } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
-  const navigate = useNavigate();
 
   useEffect(() => {
     const initClose = () => setClose(true);
@@ -34,25 +31,24 @@ const Header: React.FC<HeaderProps> = (props) => {
 
   const handleClick = (e: MenuProp) => {
     setActive(!isActive);
-    e.active && e.active.link ? navigate(`/${e.active.link}`) : navigate(`/${e.active?.name}`);
+    updateMenu(e);
   };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (
-    <header>
-      <Logo hero={logo} label={heading} />
+    <header id={uniqueId}>
+      {logo && <Logo hero={logo} label={logo.title} />}
       {menu && (
         <>
-          {" "}
           <nav className="primary-navigation">
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}
-              toggle={updateMenu}
               click={handleClick}
               language={language}
+              theme={theme}
             />
           </nav>
-          <nav className="mobile-navigation">
+          <nav className={"mobile-navigation"}>
             <BurgerButton
               isBurger={isActive}
               onClick={() => setActive(!isActive)}
@@ -61,9 +57,9 @@ const Header: React.FC<HeaderProps> = (props) => {
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}
-              toggle={updateMenu}
               click={handleClick}
               language={language}
+              theme={"alt-" + theme}
             />
           </nav>
         </>

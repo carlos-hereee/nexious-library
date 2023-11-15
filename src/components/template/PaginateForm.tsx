@@ -4,26 +4,26 @@ import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
 import { FormInitValues } from "custom-props";
 import { PaginateFormProps } from "nxs-form";
-import { makeStrReadable } from "@nxs-utils/app/text";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
-  const { order, paginate, onFormSubmit, setNewPage, page, hideNavigation, onCancel } = props;
-  const { responseError } = props;
+  const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
+  const { previewPage, theme } = props;
+  const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
   const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
     { paginate },
     true
   );
   // key variables
-  // set initial values
   const [initialValues, setInitialValues] = useState<FormInitValues>();
   // store form values
   const [values, setValues] = useState<FormInitValues>({});
   const [pageNumber, setPageNumber] = useState<number>(page ? page : 0);
   const current = paginate[pageNumber];
-  const formOrder = order ? order : paginate.map((f) => f.formName);
-  const total = formOrder.length;
-  const formName = current?.formName;
+  const formOrder = order ? order : paginate.map((f) => f.formId);
+  // const total = formOrder.length;
+  const formId = current?.formId;
+  const onViewPreview = current?.onViewPreview;
   const heading = current?.heading;
   const addEntry = current?.addEntry;
   const labels = current?.labels;
@@ -31,9 +31,10 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const types = current?.types;
   const submitLabel = current?.submitLabel;
   const schema = current?.schema;
-  const theme = current?.theme;
   const fieldHeading = current?.fieldHeading;
   const withFileUpload = current?.withFileUpload;
+  const dataList = current?.dataList;
+  const previewLabel = current?.previewLabel;
 
   useEffect(() => {
     if (pageNumber >= 0) {
@@ -49,7 +50,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     if (!next) {
       if (onFormSubmit) {
         // save values just incase
-        onFormSubmit({ ...values, [formName]: formValues });
+        formId && onFormSubmit({ ...values, [formId]: formValues });
       } else {
         const prop = "onFormSubmit";
         setLightColor("red");
@@ -61,13 +62,14 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       const nextPage = formOrder.findIndex((form) => form === next);
       handlePageClick(nextPage);
       // save form values
-      setValues({ ...values, [formName]: formValues });
+      formId && setValues({ ...values, [formId]: formValues });
     }
   };
   const onSubmit = () => (current.onSubmit ? current.onSubmit : handlePaginateSubmit);
 
   const handlePageClick = (nextPage: number) => {
     //  reset initial values to redender form component
+    onPageClick && onPageClick();
     setInitialValues(undefined);
     setPageNumber(nextPage);
   };
@@ -79,33 +81,37 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     <div className="container">
       {!hideNavigation && (
         <FormNavigation
-          heading={`Form navigation showing ${makeStrReadable(formName)}, ${
-            pageNumber + 1
-          } out of ${total}`}
-          formOrder={formOrder}
+          heading={navigationHeading}
+          formOrder={formOrder ? formOrder : []}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
         />
       )}
-      {initialValues && (
-        <Form
-          initialValues={initialValues}
-          onSubmit={onSubmit()}
-          formName={formName}
-          labels={labels}
-          placeholders={placeholders}
-          submitLabel={submitLabel}
-          types={types}
-          theme={theme}
-          withFileUpload={withFileUpload}
-          responseError={responseError}
-          schema={schema}
-          addEntry={addEntry}
-          fieldHeading={fieldHeading}
-          heading={heading}
-          onCancel={onCancel}
-        />
-      )}
+      <div className="preview-container">
+        {initialValues && (
+          <Form
+            initialValues={initialValues}
+            onSubmit={onSubmit()}
+            formId={formId}
+            labels={labels}
+            dataList={dataList}
+            placeholders={placeholders}
+            submitLabel={submitLabel}
+            types={types}
+            theme={theme}
+            withFileUpload={withFileUpload}
+            responseError={responseError}
+            schema={schema}
+            addEntry={addEntry}
+            fieldHeading={fieldHeading}
+            heading={heading}
+            onCancel={onCancel}
+            onViewPreview={onViewPreview}
+            previewLabel={previewLabel}
+          />
+        )}
+        {previewPage && previewPage}
+      </div>
     </div>
   );
 };

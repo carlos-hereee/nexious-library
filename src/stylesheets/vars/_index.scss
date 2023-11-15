@@ -1,5 +1,4 @@
+@import "./variables/_index.scss";
 @import "./reset/_index.scss";
-@import "./_variables.scss";
-@import "./_mixins.scss";
-@import "./_keyframes.scss";
-@import "./_table.scss";
+@import "./mixin/_index.scss";
+@import "./keyframes/_index.scss";

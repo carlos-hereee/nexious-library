@@ -1,0 +1,22 @@
+.calendar-navigation {
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr;
+  @include devices(mobile) {
+    .btn-start,
+    .btn-last {
+      display: none;
+    }
+  }
+}
+.calendar-navigation .heading {
+  text-align: center;
+}
+.calendar-navigation-next-buttons {
+  justify-content: flex-end;
+}
+.calendar-week,
+.calendar-view-month {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  padding: #{$rem} 0;
+}

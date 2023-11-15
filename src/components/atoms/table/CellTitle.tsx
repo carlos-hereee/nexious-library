@@ -1,4 +1,4 @@
-import { CellDataProp } from "@nxs-utils/helpers/types";
+import { CellDataProp } from "custom-props";
 
 const CellTitle: React.FC<CellDataProp> = ({ data }) => {
   return <th className="cell-header">{data}</th>;

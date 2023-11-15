@@ -1,5 +1,5 @@
-import { auth, select, textarea } from "@nxs-utils/form/types";
-import { AuthField, Field, Select, TextArea } from "@nxs-molecules";
+import { auth, textarea } from "@nxs-utils/form/types";
+import { AuthField, DataList, Field, Select, TextArea } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import { FormFieldProps } from "nxs-form";
 import { UploadFile } from "@nxs-molecules";
@@ -7,15 +7,16 @@ import { UploadFile } from "@nxs-molecules";
 const FormField: React.FC<FormFieldProps> = (props) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
-  const { formError, selectList, selected, updateSelection, handleCheckbox } = props;
+  const { formError, updateSelection, handleCheckbox, theme } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
-  const { canRemove, handleHeroChange } = props;
+  const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
       {auth.includes(name) ? (
         <AuthField
           name={name}
+          formMessage={formMessage}
           value={value}
           onChange={handleChange}
           placeholder={placeholder}
@@ -23,12 +24,23 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           labels={label}
           errors={formError}
         />
-      ) : select.includes(name) ? (
+      ) : type === "datalist" ? (
+        <DataList
+          name={name}
+          list={dataList || []}
+          formMessage={formMessage}
+          value={value}
+          label={label}
+          onChange={changeDataList}
+        />
+      ) : type === "select" ? (
         <Select
           name={name}
-          list={selectList ? selectList : []}
-          active={selected ? selected : ""}
-          onChange={(e) => updateSelection && updateSelection(e.target.value, name)}
+          formMessage={formMessage}
+          list={dataList || []}
+          active={value}
+          theme={theme}
+          onChange={(e) => updateSelection && updateSelection(e, name)}
           hideLabels={hideLabels}
           label={label}
           error={formError}
@@ -44,19 +56,22 @@ const FormField: React.FC<FormFieldProps> = (props) => {
             onChange: (e) => handleChange(e),
           }}
           hideLabels={hideLabels}
-          theme="highlight"
+          formMessage={formMessage}
+          // theme="highlight"
         />
       ) : type === "checkbox" ? (
         <InputCheckbox
           name={name}
           value={value}
           onChange={(e) => handleCheckbox && handleCheckbox(e)}
+          formMessage={formMessage}
           error={formError}
           label={label}
         />
       ) : type === "file" ? (
         <UploadFile
           input={{ name, error: formError }}
+          formMessage={formMessage}
           value={value}
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
@@ -65,6 +80,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         <Field
           name={name}
           value={value}
+          formMessage={formMessage}
           onChange={handleChange}
           placeholder={placeholder}
           hideLabel={hideLabels}

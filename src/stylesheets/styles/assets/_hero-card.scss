@@ -1,0 +1,27 @@
+.hero-card {
+  position: relative;
+  display: grid;
+  gap: #{$rem};
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.hero-card-heading {
+  width: 100%;
+  min-width: #{$min-width};
+  max-width: 28ch;
+}
+.hero-card-body-alt {
+  display: flex;
+  gap: #{$rem};
+  @include devices(mobile) {
+    flex-wrap: wrap;
+  }
+}
+.hero-user {
+  border-radius: 100%;
+  max-width: 100px;
+  aspect-ratio: 1/1;
+}
+.feature-hero {
+  width: 100%;
+  min-width: #{$max-width-button};
+}

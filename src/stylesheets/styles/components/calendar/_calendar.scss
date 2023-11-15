@@ -1,0 +1,41 @@
+.calendar {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}
+.calendar-package-details {
+  width: 100%;
+  flex: 1;
+  max-width: 100%;
+  text-align: left;
+  align-items: flex-start;
+}
+.btn-calendar-tile--today {
+  background-color: #{$action-color};
+}
+.btn-calendar-tile--selected {
+  background-color: #{$action-color-accent};
+}
+
+.btn-calendar-tile--muted {
+  cursor: not-allowed;
+}
+.btn-calendar-tile {
+  min-width: 0;
+  padding: 0;
+  position: relative;
+  min-height: 50px;
+  .icon-tile-ping {
+    position: absolute;
+    top: -9%;
+    right: -2%;
+    background-color: #{$ping-color};
+    padding: #{$rem025};
+    border-radius: 100%;
+    color: #{$dark-primary};
+  }
+  @include devices(mobile) {
+    min-height: 40px;
+  }
+}

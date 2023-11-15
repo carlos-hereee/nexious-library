@@ -1,0 +1,12 @@
+.section-container {
+  flex-direction: column;
+  display: flex;
+  border-radius: #{$border-radius};
+  gap: 0.5rem;
+}
+.secondary-section-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+}

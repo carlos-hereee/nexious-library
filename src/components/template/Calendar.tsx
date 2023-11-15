@@ -1,11 +1,10 @@
 import { CalendarView, CalendarNavigation, IconButton } from "@nxs-molecules";
 import { useEffect, useState } from "react";
-import { CalendarDayProps } from "@nxs-utils/helpers/types";
 import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import { next, previous } from "@nxs-utils/calendar/navLabels";
 import { monthChange } from "@nxs-utils/calendar/monthChange";
 import { dayChange } from "@nxs-utils/calendar/dayChange";
-import { CalendarProps } from "nxs-calendar";
+import { CalendarDayProp, CalendarProps } from "nxs-calendar";
 
 /**
  *
@@ -17,9 +16,9 @@ import { CalendarProps } from "nxs-calendar";
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, minDate, theme, onDayClick, setDay } = props;
   // keep track of today, min date, and which calenday is active
-  const [active, setActive] = useState<CalendarDayProps>(calendarValues(value));
-  const [mininumDate, setMininumDate] = useState<CalendarDayProps>();
-  const today: CalendarDayProps = calendarValues(new Date());
+  const [active, setActive] = useState<CalendarDayProp>(calendarValues(value));
+  const [mininumDate, setMininumDate] = useState<CalendarDayProp>();
+  const today: CalendarDayProp = calendarValues(new Date());
 
   useEffect(() => {
     if (minDate) {
@@ -56,11 +55,15 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           data={active}
           today={today}
           minDate={mininumDate}
-          click={(e) => dayChange({ today, active: e, setActive, events })}
-          events={events?.map((e) => {
-            const values = calendarValues(new Date(e.date));
-            return { ...values, ping: e.list.length };
-          })}
+          click={(e) => dayChange({ today, active: e, setActive, events, onDayClick })}
+          events={
+            events.length > 0
+              ? events?.map((e) => {
+                  const values = calendarValues(new Date(e.date));
+                  return { ...values, ping: e.list.length };
+                })
+              : []
+          }
         />
       )}
     </div>

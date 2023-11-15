@@ -42,7 +42,7 @@ section {
 header {
   display: grid;
   align-content: center;
-  grid-template-columns: 2fr 4fr;
+  grid-template-columns: 2fr 3fr;
   gap: #{$rem};
   min-height: #{$min-height};
 }
@@ -55,25 +55,13 @@ footer {
   gap: #{$rem};
   min-height: #{$min-height};
 }
-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  color: inherit;
-  padding: #{$rem05} #{$rem};
-  max-width: 250px;
-  min-width: #{$min-width};
-  border: none;
-  border-radius: #{$border-radius};
-  gap: #{$rem};
-  cursor: pointer;
-  &:disabled {
-    cursor: not-allowed;
-  }
-}
+
 ul {
   list-style-type: none;
   margin: 0;
   padding: 0;
+}
+// add default link color
+a {
+  color: inherit;
 }

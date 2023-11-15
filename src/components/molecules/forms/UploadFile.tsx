@@ -1,36 +1,50 @@
-import { Label } from "@nxs-atoms/index";
+import { Button, Label } from "@nxs-atoms/index";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { useEffect, useRef, useState } from "react";
-import { ErrorMessages } from "@nxs-molecules";
+import { ErrorMessages, Hero } from "@nxs-molecules";
 import { UploadFileProps } from "nxs-form";
+import { urlFile } from "@nxs-utils/data/urlFile";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { name, error } = props.input;
-  const { selectLabel, label, hideLabels, onSelect, theme, value } = props;
+  const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ onSelect, name }, true);
-  const [currentImage, setCurrentImage] = useState<File | null>(null);
   const [previewImage, setPreviewImage] = useState<string>("");
-  const imageUpLoaderRef = useRef<HTMLInputElement>(null);
-  const imageRef = useRef(null);
+  const imageUploaderRef = useRef<HTMLInputElement>(null);
+  const imageRef = useRef<HTMLImageElement>(null);
 
+  // use init values
   useEffect(() => {
-    // use init values
-    setCurrentImage(value || null);
-    setPreviewImage(value ? URL.createObjectURL(value) : "");
+    formatImageData(value);
   }, []);
 
   const imageClick = () => {
-    imageUpLoaderRef.current && imageUpLoaderRef.current.click();
+    if (imageUploaderRef.current) {
+      // Trigger the click event of the file input
+      imageUploaderRef.current.click();
+    }
+  };
+  const formatImageData = (file: File | string) => {
+    if (file) {
+      const url = typeof file === "string" ? file : urlFile(file);
+      setPreviewImage(url);
+      onSelect(file);
+    } else {
+      setPreviewImage("");
+      onSelect(file);
+    }
   };
 
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFiles = event.target.files;
-    const file = selectedFiles?.[0];
-    if (file) {
-      onSelect(file);
-      setCurrentImage(file);
-      setPreviewImage(URL.createObjectURL(file));
+    const selectedFile = event.target.files?.[0];
+    formatImageData(selectedFile || "");
+  };
+
+  const handleRemoveImage = () => {
+    formatImageData("");
+    if (imageUploaderRef.current) {
+      imageUploaderRef.current.value = "";
     }
   };
 
@@ -40,35 +54,38 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   return (
     <div className={`field-upload ${theme ? theme : ""}`}>
       <div className="flex-d-column flex-start">
-        {!hideLabels && <Label name={name} label={label} errors={error} />}
+        {!hideLabels && (
+          <Label name={name} label={label} errors={error} message={formMessage} />
+        )}
         <input
           type="file"
           onChange={selectImage}
           accept="image/*"
           name={name}
-          ref={imageUpLoaderRef}
+          ref={imageUploaderRef}
           id={name}
           hidden
         />
         <button className="btn-main" type="button" onClick={imageClick}>
           {selectLabel || "Choose a file"}
         </button>
-      </div>
-      <div className="flex-d-column">
-        <span>Image Preview</span>
-        {currentImage ? (
-          <img
-            className="hero preview-hero"
-            src={previewImage}
-            ref={imageRef}
-            alt="image-upload-preview"
-            onClick={imageClick}
-          />
-        ) : (
-          <button type="button" className="preview-hero-empty" onClick={imageClick}>
-            ?
+        {previewImage && (
+          <button className="btn-main btn-cancel" type="button" onClick={handleRemoveImage}>
+            Cancel
           </button>
         )}
+      </div>
+      <div className="preview-hero-container">
+        <span>Image Preview</span>
+        {previewImage && (
+          <Button label="x" onClick={handleRemoveImage} theme="preview-cancel btn-cancel" />
+        )}
+        <Hero
+          hero={{ url: previewImage }}
+          imageRef={imageRef}
+          onImageClick={imageClick}
+          theme="preview-hero"
+        />
       </div>
     </div>
   );

@@ -1,0 +1,71 @@
+.flex {
+  display: flex;
+}
+.flex-1 {
+  flex: 1;
+}
+.flex-2 {
+  flex: 2;
+}
+.flex-g {
+  display: flex;
+  gap: #{$rem};
+}
+.flex-end {
+  display: flex;
+  gap: #{$rem};
+  justify-content: flex-end;
+}
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: #{$rem};
+}
+.flex-d-row {
+  display: flex;
+  flex-direction: row;
+  gap: #{$rem};
+}
+.flex-column,
+.flex-d-column {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}
+.flex-j-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: #{$rem};
+}
+.flex-j-end {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+.flex-j-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: #{$rem};
+}
+.flex-wrap,
+.flex-w {
+  display: flex;
+  flex-wrap: wrap;
+  gap: #{$rem};
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: #{$rem};
+}
+.flex-start {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  gap: #{$rem};
+}

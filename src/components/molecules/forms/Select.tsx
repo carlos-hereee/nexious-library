@@ -1,4 +1,4 @@
-import { Label, Option } from "@nxs-atoms";
+import { Icon, Label, Option } from "@nxs-atoms";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules";
 import { SelectProp } from "nxs-form";
@@ -13,29 +13,36 @@ import { SelectProp } from "nxs-form";
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, active, name, hideLabels, label, error } = props;
+  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
+
+  const activeLabel = active || "Choose Selection";
+  const icon = active
+    ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon
+    : undefined;
+
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
-      {!hideLabels && label && <Label name={name} label={label} errors={error} />}
-      <select
-        className={theme ? `select-wrapper ${theme}` : "select-wrapper"}
-        value={active ? active : ""}
-        onChange={onChange}
-      >
-        <Option name="" value="" isDisabled />
-        {list.map((l, idx) => (
+      {!hideLabels && label && (
+        <Label name={name} label={label} errors={error} message={formMessage} />
+      )}
+      <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
+        {active && icon && <Icon icon={icon} className="select-icon" />}
+        <select
+          className="select"
+          value={activeLabel}
+          onChange={(e) => onChange(e.target.value)}
+        >
           <Option
-            // incase no id is provided use idx
-            key={l.uid || l.listId || idx}
-            name={l.name}
-            value={l.value}
-            isDisabled={l.name === active}
+            data={{ label: activeLabel, name: activeLabel, value: activeLabel }}
+            isDisabled
           />
-        ))}
-      </select>
+          <Option data={{ label: "", name: "", value: "" }} hideOption />
+          {list && list.map((l) => <Option key={l.uid} data={l} />)}
+        </select>
+      </div>
     </>
   );
 };

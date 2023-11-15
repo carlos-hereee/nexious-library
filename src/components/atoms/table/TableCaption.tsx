@@ -1,4 +1,4 @@
-import { CellDataProp } from "@nxs-utils/helpers/types";
+import { CellDataProp } from "custom-props";
 
 /**
  * table caption

@@ -3,18 +3,18 @@ import { CalendarTileProps } from "nxs-calendar";
 
 const CalendarTile: React.FC<CalendarTileProps> = (props) => {
   const { events, click, data } = props;
-  if (!events) return;
+
   return (
     <button
-      className={`calendar-tile${data.isMuted ? " btn-calendar-tile--muted" : ""}${
+      className={`btn-calendar-tile${data.isMuted ? " btn-calendar-tile--muted" : ""}${
         data.isToday ? " btn-calendar-tile--today" : ""
-      } ${data.isSelected ? "btn-calendar-tile--selected" : ""} ${
-        data.isMuted ? "text-mute" : ""
+      }${data.isSelected ? " btn-calendar-tile--selected" : ""}${
+        data.isMuted ? " text-mute" : ""
       }`}
       onClick={click}
-      title={events ? `${events.date} has ${events.ping} events` : undefined}
+      title={events?.date ? `${events.date} has ${events.ping} events` : "no events today"}
     >
-      {data.tile && events.day === data.tile && <TileContent tile={events.ping || 0} />}
+      {events.day === data.tile ? <TileContent tile={events.ping || 0} /> : data.tile}
     </button>
   );
 };

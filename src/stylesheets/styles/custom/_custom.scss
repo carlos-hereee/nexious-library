@@ -1,0 +1,82 @@
+.p-sm {
+  padding: 0.5rem;
+}
+.p-1 {
+  padding: 1rem;
+}
+.p-verticle {
+  padding: 1rem 0;
+}
+.elbow-room,
+.elbow-space {
+  padding: 0 1rem;
+}
+.text-center {
+  text-align: center;
+}
+.scroll-y {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.ping {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  aspect-ratio: 1/1;
+  border-radius: #{$border-radius};
+  width: 25px;
+  height: 25px;
+  right: -0.5rem;
+  top: -0.5rem;
+}
+.navlink {
+  text-decoration: none;
+}
+.w-100 {
+  width: 100%;
+}
+// add whitespace
+.m-tb,
+.white-space {
+  margin: 1rem 0;
+}
+.mt-1 {
+  margin-top: 1rem;
+}
+.m-sides,
+.m-horizontal {
+  margin: 0 1rem;
+}
+.highlight {
+  outline: 1px solid #{$faded};
+  &:focus {
+    outline: 1px solid #{$dark-mode};
+  }
+  &:hover {
+    outline: 1px solid #{$dark-mode};
+  }
+}
+.required {
+  color: #{$danger};
+}
+.active {
+  background-color: #{$dark};
+  color: #{$light};
+}
+.danger-zone {
+  display: flex;
+  justify-content: flex-end;
+  @include devices(mobile) {
+    display: none;
+  }
+}
+.banner {
+  display: grid;
+  align-items: center;
+  grid-template-columns: 2fr 3fr;
+  gap: 1rem;
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
+}

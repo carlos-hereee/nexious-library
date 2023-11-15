@@ -71,6 +71,7 @@
     "save:rename": "node ./scripts/save-rename.js",
     "renameFile": "bash ./scripts/renameFile.sh",
     "dev": "node ./scripts/run-all-watchers.js",
+    "watchers": "node ./scripts/all-watchers.js",
     "watch:add-types": "node ./scripts/watcher-add-types.js --watch",
     "watch:4": "node ./scripts/watcher-rename-file.js --watch",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
@@ -140,7 +141,7 @@
     "typescript": "^5.1.3"
   },
   "peerDependencies": {
-    "@fortawesome/free-brands-svg-icons": "^6.4.0",
+    "@fortawesome/free-brands-svg-icons": "^6.4.2",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "react-router-dom": "^6.14.0"

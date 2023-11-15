@@ -1,48 +1,13 @@
-// shared typings
-type HeroProp = {
-  url: string;
-  alt?: string;
-  name?: string;
-  icon?: string;
-  small?: string;
-  label?: string;
-  credit?: {
-    artistName: string;
-    artistUrl: string;
-    assetUrl: string;
-  };
-  theme?: string;
-  logoId?: string;
-};
-type CTAProp = {
-  name: string;
-  label: string;
-  icon?: string;
-  uid?: string;
-  heroId?: string;
-};
-
-/**
- * Component - Card
- *
- * --header
- * @param title string; heading of the card
- * @param hero.theme string; heading of the card
- * @param hero.url string; heading of the card
- * @param click   callback to be fired when button is click
- * --body 
- * @param response string; the text to manipulate
- * @param hyperlink.word; string; the word that's to become a hyperlink
- * @param hyperlink.link; string; link url
- * @param hasLink: boolean; the separator to notify component its working with
- *                          hyperlink
- --footer 
- * @param data.data string; display content on page
- * @param data.buttons string[]; display any number of buttons
- * @returns Card
- */
-
 declare module "nxs-card" {
+  import { AssetProps } from "nxs-assets";
+  export type CTAProp = {
+    name: string;
+    label: string;
+    icon?: string;
+    uid?: string;
+    sharedKey?: string;
+    heroId?: string;
+  };
   export interface CardProp {
     title: string;
     body: string;
@@ -57,27 +22,27 @@ declare module "nxs-card" {
     cost?: number;
     hyperlink?: { word: string; link: string }[];
     features?: { uid: string; title: string; hasList: boolean; list: string[] }[];
-    cta?: {
-      name: string;
-      icon: string;
-      uid: string;
-      label: string;
-    }[];
+    cta?: CTAProp[];
   }
   export interface CardProps {
     data: CardProp;
     theme?: string;
+    hero?: AssetProps;
     onClick?: (key: any) => void;
   }
   export interface HeroCardProps {
-    data: { title: string; tagline?: string; hero?: HeroProp; cta?: CTAProp[] };
+    data: { title?: string; tagline?: string; subtitle?: string };
+    hero?: AssetProps;
+    theme?: string;
+    onClick?: (key: any) => void;
+    cta?: CTAProp[];
   }
   export interface CTAProps {
-    cta?: CTAProp[];
-    onClick?: React.MouseEventHandler<HTMLButtonElement>;
+    cta: CTAProp[];
+    onClick?: (key: any) => void;
   }
   export interface CardSectionProps {
-    hero?: HeroProp;
+    hero?: AssetProps;
     hideReadMore?: boolean;
     data?: string;
     theme?: string;
@@ -87,7 +52,7 @@ declare module "nxs-card" {
     hideHero?: boolean;
     theme?: boolean;
     user: {
-      hero: HeroProp;
+      hero: AssetProps;
       name?: string;
       email?: string;
       phone?: string;

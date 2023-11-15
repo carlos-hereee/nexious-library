@@ -1,4 +1,5 @@
 declare module "nxs-typography" {
+  export type LinkProp = { data: string; isLink: boolean };
   export interface DataProp {
     data?: string;
     message?: string;

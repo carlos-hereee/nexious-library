@@ -1,9 +1,9 @@
-import { CalendarDayProps } from "@nxs-utils/helpers/types";
+import { CalendarDayProp } from "nxs-calendar";
 
 type TileMuteProps = {
   day: number;
-  minDate?: CalendarDayProps;
-  data: CalendarDayProps;
+  minDate?: CalendarDayProp;
+  data: CalendarDayProp;
 };
 export const isTileMute = ({ day, minDate, data }: TileMuteProps) => {
   const minYear = minDate && minDate?.year > data.year;

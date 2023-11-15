@@ -1,30 +1,36 @@
 import { CTAProps } from "nxs-card";
 import { IconButton } from "@nxs-molecules";
+import { capFirstCharacter } from "@nxs-utils/data/text";
 
 const CTA: React.FC<CTAProps> = (props) => {
   const { cta, onClick } = props;
+
   return (
-    <div className="flex-center">
-      {cta &&
-        cta.map((b) =>
-          b.icon ? (
-            <IconButton
-              icon={{ icon: b.icon }}
-              theme="btn-cta"
-              onClick={onClick}
-              key={b.uid || b.heroId}
-            />
-          ) : (
+    <div className="flex-row">
+      {cta.map((data) => {
+        const icon = data.icon || "";
+        const uid = data.uid || data.heroId || data.sharedKey || "";
+        const label = data.label || "";
+        return icon ? (
+          <IconButton
+            icon={{ icon, label }}
+            theme="btn-cta"
+            onClick={() => onClick && onClick(data)}
+            key={uid}
+          />
+        ) : (
+          label && (
             <button
               type="button"
-              className="btn-main"
-              onClick={onClick}
-              key={b.uid || b.heroId}
+              className="btn-main btn-cta"
+              onClick={() => onClick && data}
+              key={uid}
             >
-              {b.label}
+              {capFirstCharacter(label)}
             </button>
           )
-        )}
+        );
+      })}
     </div>
   );
 };
