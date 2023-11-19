@@ -4,7 +4,7 @@ import { ButtonProps } from "nxs-button";
 
 const ShowAuthTips: React.FC<ButtonProps> = (props) => {
   const { onSubmit } = props;
-  const { tips, setTips } = useTips();
+  const { tips } = useTips();
   return (
     <div className="form-field password-checker">
       <h3>Your password difficulty to guess is at {tips.ease}</h3>

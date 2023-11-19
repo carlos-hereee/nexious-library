@@ -4,7 +4,8 @@ import { CartRow, CartCancel } from "@nxs-molecules";
 import { CartProps } from "nxs-cart";
 
 const Cart: React.FC<CartProps> = (props) => {
-  const { data, heading, removeFromCart, onEditDetails } = props;
+  // const { data, heading, removeFromCart, onEditDetails } = props;
+  const { data, heading, removeFromCart } = props;
   const [cancel, setCancel] = useState<string>();
   // const [active, setActive] = useState<string>();
   const cancelReq = (e: any, isConfirm: boolean) => {

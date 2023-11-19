@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
-  const [warnings, setWarningsHandling] = useState<ErrorMessageProp[]>([]);
+  // const [warnings, setWarningsHandling] = useState<ErrorMessageProp[]>([]);
 
   const missingProps = (name: string) => {
     const isProp = isAProp ? true : false;
@@ -31,5 +31,6 @@ export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
       }
     });
   }, []);
-  return { lightColor, errors, setErrors, warnings, setLightColor };
+  // return { lightColor, errors, setErrors, warnings, setLightColor };
+  return { lightColor, errors, setErrors, setLightColor };
 };
