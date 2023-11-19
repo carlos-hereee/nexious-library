@@ -1,5 +1,5 @@
-import { ButtonProps } from "nxs-button";
 import { Icon } from "@nxs-atoms";
+import type { ButtonProps } from "nxs-button";
 
 const CancelButton: React.FC<ButtonProps> = (props) => {
   const { onClick, label, theme } = props;

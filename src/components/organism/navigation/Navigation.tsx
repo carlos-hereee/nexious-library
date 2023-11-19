@@ -1,5 +1,5 @@
 import { IconButton } from "@nxs-molecules";
-import { NavigationProps } from "nxs-navigation";
+import type { NavigationProps } from "nxs-navigation";
 
 /**
  * Component - Navigation

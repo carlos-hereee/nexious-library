@@ -1,6 +1,6 @@
 import { Button } from "@nxs-atoms";
 import { makeStrReadable } from "@nxs-utils/data/text";
-import { FormNavigationProps } from "nxs-navigation";
+import type { FormNavigationProps } from "nxs-navigation";
 
 const FormNavigation: React.FC<FormNavigationProps> = (props) => {
   const { formOrder, pageNumber, onClick, heading } = props;

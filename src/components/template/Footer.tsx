@@ -1,4 +1,4 @@
-import { FooterProps } from "nxs-navigation";
+import type { FooterProps } from "nxs-navigation";
 
 /**
  * Component - Footer

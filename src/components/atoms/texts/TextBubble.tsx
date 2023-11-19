@@ -1,4 +1,4 @@
-import { BubbleProps } from "nxs-assets";
+import type { BubbleProps } from "nxs-assets";
 
 const TextBubble: React.FC<BubbleProps> = (props) => {
   const { title, body } = props;

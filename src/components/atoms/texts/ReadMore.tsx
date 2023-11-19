@@ -1,4 +1,4 @@
-import { ReadMoreProps } from "nxs-typography";
+import type { ReadMoreProps } from "nxs-typography";
 
 const ReadMore: React.FC<ReadMoreProps> = (props) => {
   const { data, uid } = props;

@@ -1,7 +1,7 @@
 import UserCard from "./UserCard";
 import { Rating } from "@nxs-molecules/index";
 import { TextBubble } from "@nxs-atoms/index";
-import { TextBubbleProps } from "nxs-assets";
+import type { TextBubbleProps } from "nxs-assets";
 
 const CardTextBubble: React.FC<TextBubbleProps> = (props) => {
   const { hero, data, theme } = props;

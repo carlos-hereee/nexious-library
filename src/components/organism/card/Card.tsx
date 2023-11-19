@@ -1,5 +1,5 @@
 import { CardBody, CardHeader, CTA } from "@nxs-molecules";
-import { CardProps } from "nxs-card";
+import type { CardProps } from "nxs-card";
 
 const Card: React.FC<CardProps> = (props) => {
   const { onClick, theme, data, hero } = props;

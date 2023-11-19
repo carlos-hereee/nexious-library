@@ -2,8 +2,8 @@ import { useEffect, useState } from "react";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
-import { FormInitValues } from "custom-props";
-import { PaginateFormProps } from "nxs-form";
+import type { FormInitValues } from "custom-props";
+import type { PaginateFormProps } from "nxs-form";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors

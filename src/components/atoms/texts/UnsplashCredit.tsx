@@ -1,4 +1,4 @@
-import { UnsplashProps } from "nxs-assets";
+import type { UnsplashProps } from "nxs-assets";
 
 const UnsplashCredit: React.FC<UnsplashProps> = ({ creditTo }) => {
   const { artistUrl, artistName, assetUrl } = creditTo;

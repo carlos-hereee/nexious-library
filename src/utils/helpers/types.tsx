@@ -1,5 +1,5 @@
 // import { initLabels } from "@nxs-utils/form/labels";
-// import { AssetProps } from "nxs-assets";
+// import type { AssetProps } from "nxs-assets";
 
 // export type FormDataProps = {
 //   [key: string]: string | number | File;

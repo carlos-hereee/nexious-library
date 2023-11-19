@@ -1,4 +1,4 @@
-import { FormInitValues, KeyStringProp } from "custom-props";
+import type { FormInitValues, KeyStringProp } from "custom-props";
 
 export const clearFormEntry = (values: FormInitValues) => {
   let data: KeyStringProp = {};

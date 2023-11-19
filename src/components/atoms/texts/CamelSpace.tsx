@@ -1,4 +1,4 @@
-import { DataProp } from "nxs-typography";
+import type { DataProp } from "nxs-typography";
 
 const CamelSpace: React.FC<DataProp> = ({ data }) => {
   if (!data) return;

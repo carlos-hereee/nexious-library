@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { Heading } from "@nxs-atoms";
 import { CartRow, CartCancel } from "@nxs-molecules";
-import { CartProps } from "nxs-cart";
+import type { CartProps } from "nxs-cart";
 
 const Cart: React.FC<CartProps> = (props) => {
   // const { data, heading, removeFromCart, onEditDetails } = props;

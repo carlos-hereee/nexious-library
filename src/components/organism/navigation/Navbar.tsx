@@ -1,5 +1,5 @@
 import { IconButton, NavToggle } from "@nxs-molecules";
-import { NavbarProps } from "nxs-navigation";
+import type { NavbarProps } from "nxs-navigation";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, click, menu, theme } = props;

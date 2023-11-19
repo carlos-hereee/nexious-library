@@ -1,7 +1,7 @@
 import { months } from "@nxs-utils/calendar/weeks";
 import { Heading } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
-import { CalendarNavProps } from "nxs-calendar";
+import type { CalendarNavProps } from "nxs-calendar";
 
 /**
  * Component Calendar Navigation

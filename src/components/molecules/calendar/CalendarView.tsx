@@ -4,7 +4,7 @@ import { CalendarTile } from "@nxs-molecules";
 import { isTileMute } from "@nxs-utils/calendar/isTileMute";
 import { isTileMatch } from "@nxs-utils/calendar/isTileMatch";
 import { calendarValues } from "@nxs-utils/calendar/calendarValues";
-import { CalendarViewProps } from "nxs-calendar";
+import type { CalendarViewProps } from "nxs-calendar";
 
 const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today } = props;

@@ -1,7 +1,7 @@
 import { getLabel } from "../form/labels";
-import { FieldValueProps, ValidateProps } from "nxs-form";
+import type { FieldValueProps, ValidateProps } from "nxs-form";
 import { useState } from "react";
-import { KeyStringProp } from "custom-props";
+import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
 import { scrollToId } from "@nxs-utils/app/scrollToElement";

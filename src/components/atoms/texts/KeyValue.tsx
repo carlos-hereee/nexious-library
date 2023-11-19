@@ -1,4 +1,4 @@
-import { KeyValueProps } from "nxs-typography";
+import type { KeyValueProps } from "nxs-typography";
 
 const KeyValue: React.FC<KeyValueProps> = ({ key, value }) => {
   return (

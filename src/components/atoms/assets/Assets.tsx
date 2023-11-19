@@ -64,7 +64,7 @@ import {
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+import type { IconDefinition } from "@fortawesome/free-brands-svg-icons";
 
 type SVGProp = {
   [key: string]: IconDefinition;

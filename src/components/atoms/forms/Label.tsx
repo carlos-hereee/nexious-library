@@ -1,5 +1,5 @@
 import { initLabels } from "@nxs-utils/form/labels";
-import { LabelProps } from "nxs-form";
+import type { LabelProps } from "nxs-form";
 
 const Label: React.FC<LabelProps> = (props) => {
   const { label, errors, theme, name, message } = props;

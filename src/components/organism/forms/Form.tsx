@@ -5,7 +5,7 @@ import { ErrorMessages, SubmitButton } from "@nxs-molecules";
 import { objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { FieldValueProps, FormProps } from "nxs-form";
+import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import CancelButton from "@nxs-atoms/buttons/CancelButton";
 import {

@@ -1,5 +1,5 @@
 import { Icon } from "@nxs-atoms";
-import { CalendarEventListProps } from "nxs-calendar";
+import type { CalendarEventListProps } from "nxs-calendar";
 
 const CalendarEventList: React.FC<CalendarEventListProps> = (props) => {
   const { list, onClick, meeting } = props;

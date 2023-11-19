@@ -1,4 +1,4 @@
-import { InputProps } from "nxs-form";
+import type { InputProps } from "nxs-form";
 import Label from "./Label";
 
 const InputCheckbox: React.FC<InputProps> = (props) => {

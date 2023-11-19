@@ -1,4 +1,4 @@
-import { EventMeetingProps } from "nxs-calendar";
+import type { EventMeetingProps } from "nxs-calendar";
 
 const MeetingDetails: React.FC<EventMeetingProps> = (props) => {
   const { meeting } = props;

@@ -1,4 +1,4 @@
-import { CellDataProp } from "custom-props";
+import type { CellDataProp } from "custom-props";
 
 /**
  * table caption

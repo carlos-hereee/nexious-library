@@ -1,5 +1,5 @@
 import { Icon } from "@nxs-atoms";
-import { MediaProps } from "nxs-assets";
+import type { MediaProps } from "nxs-assets";
 
 const Socials: React.FC<MediaProps> = (props) => {
   const { label, medias } = props;

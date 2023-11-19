@@ -1,7 +1,7 @@
 import { MeetingDetails } from "@nxs-atoms";
 import { CalendarEventList, IconButton } from "@nxs-molecules";
 import { CardSection, UserCard } from "@nxs-organism";
-import { CalendarEventProps } from "nxs-calendar";
+import type { CalendarEventProps } from "nxs-calendar";
 
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
   const { selectedDay, active, meeting, setMeeting, handleCheckout, user } = props;

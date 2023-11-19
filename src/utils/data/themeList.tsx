@@ -1,4 +1,4 @@
-import { DataProp } from "nxs-typography";
+import type { DataProp } from "nxs-typography";
 
 export const themeList: DataProp[] = [
   { name: "light-mode", uid: "theme-light", value: "light" },

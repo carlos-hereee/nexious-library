@@ -1,6 +1,6 @@
 import { Hero, Select } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
-import { NavigationToggleProps } from "nxs-navigation";
+import type { NavigationToggleProps } from "nxs-navigation";
 
 /**
  *  Component - NavButton

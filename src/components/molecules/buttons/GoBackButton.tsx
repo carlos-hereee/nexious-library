@@ -1,4 +1,4 @@
-import { ButtonProps } from "nxs-button";
+import type { ButtonProps } from "nxs-button";
 import IconButton from "./IconButton";
 
 const GoBackButton: React.FC<ButtonProps> = ({ onClick }) => (

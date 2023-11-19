@@ -1,4 +1,4 @@
-import { CalendarDayProp } from "nxs-calendar";
+import type { CalendarDayProp } from "nxs-calendar";
 
 type TileMatchProps = {
   day1: CalendarDayProp;

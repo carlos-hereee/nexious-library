@@ -1,5 +1,5 @@
 import { Icon } from "@nxs-atoms";
-import { HybribDataProp } from "nxs-typography";
+import type { HybribDataProp } from "nxs-typography";
 
 export type reverseCountProp = {
   [key: string | number]:

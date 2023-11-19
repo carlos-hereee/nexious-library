@@ -1,7 +1,7 @@
 import { ReadMore } from "@nxs-atoms";
 import CardHeader from "./CardHeader";
 import { CTA } from "@nxs-molecules";
-import { CardProps } from "nxs-card";
+import type { CardProps } from "nxs-card";
 
 const CartRow: React.FC<CardProps> = (props) => {
   const { data, onClick, theme } = props;

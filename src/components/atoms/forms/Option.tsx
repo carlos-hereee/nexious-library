@@ -1,4 +1,4 @@
-import { OptionDataProps } from "nxs-form";
+import type { OptionDataProps } from "nxs-form";
 
 const Option: React.FC<OptionDataProps> = (props) => {
   const { label, value, name } = props.data;

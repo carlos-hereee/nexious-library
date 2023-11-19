@@ -1,5 +1,5 @@
 import { Icon, PingCount } from "@nxs-atoms";
-import { BurgerButtonProps } from "nxs-button";
+import type { BurgerButtonProps } from "nxs-button";
 
 /**
  * Component Burger button

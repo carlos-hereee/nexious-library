@@ -2,7 +2,7 @@ import { Icon } from "@nxs-atoms";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Hero } from "@nxs-molecules";
-import { ErrorProps } from "nxs-errors";
+import type { ErrorProps } from "nxs-errors";
 
 const PageNotFound: React.FC<ErrorProps> = (props) => {
   const { hero, message, to } = props;

@@ -1,4 +1,4 @@
-import { TableColumnProp } from "custom-props";
+import type { TableColumnProp } from "custom-props";
 
 /**
  * Specifies column properties for each column within a <colgroup> element

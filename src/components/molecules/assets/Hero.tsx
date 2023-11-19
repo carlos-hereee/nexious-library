@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { ErrorMessage, UnsplashCredit } from "@nxs-atoms";
-import { HeroProps } from "nxs-assets";
+import type { HeroProps } from "nxs-assets";
 
 /**
  * Component Hero

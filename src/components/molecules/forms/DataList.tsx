@@ -1,5 +1,5 @@
 import { Button, Label } from "@nxs-atoms/index";
-import { DataListProps } from "nxs-form";
+import type { DataListProps } from "nxs-form";
 import { capFirstCharacter } from "@nxs-utils/data/text";
 import { emojis } from "@nxs-utils/data/emojis";
 

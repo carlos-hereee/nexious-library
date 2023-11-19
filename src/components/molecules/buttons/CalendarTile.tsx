@@ -1,5 +1,5 @@
 import { TileContent } from "@nxs-atoms";
-import { CalendarTileProps } from "nxs-calendar";
+import type { CalendarTileProps } from "nxs-calendar";
 
 const CalendarTile: React.FC<CalendarTileProps> = (props) => {
   const { events, click, data } = props;

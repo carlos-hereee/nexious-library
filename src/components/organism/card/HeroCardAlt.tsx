@@ -1,5 +1,5 @@
 import { Hero } from "main";
-import { AssetProps } from "nxs-assets";
+import type { AssetProps } from "nxs-assets";
 
 type HeroCardProps = {
   data: {

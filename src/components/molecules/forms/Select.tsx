@@ -1,7 +1,7 @@
 import { Icon, Label, Option } from "@nxs-atoms";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules";
-import { SelectProp } from "nxs-form";
+import type { SelectProp } from "nxs-form";
 
 /**
  *

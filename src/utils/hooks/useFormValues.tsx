@@ -2,9 +2,9 @@ import { objToArray } from "@nxs-utils/app/objLength";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
-import { FormInitValues } from "custom-props";
-import { FieldValueProps, AddEntryValueProps, FormatEntryProps } from "nxs-form";
 import { useState } from "react";
+import type { FormInitValues } from "custom-props";
+import type { FieldValueProps, AddEntryValueProps, FormatEntryProps } from "nxs-form";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);

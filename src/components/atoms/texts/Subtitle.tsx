@@ -1,4 +1,4 @@
-import { DataProp } from "nxs-typography";
+import type { DataProp } from "nxs-typography";
 
 /**
  * Component - Subtitle

@@ -1,4 +1,4 @@
-// import { KeyStringProp } from "@nxs-utils/helpers/types";
+// import type { KeyStringProp } from "@nxs-utils/helpers/types";
 // import { useFormValidation } from "../hooks/useFormValidation";
 // import { initLabels } from "./labels";
 

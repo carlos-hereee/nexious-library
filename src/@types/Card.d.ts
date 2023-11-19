@@ -1,5 +1,5 @@
 declare module "nxs-card" {
-  import { AssetProps } from "nxs-assets";
+  import type { AssetProps } from "nxs-assets";
   export type CTAProp = {
     name: string;
     label: string;

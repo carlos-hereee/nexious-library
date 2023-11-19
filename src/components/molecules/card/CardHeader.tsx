@@ -1,6 +1,6 @@
 import { Subtitle } from "@nxs-atoms";
 import { Hero } from "@nxs-molecules";
-import { HeroCardProps } from "nxs-card";
+import type { HeroCardProps } from "nxs-card";
 
 /**
  * Component - Card Header

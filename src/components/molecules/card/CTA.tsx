@@ -1,4 +1,4 @@
-import { CTAProps } from "nxs-card";
+import type { CTAProps } from "nxs-card";
 import { IconButton } from "@nxs-molecules";
 import { capFirstCharacter } from "@nxs-utils/data/text";
 

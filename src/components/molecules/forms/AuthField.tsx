@@ -2,7 +2,7 @@ import { Input, Label } from "@nxs-atoms";
 import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { IconButton } from "@nxs-molecules";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
-import { AuthFieldProp } from "nxs-form";
+import type { AuthFieldProp } from "nxs-form";
 
 const AuthField: React.FC<AuthFieldProp> = (props) => {
   const { value, onChange, name, placeholder, formMessage, labels, errors } = props;

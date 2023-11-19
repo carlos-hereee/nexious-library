@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { svg } from "./Assets";
 import { ErrorMessage } from "@nxs-atoms";
-import { IconProps } from "nxs-button";
+import type { IconProps } from "nxs-button";
 
 /**
  * Component - Icon

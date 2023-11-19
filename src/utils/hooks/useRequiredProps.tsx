@@ -1,6 +1,6 @@
-import { objLength } from "@nxs-utils/app/objLength";
-import { ErrorDataProp, ErrorMessageProp, LightSystem } from "nxs-errors";
 import { useEffect, useState } from "react";
+import type { ErrorDataProp, ErrorMessageProp, LightSystem } from "nxs-errors";
+import { objLength } from "@nxs-utils/app/objLength";
 
 export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");

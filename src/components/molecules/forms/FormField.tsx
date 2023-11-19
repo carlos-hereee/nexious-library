@@ -1,7 +1,7 @@
 import { auth, textarea } from "@nxs-utils/form/types";
 import { AuthField, DataList, Field, Select, TextArea } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
-import { FormFieldProps } from "nxs-form";
+import type { FormFieldProps } from "nxs-form";
 import { UploadFile } from "@nxs-molecules";
 
 const FormField: React.FC<FormFieldProps> = (props) => {

@@ -1,6 +1,6 @@
 import { findValueType } from "@nxs-utils/helpers/methods";
 import { messages } from "@nxs-utils/data/messages";
-import { ErrorMessageProps } from "nxs-errors";
+import type { ErrorMessageProps } from "nxs-errors";
 
 const ErrorMessage: React.FC<ErrorMessageProps> = (props) => {
   const { prop, code, component, error } = props;

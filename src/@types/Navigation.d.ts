@@ -4,7 +4,7 @@
 //  * */
 
 declare module "nxs-navigation" {
-  import { AssetProps } from "nxs-assets";
+  import type { AssetProps } from "nxs-assets";
   export type MenuItemProp = {
     name: string;
     label: string;

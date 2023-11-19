@@ -1,4 +1,4 @@
-import { KeyStringProp } from "custom-props";
+import type { KeyStringProp } from "custom-props";
 import { useState } from "react";
 
 export const useErrors = () => {

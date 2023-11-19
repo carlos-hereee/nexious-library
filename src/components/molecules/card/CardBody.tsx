@@ -1,6 +1,6 @@
 import { Hyperlink } from "@nxs-atoms";
 import { getLinks } from "@nxs-utils/app/getLinks";
-import { CardProps } from "nxs-card";
+import type { CardProps } from "nxs-card";
 
 /**
  * Component - Card Body

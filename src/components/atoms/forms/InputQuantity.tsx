@@ -1,4 +1,4 @@
-import { InputProps } from "nxs-form";
+import type { InputProps } from "nxs-form";
 
 const InputQuantity: React.FC<InputProps> = (props) => {
   const { min, max, value, onChange, onBlur } = props;

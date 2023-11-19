@@ -2,7 +2,7 @@ import { Button, Label } from "@nxs-atoms/index";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { useEffect, useRef, useState } from "react";
 import { ErrorMessages, Hero } from "@nxs-molecules";
-import { UploadFileProps } from "nxs-form";
+import type { UploadFileProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {

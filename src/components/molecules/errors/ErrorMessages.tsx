@@ -1,5 +1,5 @@
 import { ErrorMessage } from "@nxs-atoms/index";
-import { ErrorProps } from "nxs-errors";
+import type { ErrorProps } from "nxs-errors";
 
 const ErrorMessages: React.FC<ErrorProps> = (props) => {
   const { errors, component } = props;

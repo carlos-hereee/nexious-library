@@ -1,4 +1,4 @@
-import { KeyStringProp } from "custom-props";
+import type { KeyStringProp } from "custom-props";
 
 export const initLabels: KeyStringProp = {
   firstName: "First name",

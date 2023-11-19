@@ -1,5 +1,5 @@
 import { Icon } from "@nxs-atoms";
-import { ButtonProps } from "nxs-button";
+import type { ButtonProps } from "nxs-button";
 
 const SubmitButton: React.FC<ButtonProps> = (props) => {
   const { label, isDisable } = props;

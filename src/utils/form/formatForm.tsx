@@ -1,5 +1,5 @@
-import { FormInitValues } from "custom-props";
-import { FieldValueProps } from "nxs-form";
+import type { FormInitValues } from "custom-props";
+import type { FieldValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {
   return Object.assign(

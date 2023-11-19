@@ -1,7 +1,7 @@
 import { Input, Label } from "@nxs-atoms/index";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules";
-import { InputProps } from "nxs-form";
+import type { InputProps } from "nxs-form";
 
 const Field: React.FC<InputProps> = (props) => {
   const { name, value, onChange, placeholder, hideLabel, label, error, formMessage } = props;

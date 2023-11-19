@@ -1,5 +1,5 @@
 declare module "nxs-payment-methods" {
-  import { AssetProps } from "nxs-assets";
+  import type { AssetProps } from "nxs-assets";
   export type PaymentType = {
     uid: string;
     type: string;

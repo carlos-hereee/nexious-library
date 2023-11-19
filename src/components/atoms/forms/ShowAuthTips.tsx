@@ -1,6 +1,6 @@
 import { useTips } from "@nxs-utils/hooks/useTips";
 import { Icon } from "@nxs-atoms";
-import { ButtonProps } from "nxs-button";
+import type { ButtonProps } from "nxs-button";
 
 const ShowAuthTips: React.FC<ButtonProps> = (props) => {
   const { onSubmit } = props;

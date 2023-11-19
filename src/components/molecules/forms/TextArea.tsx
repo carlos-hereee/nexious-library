@@ -1,5 +1,5 @@
 import { Label } from "@nxs-atoms/index";
-import { TextAreaProps } from "nxs-form";
+import type { TextAreaProps } from "nxs-form";
 
 const TextArea: React.FC<TextAreaProps> = (props) => {
   const { value, name, placeholder, error, label, onChange } = props.input;
