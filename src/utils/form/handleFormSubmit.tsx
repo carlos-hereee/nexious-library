@@ -1,7 +1,7 @@
 // import { useFormValidation } from "../hooks/useFormValidation";
 
 // type HandleFormSubmitProps = {
-//   values: { [key: string]: any };
+//   values: { [key: string]: unknown };
 //   schema: { required: string[] };
 //   label?: { [key: string]: string };
 // };

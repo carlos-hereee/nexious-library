@@ -9,27 +9,38 @@ import type { FieldValueProps, AddEntryValueProps, FormatEntryProps } from "nxs-
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
 
+  const formatEntry = (props: FormatEntryProps) => {
+    const { oldValues, addEntry, target } = props;
+    const { canMultiply, additionLabel, removalLabel } = addEntry;
+    oldValues[oldValues.length - 1].canMultiply = canMultiply;
+    oldValues[oldValues.length - 1].canRemove = true;
+    oldValues[oldValues.length - 1].onMultiply = {
+      additionLabel,
+      name: target,
+      removalLabel,
+    };
+    return oldValues;
+  };
   const formatFieldEntry = (props: AddEntryValueProps): FieldValueProps[] => {
-    const { formatValues, fieldHeading, labels, types, placeholders: holder } = props;
+    const { formatValues, fieldHeading, labels, types, placeholders } = props;
     const { group, sharedKey, groupName } = props;
     return formatValues.map((current) => {
       // value name
       const name = Object.keys(current)[0];
-      // get initial value
-      let value = current[name];
+      // get initial field data and extract field data
+      let value = current[name] || "";
+      let label = "No label added";
+      let type = "text";
+      let placeholder = "";
       // if null or undefined use appropriate values
-      if (!value) value = types ? (types[name] === "checkbox" ? false : "") : "";
-      // use user labels first
-      let label = labels ? (labels[name] ? labels[name] : undefined) : undefined;
-      // if user did not enter a label use app labels;
-      // incase no label found use in app use default "No label added"
-      if (!label) label = initLabels[name] ? initLabels[name] : "No label added";
-      // use user types first if not type is added use default "text"
-      let type = types ? (types[name] ? types[name] : "text") : "text";
+      if (!value && types && types[name] === "checkbox") value = false;
+      if (labels && labels[name]) label = labels[name];
+      else if (initLabels[name]) label = initLabels[name] || "";
+      if (types && types[name]) type = types[name];
       // use user placehodlers first if no placehodler use app placeholders
-      let placeholder = holder ? (holder[name] ? holder[name] : undefined) : undefined;
-      // incase no placeholer found use in app placeholder else default should empty string
-      if (!placeholder) placeholder = initHolder[name] ? initHolder[name] : "";
+      if (placeholders && placeholders[name]) placeholder = placeholders[name];
+      else if (initHolder[name]) placeholder = initHolder[name];
+
       const payload = { value, name, label, placeholder, type, fieldHeading };
       return { ...payload, group, sharedKey, groupName };
     });
@@ -54,7 +65,7 @@ export const useValues = () => {
     const { addEntry, target, oldValues } = props;
     const { initialValues, groupName } = addEntry;
     // add properties all entrys should have
-    let entryData: FieldValueProps[] = [];
+    const entryData: FieldValueProps[] = [];
     // track group
     const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
     if (groupingIdx >= 0) {
@@ -71,14 +82,7 @@ export const useValues = () => {
       oldValues.splice(groupingIdx, 1, ...entryData);
     }
   };
-  const formatEntry = (props: FormatEntryProps) => {
-    const { oldValues, addEntry, target } = props;
-    const { canMultiply, additionLabel, removalLabel } = addEntry;
-    oldValues[oldValues.length - 1].canMultiply = canMultiply;
-    oldValues[oldValues.length - 1].canRemove = true;
-    oldValues[oldValues.length - 1].onMultiply = { additionLabel, name: target, removalLabel };
-    return oldValues;
-  };
+
   const setValues = (oldValues: FieldValueProps[]) => {
     setNewValues([]);
     setNewValues(oldValues);

@@ -1,18 +1,18 @@
-import { getLabel } from "../form/labels";
 import type { FieldValueProps, ValidateProps } from "nxs-form";
 import { useState } from "react";
 import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
 import { scrollToId } from "@nxs-utils/app/scrollToElement";
+import { getLabel } from "../form/labels";
 
 export const useFormValidation = (props: ValidateProps) => {
   const { labels, required, unique } = props;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});
   const [validationStatus, setStatus] = useState<"red" | "yellow" | "green" | null>(null);
-  let require = required || [];
-  let uniqueList = unique || [{ name: "", list: [] }];
+  const require = required || [];
+  const uniqueList = unique || [{ name: "", list: [] }];
 
   const addFormError = (current: string, message: string) => {
     setFormErrors({ ...formErrors, [current]: `${getLabel(current, labels)} ${message}` });
@@ -21,14 +21,19 @@ export const useFormValidation = (props: ValidateProps) => {
   const removeError = (current: string) => {
     // [current] : _ is used to capture the value associated with current key
     // _ is a throwaway variable when you dont need the value
-    const { [current]: _, ...newObj } = formErrors;
-    setFormErrors(newObj);
+    // const { [current]: _, ...newObj } = formErrors;
+    const newErrors = Object.keys(formErrors).filter((err) => err !== current);
+
+    setFormErrors(
+      Object.assign({}, ...newErrors.map((nErr) => ({ [nErr]: formErrors[nErr] })))
+    );
   };
-  const checkRequired = (value: FieldValueProps, current: string) => {
+  const checkRequired = (field: FieldValueProps, current: string) => {
     // only check if its required
     if (require.includes(current)) {
       // add error message based on value exists else remove error message
-      value.value ? removeError(current) : addFormError(current, "is required");
+      if (field.value) removeError(current);
+      else addFormError(current, "is required");
     }
   };
   const checkUniqueness = (v: FieldValueProps, current: string) => {
@@ -42,14 +47,14 @@ export const useFormValidation = (props: ValidateProps) => {
       if (valueIdx >= 0) {
         addFormError(current, "value already exist try a different name");
       } else {
-        setFormMessage({ [current]: emojis.checkedBox + " Can be used!" });
+        setFormMessage({ [current]: `${emojis.checkedBox} Can be used!` });
         removeError(current);
       }
     }
   };
   const validateForm = (values: FieldValueProps[], status: "red" | "yellow" | "green") => {
     let errors = {};
-    for (let index = 0; index < values.length; index++) {
+    for (let index = 0; index < values.length; index += 1) {
       const current = values[index];
       // only check if its required
       if (require.includes(current.name)) {

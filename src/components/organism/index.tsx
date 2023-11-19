@@ -26,7 +26,6 @@ export type { TextBubbleProps } from "nxs-assets";
 
 // cart
 export { default as Cart } from "@nxs-organism/card/Cart";
-export type { CartProps } from "nxs-cart";
 
 // calendar
 export { default as CalendarEvents } from "@nxs-organism/calendar/CalendarEvents";
@@ -38,4 +37,4 @@ export type { FormProps } from "nxs-form";
 
 // checkout
 export { default as PaymentMethods } from "@nxs-organism/checkout/PaymentMethods";
-export type { PaymentMethodsProps, PaymentType } from "nxs-payment-methods";
+export type { PaymentMethodsProps, PaymentType, CartProps } from "nxs-cart";

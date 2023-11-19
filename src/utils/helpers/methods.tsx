@@ -1,4 +1,4 @@
-export const findValueType = (value: any | undefined | null) => {
+export const findValueType = (value: unknown | undefined | null) => {
   return {
     value,
     type: typeof value,

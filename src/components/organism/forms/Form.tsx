@@ -62,7 +62,7 @@ const Form: React.FC<FormProps> = (props) => {
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
 
-  const handleChange = (event: any, idx: number) => {
+  const handleChange = (event: unknown, idx: number) => {
     // key variables
     const value = event.currentTarget.value;
     let oldValues = [...values];
@@ -77,7 +77,7 @@ const Form: React.FC<FormProps> = (props) => {
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
-  const handleCheckbox = (event: any, field: FieldValueProps, idx: number) => {
+  const handleCheckbox = (event: unknown, field: FieldValueProps, idx: number) => {
     const { name } = field;
     // key variables
     const isChecked: boolean = event.currentTarget.checked;

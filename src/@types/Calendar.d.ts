@@ -1,8 +1,3 @@
-// /**
-//  * syntax - "my-module" is the name you want to use when importing the
-//  *           module and should match the name used in import statements
-//  * */
-
 declare module "nxs-calendar" {
   export type EventProp = {
     date: string;
@@ -35,18 +30,18 @@ declare module "nxs-calendar" {
       date: string;
       list: EventProp[];
     }[];
-    onDayClick?: (e: any) => void;
-    setDay?: (a: any) => void;
+    onDayClick?: (e: unknown) => void;
+    setDay?: (a: unknown) => void;
   }
   export interface CalendarEventProps {
     selectedDay: { date: string; list: EventProp[] };
-    setMeeting: (value: any) => void;
-    setActive: (value: any) => void;
-    removeFromCart: (value: any) => void;
-    handleCheckout: (value: any) => void;
-    user?: any;
-    active?: any;
-    meeting?: any;
+    setMeeting: (value: unknown) => void;
+    setActive: (value: unknown) => void;
+    removeFromCart: (value: unknown) => void;
+    handleCheckout: (value: unknown) => void;
+    user?: unknown;
+    active?: unknown;
+    meeting?: unknown;
     events: { date: string; list: EventProp[] };
   }
   export interface CalendarTileProps {
@@ -57,7 +52,7 @@ declare module "nxs-calendar" {
       isSelected: boolean;
     };
     events: CalendarDayProp;
-    click: (key: any) => void;
+    click: (key: unknown) => void;
   }
   export interface CalendarNavProps {
     date: { month: number; year: number };
@@ -67,7 +62,7 @@ declare module "nxs-calendar" {
   }
   export interface CalendarEventListProps {
     list: EventProp[];
-    onClick: (key: any) => void;
+    onClick: (key: unknown) => void;
     meeting: {
       uid?: string;
       meetingId?: string;
@@ -84,7 +79,7 @@ declare module "nxs-calendar" {
     today: CalendarDayProp;
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
-    onDayClick?: (e: any) => void;
+    onDayClick?: (e: unknown) => void;
     events: { date: string; list: EventProp[] }[];
   }
   export interface FindMatchProps {

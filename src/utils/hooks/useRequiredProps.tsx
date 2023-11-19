@@ -7,19 +7,18 @@ export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
   const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
   // const [warnings, setWarningsHandling] = useState<ErrorMessageProp[]>([]);
 
-  const missingProps = (name: string) => {
-    const isProp = isAProp ? true : false;
-    setLightColor("red");
-    setErrors((prev) => [
-      ...prev,
-      { prop: name, code: "missingProps", isAProp: isProp, value: props[name], name },
-    ]);
-  };
   useEffect(() => {
     // use light system to determine danger levels
     setLightColor("green");
-    // reset errors to avoid redundant data
     setErrors([]);
+    // reset errors to avoid redundant data
+    const missingProps = (name: string) => {
+      setLightColor("red");
+      setErrors((prev) => [
+        ...prev,
+        { prop: name, code: "missingProps", isAProp: !!isAProp, value: props[name], name },
+      ]);
+    };
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
       // proptype === undefined means no prop
@@ -30,7 +29,7 @@ export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
         missingProps(key);
       }
     });
-  }, []);
+  }, [props, isAProp]);
   // return { lightColor, errors, setErrors, warnings, setLightColor };
   return { lightColor, errors, setErrors, setLightColor };
 };

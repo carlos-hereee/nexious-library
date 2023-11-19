@@ -31,8 +31,8 @@ declare module "nxs-assets" {
     hero: AssetProps;
     theme?: string;
     label?: string;
-    imageRef?: any;
-    onImageClick?: (e: any) => void;
+    imageRef?: unknown;
+    onImageClick?: (e: unknown) => void;
   }
   export interface TextBubbleProps {
     hero: AssetProps;
@@ -50,6 +50,6 @@ declare module "nxs-assets" {
   }
   export type RatingProps = {
     star: number;
-    onClick?: (e: any) => void;
+    onClick?: (e: unknown) => void;
   };
 }

@@ -1,8 +1,8 @@
 import { auth, textarea } from "@nxs-utils/form/types";
 import { AuthField, DataList, Field, Select, TextArea } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
-import type { FormFieldProps } from "nxs-form";
 import { UploadFile } from "@nxs-molecules";
+import type { FormFieldProps } from "nxs-form";
 
 const FormField: React.FC<FormFieldProps> = (props) => {
   // key variables
@@ -57,7 +57,6 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           }}
           hideLabels={hideLabels}
           formMessage={formMessage}
-          // theme="highlight"
         />
       ) : type === "checkbox" ? (
         <InputCheckbox

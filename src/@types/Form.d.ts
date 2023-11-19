@@ -1,11 +1,7 @@
-// /** declare module "my-module"
-//  * syntax  - "my-module" is the name you want to use when importing the
-//  *           module and should match the name used in import statements
-//  * */
-
 declare module "nxs-form" {
-  import { MenuItemProp } from "nxs-navigation";
-  import { FormInitValues, KeyStringProp } from "custom-props";
+  import type { MenuItemProp } from "nxs-navigation";
+  import type { FormInitValues, KeyStringProp } from "custom-props";
+
   export type OptionDataProps = {
     data: OptionProps;
     isDisabled?: boolean;
@@ -38,14 +34,14 @@ declare module "nxs-form" {
   export type FormProps = {
     // required props
     initialValues: FormInitValues;
-    onSubmit?: (e: any) => void;
+    onSubmit?: (e: unknown) => void;
     formId: string;
     // optional
     heading?: string;
     previewLabel?: string;
-    onChange?: (e: any) => void;
+    onChange?: (e: unknown) => void;
     onCancel?: () => void;
-    onViewPreview?: (e: any) => void;
+    onViewPreview?: (e: unknown) => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
     withFileUpload?: boolean;
@@ -79,7 +75,7 @@ declare module "nxs-form" {
     formMessage?: string;
   };
   export type FieldValueProps = {
-    value: any;
+    value: unknown;
     label: string;
     name: string;
     placeholder: string;
@@ -97,12 +93,12 @@ declare module "nxs-form" {
     paginate: FormProps[];
     page?: number;
     navigationHeading?: string;
-    onFormSubmit?: (e: any) => void;
+    onFormSubmit?: (e: unknown) => void;
     onCancel?: () => void;
     onPageClick?: () => void;
     setNewPage?: (e: number) => void;
     // optional props
-    order?: string[]; //defaults set to first form on list
+    order?: string[]; // defaults set to first form on list
     hideNavigation?: boolean;
     responseError?: string;
     theme?: string;
@@ -146,7 +142,7 @@ declare module "nxs-form" {
   };
   export interface FormFieldProps {
     name: string;
-    value: any;
+    value: unknown;
     placeholder: string;
     label: string;
     type: string;
@@ -164,10 +160,10 @@ declare module "nxs-form" {
     formMessage?: string;
     dataList?: MenuItemProp[];
     fieldHeading?: { [key: string]: string };
-    handleChange: (key: any) => void;
-    changeDataList: (key: any) => void;
-    updateSelection?: (key: any, name: string) => void;
-    handleCheckbox?: (key: any) => void;
+    handleChange: (key: unknown) => void;
+    changeDataList: (key: unknown) => void;
+    updateSelection?: (key: unknown, name: string) => void;
+    handleCheckbox?: (key: unknown) => void;
     handleHeroChange?: (key: File | string) => void;
   }
   export interface LabelProps {
@@ -220,6 +216,8 @@ declare module "nxs-form" {
     label?: string;
     hideLabel?: boolean;
     placeholder?: string;
-    onChange: (e: any) => void;
+    onChange: (e: unknown) => void;
   };
 }
+
+/// <reference types="nxs-assets" />

@@ -8,7 +8,7 @@ const Cart: React.FC<CartProps> = (props) => {
   const { data, heading, removeFromCart } = props;
   const [cancel, setCancel] = useState<string>();
   // const [active, setActive] = useState<string>();
-  const cancelReq = (e: any, isConfirm: boolean) => {
+  const cancelReq = (e: unknown, isConfirm: boolean) => {
     isConfirm ? removeFromCart(e) : setCancel("");
   };
 

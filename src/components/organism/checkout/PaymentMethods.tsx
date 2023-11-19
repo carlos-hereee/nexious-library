@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form } from "@nxs-organism";
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
-import type { PaymentMethodsProps, PaymentType } from "nxs-payment-methods";
+import type { PaymentMethodsProps, PaymentType } from "nxs-cart";
 
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
   const { data, visaPayment, paypalPayment, inStorePayment } = props;
@@ -12,7 +12,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
     <div className="flex-d-column">
       <h2 className="heading">Enter Payment Details</h2>
       <div className="flex-j-between">
-        {data.map((d) => (
+        {data.map((d: PaymentType) => (
           <button
             className="btn-main btn-payment"
             type="button"

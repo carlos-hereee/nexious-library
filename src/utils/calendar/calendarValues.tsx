@@ -18,7 +18,7 @@ export const calendarValues = (e: Date): CalendarDayProp => {
   };
 };
 
-export const prevMonth = (c: CalendarDayProp, cb: (a: any) => void) => {
+export const prevMonth = (c: CalendarDayProp, cb: (a: unknown) => void) => {
   if (c.month === 0) {
     cb(calendarValues(new Date(c.year - 1, 12, 1)));
   }
@@ -26,7 +26,7 @@ export const prevMonth = (c: CalendarDayProp, cb: (a: any) => void) => {
     cb(calendarValues(new Date(c.year, c.month - 1, 1)));
   }
 };
-export const nextMonth = (c: CalendarDayProp, cb: (a: any) => void) => {
+export const nextMonth = (c: CalendarDayProp, cb: (a: unknown) => void) => {
   if (c.month === 11) {
     cb(calendarValues(new Date(c.year + 1, 1, 0)));
   }

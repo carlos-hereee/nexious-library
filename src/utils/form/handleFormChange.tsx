@@ -5,7 +5,7 @@
 // type HandleFormChangeProps = {
 //   values: { [key: string]: string };
 //   touched: string[];
-//   event: any;
+//   event: unknown;
 //   schema?: { required: string[] };
 //   label?: { [key: string]: string };
 // };

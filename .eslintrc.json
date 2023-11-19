@@ -9,6 +9,7 @@
     "airbnb/hooks",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
+    // "prettier",
     // adding prettier as last to avoid rules that might conflict
     "plugin:prettier/recommended"
   ],
@@ -21,18 +22,40 @@
   "plugins": [
     "react",
     "@typescript-eslint",
+    "import",
     "prettier"
   ],
   "rules": {
     // Note: you must disable the base rule as it can report incorrect errors
     "quotes": "off",
+    // inside rules, generally a good rule but we're going to disable it for now
+    "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/quotes": "off",
     "import/no-unresolved": "error",
+    "import/prefer-default-export": [
+      "off",
+      {
+        "target": "any"
+      }
+    ],
     "prettier/prettier": [
       "error",
       {
-        "semi": "off"
+        "semi": true
       }
     ]
+  },
+  "settings": {
+    "import/parsers": {
+      "@typescript-eslint/parser": [
+        ".ts",
+        ".tsx"
+      ]
+    },
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true
+      }
+    }
   }
 }

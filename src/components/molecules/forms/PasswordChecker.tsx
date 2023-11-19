@@ -3,7 +3,7 @@ import { Icon } from "@nxs-atoms";
 type PasswordCheckerProps = {
   ease: string;
   tips: string[];
-  submit?: (a: any) => void;
+  submit?: (a: unknown) => void;
 };
 const PasswordChecker: React.FC<PasswordCheckerProps> = (props) => {
   const { ease, tips, submit } = props;

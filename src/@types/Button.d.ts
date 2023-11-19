@@ -13,7 +13,7 @@ declare module "nxs-button" {
   export interface ButtonProps {
     // optional
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
-    onSubmit?: (key: any) => void;
+    onSubmit?: (key: unknown) => void;
     children?: React.ReactNode;
     name?: string;
     title?: string;

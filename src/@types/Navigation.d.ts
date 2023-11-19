@@ -1,10 +1,6 @@
-// /**
-//  * syntax - "my-module" is the name you want to use when importing the
-//  *           module and should match the name used in import statements
-//  * */
-
 declare module "nxs-navigation" {
   import type { AssetProps } from "nxs-assets";
+
   export type MenuItemProp = {
     name: string;
     label: string;
@@ -63,7 +59,7 @@ declare module "nxs-navigation" {
   export interface NavigationToggleProps {
     data: MenuProp;
     theme?: string;
-    onSelect: (a: any) => void;
+    onSelect: (a: unknown) => void;
     language?: MenuItemProp;
   }
   export interface FormNavigationProps {

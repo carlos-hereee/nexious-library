@@ -3,7 +3,7 @@
   "version": "2.3.0",
   "description": "Official database for nexious.tech",
   "type": "module",
-  "types": "dist/esm/src/main.d.ts",
+  "types": "dist/@types",
   "main": "dist/esm/src/main.js",
   "style": "dist/css/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
@@ -12,56 +12,56 @@
   "exports": {
     "./@nxs-atoms": {
       "import": {
-        "types": "./dist/esm/src/components/atoms/index.d.ts",
-        "default": "./dist/esm/src/components/atoms/index.js"
+        "types": "./dist/esm/components/atoms/index.d.ts",
+        "default": "./dist/esm/components/atoms/index.js"
       }
     },
     "./@nxs-molecules": {
       "import": {
-        "types": "./dist/esm/src/components/molecules/index.d.ts",
-        "default": "./dist/esm/src/components/molecules/index.js"
+        "types": "./dist/esm/components/molecules/index.d.ts",
+        "default": "./dist/esm/components/molecules/index.js"
       }
     },
     "./@nxs-organism": {
       "import": {
-        "types": "./dist/esm/src/components/organism/index.d.ts",
-        "default": "./dist/esm/src/components/organism/index.js"
+        "types": "./dist/esm/components/organism/index.d.ts",
+        "default": "./dist/esm/components/organism/index.js"
       }
     },
     "./@nxs-header": {
       "import": {
-        "types": "./dist/esm/src/components/template/Header.d.ts",
-        "default": "./dist/esm/src/components/template/Header.js"
+        "types": "./dist/esm/components/template/Header.d.ts",
+        "default": "./dist/esm/components/template/Header.js"
       }
     },
     "./@nxs-calendar": {
       "import": {
-        "types": "./dist/esm/src/components/template/Calendar.d.ts",
-        "default": "./dist/esm/src/components/template/Calendar.js"
+        "types": "./dist/esm/components/template/Calendar.d.ts",
+        "default": "./dist/esm/components/template/Calendar.js"
       }
     },
     "./@nxs-footer": {
       "import": {
-        "types": "./dist/esm/src/components/template/Footer.d.ts",
-        "default": "./dist/esm/src/components/template/Footer.js"
+        "types": "./dist/esm/components/template/Footer.d.ts",
+        "default": "./dist/esm/components/template/Footer.js"
       }
     },
     "./@nxs-paginate-form": {
       "import": {
-        "types": "./dist/esm/src/components/template/PaginateForm.d.ts",
-        "default": "./dist/esm/src/components/template/PaginateForm.js"
+        "types": "./dist/esm/components/template/PaginateForm.d.ts",
+        "default": "./dist/esm/components/template/PaginateForm.js"
       }
     },
     "./@nxs-math": {
       "import": {
-        "default": "./dist/esm/src/math/index.js",
+        "default": "./dist/esm/math/index.js",
         "types": "./dist/@types/math/index.d.ts"
       }
     },
     "./@index.css": "./dist/css/index.css",
     ".": {
       "import": {
-        "types": "./dist/esm/src/main.d.ts",
+        "types": "./dist/esm/main.d.ts",
         "default": "./dist/esm/src/main.js"
       }
     }
@@ -86,7 +86,8 @@
     "compile:js": "tsc --module commonjs --outDir dist/cjs",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
     "compile:css": "npx sass src/stylesheets:dist/css",
-    "pre-build": "npm unlink nexious-library && npm run clean && npm run compile && npm link",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
+    "pre-build": "npm unlink nexious-library && npm run clean && npm run compile",
     "build": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
@@ -114,14 +115,16 @@
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
-  "devDependencies": {
-    "@babel/core": "^7.22.5",
-    "@babel/preset-env": "^7.22.5",
+  "dependencies": {
     "@types/jest": "^29.5.2",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^20.2.5",
-    "@types/react": "^18.2.8",
-    "@types/react-dom": "^18.2.4",
+    "@types/react": "^18.2.37",
+    "@types/react-dom": "^18.2.4"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.22.5",
+    "@babel/preset-env": "^7.22.5",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
     "eslint": "^8.2.0",
@@ -129,7 +132,8 @@
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-config-airbnb-typescript": "^17.0.0",
     "eslint-config-prettier": "^8.10.0",
-    "eslint-plugin-import": "^2.25.3",
+    "eslint-import-resolver-typescript": "^3.6.1",
+    "eslint-plugin-import": "^2.29.0",
     "eslint-plugin-jsx-a11y": "^6.5.1",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.28.0",
@@ -143,7 +147,7 @@
     "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.6",
     "tsconfig-paths": "^4.2.0",
-    "typescript": "^5.1.3"
+    "typescript": "^5.2.0"
   },
   "peerDependencies": {
     "@fortawesome/free-brands-svg-icons": "^6.4.2",

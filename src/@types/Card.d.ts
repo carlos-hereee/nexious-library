@@ -1,5 +1,6 @@
 declare module "nxs-card" {
   import type { AssetProps } from "nxs-assets";
+
   export type CTAProp = {
     name: string;
     label: string;
@@ -28,18 +29,18 @@ declare module "nxs-card" {
     data: CardProp;
     theme?: string;
     hero?: AssetProps;
-    onClick?: (key: any) => void;
+    onClick?: (key: unknown) => void;
   }
   export interface HeroCardProps {
     data: { title?: string; tagline?: string; subtitle?: string };
     hero?: AssetProps;
     theme?: string;
-    onClick?: (key: any) => void;
+    onClick?: (key: unknown) => void;
     cta?: CTAProp[];
   }
   export interface CTAProps {
     cta: CTAProp[];
-    onClick?: (key: any) => void;
+    onClick?: (key: unknown) => void;
   }
   export interface CardSectionProps {
     hero?: AssetProps;
@@ -61,11 +62,26 @@ declare module "nxs-card" {
 }
 
 declare module "nxs-cart" {
+  import type { AssetProps } from "nxs-assets";
+
+  export type PaymentType = {
+    uid: string;
+    type: string;
+    hero?: AssetProps;
+    name?: string;
+    icon?: string;
+  };
+  export type PaymentMethodsProps = {
+    data: PaymentType[];
+    visaPayment?: (a: unknown) => void;
+    paypalPayment?: (e: unknown) => void;
+    inStorePayment?: (a: unknown) => void;
+  };
   export interface CartProps {
-    data: any[];
+    data: unknown[];
     heading: string;
-    removeFromCart: (e: any) => void;
-    onEditDetails: (e: any) => void;
+    removeFromCart: (e: unknown) => void;
+    onEditDetails: (e: unknown) => void;
     theme?: string;
   }
 }
