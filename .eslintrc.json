@@ -38,10 +38,11 @@
         "target": "any"
       }
     ],
-    "prettier/prettier": [
+    "react/react-in-jsx-scope": "off",
+    "no-unused-expressions": [
       "error",
       {
-        "semi": true
+        "allowTernary": true
       }
     ]
   },

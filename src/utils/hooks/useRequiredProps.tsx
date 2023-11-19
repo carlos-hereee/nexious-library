@@ -14,22 +14,28 @@ export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
     // reset errors to avoid redundant data
     const missingProps = (name: string) => {
       setLightColor("red");
-      setErrors((prev) => [
-        ...prev,
-        { prop: name, code: "missingProps", isAProp: !!isAProp, value: props[name], name },
-      ]);
+      const oldValues = [...errors];
+      const errorIdx = oldValues.findIndex((oldVal) => oldVal.name === name);
+      oldValues[errorIdx] = {
+        prop: name,
+        code: "missingProps",
+        isAProp: !!isAProp,
+        value: props[name],
+        name,
+      };
+      setErrors(oldValues);
     };
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
       // proptype === undefined means no prop
-      if (!propType || (!props[key] && props[key] !== 0)) missingProps(key);
+      if (!propType || !props[key]) missingProps(key);
       else if (propType === "object" && !objLength(props[key])) {
         missingProps(key);
       } else if (props[key].length === 0) {
         missingProps(key);
       }
     });
-  }, [props, isAProp]);
+  }, [props, isAProp, errors]);
   // return { lightColor, errors, setErrors, warnings, setLightColor };
   return { lightColor, errors, setErrors, setLightColor };
 };

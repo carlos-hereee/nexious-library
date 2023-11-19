@@ -3,8 +3,13 @@ import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
 import { useState } from "react";
-import type { FormInitValues } from "custom-props";
-import type { FieldValueProps, AddEntryValueProps, FormatEntryProps } from "nxs-form";
+import type { FormInitialValues } from "custom-props";
+import type {
+  FieldValueProps,
+  AddEntryValueProps,
+  FormatEntryProps,
+  FormatEntraProps,
+} from "nxs-form";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
@@ -28,12 +33,12 @@ export const useValues = () => {
       // value name
       const name = Object.keys(current)[0];
       // get initial field data and extract field data
-      let value = current[name] || "";
+      let value = current[name];
       let label = "No label added";
       let type = "text";
       let placeholder = "";
       // if null or undefined use appropriate values
-      if (!value && types && types[name] === "checkbox") value = false;
+      if (types && types[name] === "checkbox") value = value || false;
       if (labels && labels[name]) label = labels[name];
       else if (initLabels[name]) label = initLabels[name] || "";
       if (types && types[name]) type = types[name];
@@ -61,7 +66,7 @@ export const useValues = () => {
     oldValues.splice(newIdx + numCount.length + 1, 0, ...ent);
     return oldValues;
   };
-  const addExtraEntry = (props: FormatEntryProps) => {
+  const addExtraEntry = (props: FormatEntraProps) => {
     const { addEntry, target, oldValues } = props;
     const { initialValues, groupName } = addEntry;
     // add properties all entrys should have
@@ -69,7 +74,7 @@ export const useValues = () => {
     // track group
     const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
     if (groupingIdx >= 0) {
-      oldValues[groupingIdx].value.forEach((val: FormInitValues) => {
+      oldValues[groupingIdx].value.forEach((val: FormInitialValues) => {
         const sharedKey = val.sharedKey || uniqueId();
         const entryFormat = Object.keys(initialValues).map((item) => ({ [item]: val[item] }));
         // format entry

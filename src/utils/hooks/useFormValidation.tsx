@@ -23,10 +23,8 @@ export const useFormValidation = (props: ValidateProps) => {
     // _ is a throwaway variable when you dont need the value
     // const { [current]: _, ...newObj } = formErrors;
     const newErrors = Object.keys(formErrors).filter((err) => err !== current);
-
-    setFormErrors(
-      Object.assign({}, ...newErrors.map((nErr) => ({ [nErr]: formErrors[nErr] })))
-    );
+    const data = newErrors.map((nErr) => ({ [nErr]: formErrors[nErr] }));
+    setFormErrors(Object.assign({}, ...data));
   };
   const checkRequired = (field: FieldValueProps, current: string) => {
     // only check if its required
@@ -36,13 +34,14 @@ export const useFormValidation = (props: ValidateProps) => {
       else addFormError(current, "is required");
     }
   };
-  const checkUniqueness = (v: FieldValueProps, current: string) => {
+
+  const checkUniqueness = (field: FieldValueProps, current: string) => {
     // find requirements list
     const isUniqueListIdx = uniqueList.findIndex((list) => list.name === current);
     // if requirements for unique schema are found
-    if (isUniqueListIdx >= 0) {
+    if (isUniqueListIdx >= 0 && typeof field.value === "string") {
       // find unique list
-      const valueIdx = uniqueList[isUniqueListIdx].list.findIndex((l) => l.includes(v.value));
+      const valueIdx = uniqueList[isUniqueListIdx].list.findIndex((l) => l === field.value);
       // if found add error
       if (valueIdx >= 0) {
         addFormError(current, "value already exist try a different name");

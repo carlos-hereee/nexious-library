@@ -1,6 +1,6 @@
 declare module "nxs-form" {
   import type { MenuItemProp } from "nxs-navigation";
-  import type { FormInitValues, KeyStringProp } from "custom-props";
+  import type { FormInitialValues, KeyStringProp } from "custom-props";
 
   export type OptionDataProps = {
     data: OptionProps;
@@ -33,7 +33,7 @@ declare module "nxs-form" {
   // Type declarations go here
   export type FormProps = {
     // required props
-    initialValues: FormInitValues;
+    initialValues: FormInitialValues;
     onSubmit?: (e: unknown) => void;
     formId: string;
     // optional
@@ -75,7 +75,7 @@ declare module "nxs-form" {
     formMessage?: string;
   };
   export type FieldValueProps = {
-    value: unknown;
+    value: FormInitialValues;
     label: string;
     name: string;
     placeholder: string;
@@ -107,7 +107,7 @@ declare module "nxs-form" {
   export type AddEntryProps = {
     additionLabel: string;
     removalLabel: string;
-    initialValues: FormInitValues;
+    initialValues: FormInitialValues;
     fieldHeading: string;
     labels?: KeyStringProp;
     groupName: string;
@@ -117,12 +117,17 @@ declare module "nxs-form" {
   };
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
   export type FormValueProps = {
-    initialValues: FormInitValues;
+    initialValues: FormInitialValues;
     labels?: KeyStringProp;
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
     fieldHeading?: string;
     addEntry?: { [key: string]: AddEntryProps };
+  };
+  export type FormatEntraProps = {
+    target: string;
+    oldValues: FormInitialValues[];
+    addEntry: AddEntryProps;
   };
   export type FormatEntryProps = {
     target: string;
@@ -131,7 +136,7 @@ declare module "nxs-form" {
   };
 
   export type AddEntryValueProps = {
-    formatValues: FormInitValues[];
+    formatValues: FormInitialValues[];
     labels?: KeyStringProp;
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
@@ -142,7 +147,7 @@ declare module "nxs-form" {
   };
   export interface FormFieldProps {
     name: string;
-    value: unknown;
+    value: FormInitialValues;
     placeholder: string;
     label: string;
     type: string;
@@ -220,4 +225,4 @@ declare module "nxs-form" {
   };
 }
 
-/// <reference types="nxs-assets" />
+// / <reference types="nxs-assets" />

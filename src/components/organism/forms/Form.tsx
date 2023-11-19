@@ -13,9 +13,9 @@ import {
   formatFormData,
   formatPreviewData,
 } from "@nxs-utils/form/formatForm";
+import type { OnchangeProps } from "custom-props";
 
-const Form: React.FC<FormProps> = (props) => {
-  // props
+function Form(props: FormProps) {
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
   const { initialValues, theme, submitLabel, schema } = props;
@@ -38,11 +38,11 @@ const Form: React.FC<FormProps> = (props) => {
   useEffect(() => {
     if (initialValues) {
       const formatValues = objToArray(initialValues);
-      let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
+      const oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
       // clear prev values if any; avoid redundant data
       if (addEntry) {
         const entryData = objToArray(addEntry);
-        for (let entryIdx = 0; entryIdx < entryData.length; entryIdx++) {
+        for (let entryIdx = 0; entryIdx < entryData.length; entryIdx += 1) {
           const target = Object.keys(entryData[entryIdx])[0];
           const current = addEntry[target];
           // check if checkbox is checked
@@ -51,21 +51,40 @@ const Form: React.FC<FormProps> = (props) => {
         setValues(oldValues);
       } else setValues(oldValues);
     }
-  }, []);
+  }, [
+    addEntry,
+    addExtraEntry,
+    formatFieldEntry,
+    initialValues,
+    labels,
+    placeholders,
+    setValues,
+    types,
+  ]);
+
   useEffect(() => {
     if (validationStatus === "green" && onSubmit) {
-      withFileUpload ? onSubmit(formatFilesData(values)) : onSubmit(formatFormData(values));
       setStatus("red");
+      if (withFileUpload) onSubmit(formatFilesData(values));
+      else onSubmit(formatFormData(values));
     } else if (validationStatus === "yellow" && onViewPreview) {
       onViewPreview(formatPreviewData(values));
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
-  }, [validationStatus]);
+  }, [
+    onSubmit,
+    onViewPreview,
+    scrollToError,
+    setStatus,
+    validationStatus,
+    values,
+    withFileUpload,
+  ]);
 
-  const handleChange = (event: unknown, idx: number) => {
+  const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
-    const value = event.currentTarget.value;
-    let oldValues = [...values];
+    const { value } = event.currentTarget;
+    const oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
     if (validationStatus === "red") {
@@ -77,12 +96,12 @@ const Form: React.FC<FormProps> = (props) => {
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
-  const handleCheckbox = (event: unknown, field: FieldValueProps, idx: number) => {
+  const handleCheckbox = (event: OnchangeProps, field: FieldValueProps, idx: number) => {
     const { name } = field;
     // key variables
     const isChecked: boolean = event.currentTarget.checked;
     // update values
-    let oldValues = [...values];
+    const oldValues = [...values];
     oldValues[idx].value = isChecked;
     // if the checkbox is checked add entries
     if (isChecked) {
@@ -90,6 +109,7 @@ const Form: React.FC<FormProps> = (props) => {
         setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
       }
     } else {
+      // eslint-disable-next-line no-lonely-if
       if (addEntry) {
         const removalTarget = addEntry[name].groupName;
         // when button is unchecked removed all field created by checkbox
@@ -99,7 +119,7 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
   const handleSelection = (target: string, idx: number) => {
-    let oldValues = [...values];
+    const oldValues = [...values];
     oldValues[idx].value = target;
     setValues(oldValues);
   };
@@ -112,7 +132,7 @@ const Form: React.FC<FormProps> = (props) => {
     if (addEntry) {
       const name = e.onMultiply?.name || e.name;
       // move button to last appropriate field
-      let oldValues = [...values];
+      const oldValues = [...values];
       // if form has an entry value
       oldValues[fieldIndex].canMultiply = false;
       setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
@@ -126,7 +146,7 @@ const Form: React.FC<FormProps> = (props) => {
         const numCount = objToArray(addEntry[groupName].initialValues).length;
         const groupList = values.filter((val) => val.groupName === groupName);
         const neglectedKeys = groupList.filter((list) => list.sharedKey !== e.sharedKey);
-        let oldValues = [...values];
+        const oldValues = [...values];
         // if where add entry button is stored move button and down to last appropriate field
         if (e.canMultiply) {
           // if theres only been one entry; update checkbox
@@ -142,7 +162,7 @@ const Form: React.FC<FormProps> = (props) => {
   };
 
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
-    let oldValues = [...values];
+    const oldValues = [...values];
     if (selectedFile) {
       const current = oldValues[idx].name;
       oldValues[idx].value = selectedFile;
@@ -155,7 +175,7 @@ const Form: React.FC<FormProps> = (props) => {
     }
   };
   const handleChangeDataList = (value: string, idx: number) => {
-    let oldValues = [...values];
+    const oldValues = [...values];
     oldValues[idx].value = value;
     if (onChange) onChange(oldValues);
     setValues(oldValues);
@@ -213,5 +233,5 @@ const Form: React.FC<FormProps> = (props) => {
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
   );
-};
+}
 export default Form;
