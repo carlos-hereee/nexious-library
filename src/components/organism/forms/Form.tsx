@@ -196,31 +196,31 @@ function Form(props: FormProps) {
     >
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
-      {values.map((value, keyIdx) => {
+      {values.map((field, keyIdx) => {
         return (
           <FormField
-            key={keyIdx}
-            name={value.name}
-            type={value.type}
-            value={value.value}
+            key={field.fieldId}
+            name={field.name}
+            type={field.type}
+            value={field.value}
             theme={theme}
-            placeholder={value.placeholder}
+            placeholder={field.placeholder}
             hideLabels={hideLabels}
-            dataList={dataList?.[value.name]}
-            label={value.label}
+            dataList={dataList?.[field.name]}
+            label={field.label}
             changeDataList={(e) => handleChangeDataList(e, keyIdx)}
-            formError={formErrors[value.name]}
-            formMessage={formMessage[value.name]}
+            formError={formErrors[field.name]}
+            formMessage={formMessage[field.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
-            handleCheckbox={(e) => handleCheckbox(e, value, keyIdx)}
+            handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
             updateSelection={(e) => handleSelection(e, keyIdx)}
             handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
-            onMultiply={value.onMultiply}
-            canMultiply={value.canMultiply}
-            canRemove={value.canRemove}
-            onMultiplyClick={() => handleMultiplyClick(value, keyIdx)}
-            onRemovalClick={() => handleRemovalClick(value, keyIdx)}
+            onMultiply={field.onMultiply}
+            canMultiply={field.canMultiply}
+            canRemove={field.canRemove}
+            onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
+            onRemovalClick={() => handleRemovalClick(field, keyIdx)}
           />
         );
       })}

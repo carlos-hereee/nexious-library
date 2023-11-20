@@ -1,6 +1,6 @@
 declare module "nxs-form" {
   import type { MenuItemProp } from "nxs-navigation";
-  import type { FormInitialValues, KeyStringProp } from "custom-props";
+  import type { FormInitialValues, KeyStringProp, OnchangeProps } from "custom-props";
 
   export type OptionDataProps = {
     data: OptionProps;
@@ -75,17 +75,18 @@ declare module "nxs-form" {
     formMessage?: string;
   };
   export type FieldValueProps = {
-    value: FormInitialValues | FieldValueProps[];
+    value: FormInitialValues;
     name: string;
-    placeholder?: string;
-    type?: string;
-    label?: string;
+    placeholder: string;
+    type: string;
+    label: string;
     fieldHeading?: string;
     canMultiply?: boolean;
     canRemove?: boolean;
     group?: string;
     sharedKey?: string;
     groupName?: string;
+    fieldId?: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
   export interface PaginateFormProps {
@@ -153,10 +154,10 @@ declare module "nxs-form" {
     formMessage?: string;
     dataList?: MenuItemProp[];
     fieldHeading?: { [key: string]: string };
-    handleChange: (key: unknown) => void;
+    handleChange: (key: OnchangeProps) => void;
     changeDataList: (key: unknown) => void;
     updateSelection?: (key: unknown, name: string) => void;
-    handleCheckbox?: (key: unknown) => void;
+    handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;
   }
   export interface LabelProps {
@@ -213,7 +214,7 @@ declare module "nxs-form" {
   };
   export type FormatExtraEntryProps = {
     target: string;
-    oldValues: FieldValueProps[];
+    oldValues: { value: FieldValueProps[]; name: string }[];
     addEntry: AddEntryProps;
   };
 }

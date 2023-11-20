@@ -1,10 +1,10 @@
+/* eslint-disable no-nested-ternary */
 import { auth, textarea } from "@nxs-utils/form/types";
-import { AuthField, DataList, Field, Select, TextArea } from "@nxs-molecules";
+import { AuthField, DataList, Field, Select, TextArea, UploadFile } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
-import { UploadFile } from "@nxs-molecules";
 import type { FormFieldProps } from "nxs-form";
 
-const FormField: React.FC<FormFieldProps> = (props) => {
+function FormField(props: FormFieldProps) {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, updateSelection, handleCheckbox, theme } = props;
@@ -17,7 +17,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         <AuthField
           name={name}
           formMessage={formMessage}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           onChange={handleChange}
           placeholder={placeholder}
           hideLabels={hideLabels}
@@ -29,7 +29,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           name={name}
           list={dataList || []}
           formMessage={formMessage}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           label={label}
           onChange={changeDataList}
         />
@@ -38,7 +38,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
           name={name}
           formMessage={formMessage}
           list={dataList || []}
-          active={value}
+          active={typeof value === "string" ? value : ""}
           theme={theme}
           onChange={(e) => updateSelection && updateSelection(e, name)}
           hideLabels={hideLabels}
@@ -49,7 +49,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         <TextArea
           input={{
             name,
-            value,
+            value: typeof value === "string" ? value : "",
             placeholder,
             label,
             error: formError,
@@ -61,7 +61,7 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       ) : type === "checkbox" ? (
         <InputCheckbox
           name={name}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           onChange={(e) => handleCheckbox && handleCheckbox(e)}
           formMessage={formMessage}
           error={formError}
@@ -71,14 +71,14 @@ const FormField: React.FC<FormFieldProps> = (props) => {
         <UploadFile
           input={{ name, error: formError }}
           formMessage={formMessage}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />
       ) : (
         <Field
           name={name}
-          value={value}
+          value={typeof value === "string" ? value : ""}
           formMessage={formMessage}
           onChange={handleChange}
           placeholder={placeholder}
@@ -102,5 +102,5 @@ const FormField: React.FC<FormFieldProps> = (props) => {
       </div>
     </div>
   );
-};
+}
 export default FormField;

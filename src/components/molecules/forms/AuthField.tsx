@@ -1,15 +1,15 @@
 import { Input, Label } from "@nxs-atoms";
 import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
-import { IconButton } from "@nxs-molecules";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import type { AuthFieldProp } from "nxs-form";
+import { IconButton } from "@nxs-molecules";
 
-const AuthField: React.FC<AuthFieldProp> = (props) => {
+function AuthField(props: AuthFieldProp) {
   const { value, onChange, name, placeholder, formMessage, labels, errors } = props;
   const { hideLabels } = props;
   const { seePassword, togglePassword } = useSeePassword();
 
-  const placeholders = placeholder ? placeholder : initPlaceholders[name];
+  const placeholders = placeholder || initPlaceholders[name];
   return (
     <>
       {!hideLabels && labels && (
@@ -32,5 +32,5 @@ const AuthField: React.FC<AuthFieldProp> = (props) => {
       </div>
     </>
   );
-};
+}
 export default AuthField;

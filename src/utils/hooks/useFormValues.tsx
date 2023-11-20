@@ -34,20 +34,18 @@ export const useValues = () => {
       const name = Object.keys(current)[0];
       // get initial field data and extract field data
       let value = current[name];
-      let label = "No label added";
+      let label = initLabels[name] || "No label added";
       let type = "text";
-      let placeholder = "";
+      let placeholder = initHolder[name] || "";
       // if null or undefined use appropriate values
       if (types && types[name] === "checkbox") value = value || false;
       if (labels && labels[name]) label = labels[name];
-      else if (initLabels[name]) label = initLabels[name] || "";
       if (types && types[name]) type = types[name];
       // use user placehodlers first if no placehodler use app placeholders
       if (placeholders && placeholders[name]) placeholder = placeholders[name];
-      else if (initHolder[name]) placeholder = initHolder[name];
 
       const payload = { value, name, label, placeholder, type, fieldHeading };
-      return { ...payload, group, sharedKey, groupName };
+      return { ...payload, group, sharedKey, groupName, fieldId: uniqueId() };
     });
   };
 
@@ -76,10 +74,7 @@ export const useValues = () => {
     if (groupingIdx >= 0 && isArray(oldValues[groupingIdx].value)) {
       const entryData: FieldValueProps[] = [];
 
-      for (let i = 0; i < oldValues[groupingIdx].value?.length; i += 1) {
-        const element = oldValues[groupingIdx].value[i];
-      }
-      oldValues[groupingIdx].value.forEach((val: FieldValueProps) => {
+      oldValues[groupingIdx].value.forEach((val) => {
         const sharedKey = val.sharedKey || uniqueId();
         const entryFormat = Object.keys(initialValues).map((item) => ({
           [item]: val[item],
