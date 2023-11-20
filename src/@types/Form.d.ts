@@ -33,7 +33,7 @@ declare module "nxs-form" {
   // Type declarations go here
   export type FormProps = {
     // required props
-    initialValues: FormInitialValues;
+    initialValues: { [key: string]: FormInitialValues };
     onSubmit?: (e: unknown) => void;
     formId: string;
     // optional
@@ -75,11 +75,11 @@ declare module "nxs-form" {
     formMessage?: string;
   };
   export type FieldValueProps = {
-    value: FormInitialValues;
-    label: string;
+    value: FormInitialValues | FieldValueProps[];
     name: string;
-    placeholder: string;
-    type: string;
+    placeholder?: string;
+    type?: string;
+    label?: string;
     fieldHeading?: string;
     canMultiply?: boolean;
     canRemove?: boolean;
@@ -107,7 +107,7 @@ declare module "nxs-form" {
   export type AddEntryProps = {
     additionLabel: string;
     removalLabel: string;
-    initialValues: FormInitialValues;
+    initialValues: { [key: string]: FormInitialValues };
     fieldHeading: string;
     labels?: KeyStringProp;
     groupName: string;
@@ -116,19 +116,7 @@ declare module "nxs-form" {
     canMultiply?: boolean;
   };
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
-  export type FormValueProps = {
-    initialValues: FormInitialValues;
-    labels?: KeyStringProp;
-    types?: KeyStringProp;
-    placeholders?: KeyStringProp;
-    fieldHeading?: string;
-    addEntry?: { [key: string]: AddEntryProps };
-  };
-  export type FormatEntraProps = {
-    target: string;
-    oldValues: FormInitialValues[];
-    addEntry: AddEntryProps;
-  };
+
   export type FormatEntryProps = {
     target: string;
     oldValues: FieldValueProps[];
@@ -136,7 +124,7 @@ declare module "nxs-form" {
   };
 
   export type AddEntryValueProps = {
-    formatValues: FormInitialValues[];
+    formatValues: { [key: string]: FormInitialValues }[];
     labels?: KeyStringProp;
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
@@ -223,6 +211,18 @@ declare module "nxs-form" {
     placeholder?: string;
     onChange: (e: unknown) => void;
   };
+  export type FormatExtraEntryProps = {
+    target: string;
+    oldValues: FieldValueProps[];
+    addEntry: AddEntryProps;
+  };
 }
-
+// export type FormValueProps = {
+//   initialValues: FormInitialValues;
+//   labels?: KeyStringProp;
+//   types?: KeyStringProp;
+//   placeholders?: KeyStringProp;
+//   fieldHeading?: string;
+//   addEntry?: { [key: string]: AddEntryProps };
+// };
 // / <reference types="nxs-assets" />

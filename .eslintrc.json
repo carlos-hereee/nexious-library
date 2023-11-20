@@ -22,8 +22,7 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "import",
-    "prettier"
+    "import"
   ],
   "rules": {
     // Note: you must disable the base rule as it can report incorrect errors
@@ -43,6 +42,13 @@
       "error",
       {
         "allowTernary": true
+      }
+    ],
+    "prettier/prettier": [
+      "off",
+      {},
+      {
+        "usePrettierrc": true
       }
     ]
   },

@@ -29,7 +29,7 @@ export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
       const propType = typeof props[key];
       // proptype === undefined means no prop
       if (!propType || !props[key]) missingProps(key);
-      else if (propType === "object" && !objLength(props[key])) {
+      else if (propType === "object" && objLength(props[key]) > 0) {
         missingProps(key);
       } else if (props[key].length === 0) {
         missingProps(key);

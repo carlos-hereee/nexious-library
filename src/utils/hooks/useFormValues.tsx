@@ -1,23 +1,23 @@
-import { objToArray } from "@nxs-utils/app/objLength";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { initLabels } from "@nxs-utils/form/labels";
 import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
 import { useState } from "react";
-import type { FormInitialValues } from "custom-props";
 import type {
   FieldValueProps,
   AddEntryValueProps,
   FormatEntryProps,
-  FormatEntraProps,
+  FormatExtraEntryProps,
 } from "nxs-form";
+import { isArray } from "@nxs-utils/app/isArray";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
 
   const formatEntry = (props: FormatEntryProps) => {
-    const { oldValues, addEntry, target } = props;
+    const { addEntry, target, oldValues } = props;
     const { canMultiply, additionLabel, removalLabel } = addEntry;
-    oldValues[oldValues.length - 1].canMultiply = canMultiply;
+
+    oldValues[oldValues.length - 1].canMultiply = canMultiply || false;
     oldValues[oldValues.length - 1].canRemove = true;
     oldValues[oldValues.length - 1].onMultiply = {
       additionLabel,
@@ -53,7 +53,7 @@ export const useValues = () => {
 
   const addNewEntry = (props: FormatEntryProps) => {
     const { addEntry, target, oldValues } = props;
-    const entryValues = objToArray(addEntry.initialValues);
+    const entryValues = [addEntry.initialValues];
     const { groupName } = addEntry;
     // add properties all entrys should have
     const group = target;
@@ -66,17 +66,24 @@ export const useValues = () => {
     oldValues.splice(newIdx + numCount.length + 1, 0, ...ent);
     return oldValues;
   };
-  const addExtraEntry = (props: FormatEntraProps) => {
+
+  const addExtraEntry = (props: FormatExtraEntryProps) => {
     const { addEntry, target, oldValues } = props;
     const { initialValues, groupName } = addEntry;
     // add properties all entrys should have
-    const entryData: FieldValueProps[] = [];
-    // track group
     const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
-    if (groupingIdx >= 0) {
-      oldValues[groupingIdx].value.forEach((val: FormInitialValues) => {
+    // track group
+    if (groupingIdx >= 0 && isArray(oldValues[groupingIdx].value)) {
+      const entryData: FieldValueProps[] = [];
+
+      for (let i = 0; i < oldValues[groupingIdx].value?.length; i += 1) {
+        const element = oldValues[groupingIdx].value[i];
+      }
+      oldValues[groupingIdx].value.forEach((val: FieldValueProps) => {
         const sharedKey = val.sharedKey || uniqueId();
-        const entryFormat = Object.keys(initialValues).map((item) => ({ [item]: val[item] }));
+        const entryFormat = Object.keys(initialValues).map((item) => ({
+          [item]: val[item],
+        }));
         // format entry
         const payload = { formatValues: entryFormat, ...addEntry, sharedKey, group: target };
         // if additional entries are possible add them here

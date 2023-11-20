@@ -1,8 +1,8 @@
 declare module "nxs-errors" {
   import type { AssetProps } from "nxs-assets";
 
-  export type LightSystem = "green" | "yellow" | "red";
-  export type ErrorDataProp = { [key: string]: string[] };
+  export type LightSystem = "green" | "yellow" | "red" | null;
+  export type ErrorDataProp = { [key: string]: string[] | { [key: string]: unknown } };
   export interface ErrorMessageProp {
     prop: string;
     code: string;

@@ -37,7 +37,7 @@ function Form(props: FormProps) {
 
   useEffect(() => {
     if (initialValues) {
-      const formatValues = objToArray(initialValues);
+      const formatValues = [initialValues];
       const oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
       // clear prev values if any; avoid redundant data
       if (addEntry) {
