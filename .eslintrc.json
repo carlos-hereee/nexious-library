@@ -30,6 +30,7 @@
     "no-nested-ternary": "off",
     // inside rules, generally a good rule but we're going to disable it for now
     "@typescript-eslint/no-empty-function": 0,
+    "react-hooks/exhaustive-deps": "warn",
     "@typescript-eslint/quotes": "off",
     "import/no-unresolved": "error",
     "import/no-cycle": "off",

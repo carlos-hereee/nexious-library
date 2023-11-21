@@ -34,6 +34,14 @@ declare module "nxs-assets" {
     imageRef?: unknown;
     onImageClick?: (e: unknown) => void;
   }
+  export interface UserProps {
+    hero: AssetProps;
+    name?: string;
+    email?: string;
+    phone?: string;
+    uid?: string;
+    userId?: string;
+  }
   export interface TextBubbleProps {
     hero: AssetProps;
     data: { rating: number; title: string; body: string };

@@ -14,7 +14,7 @@ export const dayChange = (props: DayChangeProps) => {
       // console.log("filter", match);
       if (!match) {
         setActive(calendarValues(new Date(active.date)));
-      } else onDayClick && onDayClick(match);
+      } else onDayClick(match);
     }
     if (onDayClick) onDayClick(active);
     // no events found

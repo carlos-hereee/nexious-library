@@ -1,4 +1,6 @@
 declare module "nxs-calendar" {
+  import type { UserProps } from "nxs-assets";
+
   export type EventProp = {
     date: string;
     startTime: number;
@@ -39,9 +41,9 @@ declare module "nxs-calendar" {
     setActive: (value: unknown) => void;
     removeFromCart: (value: unknown) => void;
     handleCheckout: (value: unknown) => void;
-    user?: unknown;
+    user?: UserProps;
     active?: unknown;
-    meeting?: unknown;
+    meeting?: EventProp;
     events: { date: string; list: EventProp[] };
   }
   export interface CalendarTileProps {
@@ -79,7 +81,7 @@ declare module "nxs-calendar" {
     today: CalendarDayProp;
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
-    onDayClick?: (e: unknown) => void;
+    onDayClick: (e: unknown) => void;
     events: { date: string; list: EventProp[] }[];
   }
   export interface FindMatchProps {

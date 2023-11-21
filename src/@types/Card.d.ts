@@ -1,5 +1,5 @@
 declare module "nxs-card" {
-  import type { AssetProps } from "nxs-assets";
+  import type { AssetProps, UserProps } from "nxs-assets";
 
   export type CTAProp = {
     name: string;
@@ -48,16 +48,12 @@ declare module "nxs-card" {
     data?: string;
     theme?: string;
   }
+
   export interface UserCardProps {
     hideLabels?: boolean;
     hideHero?: boolean;
     theme?: boolean;
-    user: {
-      hero: AssetProps;
-      name?: string;
-      email?: string;
-      phone?: string;
-    };
+    user: UserProps;
   }
 }
 

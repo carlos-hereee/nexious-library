@@ -11,9 +11,9 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   const { onClick, menu, theme } = props;
 
   return (
-    <ul className={theme ? `navigation ${theme}` : "navigation bg-default"}>
+    <ul className={theme ? `navigation ${theme}` : "navigation"}>
       {menu.map((m) => (
-        <li className="nav-btn">
+        <li className="nav-btn" key={m.uid || m.menuId}>
           {onClick && <IconButton icon={m} onClick={() => onClick(m)} />}
         </li>
       ))}

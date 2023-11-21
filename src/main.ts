@@ -2,6 +2,7 @@ export { default as Header } from "@nxs-template/Header";
 export { default as Footer } from "@nxs-template/Footer";
 export { default as Calendar } from "@nxs-template/Calendar";
 export { default as PaginateForm } from "@nxs-template/PaginateForm";
+export { default as CalendarEvents } from "@nxs-template/CalendarEvents";
 
 // components
 export { default as Navbar } from "@nxs-organism/navigation/Navbar";
@@ -28,9 +29,6 @@ export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
 
 // cart
 export { default as Cart } from "@nxs-organism/card/Cart";
-
-// calendar
-export { default as CalendarEvents } from "@nxs-organism/calendar/CalendarEvents";
 
 // forms
 export { default as Form } from "@nxs-organism/forms/Form";

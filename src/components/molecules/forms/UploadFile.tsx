@@ -6,25 +6,14 @@ import type { UploadFileProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { name, error } = props.input;
-  const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage } = props;
+  const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage, input } = props;
+  const { name, error } = input;
   // required props
   const { lightColor, errors } = useRequiredProps({ onSelect, name }, true);
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUploaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
 
-  // use init values
-  useEffect(() => {
-    formatImageData(value);
-  }, []);
-
-  const imageClick = () => {
-    if (imageUploaderRef.current) {
-      // Trigger the click event of the file input
-      imageUploaderRef.current.click();
-    }
-  };
   const formatImageData = (file: File | string) => {
     if (file) {
       const url = typeof file === "string" ? file : urlFile(file);
@@ -36,6 +25,15 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     }
   };
 
+  useEffect(() => {
+    formatImageData(value);
+  }, [value]);
+
+  const imageClick = () => {
+    // Trigger the click event of the file input
+    if (imageUploaderRef.current) imageUploaderRef.current.click();
+  };
+
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     formatImageData(selectedFile || "");
@@ -43,16 +41,14 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
 
   const handleRemoveImage = () => {
     formatImageData("");
-    if (imageUploaderRef.current) {
-      imageUploaderRef.current.value = "";
-    }
+    if (imageUploaderRef.current) imageUploaderRef.current.value = "";
   };
 
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="Upload file" />;
   }
   return (
-    <div className={`field-upload ${theme ? theme : ""}`}>
+    <div className={`field-upload ${theme || ""}`}>
       <div className="flex-d-column flex-start">
         {!hideLabels && (
           <Label name={name} label={label} errors={error} message={formMessage} />

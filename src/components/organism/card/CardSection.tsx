@@ -5,7 +5,7 @@ import type { CardSectionProps } from "nxs-card";
 const CardSection: React.FC<CardSectionProps> = (props) => {
   const { hero, hideReadMore, theme, data } = props;
   return (
-    <div className={`card-section ${theme ? theme : ""}`}>
+    <div className={`card-section ${theme || ""}`}>
       {hero && <Hero hero={hero} theme={hero.theme} />}
       {hideReadMore
         ? data && <p className="text-center">{data}</p>
