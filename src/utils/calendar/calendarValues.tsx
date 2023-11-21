@@ -10,7 +10,7 @@ export const calendarValues = (e: Date): CalendarDayProp => {
     month: e.getMonth(),
     year: e.getFullYear(),
     day: e.getDate(),
-    maxDays: maxDays,
+    maxDays,
     weeks: maxWeeks,
     start: startIdx,
     date: e.toDateString(),

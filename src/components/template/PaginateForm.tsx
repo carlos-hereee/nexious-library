@@ -2,25 +2,19 @@ import { useEffect, useState } from "react";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
-import type { FormInitialValues } from "custom-props";
-import type { PaginateFormProps } from "nxs-form";
+import type { FieldValue, PaginateFormProps } from "nxs-form";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
   const { previewPage, theme } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
-  const { errors, lightColor, setLightColor, setErrors } = useRequiredProps(
-    { paginate },
-    true
-  );
+  const { errors, lightColor } = useRequiredProps({ paginate }, true);
   // key variables
-  const [initialValues, setInitialValues] = useState<FormInitialValues>();
-  // store form values
-  const [values, setValues] = useState<FormInitialValues>({});
-  const [pageNumber, setPageNumber] = useState<number>(page ? page : 0);
+  const [initialValues, setInitialValues] = useState<FieldValue>();
+  const [pageNumber, setPageNumber] = useState<number>(page || 0);
   const current = paginate[pageNumber];
-  const formOrder = order ? order : paginate.map((f) => f.formId);
+  const formOrder = order || paginate.map((f) => f.formId);
   // const total = formOrder.length;
   const formId = current?.formId;
   const onViewPreview = current?.onViewPreview;
@@ -41,38 +35,25 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       if (setNewPage) setNewPage(pageNumber);
       setInitialValues(paginate[pageNumber].initialValues);
     }
-  }, [pageNumber]);
-
-  const handlePaginateSubmit = (formValues: FormInitialValues) => {
-    // search next in the order
-    const next = formOrder[pageNumber + 1];
-    // if next is undefined its the last form
-    if (!next) {
-      if (onFormSubmit) {
-        // save values just incase
-        formId && onFormSubmit({ ...values, [formId]: formValues });
-      } else {
-        const prop = "onFormSubmit";
-        setLightColor("red");
-        setErrors([
-          { prop, code: "missingProps", value: onFormSubmit, name: prop, isAProp: true },
-        ]);
-      }
-    } else {
-      const nextPage = formOrder.findIndex((form) => form === next);
-      handlePageClick(nextPage);
-      // save form values
-      formId && setValues({ ...values, [formId]: formValues });
-    }
-  };
-  const onSubmit = () => (current.onSubmit ? current.onSubmit : handlePaginateSubmit);
+  }, [pageNumber, paginate, setNewPage]);
 
   const handlePageClick = (nextPage: number) => {
     //  reset initial values to redender form component
-    onPageClick && onPageClick();
+    if (onPageClick) onPageClick();
     setInitialValues(undefined);
     setPageNumber(nextPage);
   };
+
+  const handlePaginateSubmit = (formValues: FieldValue) => {
+    const next = formOrder[pageNumber + 1];
+    if (onFormSubmit) onFormSubmit({ [formId]: formValues });
+    // if next is undefined its the last form
+    if (next) {
+      const nextPage = formOrder.findIndex((form) => form === next);
+      handlePageClick(nextPage);
+    }
+  };
+  const onSubmit = () => (current.onSubmit ? current.onSubmit : handlePaginateSubmit);
 
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="PaginateForm" />;
@@ -82,7 +63,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       {!hideNavigation && (
         <FormNavigation
           heading={navigationHeading}
-          formOrder={formOrder ? formOrder : []}
+          formOrder={formOrder || []}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
         />
@@ -91,7 +72,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         {initialValues && (
           <Form
             initialValues={initialValues}
-            onSubmit={onSubmit()}
+            onSubmit={onSubmit}
             formId={formId}
             labels={labels}
             dataList={dataList}

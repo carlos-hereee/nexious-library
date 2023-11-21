@@ -1,7 +1,13 @@
 declare module "nxs-form" {
   import type { MenuItemProp } from "nxs-navigation";
-  import type { FormInitialValues, KeyStringProp, OnchangeProps } from "custom-props";
+  import type { KeyStringProp, OnchangeProps } from "custom-props";
 
+  export type FormInitialValue = File | string | number | boolean;
+  export type FieldValue = { [key: string]: File | string | number | boolean };
+  export type InitialExtraValue = {
+    [key: string]: File | string | number | boolean;
+    sharedKey: string;
+  };
   export type OptionDataProps = {
     data: OptionProps;
     isDisabled?: boolean;
@@ -33,7 +39,7 @@ declare module "nxs-form" {
   // Type declarations go here
   export type FormProps = {
     // required props
-    initialValues: { [key: string]: FormInitialValues };
+    initialValues: { [key: string]: FormInitialValue };
     onSubmit?: (e: unknown) => void;
     formId: string;
     // optional
@@ -74,8 +80,23 @@ declare module "nxs-form" {
     onBlur?: () => void;
     formMessage?: string;
   };
+  export type FieldInitialValueProps = {
+    value: FormInitialValue | { [key: string]: FormInitialValue }[];
+    name: string;
+    placeholder: string;
+    type: string;
+    label: string;
+    fieldHeading?: string;
+    canMultiply?: boolean;
+    canRemove?: boolean;
+    group?: string;
+    sharedKey?: string;
+    groupName?: string;
+    fieldId?: string;
+    onMultiply?: { additionLabel: string; name: string; removalLabel: string };
+  };
   export type FieldValueProps = {
-    value: FormInitialValues;
+    value: FormInitialValue;
     name: string;
     placeholder: string;
     type: string;
@@ -103,12 +124,12 @@ declare module "nxs-form" {
     hideNavigation?: boolean;
     responseError?: string;
     theme?: string;
-    previewPage?: React.JSX.Element;
+    previewPage?: React.JSX.Element | null;
   }
   export type AddEntryProps = {
     additionLabel: string;
     removalLabel: string;
-    initialValues: { [key: string]: FormInitialValues };
+    initialValues: { [key: string]: FormInitialValue };
     fieldHeading: string;
     labels?: KeyStringProp;
     groupName: string;
@@ -125,7 +146,7 @@ declare module "nxs-form" {
   };
 
   export type AddEntryValueProps = {
-    formatValues: { [key: string]: FormInitialValues }[];
+    formatValues: { [key: string]: FormInitialValue }[];
     labels?: KeyStringProp;
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
@@ -136,7 +157,7 @@ declare module "nxs-form" {
   };
   export interface FormFieldProps {
     name: string;
-    value: FormInitialValues;
+    value: FormInitialValue;
     placeholder: string;
     label: string;
     type: string;
@@ -155,8 +176,8 @@ declare module "nxs-form" {
     dataList?: MenuItemProp[];
     fieldHeading?: { [key: string]: string };
     handleChange: (key: OnchangeProps) => void;
-    changeDataList: (key: unknown) => void;
-    updateSelection?: (key: unknown, name: string) => void;
+    changeDataList: (key: string) => void;
+    updateSelection?: (key: string, name: string) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;
   }
@@ -184,7 +205,6 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     formMessage?: string;
   }
-
   export interface SelectProp {
     name: string;
     list: OptionProps[];
@@ -210,11 +230,11 @@ declare module "nxs-form" {
     label?: string;
     hideLabel?: boolean;
     placeholder?: string;
-    onChange: (e: unknown) => void;
+    onChange: (e: string) => void;
   };
   export type FormatExtraEntryProps = {
     target: string;
-    oldValues: { value: FieldValueProps[]; name: string }[];
+    oldValues: FieldInitialValueProps[];
     addEntry: AddEntryProps;
   };
 }

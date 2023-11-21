@@ -1,9 +1,9 @@
-import { Label } from "@nxs-atoms/index";
 import type { TextAreaProps } from "nxs-form";
+import { Label } from "@nxs-atoms/index";
 
-const TextArea: React.FC<TextAreaProps> = (props) => {
-  const { value, name, placeholder, error, label, onChange } = props.input;
-  const { hideLabels, theme, formMessage } = props;
+const TextArea = (props: TextAreaProps) => {
+  const { hideLabels, theme, formMessage, input } = props;
+  const { value, name, placeholder, error, label, onChange } = input;
 
   return (
     <>

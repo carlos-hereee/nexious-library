@@ -4,7 +4,7 @@ import { AuthField, DataList, Field, Select, TextArea, UploadFile } from "@nxs-m
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 
-function FormField(props: FormFieldProps) {
+const FormField = (props: FormFieldProps) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
   const { formError, updateSelection, handleCheckbox, theme } = props;
@@ -53,7 +53,7 @@ function FormField(props: FormFieldProps) {
             placeholder,
             label,
             error: formError,
-            onChange: (e) => handleChange(e),
+            onChange: handleChange,
           }}
           hideLabels={hideLabels}
           formMessage={formMessage}
@@ -62,7 +62,7 @@ function FormField(props: FormFieldProps) {
         <InputCheckbox
           name={name}
           value={typeof value === "string" ? value : ""}
-          onChange={(e) => handleCheckbox && handleCheckbox(e)}
+          onChange={handleCheckbox}
           formMessage={formMessage}
           error={formError}
           label={label}
@@ -102,5 +102,5 @@ function FormField(props: FormFieldProps) {
       </div>
     </div>
   );
-}
+};
 export default FormField;

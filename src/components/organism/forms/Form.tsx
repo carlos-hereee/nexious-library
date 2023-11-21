@@ -15,7 +15,7 @@ import {
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 
-function Form(props: FormProps) {
+const Form = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
   const { initialValues, theme, submitLabel, schema } = props;
@@ -233,5 +233,5 @@ function Form(props: FormProps) {
   ) : (
     <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
   );
-}
+};
 export default Form;

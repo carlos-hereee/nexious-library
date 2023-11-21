@@ -1,7 +1,7 @@
 import type { InputProps } from "nxs-form";
 import Label from "./Label";
 
-const InputCheckbox: React.FC<InputProps> = (props) => {
+const InputCheckbox = (props: InputProps) => {
   const { value, onChange, name, theme, hideLabel, label, error, formMessage } = props;
 
   return (
@@ -10,7 +10,7 @@ const InputCheckbox: React.FC<InputProps> = (props) => {
         className={theme}
         name={name}
         type="checkbox"
-        checked={value ? true : false}
+        checked={!!value}
         onChange={onChange}
         // give lavels a reason to be there give inputs id
         id={name}

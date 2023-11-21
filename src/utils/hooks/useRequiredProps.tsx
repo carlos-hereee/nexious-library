@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import type { ErrorDataProp, ErrorMessageProp, LightSystem } from "nxs-errors";
+import type { RequiredTypesProps, ErrorMessageProp, LightSystem } from "nxs-errors";
 import { objLength } from "@nxs-utils/app/objLength";
+import { arrayLen } from "@nxs-utils/app/isArray";
 
-export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
+export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
   // const [warnings, setWarningsHandling] = useState<ErrorMessageProp[]>([]);
@@ -27,13 +28,10 @@ export const useRequiredProps = (props: ErrorDataProp, isAProp?: boolean) => {
     };
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
-      // proptype === undefined means no prop
+      // check required
       if (!propType || !props[key]) missingProps(key);
-      else if (propType === "object" && objLength(props[key]) > 0) {
-        missingProps(key);
-      } else if (props[key].length === 0) {
-        missingProps(key);
-      }
+      if (propType === "object" && objLength(props[key]) > 0) missingProps(key);
+      if (arrayLen(props[key]) === 0) missingProps(key);
     });
   }, [props, isAProp, errors]);
   // return { lightColor, errors, setErrors, warnings, setLightColor };

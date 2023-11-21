@@ -3,7 +3,7 @@ import type { DataListProps } from "nxs-form";
 import { capFirstCharacter } from "@nxs-utils/data/text";
 import { emojis } from "@nxs-utils/data/emojis";
 
-const DataList: React.FC<DataListProps> = (props) => {
+const DataList = (props: DataListProps) => {
   const { name, value, onChange, hideLabel, label, error, formMessage, list } = props;
 
   const selectList = (value && value.split(",")) || [];
@@ -26,13 +26,13 @@ const DataList: React.FC<DataListProps> = (props) => {
           <Button
             label={
               value.includes(l.value)
-                ? emojis.checkedBox + " " + l.label
-                : emojis.emptyCircle + " " + l.label
+                ? `${emojis.checkedBox} ${l.label}`
+                : `${emojis.emptyCircle} ${l.label}`
             }
             key={l.uid}
             theme={l.themeId ? l.name : ""}
-            onClick={() => handleDataChange(l.value + ",")}
-            title={value.includes(l.value) ? "remove " + l.value : "add" + l.value}
+            onClick={() => handleDataChange(`${l.value},`)}
+            title={value.includes(l.value) ? `remove ${l.value}` : `add${l.value}`}
           />
         ))}
       </div>
@@ -45,9 +45,9 @@ const DataList: React.FC<DataListProps> = (props) => {
                 v && (
                   <Button
                     key={v}
-                    title={"remove " + v}
-                    label={"X " + v}
-                    onClick={() => handleDataChange(v + ",")}
+                    title={`remove ${v}`}
+                    label={`X ${v}`}
+                    onClick={() => handleDataChange(`${v},`)}
                   />
                 )
             )}

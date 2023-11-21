@@ -73,10 +73,11 @@
     "dev": "node ./scripts/run-all-watchers.js",
     "watchers": "node ./scripts/all-watchers.js",
     "watch:add-types": "node ./scripts/watcher-add-types.js --watch",
-    "watch:4": "node ./scripts/watcher-rename-file.js --watch",
+    "watch:5": "node ./scripts/watcher-rename-file.js --watch",
     "watch:1": "npx sass src/stylesheets:dist/css --watch",
     "watch:2": "tsc -p tsconfig.json --watch",
     "watch:3": "tsc-alias -p tsconfig.json --watch",
+    "watch:4": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --cache",
     "copy:esm": "copyfiles -u 1 src/**/*.html src/**/*.css src/**/*.scss dist/esm",
     "copy:css": "node ./copy-styles.js",
     "copy-styles:esm": "node --loader ts-node/esm .copy-styles.ts",
@@ -86,7 +87,6 @@
     "compile:js": "tsc --module commonjs --outDir dist/cjs",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
     "compile:css": "npx sass src/stylesheets:dist/css",
-    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\" --quiet",
     "pre-build": "npm unlink nexious-library && npm run clean && npm run compile",
     "build": "npm run clean && npm run compile",
     "build:tsup": "npm run clean && npm run compile:tsup && npm run sass",
@@ -116,6 +116,7 @@
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@types/jest": "^29.5.2",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^20.2.5",
@@ -143,8 +144,6 @@
     "sass": "^1.62.1",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
-    "ts-loader": "^9.4.3",
-    "ts-node": "^10.9.1",
     "tsc-alias": "^1.8.6",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.0"

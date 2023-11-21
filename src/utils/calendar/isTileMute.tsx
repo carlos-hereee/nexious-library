@@ -13,7 +13,7 @@ export const isTileMute = ({ day, minDate, data }: TileMuteProps) => {
   const minDay = minDate && minDate.day > day;
 
   if (minYear) return true;
-  else if (currentYear && minMonth) return true;
-  else if (currentMonth && minDay) return true;
+  if (currentYear && minMonth) return true;
+  if (currentMonth && minDay) return true;
   return false;
 };

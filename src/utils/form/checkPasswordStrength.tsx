@@ -6,8 +6,8 @@ const errorMessage: { [num: number]: string } = {
 };
 
 export const checkPasswordStrength = (password: string) => {
-  let passwordStrength: number = 0;
-  let tipsMessage: string[] = [];
+  let passwordStrength = 0;
+  const tipsMessage: string[] = [];
 
   const len = password.length;
   const hasLowercaseLetters = password.match(/[a-z]/);

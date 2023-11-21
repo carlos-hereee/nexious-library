@@ -7,8 +7,8 @@ import type {
   AddEntryValueProps,
   FormatEntryProps,
   FormatExtraEntryProps,
+  InitialExtraValue,
 } from "nxs-form";
-import { isArray } from "@nxs-utils/app/isArray";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
@@ -71,10 +71,9 @@ export const useValues = () => {
     // add properties all entrys should have
     const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
     // track group
-    if (groupingIdx >= 0 && isArray(oldValues[groupingIdx].value)) {
+    if (groupingIdx >= 0 && Array.isArray(oldValues[groupingIdx].value)) {
       const entryData: FieldValueProps[] = [];
-
-      oldValues[groupingIdx].value.forEach((val) => {
+      (oldValues[groupingIdx].value as InitialExtraValue[]).forEach((val) => {
         const sharedKey = val.sharedKey || uniqueId();
         const entryFormat = Object.keys(initialValues).map((item) => ({
           [item]: val[item],
@@ -94,5 +93,13 @@ export const useValues = () => {
     setNewValues([]);
     setNewValues(oldValues);
   };
-  return { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry };
+  const formatInitialEntry = () => {};
+  return {
+    values,
+    setValues,
+    formatFieldEntry,
+    addNewEntry,
+    addExtraEntry,
+    formatInitialEntry,
+  };
 };
