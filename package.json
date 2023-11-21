@@ -4,7 +4,7 @@
   "description": "Official database for nexious.tech",
   "type": "module",
   "types": "dist/@types",
-  "main": "dist/esm/src/main.js",
+  "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
   "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
@@ -12,43 +12,49 @@
   "exports": {
     "./@nxs-atoms": {
       "import": {
-        "types": "./dist/esm/components/atoms/index.d.ts",
+        "types": "./dist/@types/components/atoms/index.d.ts",
         "default": "./dist/esm/components/atoms/index.js"
       }
     },
     "./@nxs-molecules": {
       "import": {
-        "types": "./dist/esm/components/molecules/index.d.ts",
+        "types": "./dist/@types/components/molecules/index.d.ts",
         "default": "./dist/esm/components/molecules/index.js"
       }
     },
     "./@nxs-organism": {
       "import": {
-        "types": "./dist/esm/components/organism/index.d.ts",
+        "types": "./dist/@types/components/organism/index.d.ts",
         "default": "./dist/esm/components/organism/index.js"
+      }
+    },
+    "./@nxs-template": {
+      "import": {
+        "types": "./dist/@types/components/template/index.d.ts",
+        "default": "./dist/esm/components/template/index.js"
       }
     },
     "./@nxs-header": {
       "import": {
-        "types": "./dist/esm/components/template/Header.d.ts",
+        "types": "./dist/@types/components/template/Header.d.ts",
         "default": "./dist/esm/components/template/Header.js"
       }
     },
     "./@nxs-calendar": {
       "import": {
-        "types": "./dist/esm/components/template/Calendar.d.ts",
+        "types": "./dist/@types/components/template/Calendar.d.ts",
         "default": "./dist/esm/components/template/Calendar.js"
       }
     },
     "./@nxs-footer": {
       "import": {
-        "types": "./dist/esm/components/template/Footer.d.ts",
+        "types": "./dist/@types/components/template/Footer.d.ts",
         "default": "./dist/esm/components/template/Footer.js"
       }
     },
     "./@nxs-paginate-form": {
       "import": {
-        "types": "./dist/esm/components/template/PaginateForm.d.ts",
+        "types": "./dist/@types/components/template/PaginateForm.d.ts",
         "default": "./dist/esm/components/template/PaginateForm.js"
       }
     },
@@ -61,8 +67,8 @@
     "./@index.css": "./dist/css/index.css",
     ".": {
       "import": {
-        "types": "./dist/esm/main.d.ts",
-        "default": "./dist/esm/src/main.js"
+        "types": "./dist/@types/main.d.ts",
+        "default": "./dist/esm/main.js"
       }
     }
   },
@@ -84,7 +90,7 @@
     "clean": "rimraf dist/ && npx prettier --write src/",
     "compile": "npm run compile:tsc && npm run compile:tsc-alias && npm run compile:css",
     "compile:tsc": "tsc -p tsconfig.json",
-    "compile:js": "tsc --module commonjs --outDir dist/cjs",
+    "compile:cjs": "tsc --module commonjs --outDir dist/cjs",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
     "compile:css": "npx sass src/stylesheets:dist/css",
     "pre-build": "npm unlink nexious-library && npm run clean && npm run compile",

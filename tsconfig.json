@@ -63,14 +63,14 @@
     "sourceMap": true /* Create source map files for emitted JavaScript files. */,
     "outDir": "dist/esm" /* Specify an output folder for all emitted files. */,
     "strict": true /* Enable all strict type-checking options. */,
-    // "lib": [
-    //   "ES5",
-    //   "ES2015",
-    //   "ES2016",
-    //   "DOM",
-    //   "ESNext",
-    //   "DOM.Iterable"
-    // ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
+    "lib": [
+      "ES5",
+      "ES2015",
+      "ES2016",
+      "DOM",
+      "ESNext",
+      "DOM.Iterable"
+    ] /* Specify a set of bundled library declaration files that describe the target runtime environment. */,
     // "experimentalDecorators": true,                   /* Enable experimental support for legacy experimental decorators. */
     // "emitDecoratorMetadata": true, /* Emit design-type metadata for decorated declarations in source files. */
     // "jsxFactory": "",                                 /* Specify the JSX factory function used when targeting React JSX emit, e.g. 'React.createElement' or 'h'. */
@@ -90,7 +90,7 @@
     // ], /* Allow multiple folders to be treated as one when resolving modules. */
     // "typeRoots": [
     //   "./src/@types",
-    //   // "./node_modules/@types"
+    //   "./node_modules/@types"
     // ] /* Specify multiple folders that act like './node_modules/@types'. */,
     // "types": ["./src/@types"],                                      /* Specify type package names to be included without being referenced in a source file. */
     // "allowUmdGlobalAccess": true,                     /* Allow accessing UMD globals from modules. */
@@ -124,7 +124,7 @@
     // "noEmitHelpers": true,                            /* Disable generating custom helper functions like '__extends' in compiled output. */
     // "noEmitOnError": true,                            /* Disable emitting files if any type checking errors are reported. */
     // "preserveConstEnums": true,                       /* Disable erasing 'const enum' declarations in generated code. */
-    "declarationDir": "./dist/esm/" /* Specify the output directory for generated declaration files. */,
+    "declarationDir": "dist/@types" /* Specify the output directory for generated declaration files. */,
     // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
     /* Interop Constraints */
     // "isolatedModules": true, /* Ensure that each file can be safely transpiled without relying on other imports. */
@@ -157,12 +157,10 @@
   "include": [
     ".eslintrc.json",
     "src/**/*", // include all files in src files
-    // "src/**/*.ts", // include ts files
+    // "src/**/*.ts", // include ts files 
     // "src/**/*.tsx", // include tsx files
-    "src/**/*.d.ts", // Include declaration files in 'dist'
+    // "src/**/*.d.ts", // Include declaration files in 'dist'
     // "dist/**/*.d.ts", // Include declaration files in 'dist'
-    // "src",
-    // "src/@types", 
   ],
   "compileOnSave": true,
   "exclude": [
