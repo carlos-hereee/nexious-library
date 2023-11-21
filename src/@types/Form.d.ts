@@ -63,6 +63,23 @@ declare module "nxs-form" {
     fieldHeading?: { [key: string]: string };
     addEntry?: { [key: string]: AddEntryProps };
   };
+  export type InputCheckBoxProps = {
+    name: string;
+    value: boolean;
+    label?: string;
+    theme?: string;
+    error?: string;
+    type?: string;
+    placeholder?: string;
+    min?: number;
+    max?: number;
+    hideLabel?: boolean;
+    checked?: boolean;
+    isDisabled?: boolean;
+    onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+    onBlur?: () => void;
+    formMessage?: string;
+  };
   export type InputProps = {
     name: string;
     value?: string;

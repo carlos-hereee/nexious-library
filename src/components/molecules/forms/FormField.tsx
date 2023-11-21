@@ -11,7 +11,7 @@ const FormField = (props: FormFieldProps) => {
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
 
-  console.log("value :>> ", value);
+  // console.log("value :>> ", value);
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
@@ -63,7 +63,7 @@ const FormField = (props: FormFieldProps) => {
       ) : type === "checkbox" ? (
         <InputCheckbox
           name={name}
-          value={typeof value === "string" ? value : ""}
+          value={typeof value === "boolean" ? value : false}
           onChange={handleCheckbox}
           formMessage={formMessage}
           error={formError}

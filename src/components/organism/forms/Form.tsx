@@ -36,7 +36,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
-
+  // console.log("values :>> ", values);
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
