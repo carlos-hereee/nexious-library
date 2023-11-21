@@ -9,7 +9,7 @@ const Socials: React.FC<MediaProps> = (props) => {
     <div className="flex-d-column text-center">
       <div className="container-split align-center">
         {label && <h2 className="heading">{label}</h2>}
-        {hero && <Hero hero={hero} />}
+        {hero && <Hero hero={hero} theme="hero-thumbnail" />}
       </div>
       <div className="socials-icons">
         {medias.length > 0 &&
