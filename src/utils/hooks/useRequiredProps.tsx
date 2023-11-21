@@ -30,7 +30,7 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
       const propType = typeof props[key];
       // check required
       if (!propType || !props[key]) missingProps(key);
-      if (propType === "object" && objLength(props[key]) > 0) missingProps(key);
+      if (propType === "object" && objLength(props[key]) < 0) missingProps(key);
       if (arrayLen(props[key]) === 0) missingProps(key);
     });
   }, []);

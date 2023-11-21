@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { BurgerButton, ErrorMessages, Logo } from "@nxs-molecules";
 import { Navbar } from "@nxs-organism";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
@@ -22,20 +22,31 @@ const Header: React.FC<HeaderProps> = (props) => {
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
-    const initClose = () => setClose(true);
-    document.addEventListener("animationend", initClose, true);
-    return () => document.removeEventListener("animationend", initClose, true);
+    const handler = () => setClose(true);
+    document.addEventListener("animationend", handler, true);
+    return () => document.removeEventListener("animationend", handler, true);
   }, []);
 
+  useEffect(() => {
+    const handler = (event: MouseEvent | TouchEvent) => {
+      if (headerRef.current && isActive) {
+        if (!headerRef.current.contains(event.target as HTMLElement)) setActive(false);
+      }
+    };
+    document.addEventListener("click", handler, true);
+    return () => document.removeEventListener("click", handler, true);
+  }, [isActive]);
+
   const handleClick = (e: MenuProp) => {
-    setActive(!isActive);
+    setActive(true);
     updateMenu(e);
   };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (
-    <header id={uniqueId}>
+    <header id={uniqueId} ref={headerRef}>
       {logo && <Logo hero={logo} label={logo.title} />}
       {menu && (
         <>

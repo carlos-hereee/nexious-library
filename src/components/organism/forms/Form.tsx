@@ -182,7 +182,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       {values.map((field, keyIdx) => {
-        console.log("field :>> ", field);
+        // console.log("field :>> ", field);
         return (
           <FormField
             key={field.fieldId}

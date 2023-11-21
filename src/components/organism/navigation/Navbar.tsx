@@ -3,12 +3,12 @@ import type { NavbarProps } from "nxs-navigation";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, click, menu, theme } = props;
-  let dataState = show.isActive ? "open" : "close";
-  if (show.isClose) dataState = "closing";
-  if (!show.isActive && !show.isClose) dataState = "close";
 
   return (
-    <ul className={theme ? `navigation ${theme}` : "navigation"} data-state={dataState}>
+    <ul
+      className={theme ? `navigation ${theme}` : "navigation"}
+      data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
+    >
       {menu.map((m) => (
         <li className="nav-btn" key={m.menuId}>
           {m.isToggle ? (
