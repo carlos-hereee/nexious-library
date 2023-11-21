@@ -1,10 +1,10 @@
 import { useEffect } from "react";
-import { Button, ErrorMessage } from "@nxs-atoms";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
-import { ErrorMessages, SubmitButton } from "@nxs-molecules";
-import { objToArray } from "@nxs-utils/app/objLength";
+// import { ErrorMessages,  } from "@nxs-molecules";
+import { SubmitButton } from "@nxs-molecules";
+import { formatInitialFormValues, objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
-import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
+// import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import CancelButton from "@nxs-atoms/buttons/CancelButton";
@@ -14,14 +14,16 @@ import {
   formatPreviewData,
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
+import { Button, ErrorMessage } from "@nxs-atoms";
 
-const Form = (props: FormProps) => {
+const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
   const { initialValues, theme, submitLabel, schema } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
   // must have required props
-  const { lightColor, errors } = useRequiredProps({ initialValues }, true);
+  // const { lightColor, errors } = useRequiredProps({ initialValues }, true);
+
   const {
     formErrors,
     validationStatus,
@@ -37,7 +39,7 @@ const Form = (props: FormProps) => {
 
   useEffect(() => {
     if (initialValues) {
-      const formatValues = [initialValues];
+      const formatValues = formatInitialFormValues(initialValues);
       const oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
       // clear prev values if any; avoid redundant data
       if (addEntry) {
@@ -48,8 +50,8 @@ const Form = (props: FormProps) => {
           // check if checkbox is checked
           if (initialValues[target]) addExtraEntry({ addEntry: current, target, oldValues });
         }
-        setValues(oldValues);
-      } else setValues(oldValues);
+      }
+      setValues(oldValues);
     }
   }, []);
 
@@ -170,8 +172,8 @@ const Form = (props: FormProps) => {
       validateForm(values, "yellow");
     }
   };
-  if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
-  return values ? (
+  // if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
+  return values.length > 0 ? (
     <form
       className={theme}
       onSubmit={handleSubmit}
@@ -180,6 +182,7 @@ const Form = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       {values.map((field, keyIdx) => {
+        console.log("field :>> ", field);
         return (
           <FormField
             key={field.fieldId}

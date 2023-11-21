@@ -92,6 +92,7 @@
     "compile:tsc": "tsc -p tsconfig.json",
     "compile:cjs": "tsc --module commonjs --outDir dist/cjs",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
+    "compile:alias@types": "tsc-alias -p tsconfig.json dist/@types",
     "compile:css": "npx sass src/stylesheets:dist/css",
     "pre-build": "npm unlink nexious-library && npm run clean && npm run compile",
     "build": "npm run clean && npm run compile",

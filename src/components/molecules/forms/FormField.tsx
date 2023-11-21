@@ -10,6 +10,8 @@ const FormField = (props: FormFieldProps) => {
   const { formError, updateSelection, handleCheckbox, theme } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
+
+  console.log("value :>> ", value);
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
