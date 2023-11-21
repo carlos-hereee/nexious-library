@@ -9,7 +9,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage, input } = props;
   const { name, error } = input;
   // required props
-  const { lightColor, errors } = useRequiredProps({ onSelect, name }, true);
+  // const { lightColor, errors } = useRequiredProps({ name }, true);
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUploaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -44,9 +44,11 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     if (imageUploaderRef.current) imageUploaderRef.current.value = "";
   };
 
-  if (lightColor === "red") {
-    return <ErrorMessages errors={errors} component="Upload file" />;
-  }
+  // console.log("lightColor :>> ", lightColor);
+
+  // if (lightColor === "red") {
+  //   return <ErrorMessages errors={errors} component="Upload file" />;
+  // }
   return (
     <div className={`field-upload ${theme || ""}`}>
       <div className="flex-d-column flex-start">
