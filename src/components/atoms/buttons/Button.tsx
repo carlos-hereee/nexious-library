@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = (props) => {
     <button
       type="button"
       className={theme ? `btn-main ${theme}` : "btn-main"}
-      title={title ? title : undefined}
+      title={title || undefined}
       onClick={onClick}
       disabled={isDisable}
     >

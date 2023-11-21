@@ -7,7 +7,7 @@ type Links = { word: string; link: string }[];
  * @param param0
  * @returns
  */
-export const getLinks = (hyperlinks: Links, body: string): LinkProp[] => {
+export const getLinks = (hyperlinks: Links, body?: string): LinkProp[] => {
   const arr: LinkProp[] = [];
   if (body) {
     for (let i = 0; i < hyperlinks.length; i += 1) {

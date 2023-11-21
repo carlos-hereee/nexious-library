@@ -1,7 +1,7 @@
 import { Icon } from "@nxs-atoms";
 import type { HybribDataProp } from "nxs-typography";
 
-export type reverseCountProp = {
+export type ReverseCountProp = {
   [key: string | number]:
     | "one"
     | "two"
@@ -14,7 +14,7 @@ export type reverseCountProp = {
     | "nine"
     | "zero";
 };
-export const reverseCount: reverseCountProp = {
+export const reverseCount: ReverseCountProp = {
   1: "one",
   2: "two",
   3: "three",

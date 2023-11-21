@@ -12,7 +12,8 @@ import type { CardProps } from "nxs-card";
  * @returns
  */
 const CardBody: React.FC<CardProps> = (props) => {
-  const { hyperlink, body, features } = props.data;
+  const { data } = props;
+  const { hyperlink, body, features } = data;
   const links = hyperlink && getLinks(hyperlink, body);
 
   return (

@@ -12,6 +12,7 @@ const CalendarTile: React.FC<CalendarTileProps> = (props) => {
         data.isMuted ? " text-mute" : ""
       }`}
       onClick={click}
+      type="button"
       title={events?.date ? `${events.date} has ${events.ping} events` : "no events today"}
     >
       {events.day === data.tile ? <TileContent tile={events.ping || 0} /> : data.tile}
