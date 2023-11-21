@@ -2,10 +2,10 @@ declare module "nxs-form" {
   import type { MenuItemProp } from "nxs-navigation";
   import type { KeyStringProp, OnchangeProps } from "custom-props";
 
-  export type FormInitialValue = File | string | number | boolean;
-  export type FieldValue = { [key: string]: File | string | number | boolean };
+  export type FormInitialValue = File | Blob | string | number | boolean;
+  export type FormValueProps = { [key: string]: FormInitialValue };
   export type InitialExtraValue = {
-    [key: string]: File | string | number | boolean;
+    [key: string]: FormInitialValue;
     sharedKey: string;
   };
   export type OptionDataProps = {

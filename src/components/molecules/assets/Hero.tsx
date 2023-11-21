@@ -11,7 +11,10 @@ import type { HeroProps } from "nxs-assets";
  */
 const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
   const [load, setLoad] = useState<boolean>();
-  if (!hero) return <ErrorMessage code="missingProps" prop="hero" />;
+
+  if (!hero) {
+    return <ErrorMessage error={{ code: "missingProps", prop: "hero", value: hero }} />;
+  }
   return hero?.small ? (
     <div
       className={load ? "blur-load--loaded" : "blur-load"}

@@ -159,7 +159,7 @@
     "src/**/*", // include all files in src files
     // "src/**/*.ts", // include ts files
     // "src/**/*.tsx", // include tsx files
-    // "src/**/*.d.ts", // Include declaration files in 'dist'
+    "src/**/*.d.ts", // Include declaration files in 'dist'
     // "dist/**/*.d.ts", // Include declaration files in 'dist'
     // "src",
     // "src/@types", 

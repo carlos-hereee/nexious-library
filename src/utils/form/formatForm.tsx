@@ -1,5 +1,4 @@
-import type { FormInitialValues } from "custom-props";
-import type { FieldValueProps } from "nxs-form";
+import type { FieldValueProps, FormInitialValue, FormValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {
   return Object.assign(
@@ -15,19 +14,20 @@ export const formatFormData = (values: FieldValueProps[]) => {
   );
 };
 export const formatPreviewData = (values: FieldValueProps[]) => {
-  const payload: FormInitialValues = {};
+  const payload: { [key: string]: FormInitialValue | FormValueProps[] } = {};
   values.forEach((val) => {
     const { name, group, groupName, sharedKey, value } = val;
     if (group && groupName) {
-      const idx = payload[groupName]?.findIndex((p: unknown) => p.sharedKey === sharedKey);
       // if group has been added
-      if (idx >= 0) {
-        payload[groupName][idx] = { ...payload[groupName][idx], [name]: value };
-        // if group has yet to added
-      } else if (payload[groupName]?.length > 0) {
-        payload[groupName].push({ [name]: value, sharedKey });
+      if (Array.isArray(payload[groupName])) {
+        (payload[groupName] as FormValueProps[]).push({ [name]: value });
+        // } else if (payload[groupName]?.length > 0) {
+        //   // const idx = (payload[groupName] as KeyStringProp[])?.findIndex(
+        //   //   (p) => p.sharedKey === sharedKey
+        //   // );
+        //   payload[groupName].push({ [name]: value, sharedKey });
         // init group
-      } else payload[groupName] = [{ [name]: value, sharedKey }];
+      } else payload[groupName] = [{ [name]: value, sharedKey: sharedKey || "" }];
     } else payload[name] = value;
   });
   return payload;
@@ -37,12 +37,14 @@ export const formatFilesData = (values: FieldValueProps[]) => {
   const formData = new FormData();
   for (let item = 0; item < values.length; item += 1) {
     const current = values[item];
-    if (current.sharedKey && current.name !== "hero" && current.name !== "sectionHero") {
+    if (typeof current.value === "number") formData.append(current.name, `${current.value}`);
+    else if (current.value instanceof File) formData.append(current.name, current.value);
+    else if (current.value instanceof Blob) formData.append(current.name, current.value);
+    else if (current.sharedKey) {
       const keyName = `${current.name}-${current.group}-${current.sharedKey}`;
-      formData.append(keyName, current.value);
-    } else if (current.name === "hero") formData.append("hero", current.value);
-    else if (current.name === "sectionHero") formData.append("sectionHero", current.value);
-    else formData.append(current.name, current.value);
+      if (typeof current.value === "string") formData.append(keyName, current.value);
+      if (typeof current.value === "boolean") formData.append(keyName, `${current.value}`);
+    }
   }
   return formData;
 };

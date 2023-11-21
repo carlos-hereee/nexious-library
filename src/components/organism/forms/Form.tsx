@@ -231,7 +231,7 @@ const Form = (props: FormProps) => {
       </div>
     </form>
   ) : (
-    <ErrorMessage code="missingFormInitialValues" prop="form" error={values} />
+    <ErrorMessage error={{ code: "missingFormInitialValues", prop: "form", value: values }} />
   );
 };
 export default Form;

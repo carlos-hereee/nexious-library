@@ -160,12 +160,12 @@ export { objToArray } from "@nxs-utils/app/objLength";
 // /// <reference types="nxs-cart" />
 // export type { CartProps, PaymentMethodsProps, PaymentType } from "nxs-cart";
 
-/// <reference types="nxs-form" />
-/// <reference types="nxs-card" />
-/// <reference types="nxs-cart" />
-/// <reference types="nxs-calendar" />
-/// <reference types="nxs-button" />
-/// <reference types="nxs-errors" />
-/// <reference types="nxs-assets" />
-/// <reference types="nxs-typography" />
-/// <reference types="nxs-navigation" />
+// / <reference types="nxs-form" />
+// / <reference types="nxs-card" />
+// / <reference types="nxs-cart" />
+// / <reference types="nxs-calendar" />
+// / <reference types="nxs-button" />
+// / <reference types="nxs-errors" />
+// / <reference types="nxs-assets" />
+// / <reference types="nxs-typography" />
+// / <reference types="nxs-navigation" />

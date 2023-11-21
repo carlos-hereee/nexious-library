@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
-import type { FieldValue, PaginateFormProps } from "nxs-form";
+import type { FormValueProps, PaginateFormProps } from "nxs-form";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
@@ -11,7 +11,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
   const { errors, lightColor } = useRequiredProps({ paginate }, true);
   // key variables
-  const [initialValues, setInitialValues] = useState<FieldValue>();
+  const [initialValues, setInitialValues] = useState<FormValueProps>();
   const [pageNumber, setPageNumber] = useState<number>(page || 0);
   const current = paginate[pageNumber];
   const formOrder = order || paginate.map((f) => f.formId);
@@ -44,7 +44,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
     setPageNumber(nextPage);
   };
 
-  const handlePaginateSubmit = (formValues: FieldValue) => {
+  const handlePaginateSubmit = (formValues: FormValueProps) => {
     const next = formOrder[pageNumber + 1];
     if (onFormSubmit) onFormSubmit({ [formId]: formValues });
     // if next is undefined its the last form

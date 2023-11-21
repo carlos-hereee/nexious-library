@@ -1,6 +1,18 @@
 declare module "nxs-calendar" {
   import type { UserProps } from "nxs-assets";
 
+  export type CalendarEventProp = {
+    date: string;
+    list: EventProp[];
+  };
+  export type MeetingProps = {
+    response?: string;
+    uid?: string;
+    meetingId?: string;
+    startTime?: string;
+    date?: string;
+    endTime?: string;
+  };
   export type EventProp = {
     date: string;
     startTime: number;
@@ -23,7 +35,7 @@ declare module "nxs-calendar" {
     ping?: number;
   };
   // Define your exported types here
-  // export type EventMeetingProps = { meeting: EventProp };
+  export type EventMeetingProps = { meeting: MeetingProps };
   export interface CalendarProps {
     value: Date;
     minDate?: Date;
@@ -32,11 +44,11 @@ declare module "nxs-calendar" {
       date: string;
       list: EventProp[];
     }[];
-    onDayClick?: (e: unknown) => void;
+    onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
     setDay?: (a: unknown) => void;
   }
   export interface CalendarEventProps {
-    selectedDay: { date: string; list: EventProp[] };
+    selectedDay: CalendarEventProp;
     setMeeting: (value: unknown) => void;
     setActive: (value: unknown) => void;
     removeFromCart: (value: unknown) => void;
@@ -44,7 +56,7 @@ declare module "nxs-calendar" {
     user?: UserProps;
     active?: string;
     meeting?: MeetingProps;
-    events: { date: string; list: EventProp[] };
+    events: CalendarEventProp;
   }
   export interface CalendarTileProps {
     data: {
@@ -62,13 +74,7 @@ declare module "nxs-calendar" {
     previous: { label: string; icon: string }[];
     next: { label: string; icon: string }[];
   }
-  export type MeetingProps = {
-    response?: string;
-    uid?: string;
-    meetingId?: string;
-    startTime?: string;
-    endTime?: string;
-  };
+
   export interface CalendarEventListProps {
     list: EventProp[];
     onClick: (key: unknown) => void;
@@ -85,11 +91,11 @@ declare module "nxs-calendar" {
     today: CalendarDayProp;
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
-    onDayClick: (e: unknown) => void;
-    events: { date: string; list: EventProp[] }[];
+    onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
+    events: CalendarEventProp[];
   }
   export interface FindMatchProps {
-    events?: { date: string; list: EventProp[] }[];
+    events?: CalendarEventProp[];
     calDay: CalendarDayProp;
   }
 }
