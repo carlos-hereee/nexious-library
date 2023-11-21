@@ -22,6 +22,6 @@ declare module "nxs-errors" {
     code: string;
     prop: string;
     component?: string;
-    error?: unknown;
+    error: { [key: string]: unknown };
   };
 }

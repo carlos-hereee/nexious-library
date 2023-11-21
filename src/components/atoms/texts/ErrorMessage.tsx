@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 import { findValueType } from "@nxs-utils/helpers/methods";
 import { messages } from "@nxs-utils/data/messages";
 import type { ErrorMessageProps } from "nxs-errors";
@@ -22,7 +23,7 @@ const ErrorMessage: React.FC<ErrorMessageProps> = (props) => {
         {error?.isAProp ? `Prop ${prop} from ${component} component ` : `Component ${prop} `}
         {messages[code]}
       </p>
-      <button className="btn-main" onClick={handleClick}>
+      <button type="button" className="btn-main" onClick={handleClick}>
         Double check log
       </button>
     </div>

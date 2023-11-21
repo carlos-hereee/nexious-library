@@ -1,6 +1,6 @@
+import type { DayChangeProps } from "nxs-calendar";
 import { findMatch } from "./findMatch";
 import { calendarValues, nextMonth, prevMonth } from "./calendarValues";
-import type { DayChangeProps } from "nxs-calendar";
 
 export const dayChange = (props: DayChangeProps) => {
   const { today, active, setActive, events, onDayClick } = props;

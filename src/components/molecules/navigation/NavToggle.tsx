@@ -11,7 +11,7 @@ import type { NavigationToggleProps } from "nxs-navigation";
  */
 const NavToggle: React.FC<NavigationToggleProps> = (props) => {
   const { data, onSelect, theme } = props;
-  const { active, alternatives } = props.data;
+  const { active, alternatives } = data;
 
   const handleSelect = (value: string) => {
     // find selected and update values

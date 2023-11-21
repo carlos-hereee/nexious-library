@@ -28,10 +28,8 @@ const Calendar: React.FC<CalendarProps> = (props) => {
 
   useEffect(() => {
     // programatically setDay when new day is chosen
-    if (active.date) {
-      setDay && setDay(active);
-    }
-  }, [active]);
+    if (active.date && setDay) setDay(active);
+  }, [active, setDay]);
 
   return (
     <div className={theme ? `${theme} calendar` : "calendar"}>

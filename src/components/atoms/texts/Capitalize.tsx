@@ -7,7 +7,7 @@ import type { DataProp } from "nxs-typography";
  */
 const Capitalize: React.FC<DataProp> = (props) => {
   const { data } = props;
-  if (!data) return;
+  if (!data) return <span />;
   return (
     <span>
       {data.charAt(0).toUpperCase()}

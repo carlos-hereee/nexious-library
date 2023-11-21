@@ -1,4 +1,4 @@
-/***
+/** *
  * function addition
  * @param {number} num1 The fist number
  * @param {number} num2 The secondary number

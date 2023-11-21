@@ -8,6 +8,8 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
   const { data, visaPayment, paypalPayment, inStorePayment } = props;
   const [active, setActive] = useState<PaymentType>(data[0]);
 
+  const handlePaypal = () => paypalPayment && paypalPayment(active);
+  const handleStore = () => inStorePayment && inStorePayment(active);
   return (
     <div className="flex-d-column">
       <h2 className="heading">Enter Payment Details</h2>
@@ -42,15 +44,15 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
         />
       )}
       {active.type === "paypal" && (
-        <button className="btn-cta" onClick={() => paypalPayment && paypalPayment(active)}>
+        <button type="button" className="btn-cta" onClick={handlePaypal}>
           {active.hero && <Hero hero={active.hero} theme="icon" />}
-          <p>Pay with paypal</p>
+          Pay with paypal
         </button>
       )}
       {active.type === "in-store" && (
-        <button className="btn-cta" onClick={() => inStorePayment && inStorePayment(active)}>
+        <button type="button" className="btn-cta" onClick={handleStore}>
           {active.hero && <Hero hero={active.hero} theme="icon" />}
-          <p>Complete Checkout</p>
+          Complete Checkout
         </button>
       )}
     </div>

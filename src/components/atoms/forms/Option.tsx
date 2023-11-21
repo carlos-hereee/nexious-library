@@ -1,8 +1,8 @@
 import type { OptionDataProps } from "nxs-form";
 
 const Option: React.FC<OptionDataProps> = (props) => {
-  const { label, value, name } = props.data;
-  const { isDisabled, hideOption } = props;
+  const { isDisabled, hideOption, data } = props;
+  const { label, value, name } = data;
 
   return (
     <option value={value} disabled={isDisabled} hidden={hideOption} title={name}>

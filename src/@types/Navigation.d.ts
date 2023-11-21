@@ -59,7 +59,7 @@ declare module "nxs-navigation" {
   export interface NavigationToggleProps {
     data: MenuProp;
     theme?: string;
-    onSelect: (a: unknown) => void;
+    onSelect: (a: MenuProp) => void;
     language?: MenuItemProp;
   }
   export interface FormNavigationProps {

@@ -7,7 +7,7 @@ const Input: React.FC<InputProps> = (props) => {
       className={theme}
       autoComplete="on"
       name={name}
-      type={type ? type : "text"}
+      type={type || "text"}
       value={value}
       placeholder={placeholder}
       onChange={onChange}

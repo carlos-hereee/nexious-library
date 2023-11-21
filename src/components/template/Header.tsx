@@ -48,7 +48,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               theme={theme}
             />
           </nav>
-          <nav className={"mobile-navigation"}>
+          <nav className="mobile-navigation">
             <BurgerButton
               isBurger={isActive}
               onClick={() => setActive(!isActive)}
@@ -59,7 +59,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               menu={menu}
               click={handleClick}
               language={language}
-              theme={"alt-" + theme}
+              theme={`alt-${theme}`}
             />
           </nav>
         </>
