@@ -26,15 +26,15 @@
   ],
   "rules": {
     // Note: you must disable the base rule as it can report incorrect errors
-    "quotes": "off",
-    "no-nested-ternary": "off",
+    "quotes": 0,
+    "no-nested-ternary": 0,
     // inside rules, generally a good rule but we're going to disable it for now
     "@typescript-eslint/no-empty-function": 0,
-    "react-hooks/exhaustive-deps": "warn",
-    "@typescript-eslint/quotes": "off",
-    "import/no-unresolved": "error",
-    "import/no-cycle": "off",
-    "jsx-a11y/label-has-associated-control": "off",
+    "react-hooks/exhaustive-deps": 0,
+    "@typescript-eslint/quotes": 0,
+    "import/no-unresolved": 0,
+    "import/no-cycle": 0,
+    "jsx-a11y/label-has-associated-control": 0,
     "react/prop-types": 0,
     "react/function-component-definition": [
       2,
@@ -43,20 +43,20 @@
       }
     ],
     "import/prefer-default-export": [
-      "off",
+      0,
       {
         "target": "any"
       }
     ],
-    "react/react-in-jsx-scope": "off",
+    "react/react-in-jsx-scope": 0,
     "no-unused-expressions": [
-      "error",
+      0,
       {
         "allowTernary": true
       }
     ],
     "prettier/prettier": [
-      "off",
+      0,
       {},
       {
         "usePrettierrc": true

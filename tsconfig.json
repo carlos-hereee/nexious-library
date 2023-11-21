@@ -155,7 +155,7 @@
     // "skipLibCheck": true /* Skip type checking all .d.ts files. */  
   },
   "include": [
-    ".eslintrc.json",
+    // ".eslintrc.json",
     "src/**/*", // include all files in src files
     // "src/**/*.ts", // include ts files 
     // "src/**/*.tsx", // include tsx files

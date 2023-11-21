@@ -27,7 +27,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
 
   useEffect(() => {
     formatImageData(value);
-  }, [value]);
+  }, []);
 
   const imageClick = () => {
     // Trigger the click event of the file input

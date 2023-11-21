@@ -35,7 +35,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       if (setNewPage) setNewPage(pageNumber);
       setInitialValues(paginate[pageNumber].initialValues);
     }
-  }, [pageNumber, paginate, setNewPage]);
+  }, [pageNumber, paginate]);
 
   const handlePageClick = (nextPage: number) => {
     //  reset initial values to redender form component

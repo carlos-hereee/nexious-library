@@ -11,7 +11,7 @@ const PageNotFound: React.FC<ErrorProps> = (props) => {
   useEffect(() => {
     // let client read error message and reroute to page
     if (to) setTimeout(() => navigate(`/${to}`), 2300);
-  }, [to]);
+  }, []);
 
   return (
     <div className="page-center">

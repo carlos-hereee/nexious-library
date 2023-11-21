@@ -51,16 +51,7 @@ const Form = (props: FormProps) => {
         setValues(oldValues);
       } else setValues(oldValues);
     }
-  }, [
-    addEntry,
-    addExtraEntry,
-    formatFieldEntry,
-    initialValues,
-    labels,
-    placeholders,
-    setValues,
-    types,
-  ]);
+  }, []);
 
   useEffect(() => {
     if (validationStatus === "green" && onSubmit) {
@@ -71,15 +62,7 @@ const Form = (props: FormProps) => {
       onViewPreview(formatPreviewData(values));
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
-  }, [
-    onSubmit,
-    onViewPreview,
-    scrollToError,
-    setStatus,
-    validationStatus,
-    values,
-    withFileUpload,
-  ]);
+  }, [validationStatus, withFileUpload]);
 
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables

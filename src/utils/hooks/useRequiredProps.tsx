@@ -33,7 +33,8 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
       if (propType === "object" && objLength(props[key]) > 0) missingProps(key);
       if (arrayLen(props[key]) === 0) missingProps(key);
     });
-  }, [props, isAProp, errors]);
+  }, []);
+
   // return { lightColor, errors, setErrors, warnings, setLightColor };
   return { lightColor, errors, setErrors, setLightColor };
 };

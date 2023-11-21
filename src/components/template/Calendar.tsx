@@ -21,15 +21,13 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   const today: CalendarDayProp = calendarValues(new Date());
 
   useEffect(() => {
-    if (minDate) {
-      setMininumDate(calendarValues(minDate));
-    }
-  }, [minDate]);
+    if (minDate) setMininumDate(calendarValues(minDate));
+  }, []);
 
   useEffect(() => {
     // programatically setDay when new day is chosen
     if (active.date && setDay) setDay(active);
-  }, [active, setDay]);
+  }, [active]);
 
   return (
     <div className={theme ? `${theme} calendar` : "calendar"}>
