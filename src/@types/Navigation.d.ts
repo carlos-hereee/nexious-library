@@ -1,5 +1,6 @@
 declare module "nxs-navigation" {
   import type { AssetProps } from "nxs-assets";
+  import type { SectionProps } from "custom-props";
 
   export type MenuItemProp = {
     name: string;
@@ -43,6 +44,8 @@ declare module "nxs-navigation" {
   }
   export interface FooterProps {
     appName: string;
+    media: SectionProps;
+    hero: AssetProps;
   }
   export interface NavigationProps {
     onClick?: (key: MenuProp) => void;

@@ -1,5 +1,4 @@
 import { Subtitle } from "@nxs-atoms";
-import { Hero } from "@nxs-molecules";
 import type { HeroCardProps } from "nxs-card";
 
 /**
@@ -12,12 +11,11 @@ import type { HeroCardProps } from "nxs-card";
  * @returns
  */
 const CardHeader: React.FC<HeroCardProps> = (props) => {
-  const { hero, data } = props;
+  const { data } = props;
   return (
     <div className="card-header">
-      {data.title && <h3 className="heading">{data.title}</h3>}{" "}
-      {data.tagline && <h4 className="heading">{data.tagline}</h4>}
-      {hero && <Hero hero={hero} theme={hero.theme} />}
+      {data.title && <h2 className="heading">{data.title}</h2>}{" "}
+      {data.tagline && <h3 className="heading">{data.tagline}</h3>}
       {data.subtitle && <Subtitle data={data.subtitle} />}
     </div>
   );

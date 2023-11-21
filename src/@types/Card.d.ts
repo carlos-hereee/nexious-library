@@ -32,7 +32,7 @@ declare module "nxs-card" {
     onClick?: (key: unknown) => void;
   }
   export interface HeroCardProps {
-    data: { title?: string; tagline?: string; subtitle?: string };
+    data: { title?: string; tagline?: string; subtitle?: string; body?: string };
     hero?: AssetProps;
     theme?: string;
     onClick?: (key: unknown) => void;

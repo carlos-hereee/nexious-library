@@ -53,6 +53,7 @@ declare module "nxs-assets" {
   }
   export interface MediaProps {
     medias: AssetProps[];
+    hero: AssetProps;
     theme?: string;
     label?: string;
   }
