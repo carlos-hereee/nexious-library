@@ -10,7 +10,7 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = (props) => {
   return (
     <div className="form-field password-checker">
       <h3>Your password difficulty to guess is at {ease}</h3>
-      <p>Increase your password's security by:</p>
+      <p>Increase your password security by:</p>
       <ol>
         {tips.map((t) => (
           <li key={t} className="text-max">

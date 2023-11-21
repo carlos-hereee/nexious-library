@@ -18,10 +18,14 @@ declare module "nxs-errors" {
     to?: string;
     errors?: ErrorMessageProp[];
   }
-  export type ErrorMessageProps = {
+  export type ErrorProp = {
+    value: { [key: string]: unknown } | unknown;
     code: string;
     prop: string;
     component?: string;
-    error: { [key: string]: unknown };
+    isAProp?: boolean;
+  };
+  export type ErrorMessageProps = {
+    error: ErrorProp;
   };
 }

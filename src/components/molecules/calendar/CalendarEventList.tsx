@@ -8,6 +8,7 @@ const CalendarEventList: React.FC<CalendarEventListProps> = (props) => {
       {list.map((d) => (
         <button
           key={d.uid}
+          type="button"
           onClick={() => onClick(d)}
           className="btn-list-item"
           title={d.details}

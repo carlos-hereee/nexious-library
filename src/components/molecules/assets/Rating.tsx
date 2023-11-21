@@ -13,6 +13,7 @@ const Rating: React.FC<RatingProps> = (props) => {
           className="btn-rating"
           type="button"
           onClick={() => onClick && onClick(r)}
+          aria-label={`${r > 1 ? `${r} star filled` : `${r} stars filled`}`}
         >
           <Icon icon="star" name={star < r ? "star" : "star-filled"} />
         </button>

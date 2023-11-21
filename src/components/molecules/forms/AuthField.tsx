@@ -4,7 +4,7 @@ import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import type { AuthFieldProp } from "nxs-form";
 import { IconButton } from "@nxs-molecules";
 
-function AuthField(props: AuthFieldProp) {
+const AuthField = (props: AuthFieldProp) => {
   const { value, onChange, name, placeholder, formMessage, labels, errors } = props;
   const { hideLabels } = props;
   const { seePassword, togglePassword } = useSeePassword();
@@ -32,5 +32,5 @@ function AuthField(props: AuthFieldProp) {
       </div>
     </>
   );
-}
+};
 export default AuthField;

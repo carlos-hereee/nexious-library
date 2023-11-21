@@ -10,9 +10,9 @@ declare module "nxs-card" {
     heroId?: string;
   };
   export interface CardProp {
-    title: string;
-    body: string;
-    uid: string;
+    title?: string;
+    body?: string;
+    uid?: string;
     subtitle?: string;
     hasHero?: boolean;
     hasFeatures?: boolean;
@@ -74,7 +74,12 @@ declare module "nxs-cart" {
     inStorePayment?: (a: unknown) => void;
   };
   export interface CartProps {
-    data: unknown[];
+    data: {
+      service: { [key: string]: string };
+      title?: string;
+      body?: string;
+      uid?: string;
+    }[];
     heading: string;
     removeFromCart: (e: unknown) => void;
     onEditDetails: (e: unknown) => void;

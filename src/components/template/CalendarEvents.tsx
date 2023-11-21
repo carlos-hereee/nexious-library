@@ -1,6 +1,6 @@
 import { MeetingDetails } from "@nxs-atoms";
 import { CalendarEventList, IconButton } from "@nxs-molecules";
-import { CardSection, UserCard } from "@nxs-organism";
+import { UserCard } from "@nxs-organism";
 import type { CalendarEventProps } from "nxs-calendar";
 
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
@@ -9,7 +9,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
     <div className="calendar-events" id="calendar-events">
       <div className="calendar-package-details">
         <h2 className="heading">Selected package</h2>
-        {/* <CardSection data={active} /> */}
+        <p className="text-center">{active}</p>
       </div>
       <div className="event-wrapper">
         <h2 className="heading">
@@ -38,11 +38,13 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
             )}
           </div>
         ) : selectedDay.list?.length > 0 ? (
-          <CalendarEventList
-            list={selectedDay.list}
-            onClick={(e) => setMeeting(e)}
-            meeting={meeting}
-          />
+          meeting && (
+            <CalendarEventList
+              list={selectedDay.list}
+              onClick={(e) => setMeeting(e)}
+              meeting={meeting}
+            />
+          )
         ) : (
           <div className="flex-d-column flex-center">
             <strong>All booked up, please try a different day</strong>

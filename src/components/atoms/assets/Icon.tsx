@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { svg } from "./Assets";
 import { ErrorMessage } from "@nxs-atoms";
 import type { IconProps } from "nxs-button";
+import { svg } from "./Assets";
 
 /**
  * Component - Icon
@@ -14,17 +14,20 @@ import type { IconProps } from "nxs-button";
  */
 const Icon: React.FC<IconProps> = (props) => {
   const { icon, size, spin, color, name, className } = props;
-  // const
   const n = className
-    ? `icon ${name ? `icon-${name} ` + className : className}`
+    ? `icon ${name ? `icon-${name} ${className}` : className}`
     : `${name ? `icon-${name}` : ""}`;
 
-  if (!icon) return <ErrorMessage code="missingProps" prop="icon" />;
-  if (!svg[icon]) return <ErrorMessage code="iconNotFound" prop="icon" />;
+  if (!icon) {
+    return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon }} />;
+  }
+  if (!svg[icon]) {
+    return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: svg[icon] }} />;
+  }
   return (
     <FontAwesomeIcon
       icon={svg[icon]}
-      size={size ? size : "1x"}
+      size={size || "1x"}
       className={n}
       spin={spin ? spin === "spin" : false}
       pulse={spin ? spin === "pulse" : false}

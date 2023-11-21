@@ -23,7 +23,7 @@ declare module "nxs-calendar" {
     ping?: number;
   };
   // Define your exported types here
-  export type EventMeetingProps = { meeting: EventProp };
+  // export type EventMeetingProps = { meeting: EventProp };
   export interface CalendarProps {
     value: Date;
     minDate?: Date;
@@ -42,8 +42,8 @@ declare module "nxs-calendar" {
     removeFromCart: (value: unknown) => void;
     handleCheckout: (value: unknown) => void;
     user?: UserProps;
-    active?: unknown;
-    meeting?: EventProp;
+    active?: string;
+    meeting?: MeetingProps;
     events: { date: string; list: EventProp[] };
   }
   export interface CalendarTileProps {
@@ -62,13 +62,17 @@ declare module "nxs-calendar" {
     previous: { label: string; icon: string }[];
     next: { label: string; icon: string }[];
   }
+  export type MeetingProps = {
+    response?: string;
+    uid?: string;
+    meetingId?: string;
+    startTime?: string;
+    endTime?: string;
+  };
   export interface CalendarEventListProps {
     list: EventProp[];
     onClick: (key: unknown) => void;
-    meeting: {
-      uid?: string;
-      meetingId?: string;
-    };
+    meeting: MeetingProps;
   }
   export interface CalendarViewProps {
     data: CalendarDayProp;
