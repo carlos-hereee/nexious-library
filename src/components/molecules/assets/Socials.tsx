@@ -4,6 +4,7 @@ import { Hero } from "@nxs-molecules";
 
 const Socials: React.FC<MediaProps> = (props) => {
   const { label, medias, hero } = props;
+
   return (
     <div className="flex-d-column text-center">
       <div className="container-split align-center">
@@ -12,12 +13,11 @@ const Socials: React.FC<MediaProps> = (props) => {
       </div>
       <div className="socials-icons">
         {medias.length > 0 &&
-          medias.map(
-            (d) =>
-              d.media && (
-                <Icon key={d.uid || d.sharedKey} icon={d.media} name={d.media} size="3x" />
-              )
-          )}
+          medias.map((d) => (
+            <a key={d.uid || d.sharedKey} className="nav-link" href={d.link || "#"}>
+              {d.media && <Icon icon={d.media} name={d.media} size="3x" />}
+            </a>
+          ))}
       </div>
     </div>
   );
