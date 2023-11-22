@@ -29,6 +29,7 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
     Object.keys(props).forEach((key) => {
       const propType = typeof props[key];
       // check required
+      if (propType) return;
       if (!propType || !props[key]) missingProps(key);
       else if (propType === "object" && objLength(props[key]) < 0) missingProps(key);
       else if (arrayLen(props[key]) === 0) missingProps(key);

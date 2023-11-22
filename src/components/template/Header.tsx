@@ -41,7 +41,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   }, [isActive]);
 
   const handleClick = (e: MenuProp) => {
-    setActive(true);
+    setActive(!isActive);
     updateMenu(e);
   };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;

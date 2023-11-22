@@ -28,7 +28,7 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
       )}
       <Select
         list={alternatives}
-        name={active?.name || ""}
+        name={active?.name || active.value}
         theme={theme}
         onChange={(value) => handleSelect(value)}
         active={active?.label || ""}
