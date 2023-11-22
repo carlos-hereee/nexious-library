@@ -9,7 +9,7 @@ import type { FooterProps } from "nxs-navigation";
 const Footer: React.FC<FooterProps> = (props) => {
   const { appName, media, hero } = props;
   return (
-    <footer className="container">
+    <footer className="container mt-2">
       {media && <Socials medias={media.medias || []} label={media.title} hero={hero} />}
       <div className="w-max">
         <span className="flex-center">

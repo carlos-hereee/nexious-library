@@ -5,7 +5,6 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
   const { hero, cta, theme, onClick, data } = props;
 
   if (!data) return <div />;
-
   const { title, tagline } = data;
   return (
     <div className={`hero-card ${theme || ""}`}>

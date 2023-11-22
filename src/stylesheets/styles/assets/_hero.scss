@@ -34,3 +34,15 @@
   aspect-ratio: 16/9;
   color: inherit;
 }
+.form-hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  gap: #{$rem};
+  @include devices(mobile) {
+    .hero,
+    .credit-to {
+      display: none;
+    }
+  }
+}
