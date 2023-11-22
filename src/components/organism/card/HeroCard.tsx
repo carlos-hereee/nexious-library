@@ -14,11 +14,7 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
         {tagline && <h2 className="tagline">{tagline}</h2>}
         {cta && <CTA cta={cta} onClick={onClick} />}
       </div>
-      {hero && (
-        <div className="flex-center">
-          <Hero hero={hero} theme={hero?.theme} />
-        </div>
-      )}
+      {hero && <Hero hero={hero} theme={hero?.theme} />}
     </div>
   );
 };

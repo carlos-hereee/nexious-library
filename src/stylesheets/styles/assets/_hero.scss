@@ -1,17 +1,23 @@
 .hero {
   display: block;
   width: 100%;
-  max-width: #{$max-width};
+  max-width: #{$max-hero-width};
   min-width: #{$min-width};
   object-fit: cover;
   object-position: center;
   border-radius: #{$border-radius};
+}
+.hero-wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 .hero-main {
   max-width: #{$max-width-lg};
   min-width: #{$min-width};
 }
 .feature-hero {
+  width: 100%;
   aspect-ratio: 1/1;
 }
 .thumbnail {

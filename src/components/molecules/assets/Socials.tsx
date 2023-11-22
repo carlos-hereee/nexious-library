@@ -10,7 +10,7 @@ const Socials: React.FC<MediaProps> = (props) => {
       {hero && <Hero hero={hero} />}
       <div className="container">
         {label && <h2 className="heading">{label}</h2>}
-        <div className="socials-icons">
+        <div className="flex-row">
           {medias.map((d) => (
             <a key={d.uid} className="nav-link" href={d.link || "#"}>
               {d.media && <Icon icon={d.media} name={d.media} size="3x" />}

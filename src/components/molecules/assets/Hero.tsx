@@ -38,7 +38,7 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
       {hero.creditTo && <UnsplashCredit creditTo={hero.creditTo} />}
     </div>
   ) : (
-    <div className="w-max">
+    <div className="hero-wrapper">
       {hero.url ? (
         <img
           loading="lazy"
