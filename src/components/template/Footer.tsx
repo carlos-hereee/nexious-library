@@ -1,4 +1,4 @@
-import { CardHeader, Hero, Socials } from "@nxs-molecules";
+import { Socials } from "@nxs-molecules";
 import type { FooterProps } from "nxs-navigation";
 
 /**

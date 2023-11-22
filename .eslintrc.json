@@ -9,7 +9,6 @@
     "airbnb/hooks",
     "plugin:react/recommended",
     "plugin:@typescript-eslint/recommended",
-    // "prettier",
     // adding prettier as last to avoid rules that might conflict
     "plugin:prettier/recommended"
   ],
@@ -22,7 +21,8 @@
   "plugins": [
     "react",
     "@typescript-eslint",
-    "import"
+    "import",
+    "prettier"
   ],
   "rules": {
     // Note: you must disable the base rule as it can report incorrect errors

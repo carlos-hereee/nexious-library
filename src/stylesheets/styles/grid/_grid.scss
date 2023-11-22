@@ -2,6 +2,9 @@
   display: grid;
   gap: #{$rem};
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
 }
 .preview-container {
   display: grid;

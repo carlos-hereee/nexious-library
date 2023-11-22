@@ -46,15 +46,6 @@ header {
   gap: #{$rem};
   min-height: #{$min-height};
 }
-footer {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-around;
-  flex-wrap: wrap;
-  padding-top: #{$rem};
-  gap: #{$rem};
-  min-height: #{$min-height};
-}
 
 ul {
   list-style-type: none;

@@ -13,11 +13,7 @@ declare module "nxs-assets" {
     small?: string;
     label?: string;
     link?: string;
-    credit?: {
-      artistName: string;
-      artistUrl: string;
-      assetUrl: string;
-    };
+    creditTo?: UnplashAsset;
     theme?: string;
     // variable id
     uid?: string;

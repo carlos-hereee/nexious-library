@@ -35,10 +35,10 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
           ?
         </button>
       )}
-      {hero.credit && <UnsplashCredit creditTo={hero.credit} />}
+      {hero.creditTo && <UnsplashCredit creditTo={hero.creditTo} />}
     </div>
   ) : (
-    <>
+    <div className="w-max">
       {hero.url ? (
         <img
           loading="lazy"
@@ -53,8 +53,8 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
           ?
         </button>
       )}
-      {hero.credit && <UnsplashCredit creditTo={hero.credit} />}
-    </>
+      {hero.creditTo && <UnsplashCredit creditTo={hero.creditTo} />}
+    </div>
   );
 };
 

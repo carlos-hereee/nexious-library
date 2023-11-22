@@ -6,18 +6,17 @@ const Socials: React.FC<MediaProps> = (props) => {
   const { label, medias, hero } = props;
 
   return (
-    <div className="flex-d-column text-center">
-      <div className="container-split align-center">
+    <div className="container-split align-center">
+      {hero && <Hero hero={hero} />}
+      <div className="container">
         {label && <h2 className="heading">{label}</h2>}
-        {hero && <Hero hero={hero} theme="hero-thumbnail" />}
-      </div>
-      <div className="socials-icons">
-        {medias.length > 0 &&
-          medias.map((d) => (
-            <a key={d.uid || d.sharedKey} className="nav-link" href={d.link || "#"}>
+        <div className="socials-icons">
+          {medias.map((d) => (
+            <a key={d.uid} className="nav-link" href={d.link || "#"}>
               {d.media && <Icon icon={d.media} name={d.media} size="3x" />}
             </a>
           ))}
+        </div>
       </div>
     </div>
   );
