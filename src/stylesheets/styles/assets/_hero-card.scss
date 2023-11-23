@@ -1,8 +1,22 @@
 .hero-card {
   position: relative;
   display: grid;
+  align-items: center;
   gap: #{$rem};
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  @include devices(mobile) {
+    .hero-wrapper {
+      order: 0;
+    }
+    .hero-card-header {
+      order: 1;
+    }
+  }
+}
+.hero-card-header {
+  display: grid;
+  text-align: center;
+  gap: #{$rem};
 }
 .hero-card-heading {
   width: 100%;

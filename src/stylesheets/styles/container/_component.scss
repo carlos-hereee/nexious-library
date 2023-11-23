@@ -7,3 +7,10 @@
   flex-direction: column;
   gap: #{$rem};
 }
+.call-to-action {
+  // display: flex;
+  display: grid;
+  justify-items: center;
+  gap: #{$rem};
+  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
+}

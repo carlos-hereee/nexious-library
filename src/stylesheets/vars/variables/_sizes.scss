@@ -3,6 +3,7 @@
 $min-width-icons: 50px;
 $min-height: 120px;
 $min-width: 100px;
+$min-cell-width: 150px;
 $min-width-sm: 50px;
 // max widths
 $max-width-sm: 250px;
@@ -15,4 +16,6 @@ $icon-width-sm: 50px;
 
 $max-height: 300px;
 
+// limit image lengths
 $max-hero-width: 550px;
+$max-hero-height: 500px;

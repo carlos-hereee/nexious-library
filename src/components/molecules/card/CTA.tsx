@@ -6,7 +6,7 @@ const CTA: React.FC<CTAProps> = (props) => {
   const { cta, onClick } = props;
 
   return (
-    <div className="flex-row">
+    <div className="call-to-action">
       {cta.map((data) => {
         const icon = data.icon || "";
         const uid = data.uid || data.heroId || data.sharedKey || "";
