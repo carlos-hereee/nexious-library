@@ -210,7 +210,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           />
         );
       })}
-      <div className="form-buttons">
+      <div className="buttons-container">
         {onCancel && <CancelButton onClick={onCancel} />}
         {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} />}
         {onViewPreview && <Button label={previewLabel} onClick={handleViewPreview} />}

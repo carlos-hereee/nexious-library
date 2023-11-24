@@ -9,6 +9,7 @@ import type {
   FormatExtraEntryProps,
   InitialExtraValue,
 } from "nxs-form";
+import { objToArray } from "main";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
@@ -51,7 +52,7 @@ export const useValues = () => {
 
   const addNewEntry = (props: FormatEntryProps) => {
     const { addEntry, target, oldValues } = props;
-    const entryValues = [addEntry.initialValues];
+    const entryValues = objToArray(addEntry.initialValues);
     const { groupName } = addEntry;
     // add properties all entrys should have
     const group = target;

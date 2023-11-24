@@ -20,13 +20,9 @@ export const formatPreviewData = (values: FieldValueProps[]) => {
     if (group && groupName) {
       // if group has been added
       if (Array.isArray(payload[groupName])) {
-        (payload[groupName] as FormValueProps[]).push({ [name]: value });
-        // } else if (payload[groupName]?.length > 0) {
-        //   // const idx = (payload[groupName] as KeyStringProp[])?.findIndex(
-        //   //   (p) => p.sharedKey === sharedKey
-        //   // );
-        //   payload[groupName].push({ [name]: value, sharedKey });
-        // init group
+        const current = payload[groupName] as FormValueProps[];
+        const idx = current.findIndex((v) => v.sharedKey === sharedKey);
+        if (idx >= 0) current[idx] = { ...current[idx], [name]: value };
       } else payload[groupName] = [{ [name]: value, sharedKey: sharedKey || "" }];
     } else payload[name] = value;
   });

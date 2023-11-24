@@ -2,6 +2,9 @@
   padding: #{$rem};
   border-radius: #{$border-radius};
 }
+.btn-submit {
+  width: 100%;
+}
 .btn-main {
   border: 1px solid #{$faded};
   &:hover {
@@ -18,6 +21,7 @@
   height: min-content;
 }
 .btn-cancel {
+  width: 100%;
   background-color: #{$danger};
   color: #{$light-primary};
 }
