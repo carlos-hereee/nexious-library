@@ -58,6 +58,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   useEffect(() => {
     if (validationStatus === "green" && onSubmit) {
       setStatus("red");
+      // console.log("withFileUpload :>> ", withFileUpload);
       if (withFileUpload) onSubmit(formatFilesData(values));
       else onSubmit(formatFormData(values));
     } else if (validationStatus === "yellow" && onViewPreview) {
@@ -110,6 +111,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
+    // console.log("formProps :>> ", formProps);
     // check validation status to contine
     if (validationStatus === "red" || !validationStatus) validateForm(values, "green");
   };

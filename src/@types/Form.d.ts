@@ -40,14 +40,14 @@ declare module "nxs-form" {
   export type FormProps = {
     // required props
     initialValues: { [key: string]: FormInitialValue };
-    onSubmit?: (e: unknown) => void;
+    onSubmit?: (e: any) => void;
     formId: string;
     // optional
     heading?: string;
     previewLabel?: string;
-    onChange?: (e: unknown) => void;
+    onChange?: (e: any) => void;
     onCancel?: () => void;
-    onViewPreview?: (e: unknown) => void;
+    onViewPreview?: (e: any) => void;
     hideLabels?: boolean;
     hideSubmit?: boolean;
     withFileUpload?: boolean;

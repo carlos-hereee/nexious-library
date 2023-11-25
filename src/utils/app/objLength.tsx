@@ -5,6 +5,7 @@ export const objLength = (obj?: unknown) => {
   if (!obj) return 0;
   return Object.keys(obj).length;
 };
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const objToArray = (obj?: { [key: string]: any }) => {
   if (!obj) return [];
   if (typeof obj === "object") return Object.keys(obj).map((key) => ({ [key]: obj[key] }));

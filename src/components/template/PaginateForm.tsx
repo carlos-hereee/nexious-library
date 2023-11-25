@@ -53,7 +53,10 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       handlePageClick(nextPage);
     }
   };
-  const onSubmit = () => (current.onSubmit ? current.onSubmit : handlePaginateSubmit);
+  const onSubmit = (values: FormValueProps) => {
+    if (current.onSubmit) current.onSubmit(values);
+    else handlePaginateSubmit(values);
+  };
 
   if (lightColor === "red") {
     return <ErrorMessages errors={errors} component="PaginateForm" />;
