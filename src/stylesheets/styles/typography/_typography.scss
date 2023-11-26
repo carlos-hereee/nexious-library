@@ -62,7 +62,8 @@
 }
 .heading {
   width: 100%;
-  min-width: #{$min-width};
+  min-width: #{$min-heading-width};
+  text-align: left;
 }
 .ping-count {
   top: -0.5rem;

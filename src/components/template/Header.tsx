@@ -18,7 +18,7 @@ import type { HeaderProps, MenuProp } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, updateMenu, language, theme, uniqueId } = props;
+  const { menu, logo, ping, updateMenu, language, theme, uniqueId, onLogoClick } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
@@ -47,7 +47,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (
     <header id={uniqueId} ref={headerRef}>
-      {logo && <Logo hero={logo} label={logo.title} />}
+      {logo && <Logo hero={logo} label={logo.title} onLogoClick={onLogoClick} />}
       {menu && (
         <>
           <nav className="primary-navigation">

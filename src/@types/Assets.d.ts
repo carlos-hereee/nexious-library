@@ -29,6 +29,7 @@ declare module "nxs-assets" {
     label?: string;
     imageRef?: React.LegacyRef<HTMLImageElement>;
     onImageClick?: (e: unknown) => void;
+    onLogoClick?: () => void;
   }
   export interface UserProps {
     hero: AssetProps;

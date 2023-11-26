@@ -41,6 +41,7 @@ declare module "nxs-navigation" {
     logo?: AssetProps;
     language?: MenuItemProp;
     updateMenu: (e: MenuProp) => void;
+    onLogoClick?: () => void;
   }
   export interface FooterProps {
     appName: string;
