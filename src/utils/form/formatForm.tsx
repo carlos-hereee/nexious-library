@@ -40,7 +40,9 @@ export const formatFilesData = (values: FieldValueProps[]) => {
       const keyName = `${current.name}-${current.group}-${current.sharedKey}`;
       if (typeof current.value === "string") formData.append(keyName, current.value);
       if (typeof current.value === "boolean") formData.append(keyName, `${current.value}`);
-    }
+    } else if (typeof current.value === "string") formData.append(current.name, current.value);
+    else if (typeof current.value === "boolean")
+      formData.append(current.name, `${current.value}`);
   }
   return formData;
 };
