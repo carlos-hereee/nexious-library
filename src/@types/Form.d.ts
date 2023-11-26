@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 declare module "nxs-form" {
   import type { MenuItemProp } from "nxs-navigation";
   import type { KeyStringProp, OnchangeProps } from "custom-props";
