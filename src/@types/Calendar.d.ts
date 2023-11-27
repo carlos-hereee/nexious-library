@@ -40,7 +40,7 @@ declare module "nxs-calendar" {
     value: Date;
     minDate?: Date;
     theme?: string;
-    events: {
+    events?: {
       date: string;
       list: EventProp[];
     }[];
@@ -92,7 +92,7 @@ declare module "nxs-calendar" {
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
     onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
-    events: CalendarEventProp[];
+    events?: CalendarEventProp[];
   }
   export interface FindMatchProps {
     events?: CalendarEventProp[];

@@ -29,6 +29,8 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (active.date && setDay) setDay(active);
   }, [active]);
 
+  // if (!events) return <p className="error-message">Missing events prop</p>;
+
   return (
     <div className={theme ? `${theme} calendar` : "calendar"}>
       <div className="flex-j-end">
@@ -53,7 +55,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
           minDate={mininumDate}
           click={(e) => dayChange({ today, active: e, setActive, events, onDayClick })}
           events={
-            events.length > 0
+            events
               ? events?.map((e) => {
                   const values = calendarValues(new Date(e.date));
                   return { ...values, ping: e.list.length };

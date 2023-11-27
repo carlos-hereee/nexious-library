@@ -41,28 +41,28 @@ declare module "nxs-form" {
   export type FormProps = {
     // required props
     initialValues: { [key: string]: FormInitialValue };
-    onSubmit?: (e: any) => void;
     formId: string;
     // optional
     heading?: string;
     previewLabel?: string;
-    onChange?: (e: any) => void;
-    onCancel?: () => void;
-    onViewPreview?: (e: any) => void;
+    responseError?: string;
+    submitLabel?: string;
+    theme?: string;
     hideLabels?: boolean;
     hideSubmit?: boolean;
     withFileUpload?: boolean;
-    showAuthTips?: boolean;
-    responseError?: string;
-    theme?: string;
-    labels?: KeyStringProp;
-    placeholders?: KeyStringProp;
-    types?: KeyStringProp;
-    submitLabel?: string;
+    // showAuthTips?: boolean;
     dataList?: { [key: string]: MenuItemProp[] };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
+    labels?: KeyStringProp;
+    placeholders?: KeyStringProp;
+    types?: KeyStringProp;
     addEntry?: { [key: string]: AddEntryProps };
+    onSubmit?: (e: any) => void;
+    onChange?: (e: any) => void;
+    onCancel?: () => void;
+    onViewPreview?: (e: any) => void;
   };
   export type InputCheckBoxProps = {
     name: string;
@@ -133,17 +133,17 @@ declare module "nxs-form" {
     paginate: FormProps[];
     page?: number;
     navigationHeading?: string;
-    onFormSubmit?: (e: unknown) => void;
-    onCancel?: () => void;
-    onPageClick?: () => void;
-    onDialogClose?: () => void;
-    setNewPage?: (e: number) => void;
     // optional props
     order?: string[]; // defaults set to first form on list
     hideNavigation?: boolean;
     responseError?: string;
     theme?: string;
     previewPage?: React.JSX.Element | null;
+    onFormSubmit?: (e: unknown) => void;
+    onCancel?: () => void;
+    onPageClick?: () => void;
+    onDialogClose?: () => void;
+    setNewPage?: (e: number) => void;
   }
   export type AddEntryProps = {
     additionLabel: string;

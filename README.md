@@ -5,8 +5,7 @@
 ## Download
 
 - npm
-  - npm i nexious-library
-  - npm install nexious-library
+  - npm i -S nexious-library
 - Yarn:
   - yarn add nexious-library
 
@@ -113,28 +112,34 @@ Works out of the box with following initial props:
      <Form
        <!-- required props -->
        initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
-       onSubmit: (e: unknown) => void;            // create your custom submit function
-       formName: string;                      // give your form any name
+       formId: string;                        // give your form an Id, is only required with Paginate Form
        <!-- optional -->
        heading?: string;                      // title of the form
-       onChange?: (e: unknown) => void;           // create your custom onChange event handlers
+       previewLabel?: string;                 // add preview label for button to view changes on form
+       responseErr?: string;                  // add error message after AJAX request failed
+       submitLabel?: string;                  // use your custom submit button label
+       theme?: string;                        // overwrite styling with your own
        hideLabels?: boolean;                  // hide form labels
        hideSubmit?: boolean;                  // hide submit button
-       theme?: string;                        // use your custom classname to overwrite app theme
-       labels?:  {[key: string]: string} ;    // use your custom labels for your form field
-                                              // e.g. { appName:"enter new app name " }
+       withFileUpload?: boolean;              // this is required to upload files
+      dataList?: {[key:string]:  {            // name of field affected
+          name:"",
+         value:"",
+          label:""
+         } []} // data list for field with input type === select
+       labels?:  {[key: string]: string} ;      // use your custom labels for your form field  e.g. { appName:"enter new app name " }
        placeholders?:  {[key: string]: string}; // use your custom placeholders
        types?:  {[key: string]: string};       // use your custom field types
-       submitLabel?: string;                  // use your custom submit button label
-       schema?: { required: string[] };       // enter your desired schema for
+       schema?: {
+         required: string[], // field name of required data
+          unique?: {
+            name: "" // field name affected
+            list: string[] // fist of string values that data cannot be
+            }
+        };       // enter your desired schema for
        fieldHeading?: { [key: string]: string }; // enter custom field heading
-       selectList?: {                          // this is required if type = "select"
-         name: string;
-         value: string;
-         isDisabled?: boolean;
-         uid?: string }[];
        addEntry?: {                           // works with type ="checkbox" and adds new field values when a
-         [key: string]: {                      // checkbox is checked
+         [key: string]: {                      // name of field affected
            additionLabel: string;
            removalLabel: string;
            initialValues: {[key:string]:any};
@@ -145,6 +150,10 @@ Works out of the box with following initial props:
            canMultiply?: boolean;
          };
        };
+       onSubmit?: (e: any) => void;            // create your custom submit function it will work with out it but it will do nothing
+       onChange?: (e: any) => void;           // create your custom onChange event handlers
+       onCancel?: () => void;           // add custom function for cancelling
+       onViewPreview?: (e: any) => void;           // create your custom function to view data
      />
    ```
 
@@ -157,48 +166,64 @@ Works out of the box with following initial props:
        <!-- required props -->
          paginate: [
            {
-           <!-- required props -->
-       initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
-       onSubmit: (e: unknown) => void;            // create your custom submit function
-       formName: string;                      // give your form any name
-       <!-- optional -->
-       heading?: string;                      // title of the form
-       onChange?: (e: unknown) => void;           // create your custom onChange event handlers
-       hideLabels?: boolean;                  // hide form labels
-       hideSubmit?: boolean;                  // hide submit button
-       theme?: string;                        // use your custom classname to overwrite app theme
-       labels?:  {[key: string]: string} ;    // use your custom labels for your form field
-                                              // e.g. { appName:"enter new app name " }
-       placeholders?:  {[key: string]: string}; // use your custom placeholders
-       types?:  {[key: string]: string};       // use your custom field types
-       submitLabel?: string;                  // use your custom submit button label
-       schema?: { required: string[] };       // enter your desired schema for
-       fieldHeading?: { [key: string]: string }; // enter custom field heading
-       selectList?: {                          // this is required if type = "select"
-         name: string;
-         value: string;
-         isDisabled?: boolean;
-         uid?: string }[];
-       addEntry?: {                           // works with type ="checkbox" and adds new field values when a
-         [key: string]: {                      // checkbox is checked
-           additionLabel: string;
-           removalLabel: string;
-           initialValues: {[key:string]:any};
-           fieldHeading: string;
-           labels?:  {[key: string]: string} ;
-           placeholders?:  {[key: string]: string} ;
-           types?:  {[key: string]: string} ;
-           canMultiply?: boolean;
-         };
-       };
-           }
-         ];
+                  <!-- required props -->
+            initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
+            formId: string;                        // give your form an Id, is only required with Paginate Form
+            <!-- optional -->
+            heading?: string;                      // title of the form
+            previewLabel?: string;                 // add preview label for button to view changes on form
+            responseErr?: string;                  // add error message after AJAX request failed
+            submitLabel?: string;                  // use your custom submit button label
+            theme?: string;                        // overwrite styling with your own
+            hideLabels?: boolean;                  // hide form labels
+            hideSubmit?: boolean;                  // hide submit button
+            withFileUpload?: boolean;              // this is required to upload files
+            dataList?: {[key:string]:  {            // name of field affected
+                name:"",
+              value:"",
+                label:""
+              } []} // data list for field with input type === select
+            labels?:  {[key: string]: string} ;      // use your custom labels for your form field  e.g. { appName:"enter new app name " }
+            placeholders?:  {[key: string]: string}; // use your custom placeholders
+            types?:  {[key: string]: string};       // use your custom field types
+            schema?: {
+              required: string[], // field name of required data
+                unique?: {
+                  name: "" // field name affected
+                  list: string[] // fist of string values that data cannot be
+                  }
+              };       // enter your desired schema for
+            fieldHeading?: { [key: string]: string }; // enter custom field heading
+            addEntry?: {                           // works with type ="checkbox" and adds new field values when a
+              [key: string]: {                      // name of field affected
+                additionLabel: string;
+                removalLabel: string;
+                initialValues: {[key:string]:any};
+                fieldHeading: string;
+                labels?:  {[key: string]: string} ;
+                placeholders?:  {[key: string]: string} ;
+                types?:  {[key: string]: string} ;
+                canMultiply?: boolean;
+              };
+            };
+            onSubmit?: (e: any) => void;            // create your custom submit function it will work with out it but it will do nothing
+            onChange?: (e: any) => void;           // create your custom onChange event handlers
+            onCancel?: () => void;           // add custom function for cancelling
+            onViewPreview?: (e: any) => void;           // create your custom function to view data
+      }   ];
          onFormSumbit={(e:any)=>void }                     // create your custom onFormSubmit function
        <!-- optional props -->
-         setNewPage={(e:any)=>void }                     // create your custom setNewPage function
-         page?: number; default is 0
+         navigationHeading?: string ;                   // add custom navigation title
+            theme?: string;                        // overwrite styling with your own
+         page?: number;                                   //  default is 0
+         responseErr?: string;                  // add error message after AJAX request failed
          order?: string[]; default is orginal order      // use your custom order to traverse form
+         previewPage?: <YourOwnComponent  preview={formData} />;                  // add your own custom component
          hideNavigation?: boolean;                     //  hide paginated navigation
+         setNewPage={(e:any)=>void }                     //   create your custom setNewPage function
+         onCancel={(e:any)=>void }                     //   cancel form function
+         onPageClick={(e:any)=>void }                     //   navigation button pressed
+         onDialogClose={(e:any)=>void }                     //   Dialog close button pressed
      />
    ```
 
