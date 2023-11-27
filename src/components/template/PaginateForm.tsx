@@ -66,7 +66,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
       {!hideNavigation && (
         <FormNavigation
           heading={navigationHeading}
-          formOrder={formOrder || []}
+          formOrder={formOrder}
           pageNumber={pageNumber}
           onClick={(idx) => handlePageClick(idx)}
         />

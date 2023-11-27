@@ -8,7 +8,9 @@
 }
 .card-row {
   display: flex;
+  align-items: center;
   gap: #{$rem};
+  padding: #{$rem};
   width: 100%;
   max-width: none;
   border-radius: #{$border-radius};

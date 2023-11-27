@@ -45,6 +45,9 @@ header {
   grid-template-columns: 2fr 3fr;
   gap: #{$rem};
   min-height: #{$min-height};
+  @include devices(mobile) {
+    grid-template-columns: auto auto;
+  }
 }
 
 ul {

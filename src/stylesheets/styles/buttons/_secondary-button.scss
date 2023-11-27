@@ -20,3 +20,6 @@
   gap: #{$rem};
   justify-content: flex-start;
 }
+.btn-selected {
+  background-color: #{$action-color};
+}

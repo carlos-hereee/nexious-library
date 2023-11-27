@@ -80,3 +80,8 @@
     grid-template-columns: 1fr;
   }
 }
+.hide-on-mobile {
+  @include devices(mobile) {
+    display: none;
+  }
+}

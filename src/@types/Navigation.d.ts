@@ -70,6 +70,6 @@ declare module "nxs-navigation" {
     pageNumber: number;
     onClick: (key: number) => void;
     heading?: string;
-    formOrder: string[];
+    formOrder?: string[];
   }
 }

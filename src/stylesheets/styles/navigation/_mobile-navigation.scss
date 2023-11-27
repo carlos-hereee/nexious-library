@@ -10,8 +10,8 @@
     transition: clip-path ease-in-out 700ms;
     align-items: center;
     padding: #{$rem};
-    min-width: 50%;
-    min-height: 200px;
+    min-width: #{$min-width-section};
+    min-height: #{$min-height-section};
     z-index: 9999;
     right: 3%;
     top: 100%;

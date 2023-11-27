@@ -51,3 +51,20 @@
   gap: #{$rem};
   grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
 }
+.navigation-container {
+  width: 100%;
+  display: grid;
+  gap: #{$rem};
+  align-items: center;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
+}
+.mini-navigation-container {
+  width: 100%;
+  display: flex;
+  gap: #{$rem};
+  align-items: center;
+  justify-content: center;
+  // grid-template-columns: repeat(auto-fit, (#{$min-cell-width}, 1fr));
+  // grid-template-columns: 1fr;
+}

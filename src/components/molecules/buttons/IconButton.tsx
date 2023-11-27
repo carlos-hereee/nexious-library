@@ -12,12 +12,19 @@ import type { IconButtonProps } from "nxs-button";
  * @returns button with icon label
  */
 const IconButton: React.FC<IconButtonProps> = (props) => {
-  const { theme, onClick, ping, icon } = props;
+  const { theme, onClick, ping, icon, title, isDisable } = props;
   if (!icon) return <p className="error-message">Double check icon prop</p>;
 
-  const { color, label, name, size, spin } = icon;
+  const { color, label, size, spin } = icon;
+
   return (
-    <button className={theme} onClick={onClick} title={name || icon.icon || ""} type="button">
+    <button
+      className={theme}
+      onClick={onClick}
+      title={title || icon.icon || icon.name || ""}
+      type="button"
+      disabled={isDisable}
+    >
       <Icon icon={icon.icon} size={size} spin={spin} color={color} />
       {label && label}
       {ping && ping > 0 && <PingCount data={ping} />}

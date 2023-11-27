@@ -6,6 +6,7 @@
   width: 100%;
 }
 .btn-main {
+  width: 100%;
   border: 1px solid #{$faded};
   &:hover {
     border: 1px solid #{$dark-mode};
@@ -34,8 +35,8 @@
   font: initial;
   max-width: 100%;
   width: 100%;
-  // .heading {
-  //   min-width: 100%;
-  //   width: 100%;
-  // }
+}
+.btn-icon {
+  max-width: #{$min-icon-width};
+  min-width: auto;
 }

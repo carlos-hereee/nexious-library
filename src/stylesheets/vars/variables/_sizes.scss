@@ -1,5 +1,4 @@
 // app/component sizes
-// min widths
 $min-width-icons: 50px;
 $min-height: 120px;
 $min-width: 100px;
@@ -11,8 +10,11 @@ $max-width-button: 250px;
 $max-width: 400px;
 $max-width-lg: 600px;
 
+// icon sizes
 $icon-width: 120px;
 $icon-width-sm: 50px;
+$max-icon-width: 150px;
+$min-icon-width: 50px;
 
 $max-height: 300px;
 
@@ -21,3 +23,6 @@ $max-hero-width: 550px;
 $max-hero-height: 500px;
 
 $min-heading-width: 150px;
+// set sizes for section containers
+$min-width-section: 250px;
+$min-height-section: 300px;

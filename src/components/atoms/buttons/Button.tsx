@@ -17,7 +17,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       onClick={onClick}
       disabled={isDisable}
     >
-      {label}
+      {label && label}
     </button>
   );
 };

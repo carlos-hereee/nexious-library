@@ -1,35 +1,46 @@
 import { Button } from "@nxs-atoms";
 import { makeStrReadable } from "@nxs-utils/data/text";
+import { IconButton } from "@nxs-molecules";
 import type { FormNavigationProps } from "nxs-navigation";
 
 const FormNavigation: React.FC<FormNavigationProps> = (props) => {
   const { formOrder, pageNumber, onClick, heading } = props;
-  const total = formOrder ? formOrder.length - 1 : 0;
+
+  if (!formOrder) return <div />;
+
   return (
     <div className="container">
       {heading && <h3 className="heading">{heading}</h3>}
-      <div className="grid">
-        {formOrder &&
-          formOrder.map((name, idx) => {
-            const formName = makeStrReadable(name);
-            let isDisable = false;
-            if (idx === 0 && pageNumber === 0) isDisable = true;
-            if (idx === total - 1 && pageNumber === total - 1) isDisable = true;
-            return (
-              <Button
-                key={formName}
-                label={formName}
-                onClick={() => onClick(idx)}
-                title={formName}
-                isDisable={isDisable}
-              />
-            );
-          })}
+      <div className="navigation-container hide-on-mobile">
+        {formOrder.map((name, idx) => {
+          const formName = makeStrReadable(name);
+          return (
+            <Button
+              key={formName}
+              label={formName}
+              onClick={() => onClick(idx)}
+              title={formName}
+              isDisable={idx === pageNumber}
+              theme={idx === pageNumber ? "btn-selected" : ""}
+            />
+          );
+        })}
       </div>
-      {/* <nav className="grid-start">
-        <Button label="Previous page" />
-        <Button label="Next page" />
-      </nav> */}
+      <div className="mini-navigation-container">
+        {formOrder.map((name, idx) => {
+          const formName = makeStrReadable(name);
+          return (
+            <IconButton
+              key={formName}
+              title={formName}
+              isDisable={idx === pageNumber}
+              onClick={() => onClick(idx)}
+              icon={{ icon: idx === pageNumber ? "dot" : "uncheck" }}
+              theme="btn-icon"
+            />
+          );
+        })}
+      </div>
     </div>
   );
 };
