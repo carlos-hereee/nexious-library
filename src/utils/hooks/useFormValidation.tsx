@@ -44,7 +44,7 @@ export const useFormValidation = (props: ValidateProps) => {
       const valueIdx = uniqueList[isUniqueListIdx].list.findIndex((l) => l === field.value);
       // if found add error
       if (valueIdx >= 0) {
-        addFormError(current, "value already exist try a different name");
+        addFormError(current, "already exist try a something different");
       } else {
         setFormMessage({ [current]: `${emojis.checkedBox} Can be used!` });
         removeError(current);
@@ -52,7 +52,7 @@ export const useFormValidation = (props: ValidateProps) => {
     }
   };
   const validateForm = (values: FieldValueProps[], status: "red" | "yellow" | "green") => {
-    let errors = {};
+    let errors: KeyStringProp = {};
     for (let index = 0; index < values.length; index += 1) {
       const current = values[index];
       // only check if its required
@@ -62,6 +62,11 @@ export const useFormValidation = (props: ValidateProps) => {
         if (!current.value) {
           errors = { ...errors, [key]: `${getLabel(key, labels)} is required` };
         }
+      }
+      const isInList = uniqueList.findIndex((list) => list.name === current.name);
+      if (isInList >= 0) {
+        const valueIdx = uniqueList[isInList].list.findIndex((l) => l === current.value);
+        if (valueIdx >= 0) errors[current.name] = "already exists try something else";
       }
     }
     if (objLength(errors) === 0) setStatus(status);

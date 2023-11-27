@@ -65,7 +65,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       onViewPreview(formatPreviewData(values));
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
-  }, [validationStatus, withFileUpload]);
+  }, [validationStatus]);
 
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
@@ -172,6 +172,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     }
   };
   // if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
+  // console.log("formErrors :>> ", formErrors);
   if (!values.length)
     return (
       <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
