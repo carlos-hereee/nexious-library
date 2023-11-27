@@ -71,7 +71,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           onClick={(idx) => handlePageClick(idx)}
         />
       )}
-      <div className="preview-container">
+      <div className="paginate-preview-container">
         {initialValues && (
           <Form
             initialValues={initialValues}
@@ -94,7 +94,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
             previewLabel={previewLabel}
           />
         )}
-        {previewPage && previewPage}
+        {previewPage || <div className="empty-container" />}
       </div>
     </div>
   );

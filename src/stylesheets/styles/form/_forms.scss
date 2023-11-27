@@ -20,6 +20,7 @@
 .input-checkbox {
   display: flex;
   justify-content: flex-start;
+  align-items: start;
   input {
     min-width: #{$min-width-sm};
     width: fit-content;

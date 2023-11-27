@@ -6,14 +6,7 @@
     grid-template-columns: 1fr;
   }
 }
-.preview-container {
-  display: grid;
-  gap: #{$rem};
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  @include devices(laptop) {
-    grid-template-columns: 1fr;
-  }
-}
+
 .grid-row {
   display: grid;
   gap: #{$rem};

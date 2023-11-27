@@ -1,0 +1,25 @@
+// .paginate-form {
+//   // max-height: 300px;
+//   // overflow-y: auto;
+//   // padding: 0 #{$rem};
+//   // display: flex;
+//   // flex-direction: column;
+//   // gap: #{$rem};
+// }
+.paginate-preview-container {
+  display: grid;
+  gap: #{$rem};
+  padding: #{$rem};
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  // align-items: center;
+  // justify-items: center;
+  // max-height: 300px;
+  .form-field-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: #{$rem};
+  }
+  @include devices(tablet) {
+    grid-template-columns: 1fr;
+  }
+}

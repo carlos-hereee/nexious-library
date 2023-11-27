@@ -110,6 +110,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setValues(oldValues);
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
+    // console.log("formProps :>> ", formProps);
     formProps.preventDefault();
     // console.log("formProps :>> ", formProps);
     // check validation status to contine
@@ -187,34 +188,36 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     >
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
-      {values.map((field, keyIdx) => {
-        return (
-          <FormField
-            key={field.fieldId}
-            name={field.name}
-            type={field.type}
-            value={field.value}
-            theme={theme}
-            placeholder={field.placeholder}
-            hideLabels={hideLabels}
-            dataList={dataList?.[field.name]}
-            label={field.label}
-            changeDataList={(e) => handleChangeDataList(e, keyIdx)}
-            formError={formErrors[field.name]}
-            formMessage={formMessage[field.name]}
-            handleChange={(e) => handleChange(e, keyIdx)}
-            handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
-            updateSelection={(e) => handleSelection(e, keyIdx)}
-            handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
-            fieldHeading={fieldHeading}
-            onMultiply={field.onMultiply}
-            canMultiply={field.canMultiply}
-            canRemove={field.canRemove}
-            onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
-            onRemovalClick={() => handleRemovalClick(field, keyIdx)}
-          />
-        );
-      })}
+      <div className="form-field-container">
+        {values.map((field, keyIdx) => {
+          return (
+            <FormField
+              key={field.fieldId}
+              name={field.name}
+              type={field.type}
+              value={field.value}
+              theme={theme}
+              placeholder={field.placeholder}
+              hideLabels={hideLabels}
+              dataList={dataList?.[field.name]}
+              label={field.label}
+              changeDataList={(e) => handleChangeDataList(e, keyIdx)}
+              formError={formErrors[field.name]}
+              formMessage={formMessage[field.name]}
+              handleChange={(e) => handleChange(e, keyIdx)}
+              handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
+              updateSelection={(e) => handleSelection(e, keyIdx)}
+              handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
+              fieldHeading={fieldHeading}
+              onMultiply={field.onMultiply}
+              canMultiply={field.canMultiply}
+              canRemove={field.canRemove}
+              onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
+              onRemovalClick={() => handleRemovalClick(field, keyIdx)}
+            />
+          );
+        })}
+      </div>
       <div className="buttons-container">
         {onCancel && <CancelButton onClick={onCancel} theme="btn-main" />}
         {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} />}

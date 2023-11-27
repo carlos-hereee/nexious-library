@@ -11,7 +11,7 @@ const TextArea = (props: TextAreaProps) => {
         <Label name={name} label={label} errors={error} message={formMessage} />
       )}
       <textarea
-        className={theme}
+        className={theme ? `highlight ${theme}` : "highlight"}
         name={name}
         value={value}
         placeholder={placeholder}
