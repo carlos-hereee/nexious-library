@@ -16,7 +16,7 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
   if (!icon) return <p className="error-message">Double check icon prop</p>;
 
   const { color, label, size, spin } = icon;
-
+  // console.log('object :>> ', object);
   return (
     <button
       className={theme}

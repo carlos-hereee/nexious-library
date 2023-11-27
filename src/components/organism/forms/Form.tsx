@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 // import { ErrorMessages,  } from "@nxs-molecules";
-import { SubmitButton } from "@nxs-molecules";
+import { IconButton, SubmitButton } from "@nxs-molecules";
 import { formatInitialFormValues, objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 // import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
@@ -14,7 +14,7 @@ import {
   formatPreviewData,
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
-import { Button, ErrorMessage } from "@nxs-atoms";
+import { ErrorMessage } from "@nxs-atoms";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
@@ -175,7 +175,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     }
   };
   // if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
-  return values.length > 0 ? (
+  if (!values.length)
+    return (
+      <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
+    );
+  return (
     <form
       className={theme}
       onSubmit={handleSubmit}
@@ -212,13 +216,17 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         );
       })}
       <div className="buttons-container">
-        {onCancel && <CancelButton onClick={onCancel} />}
+        {onCancel && <CancelButton onClick={onCancel} theme="btn-main" />}
         {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} />}
-        {onViewPreview && <Button label={previewLabel} onClick={handleViewPreview} />}
+        {onViewPreview && (
+          <IconButton
+            icon={{ icon: "eye", label: previewLabel }}
+            theme="btn-main"
+            onClick={handleViewPreview}
+          />
+        )}
       </div>
     </form>
-  ) : (
-    <ErrorMessage error={{ code: "missingFormInitialValues", prop: "form", value: values }} />
   );
 };
 export default Form;

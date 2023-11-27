@@ -20,9 +20,9 @@
   position: absolute;
   top: 10%;
   left: 85%;
-  max-width: #{$min-width-icons};
-  min-width: #{$min-width-icons};
-  width: #{$min-width-icons};
+  max-width: #{$min-icon-width};
+  min-width: #{$min-icon-width};
+  // width: #{$min-width-icons};
   aspect-ratio: 1/1;
   border-radius: 100%;
 }

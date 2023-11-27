@@ -41,6 +41,9 @@ const FormNavigation: React.FC<FormNavigationProps> = (props) => {
           );
         })}
       </div>
+      <p>
+        Showing {makeStrReadable(formOrder[pageNumber])} ({pageNumber + 1}/{formOrder.length})
+      </p>
     </div>
   );
 };

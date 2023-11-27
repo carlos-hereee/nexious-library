@@ -30,7 +30,7 @@
   flex-direction: column;
   justify-content: space-between;
   gap: #{$rem};
-  flex: 3;
+  width: 100%;
   .read-more-wrapper {
     width: 100%;
     text-align: left;

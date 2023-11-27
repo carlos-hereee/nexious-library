@@ -51,7 +51,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   // }
   return (
     <div className={`field-upload ${theme || ""}`}>
-      <div className="flex-d-column flex-start">
+      <div className="field-upload-field">
         {!hideLabels && (
           <Label name={name} label={label} errors={error} message={formMessage} />
         )}
@@ -68,8 +68,12 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           {selectLabel || "Choose a file"}
         </button>
         {previewImage && (
-          <button className="btn-main btn-cancel" type="button" onClick={handleRemoveImage}>
-            Cancel
+          <button
+            className="btn-main btn-cancel hide-on-mobile"
+            type="button"
+            onClick={handleRemoveImage}
+          >
+            Remove
           </button>
         )}
       </div>

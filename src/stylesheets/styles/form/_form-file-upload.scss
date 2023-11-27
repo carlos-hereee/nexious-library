@@ -1,0 +1,14 @@
+.field-upload-field {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}
+.field-upload {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: start;
+  gap: #{$rem};
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
+}

@@ -9,15 +9,7 @@
     width: 100%;
   }
 }
-.field-upload {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: start;
-  gap: #{$rem};
-  @include devices(mobile) {
-    grid-template-columns: 1fr;
-  }
-}
+
 .form-submit {
   display: flex;
   flex-direction: column;
