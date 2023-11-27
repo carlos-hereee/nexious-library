@@ -90,10 +90,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     const oldValues = [...values];
     oldValues[idx].value = isChecked;
     // if the checkbox is checked add entries
-    if (isChecked) {
-      if (addEntry) {
-        setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
-      }
+    if (isChecked && addEntry) {
+      setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     } else {
       // eslint-disable-next-line no-lonely-if
       if (addEntry) {
@@ -110,9 +108,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setValues(oldValues);
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
-    // console.log("formProps :>> ", formProps);
     formProps.preventDefault();
-    // console.log("formProps :>> ", formProps);
     // check validation status to contine
     if (validationStatus === "red" || !validationStatus) validateForm(values, "green");
   };
