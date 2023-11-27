@@ -8,8 +8,8 @@
   color: #{$dark-mode};
 }
 .alt-light-mode {
-  background-color: #{$dark-mode-alt};
-  color: #{$light-mode};
+  background-color: #{$light-mode-alt};
+  color: #{$dark-mode};
   &:disabled {
     background-color: #{$dark-mode-alt};
     color: #{$faded};

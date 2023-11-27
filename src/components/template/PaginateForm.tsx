@@ -3,12 +3,13 @@ import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
 import { Form, FormNavigation } from "@nxs-organism/index";
 import type { FormValueProps, PaginateFormProps } from "nxs-form";
+import { Button } from "main";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
   const { previewPage, theme } = props;
-  const { onFormSubmit, setNewPage, onPageClick, onCancel } = props;
+  const { onFormSubmit, setNewPage, onPageClick, onCancel, onDialogClose } = props;
   const { errors, lightColor } = useRequiredProps({ paginate }, true);
   // key variables
   const [initialValues, setInitialValues] = useState<FormValueProps>();
@@ -71,31 +72,36 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           onClick={(idx) => handlePageClick(idx)}
         />
       )}
-      <div className="paginate-preview-container">
-        {initialValues && (
-          <Form
-            initialValues={initialValues}
-            onSubmit={onSubmit}
-            formId={formId}
-            labels={labels}
-            dataList={dataList}
-            placeholders={placeholders}
-            submitLabel={submitLabel}
-            types={types}
-            theme={theme}
-            withFileUpload={withFileUpload}
-            responseError={responseError}
-            schema={schema}
-            addEntry={addEntry}
-            fieldHeading={fieldHeading}
-            heading={heading}
-            onCancel={onCancel}
-            onViewPreview={onViewPreview}
-            previewLabel={previewLabel}
-          />
-        )}
-        {previewPage || <div className="empty-container" />}
-      </div>
+      {initialValues && (
+        <Form
+          initialValues={initialValues}
+          onSubmit={onSubmit}
+          formId={formId}
+          labels={labels}
+          dataList={dataList}
+          placeholders={placeholders}
+          submitLabel={submitLabel}
+          types={types}
+          theme={theme}
+          withFileUpload={withFileUpload}
+          responseError={responseError}
+          schema={schema}
+          addEntry={addEntry}
+          fieldHeading={fieldHeading}
+          heading={heading}
+          onCancel={onCancel}
+          onViewPreview={onViewPreview}
+          previewLabel={previewLabel}
+        />
+      )}
+      {previewPage && (
+        <div className={`dialog ${theme ? ` alt-${theme}` : "alt-light-mode"}`}>
+          <div className="dialog-navigation">
+            <Button label="X" onClick={onDialogClose} theme="btn-dialog btn-cancel" />
+          </div>
+          <div className="dialog-body">{previewPage}</div>
+        </div>
+      )}
     </div>
   );
 };

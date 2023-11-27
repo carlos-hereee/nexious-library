@@ -1,0 +1,22 @@
+.dialog {
+  position: fixed;
+  border-radius: #{$border-radius};
+  display: flex;
+  flex-direction: column;
+  padding: #{$rem};
+  overflow-y: auto;
+  top: 25%;
+  aspect-ratio: 16/9;
+  width: 95%;
+  z-index: 99;
+}
+.dialog-navigation {
+  display: flex;
+  justify-content: flex-end;
+}
+.btn-dialog {
+  max-width: #{$min-width-sm};
+}
+.dialog-body {
+  padding: #{$rem};
+}

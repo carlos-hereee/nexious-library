@@ -7,19 +7,21 @@
 //   // gap: #{$rem};
 // }
 .paginate-preview-container {
-  display: grid;
-  gap: #{$rem};
-  padding: #{$rem};
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  // display: grid;
+  // gap: #{$rem};
+  // padding: #{$rem};
+  // position: relative;
+  // grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   // align-items: center;
   // justify-items: center;
   // max-height: 300px;
-  .form-field-container {
-    max-height: 300px;
-    overflow-y: auto;
-    padding: #{$rem};
-  }
-  @include devices(tablet) {
-    grid-template-columns: 1fr;
-  }
+
+  // @include devices(tablet) {
+  //   grid-template-columns: 1fr;
+  // }
+}
+.form-field-container {
+  max-height: #{$max-form-height};
+  overflow-y: auto;
+  padding: #{$rem};
 }

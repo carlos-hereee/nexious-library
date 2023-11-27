@@ -136,6 +136,7 @@ declare module "nxs-form" {
     onFormSubmit?: (e: unknown) => void;
     onCancel?: () => void;
     onPageClick?: () => void;
+    onDialogClose?: () => void;
     setNewPage?: (e: number) => void;
     // optional props
     order?: string[]; // defaults set to first form on list
