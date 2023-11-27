@@ -3,6 +3,7 @@ import {
   faCcVisa,
   faFacebook,
   faInstagram,
+  faLinkedin,
   faPaypal,
   faTwitter,
   // TODO: new twitter logo
@@ -131,6 +132,7 @@ const svg: SVGProp = {
   next: faRightLong,
   last: faCircleChevronRight,
   logout: faDoorClosed,
+  linkedin: faLinkedin,
   visa: faCcVisa,
   wig: faUser,
   x: faTwitter,
