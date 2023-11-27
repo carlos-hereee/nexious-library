@@ -2,12 +2,12 @@ import {
   faCcMastercard,
   faCcVisa,
   faFacebook,
+  faGithub,
   faInstagram,
   faLinkedin,
   faPaypal,
   faTwitter,
-  // TODO: new twitter logo
-  // faXTwitter,
+  faXTwitter,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   fa0,
@@ -99,6 +99,7 @@ const svg: SVGProp = {
   flagEnglish: faFlagUsa,
   first: faCircleChevronLeft,
   games: faGamepad,
+  github: faGithub,
   heart: faHeart,
   home: faHome,
   instagram: faInstagram,
@@ -135,7 +136,7 @@ const svg: SVGProp = {
   linkedin: faLinkedin,
   visa: faCcVisa,
   wig: faUser,
-  x: faTwitter,
+  x: faXTwitter,
   one: fa1,
   two: fa2,
   three: fa3,
