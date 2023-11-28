@@ -18,7 +18,18 @@ import type { HeaderProps, MenuProp } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, updateMenu, language, theme, uniqueId, onLogoClick } = props;
+  const {
+    menu,
+    logo,
+    ping,
+    updateMenu,
+    language,
+    theme,
+    uniqueId,
+    onLogoClick,
+    themeList,
+    handleTheme,
+  } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
@@ -55,7 +66,9 @@ const Header: React.FC<HeaderProps> = (props) => {
               show={{ isActive, isClose }}
               menu={menu}
               click={handleClick}
+              handleTheme={handleTheme}
               language={language}
+              themeList={themeList}
               theme={theme}
             />
           </nav>
@@ -70,6 +83,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               menu={menu}
               click={handleClick}
               language={language}
+              themeList={themeList}
               theme={`alt-${theme}`}
             />
           </nav>

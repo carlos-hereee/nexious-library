@@ -233,7 +233,7 @@ declare module "nxs-form" {
     label?: string;
     error?: string;
     formMessage?: string;
-    onChange: (key: string) => void;
+    onChange?: (key: string) => void;
   }
   export type ValidateProps = {
     required?: string[];

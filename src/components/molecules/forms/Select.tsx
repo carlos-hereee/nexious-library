@@ -33,7 +33,7 @@ const Select: React.FC<SelectProp> = (props) => {
         <select
           className="select"
           value={activeLabel}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(e) => onChange && onChange(e.target.value)}
         >
           <Option
             data={{ label: activeLabel, name: activeLabel, value: activeLabel }}

@@ -13,6 +13,21 @@ declare module "nxs-navigation" {
     locale?: string;
     link?: string;
   };
+  export type Colors = {
+    primary: string;
+    secondary: string;
+    altPrimary: string;
+    altSecondary: string;
+  };
+  export type ThemeList = {
+    name: string;
+    value: string;
+    label: string;
+    uid: string;
+    colors: Colors;
+    backgroundColors: Colors;
+  };
+
   export type MenuProp = {
     uid?: string;
     menuId?: string;
@@ -39,8 +54,10 @@ declare module "nxs-navigation" {
     uniqueId?: string;
     theme?: string;
     logo?: AssetProps;
+    themeList?: ThemeList[];
     language?: MenuItemProp;
     updateMenu: (e: MenuProp) => void;
+    handleTheme?: (a: string) => void;
     onLogoClick?: () => void;
   }
   export interface FooterProps {
@@ -56,7 +73,9 @@ declare module "nxs-navigation" {
   export type NavbarProps = {
     show: { isActive: boolean; isClose: boolean };
     click: (a: MenuProp) => void;
+    handleTheme?: (a: string) => void;
     menu: MenuProp[];
+    themeList?: ThemeList[];
     theme?: string;
     language?: MenuItemProp;
   };
