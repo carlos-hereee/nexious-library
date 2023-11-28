@@ -173,7 +173,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   // if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
   // console.log("formErrors :>> ", formErrors);
-  if (!values.length)
+  if (!initialValues)
     return (
       <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
     );

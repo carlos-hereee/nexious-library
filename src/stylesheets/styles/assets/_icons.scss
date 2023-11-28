@@ -1,11 +1,18 @@
 .icon {
-  min-width: 1rem;
+  min-width: #{$min-icon-width};
+  color: #{$icon-color};
 }
 .icon-instagram {
   color: #{$instagram};
 }
 .icon-twitter {
   color: #{$twitter};
+}
+.icon-twitter {
+  color: #{$github};
+}
+.icon-x {
+  color: #{$xTwitter};
 }
 .icon-linkedin {
   color: #{$linkedin};

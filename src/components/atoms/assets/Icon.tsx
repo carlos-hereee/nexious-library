@@ -14,9 +14,6 @@ import { svg } from "./Assets";
  */
 const Icon: React.FC<IconProps> = (props) => {
   const { icon, size, spin, color, name, className } = props;
-  const n = className
-    ? `icon ${name ? `icon-${name} ${className}` : className}`
-    : `${name ? `icon-${name}` : ""}`;
 
   if (!icon) {
     return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon }} />;
@@ -24,6 +21,11 @@ const Icon: React.FC<IconProps> = (props) => {
   if (!svg[icon]) {
     return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: svg[icon] }} />;
   }
+
+  const n = className
+    ? `icon ${name ? `icon-${name} ${className}` : className}`
+    : `icon ${name ? `icon-${name}` : ""}`;
+
   return (
     <FontAwesomeIcon
       icon={svg[icon]}
