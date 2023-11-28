@@ -53,6 +53,7 @@ declare module "nxs-form" {
     withFileUpload?: boolean;
     // showAuthTips?: boolean;
     dataList?: { [key: string]: MenuItemProp[] };
+    clearSelection?: { [key: string]: boolean };
     schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
     fieldHeading?: { [key: string]: string };
     labels?: KeyStringProp;
@@ -187,6 +188,7 @@ declare module "nxs-form" {
     group?: string;
     sharedKey?: string;
     canMultiply?: boolean;
+    clearSelection?: boolean;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
@@ -232,6 +234,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     label?: string;
     error?: string;
+    clearSelection?: boolean;
     formMessage?: string;
     onChange?: (key: string) => void;
   }

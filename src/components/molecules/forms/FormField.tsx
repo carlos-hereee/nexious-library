@@ -6,7 +6,8 @@ import type { FormFieldProps } from "nxs-form";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
+  const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection } =
+    props;
   const { formError, updateSelection, handleCheckbox, theme } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
@@ -45,6 +46,7 @@ const FormField = (props: FormFieldProps) => {
           onChange={(e) => updateSelection && updateSelection(e, name)}
           hideLabels={hideLabels}
           label={label}
+          clearSelection={clearSelection}
           error={formError}
         />
       ) : textarea.includes(name) ? (

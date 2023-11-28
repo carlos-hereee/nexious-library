@@ -1,6 +1,6 @@
 import { Icon, Label, Option } from "@nxs-atoms";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { ErrorMessages } from "@nxs-molecules";
+import { ErrorMessages, IconButton } from "@nxs-molecules";
 import type { SelectProp } from "nxs-form";
 
 /**
@@ -13,7 +13,18 @@ import type { SelectProp } from "nxs-form";
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active } = props;
+  const {
+    list,
+    onChange,
+    theme,
+    name,
+    hideLabels,
+    label,
+    error,
+    formMessage,
+    active,
+    clearSelection,
+  } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
 
@@ -42,6 +53,13 @@ const Select: React.FC<SelectProp> = (props) => {
           <Option data={{ label: "", name: "", value: "" }} hideOption />
           {list && list.map((l) => <Option key={l.uid} data={l} />)}
         </select>
+        {active && clearSelection && (
+          <IconButton
+            icon={{ icon: "close" }}
+            onClick={() => onChange && onChange("")}
+            theme="btn-icon"
+          />
+        )}
       </div>
     </>
   );

@@ -17,7 +17,8 @@ import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
-  const { labels, placeholders, types, responseError, heading, hideSubmit } = props;
+  const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
+    props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
   const { initialValues, theme, submitLabel, schema } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
@@ -209,6 +210,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
               onMultiply={field.onMultiply}
               canMultiply={field.canMultiply}
               canRemove={field.canRemove}
+              clearSelection={clearSelection?.[field.name]}
               onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
               onRemovalClick={() => handleRemovalClick(field, keyIdx)}
             />

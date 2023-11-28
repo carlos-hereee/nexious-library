@@ -88,6 +88,7 @@ const svg: SVGProp = {
   contact: faEnvelope,
   cross: faX,
   copy: faCopy,
+  close: faX,
   circle: faCircleNotch,
   confirm: faPaperPlane,
   dot: faCircleDot,

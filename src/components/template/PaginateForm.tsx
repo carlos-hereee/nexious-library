@@ -29,6 +29,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const fieldHeading = current?.fieldHeading;
   const withFileUpload = current?.withFileUpload;
   const dataList = current?.dataList;
+  const clearSelection = current?.clearSelection;
   const previewLabel = current?.previewLabel;
 
   useEffect(() => {
@@ -86,6 +87,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           withFileUpload={withFileUpload}
           responseError={responseError}
           schema={schema}
+          clearSelection={clearSelection}
           addEntry={addEntry}
           fieldHeading={fieldHeading}
           heading={heading}
