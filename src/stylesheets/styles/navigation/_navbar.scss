@@ -28,5 +28,8 @@
   align-items: center;
 }
 .nav-btn {
+  display: flex;
+  align-self: stretch;
   width: 100%;
+  min-width: #{$min-cell-width};
 }
