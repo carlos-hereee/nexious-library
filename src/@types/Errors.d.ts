@@ -18,6 +18,7 @@ declare module "nxs-errors" {
     to?: string;
     errors: ErrorMessageProp[];
     timer?: number;
+    handleClick?: () => void;
   }
   export type ErrorProp = {
     value: { [key: string]: unknown } | unknown;

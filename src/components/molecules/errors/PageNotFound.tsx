@@ -5,10 +5,10 @@ import { Hero } from "@nxs-molecules";
 import type { ErrorProps } from "nxs-errors";
 
 const PageNotFound: React.FC<ErrorProps> = (props) => {
-  const { hero, message, to, timer } = props;
+  const { hero, message, to, timer, handleClick } = props;
   const navigate = useNavigate();
 
-  const msg = message || `Page not found re-route to ${to}`;
+  const msg = message || `Page not found go to ${to === "/" ? "homepage" : to}`;
 
   useEffect(() => {
     // let client read error message and reroute to page
@@ -23,7 +23,11 @@ const PageNotFound: React.FC<ErrorProps> = (props) => {
       <div className="text-center">
         <Icon icon="spinner" spin="spin" />
       </div>
-      {timer ? <p className="page-not-found-message">{msg}</p> : <Button label={msg} />}
+      {timer ? (
+        <p className="page-not-found-message">{msg}</p>
+      ) : (
+        <Button label={msg} onClick={handleClick} />
+      )}
     </div>
   );
 };
