@@ -3,10 +3,10 @@ import type { MediaProps } from "nxs-assets";
 import { Hero } from "@nxs-molecules";
 
 const Socials: React.FC<MediaProps> = (props) => {
-  const { label, medias, hero } = props;
+  const { label, medias, hero, theme } = props;
 
   return (
-    <div className="container-split align-center">
+    <div className={`container-split align-center${theme ? ` ${theme}` : ""}`}>
       {hero && <Hero hero={hero} />}
       <div className="container">
         {label && <h2 className="heading">{label}</h2>}
