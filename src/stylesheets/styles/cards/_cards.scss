@@ -75,22 +75,24 @@
   gap: #{$rem};
 }
 .app-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+  display: grid;
+  justify-items: center;
   aspect-ratio: 2/3;
   gap: #{$rem};
   border-radius: #{$border-radius};
+  grid-template-rows: auto 3fr;
   padding: #{$rem};
   box-shadow: 1px 1px 4px 1px #{$light-primary};
   max-width: #{$max-app-card-width};
+  min-width: #{$min-app-card-width};
   .card-row-body {
+    display: grid;
     height: 100%;
-    display: flex;
-    align-items: center;
     .navigation-container {
-      display: flex;
-      flex-direction: column;
+      display: grid;
+      grid-template-columns: auto;
+      align-items: end;
+      // flex-direction: column;
     }
   }
 }
