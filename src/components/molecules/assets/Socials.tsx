@@ -7,7 +7,7 @@ const Socials: React.FC<MediaProps> = (props) => {
 
   return (
     <div className={`container-split align-center${theme ? ` ${theme}` : ""}`}>
-      {hero && <Hero hero={hero} />}
+      {hero && hero.url && <Hero hero={hero} />}
       <div className="container">
         {label && <h2 className="heading">{label}</h2>}
         <div className="card-container">

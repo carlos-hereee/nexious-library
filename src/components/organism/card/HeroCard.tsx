@@ -3,7 +3,7 @@ import type { HeroCardProps } from "nxs-card";
 
 const HeroCard: React.FC<HeroCardProps> = (props) => {
   const { hero, cta, theme, onClick, data } = props;
-
+  // console.log("hero :>> ", hero);
   if (!data) return <div />;
   const { title, tagline } = data;
   return (
