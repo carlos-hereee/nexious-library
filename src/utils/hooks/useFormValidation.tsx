@@ -15,7 +15,7 @@ export const useFormValidation = (props: ValidateProps) => {
   const uniqueList = unique || [{ name: "", list: [] }];
 
   const addFormError = (current: string, message: string) => {
-    setFormErrors({ ...formErrors, [current]: `${getLabel(current, labels)} ${message}` });
+    setFormErrors({ ...formErrors, [current]: message });
     setStatus("red");
   };
   const removeError = (current: string) => {
@@ -44,9 +44,11 @@ export const useFormValidation = (props: ValidateProps) => {
       const valueIdx = uniqueList[isUniqueListIdx].list.findIndex((l) => l === field.value);
       // if found add error
       if (valueIdx >= 0) {
+        // reset success message if any
+        setFormMessage({ ...formMessage, [current]: "" });
         addFormError(current, "already exist try a something different");
       } else {
-        setFormMessage({ [current]: `${emojis.checkedBox} Can be used!` });
+        setFormMessage({ ...formMessage, [current]: `${emojis.checkedBox} Can be used!` });
         removeError(current);
       }
     }

@@ -74,7 +74,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     const oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
-    if (validationStatus === "red") {
+    if (validationStatus === "red" || !validationStatus) {
       const current = values[idx].name;
       // check required first and then uniqueness
       checkRequired(oldValues[idx], current);
@@ -152,7 +152,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       const current = oldValues[idx].name;
       oldValues[idx].value = selectedFile;
       // // check schema if value is required for validation
-      if (validationStatus === "red") checkRequired(oldValues[idx], current);
+      if (validationStatus === "red" || !validationStatus)
+        checkRequired(oldValues[idx], current);
       setValues(oldValues);
     } else {
       oldValues[idx].value = "";
