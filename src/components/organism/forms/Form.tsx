@@ -37,11 +37,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
-  // console.log("values :>> ", values);
+
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
-      const oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
+      let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
       // clear prev values if any; avoid redundant data
       if (addEntry) {
         const entryData = objToArray(addEntry);
@@ -50,6 +50,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           const current = addEntry[target];
           // check if checkbox is checked
           if (initialValues[target]) addExtraEntry({ addEntry: current, target, oldValues });
+          else oldValues = oldValues.filter((val) => val.name !== current.groupName);
         }
       }
       setValues(oldValues);
@@ -152,8 +153,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       const current = oldValues[idx].name;
       oldValues[idx].value = selectedFile;
       // // check schema if value is required for validation
-      if (validationStatus === "red" || !validationStatus)
+      if (validationStatus === "red" || !validationStatus) {
         checkRequired(oldValues[idx], current);
+      }
       setValues(oldValues);
     } else {
       oldValues[idx].value = "";

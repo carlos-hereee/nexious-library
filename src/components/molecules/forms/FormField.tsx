@@ -75,7 +75,7 @@ const FormField = (props: FormFieldProps) => {
         <UploadFile
           input={{ name, error: formError }}
           formMessage={formMessage}
-          value={typeof value === "string" ? value : ""}
+          value={typeof value === "string" ? value : value instanceof File ? value : ""}
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />

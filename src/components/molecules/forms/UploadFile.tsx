@@ -21,13 +21,12 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
       onSelect(file);
     } else {
       setPreviewImage("");
-      onSelect(file);
+      onSelect("");
     }
   };
-
   useEffect(() => {
     formatImageData(value);
-  }, []);
+  }, [value]);
 
   const imageClick = () => {
     // Trigger the click event of the file input
@@ -36,7 +35,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
 
   const selectImage = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
-    formatImageData(selectedFile || "");
+    if (selectedFile) formatImageData(selectedFile);
   };
 
   const handleRemoveImage = () => {
@@ -83,7 +82,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           <Button label="x" onClick={handleRemoveImage} theme="preview-cancel btn-cancel" />
         )}
         <Hero
-          hero={{ url: previewImage }}
+          hero={{ url: previewImage, alt: `${name} image value` }}
           imageRef={imageRef}
           onImageClick={imageClick}
           theme="preview-hero"
