@@ -18,3 +18,12 @@
   align-items: flex-start;
   // grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
 }
+.grid-center {
+  display: grid;
+  gap: #{$rem};
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
+}

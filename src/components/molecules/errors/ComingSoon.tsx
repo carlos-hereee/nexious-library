@@ -14,9 +14,7 @@ const ComingSoon: React.FC<ErrorProps> = (props) => {
   return (
     <div className="text-center">
       {hero && <Hero hero={hero} />}
-      <p className="text-max">
-        {message || "This is the lastest of the greats, more coming soon"}
-      </p>
+      <p className="text-max">{message || "More coming soon"}</p>
     </div>
   );
 };
