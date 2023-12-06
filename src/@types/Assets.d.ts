@@ -28,6 +28,7 @@ declare module "nxs-assets" {
     theme?: string;
     label?: string;
     imageRef?: React.LegacyRef<HTMLImageElement>;
+    onImageLoad?: () => void;
     onImageClick?: (e: unknown) => void;
     onLogoClick?: () => void;
   }

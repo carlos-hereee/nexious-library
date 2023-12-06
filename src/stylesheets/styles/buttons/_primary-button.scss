@@ -9,12 +9,6 @@
   width: 100%;
   max-width: #{$max-width-button-lg};
   border: 1px solid #{$faded};
-  // display: grid;
-  // gap: #{$rem};
-  // align-items: center;
-  // justify-items: center;
-  // grid-template-rows: 1fr;
-  // grid-template-columns: 1fr auto;
   &:hover {
     border: 1px solid #{$dark-mode};
   }
@@ -35,6 +29,7 @@
 }
 .btn-removal,
 .btn-remove {
+  // object-fit: cover;
   aspect-ratio: 1/1;
   position: absolute;
   top: -10%;
