@@ -33,6 +33,18 @@
   background-color: #{$danger};
   color: #{$light-primary};
 }
+.btn-removal,
+.btn-remove {
+  aspect-ratio: 1/1;
+  position: absolute;
+  top: -10%;
+  right: -7%;
+  width: #{$icon-width-sm};
+  min-width: auto;
+  border-radius: #{$border-radius-full};
+  background-color: #{$danger};
+  color: #{$light-primary};
+}
 .btn-burger,
 .btn-x {
   min-width: #{$min-width-sm};
