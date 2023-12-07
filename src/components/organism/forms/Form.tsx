@@ -17,6 +17,7 @@ import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
 import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
 import { useScroll } from "@nxs-utils/hooks/useScroll";
+import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
@@ -37,8 +38,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
-  const { dimensions, getDimensions, direction, setDirection, showScroll, watchElement } =
-    useScroll();
+  const { direction, setDirection, showScroll, watchElement } = useScroll();
 
   useEffect(() => {
     if (initialValues) {
@@ -57,7 +57,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
       setValues(oldValues);
     }
-    watchElement("form-field-container");
+    watchElement("form-field-container", { height: 650 });
   }, []);
 
   useEffect(() => {
@@ -72,15 +72,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
 
-  useEffect(() => {
-    if (direction) scrollInDirection("form-field-container", direction);
-  }, [direction]);
-
-  useEffect(() => {
-    if (values) getDimensions("form-field-container", { height: 750 });
-  }, [values]);
-
-  // console.log("dimensions :>> ", dimensions);
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
     const { value } = event.currentTarget;
@@ -187,6 +178,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     }
   };
 
+  const handleScroll = (target: CardinalDirectionProps) => {
+    setDirection(target);
+    scrollInDirection("form-field-container", target);
+  };
+
   if (!initialValues)
     return (
       <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
@@ -200,9 +196,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className="form-field-container" id="form-field-container">
-        {showScroll.up && <UpArrow onClick={() => setDirection("up")} active={direction} />}
+        {showScroll.up && <UpArrow onClick={() => handleScroll("up")} active={direction} />}
         {showScroll.down && (
-          <DownArrow onClick={() => setDirection("down")} active={direction} />
+          <DownArrow onClick={() => handleScroll("down")} active={direction} />
         )}
 
         {values.map((field, keyIdx) => {
