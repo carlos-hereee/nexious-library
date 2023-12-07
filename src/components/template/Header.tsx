@@ -18,18 +18,8 @@ import type { HeaderProps, MenuProp } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const {
-    menu,
-    logo,
-    ping,
-    updateMenu,
-    language,
-    theme,
-    uniqueId,
-    onLogoClick,
-    themeList,
-    handleTheme,
-  } = props;
+  const { menu, logo, ping, language, theme, uniqueId, themeList } = props;
+  const { updateMenu, onLogoClick, handleTheme } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);

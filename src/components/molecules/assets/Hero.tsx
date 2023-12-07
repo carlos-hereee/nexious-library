@@ -10,28 +10,18 @@ import type { HeroProps } from "nxs-assets";
  * @returns image component
  */
 const Hero: React.FC<HeroProps> = (props) => {
-  const { hero, theme, onImageClick, imageRef, isDisable } = props;
+  const { hero, theme, onImageClick, imageRef, isDisable, layout } = props;
   const [load, setLoad] = useState<boolean>();
 
   if (!hero) {
     return <ErrorMessage error={{ code: "missingProps", prop: "hero", value: hero }} />;
   }
-  return hero?.small ? (
-    <div
-      className={load ? "blur-load--loaded" : "blur-load"}
-      style={{ backgroundImage: `url(${hero.small})` }}
-    >
-      <Image
-        onImageClick={!isDisable ? onImageClick : undefined}
-        onImageLoad={() => setLoad(true)}
-        hero={hero}
-        imageRef={imageRef}
-        theme={theme}
-      />
-      {hero.creditTo && <UnsplashCredit creditTo={hero.creditTo} />}
-    </div>
-  ) : hero.creditTo ? (
-    <div className="hero-wrapper">
+
+  const loadStyling = load ? "blur-load--loaded" : "blur-load";
+  const designStyle = layout ? `${layout} ${loadStyling}` : loadStyling;
+
+  return hero?.url ? (
+    <div className={designStyle} style={{ backgroundImage: `url(${hero.small})` }}>
       <Image
         onImageClick={!isDisable ? onImageClick : undefined}
         onImageLoad={() => setLoad(true)}

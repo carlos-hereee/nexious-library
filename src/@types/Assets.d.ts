@@ -26,6 +26,7 @@ declare module "nxs-assets" {
   export interface HeroProps {
     hero: AssetProps;
     theme?: string;
+    layout?: string;
     label?: string;
     isDisable?: boolean;
     imageRef?: React.LegacyRef<HTMLImageElement>;

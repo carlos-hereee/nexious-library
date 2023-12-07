@@ -5,7 +5,6 @@ const Field: React.FC<InputProps> = (props) => {
   const { name, value, placeholder, hideLabel, label, error, formMessage, isDisabled } = props;
   const { onChange } = props;
 
-  console.log("isDisabled :>> ", isDisabled);
   return (
     <>
       {!hideLabel && label && (
