@@ -4,8 +4,8 @@
   flex-direction: column;
   justify-content: space-between;
   gap: #{$rem};
-  min-width: 200px;
-  max-width: 400px;
+  min-width: #{$min-card-width};
+  max-width: #{$max-card-width};
   &:has(> div > .ribbon) {
     position: relative;
     max-width: 275px;

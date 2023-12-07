@@ -32,13 +32,14 @@
   // object-fit: cover;
   aspect-ratio: 1/1;
   position: absolute;
-  top: -10%;
-  right: -7%;
+  top: -5%;
+  right: -5%;
   width: #{$icon-width-sm};
   min-width: auto;
   border-radius: #{$border-radius-full};
   background-color: #{$danger};
   color: #{$light-primary};
+  z-index: 98;
 }
 .btn-burger,
 .btn-x {

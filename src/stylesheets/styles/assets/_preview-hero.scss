@@ -2,7 +2,7 @@
   aspect-ratio: 1/1;
   object-fit: contain;
   max-height: #{$min-width};
-  max-width: #{$max-width-sm};
+  // max-width: #{$max-width-sm};
 }
 .preview-hero-empty {
   display: flex;

@@ -1,9 +1,5 @@
-.hero-logo {
-  max-width: 70px;
-}
 .logo {
-  min-width: 100px;
-  max-width: 150px;
-  max-height: 150px;
-  min-height: 100px;
+  aspect-ratio: 1/1;
+  max-width: #{$max-logo-width};
+  min-width: #{$min-logo-width};
 }
