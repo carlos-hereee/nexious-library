@@ -13,3 +13,8 @@ export const scrollInDirection = (id: string, direction: string) => {
     if (direction === "down") element.scrollTop += element.offsetHeight;
   }
 };
+export const getElementHeight = (id: string): number => {
+  const element = document.getElementById(id);
+  if (element) return element.scrollHeight;
+  return 0;
+};

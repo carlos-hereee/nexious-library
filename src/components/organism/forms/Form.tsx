@@ -15,7 +15,7 @@ import {
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
-import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
+import { getElementHeight, scrollInDirection } from "@nxs-utils/app/scrollToElement";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
@@ -37,6 +37,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
   const [scrollable, setScroll] = useState<string>("");
+  const [isScroll, setIsScroll] = useState<{ [key: string]: boolean }>({
+    up: false,
+    down: false,
+  });
 
   useEffect(() => {
     if (initialValues) {
@@ -75,6 +79,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setScroll("");
     }
   }, [scrollable]);
+
+  useEffect(() => {
+    if (values) {
+      const height = getElementHeight("form-field-container");
+      // add scrolling controls when height of element is greater than overflow
+      setIsScroll({ up: height > 750, down: height > 750 });
+    }
+  }, [values]);
 
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
@@ -153,7 +165,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
     }
   };
-
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
     const oldValues = [...values];
     if (selectedFile) {
@@ -182,10 +193,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       validateForm(values, "yellow");
     }
   };
-  console.log("scrollable :>> ", scrollable);
-  // const handleArrowScroll = (e: string) => {
-  //   console.log("e :>> ", e);
-  // };
+
   if (!initialValues)
     return (
       <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
@@ -199,8 +207,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className="form-field-container" id="form-field-container">
-        <UpArrow onClick={() => setScroll("up")} active={scrollable} />
-        <DownArrow onClick={() => setScroll("down")} active={scrollable} />
+        {isScroll.up && <UpArrow onClick={() => setScroll("up")} active={scrollable} />}
+        {isScroll.down && <DownArrow onClick={() => setScroll("down")} active={scrollable} />}
+
         {values.map((field, keyIdx) => {
           return (
             <FormField
