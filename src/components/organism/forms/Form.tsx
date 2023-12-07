@@ -57,7 +57,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
       setValues(oldValues);
     }
-    watchElement("form-field-container", { height: 650 });
+    watchElement("form-field-container", { height: 600 });
   }, []);
 
   useEffect(() => {

@@ -1,4 +1,3 @@
-import { getElementDimensions } from "@nxs-utils/app/scrollToElement";
 import type {
   CardinalDirectionProps,
   ShowScrollProps,
@@ -25,11 +24,14 @@ export const useScroll = () => {
   };
 
   const handleScroll = (element: HTMLElement) => {
-    const currentPosition = element.scrollTop;
-    const bottomHeight = element.offsetHeight;
-    const atTop = currentPosition < 30;
-    const atMid = currentPosition > 30 && currentPosition + 20 < bottomHeight;
-    const atBot = currentPosition + 20 > bottomHeight;
+    const currentPosition = element.scrollTop + element.offsetHeight;
+    const elementHeight = element.offsetHeight;
+    const maxHeight = element.scrollHeight;
+    // -20 is for padding on scrolling
+    const atTop = currentPosition - 20 < elementHeight;
+    const atMid = currentPosition > elementHeight + 20 && currentPosition - 20 < maxHeight;
+    const atBot = currentPosition + 20 > maxHeight;
+
     if (atTop) {
       setShow({ ...showScroll, north: !atTop, up: !atTop, down: atTop, south: atTop });
     } else if (atMid && !atBot) {
