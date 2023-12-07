@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 // import { ErrorMessages,  } from "@nxs-molecules";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
@@ -15,7 +15,8 @@ import {
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
-import { getElementHeight, scrollInDirection } from "@nxs-utils/app/scrollToElement";
+import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
+import { useScroll } from "@nxs-utils/hooks/useScroll";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
@@ -36,11 +37,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
-  const [scrollable, setScroll] = useState<string>("");
-  const [isScroll, setIsScroll] = useState<{ [key: string]: boolean }>({
-    up: false,
-    down: false,
-  });
+  const { dimensions, getDimensions, direction, setDirection, showScroll } = useScroll();
 
   useEffect(() => {
     if (initialValues) {
@@ -74,20 +71,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   }, [validationStatus]);
 
   useEffect(() => {
-    if (scrollable) {
-      scrollInDirection("form-field-container", scrollable);
-      setScroll("");
-    }
-  }, [scrollable]);
+    if (direction) scrollInDirection("form-field-container", direction);
+  }, [direction]);
 
   useEffect(() => {
-    if (values) {
-      const height = getElementHeight("form-field-container");
-      // add scrolling controls when height of element is greater than overflow
-      setIsScroll({ up: height > 750, down: height > 750 });
-    }
+    if (values) getDimensions("form-field-container", { height: 750 });
   }, [values]);
 
+  console.log("dimensions :>> ", dimensions);
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
     const { value } = event.currentTarget;
@@ -207,8 +198,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className="form-field-container" id="form-field-container">
-        {isScroll.up && <UpArrow onClick={() => setScroll("up")} active={scrollable} />}
-        {isScroll.down && <DownArrow onClick={() => setScroll("down")} active={scrollable} />}
+        {showScroll.up && <UpArrow onClick={() => setDirection("up")} active={direction} />}
+        {showScroll.down && (
+          <DownArrow onClick={() => setDirection("down")} active={direction} />
+        )}
 
         {values.map((field, keyIdx) => {
           return (

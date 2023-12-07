@@ -1,4 +1,6 @@
 declare module "nxs-button" {
+  import type { CardinalDirectionProps } from "nxs-typography";
+
   export type SizeProp = "2xs" | "xs" | "sm" | "lg" | "xl" | "2xl";
   export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9x" | "10x";
   export type IconProps = {
@@ -21,7 +23,7 @@ declare module "nxs-button" {
     isDisable?: boolean;
     label?: string;
     data?: string;
-    active?: string;
+    active?: CardinalDirectionProps;
   }
   export interface IconButtonProps {
     // all of button props
