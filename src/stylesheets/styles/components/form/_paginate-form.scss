@@ -1,5 +1,5 @@
 .form-field-container {
   max-height: #{$max-form-height};
   overflow-y: auto;
-  padding: #{$rem};
+  padding: #{$rem} #{$rem025};
 }

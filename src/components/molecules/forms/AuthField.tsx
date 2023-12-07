@@ -15,7 +15,7 @@ const AuthField = (props: AuthFieldProp) => {
       {!hideLabels && labels && (
         <Label name={name} label={labels} errors={errors} message={formMessage} />
       )}
-      <div className="flex-row">
+      <div className="flex-g">
         <Input
           value={value}
           onChange={onChange}
