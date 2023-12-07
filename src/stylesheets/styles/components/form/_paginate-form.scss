@@ -6,11 +6,11 @@
   max-height: #{$max-form-height};
   padding: #{$rem} #{$rem025};
   scroll-behavior: smooth;
-  position: relative;
+  // position: relative;
 }
 .btn-arrow {
-  position: absolute;
-  right: 7%;
+  position: fixed;
+  right: 8%;
   z-index: 99;
   background-color: #{$dimmer};
   border-radius: #{$border-radius-full};
@@ -21,7 +21,7 @@
   }
 }
 .up-arrow-container {
-  top: 5%;
+  top: 20%;
 }
 .down-arrow-container {
   position: fixed;

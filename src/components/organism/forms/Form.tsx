@@ -37,7 +37,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
-  const { dimensions, getDimensions, direction, setDirection, showScroll } = useScroll();
+  const { dimensions, getDimensions, direction, setDirection, showScroll, watchElement } =
+    useScroll();
 
   useEffect(() => {
     if (initialValues) {
@@ -56,6 +57,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
       setValues(oldValues);
     }
+    watchElement("form-field-container");
   }, []);
 
   useEffect(() => {
@@ -78,7 +80,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (values) getDimensions("form-field-container", { height: 750 });
   }, [values]);
 
-  console.log("dimensions :>> ", dimensions);
+  // console.log("dimensions :>> ", dimensions);
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
     const { value } = event.currentTarget;

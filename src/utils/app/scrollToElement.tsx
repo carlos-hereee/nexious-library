@@ -25,3 +25,13 @@ export const getElementDimensions = (id: string) => {
   if (element) return { width: element.scrollWidth, height: element.scrollHeight };
   return { width: 0, height: 0 };
 };
+export const getElementBindings = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) return element.getBoundingClientRect();
+  return { width: 0, height: 0 };
+};
+export const watchElementResize = (id: string) => {
+  const element = document.getElementById(id);
+  if (element) return null;
+  return null;
+};
