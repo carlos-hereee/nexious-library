@@ -70,6 +70,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               language={language}
               themeList={themeList}
               theme={theme}
+              active={theme}
             />
           </nav>
           <nav className="mobile-navigation">
@@ -84,6 +85,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               click={handleClick}
               language={language}
               themeList={themeList}
+              active={theme}
               theme={`alt-${theme}`}
             />
           </nav>

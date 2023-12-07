@@ -2,7 +2,7 @@ import { IconButton, NavToggle, Select } from "@nxs-molecules";
 import type { NavbarProps } from "nxs-navigation";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const { show, click, menu, theme, themeList, handleTheme } = props;
+  const { show, click, menu, theme, themeList, handleTheme, active } = props;
   return (
     <ul
       className={theme ? `navigation ${theme}` : "navigation"}
@@ -15,7 +15,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             name="themeList"
             theme={theme}
             onChange={handleTheme}
-            active={theme}
+            active={active}
           />
         </li>
       )}

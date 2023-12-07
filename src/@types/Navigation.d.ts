@@ -77,6 +77,7 @@ declare module "nxs-navigation" {
     menu: MenuProp[];
     themeList?: ThemeList[];
     theme?: string;
+    active?: string;
     language?: MenuItemProp;
   };
   export interface NavigationToggleProps {
