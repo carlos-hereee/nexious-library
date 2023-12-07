@@ -5,6 +5,7 @@ form {
   text-align: left;
   gap: #{$rem};
   max-width: #{$max-form-width};
+  // position: relative;
   width: 100%;
 }
 input,

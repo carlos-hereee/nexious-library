@@ -5,15 +5,23 @@
   gap: #{$rem};
   max-height: #{$max-form-height};
   padding: #{$rem} #{$rem025};
-  position: relative;
+  scroll-behavior: smooth;
 }
 .btn-arrow {
   position: absolute;
-  right: 3%;
+  right: 7%;
+  z-index: 99;
+  background-color: #{$dimmer};
+  border-radius: #{$border-radius-full};
+  aspect-ratio: 1/1;
+  min-width: auto;
+  &:hover {
+    background-color: #{$dim};
+  }
 }
 .up-arrow-container {
-  top: 0;
+  top: 20%;
 }
 .down-arrow-container {
-  bottom: 0;
+  bottom: 3%;
 }

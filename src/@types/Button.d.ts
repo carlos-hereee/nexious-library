@@ -21,6 +21,7 @@ declare module "nxs-button" {
     isDisable?: boolean;
     label?: string;
     data?: string;
+    active?: string;
   }
   export interface IconButtonProps {
     // all of button props

@@ -63,4 +63,8 @@ ul {
 // add default link color
 a {
   color: inherit;
+  display: inline-block;
+  border-radius: #{$border-radius};
+  user-select: none;
+  white-space: nowrap;
 }

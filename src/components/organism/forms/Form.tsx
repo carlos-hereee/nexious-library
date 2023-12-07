@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 // import { ErrorMessages,  } from "@nxs-molecules";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
@@ -15,6 +15,7 @@ import {
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
+import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
@@ -22,8 +23,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
   const { initialValues, theme, submitLabel, schema, disableForm } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
-  // must have required props
-  // const { lightColor, errors } = useRequiredProps({ initialValues }, true);
 
   const {
     formErrors,
@@ -37,6 +36,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   } = useFormValidation({ ...schema, labels });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
+  const [scrollable, setScroll] = useState<string>("");
 
   useEffect(() => {
     if (initialValues) {
@@ -68,6 +68,13 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setStatus(null);
     } else if (validationStatus === "red") scrollToError();
   }, [validationStatus]);
+
+  useEffect(() => {
+    if (scrollable) {
+      scrollInDirection("form-field-container", scrollable);
+      setScroll("");
+    }
+  }, [scrollable]);
 
   const handleChange = (event: OnchangeProps, idx: number) => {
     // key variables
@@ -175,8 +182,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       validateForm(values, "yellow");
     }
   };
-  // if (lightColor === "red") return <ErrorMessages errors={errors} component="Form" />;
-  // console.log("formErrors :>> ", formErrors);
+  console.log("scrollable :>> ", scrollable);
+  // const handleArrowScroll = (e: string) => {
+  //   console.log("e :>> ", e);
+  // };
   if (!initialValues)
     return (
       <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
@@ -189,9 +198,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     >
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
-      <div className="form-field-container">
-        <UpArrow />
-        <DownArrow />
+      <div className="form-field-container" id="form-field-container">
+        <UpArrow onClick={() => setScroll("up")} active={scrollable} />
+        <DownArrow onClick={() => setScroll("down")} active={scrollable} />
         {values.map((field, keyIdx) => {
           return (
             <FormField
