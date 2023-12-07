@@ -2,8 +2,10 @@ import { Input, Label } from "@nxs-atoms/index";
 import type { InputProps } from "nxs-form";
 
 const Field: React.FC<InputProps> = (props) => {
-  const { name, value, onChange, placeholder, hideLabel, label, error, formMessage } = props;
+  const { name, value, placeholder, hideLabel, label, error, formMessage, isDisabled } = props;
+  const { onChange } = props;
 
+  console.log("isDisabled :>> ", isDisabled);
   return (
     <>
       {!hideLabel && label && (
@@ -15,6 +17,7 @@ const Field: React.FC<InputProps> = (props) => {
         name={name}
         theme="highlight"
         placeholder={placeholder}
+        isDisabled={isDisabled}
       />
     </>
   );

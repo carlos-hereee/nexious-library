@@ -7,7 +7,7 @@ import { urlFile } from "@nxs-utils/data/urlFile";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage, input } = props;
-  const { name, error } = input;
+  const { name, error, isDisabled } = input;
   // required props
   // const { lightColor, errors } = useRequiredProps({ name }, true);
   const [previewImage, setPreviewImage] = useState<string>("");
@@ -63,7 +63,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           id={name}
           hidden
         />
-        <button className="btn-main" type="button" onClick={imageClick}>
+        <button className="btn-main" type="button" onClick={imageClick} disabled={isDisabled}>
           {selectLabel || "Choose a file"}
         </button>
         {previewImage && (
@@ -84,6 +84,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         <Hero
           hero={{ url: previewImage, alt: `${name} image value` }}
           imageRef={imageRef}
+          isDisable={isDisabled}
           onImageClick={imageClick}
           theme="preview-hero"
         />

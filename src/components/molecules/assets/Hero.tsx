@@ -9,7 +9,8 @@ import type { HeroProps } from "nxs-assets";
  * @param theme string; add an optional classname
  * @returns image component
  */
-const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
+const Hero: React.FC<HeroProps> = (props) => {
+  const { hero, theme, onImageClick, imageRef, isDisable } = props;
   const [load, setLoad] = useState<boolean>();
 
   if (!hero) {
@@ -21,7 +22,7 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
       style={{ backgroundImage: `url(${hero.small})` }}
     >
       <Image
-        onImageClick={onImageClick}
+        onImageClick={!isDisable ? onImageClick : undefined}
         onImageLoad={() => setLoad(true)}
         hero={hero}
         imageRef={imageRef}
@@ -32,7 +33,7 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
   ) : hero.creditTo ? (
     <div className="hero-wrapper">
       <Image
-        onImageClick={onImageClick}
+        onImageClick={!isDisable ? onImageClick : undefined}
         onImageLoad={() => setLoad(true)}
         hero={hero}
         imageRef={imageRef}
@@ -42,7 +43,7 @@ const Hero: React.FC<HeroProps> = ({ hero, theme, onImageClick, imageRef }) => {
     </div>
   ) : (
     <Image
-      onImageClick={onImageClick}
+      onImageClick={!isDisable ? onImageClick : undefined}
       onImageLoad={() => setLoad(true)}
       hero={hero}
       imageRef={imageRef}

@@ -8,7 +8,7 @@ const FormField = (props: FormFieldProps) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection } =
     props;
-  const { formError, updateSelection, handleCheckbox, theme } = props;
+  const { formError, updateSelection, handleCheckbox, theme, disableForm } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
 
@@ -26,6 +26,7 @@ const FormField = (props: FormFieldProps) => {
           hideLabels={hideLabels}
           labels={label}
           errors={formError}
+          isDisabled={disableForm}
         />
       ) : type === "datalist" ? (
         <DataList
@@ -35,6 +36,7 @@ const FormField = (props: FormFieldProps) => {
           value={typeof value === "string" ? value : ""}
           label={label}
           onChange={changeDataList}
+          isDisabled={disableForm}
         />
       ) : type === "select" ? (
         <Select
@@ -48,6 +50,7 @@ const FormField = (props: FormFieldProps) => {
           label={label}
           clearSelection={clearSelection}
           error={formError}
+          isDisabled={disableForm}
         />
       ) : textarea.includes(name) ? (
         <TextArea
@@ -58,6 +61,7 @@ const FormField = (props: FormFieldProps) => {
             label,
             error: formError,
             onChange: handleChange,
+            isDisabled: disableForm,
           }}
           hideLabels={hideLabels}
           formMessage={formMessage}
@@ -70,10 +74,11 @@ const FormField = (props: FormFieldProps) => {
           formMessage={formMessage}
           error={formError}
           label={label}
+          isDisabled={disableForm}
         />
       ) : type === "file" ? (
         <UploadFile
-          input={{ name, error: formError }}
+          input={{ name, error: formError, isDisabled: disableForm }}
           formMessage={formMessage}
           value={typeof value === "string" ? value : value instanceof File ? value : ""}
           label={label}
@@ -89,6 +94,7 @@ const FormField = (props: FormFieldProps) => {
           hideLabel={hideLabels}
           label={label}
           error={formError}
+          isDisabled={disableForm}
         />
       )}
       <div className="flex-end">
@@ -101,7 +107,11 @@ const FormField = (props: FormFieldProps) => {
           />
         )}
         {canMultiply && onMultiply && (
-          <Button label={onMultiply?.additionLabel} onClick={onMultiplyClick} />
+          <Button
+            label={onMultiply?.additionLabel}
+            onClick={onMultiplyClick}
+            isDisable={disableForm}
+          />
         )}
       </div>
     </div>

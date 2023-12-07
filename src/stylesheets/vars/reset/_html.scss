@@ -16,6 +16,11 @@ body {
 [hidden] {
   display: none;
 }
+// Add basic styling to disabled components
+[disabled] {
+  cursor: not-allowed;
+  background: linear-gradient($dimmer, $dim);
+}
 
 *,
 ::before,

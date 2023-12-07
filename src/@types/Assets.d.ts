@@ -27,6 +27,7 @@ declare module "nxs-assets" {
     hero: AssetProps;
     theme?: string;
     label?: string;
+    isDisable?: boolean;
     imageRef?: React.LegacyRef<HTMLImageElement>;
     onImageLoad?: () => void;
     onImageClick?: (e: unknown) => void;

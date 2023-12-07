@@ -4,7 +4,8 @@ import { capFirstCharacter } from "@nxs-utils/data/text";
 import { emojis } from "@nxs-utils/data/emojis";
 
 const DataList = (props: DataListProps) => {
-  const { name, value, onChange, hideLabel, label, error, formMessage, list } = props;
+  const { name, value, onChange, hideLabel, label, error, formMessage, list, isDisabled } =
+    props;
 
   const selectList = (value && value.split(",")) || [];
 
@@ -30,6 +31,7 @@ const DataList = (props: DataListProps) => {
                 : `${emojis.emptyCircle} ${l.label}`
             }
             key={l.uid}
+            isDisable={isDisabled}
             theme={l.themeId ? l.name : ""}
             onClick={() => handleDataChange(`${l.value},`)}
             title={value.includes(l.value) ? `remove ${l.value}` : `add${l.value}`}

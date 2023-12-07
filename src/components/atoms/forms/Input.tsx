@@ -1,7 +1,7 @@
 import type { InputProps } from "nxs-form";
 
 const Input: React.FC<InputProps> = (props) => {
-  const { value, onChange, onBlur, name, theme, placeholder, type } = props;
+  const { value, onChange, onBlur, name, theme, isDisabled, placeholder, type } = props;
   return (
     <input
       className={theme}
@@ -12,6 +12,7 @@ const Input: React.FC<InputProps> = (props) => {
       placeholder={placeholder}
       onChange={onChange}
       onBlur={onBlur}
+      disabled={isDisabled}
       // give labels a reason to be there give inputs id
       id={name}
     />

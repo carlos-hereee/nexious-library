@@ -24,6 +24,7 @@ const Select: React.FC<SelectProp> = (props) => {
     formMessage,
     active,
     clearSelection,
+    isDisabled,
   } = props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
@@ -44,6 +45,7 @@ const Select: React.FC<SelectProp> = (props) => {
         <select
           className="select"
           value={activeLabel}
+          disabled={isDisabled}
           onChange={(e) => onChange && onChange(e.target.value)}
         >
           <Option

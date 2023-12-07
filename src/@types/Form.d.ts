@@ -28,6 +28,7 @@ declare module "nxs-form" {
     value: string;
     placeholder: string;
     hideLabels?: boolean;
+    isDisabled?: boolean;
     labels?: string;
     errors?: string;
     formMessage?: string;
@@ -51,6 +52,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     hideSubmit?: boolean;
     withFileUpload?: boolean;
+    disableForm?: boolean;
     // showAuthTips?: boolean;
     dataList?: { [key: string]: MenuItemProp[] };
     clearSelection?: { [key: string]: boolean };
@@ -184,6 +186,7 @@ declare module "nxs-form" {
     theme?: string;
     selected?: string;
     hideLabels?: boolean;
+    disableForm?: boolean;
     canRemove?: boolean;
     group?: string;
     sharedKey?: string;
@@ -235,6 +238,7 @@ declare module "nxs-form" {
     label?: string;
     error?: string;
     clearSelection?: boolean;
+    isDisabled?: boolean;
     formMessage?: string;
     onChange?: (key: string) => void;
   }
@@ -251,6 +255,7 @@ declare module "nxs-form" {
     name: string;
     label?: string;
     hideLabel?: boolean;
+    isDisabled?: boolean;
     placeholder?: string;
     onChange: (e: string) => void;
   };

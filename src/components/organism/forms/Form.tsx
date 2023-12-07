@@ -20,7 +20,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
     props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
-  const { initialValues, theme, submitLabel, schema } = props;
+  const { initialValues, theme, submitLabel, schema, disableForm } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
   // must have required props
   // const { lightColor, errors } = useRequiredProps({ initialValues }, true);
@@ -214,6 +214,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
               canMultiply={field.canMultiply}
               canRemove={field.canRemove}
               clearSelection={clearSelection?.[field.name]}
+              disableForm={disableForm}
               onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
               onRemovalClick={() => handleRemovalClick(field, keyIdx)}
             />
@@ -222,7 +223,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       </div>
       <div className="buttons-container">
         {onCancel && <CancelButton onClick={onCancel} theme="btn-main" />}
-        {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} />}
+        {!hideSubmit && onSubmit && (
+          <SubmitButton label={submitLabel} isDisable={disableForm} />
+        )}
         {onViewPreview && (
           <IconButton
             icon={{ icon: "eye", label: previewLabel }}

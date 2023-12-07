@@ -6,7 +6,7 @@ import { IconButton } from "@nxs-molecules";
 
 const AuthField = (props: AuthFieldProp) => {
   const { value, onChange, name, placeholder, formMessage, labels, errors } = props;
-  const { hideLabels } = props;
+  const { hideLabels, isDisabled } = props;
   const { seePassword, togglePassword } = useSeePassword();
 
   const placeholders = placeholder || initPlaceholders[name];
@@ -20,6 +20,7 @@ const AuthField = (props: AuthFieldProp) => {
           value={value}
           onChange={onChange}
           name={name}
+          isDisabled={isDisabled}
           type={seePassword[name] ? "text" : "password"}
           placeholder={placeholders}
           theme="highlight password"

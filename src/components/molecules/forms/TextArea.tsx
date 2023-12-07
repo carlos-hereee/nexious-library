@@ -3,7 +3,7 @@ import { Label } from "@nxs-atoms/index";
 
 const TextArea = (props: TextAreaProps) => {
   const { hideLabels, theme, formMessage, input } = props;
-  const { value, name, placeholder, error, label, onChange } = input;
+  const { value, name, placeholder, error, label, onChange, isDisabled } = input;
 
   return (
     <>
@@ -14,6 +14,7 @@ const TextArea = (props: TextAreaProps) => {
         className={theme ? `highlight ${theme}` : "highlight"}
         name={name}
         value={value}
+        disabled={isDisabled}
         placeholder={placeholder}
         onChange={onChange}
       />
