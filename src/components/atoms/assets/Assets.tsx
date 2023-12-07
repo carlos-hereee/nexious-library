@@ -20,6 +20,8 @@ import {
   fa7,
   fa8,
   fa9,
+  faArrowDown,
+  faArrowUp,
   faBars,
   faBullseye,
   faCalendarAlt,
@@ -75,6 +77,8 @@ type SVGProp = {
 };
 const svg: SVGProp = {
   about: faInfo,
+  arrowUp: faArrowUp,
+  arrowDown: faArrowDown,
   accessories: faImage,
   account: faUser,
   all: faGlobe,

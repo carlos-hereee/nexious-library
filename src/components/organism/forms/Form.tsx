@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 // import { ErrorMessages,  } from "@nxs-molecules";
-import { IconButton, SubmitButton } from "@nxs-molecules";
+import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 import { formatInitialFormValues, objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 // import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
@@ -190,6 +190,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className="form-field-container">
+        <UpArrow />
+        <DownArrow />
         {values.map((field, keyIdx) => {
           return (
             <FormField

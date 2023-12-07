@@ -1,5 +1,19 @@
 .form-field-container {
-  max-height: #{$max-form-height};
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
+  gap: #{$rem};
+  max-height: #{$max-form-height};
   padding: #{$rem} #{$rem025};
+  position: relative;
+}
+.btn-arrow {
+  position: absolute;
+  right: 3%;
+}
+.up-arrow-container {
+  top: 0;
+}
+.down-arrow-container {
+  bottom: 0;
 }
