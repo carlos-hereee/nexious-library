@@ -79,7 +79,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
       <div className="preview-hero-container">
         <span>Image Preview</span>
         {previewImage && (
-          <Button label="x" onClick={handleRemoveImage} theme="preview-cancel btn-cancel" />
+          <Button label="x" onClick={handleRemoveImage} theme="btn-cancel preview-cancel" />
         )}
         <Hero
           hero={{ url: previewImage, alt: `${name} image value` }}

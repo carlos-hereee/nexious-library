@@ -5,7 +5,7 @@ const Image = (props: HeroProps) => {
 
   if (!hero.url) {
     return (
-      <button type="button" className="preview-hero-empty" onClick={onImageClick}>
+      <button type="button" className="preview-hero-empty highlight" onClick={onImageClick}>
         ?
       </button>
     );
