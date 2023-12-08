@@ -70,8 +70,8 @@ export const useValues = () => {
     const { addEntry, target, oldValues } = props;
     const { initialValues, groupName } = addEntry;
 
-    // console.log("oldValues :>> ", oldValues);
-    // console.log("initialValues :>> ", initialValues);
+    // TODO: REMOVE CAN MULTIPLY PROPERTY IF ITS NOT LAST ENTRY
+
     // add properties all entrys should have
     const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
     // track group

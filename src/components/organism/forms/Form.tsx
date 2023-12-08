@@ -130,7 +130,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const handleRemovalClick = (e: FieldValueProps, idx: number) => {
     if (addEntry && e.onMultiply) {
       // find the number of fields to delete
-      const groupName = e.groupName ? e.groupName : e.onMultiply.name;
+      const groupName = e.group ? e.group : e.onMultiply.name;
       if (addEntry[groupName]) {
         const numCount = objToArray(addEntry[groupName].initialValues).length;
         const groupList = values.filter((val) => val.groupName === groupName);
