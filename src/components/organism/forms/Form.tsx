@@ -23,7 +23,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
     props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
-  const { initialValues, theme, submitLabel, schema, disableForm } = props;
+  const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
 
   const {
@@ -233,7 +233,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         })}
       </div>
       <div className="buttons-container">
-        {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" />}
+        {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
         {!hideSubmit && onSubmit && (
           <SubmitButton label={submitLabel} isDisable={disableForm} />
         )}

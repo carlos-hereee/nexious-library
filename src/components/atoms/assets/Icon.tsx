@@ -23,8 +23,8 @@ const Icon: React.FC<IconProps> = (props) => {
   }
 
   const n = className
-    ? `icon ${name ? `icon-${name} ${className}` : className}`
-    : `icon ${name ? `icon-${name}` : ""}`;
+    ? `icon${name ? ` icon-${name} ${className}` : className}`
+    : `icon${name ? ` icon-${name}` : ""}`;
 
   return (
     <FontAwesomeIcon
