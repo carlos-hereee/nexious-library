@@ -3,7 +3,10 @@ import { Button } from "@nxs-atoms";
 import type { NavbarProps } from "nxs-navigation";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const { show, click, menu, theme, themeList, handleTheme, active } = props;
+  const { show, menu, theme, themeList, active, includeHome } = props;
+  const { handleTheme, click, onHomeClick } = props;
+
+  const layout = "nav-item highlight";
   return (
     <ul
       className={theme ? `navigation ${theme}` : "navigation"}
@@ -27,13 +30,18 @@ const Navbar: React.FC<NavbarProps> = (props) => {
             {m.isToggle ? (
               <NavToggle data={m} onSelect={(e) => click(e)} theme={theme} />
             ) : m.icon ? (
-              <IconButton icon={m} onClick={() => click(m)} theme="nav-item highlight" />
+              <IconButton icon={m} onClick={() => click(m)} theme={layout} />
             ) : (
-              <Button label={m.label} theme="nav-item highlight" onClick={() => click(m)} />
+              <Button label={m.label} theme={layout} onClick={() => click(m)} />
             )}
           </li>
         );
       })}
+      {includeHome && (
+        <li className="nav-btn nav-order-first">
+          <Button label="Home" title="home" theme={layout} onClick={onHomeClick} />
+        </li>
+      )}
     </ul>
   );
 };

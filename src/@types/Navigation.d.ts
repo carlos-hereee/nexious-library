@@ -54,12 +54,14 @@ declare module "nxs-navigation" {
     heading?: string;
     uniqueId?: string;
     theme?: string;
+    includeHome?: boolean;
     logo?: AssetProps;
     themeList?: ThemeList[];
     language?: MenuItemProp;
     updateMenu: (e: MenuProp) => void;
     handleTheme?: (a: string) => void;
     onLogoClick?: () => void;
+    onHomeClick?: () => void;
   }
   export interface FooterProps {
     appName: string;
@@ -73,13 +75,15 @@ declare module "nxs-navigation" {
   }
   export type NavbarProps = {
     show: { isActive: boolean; isClose: boolean };
-    click: (a: MenuProp) => void;
-    handleTheme?: (a: string) => void;
     menu: MenuProp[];
     themeList?: ThemeList[];
     theme?: string;
     active?: string;
     language?: MenuItemProp;
+    includeHome?: boolean;
+    click: (a: MenuProp) => void;
+    handleTheme?: (a: string) => void;
+    onHomeClick?: () => void;
   };
   export interface NavigationToggleProps {
     data: MenuProp;

@@ -22,6 +22,9 @@
   gap: #{$rem};
   color: inherit;
 }
+.nav-order-first {
+  order: -1;
+}
 .nav-order-last {
   order: 1;
 }

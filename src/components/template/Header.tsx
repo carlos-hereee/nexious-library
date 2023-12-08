@@ -18,8 +18,8 @@ import type { HeaderProps, MenuProp } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, language, theme, uniqueId, themeList } = props;
-  const { updateMenu, onLogoClick, handleTheme } = props;
+  const { menu, logo, ping, language, theme, uniqueId, themeList, includeHome } = props;
+  const { updateMenu, onLogoClick, handleTheme, onHomeClick } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
@@ -61,6 +61,8 @@ const Header: React.FC<HeaderProps> = (props) => {
               themeList={themeList}
               theme={theme}
               active={theme}
+              includeHome={includeHome}
+              onHomeClick={onHomeClick}
             />
           </nav>
           <nav className="mobile-navigation">
@@ -77,6 +79,8 @@ const Header: React.FC<HeaderProps> = (props) => {
               themeList={themeList}
               active={theme}
               theme={`alt-${theme}`}
+              includeHome={includeHome}
+              onHomeClick={onHomeClick}
             />
           </nav>
         </>
