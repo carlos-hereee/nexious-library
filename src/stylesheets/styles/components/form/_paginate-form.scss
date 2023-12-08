@@ -6,6 +6,7 @@
   max-height: #{$max-form-height};
   padding: #{$rem} #{$rem025};
   scroll-behavior: smooth;
+  // position: fixed;
 }
 .btn-arrow {
   position: fixed;
@@ -20,10 +21,10 @@
   }
 }
 .up-arrow-container {
-  position: absolute;
+  // position: absolute;
   top: 25%;
 }
 .down-arrow-container {
-  position: absolute;
+  // position: absolute;
   bottom: 10%;
 }
