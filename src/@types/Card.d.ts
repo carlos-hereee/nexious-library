@@ -17,6 +17,7 @@ declare module "nxs-card" {
   };
   export interface CardProp {
     title?: string;
+    tagline?: string;
     body?: string;
     uid?: string;
     subtitle?: string;
@@ -38,11 +39,10 @@ declare module "nxs-card" {
     onClick?: (key: unknown) => void;
   }
   export interface HeroCardProps {
-    data: { title?: string; tagline?: string; subtitle?: string; body?: string };
+    data: CardProp;
     hero?: AssetProps;
     theme?: string;
     onClick?: (key: unknown) => void;
-    cta?: CTAProp[];
     viewAsPreview?: boolean;
   }
   export interface CTAProps {

@@ -10,11 +10,10 @@ import type { ButtonProps } from "nxs-button";
 const Button: React.FC<ButtonProps> = (props) => {
   const { onClick, title, theme, label, isDisable, name } = props;
 
-  const buttonStyle = theme ? `btn-main ${theme}` : "btn-main";
   return (
     <button
       type="button"
-      className={buttonStyle}
+      className={theme || "btn-main"}
       title={title}
       onClick={onClick}
       aria-label={title || label || name}

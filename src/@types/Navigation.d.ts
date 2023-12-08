@@ -32,8 +32,9 @@ declare module "nxs-navigation" {
     uid?: string;
     menuId?: string;
     name: string;
-    icon: string;
     link: string;
+    category?: string;
+    icon: string;
     locale?: string;
     label?: string;
     isToggle?: boolean;
