@@ -7,7 +7,7 @@ import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 // import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
-import CancelButton from "@nxs-atoms/buttons/CancelButton";
+import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
 import {
   formatFilesData,
   formatFormData,
@@ -233,7 +233,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         })}
       </div>
       <div className="buttons-container">
-        {onCancel && <CancelButton onClick={onCancel} theme="btn-main" />}
+        {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" />}
         {!hideSubmit && onSubmit && (
           <SubmitButton label={submitLabel} isDisable={disableForm} />
         )}

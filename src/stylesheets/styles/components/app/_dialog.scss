@@ -13,6 +13,8 @@
 .dialog-navigation {
   display: flex;
   justify-content: flex-end;
+  position: sticky;
+  top: 3%;
 }
 .btn-dialog {
   max-width: #{$min-width-sm};

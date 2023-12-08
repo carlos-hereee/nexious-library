@@ -1,7 +1,7 @@
 import { Icon } from "@nxs-atoms";
 import type { ButtonProps } from "nxs-button";
 
-const CancelButton: React.FC<ButtonProps> = (props) => {
+const ButtonCancel: React.FC<ButtonProps> = (props) => {
   const { onClick, label, theme } = props;
   return (
     <button type="button" className={`btn-cancel ${theme || ""}`} onClick={onClick}>
@@ -10,4 +10,4 @@ const CancelButton: React.FC<ButtonProps> = (props) => {
     </button>
   );
 };
-export default CancelButton;
+export default ButtonCancel;
