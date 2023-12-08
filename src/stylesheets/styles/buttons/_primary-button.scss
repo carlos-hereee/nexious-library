@@ -36,14 +36,18 @@
   // object-fit: cover;
   aspect-ratio: 1/1;
   position: absolute;
-  top: -5%;
-  right: -5%;
+  top: 0;
+  right: 0;
   width: #{$icon-width-sm};
   min-width: auto;
   border-radius: #{$border-radius-full};
-  background-color: #{$danger};
   color: #{$light-primary};
+  background-color: #{$error};
   z-index: 98;
+  &:hover {
+    background-color: #{$danger};
+    border: 1px solid #{$dark};
+  }
 }
 .btn-burger,
 .btn-x {

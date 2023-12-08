@@ -1,9 +1,20 @@
 .sections-container {
   display: grid;
   gap: #{$rem};
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, auto));
   justify-content: center;
   grid-auto-rows: max-content;
+  // only 1 item in last grid row
+  > *:nth-child(3n-2):nth-last-of-type(1) {
+    grid-column: 2;
+  }
+}
+.section-container {
+  display: grid;
+  gap: #{$rem};
+  grid-template-columns: repeat(3, minmax(0, auto));
+  justify-content: center;
+  // grid-auto-rows: max-content;
   // only 1 item in last grid row
   > *:nth-child(3n-2):nth-last-of-type(1) {
     grid-column: 2;

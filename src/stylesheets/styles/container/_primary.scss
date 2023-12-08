@@ -24,11 +24,16 @@
   }
 }
 .card-container {
+  width: 100%;
+  // display: grid;
+  // grid-template-columns: auto minmax(0, auto);
+  // align-items: center;
   display: flex;
   flex-wrap: wrap;
-  // position: relative;
+  justify-items: center;
+  position: relative;
   gap: #{$rem};
-  // justify-content: space-around;
+  justify-content: space-around;
 }
 .page-center {
   display: flex;

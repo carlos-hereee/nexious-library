@@ -1,9 +1,10 @@
 .card {
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
   gap: #{$rem};
+  padding: #{$rem};
   min-width: #{$min-card-width};
   max-width: #{$max-card-width};
   &:has(> div > .ribbon) {
@@ -95,4 +96,11 @@
       // flex-direction: column;
     }
   }
+}
+.preview-card {
+  max-height: #{$max-card-height};
+  overflow: hidden;
+  padding: #{$rem};
+  border-radius: #{$border-radius};
+  position: relative;
 }
