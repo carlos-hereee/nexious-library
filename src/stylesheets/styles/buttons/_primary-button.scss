@@ -1,4 +1,7 @@
 .btn {
+  display: flex;
+  gap: #{$rem};
+  align-items: center;
   padding: #{$rem};
   border-radius: #{$border-radius};
 }
@@ -17,10 +20,11 @@
   }
 }
 .btn-cta {
+  // display: flex;
   background-color: #{$cta-color};
   width: 100%;
-  font-size: large;
-  height: min-content;
+  // font-size: large;
+  // height: min-content;
 }
 .btn-cancel {
   width: 100%;

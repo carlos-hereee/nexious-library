@@ -37,10 +37,12 @@ declare module "nxs-card" {
     theme?: string;
     onClick?: (key: unknown) => void;
     cta?: CTAProp[];
+    viewAsPreview?: boolean;
   }
   export interface CTAProps {
     cta: CTAProp[];
     onClick?: (key: unknown) => void;
+    viewAsPreview?: boolean;
   }
   export interface CardSectionProps {
     hero?: AssetProps;

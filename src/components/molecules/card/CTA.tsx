@@ -1,9 +1,10 @@
 import type { CTAProps } from "nxs-card";
 import { IconButton } from "@nxs-molecules";
 import { capFirstCharacter } from "@nxs-utils/data/text";
+import { Icon } from "@nxs-atoms";
 
 const CTA: React.FC<CTAProps> = (props) => {
-  const { cta, onClick } = props;
+  const { cta, onClick, viewAsPreview } = props;
 
   return (
     <div className="call-to-action">
@@ -11,6 +12,13 @@ const CTA: React.FC<CTAProps> = (props) => {
         const icon = data.icon || "";
         const uid = data.uid || data.heroId || data.sharedKey || "";
         const label = data.label || "";
+        if (viewAsPreview)
+          return (
+            <div key={uid} className="btn btn-cta">
+              {icon && <Icon icon={icon} />}
+              {label && label}
+            </div>
+          );
         return icon ? (
           <IconButton
             icon={{ icon, label }}
