@@ -13,13 +13,15 @@ import { svg } from "./Assets";
  * @returns JSX.Element
  */
 const Icon: React.FC<IconProps> = (props) => {
-  const { icon, size, spin, color, name, className } = props;
+  const { icon, size, spin, color, name, className, hideHints } = props;
 
-  if (!icon) {
-    return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon }} />;
-  }
-  if (!svg[icon]) {
-    return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: svg[icon] }} />;
+  if (!hideHints) {
+    if (!icon) {
+      return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon }} />;
+    }
+    if (!svg[icon]) {
+      return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: svg[icon] }} />;
+    }
   }
 
   const n = className
