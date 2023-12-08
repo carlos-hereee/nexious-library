@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { ErrorMessages } from "@nxs-molecules/index";
-import { Form, FormNavigation } from "@nxs-organism/index";
+import { Dialog, Form, FormNavigation } from "@nxs-organism/index";
 import type { FormValueProps, PaginateFormProps } from "nxs-form";
-import { Button } from "main";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
@@ -97,12 +96,9 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         />
       )}
       {previewPage && (
-        <div className={`dialog ${theme ? ` alt-${theme}` : "alt-light-mode"}`}>
-          <div className="dialog-navigation">
-            <Button label="X" onClick={onDialogClose} theme="btn-dialog btn-cancel" />
-          </div>
-          <div className="dialog-body">{previewPage}</div>
-        </div>
+        <Dialog onDialogClose={onDialogClose} theme={theme}>
+          {previewPage}
+        </Dialog>
       )}
     </div>
   );

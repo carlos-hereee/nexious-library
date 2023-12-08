@@ -1,6 +1,11 @@
 declare module "nxs-card" {
   import type { AssetProps, UserProps } from "nxs-assets";
 
+  export type DialogProps = {
+    theme?: string;
+    onDialogClose?: () => void;
+    children: React.ReactNode;
+  };
   export type CTAProp = {
     name: string;
     label: string;
