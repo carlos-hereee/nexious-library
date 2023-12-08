@@ -46,11 +46,11 @@ export const useScroll = () => {
     if (element) {
       if (targets.height) {
         const isShow = element.scrollHeight > targets.height;
-        setShow({ ...showScroll, north: isShow, up: isShow, down: !isShow, south: !isShow });
+        setShow({ ...showScroll, north: isShow, up: isShow, down: isShow, south: isShow });
       }
       if (targets.width) {
         const isShow = element.scrollWidth > targets.width;
-        setShow({ ...showScroll, left: !isShow, right: !isShow, east: isShow, west: isShow });
+        setShow({ ...showScroll, left: isShow, right: isShow, east: isShow, west: isShow });
       }
       new ResizeObserver(() => outputElementDimensions(element)).observe(element);
       element.addEventListener("scroll", () => handleScroll(element));
