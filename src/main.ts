@@ -20,6 +20,8 @@ export { default as Navigation } from "@nxs-organism/navigation/Navigation";
 export { default as Card } from "@nxs-organism/card/Card";
 export { default as UserCard } from "@nxs-organism/card/UserCard";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
+export { default as Dialog } from "@nxs-organism/card/Dialog";
+
 // TODO: likely remove feature card. same as with card component
 // export { default as FeatureCard } from "@nxs-organism/card/FeatureCard";
 // TODO: likely remove hero card alt. same as with hero card component

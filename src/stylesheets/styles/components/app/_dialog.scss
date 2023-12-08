@@ -10,6 +10,11 @@
   width: 95%;
   z-index: 99;
 }
+.dialog-header {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+}
 .dialog-navigation {
   display: flex;
   justify-content: flex-end;

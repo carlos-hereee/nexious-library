@@ -5,6 +5,7 @@ declare module "nxs-card" {
     theme?: string;
     onDialogClose?: () => void;
     children: React.ReactNode;
+    header?: { heading?: string; subtitle?: string; data?: string };
   };
   export type CTAProp = {
     name: string;

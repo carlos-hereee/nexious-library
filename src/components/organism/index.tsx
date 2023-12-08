@@ -18,7 +18,13 @@ export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as CardSection } from "@nxs-organism/card/CardSection";
 export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
 export { default as Dialog } from "@nxs-organism/card/Dialog";
-export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps } from "nxs-card";
+export type {
+  HeroCardProps,
+  UserCardProps,
+  CardProps,
+  CardSectionProps,
+  DialogProps,
+} from "nxs-card";
 export type { TextBubbleProps } from "nxs-assets";
 
 // cart
