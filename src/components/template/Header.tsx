@@ -45,6 +45,10 @@ const Header: React.FC<HeaderProps> = (props) => {
     setActive(!isActive);
     updateMenu(e);
   };
+  const handleHomeClick = () => {
+    setActive(!isActive);
+    if (onHomeClick) onHomeClick();
+  };
   if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
   return (
     <header id={uniqueId} ref={headerRef}>
@@ -62,7 +66,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               theme={theme}
               active={theme}
               includeHome={includeHome}
-              onHomeClick={onHomeClick}
+              onHomeClick={handleHomeClick}
             />
           </nav>
           <nav className="mobile-navigation">
@@ -80,7 +84,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               active={theme}
               theme={`alt-${theme}`}
               includeHome={includeHome}
-              onHomeClick={onHomeClick}
+              onHomeClick={handleHomeClick}
             />
           </nav>
         </>
