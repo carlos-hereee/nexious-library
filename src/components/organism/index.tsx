@@ -13,6 +13,7 @@ export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navi
 
 // card
 export { default as Card } from "@nxs-organism/card/Card";
+export { default as MerchCard } from "@nxs-organism/card/MerchCard";
 export { default as UserCard } from "@nxs-organism/card/UserCard";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as CardSection } from "@nxs-organism/card/CardSection";

@@ -12,17 +12,19 @@ const CTA: React.FC<CTAProps> = (props) => {
         const icon = data.icon || "";
         const uid = data.uid || data.heroId || data.sharedKey || "";
         const label = data.label || "";
-        if (viewAsPreview)
+        if (viewAsPreview) {
+          // prevent nesting buttons
           return (
-            <div key={uid} className="btn btn-cta">
+            <div key={uid} className={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}>
               {icon && <Icon icon={icon} />}
               {label && label}
             </div>
           );
+        }
         return icon ? (
           <IconButton
             icon={{ icon, label }}
-            theme="btn-cta"
+            theme={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}
             onClick={() => onClick && onClick(data)}
             key={uid}
           />
@@ -30,8 +32,8 @@ const CTA: React.FC<CTAProps> = (props) => {
           label && (
             <button
               type="button"
-              className="btn-main btn-cta"
-              onClick={() => onClick && data}
+              className={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}
+              onClick={() => onClick && onClick(data)}
               key={uid}
             >
               {capFirstCharacter(label)}

@@ -24,3 +24,12 @@
 .btn-active {
   background-color: #{$action-color};
 }
+.btn-add {
+  // border: 1px solid #{$dark-primary};
+  background-color: #{$action-color-alt};
+}
+.btn-subtract {
+  border: 1px solid #{$dark-primary};
+  // color: #{$light};
+  // background-color: #{$error};
+}

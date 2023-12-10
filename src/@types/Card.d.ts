@@ -9,6 +9,7 @@ declare module "nxs-card" {
   };
   export type CTAProp = {
     name: string;
+    theme?: string;
     label: string;
     icon?: string;
     uid?: string;
@@ -19,6 +20,7 @@ declare module "nxs-card" {
     title?: string;
     tagline?: string;
     body?: string;
+    name?: string;
     uid?: string;
     subtitle?: string;
     hasHero?: boolean;

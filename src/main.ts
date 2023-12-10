@@ -59,6 +59,7 @@ export { default as CardBody } from "@nxs-molecules/card/CardBody";
 export { default as CTA } from "@nxs-molecules/card/CTA";
 export { default as CartRow } from "@nxs-molecules/card/CartRow";
 export { default as CartCancel } from "@nxs-molecules/card/CartCancelRow";
+export { default as MerchCard } from "@nxs-organism/card/MerchCard";
 
 // errors
 export { default as EmptySection } from "@nxs-molecules/errors/EmptySection";

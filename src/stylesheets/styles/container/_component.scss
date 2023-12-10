@@ -8,9 +8,10 @@
   gap: #{$rem};
 }
 .call-to-action {
-  // display: flex;
-  display: grid;
-  justify-items: center;
+  display: flex;
+  align-items: center;
   gap: #{$rem};
-  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
+  .btn {
+    flex: 1;
+  }
 }
