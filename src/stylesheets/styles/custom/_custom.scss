@@ -92,3 +92,7 @@
 .pos-rel {
   position: relative;
 }
+.no-scroll {
+  overflow-y: visible;
+  max-height: 100%;
+}

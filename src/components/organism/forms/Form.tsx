@@ -23,7 +23,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
     props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
-  const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel } = props;
+  const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel, noScroll } =
+    props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
 
   const {
@@ -195,42 +196,43 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     >
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
-      <div className="form-field-container" id="form-field-container">
+      <div
+        className={noScroll ? "form-field-container no-scroll" : "form-field-container"}
+        id="form-field-container"
+      >
         {showScroll.up && <UpArrow onClick={() => handleScroll("up")} active={direction} />}
         {showScroll.down && (
           <DownArrow onClick={() => handleScroll("down")} active={direction} />
         )}
 
-        {values.map((field, keyIdx) => {
-          return (
-            <FormField
-              key={field.fieldId}
-              name={field.name}
-              type={field.type}
-              value={field.value}
-              theme={theme}
-              placeholder={field.placeholder}
-              hideLabels={hideLabels}
-              dataList={dataList?.[field.name]}
-              label={field.label}
-              changeDataList={(e) => handleChangeDataList(e, keyIdx)}
-              formError={formErrors[field.name]}
-              formMessage={formMessage[field.name]}
-              handleChange={(e) => handleChange(e, keyIdx)}
-              handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
-              updateSelection={(e) => handleSelection(e, keyIdx)}
-              handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
-              fieldHeading={fieldHeading}
-              onMultiply={field.onMultiply}
-              canMultiply={field.canMultiply}
-              canRemove={field.canRemove}
-              clearSelection={clearSelection?.[field.name]}
-              disableForm={disableForm}
-              onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
-              onRemovalClick={() => handleRemovalClick(field, keyIdx)}
-            />
-          );
-        })}
+        {values.map((field, keyIdx) => (
+          <FormField
+            key={field.fieldId}
+            name={field.name}
+            type={field.type}
+            value={field.value}
+            theme={theme}
+            placeholder={field.placeholder}
+            hideLabels={hideLabels}
+            dataList={dataList?.[field.name]}
+            label={field.label}
+            changeDataList={(e) => handleChangeDataList(e, keyIdx)}
+            formError={formErrors[field.name]}
+            formMessage={formMessage[field.name]}
+            handleChange={(e) => handleChange(e, keyIdx)}
+            handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
+            updateSelection={(e) => handleSelection(e, keyIdx)}
+            handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
+            fieldHeading={fieldHeading}
+            onMultiply={field.onMultiply}
+            canMultiply={field.canMultiply}
+            canRemove={field.canRemove}
+            clearSelection={clearSelection?.[field.name]}
+            disableForm={disableForm}
+            onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
+            onRemovalClick={() => handleRemovalClick(field, keyIdx)}
+          />
+        ))}
       </div>
       <div className="buttons-container">
         {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
