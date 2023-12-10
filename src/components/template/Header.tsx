@@ -85,6 +85,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               theme={`alt-${theme}`}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}
+              handleTheme={handleTheme}
             />
           </nav>
         </>

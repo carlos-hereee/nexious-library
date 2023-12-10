@@ -49,12 +49,12 @@
   margin: 0 1rem;
 }
 .highlight {
-  outline: 1px solid #{$faded};
+  border: 1px solid #{$faded};
   &:focus {
-    outline: 1px solid #{$dark-mode};
+    border: 1px solid #{$dark-mode};
   }
   &:hover {
-    outline: 1px solid #{$dark-mode};
+    border: 1px solid #{$dark-mode};
   }
 }
 .required {
