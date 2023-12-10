@@ -15,6 +15,7 @@ declare module "nxs-card" {
     uid?: string;
     sharedKey?: string;
     heroId?: string;
+    onClick?: (key: unknown) => void;
   };
   export interface CardProp {
     title?: string;

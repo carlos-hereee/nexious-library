@@ -4,7 +4,7 @@ import { capFirstCharacter } from "@nxs-utils/data/text";
 import { Icon } from "@nxs-atoms";
 
 const CTA: React.FC<CTAProps> = (props) => {
-  const { cta, onClick, viewAsPreview } = props;
+  const { cta, viewAsPreview } = props;
 
   return (
     <div className="call-to-action">
@@ -25,7 +25,7 @@ const CTA: React.FC<CTAProps> = (props) => {
           <IconButton
             icon={{ icon, label }}
             theme={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}
-            onClick={() => onClick && onClick(data)}
+            onClick={() => data.onClick && data.onClick(data)}
             key={uid}
           />
         ) : (
@@ -33,7 +33,7 @@ const CTA: React.FC<CTAProps> = (props) => {
             <button
               type="button"
               className={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}
-              onClick={() => onClick && onClick(data)}
+              onClick={() => data.onClick && data.onClick(data)}
               key={uid}
             >
               {capFirstCharacter(label)}
