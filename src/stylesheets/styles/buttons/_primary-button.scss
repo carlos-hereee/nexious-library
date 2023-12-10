@@ -19,6 +19,14 @@
     border: 1px solid #{$dark-mode};
   }
 }
+.btn-card {
+  // width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+  min-width: 100%;
+  min-height: 100%;
+}
 .btn-cta {
   // display: flex;
   background-color: #{$cta-color};

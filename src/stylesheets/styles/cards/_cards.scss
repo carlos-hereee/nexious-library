@@ -16,9 +16,17 @@
     max-width: auto;
   }
 }
+.card-header {
+  display: flex;
+  flex-direction: column;
+  gap: #{$rem};
+  width: 100%;
+}
+
 .card-body {
   display: flex;
   flex-direction: column;
+  width: 100%;
   &:has(> .btn-primary) {
     justify-content: space-between;
     .btn-primary {

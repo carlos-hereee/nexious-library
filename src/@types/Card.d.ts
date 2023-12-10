@@ -37,8 +37,11 @@ declare module "nxs-card" {
   export interface CardProps {
     data: CardProp;
     theme?: string;
+    canRemove?: string;
     hero?: AssetProps;
     onClick?: (key: unknown) => void;
+    onRemoveFromCart?: (key: unknown) => void;
+    onAddToCart?: (key: unknown) => void;
   }
   export interface HeroCardProps {
     data: CardProp;

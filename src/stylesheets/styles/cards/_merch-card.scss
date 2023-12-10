@@ -1,0 +1,8 @@
+.merch-card {
+  min-height: #{$min-card-height};
+  max-width: #{$max-card-width};
+  display: flex;
+  gap: #{$rem};
+  flex-direction: column;
+  flex: 1;
+}
