@@ -4,44 +4,39 @@ import { capFirstCharacter } from "@nxs-utils/data/text";
 import { Icon } from "@nxs-atoms";
 
 const CTA: React.FC<CTAProps> = (props) => {
-  const { cta, viewAsPreview } = props;
+  const { cta, viewAsPreview, onClick } = props;
 
-  return (
-    <div className="call-to-action">
-      {cta.map((data) => {
-        const icon = data.icon || "";
-        const uid = data.uid || data.heroId || data.sharedKey || "";
-        const label = data.label || "";
-        if (viewAsPreview) {
-          // prevent nesting buttons
-          return (
-            <div key={uid} className={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}>
-              {icon && <Icon icon={icon} />}
-              {label && label}
-            </div>
-          );
-        }
-        return icon ? (
-          <IconButton
-            icon={{ icon, label }}
-            theme={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}
-            onClick={() => data.onClick && data.onClick(data)}
-            key={uid}
-          />
-        ) : (
-          label && (
-            <button
-              type="button"
-              className={data.theme ? `btn ${data.theme}` : "btn-main btn-cta"}
-              onClick={() => data.onClick && data.onClick(data)}
-              key={uid}
-            >
-              {capFirstCharacter(label)}
-            </button>
-          )
-        );
-      })}
-    </div>
+  const icon = cta.icon || "";
+  const uid = cta.uid || cta.heroId || cta.sharedKey || "";
+  const label = cta.label || "";
+  const theme = cta.theme || "";
+  if (viewAsPreview) {
+    // prevent nesting buttons
+    return (
+      <div key={uid} className={theme ? `btn ${theme}` : "btn-main btn-cta"}>
+        {icon && <Icon icon={icon} />}
+        {label && label}
+      </div>
+    );
+  }
+  return icon ? (
+    <IconButton
+      icon={{ icon, label }}
+      theme={theme ? `btn ${theme}` : "btn-main btn-cta"}
+      onClick={onClick}
+      key={uid}
+    />
+  ) : (
+    label && (
+      <button
+        type="button"
+        className={theme ? `btn ${theme}` : "btn-main btn-cta"}
+        onClick={onClick}
+        key={uid}
+      >
+        {capFirstCharacter(label)}
+      </button>
+    )
   );
 };
 export default CTA;

@@ -15,7 +15,7 @@ declare module "nxs-card" {
     uid?: string;
     sharedKey?: string;
     heroId?: string;
-    onClick?: (key: unknown) => void;
+    // onClick?: (key: unknown) => void;
   };
   export interface CardProp {
     title?: string;
@@ -52,7 +52,7 @@ declare module "nxs-card" {
     viewAsPreview?: boolean;
   }
   export interface CTAProps {
-    cta: CTAProp[];
+    cta: CTAProp;
     onClick?: (key: unknown) => void;
     viewAsPreview?: boolean;
   }
