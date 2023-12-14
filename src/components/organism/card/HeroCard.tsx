@@ -11,7 +11,15 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
       <div className="hero-card-header">
         {title && <h1 className="hero-card-heading">{title}</h1>}
         {tagline && <h2 className="tagline">{tagline}</h2>}
-        {cta && <CTA cta={cta} onClick={onClick} viewAsPreview={viewAsPreview} />}
+        {cta &&
+          cta.map((c) => (
+            <CTA
+              key={c.uid}
+              cta={c}
+              onClick={() => onClick && onClick(c)}
+              viewAsPreview={viewAsPreview}
+            />
+          ))}
       </div>
       {hero && <Hero hero={hero} theme={hero?.theme} />}
     </div>
