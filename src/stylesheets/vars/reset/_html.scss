@@ -45,14 +45,11 @@ section {
 
 // add basic styling
 header {
-  display: grid;
-  align-content: center;
-  grid-template-columns: 2fr 3fr;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
   gap: #{$rem};
   min-height: #{$min-height};
-  @include devices(mobile) {
-    grid-template-columns: auto auto;
-  }
 }
 
 ul {

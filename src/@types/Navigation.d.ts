@@ -54,6 +54,7 @@ declare module "nxs-navigation" {
     heading?: string;
     uniqueId?: string;
     theme?: string;
+    layout?: string;
     includeHome?: boolean;
     logo?: AssetProps;
     themeList?: ThemeList[];

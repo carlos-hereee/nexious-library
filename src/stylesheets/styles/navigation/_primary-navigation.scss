@@ -1,14 +1,9 @@
 .primary-navigation {
-  overflow-x: auto;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-  padding: 0 #{$rem};
+  margin-left: auto;
   @include devices(tablet) {
     display: none;
-  }
-  .navigation {
-    padding: #{$rem025};
-    overflow-x: auto;
   }
 }

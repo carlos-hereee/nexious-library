@@ -60,8 +60,9 @@
 }
 .btn-logo {
   font: initial;
-  max-width: 100%;
-  width: 100%;
+  max-width: #{$max-width-button-lg};
+  padding: 0;
+  // width: 100%;
 }
 .btn-icon {
   max-width: #{$min-icon-width};
