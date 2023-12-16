@@ -1,7 +1,7 @@
-import type { InputProps } from "nxs-form";
+import type { NumberInputProps } from "nxs-form";
 
-const InputQuantity: React.FC<InputProps> = (props) => {
-  const { min, max, value, onChange, onBlur } = props;
+const InputQuantity: React.FC<NumberInputProps> = (props) => {
+  const { min, max, value, onChange, onBlur, isDisabled } = props;
   return (
     <input
       className="input-quantity"
@@ -11,6 +11,7 @@ const InputQuantity: React.FC<InputProps> = (props) => {
       value={value}
       onChange={onChange}
       onBlur={onBlur}
+      disabled={isDisabled}
     />
   );
 };

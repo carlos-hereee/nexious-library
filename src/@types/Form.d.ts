@@ -86,6 +86,23 @@ declare module "nxs-form" {
     onBlur?: () => void;
     formMessage?: string;
   };
+  export interface NumberInputProps {
+    name: string;
+    value: number;
+    label?: string;
+    theme?: string;
+    error?: string;
+    type?: string;
+    placeholder?: string;
+    min?: number;
+    max?: number;
+    hideLabel?: boolean;
+    checked?: boolean;
+    isDisabled?: boolean;
+    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    onBlur?: () => void;
+    formMessage?: string;
+  }
   export type InputProps = {
     name: string;
     value?: string;
@@ -203,6 +220,7 @@ declare module "nxs-form" {
     fieldHeading?: { [key: string]: string };
     handleChange: (key: OnchangeProps) => void;
     changeDataList: (key: string) => void;
+    handleCountChange: React.ChangeEventHandler<HTMLInputElement>;
     updateSelection?: (key: string, name: string) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;

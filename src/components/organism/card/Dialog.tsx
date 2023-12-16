@@ -1,5 +1,5 @@
-import { Button } from "main";
 import type { DialogProps } from "nxs-card";
+import { Button } from "@nxs-atoms";
 
 const Dialog = (props: DialogProps) => {
   const { theme, onDialogClose, children, header } = props;

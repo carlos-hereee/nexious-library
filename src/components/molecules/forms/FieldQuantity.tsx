@@ -1,11 +1,14 @@
 import { InputQuantity, Label } from "@nxs-atoms";
-import type { InputProps } from "nxs-form";
+import type { NumberInputProps } from "nxs-form";
 
-const FieldQuantity: React.FC<InputProps> = (props) => {
-  const { min, max, value, onChange, onBlur, name, label } = props;
+const FieldQuantity: React.FC<NumberInputProps> = (props) => {
+  const { min, max, value, onChange, onBlur, name, label, hideLabel, error, formMessage } =
+    props;
   return (
-    <div className="field">
-      {label && <Label label={label} name={name} />}
+    <>
+      {!hideLabel && label && (
+        <Label name={name} label={label} errors={error} message={formMessage} />
+      )}
       <InputQuantity
         name={name}
         min={min}
@@ -14,7 +17,7 @@ const FieldQuantity: React.FC<InputProps> = (props) => {
         onChange={onChange}
         onBlur={onBlur}
       />
-    </div>
+    </>
   );
 };
 export default FieldQuantity;

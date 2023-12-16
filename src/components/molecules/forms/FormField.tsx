@@ -1,6 +1,14 @@
 /* eslint-disable no-nested-ternary */
 import { auth, textarea } from "@nxs-utils/form/types";
-import { AuthField, DataList, Field, Select, TextArea, UploadFile } from "@nxs-molecules";
+import {
+  AuthField,
+  DataList,
+  Field,
+  FieldQuantity,
+  Select,
+  TextArea,
+  UploadFile,
+} from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 
@@ -8,7 +16,8 @@ const FormField = (props: FormFieldProps) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection } =
     props;
-  const { formError, updateSelection, handleCheckbox, theme, disableForm } = props;
+  const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } =
+    props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
 
@@ -84,6 +93,15 @@ const FormField = (props: FormFieldProps) => {
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />
+      ) : type === "number" ? (
+        <FieldQuantity
+          // input={{ name, error: formError, isDisabled: disableForm }}
+          name={name}
+          formMessage={formMessage}
+          value={typeof value === "number" ? value : 0}
+          label={label}
+          onChange={handleCountChange}
+        />
       ) : (
         <Field
           name={name}
@@ -97,23 +115,25 @@ const FormField = (props: FormFieldProps) => {
           isDisabled={disableForm}
         />
       )}
-      <div className="flex-end">
-        {canRemove && onMultiply && (
-          <Button
-            label={onMultiply.removalLabel}
-            onClick={onRemovalClick}
-            // todo add confirmation removal
-            theme="btn-cancel"
-          />
-        )}
-        {canMultiply && onMultiply && (
-          <Button
-            label={onMultiply?.additionLabel}
-            onClick={onMultiplyClick}
-            isDisable={disableForm}
-          />
-        )}
-      </div>
+      {onMultiply && (
+        <div className="flex-end">
+          {canRemove && (
+            <Button
+              label={onMultiply.removalLabel}
+              onClick={onRemovalClick}
+              // todo add confirmation removal
+              theme="btn-cancel"
+            />
+          )}
+          {canMultiply && (
+            <Button
+              label={onMultiply?.additionLabel}
+              onClick={onMultiplyClick}
+              isDisable={disableForm}
+            />
+          )}
+        </div>
+      )}
     </div>
   );
 };

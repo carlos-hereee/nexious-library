@@ -58,7 +58,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
       setValues(oldValues);
     }
-    watchElement("form-field-container", { height: 600 });
+    watchElement("form-field-container", { height: 900 });
   }, []);
 
   useEffect(() => {
@@ -183,7 +183,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setDirection(target);
     scrollInDirection("form-field-container", target);
   };
-
+  const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
+    const { value } = e.target;
+    const oldValues = [...values];
+    oldValues[idx].value = parseInt(value, 10);
+    setValues(oldValues);
+  };
   if (!initialValues)
     return (
       <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
@@ -220,6 +225,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             formError={formErrors[field.name]}
             formMessage={formMessage[field.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
+            handleCountChange={(e) => handleCountChange(e, keyIdx)}
             handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
             updateSelection={(e) => handleSelection(e, keyIdx)}
             handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
