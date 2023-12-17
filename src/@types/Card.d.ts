@@ -22,6 +22,7 @@ declare module "nxs-card" {
     tagline?: string;
     body?: string;
     name?: string;
+    hero?: string;
     uid?: string;
     quantity?: string;
     subtitle?: string;
