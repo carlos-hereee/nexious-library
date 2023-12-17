@@ -1,17 +1,13 @@
 import type { ErrorProps } from "nxs-errors";
 
 const EmptySection: React.FC<ErrorProps> = (props) => {
-  const { message, heading } = props;
+  const { message, heading, children } = props;
   return (
-    <p>
-      {heading ? (
-        <strong className="heading">{heading}</strong>
-      ) : (
-        <strong className="heading">Nothing to see here</strong>
-      )}
-      <br />
-      {message}
-    </p>
+    <div className="container">
+      <h3>{heading || "Nothing to see here"}</h3>
+      {message && <p>{message}</p>}
+      {children}
+    </div>
   );
 };
 

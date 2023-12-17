@@ -1,8 +1,6 @@
 import { roundToHundreth } from "@nxs-math/toHundreth";
+import type { TotalProps } from "custom-props";
 
-type TotalProps = {
-  total: number;
-};
 const Total: React.FC<TotalProps> = (props) => {
   const { total } = props;
   const tax = total * 0.0625;

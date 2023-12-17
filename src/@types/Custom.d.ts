@@ -19,4 +19,8 @@ declare module "custom-props" {
     sections?: { [key: string]: string }[];
     medias?: { [key: string]: string }[];
   }
+  export interface TotalProps {
+    total: number;
+    theme: string;
+  }
 }

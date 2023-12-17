@@ -86,7 +86,7 @@ export { default as CalendarEventList } from "@nxs-molecules/calendar/CalendarEv
 // // tables
 // export { default as ColumnGroup } from "@nxs-molecules/table/ColumnGroup";
 // export { default as TableRow } from "@nxs-molecules/table/TableRow";
-
+export { default as Total } from "@nxs-organism/table/Total";
 // navigation
 export { default as NavToggle } from "@nxs-molecules/navigation/NavToggle";
 
@@ -138,7 +138,7 @@ export { uniqueId } from "@nxs-utils/data/uniqueId";
 export { urlFile } from "@nxs-utils/data/urlFile";
 export { capFirstCharacter, makeStrReadable } from "@nxs-utils/data/text";
 export { objToArray } from "@nxs-utils/app/objLength";
-
+export { combineArraysWithOutDups } from "@nxs-utils/app/combineArraysWithOutDups";
 // /// <reference types="nxs-form" />
 // // export types
 // export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";

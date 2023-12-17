@@ -9,6 +9,8 @@ const Cart: React.FC<CartProps> = (props) => {
   const [cancel, setCancel] = useState<string>("");
   // const [active, setActive] = useState<string>();
 
+  console.log("data :>> ", data);
+
   const cancelReq = (e: unknown, isConfirm: boolean) => {
     return isConfirm ? removeFromCart(e) : setCancel("");
   };
@@ -17,10 +19,10 @@ const Cart: React.FC<CartProps> = (props) => {
     <div className="flex-d-column">
       <Heading data={heading} />
       {data.map((c) =>
-        cancel === c.service.uid ? (
-          <CartCancel key={c.service.uid} click={(e) => cancelReq(c, e)} />
+        cancel === c.uid ? (
+          <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
         ) : (
-          <CartRow key={c.service.uid} data={c} />
+          <CartRow key={c.uid} data={c} />
         )
       )}
     </div>

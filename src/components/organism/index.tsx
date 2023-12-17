@@ -9,7 +9,7 @@ export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navi
 // export { default as TableFooter } from "@nxs-organism/table/TableFooter";
 
 // TODO: Potential template
-// export { default as Total } from "@nxs-organism/table/Total";
+export { default as Total } from "@nxs-organism/table/Total";
 
 // card
 export { default as Card } from "@nxs-organism/card/Card";
