@@ -25,7 +25,8 @@
   text-align: left;
   gap: #{$rem};
   min-width: 100%;
-  min-height: 100%;
+  padding: 0;
+  // min-height: 100%;
 }
 .btn-cta {
   background-color: #{$cta-color};

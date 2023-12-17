@@ -8,7 +8,9 @@ const Card: React.FC<CardProps> = (props) => {
     <div className={`card ${theme || ""}`}>
       <CardHeader data={data} hero={hero} />
       <CardBody data={data} />
-      {data.cta && onClick && <CTA cta={data.cta} onClick={() => onClick(data)} />}
+      {data.cta &&
+        onClick &&
+        data.cta.map((c) => <CTA key={c.uid} cta={c} onClick={() => onClick(c)} />)}
     </div>
   );
 };

@@ -10,7 +10,9 @@ const CartRow: React.FC<CardProps> = (props) => {
       <CardHeader data={data} />
       <div className="cart-column">
         {data.body && <ReadMore data={data.body} uid={data.uid || uniqueId()} />}
-        {data.cta && <CTA cta={data.cta} onClick={onClick} />}
+        {data.cta &&
+          onClick &&
+          data.cta.map((c) => <CTA key={c.uid} cta={c} onClick={() => onClick(c)} />)}
       </div>
     </div>
   );

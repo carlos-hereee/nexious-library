@@ -23,6 +23,7 @@ declare module "nxs-card" {
     body?: string;
     name?: string;
     uid?: string;
+    quantity?: string;
     subtitle?: string;
     hasHero?: boolean;
     hasFeatures?: boolean;
@@ -54,6 +55,7 @@ declare module "nxs-card" {
   export interface CTAProps {
     cta: CTAProp;
     onClick?: (key: unknown) => void;
+    // onClick?: (key: unknown) => void;
     viewAsPreview?: boolean;
   }
   export interface CardSectionProps {

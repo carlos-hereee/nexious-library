@@ -1,8 +1,39 @@
 .merch-card {
   min-height: #{$min-card-height};
   max-width: #{$max-card-width};
+  min-width: #{$min-card-width};
   display: flex;
   gap: #{$rem};
   flex-direction: column;
   flex: 1;
+
+  position: relative;
+  justify-content: space-between;
+
+  .btn-card,
+  .merch-card-header {
+    height: 100%;
+  }
+}
+.merch-card-cost {
+  top: 0;
+  right: -3%;
+  z-index: 99;
+  position: absolute;
+  font-size: xx-large;
+  padding: #{$rem025} #{$rem};
+  border-radius: 10px;
+  background-color: #{$cta-color};
+  -webkit-transform: rotate(30deg);
+  -moz-transform: rotate(30deg);
+  -ms-transform: rotate(30deg);
+  -o-transform: rotate(30deg);
+  transform: rotate(30deg);
+}
+.merch-card-body {
+  text-align: left;
+  width: 100%;
+}
+.merch-card-hero {
+  width: 100%;
 }
