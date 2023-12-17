@@ -23,28 +23,29 @@ const MerchCard: React.FC<CardProps> = (props) => {
         </div>
       </button>
       <div className="buttons-container">
-        {onAddToCart && (
-          <CTA
-            cta={{
-              name: data.title || "",
-              label: "+ add to cart",
-              uid: "+add",
-              theme: "btn-add",
-            }}
-            onClick={() => onAddToCart(data)}
-          />
-        )}
-        {canRemove && onRemoveFromCart && (
-          <CTA
-            cta={{
-              name: data.title || "",
-              label: "- remove from cart",
-              uid: "-subtract",
-              theme: "btn-subtract",
-            }}
-            onClick={() => onRemoveFromCart(data)}
-          />
-        )}
+        {canRemove
+          ? onRemoveFromCart && (
+              <CTA
+                cta={{
+                  name: data.title || "",
+                  label: "- remove from cart",
+                  uid: "-subtract",
+                  theme: "btn-subtract",
+                }}
+                onClick={() => onRemoveFromCart(data)}
+              />
+            )
+          : onAddToCart && (
+              <CTA
+                cta={{
+                  name: data.title || "",
+                  label: "+ add to cart",
+                  uid: "+add",
+                  theme: "btn-add",
+                }}
+                onClick={() => onAddToCart(data)}
+              />
+            )}
       </div>
     </div>
   );
