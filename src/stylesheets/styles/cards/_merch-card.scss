@@ -21,9 +21,11 @@
   z-index: 99;
   position: absolute;
   font-size: xx-large;
+  text-align: center;
   padding: #{$rem025} #{$rem};
   border-radius: 10px;
   background-color: #{$cta-color};
+  min-width: #{$min-cell-width};
   -webkit-transform: rotate(30deg);
   -moz-transform: rotate(30deg);
   -ms-transform: rotate(30deg);
