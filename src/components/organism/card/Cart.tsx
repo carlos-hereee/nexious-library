@@ -11,7 +11,7 @@ const Cart: React.FC<CartProps> = (props) => {
     return isConfirm ? removeFromCart(e as MerchProps) : setCancel("");
   };
 
-  console.log("data :>> ", data);
+  // console.log("data :>> ", data);
 
   const handleCLick = (e: unknown) => {
     const { uid } = e as { uid: string };

@@ -10,10 +10,12 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
 
   const handlePaypal = () => paypalPayment && paypalPayment(active);
   const handleStore = () => inStorePayment && inStorePayment(active);
+
+  // console.log("data :>> ", data);
   return (
-    <div className="flex-d-column">
+    <div className="container">
       <h2 className="heading">Enter Payment Details</h2>
-      <div className="flex-j-between">
+      <div className="buttons-container">
         {data.map((d: PaymentType) => (
           <button
             className="btn-main btn-payment"
@@ -23,9 +25,9 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           >
             {active && <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />}
             {d.hero ? (
-              <Hero hero={d.hero} theme={`icon hero-${d.icon}`} />
+              <Hero hero={d.hero} theme={`icon hero-icon icon-${d.icon}`} />
             ) : (
-              d.icon && <Icon icon={d.icon} size="3x" name={d.icon} />
+              d.icon && <Icon icon={d.icon} name={d.icon} theme="hero-icon" />
             )}
             <span> {d.name}</span>
           </button>
@@ -33,7 +35,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       </div>
       {active?.type === "visa/credit" && (
         <Form
-          formId=""
+          formId="payment-methods"
           initialValues={{
             cardHolderName: "",
             cardNumber: "",
@@ -49,6 +51,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           Pay with paypal
         </button>
       )}
+
       {active.type === "in-store" && (
         <button type="button" className="btn-cta" onClick={handleStore}>
           {active.hero && <Hero hero={active.hero} theme="icon" />}

@@ -13,7 +13,7 @@ import { svg } from "./Assets";
  * @returns JSX.Element
  */
 const Icon: React.FC<IconProps> = (props) => {
-  const { icon, size, spin, color, name, className, hideHints } = props;
+  const { icon, size, spin, color, name, hideHints, theme } = props;
 
   if (!hideHints) {
     if (!icon) {
@@ -24,8 +24,8 @@ const Icon: React.FC<IconProps> = (props) => {
     }
   }
 
-  const n = className
-    ? `icon${name ? ` icon-${name} ${className}` : className}`
+  const n = theme
+    ? `icon${name ? ` icon-${name} ${theme}` : theme}`
     : `icon${name ? ` icon-${name}` : ""}`;
 
   return (

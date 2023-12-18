@@ -19,6 +19,7 @@
 .btn-payment {
   gap: #{$rem};
   justify-content: flex-start;
+  flex: 1;
 }
 .btn-selected,
 .btn-active {

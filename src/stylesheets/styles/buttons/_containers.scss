@@ -4,11 +4,11 @@
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
   grid-template-rows: auto auto;
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
 }
 .buttons-container-row {
   display: flex;
   gap: #{$rem};
-  // .btn-main {
-  //   min-width: 100%;
-  // }
 }

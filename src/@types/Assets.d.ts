@@ -35,8 +35,9 @@ declare module "nxs-assets" {
     onLogoClick?: () => void;
   }
   export interface UserProps {
-    hero: AssetProps;
+    hero?: string;
     name?: string;
+    username?: string;
     email?: string;
     phone?: string;
     uid?: string;

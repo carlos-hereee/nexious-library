@@ -11,7 +11,8 @@ declare module "nxs-button" {
     label?: string;
     name?: string;
     hideHints?: boolean;
-    className?: string;
+    theme?: string;
+    layout?: string;
   };
   export interface ButtonProps {
     // optional
