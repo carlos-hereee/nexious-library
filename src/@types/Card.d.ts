@@ -22,6 +22,8 @@ declare module "nxs-card" {
     tagline?: string;
     body?: string;
     name?: string;
+    theme?: string;
+    label?: string;
     hero?: string;
     uid?: string;
     quantity?: string;
@@ -92,7 +94,6 @@ declare module "nxs-cart" {
   };
   export interface CartProps {
     data: {
-      service: { [key: string]: string };
       title?: string;
       body?: string;
       uid?: string;

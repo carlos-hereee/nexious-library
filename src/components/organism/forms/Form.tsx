@@ -188,6 +188,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     const oldValues = [...values];
     oldValues[idx].value = parseInt(value, 10);
     setValues(oldValues);
+    if (onChange) onChange(oldValues[idx].value);
   };
   if (!initialValues)
     return (

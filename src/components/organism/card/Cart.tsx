@@ -13,6 +13,12 @@ const Cart: React.FC<CartProps> = (props) => {
     return isConfirm ? removeFromCart(e) : setCancel("");
   };
 
+  console.log("data :>> ", data);
+
+  const handleCLick = (e: unknown) => {
+    const { uid } = e as { uid: string };
+    setCancel(uid);
+  };
   return (
     <div className="container">
       {heading && <Heading data={heading} />}
@@ -20,7 +26,11 @@ const Cart: React.FC<CartProps> = (props) => {
         cancel === c.uid ? (
           <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
         ) : (
-          <CartRow key={c.uid} data={c} />
+          <CartRow
+            key={c.uid}
+            data={{ ...c, label: "- remove from cart", theme: "btn-main" }}
+            onClick={handleCLick}
+          />
         )
       )}
     </div>
