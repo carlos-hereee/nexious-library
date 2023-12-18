@@ -241,19 +241,23 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           />
         ))}
       </div>
-      <div className="buttons-container">
-        {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
-        {!hideSubmit && onSubmit && (
-          <SubmitButton label={submitLabel} isDisable={disableForm} />
-        )}
-        {onViewPreview && (
-          <IconButton
-            icon={{ icon: "eye", label: previewLabel }}
-            theme="btn-main"
-            onClick={handleViewPreview}
-          />
-        )}
-      </div>
+      {(onCancel || onSubmit || onViewPreview) && (
+        <div className="buttons-container">
+          {onCancel && (
+            <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />
+          )}
+          {!hideSubmit && onSubmit && (
+            <SubmitButton label={submitLabel} isDisable={disableForm} />
+          )}
+          {onViewPreview && (
+            <IconButton
+              icon={{ icon: "eye", label: previewLabel }}
+              theme="btn-main"
+              onClick={handleViewPreview}
+            />
+          )}
+        </div>
+      )}
     </form>
   );
 };

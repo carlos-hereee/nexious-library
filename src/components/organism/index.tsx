@@ -37,4 +37,4 @@ export type { FormProps } from "nxs-form";
 
 // checkout
 export { default as PaymentMethods } from "@nxs-organism/checkout/PaymentMethods";
-export type { PaymentMethodsProps, PaymentType, CartProps } from "nxs-cart";
+export type { PaymentMethodsProps, PaymentType, CartProps } from "nxs-card";

@@ -51,18 +51,7 @@
     grid-template-columns: 1fr;
   }
 }
-.buttons-container {
-  display: grid;
-  gap: #{$rem};
-  justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
-  grid-template-rows: auto auto;
-  .btn {
-    width: 100%;
-    min-width: 100%;
-    // flex: 1;
-  }
-}
+
 .navigation-container {
   width: 100%;
   display: grid;

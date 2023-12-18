@@ -1,16 +1,14 @@
 import { useState } from "react";
 import { Heading } from "@nxs-atoms";
-import { CartRow, CartCancel } from "@nxs-molecules";
-import type { CartProps } from "nxs-cart";
+import { CartRow, CartCancel, CTA } from "@nxs-molecules";
+import type { CartProps, MerchProps } from "nxs-card";
 
 const Cart: React.FC<CartProps> = (props) => {
-  // const { data, heading, removeFromCart, onEditDetails } = props;
-  const { data, heading, removeFromCart } = props;
+  const { data, heading, removeFromCart, setQuantity, theme } = props;
   const [cancel, setCancel] = useState<string>("");
-  // const [active, setActive] = useState<string>();
 
   const cancelReq = (e: unknown, isConfirm: boolean) => {
-    return isConfirm ? removeFromCart(e) : setCancel("");
+    return isConfirm ? removeFromCart(e as MerchProps) : setCancel("");
   };
 
   console.log("data :>> ", data);
@@ -20,17 +18,19 @@ const Cart: React.FC<CartProps> = (props) => {
     setCancel(uid);
   };
   return (
-    <div className="container">
+    <div className={theme || "cart"}>
       {heading && <Heading data={heading} />}
       {data.map((c) =>
         cancel === c.uid ? (
           <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
         ) : (
-          <CartRow
-            key={c.uid}
-            data={{ ...c, label: "- remove from cart", theme: "btn-main" }}
-            onClick={handleCLick}
-          />
+          <div className="container" key={c.uid}>
+            <CartRow data={c} setQuantity={(count: number) => setQuantity(c, count)} />
+            <CTA
+              cta={{ ...c, label: "- remove from cart", theme: "btn-main w-full" }}
+              onClick={() => handleCLick(data)}
+            />
+          </div>
         )
       )}
     </div>

@@ -12,25 +12,17 @@ const CTA: React.FC<CTAProps> = (props) => {
   if (viewAsPreview) {
     // prevent nesting buttons
     return (
-      <div className={theme ? `btn ${theme}` : "btn-main btn-cta"}>
+      <div className={theme || "btn-main btn-cta"}>
         {icon && <Icon icon={icon} />}
         {label && label}
       </div>
     );
   }
   return icon ? (
-    <IconButton
-      icon={{ icon, label }}
-      theme={theme ? `btn ${theme}` : "btn-main btn-cta"}
-      onClick={onClick}
-    />
+    <IconButton icon={{ icon, label }} theme={theme || "btn-main btn-cta"} onClick={onClick} />
   ) : (
     label && (
-      <button
-        type="button"
-        className={theme ? `btn ${theme}` : "btn-main btn-cta"}
-        onClick={onClick}
-      >
+      <button type="button" className={theme || "btn-main btn-cta"} onClick={onClick}>
         {capFirstCharacter(label)}
       </button>
     )

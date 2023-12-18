@@ -1,0 +1,14 @@
+.buttons-container {
+  display: grid;
+  gap: #{$rem};
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
+  grid-template-rows: auto auto;
+}
+.buttons-container-row {
+  display: flex;
+  gap: #{$rem};
+  // .btn-main {
+  //   min-width: 100%;
+  // }
+}

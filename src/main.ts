@@ -160,12 +160,12 @@ export { combineArraysWithOutDups } from "@nxs-utils/app/combineArraysWithOutDup
 // export type { CalendarNavProps, CalendarEventProps } from "nxs-calendar";
 // /// <reference types="nxs-card" />
 // export type { HeroCardProps, UserCardProps, CardSectionProps, CardProps } from "nxs-card";
-// /// <reference types="nxs-cart" />
-// export type { CartProps, PaymentMethodsProps, PaymentType } from "nxs-cart";
+// /// <reference types="nxs-card" />
+// export type { CartProps, PaymentMethodsProps, PaymentType } from "nxs-card";
 
 // / <reference types="nxs-form" />
 // / <reference types="nxs-card" />
-// / <reference types="nxs-cart" />
+// / <reference types="nxs-card" />
 // / <reference types="nxs-calendar" />
 // / <reference types="nxs-button" />
 // / <reference types="nxs-errors" />

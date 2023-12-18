@@ -4,7 +4,7 @@
   overflow-y: auto;
   gap: #{$rem};
   max-height: #{$max-form-height};
-  padding: #{$rem} #{$rem025};
+  // padding: #{$rem} #{$rem025};
   scroll-behavior: smooth;
   // position: fixed;
 }

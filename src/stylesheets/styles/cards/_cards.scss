@@ -58,13 +58,7 @@
   border: 1px solid white;
   padding: 0.25rem 4rem;
 }
-.cancel-row {
-  min-width: 250px;
-  text-align: center;
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
+
 .cancel-row-footer {
   display: flex;
   gap: #{$rem};
@@ -91,7 +85,7 @@
   border-radius: #{$border-radius};
   grid-template-rows: auto 3fr;
   padding: #{$rem};
-  box-shadow: 1px 1px 4px 1px #{$light-primary};
+  // box-shadow: 1px 1px 4px 1px #{$action-color-alt};
   max-width: #{$max-app-card-width};
   min-width: #{$min-app-card-width};
   .card-row-body {

@@ -17,6 +17,15 @@ declare module "nxs-card" {
     heroId?: string;
     // onClick?: (key: unknown) => void;
   };
+  export interface MerchProps {
+    cost: number;
+    inStock: number;
+    quantity: number;
+    name: string;
+    body: string;
+    hero: string;
+    uid: string;
+  }
   export interface CardProp {
     title?: string;
     tagline?: string;
@@ -26,13 +35,14 @@ declare module "nxs-card" {
     label?: string;
     hero?: string;
     uid?: string;
-    quantity?: string;
     subtitle?: string;
     hasHero?: boolean;
     hasFeatures?: boolean;
     isForSale?: boolean;
     isBookable?: boolean;
     isAccessory?: boolean;
+    quantity?: number;
+    inStock?: number;
     count?: number;
     cost?: number;
     hyperlink?: { word: string; link: string }[];
@@ -47,6 +57,7 @@ declare module "nxs-card" {
     onClick?: (key: unknown) => void;
     onRemoveFromCart?: (key: unknown) => void;
     onAddToCart?: (key: unknown) => void;
+    setQuantity?: (key: number) => void;
   }
   export interface HeroCardProps {
     data: CardProp;
@@ -74,10 +85,6 @@ declare module "nxs-card" {
     theme?: boolean;
     user: UserProps;
   }
-}
-
-declare module "nxs-cart" {
-  import type { AssetProps } from "nxs-assets";
 
   export type PaymentType = {
     uid: string;
@@ -93,14 +100,11 @@ declare module "nxs-cart" {
     inStorePayment?: (a: unknown) => void;
   };
   export interface CartProps {
-    data: {
-      title?: string;
-      body?: string;
-      uid?: string;
-    }[];
+    data: MerchProps[];
     heading: string;
-    removeFromCart: (e: unknown) => void;
-    onEditDetails: (e: unknown) => void;
+    removeFromCart: (e: MerchProps) => void;
+    onEditDetails: (e: MerchProps) => void;
+    setQuantity: (e: MerchProps, count: number) => void;
     theme?: string;
   }
 }

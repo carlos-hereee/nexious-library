@@ -3,6 +3,7 @@ button {
   align-items: center;
   justify-content: center;
   background-color: transparent;
+  font: inherit;
   color: inherit;
   padding: #{$rem05} #{$rem};
   max-width: #{$max-width-button};

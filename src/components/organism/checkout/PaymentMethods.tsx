@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Form } from "@nxs-organism";
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
-import type { PaymentMethodsProps, PaymentType } from "nxs-cart";
+import type { PaymentMethodsProps, PaymentType } from "nxs-card";
 
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
   const { data, visaPayment, paypalPayment, inStorePayment } = props;

@@ -3,10 +3,10 @@ type CancelRowProps = {
 };
 const CartCancel: React.FC<CancelRowProps> = ({ click }) => {
   return (
-    <div className="cancel-row">
+    <div className="container">
       <p>Are you sure you want to remove</p>
       <p>This will delete all progress</p>
-      <div className="cancel-row-footer">
+      <div className="buttons-container-row">
         <button type="button" className="btn-main" onClick={() => click(false)}>
           Back
         </button>

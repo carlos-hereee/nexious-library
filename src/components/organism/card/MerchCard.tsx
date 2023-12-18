@@ -15,11 +15,12 @@ const MerchCard: React.FC<CardProps> = (props) => {
         </div>
         <div className="merch-card-body">
           {data.cost && <strong className="merch-card-cost">${data.cost}</strong>}
-          {data.quantity ? (
-            <p className="quantity">Remaining: {data.quantity}</p>
+          {data.inStock ? (
+            <p className="quantity">Remaining: {data.inStock}</p>
           ) : (
             <p>OUT OF STOCK</p>
           )}
+          {/* {data.quantity && <p className="quantity">Remaining: {data.quantity}</p>} */}
         </div>
       </button>
       <div className="buttons-container">
