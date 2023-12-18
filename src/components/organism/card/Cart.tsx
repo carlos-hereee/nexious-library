@@ -25,7 +25,7 @@ const Cart: React.FC<CartProps> = (props) => {
           <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
         ) : (
           <div className="container" key={c.uid}>
-            <CartRow data={c} setQuantity={(count: number) => setQuantity(c, count)} />
+            <CartRow data={c} setQuantity={(count) => setQuantity(c, count)} showPrice />
             <CTA
               cta={{ ...c, label: "- remove from cart", theme: "btn-main w-full" }}
               onClick={() => handleCLick(data)}

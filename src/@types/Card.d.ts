@@ -54,6 +54,7 @@ declare module "nxs-card" {
     theme?: string;
     canRemove?: string;
     hero?: AssetProps;
+    showPrice?: boolean;
     onClick?: (key: unknown) => void;
     onRemoveFromCart?: (key: unknown) => void;
     onAddToCart?: (key: unknown) => void;
