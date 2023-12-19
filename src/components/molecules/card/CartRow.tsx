@@ -16,7 +16,7 @@ const CartRow: React.FC<CardProps> = (props) => {
         <h3 className="sub-title">Details:</h3>
         {data.body && <ReadMore data={data.body} uid={data.uid || uniqueId()} />}
       </div>
-      {data.quantity && setQuantity ? (
+      {data.inStock && setQuantity ? (
         <Form
           initialValues={{ quantity: data.quantity || 1 }}
           onChange={(e) => setQuantity(e)}

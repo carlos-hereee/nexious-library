@@ -1,15 +1,16 @@
-import { useState } from "react";
-import { Form } from "@nxs-organism";
+// import { useState } from "react";
+// import { Form } from "@nxs-organism";
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
 import type { PaymentMethodsProps, PaymentType } from "nxs-card";
 
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
-  const { data, visaPayment, paypalPayment, inStorePayment } = props;
-  const [active, setActive] = useState<PaymentType>(data[0]);
+  const { data, onClick, active } = props;
+  // const { data, visaPayment, paypalPayment, inStorePayment, onClick } = props;
+  // const [active, setActive] = useState<PaymentType>(data[0]);
 
-  const handlePaypal = () => paypalPayment && paypalPayment(active);
-  const handleStore = () => inStorePayment && inStorePayment(active);
+  // const handlePaypal = () => paypalPayment && paypalPayment(active);
+  // const handleStore = () => inStorePayment && inStorePayment(active);
 
   // console.log("data :>> ", data);
   return (
@@ -18,12 +19,12 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
       <div className="buttons-container">
         {data.map((d: PaymentType) => (
           <button
-            className="btn-main btn-payment"
+            className={active?.uid === d.uid ? "btn-main btn-cta" : "btn-main btn-payment"}
             type="button"
             key={d.uid}
-            onClick={() => setActive(d)}
+            onClick={() => onClick(d)}
           >
-            {active && <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />}
+            {/* {active && <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />} */}
             {d.hero ? (
               <Hero hero={d.hero} theme={`icon hero-icon icon-${d.icon}`} />
             ) : (
@@ -33,7 +34,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           </button>
         ))}
       </div>
-      {active?.type === "visa/credit" && (
+      {/* {active?.type === "visa/credit" && (
         <Form
           formId="payment-methods"
           initialValues={{
@@ -44,20 +45,33 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
           }}
           onSubmit={(e) => visaPayment && visaPayment(e)}
         />
+      )} */}
+      {/* {active.type === "visa/credit" && (
+        <div className="flex-center">
+          <button type="button" className="btn-main btn-cta" onClick={handlePaypal}>
+            {active.hero && <Hero hero={active.hero} theme="icon" />}
+            Continue with credit/debit
+          </button>
+        </div>
       )}
+
       {active.type === "paypal" && (
-        <button type="button" className="btn-cta" onClick={handlePaypal}>
-          {active.hero && <Hero hero={active.hero} theme="icon" />}
-          Pay with paypal
-        </button>
+        <div className="flex-center">
+          <button type="button" className="btn-main btn-cta" onClick={handlePaypal}>
+            {active.hero && <Hero hero={active.hero} theme="icon" />}
+            Pay with paypal
+          </button>
+        </div>
       )}
 
       {active.type === "in-store" && (
-        <button type="button" className="btn-cta" onClick={handleStore}>
-          {active.hero && <Hero hero={active.hero} theme="icon" />}
-          Complete Checkout
-        </button>
-      )}
+        <div className="flex-center">
+          <button type="button" className="btn-main btn-cta" onClick={handleStore}>
+            {active.hero && <Hero hero={active.hero} theme="icon" />}
+            Complete Checkout
+          </button>
+        </div>
+      )} */}
     </div>
   );
 };

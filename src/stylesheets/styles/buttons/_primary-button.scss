@@ -12,6 +12,7 @@
   width: 100%;
   max-width: #{$max-width-button-lg};
   border: 1px solid #{$faded};
+  // padding: 0;
   &:hover {
     border: 1px solid #{$dark-mode};
   }

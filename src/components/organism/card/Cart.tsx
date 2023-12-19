@@ -13,10 +13,6 @@ const Cart: React.FC<CartProps> = (props) => {
 
   // console.log("data :>> ", data);
 
-  const handleCLick = (e: unknown) => {
-    const { uid } = e as { uid: string };
-    setCancel(uid);
-  };
   return (
     <div className={theme || "cart"}>
       {heading && <Heading data={heading} />}
@@ -28,7 +24,7 @@ const Cart: React.FC<CartProps> = (props) => {
             <CartRow data={c} setQuantity={(count) => setQuantity(c, count)} showPrice />
             <CTA
               cta={{ ...c, label: "- remove from cart", theme: "btn-main w-full" }}
-              onClick={() => handleCLick(data)}
+              onClick={() => setCancel(c.uid)}
             />
           </div>
         )
