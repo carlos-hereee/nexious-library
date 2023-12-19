@@ -13,9 +13,10 @@ export { default as Input } from "@nxs-atoms/forms/Input";
 export { default as InputCheckbox } from "@nxs-atoms/forms/InputCheckbox";
 export { default as InputQuantity } from "@nxs-atoms/forms/InputQuantity";
 export { default as Label } from "@nxs-atoms/forms/Label";
+export { default as InputPrice } from "@nxs-atoms/forms/InputPrice";
 export { default as Option } from "@nxs-atoms/forms/Option";
 export { default as ShowAuthTips } from "@nxs-atoms/forms/ShowAuthTips";
-export type { InputProps } from "nxs-form";
+export type { InputProps, NumberInputProps } from "nxs-form";
 
 // // save tables components for future update
 // // table

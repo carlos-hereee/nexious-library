@@ -11,6 +11,7 @@ import {
 } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
+import FieldPrice from "./FieldPrice";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
@@ -93,9 +94,16 @@ const FormField = (props: FormFieldProps) => {
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />
+      ) : type === "price" ? (
+        <FieldPrice
+          name={name}
+          formMessage={formMessage}
+          value={typeof value === "number" ? value : 0}
+          label={label}
+          onChange={handleCountChange}
+        />
       ) : type === "number" ? (
         <FieldQuantity
-          // input={{ name, error: formError, isDisabled: disableForm }}
           name={name}
           formMessage={formMessage}
           value={typeof value === "number" ? value : 0}
