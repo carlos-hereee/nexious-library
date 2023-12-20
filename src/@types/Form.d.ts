@@ -38,6 +38,13 @@ declare module "nxs-form" {
     filename: string;
     file: File;
   };
+  export interface FormSchemaProps {
+    required?: string[];
+    unique?: { name: string; list: string[] }[];
+  }
+  export interface FormCountSchemaProps {
+    [key: string]: { max?: number; min?: number };
+  }
   // Type declarations go here
   export type FormProps = {
     // required props
@@ -58,8 +65,9 @@ declare module "nxs-form" {
     // showAuthTips?: boolean;
     dataList?: { [key: string]: MenuItemProp[] };
     clearSelection?: { [key: string]: boolean };
-    schema?: { required: string[]; unique?: { name: string; list: string[] }[] };
-    fieldHeading?: { [key: string]: string };
+    schema?: FormSchemaProps;
+    countSchema?: FormCountSchemaProps;
+    fieldHeading?: KeyStringProp;
     labels?: KeyStringProp;
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
@@ -94,6 +102,7 @@ declare module "nxs-form" {
     error?: string;
     type?: string;
     placeholder?: string;
+    schema?: { max?: number; min?: number };
     min?: number;
     max?: number;
     hideLabel?: boolean;
@@ -217,6 +226,7 @@ declare module "nxs-form" {
     formError?: string;
     formMessage?: string;
     dataList?: MenuItemProp[];
+    countSchema?: FormCountSchemaProps;
     fieldHeading?: { [key: string]: string };
     handleChange: (key: OnchangeProps) => void;
     changeDataList: (key: string) => void;

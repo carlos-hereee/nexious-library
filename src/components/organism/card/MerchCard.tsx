@@ -31,7 +31,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
                   name: data.title || "",
                   label: "- remove from cart",
                   uid: "-subtract",
-                  theme: "btn-subtract",
+                  theme: "btn-main btn-subtract",
                 }}
                 onClick={() => onRemoveFromCart(data)}
               />
@@ -42,7 +42,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
                   name: data.title || "",
                   label: "+ add to cart",
                   uid: "+add",
-                  theme: "btn-add",
+                  theme: "btn-main btn-add",
                 }}
                 onClick={() => onAddToCart(data)}
               />

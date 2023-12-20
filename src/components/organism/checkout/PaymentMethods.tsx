@@ -5,7 +5,7 @@ import { Icon } from "@nxs-atoms";
 import type { PaymentMethodsProps, PaymentType } from "nxs-card";
 
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
-  const { data, onClick, active } = props;
+  const { data, onClick, active, heading } = props;
   // const { data, visaPayment, paypalPayment, inStorePayment, onClick } = props;
   // const [active, setActive] = useState<PaymentType>(data[0]);
 
@@ -15,7 +15,7 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
   // console.log("data :>> ", data);
   return (
     <div className="container">
-      <h2 className="heading">Enter Payment Details</h2>
+      <h2 className="heading">{heading || "Pay with"}</h2>
       <div className="buttons-container">
         {data.map((d: PaymentType) => (
           <button

@@ -22,7 +22,15 @@ import type { CardinalDirectionProps } from "nxs-typography";
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
     props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel } = props;
+  const {
+    addEntry,
+    fieldHeading,
+    hideLabels,
+    withFileUpload,
+    dataList,
+    previewLabel,
+    countSchema,
+  } = props;
   const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel, noScroll } =
     props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
@@ -231,6 +239,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             updateSelection={(e) => handleSelection(e, keyIdx)}
             handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
+            countSchema={countSchema}
             onMultiply={field.onMultiply}
             canMultiply={field.canMultiply}
             canRemove={field.canRemove}

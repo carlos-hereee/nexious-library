@@ -25,6 +25,7 @@ const CartRow: React.FC<CardProps> = (props) => {
           labels={{ quantity: "Quantity" }}
           placeholders={{ quantity: `1` }}
           formId={`${data.name || data.label}-form`}
+          countSchema={{ quantity: { max: data.inStock } }}
           noScroll
         />
       ) : (

@@ -97,6 +97,7 @@ declare module "nxs-card" {
   export type PaymentMethodsProps = {
     data: PaymentType[];
     active: PaymentType;
+    heading?: string;
     onClick: (e: PaymentType) => void;
     visaPayment?: (a: unknown) => void;
     paypalPayment?: (e: unknown) => void;

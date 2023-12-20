@@ -20,7 +20,8 @@ const FormField = (props: FormFieldProps) => {
   const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } =
     props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
-  const { canRemove, handleHeroChange, formMessage, dataList, changeDataList } = props;
+  const { canRemove, handleHeroChange, formMessage, dataList, changeDataList, countSchema } =
+    props;
 
   // console.log("value :>> ", value);
   return (
@@ -100,6 +101,7 @@ const FormField = (props: FormFieldProps) => {
           formMessage={formMessage}
           value={typeof value === "number" ? value : 0}
           label={label}
+          schema={countSchema?.[name]}
           onChange={handleCountChange}
         />
       ) : type === "number" ? (
@@ -108,6 +110,7 @@ const FormField = (props: FormFieldProps) => {
           formMessage={formMessage}
           value={typeof value === "number" ? value : 0}
           label={label}
+          schema={countSchema?.[name]}
           onChange={handleCountChange}
         />
       ) : (
