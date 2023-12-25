@@ -8,7 +8,8 @@ const Cart: React.FC<CartProps> = (props) => {
   const [cancel, setCancel] = useState<string>("");
 
   const cancelReq = (e: unknown, isConfirm: boolean) => {
-    return isConfirm ? removeFromCart(e as MerchProps) : setCancel("");
+    setCancel("");
+    return isConfirm && removeFromCart(e as MerchProps);
   };
 
   // console.log("data :>> ", data);

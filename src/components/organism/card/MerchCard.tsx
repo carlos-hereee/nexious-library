@@ -5,13 +5,14 @@ import type { CardProps } from "nxs-card";
 const MerchCard: React.FC<CardProps> = (props) => {
   const { theme, data, hero, canRemove, onRemoveFromCart, onAddToCart, onClick } = props;
 
+  // console.log("hero :>> ", hero);
   return (
     <div className={`merch-card ${theme || ""}`}>
       <button type="button" className="btn btn-card" aria-label={data.title} onClick={onClick}>
         <div className="merch-card-header">
           {data.title && <h3 className="heading">{data.title}</h3>}{" "}
           {data.subtitle && <Subtitle data={data.subtitle} />}
-          {hero && <Hero hero={hero} theme="merch-card-hero" />}
+          {hero && hero.url && <Hero hero={hero} theme="merch-card-hero" />}
         </div>
         <div className="merch-card-body">
           {data.cost && <strong className="merch-card-cost">${data.cost}</strong>}
