@@ -15,8 +15,17 @@ import FieldPrice from "./FieldPrice";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection } =
-    props;
+  const {
+    type,
+    name,
+    value,
+    handleChange,
+    placeholder,
+    hideLabels,
+    label,
+    clearSelection,
+    populateLink,
+  } = props;
   const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } =
     props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
@@ -86,6 +95,7 @@ const FormField = (props: FormFieldProps) => {
           error={formError}
           label={label}
           isDisabled={disableForm}
+          populateLink={populateLink}
         />
       ) : type === "file" ? (
         <UploadFile

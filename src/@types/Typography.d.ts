@@ -1,5 +1,5 @@
 declare module "nxs-typography" {
-  export type LinkProp = { data: string; isLink: boolean };
+  export type LinkProp = { data: string; isLink: boolean; link: string };
   export interface DataProp {
     data?: string;
     message?: string;
@@ -10,7 +10,7 @@ declare module "nxs-typography" {
   }
   export interface HyperlinkProp {
     isLink?: boolean;
-    link: string;
+    link?: string;
     data: string;
   }
   export interface KeyValueProps {

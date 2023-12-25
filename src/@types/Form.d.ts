@@ -68,6 +68,7 @@ declare module "nxs-form" {
     schema?: FormSchemaProps;
     countSchema?: FormCountSchemaProps;
     fieldHeading?: KeyStringProp;
+    populateLink?: { [key: string]: { word: string; link: string }[] };
     labels?: KeyStringProp;
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
@@ -85,6 +86,7 @@ declare module "nxs-form" {
     error?: string;
     type?: string;
     placeholder?: string;
+    populateLink?: { word: string; link: string }[];
     min?: number;
     max?: number;
     hideLabel?: boolean;
@@ -224,6 +226,7 @@ declare module "nxs-form" {
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
     formError?: string;
+    populateLink?: { word: string; link: string }[];
     formMessage?: string;
     dataList?: MenuItemProp[];
     countSchema?: FormCountSchemaProps;

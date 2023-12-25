@@ -20,8 +20,16 @@ import { useScroll } from "@nxs-utils/hooks/useScroll";
 import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
-  const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection } =
-    props;
+  const {
+    labels,
+    placeholders,
+    types,
+    responseError,
+    heading,
+    hideSubmit,
+    clearSelection,
+    populateLink,
+  } = props;
   const {
     addEntry,
     fieldHeading,
@@ -113,6 +121,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         // when button is unchecked removed all field created by checkbox
         const removalList = oldValues.filter((val) => val.groupName !== removalTarget);
         setValues(removalList);
+      } else {
+        setValues(oldValues);
       }
     }
   };
@@ -228,6 +238,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             theme={theme}
             placeholder={field.placeholder}
             hideLabels={hideLabels}
+            populateLink={populateLink?.[field.name]}
             dataList={dataList?.[field.name]}
             label={field.label}
             changeDataList={(e) => handleChangeDataList(e, keyIdx)}
