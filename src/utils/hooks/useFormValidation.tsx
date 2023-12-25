@@ -4,10 +4,10 @@ import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
 import { scrollToId } from "@nxs-utils/app/scrollToElement";
-import { getLabel } from "../form/labels";
+import { makeStrReadable } from "@nxs-utils/data/text";
 
 export const useFormValidation = (props: ValidateProps) => {
-  const { labels, required, unique } = props;
+  const { required, unique } = props;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});
   const [validationStatus, setStatus] = useState<"red" | "yellow" | "green" | null>(null);
@@ -62,7 +62,7 @@ export const useFormValidation = (props: ValidateProps) => {
         const key = current.name;
         // if value is empty
         if (!current.value) {
-          errors = { ...errors, [key]: `${getLabel(key, labels)} is required` };
+          errors = { ...errors, [key]: `${makeStrReadable(key)} is required` };
         }
       }
       const isInList = uniqueList.findIndex((list) => list.name === current.name);

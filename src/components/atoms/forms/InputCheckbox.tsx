@@ -19,33 +19,36 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
   } = props;
 
   return (
-    <div className="input-checkbox">
-      <input
-        className={theme}
-        name={name}
-        type="checkbox"
-        disabled={isDisabled}
-        checked={value}
-        onChange={onChange}
-        // give lavels a reason to be there give inputs id
-        id={name}
-      />
-      {!hideLabel &&
-        label &&
-        (populateLink ? (
-          <label htmlFor={name}>
-            {getLinks(populateLink, label).map((link) => (
-              <Hyperlink
-                data={link.data}
-                isLink={link.isLink}
-                link={link.link}
-                key={uniqueId()}
-              />
-            ))}
-          </label>
-        ) : (
-          <Label name={name} label={label} errors={error} message={formMessage} />
-        ))}
+    <div className="container">
+      {error && <span className="required">{error}</span>}
+      <div className="input-checkbox ">
+        <input
+          className={theme}
+          name={name}
+          type="checkbox"
+          disabled={isDisabled}
+          checked={value}
+          onChange={onChange}
+          // give lavels a reason to be there give inputs id
+          id={name}
+        />
+        {!hideLabel &&
+          label &&
+          (populateLink ? (
+            <label htmlFor={name}>
+              {getLinks(populateLink, label).map((link) => (
+                <Hyperlink
+                  data={link.data}
+                  isLink={link.isLink}
+                  link={link.link}
+                  key={uniqueId()}
+                />
+              ))}
+            </label>
+          ) : (
+            <Label name={name} label={label} errors={error} message={formMessage} />
+          ))}
+      </div>
     </div>
   );
 };

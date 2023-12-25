@@ -52,7 +52,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     checkUniqueness,
     scrollToError,
     formMessage,
-  } = useFormValidation({ ...schema, labels });
+  } = useFormValidation({ ...schema });
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
@@ -74,7 +74,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
       setValues(oldValues);
     }
-    watchElement("form-field-container", { height: 900 });
+    if (!noScroll) watchElement("form-field-container", { height: 900 });
   }, []);
 
   useEffect(() => {

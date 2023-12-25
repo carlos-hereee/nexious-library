@@ -278,7 +278,6 @@ declare module "nxs-form" {
   export type ValidateProps = {
     required?: string[];
     unique?: { name: string; list: string[] }[];
-    labels?: KeyStringProp;
   };
   export type DataListProps = {
     list: { [key: string]: string }[];
