@@ -7,7 +7,7 @@ const CardTextBubble: React.FC<TextBubbleProps> = (props) => {
   const { hero, data, theme } = props;
   return (
     <div className={theme ? `${theme} card-text-bubble` : "card-text-bubble"}>
-      <UserCard user={{ hero }} hideLabels />
+      <UserCard user={hero} hideLabels />
       <div>
         <Rating star={data.rating} />
         <TextBubble title={data.title} body={data.body} />

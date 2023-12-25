@@ -41,7 +41,7 @@ const Select: React.FC<SelectProp> = (props) => {
         <Label name={name} label={label} errors={error} message={formMessage} />
       )}
       <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
-        {active && icon && <Icon icon={icon} name={icon} className="select-icon" />}
+        {active && icon && <Icon icon={icon} name={icon} theme="select-icon" />}
         <select
           className="select"
           value={activeLabel}
