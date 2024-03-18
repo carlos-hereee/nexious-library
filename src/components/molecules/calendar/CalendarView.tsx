@@ -10,7 +10,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
   const { data, click, events, minDate, today } = props;
   return (
     <div className="container">
-      <div className="calendar-week flex-g">
+      <div className="calendar-week">
         {sundayFirst.map((w) => (
           <span key={w} className="day text-overflow">
             {w}
