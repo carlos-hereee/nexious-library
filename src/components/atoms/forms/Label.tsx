@@ -9,8 +9,7 @@ const Label: React.FC<LabelProps> = (props) => {
 
   return (
     <label htmlFor={name} className={theme}>
-      <span className="label-name">{labelCap}</span>{" "}
-      {errors && <span className="required">{errors}</span>}
+      <span className="label-name">{labelCap}</span> {errors && <span className="required">{errors}</span>}
       {message && <span className="success">{message}</span>}
     </label>
   );

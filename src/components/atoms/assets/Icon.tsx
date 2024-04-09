@@ -24,9 +24,7 @@ const Icon: React.FC<IconProps> = (props) => {
     }
   }
 
-  const n = theme
-    ? `icon${name ? ` icon-${name} ${theme}` : theme}`
-    : `icon${name ? ` icon-${name}` : ""}`;
+  const n = theme ? `icon${name ? ` icon-${name} ${theme}` : theme}` : `icon${name ? ` icon-${name}` : ""}`;
 
   return (
     <FontAwesomeIcon

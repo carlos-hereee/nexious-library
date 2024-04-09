@@ -14,13 +14,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
     >
       {themeList && (
         <li className="nav-btn">
-          <Select
-            list={themeList}
-            name="themeList"
-            theme={theme}
-            onChange={handleTheme}
-            active={active}
-          />
+          <Select list={themeList} name="themeList" theme={theme} onChange={handleTheme} active={active} />
         </li>
       )}
       {menu.map((m) => {

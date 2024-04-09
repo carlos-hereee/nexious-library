@@ -20,12 +20,7 @@ const CardBody: React.FC<CardProps> = (props) => {
     <div className="card-body">
       <p className="card-body-p">
         {links
-          ? links.map(
-              (l) =>
-                l.data && (
-                  <Hyperlink data={l.data} isLink={l.isLink} link={l.data} key={l.data} />
-                )
-            )
+          ? links.map((l) => l.data && <Hyperlink data={l.data} isLink={l.isLink} link={l.data} key={l.data} />)
           : body}
       </p>
       {features && (

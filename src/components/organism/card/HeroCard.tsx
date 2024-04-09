@@ -13,12 +13,7 @@ const HeroCard: React.FC<HeroCardProps> = (props) => {
         {tagline && <h2 className="tagline">{tagline}</h2>}
         {cta &&
           cta.map((c) => (
-            <CTA
-              key={c.uid}
-              cta={c}
-              onClick={() => onClick && onClick(c)}
-              viewAsPreview={viewAsPreview}
-            />
+            <CTA key={c.uid} cta={c} onClick={() => onClick && onClick(c)} viewAsPreview={viewAsPreview} />
           ))}
       </div>
       {hero && <Hero hero={hero} theme={hero?.theme} />}

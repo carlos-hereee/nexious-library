@@ -10,19 +10,14 @@ const ErrorMessage: React.FC<ErrorMessageProps> = (props) => {
     const { isUndefined } = findValueType(error.value);
     console.log("error occurred in prop ", error.prop);
     console.log("failed with code  ", error.code);
-    console.log(
-      "Value type",
-      isUndefined ? " is undefined. \n***Hint:*** double check props" : error.value
-    );
+    console.log("Value type", isUndefined ? " is undefined. \n***Hint:*** double check props" : error.value);
     console.log("error : ", error);
   };
 
   return (
     <div className="error-message-container">
       <p className="error-message">
-        {error?.isAProp
-          ? `Prop ${error.prop} from ${error.component} component `
-          : `Component ${error.prop} `}
+        {error?.isAProp ? `Prop ${error.prop} from ${error.component} component ` : `Component ${error.prop} `}
         {messages[error.code]}
       </p>
       <button type="button" className="btn-main" onClick={handleClick}>

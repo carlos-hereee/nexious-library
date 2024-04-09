@@ -7,9 +7,7 @@ const TextArea = (props: TextAreaProps) => {
 
   return (
     <>
-      {!hideLabels && label && (
-        <Label name={name} label={label} errors={error} message={formMessage} />
-      )}
+      {!hideLabels && label && <Label name={name} label={label} errors={error} message={formMessage} />}
       <textarea
         className={theme ? `highlight ${theme}` : "highlight"}
         name={name}

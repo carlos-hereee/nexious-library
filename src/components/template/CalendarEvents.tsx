@@ -12,9 +12,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
         <p className="text-center">{active}</p>
       </div>
       <div className="event-wrapper">
-        <h2 className="heading">
-          {`${selectedDay.date} ${meeting?.uid ? `@ ${meeting?.response}` : ""}`}
-        </h2>
+        <h2 className="heading">{`${selectedDay.date} ${meeting?.uid ? `@ ${meeting?.response}` : ""}`}</h2>
         {meeting?.uid ? (
           <div className="flex-d-column">
             <IconButton
@@ -38,13 +36,7 @@ const CalendarEvents: React.FC<CalendarEventProps> = (props) => {
             )}
           </div>
         ) : selectedDay.list?.length > 0 ? (
-          meeting && (
-            <CalendarEventList
-              list={selectedDay.list}
-              onClick={(e) => setMeeting(e)}
-              meeting={meeting}
-            />
-          )
+          meeting && <CalendarEventList list={selectedDay.list} onClick={(e) => setMeeting(e)} meeting={meeting} />
         ) : (
           <div className="flex-d-column flex-center">
             <strong>All booked up, please try a different day</strong>

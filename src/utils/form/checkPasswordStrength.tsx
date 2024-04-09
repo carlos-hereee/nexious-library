@@ -16,9 +16,7 @@ export const checkPasswordStrength = (password: string) => {
   const hasNumbers = password.match(/\d/);
   // check length
   if (len < 8) {
-    tipsMessage.push(
-      `The length of strong passwords start at 8 characters long! ${8 - len} character(s) left`
-    );
+    tipsMessage.push(`The length of strong passwords start at 8 characters long! ${8 - len} character(s) left`);
   } else passwordStrength += 1;
   // check for caps case
   if (!hasLowercaseLetters || !hasUppercaseLetters) {

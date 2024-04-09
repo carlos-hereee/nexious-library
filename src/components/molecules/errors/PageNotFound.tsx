@@ -23,11 +23,7 @@ const PageNotFound: React.FC<ErrorProps> = (props) => {
       <div className="text-center">
         <Icon icon="spinner" spin="spin" />
       </div>
-      {timer ? (
-        <p className="page-not-found-message">{msg}</p>
-      ) : (
-        <Button label={msg} onClick={handleClick} />
-      )}
+      {timer ? <p className="page-not-found-message">{msg}</p> : <Button label={msg} onClick={handleClick} />}
     </div>
   );
 };

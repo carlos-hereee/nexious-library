@@ -6,13 +6,7 @@ export const types: { [key: string]: string } = {
   phone: "number",
   string: "text",
 };
-export const auth: string[] = [
-  "password",
-  "confirmPassword",
-  "oldPassword",
-  "newPassword",
-  "confirmNewPassword",
-];
+export const auth: string[] = ["password", "confirmPassword", "oldPassword", "newPassword", "confirmNewPassword"];
 export const fileUpload: [string] = ["logo"];
 export const textarea: [string] = ["body"];
 export const files: [string, string] = ["logo", "hero"];

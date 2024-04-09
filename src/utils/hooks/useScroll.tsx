@@ -1,8 +1,4 @@
-import type {
-  CardinalDirectionProps,
-  ShowScrollProps,
-  ScrollTargetProps,
-} from "nxs-typography";
+import type { CardinalDirectionProps, ShowScrollProps, ScrollTargetProps } from "nxs-typography";
 import { useState } from "react";
 
 export const useScroll = () => {

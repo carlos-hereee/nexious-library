@@ -10,17 +10,12 @@ const MerchCard: React.FC<CardProps> = (props) => {
     <div className={`merch-card ${theme || ""}`}>
       <button type="button" className="btn btn-card" aria-label={data.title} onClick={onClick}>
         <div className="merch-card-header">
-          {data.title && <h3 className="heading">{data.title}</h3>}{" "}
-          {data.subtitle && <Subtitle data={data.subtitle} />}
+          {data.title && <h3 className="heading">{data.title}</h3>} {data.subtitle && <Subtitle data={data.subtitle} />}
           {hero && hero.url && <Hero hero={hero} theme="merch-card-hero" />}
         </div>
         <div className="merch-card-body">
           {data.cost && <strong className="merch-card-cost">${data.cost}</strong>}
-          {data.inStock ? (
-            <p className="quantity">Remaining: {data.inStock}</p>
-          ) : (
-            <p>OUT OF STOCK</p>
-          )}
+          {data.inStock ? <p className="quantity">Remaining: {data.inStock}</p> : <p>OUT OF STOCK</p>}
           {/* {data.quantity && <p className="quantity">Remaining: {data.quantity}</p>} */}
         </div>
       </button>

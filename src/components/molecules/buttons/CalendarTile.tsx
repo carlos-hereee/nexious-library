@@ -8,9 +8,7 @@ const CalendarTile: React.FC<CalendarTileProps> = (props) => {
     <button
       className={`btn-calendar-tile${data.isMuted ? " btn-calendar-tile--muted" : ""}${
         data.isToday ? " btn-calendar-tile--today" : ""
-      }${data.isSelected ? " btn-calendar-tile--selected" : ""}${
-        data.isMuted ? " text-mute" : ""
-      }`}
+      }${data.isSelected ? " btn-calendar-tile--selected" : ""}${data.isMuted ? " text-mute" : ""}`}
       onClick={click}
       type="button"
       title={events?.date ? `${events.date} has ${events.ping} events` : "no events today"}

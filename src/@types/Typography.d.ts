@@ -27,15 +27,7 @@ declare module "nxs-typography" {
     data: string;
     uid: string;
   }
-  export type CardinalDirectionProps =
-    | "up"
-    | "down"
-    | "left"
-    | "right"
-    | "north"
-    | "south"
-    | "west"
-    | "east";
+  export type CardinalDirectionProps = "up" | "down" | "left" | "right" | "north" | "south" | "west" | "east";
   export type ShowScrollProps = {
     [key in CardinalDirectionProps]: boolean;
   };

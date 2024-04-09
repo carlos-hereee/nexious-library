@@ -4,8 +4,7 @@ import { capFirstCharacter } from "@nxs-utils/data/text";
 import { emojis } from "@nxs-utils/data/emojis";
 
 const DataList = (props: DataListProps) => {
-  const { name, value, onChange, hideLabel, label, error, formMessage, list, isDisabled } =
-    props;
+  const { name, value, onChange, hideLabel, label, error, formMessage, list, isDisabled } = props;
 
   const selectList = (value && value.split(",")) || [];
 
@@ -19,17 +18,11 @@ const DataList = (props: DataListProps) => {
   };
   return (
     <>
-      {!hideLabel && label && (
-        <Label name={name} label={label} errors={error} message={formMessage} />
-      )}
+      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
       <div className="list-container">
         {list.map((l) => (
           <Button
-            label={
-              value.includes(l.value)
-                ? `${emojis.checkedBox} ${l.label}`
-                : `${emojis.emptyCircle} ${l.label}`
-            }
+            label={value.includes(l.value) ? `${emojis.checkedBox} ${l.label}` : `${emojis.emptyCircle} ${l.label}`}
             key={l.uid}
             isDisable={isDisabled}
             theme={l.themeId ? l.name : ""}
@@ -44,14 +37,7 @@ const DataList = (props: DataListProps) => {
           <div className="list-selection-value">
             {selectList.map(
               (v) =>
-                v && (
-                  <Button
-                    key={v}
-                    title={`remove ${v}`}
-                    label={`X ${v}`}
-                    onClick={() => handleDataChange(`${v},`)}
-                  />
-                )
+                v && <Button key={v} title={`remove ${v}`} label={`X ${v}`} onClick={() => handleDataChange(`${v},`)} />
             )}
           </div>
         </div>

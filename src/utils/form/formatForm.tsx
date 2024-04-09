@@ -1,6 +1,7 @@
 import type { FieldValueProps, FormInitialValue, FormValueProps } from "nxs-form";
 
 export const formatFormData = (values: FieldValueProps[]) => {
+  console.log("values :>> ", values);
   return Object.assign(
     {},
     ...values.map((val) => {
@@ -41,8 +42,7 @@ export const formatFilesData = (values: FieldValueProps[]) => {
       if (typeof current.value === "string") formData.append(keyName, current.value);
       if (typeof current.value === "boolean") formData.append(keyName, `${current.value}`);
     } else if (typeof current.value === "string") formData.append(current.name, current.value);
-    else if (typeof current.value === "boolean")
-      formData.append(current.name, `${current.value}`);
+    else if (typeof current.value === "boolean") formData.append(current.name, `${current.value}`);
   }
   return formData;
 };

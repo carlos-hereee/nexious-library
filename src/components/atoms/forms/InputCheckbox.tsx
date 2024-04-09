@@ -5,18 +5,7 @@ import { uniqueId } from "@nxs-utils/data/uniqueId";
 import Label from "./Label";
 
 const InputCheckbox = (props: InputCheckBoxProps) => {
-  const {
-    value,
-    onChange,
-    name,
-    theme,
-    hideLabel,
-    label,
-    error,
-    formMessage,
-    isDisabled,
-    populateLink,
-  } = props;
+  const { value, onChange, name, theme, hideLabel, label, error, formMessage, isDisabled, populateLink } = props;
 
   return (
     <div className="container">
@@ -37,12 +26,7 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
           (populateLink ? (
             <label htmlFor={name}>
               {getLinks(populateLink, label).map((link) => (
-                <Hyperlink
-                  data={link.data}
-                  isLink={link.isLink}
-                  link={link.link}
-                  key={uniqueId()}
-                />
+                <Hyperlink data={link.data} isLink={link.isLink} link={link.link} key={uniqueId()} />
               ))}
             </label>
           ) : (

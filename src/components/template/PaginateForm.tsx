@@ -6,8 +6,7 @@ import type { FormValueProps, PaginateFormProps } from "nxs-form";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
-  const { order, paginate, responseError, navigationHeading, page, hideNavigation } = props;
-  const { previewPage, theme } = props;
+  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, theme } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel, onDialogClose } = props;
   const { errors, lightColor } = useRequiredProps({ paginate }, true);
   // key variables

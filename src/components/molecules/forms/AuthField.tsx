@@ -12,9 +12,7 @@ const AuthField = (props: AuthFieldProp) => {
   const placeholders = placeholder || initPlaceholders[name];
   return (
     <>
-      {!hideLabels && labels && (
-        <Label name={name} label={labels} errors={errors} message={formMessage} />
-      )}
+      {!hideLabels && labels && <Label name={name} label={labels} errors={errors} message={formMessage} />}
       <div className="flex-g">
         <Input
           value={value}

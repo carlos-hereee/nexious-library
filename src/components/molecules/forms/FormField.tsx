@@ -1,38 +1,17 @@
 /* eslint-disable no-nested-ternary */
 import { auth, textarea } from "@nxs-utils/form/types";
-import {
-  AuthField,
-  DataList,
-  Field,
-  FieldQuantity,
-  Select,
-  TextArea,
-  UploadFile,
-} from "@nxs-molecules";
+import { AuthField, DataList, Field, FieldQuantity, Select, TextArea, UploadFile } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 import FieldPrice from "./FieldPrice";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const {
-    type,
-    name,
-    value,
-    handleChange,
-    placeholder,
-    hideLabels,
-    label,
-    clearSelection,
-    populateLink,
-  } = props;
-  const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } =
-    props;
+  const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection, populateLink } = props;
+  const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } = props;
   const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
-  const { canRemove, handleHeroChange, formMessage, dataList, changeDataList, countSchema } =
-    props;
+  const { canRemove, handleHeroChange, formMessage, dataList, changeDataList, countSchema } = props;
 
-  // console.log("value :>> ", value);
   return (
     <div className="form-field">
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
@@ -147,11 +126,7 @@ const FormField = (props: FormFieldProps) => {
             />
           )}
           {canMultiply && (
-            <Button
-              label={onMultiply?.additionLabel}
-              onClick={onMultiplyClick}
-              isDisable={disableForm}
-            />
+            <Button label={onMultiply?.additionLabel} onClick={onMultiplyClick} isDisable={disableForm} />
           )}
         </div>
       )}

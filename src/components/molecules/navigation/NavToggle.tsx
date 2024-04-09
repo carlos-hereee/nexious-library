@@ -21,11 +21,7 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
   };
   return (
     <div className="nav-toggle">
-      {active.icon ? (
-        <Icon icon={active.icon} />
-      ) : (
-        active.url && <Hero hero={active} theme="hero-icon" />
-      )}
+      {active.icon ? <Icon icon={active.icon} /> : active.url && <Hero hero={active} theme="hero-icon" />}
       <Select
         list={alternatives}
         name={active?.name || active.value}

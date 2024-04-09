@@ -20,9 +20,7 @@ const FieldPrice: React.FC<NumberInputProps> = (props) => {
   };
   return (
     <>
-      {!hideLabel && label && (
-        <Label name={name} label={label} errors={error} message={formMessage} />
-      )}
+      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
       <div className="input-price-wrapper">
         $
         <InputPrice

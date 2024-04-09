@@ -13,33 +13,18 @@ import type { SelectProp } from "nxs-form";
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const {
-    list,
-    onChange,
-    theme,
-    name,
-    hideLabels,
-    label,
-    error,
-    formMessage,
-    active,
-    clearSelection,
-    isDisabled,
-  } = props;
+  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
+    props;
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
 
   const activeLabel = active || "Choose Selection";
-  const icon = active
-    ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon
-    : undefined;
+  const icon = active ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon : undefined;
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
-      {!hideLabels && label && (
-        <Label name={name} label={label} errors={error} message={formMessage} />
-      )}
+      {!hideLabels && label && <Label name={name} label={label} errors={error} message={formMessage} />}
       <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
         {active && icon && <Icon icon={icon} name={icon} theme="select-icon" />}
         <select
@@ -48,19 +33,12 @@ const Select: React.FC<SelectProp> = (props) => {
           disabled={isDisabled}
           onChange={(e) => onChange && onChange(e.target.value)}
         >
-          <Option
-            data={{ label: activeLabel, name: activeLabel, value: activeLabel }}
-            isDisabled
-          />
+          <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />
           <Option data={{ label: "", name: "", value: "" }} hideOption />
           {list && list.map((l) => <Option key={l.uid} data={l} />)}
         </select>
         {active && clearSelection && (
-          <IconButton
-            icon={{ icon: "close" }}
-            onClick={() => onChange && onChange("")}
-            theme="btn-icon"
-          />
+          <IconButton icon={{ icon: "close" }} onClick={() => onChange && onChange("")} theme="btn-icon" />
         )}
       </div>
     </>

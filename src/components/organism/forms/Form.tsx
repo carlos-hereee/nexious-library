@@ -1,18 +1,12 @@
 import { useEffect } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
-// import { ErrorMessages,  } from "@nxs-molecules";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 import { formatInitialFormValues, objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
-// import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
-import {
-  formatFilesData,
-  formatFormData,
-  formatPreviewData,
-} from "@nxs-utils/form/formatForm";
+import { formatFilesData, formatFormData, formatPreviewData } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
 import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
@@ -20,29 +14,10 @@ import { useScroll } from "@nxs-utils/hooks/useScroll";
 import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
-  const {
-    labels,
-    placeholders,
-    types,
-    responseError,
-    heading,
-    hideSubmit,
-    clearSelection,
-    populateLink,
-  } = props;
-  const {
-    addEntry,
-    fieldHeading,
-    hideLabels,
-    withFileUpload,
-    dataList,
-    previewLabel,
-    countSchema,
-  } = props;
-  const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel, noScroll } =
-    props;
+  const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema } = props;
+  const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel, noScroll } = props;
   const { onViewPreview, onSubmit, onChange, onCancel } = props;
-
   const {
     formErrors,
     validationStatus,
@@ -53,6 +28,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     scrollToError,
     formMessage,
   } = useFormValidation({ ...schema });
+
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
@@ -208,26 +184,16 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setValues(oldValues);
     if (onChange) onChange(oldValues[idx].value);
   };
-  if (!initialValues)
-    return (
-      <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />
-    );
+  if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
+
+  console.log("initialValues :>> ", initialValues);
   return (
-    <form
-      className={theme}
-      onSubmit={handleSubmit}
-      encType={withFileUpload ? "multipart/form-data" : undefined}
-    >
+    <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
-      <div
-        className={noScroll ? "form-field-container no-scroll" : "form-field-container"}
-        id="form-field-container"
-      >
+      <div className={noScroll ? "form-field-container no-scroll" : "form-field-container"} id="form-field-container">
         {showScroll.up && <UpArrow onClick={() => handleScroll("up")} active={direction} />}
-        {showScroll.down && (
-          <DownArrow onClick={() => handleScroll("down")} active={direction} />
-        )}
+        {showScroll.down && <DownArrow onClick={() => handleScroll("down")} active={direction} />}
 
         {values.map((field, keyIdx) => (
           <FormField
@@ -263,18 +229,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       </div>
       {(onCancel || onSubmit || onViewPreview) && (
         <div className="buttons-container">
-          {onCancel && (
-            <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />
-          )}
-          {!hideSubmit && onSubmit && (
-            <SubmitButton label={submitLabel} isDisable={disableForm} />
-          )}
+          {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
+          {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} />}
           {onViewPreview && (
-            <IconButton
-              icon={{ icon: "eye", label: previewLabel }}
-              theme="btn-main"
-              onClick={handleViewPreview}
-            />
+            <IconButton icon={{ icon: "eye", label: previewLabel }} theme="btn-main" onClick={handleViewPreview} />
           )}
         </div>
       )}

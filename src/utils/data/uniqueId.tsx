@@ -1,7 +1,6 @@
 // Define a function to generate a random character from a given set of characters
 function getRandomCharacter() {
-  const characters =
-    "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=[]{}|;:,.<>?";
+  const characters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+=[]{}|;:,.<>?";
   const randomIndex = Math.floor(Math.random() * characters.length);
   return characters.charAt(randomIndex);
 }

@@ -18,8 +18,7 @@ import type { HeaderProps, MenuProp } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, language, theme, uniqueId, themeList, includeHome, layout } =
-    props;
+  const { menu, logo, ping, language, theme, uniqueId, themeList, includeHome, layout } = props;
   const { updateMenu, onLogoClick, handleTheme, onHomeClick } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
@@ -71,11 +70,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             />
           </nav>
           <nav className="mobile-navigation">
-            <BurgerButton
-              isBurger={isActive}
-              onClick={() => setActive(!isActive)}
-              ping={ping}
-            />
+            <BurgerButton isBurger={isActive} onClick={() => setActive(!isActive)} ping={ping} />
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}

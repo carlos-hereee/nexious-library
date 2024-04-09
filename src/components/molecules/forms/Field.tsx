@@ -7,9 +7,7 @@ const Field: React.FC<InputProps> = (props) => {
 
   return (
     <>
-      {!hideLabel && label && (
-        <Label name={name} label={label} errors={error} message={formMessage} />
-      )}
+      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
       <Input
         value={value}
         onChange={onChange}

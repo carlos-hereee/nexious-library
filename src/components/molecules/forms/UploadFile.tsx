@@ -51,9 +51,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   return (
     <div className={`field-upload ${theme || ""}`}>
       <div className="field-upload-field">
-        {!hideLabels && (
-          <Label name={name} label={label} errors={error} message={formMessage} />
-        )}
+        {!hideLabels && <Label name={name} label={label} errors={error} message={formMessage} />}
         <input
           type="file"
           onChange={selectImage}
@@ -67,20 +65,14 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           {selectLabel || "Choose a file"}
         </button>
         {previewImage && (
-          <button
-            className="btn-main btn-cancel hide-on-mobile"
-            type="button"
-            onClick={handleRemoveImage}
-          >
+          <button className="btn-main btn-cancel hide-on-mobile" type="button" onClick={handleRemoveImage}>
             Remove
           </button>
         )}
       </div>
       <div className="preview-hero-container">
         <span>Image Preview</span>
-        {previewImage && (
-          <Button label="x" onClick={handleRemoveImage} theme="btn-cancel preview-cancel" />
-        )}
+        {previewImage && <Button label="x" onClick={handleRemoveImage} theme="btn-cancel preview-cancel" />}
         <Hero
           hero={{ url: previewImage, alt: `${name} image value` }}
           imageRef={imageRef}

@@ -21,9 +21,7 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
     return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon.icon }} />;
   }
   if (!svg[icon.icon]) {
-    return (
-      <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: svg[icon.icon] }} />
-    );
+    return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: svg[icon.icon] }} />;
   }
   return (
     <button

@@ -7,8 +7,6 @@ const ErrorMessages: React.FC<ErrorProps> = (props) => {
     const errorData = { prop: "errors", code: "missingProps", component: "error messages" };
     return <ErrorMessage error={{ ...errorData, value: errors }} />;
   }
-  return errors.map((err) => (
-    <ErrorMessage key={err.name} error={{ ...err, component, value: err }} />
-  ));
+  return errors.map((err) => <ErrorMessage key={err.name} error={{ ...err, component, value: err }} />);
 };
 export default ErrorMessages;
