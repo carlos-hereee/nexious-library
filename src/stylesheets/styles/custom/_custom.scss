@@ -41,6 +41,7 @@
 .white-space {
   margin: 1rem 0;
 }
+
 .mt-1 {
   margin-top: 1rem;
 }
@@ -95,4 +96,9 @@
 .no-scroll {
   overflow-y: visible;
   max-height: 100%;
+}
+.key-with-definition {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  align-items: flex-start;
 }

@@ -57,8 +57,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (validationStatus === "green" && onSubmit) {
       setStatus("red");
       // console.log("withFileUpload :>> ", withFileUpload);
-      if (withFileUpload) onSubmit(formatFilesData(values));
-      else onSubmit(formatFormData(values));
+      const data = formatFormData(values);
+      console.log("data :>> ", data);
+
+      // if (withFileUpload) onSubmit(formatFilesData(values));
+      // else onSubmit(formatFormData(values));
     } else if (validationStatus === "yellow" && onViewPreview) {
       onViewPreview(formatPreviewData(values));
       setStatus(null);
@@ -186,7 +189,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
-  console.log("initialValues :>> ", initialValues);
+  // console.log("initialValues :>> ", initialValues);
   return (
     <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
       {heading && <h2 className="heading">{heading}</h2>}

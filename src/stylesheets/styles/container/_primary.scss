@@ -25,15 +25,15 @@
 }
 .card-container {
   width: 100%;
-  // display: grid;
-  // grid-template-columns: auto minmax(0, auto);
-  // align-items: center;
   display: flex;
   flex-wrap: wrap;
   justify-items: center;
   position: relative;
   gap: #{$rem};
   justify-content: space-around;
+  @include devices(tablet) {
+    justify-content: center;
+  }
 }
 .page-center {
   display: flex;

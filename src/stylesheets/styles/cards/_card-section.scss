@@ -72,6 +72,16 @@
     }
   }
 }
+.sections-grid {
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+  @include devices(tablet) {
+    margin-top: 1rem;
+    grid-template-columns: 1fr;
+  }
+}
 
 .section-header {
   display: flex;
