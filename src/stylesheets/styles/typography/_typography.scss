@@ -30,6 +30,13 @@
   max-width: 100%;
   width: 100%;
 }
+.w-full-child {
+  width: 100%;
+  * {
+    min-width: 100%;
+    width: 100%;
+  }
+}
 .text-bubble {
   height: fit-content;
   background-color: #{$text-bubble};

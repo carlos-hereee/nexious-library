@@ -22,6 +22,17 @@ declare module "nxs-form" {
     uid?: string;
     listItemId?: string;
   };
+  export type FieldDateTimeProps = {
+    name: string;
+    onChange: (e: string) => void;
+    value: string;
+    placeholder: string;
+    hideLabels?: boolean;
+    isDisabled?: boolean;
+    label?: string;
+    errors?: string;
+    formMessage?: string;
+  };
   export type AuthFieldProp = {
     name: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;

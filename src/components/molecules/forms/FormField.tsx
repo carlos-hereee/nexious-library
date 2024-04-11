@@ -4,6 +4,7 @@ import { AuthField, DataList, Field, FieldQuantity, Select, TextArea, UploadFile
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 import FieldPrice from "./FieldPrice";
+import FieldDateTime from "./FieldDateTime";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
@@ -93,14 +94,14 @@ const FormField = (props: FormFieldProps) => {
           schema={countSchema?.[name]}
           onChange={handleCountChange}
         />
-      ) : type === "number" ? (
-        <FieldQuantity
+      ) : type === "date-time" ? (
+        <FieldDateTime
           name={name}
+          placeholder={placeholder}
           formMessage={formMessage}
-          value={typeof value === "number" ? value : 0}
+          value={typeof value === "string" ? value : ""}
           label={label}
-          schema={countSchema?.[name]}
-          onChange={handleCountChange}
+          onChange={(e) => updateSelection && updateSelection(e, name)}
         />
       ) : (
         <Field

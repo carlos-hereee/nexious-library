@@ -56,13 +56,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   useEffect(() => {
     if (validationStatus === "green" && onSubmit) {
       setStatus("red");
-      // console.log("withFileUpload :>> ", withFileUpload);
-      if (addEntry) {
-        const data = formatFormEntryData(values);
-        console.log("data :>> ", data);
-      }
-      // if (withFileUpload) onSubmit(formatFilesData(values));
-      // else  onSubmit(formatFormData(values));
+      if (withFileUpload) onSubmit(formatFilesData(values));
+      else if (addEntry) onSubmit(formatFormEntryData(values));
+      else onSubmit(formatFormData(values));
     } else if (validationStatus === "yellow" && onViewPreview) {
       onViewPreview(formatPreviewData(values));
       setStatus(null);
