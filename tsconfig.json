@@ -65,6 +65,7 @@
     "strict": true /* Enable all strict type-checking options. */,
     "lib": [
       "ES5",
+      "ES6",
       "ES2015",
       "ES2016",
       "DOM",

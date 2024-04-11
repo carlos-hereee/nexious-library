@@ -146,6 +146,13 @@ declare module "nxs-form" {
     fieldId?: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
+  export type FieldValueData = {
+    value?: FormInitialValue;
+    name?: string;
+    group: string;
+    sharedKey: string;
+    groupName: string;
+  };
   export type FieldValueProps = {
     value: FormInitialValue;
     name: string;

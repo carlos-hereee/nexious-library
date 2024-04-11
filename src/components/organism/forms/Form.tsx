@@ -6,7 +6,7 @@ import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
-import { formatFilesData, formatFormData, formatPreviewData } from "@nxs-utils/form/formatForm";
+import { formatFilesData, formatFormData, formatFormEntryData, formatPreviewData } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
 import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
@@ -57,11 +57,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (validationStatus === "green" && onSubmit) {
       setStatus("red");
       // console.log("withFileUpload :>> ", withFileUpload);
-      const data = formatFormData(values);
-      console.log("data :>> ", data);
-
+      if (addEntry) {
+        const data = formatFormEntryData(values);
+        console.log("data :>> ", data);
+      }
       // if (withFileUpload) onSubmit(formatFilesData(values));
-      // else onSubmit(formatFormData(values));
+      // else  onSubmit(formatFormData(values));
     } else if (validationStatus === "yellow" && onViewPreview) {
       onViewPreview(formatPreviewData(values));
       setStatus(null);
