@@ -22,6 +22,17 @@ declare module "nxs-form" {
     uid?: string;
     listItemId?: string;
   };
+  export type FieldDateWeekProps = {
+    name: string;
+    onChange: (e: string) => void;
+    value: string;
+    placeholder: string;
+    hideLabels?: boolean;
+    isDisabled?: boolean;
+    label?: string;
+    errors?: string;
+    formMessage?: string;
+  };
   export type FieldDateTimeProps = {
     name: string;
     onChange: (e: string) => void;
@@ -176,7 +187,7 @@ declare module "nxs-form" {
     group?: string;
     sharedKey?: string;
     groupName?: string;
-    fieldId?: string;
+    fieldId: string;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
   export interface PaginateFormProps {
@@ -231,6 +242,7 @@ declare module "nxs-form" {
     placeholder: string;
     label: string;
     type: string;
+    fieldId: string;
     theme?: string;
     selected?: string;
     hideLabels?: boolean;
@@ -305,6 +317,7 @@ declare module "nxs-form" {
     name: string;
     label?: string;
     hideLabel?: boolean;
+    hideList?: boolean;
     isDisabled?: boolean;
     placeholder?: string;
     onChange: (e: string) => void;

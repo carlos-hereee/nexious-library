@@ -15,19 +15,11 @@ import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema } = props;
-  const { initialValues, theme, submitLabel, schema, disableForm, cancelLabel, noScroll } = props;
-  const { onViewPreview, onSubmit, onChange, onCancel } = props;
-  const {
-    formErrors,
-    validationStatus,
-    checkRequired,
-    validateForm,
-    setStatus,
-    checkUniqueness,
-    scrollToError,
-    formMessage,
-  } = useFormValidation({ ...schema });
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema, theme } = props;
+  const { initialValues, submitLabel, schema, disableForm, cancelLabel, noScroll } = props;
+  const { onChange, onCancel, onSubmit, onViewPreview } = props;
+  const { formErrors, validationStatus, checkRequired, validateForm, setStatus, checkUniqueness, formMessage } =
+    useFormValidation({ ...schema });
 
   // key variables
   const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
@@ -54,15 +46,19 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   }, []);
 
   useEffect(() => {
-    if (validationStatus === "green" && onSubmit) {
-      setStatus("red");
-      if (withFileUpload) onSubmit(formatFilesData(values));
+    if (validationStatus === "green") {
+      if (!onSubmit) setStatus("red");
+      else if (withFileUpload) onSubmit(formatFilesData(values));
       else if (addEntry) onSubmit(formatFormEntryData(values));
       else onSubmit(formatFormData(values));
-    } else if (validationStatus === "yellow" && onViewPreview) {
-      onViewPreview(formatPreviewData(values));
       setStatus(null);
-    } else if (validationStatus === "red") scrollToError();
+    }
+    if (validationStatus === "yellow") {
+      if (onViewPreview) {
+        onViewPreview(formatPreviewData(values));
+        setStatus(null);
+      }
+    }
   }, [validationStatus]);
 
   const handleChange = (event: OnchangeProps, idx: number) => {
@@ -72,7 +68,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     oldValues[idx].value = value;
     // check schema if value is required for validation
     if (validationStatus === "red" || !validationStatus) {
-      const current = values[idx].name;
+      const current = values[idx].fieldId;
       // check required first and then uniqueness
       checkRequired(oldValues[idx], current);
       checkUniqueness(oldValues[idx], current);
@@ -110,7 +106,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
     // check validation status to contine
-    if (validationStatus === "red" || !validationStatus) validateForm(values, "green");
+    if (validationStatus === "red" || !validationStatus) validateForm(values);
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
     if (addEntry) {
@@ -147,12 +143,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
     const oldValues = [...values];
     if (selectedFile) {
-      const current = oldValues[idx].name;
+      const current = oldValues[idx].fieldId;
       oldValues[idx].value = selectedFile;
       // // check schema if value is required for validation
-      if (validationStatus === "red" || !validationStatus) {
-        checkRequired(oldValues[idx], current);
-      }
+      if (validationStatus === "red" || !validationStatus) checkRequired(oldValues[idx], current);
       setValues(oldValues);
     } else {
       oldValues[idx].value = "";
@@ -166,10 +160,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setValues(oldValues);
   };
   const handleViewPreview = () => {
-    if (!validationStatus) validateForm(values, "yellow");
+    if (!validationStatus) validateForm(values);
     if (validationStatus === "red") {
-      scrollToError();
-      validateForm(values, "yellow");
+      validateForm(values);
     }
   };
 
@@ -186,7 +179,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
-  // console.log("initialValues :>> ", initialValues);
   return (
     <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
       {heading && <h2 className="heading">{heading}</h2>}
@@ -194,10 +186,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       <div className={noScroll ? "form-field-container no-scroll" : "form-field-container"} id="form-field-container">
         {showScroll.up && <UpArrow onClick={() => handleScroll("up")} active={direction} />}
         {showScroll.down && <DownArrow onClick={() => handleScroll("down")} active={direction} />}
-
         {values.map((field, keyIdx) => (
           <FormField
             key={field.fieldId}
+            fieldId={field.fieldId}
             name={field.name}
             type={field.type}
             value={field.value}
@@ -208,7 +200,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             dataList={dataList?.[field.name]}
             label={field.label}
             changeDataList={(e) => handleChangeDataList(e, keyIdx)}
-            formError={formErrors[field.name]}
+            formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(e) => handleChange(e, keyIdx)}
             handleCountChange={(e) => handleCountChange(e, keyIdx)}

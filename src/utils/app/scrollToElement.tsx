@@ -6,6 +6,13 @@ export const scrollToId = (id: string) => {
   const element = document.getElementById(id);
   if (element) element.scrollIntoView({ block: "end", behavior: "smooth" });
 };
+// if any errors scroll to element id
+export const scrollToError = (error: { [x: string]: string }, idx?: number) => {
+  const errorId = Object.keys(error);
+  if (idx === undefined) scrollToId(errorId[0]);
+  else scrollToId(errorId[idx]);
+};
+
 export const scrollInDirection = (id: string, direction: string) => {
   const element = document.getElementById(id);
   if (element) {

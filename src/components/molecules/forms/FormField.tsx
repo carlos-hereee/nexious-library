@@ -1,20 +1,22 @@
 /* eslint-disable no-nested-ternary */
 import { auth, textarea } from "@nxs-utils/form/types";
-import { AuthField, DataList, Field, FieldQuantity, Select, TextArea, UploadFile } from "@nxs-molecules";
+import { AuthField, DataList, Field, Select, TextArea, UploadFile } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 import FieldPrice from "./FieldPrice";
 import FieldDateTime from "./FieldDateTime";
+import FieldDateWeek from "./FieldDateWeek";
+import FieldDateDay from "./FieldDateDay";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
   const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection, populateLink } = props;
   const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } = props;
-  const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick } = props;
+  const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick, fieldId } = props;
   const { canRemove, handleHeroChange, formMessage, dataList, changeDataList, countSchema } = props;
 
   return (
-    <div className="form-field">
+    <div className="form-field" id={fieldId}>
       {fieldHeading && fieldHeading[name] && <h3 className="heading">{fieldHeading[name]}</h3>}
       {auth.includes(name) ? (
         <AuthField
@@ -97,6 +99,27 @@ const FormField = (props: FormFieldProps) => {
       ) : type === "date-time" ? (
         <FieldDateTime
           name={name}
+          errors={formError}
+          placeholder={placeholder}
+          formMessage={formMessage}
+          value={typeof value === "string" ? value : ""}
+          label={label}
+          onChange={(e) => updateSelection && updateSelection(e, name)}
+        />
+      ) : type === "date-week" ? (
+        <FieldDateWeek
+          name={name}
+          placeholder={placeholder}
+          formMessage={formMessage}
+          errors={formError}
+          value={typeof value === "string" ? value : ""}
+          label={label}
+          onChange={changeDataList}
+        />
+      ) : type === "date-day" ? (
+        <FieldDateDay
+          name={name}
+          errors={formError}
           placeholder={placeholder}
           formMessage={formMessage}
           value={typeof value === "string" ? value : ""}

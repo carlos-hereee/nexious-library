@@ -4,7 +4,7 @@ import { capFirstCharacter } from "@nxs-utils/data/text";
 import { emojis } from "@nxs-utils/data/emojis";
 
 const DataList = (props: DataListProps) => {
-  const { name, value, onChange, hideLabel, label, error, formMessage, list, isDisabled } = props;
+  const { name, value, onChange, hideLabel, label, error, formMessage, list, isDisabled, hideList } = props;
 
   const selectList = (value && value.split(",")) || [];
 
@@ -31,7 +31,7 @@ const DataList = (props: DataListProps) => {
           />
         ))}
       </div>
-      {value && (
+      {!hideList && value && (
         <div>
           <p>{capFirstCharacter(name)} selected list:</p>
           <div className="list-selection-value">

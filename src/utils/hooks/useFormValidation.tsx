@@ -1,10 +1,9 @@
 import type { FieldValueProps, ValidateProps } from "nxs-form";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
-import { scrollToId } from "@nxs-utils/app/scrollToElement";
-import { makeStrReadable } from "@nxs-utils/data/text";
+import { scrollToError } from "@nxs-utils/app/scrollToElement";
 
 export const useFormValidation = (props: ValidateProps) => {
   const { required, unique } = props;
@@ -14,10 +13,18 @@ export const useFormValidation = (props: ValidateProps) => {
   const require = required || [];
   const uniqueList = unique || [{ name: "", list: [] }];
 
-  const addFormError = (current: string, message: string) => {
-    setFormErrors({ ...formErrors, [current]: message });
-    setStatus("red");
-  };
+  useEffect(() => {
+    if (validationStatus) {
+      if (objLength(formErrors) === 0) setStatus("yellow");
+      else {
+        setStatus("red");
+        scrollToError(formErrors);
+      }
+    }
+  }, [formErrors]);
+
+  const addFormError = (fieldId: string, message: string) => setFormErrors({ ...formErrors, [fieldId]: message });
+
   const removeError = (current: string) => {
     // [current] : _ is used to capture the value associated with current key
     // _ is a throwaway variable when you dont need the value
@@ -53,37 +60,27 @@ export const useFormValidation = (props: ValidateProps) => {
       }
     }
   };
-  const validateForm = (values: FieldValueProps[], status: "red" | "yellow" | "green") => {
-    let errors: KeyStringProp = {};
+  const validateForm = (values: FieldValueProps[]) => {
+    const errors: KeyStringProp = {};
     for (let index = 0; index < values.length; index += 1) {
       const current = values[index];
-      // only check if its required
-      if (require.includes(current.name)) {
-        const key = current.name;
-        // if value is empty
-        if (!current.value) {
-          errors = { ...errors, [key]: `${makeStrReadable(key)} is required` };
-        }
-      }
+      const { fieldId } = current;
+      // only check if its required and if value is empty
+      if (require.includes(current.name) && !current.value) errors[fieldId] = `**Required`;
+      // next validate unique list
       const isInList = uniqueList.findIndex((list) => list.name === current.name);
       if (isInList >= 0) {
         const valueIdx = uniqueList[isInList].list.findIndex((l) => l === current.value);
-        if (valueIdx >= 0) errors[current.name] = "already exists try something else";
+        if (valueIdx >= 0) errors[fieldId] = "already exists try something else";
       }
     }
-    if (objLength(errors) === 0) setStatus(status);
-    else {
-      setStatus("red");
+    if (objLength(errors) > 0) {
+      // add all erros to state
       setFormErrors(errors);
-    }
-  };
-  // if any errors scroll to element id
-  const scrollToError = (idx?: number) => {
-    const errorId = Object.keys(formErrors);
-    if (idx === undefined) {
-      scrollToId(errorId[0]);
+      setStatus("red");
     } else {
-      scrollToId(errorId[idx]);
+      setFormErrors({});
+      setStatus("green");
     }
   };
 
@@ -95,7 +92,6 @@ export const useFormValidation = (props: ValidateProps) => {
     checkRequired,
     validateForm,
     checkUniqueness,
-    scrollToError,
     formMessage,
   };
 };
