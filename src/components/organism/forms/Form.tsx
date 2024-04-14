@@ -86,16 +86,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     // if the checkbox is checked add entries
     if (isChecked && addEntry) {
       setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
-    } else {
-      // eslint-disable-next-line no-lonely-if
-      if (addEntry) {
-        const removalTarget = addEntry[name].groupName;
-        // when button is unchecked removed all field created by checkbox
-        const removalList = oldValues.filter((val) => val.groupName !== removalTarget);
-        setValues(removalList);
-      } else {
-        setValues(oldValues);
-      }
+    } else if (!addEntry) setValues(oldValues);
+    else {
+      const removalTarget = addEntry[name].groupName;
+      // when button is unchecked removed all field created by checkbox
+      const removalList = oldValues.filter((val) => val.groupName !== removalTarget);
+      setValues(removalList);
     }
   };
   const handleSelection = (target: string, idx: number) => {
@@ -161,9 +157,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   const handleViewPreview = () => {
     if (!validationStatus) validateForm(values);
-    if (validationStatus === "red") {
-      validateForm(values);
-    }
+    if (validationStatus === "red") validateForm(values);
   };
 
   const handleScroll = (target: CardinalDirectionProps) => {

@@ -10,9 +10,7 @@ const FieldDateTime = (props: FieldDateTimeProps) => {
   const { toggle, handleToggle } = useToggle();
 
   useEffect(() => {
-    if (value) {
-      onChange(`${value.split(toggle[name] ? "AM" : "PM").join("")} ${toggle[name] ? "PM" : "AM"}`);
-    }
+    if (value) onChange(`${value.split(toggle[name] ? "AM" : "PM").join("")} ${toggle[name] ? "PM" : "AM"}`);
   }, [toggle]);
 
   const handleChange = (e: string) => {

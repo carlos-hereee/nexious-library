@@ -140,7 +140,7 @@ const FormField = (props: FormFieldProps) => {
         />
       )}
       {onMultiply && (
-        <div className="flex-end">
+        <div className="button-container">
           {canRemove && (
             <Button
               label={onMultiply.removalLabel}

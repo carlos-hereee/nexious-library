@@ -12,3 +12,11 @@
   display: flex;
   gap: #{$rem};
 }
+.button-container {
+  display: flex;
+  gap: #{$rem};
+  * {
+    width: 100%;
+    max-width: 100%;
+  }
+}
