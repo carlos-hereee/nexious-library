@@ -1,8 +1,8 @@
 import { ReadMore } from "@nxs-atoms";
 import { Hero } from "@nxs-molecules";
-import { uniqueId } from "main";
 import type { CardProps } from "nxs-card";
 import { Form } from "@nxs-organism";
+import { uniqueId } from "@nxs-utils/data/uniqueId";
 
 const CartRow: React.FC<CardProps> = (props) => {
   const { data, theme, setQuantity, showPrice } = props;

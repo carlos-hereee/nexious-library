@@ -17,6 +17,13 @@ declare module "nxs-card" {
     heroId?: string;
     // onClick?: (key: unknown) => void;
   };
+  export interface ItemDetailProps {
+    label?: string;
+    value?: string;
+    hint?: { title: string; body: string };
+    labelLayout?: "bolden";
+    children?: React.ReactNode;
+  }
   export interface MerchProps {
     cost: number;
     inStock: number;

@@ -19,12 +19,15 @@ declare module "nxs-button" {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     onSubmit?: (key: unknown) => void;
     children?: React.ReactNode;
-    name?: string;
-    title?: string;
     theme?: string;
     isDisable?: boolean;
+    title?: string;
     label?: string;
-    data?: string;
+    name?: string;
+    data?: {
+      heading?: string;
+      body?: string;
+    };
     active?: CardinalDirectionProps;
   }
   export interface IconButtonProps {
@@ -47,5 +50,13 @@ declare module "nxs-button" {
     onClick?: React.MouseEventHandler<HTMLButtonElement>;
     // notification count
     ping?: number;
+  }
+  export interface CopyToClipboardProps {
+    heading?: string;
+    label?: string;
+    labelLayout?: string;
+    theme?: string;
+    data: string;
+    isCopy?: boolean;
   }
 }

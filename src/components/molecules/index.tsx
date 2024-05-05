@@ -11,6 +11,8 @@ export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
 export { default as GoBackButton } from "@nxs-molecules/buttons/GoBackButton";
 export { default as SubmitButton } from "@nxs-molecules/buttons/SubmitButton";
 export { default as CalendarTile } from "@nxs-molecules/buttons/CalendarTile";
+export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
+export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
 export type { ButtonProps, IconButtonProps } from "nxs-button";
 

@@ -1,8 +1,7 @@
 import type { DialogProps } from "nxs-card";
 import { Button } from "@nxs-atoms";
 
-const Dialog = (props: DialogProps) => {
-  const { theme, onDialogClose, children, header } = props;
+const Dialog = ({ theme, onDialogClose, children, header }: DialogProps) => {
   return (
     <div className={`dialog ${theme ? `alt-${theme}` : "alt-light-mode"}`}>
       <div className="dialog-navigation">

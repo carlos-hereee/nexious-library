@@ -9,7 +9,7 @@ import type {
   FormatExtraEntryProps,
   InitialExtraValue,
 } from "nxs-form";
-import { objToArray } from "main";
+import { objToArray } from "@nxs-utils/app/objLength";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
