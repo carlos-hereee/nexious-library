@@ -26,7 +26,7 @@ export type { TextBubbleProps } from "nxs-assets";
 export { default as Cart } from "@nxs-organism/card/Cart";
 
 // forms
-export { default as Form } from "@nxs-organism/forms/Form";
+export { default as Form } from "@nxs-template/Form";
 export type { FormProps } from "nxs-form";
 
 // checkout
