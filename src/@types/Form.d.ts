@@ -260,6 +260,7 @@ declare module "nxs-form" {
     activeEntry?: string;
     clearSelection?: boolean;
     onMultiplyClick?: () => void;
+    setActiveEntry?: (n: KeyStringProp) => void;
     onRemovalClick?: () => void;
     formError?: string;
     populateLink?: { word: string; link: string }[];

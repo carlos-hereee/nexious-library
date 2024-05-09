@@ -6,16 +6,17 @@ import Field from "./Field";
 const FormField = (props: FormFieldProps) => {
   // key variables
   const { name, isEntry, entries, entry, activeEntry } = props;
-  const { fieldHeading, onMultiplyClick, onRemovalClick, fieldId } = props;
+  const { fieldHeading, onMultiplyClick, onRemovalClick, fieldId, setActiveEntry } = props;
 
-  if (isEntry && entry && activeEntry && entries) {
+  if (isEntry && entry && activeEntry && entries && setActiveEntry) {
     const targetEntry = entries[activeEntry];
-    const activeId = 0;
-    // console.log("activeId :>> ", activeId);
-    console.log("targetEntry :>> ", targetEntry);
-    console.log("entries :>> ", entries);
-    // console.log("entries :>> ", activeId >= 0 && entries[activeId]);
-    console.log("activeId :>> ", activeEntry);
+    const targetList = Object.keys(entries);
+    const activeIdx = targetList.findIndex((s) => s === activeEntry);
+
+    const handleToggleClick = (target: string) => {
+      const tGroupName = entries[target][0].groupName;
+      if (tGroupName) setActiveEntry({ [tGroupName]: target });
+    };
     return (
       <div className="container" id={fieldId}>
         {entry.max && entry.max > 0 && (
@@ -24,8 +25,9 @@ const FormField = (props: FormFieldProps) => {
               <IconButton
                 key={num}
                 icon={{ icon: `${num}`, isNum: true }}
-                theme={activeId === num - 1 ? "btn-active" : ""}
-                // isDisable={entries.length < num}
+                theme={activeIdx === num - 1 ? "btn-active highlight" : "highlight"}
+                isDisable={targetList.length < num}
+                onClick={() => handleToggleClick(targetList[num - 1])}
               />
             ))}
           </div>

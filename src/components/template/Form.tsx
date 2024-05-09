@@ -29,7 +29,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     useFormValidation({ ...schema });
 
   // key variables
-  const { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry } = useValues();
+  const { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry } = useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
 
   useEffect(() => {
@@ -222,6 +222,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             disableForm={disableForm}
             onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={() => handleRemovalClick(field, keyIdx)}
+            setActiveEntry={setActiveEntry}
           />
         ))}
       </div>

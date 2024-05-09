@@ -8,10 +8,11 @@ import type {
   InitialExtraValue,
 } from "nxs-form";
 import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
+import type { KeyStringProp } from "custom-props";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
-  const [activeEntry, setActiveEntry] = useState<{ [x: string]: string }>({});
+  const [activeEntry, setActiveEntry] = useState<KeyStringProp>({});
   const [entries, setEntries] = useState<{ [x: string]: { [id: string]: FieldValueProps[] } }>({});
 
   const addNewEntry = ({ addEntry, group }: FormatEntryProps) => {
@@ -64,7 +65,12 @@ export const useValues = () => {
     setNewValues([]);
     setNewValues(oldValues);
   };
-  return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry };
+  // const setActiveEntryEntry = (n: KeyStringProp) => {
+  //   console.log("n :>> ", n);
+  //   // console.log("entries :>> ", entries);
+  //   // setActiveEntry();
+  // };
+  return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry };
 };
 // const formatEntry = (props: FormatEntryProps) => {
 //   const { addEntry, target, oldValues } = props;
