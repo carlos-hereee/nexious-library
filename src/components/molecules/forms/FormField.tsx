@@ -1,6 +1,6 @@
 /* eslint-disable no-nested-ternary */
 import { auth, textarea } from "@nxs-utils/form/types";
-import { AuthField, DataList, Field, Select, TextArea, UploadFile } from "@nxs-molecules";
+import { AuthField, DataList, Field, FieldQuantity, Select, TextArea, UploadFile } from "@nxs-molecules";
 import { Button, InputCheckbox } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 import FieldPrice from "./FieldPrice";
@@ -30,6 +30,15 @@ const FormField = (props: FormFieldProps) => {
           errors={formError}
           isDisabled={disableForm}
         />
+      ) : type === "number" ? (
+        <FieldQuantity
+          name={name}
+          formMessage={formMessage}
+          value={value ? parseInt(value as string, 10) : 0}
+          label={label}
+          onChange={handleChange}
+          isDisabled={disableForm}
+        />
       ) : type === "datalist" ? (
         <DataList
           name={name}
@@ -54,7 +63,7 @@ const FormField = (props: FormFieldProps) => {
           error={formError}
           isDisabled={disableForm}
         />
-      ) : textarea.includes(name) ? (
+      ) : type === "textarea" ? (
         <TextArea
           input={{
             name,
@@ -87,13 +96,14 @@ const FormField = (props: FormFieldProps) => {
           label={label}
           onSelect={(e) => handleHeroChange && handleHeroChange(e)}
         />
-      ) : type === "price" ? (
+      ) : type === "price-dollars-cents" ? (
         <FieldPrice
           name={name}
           formMessage={formMessage}
           value={typeof value === "number" ? value : 0}
           label={label}
           schema={countSchema?.[name]}
+          type={type}
           onChange={handleCountChange}
         />
       ) : type === "date-time" ? (

@@ -83,7 +83,7 @@ declare module "nxs-form" {
     hideSubmit?: boolean;
     withFileUpload?: boolean;
     disableForm?: boolean;
-    noScroll?: boolean;
+    formScroll?: boolean;
     // showAuthTips?: boolean;
     dataList?: { [key: string]: MenuItemProp[] };
     clearSelection?: { [key: string]: boolean };

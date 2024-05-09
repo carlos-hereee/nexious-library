@@ -16,7 +16,7 @@ import type { CardinalDirectionProps } from "nxs-typography";
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema, theme } = props;
-  const { initialValues, submitLabel, schema, disableForm, cancelLabel, noScroll } = props;
+  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll } = props;
   const { onChange, onCancel, onSubmit, onViewPreview } = props;
   const { formErrors, validationStatus, checkRequired, validateForm, setStatus, checkUniqueness, formMessage } =
     useFormValidation({ ...schema });
@@ -42,7 +42,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       }
       setValues(oldValues);
     }
-    if (!noScroll) watchElement("form-field-container", { height: 900 });
+    if (formScroll) watchElement("form-field-container", { height: 900 });
   }, []);
 
   useEffect(() => {
@@ -177,7 +177,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
-      <div className={noScroll ? "form-field-container no-scroll" : "form-field-container"} id="form-field-container">
+      <div className={formScroll ? "form-field-container" : "form-field-container no-scroll"} id="form-field-container">
         {showScroll.up && <UpArrow onClick={() => handleScroll("up")} active={direction} />}
         {showScroll.down && <DownArrow onClick={() => handleScroll("down")} active={direction} />}
         {values.map((field, keyIdx) => (
@@ -213,14 +213,16 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           />
         ))}
       </div>
-      {(onCancel || onSubmit || onViewPreview) && (
+      {(onCancel || onViewPreview) && onSubmit ? (
         <div className="buttons-container">
           {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
-          {!hideSubmit && onSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} />}
+          {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} />}
           {onViewPreview && (
             <IconButton icon={{ icon: "eye", label: previewLabel }} theme="btn-main" onClick={handleViewPreview} />
           )}
         </div>
+      ) : (
+        onSubmit && !hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} theme="form-submit-btn" />
       )}
     </form>
   );

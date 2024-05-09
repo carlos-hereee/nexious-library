@@ -1,13 +1,4 @@
-.form-field-container {
-  display: flex;
-  flex-direction: column;
-  overflow-y: auto;
-  gap: #{$rem};
-  max-height: #{$max-form-height};
-  // padding: #{$rem} #{$rem025};
-  scroll-behavior: smooth;
-  // position: fixed;
-}
+
 .btn-arrow {
   position: fixed;
   right: 8%;

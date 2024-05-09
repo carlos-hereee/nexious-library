@@ -3,6 +3,7 @@ import type { NumberInputProps } from "nxs-form";
 
 const FieldQuantity: React.FC<NumberInputProps> = (props) => {
   const { schema, value, onChange, onBlur, name, label, hideLabel, error, formMessage } = props;
+
   return (
     <>
       {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}

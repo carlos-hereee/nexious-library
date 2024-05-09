@@ -1,12 +1,11 @@
 import type { NumberInputProps } from "nxs-form";
 
-const InputPrice: React.FC<NumberInputProps> = (props) => {
-  const { max, value, onChange, onBlur, isDisabled } = props;
+const InputPrice: React.FC<NumberInputProps> = ({ max, value, onChange, onBlur, isDisabled, theme }) => {
   return (
     <input
-      className="input-price"
+      className={`input-price highlight${theme ? ` ${theme}` : ""}`}
       type="number"
-      min="0"
+      min={0}
       max={max}
       placeholder={`${value / 100}`}
       value={value < 10 ? `0${value}` : value}

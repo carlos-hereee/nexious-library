@@ -2,6 +2,7 @@
 form {
   display: flex;
   flex-direction: column;
+  align-items: center;
   text-align: left;
   gap: #{$rem};
   max-width: #{$max-form-width};
@@ -19,6 +20,7 @@ textarea {
 textarea {
   min-height: #{$min-height};
   width: 100%;
+  resize: vertical;
 }
 // replace default styling
 select {
