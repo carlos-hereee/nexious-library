@@ -1,3 +1,4 @@
+import type { ObjectToArray } from "custom-props";
 import type { FormInitialValue } from "nxs-form";
 
 export const objLength = (obj?: unknown) => {
@@ -5,13 +6,7 @@ export const objLength = (obj?: unknown) => {
   if (!obj) return 0;
   return Object.keys(obj).length;
 };
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const objToArray = (obj?: { [key: string]: any }) => {
-  if (!obj) return [];
-  if (typeof obj === "object") return Object.keys(obj).map((key) => ({ [key]: obj[key] }));
-  return [];
-};
-export const formatInitialFormValues = (obj?: { [key: string]: FormInitialValue }) => {
+export const objToArray: ObjectToArray<unknown> = (obj) => {
   if (!obj) return [];
   if (typeof obj === "object") return Object.keys(obj).map((key) => ({ [key]: obj[key] }));
   return [];

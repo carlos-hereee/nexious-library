@@ -1,7 +1,7 @@
 import { useEffect, type ChangeEvent } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
-import { formatInitialFormValues, objToArray } from "@nxs-utils/app/objLength";
+import { objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
@@ -11,6 +11,7 @@ import {
   formatFilesData,
   formatFormData,
   formatFormEntryData,
+  formatInitialFormValues,
   formatPreviewData,
 } from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
@@ -35,7 +36,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
       let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
-      console.log("oldValues :>> ", oldValues);
       // clear prev values if any; avoid redundant data
       if (addEntry) {
         const entryData = objToArray(addEntry);
@@ -92,7 +92,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     oldValues[idx].value = isChecked;
     // if the checkbox is checked add entries
     if (isChecked && addEntry) {
-      addNewEntry({ addEntry: addEntry[name], group: name });
+      const entry = addNewEntry({ addEntry: addEntry[name], group: name });
+      const newIdx = oldValues.findIndex((d) => d.name === name);
+      const numCount = oldValues.filter((d) => d.groupName === addEntry[name].groupName);
+      // keep everything together; 0 is the number of element to be deleted
+      oldValues.splice(newIdx + numCount.length + 1, 0, ...entry);
       setValues(oldValues);
       // setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     } else if (!addEntry) setValues(oldValues);

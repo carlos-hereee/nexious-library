@@ -1,8 +1,13 @@
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { useState } from "react";
-import type { FieldValueProps, FormatEntryProps, FormatExtraEntryProps, InitialExtraValue } from "nxs-form";
-import { objToArray } from "@nxs-utils/app/objLength";
-import { formatFieldEntry } from "@nxs-utils/form/formatForm";
+import type {
+  FieldValueProps,
+  FormValueProps,
+  FormatEntryProps,
+  FormatExtraEntryProps,
+  InitialExtraValue,
+} from "nxs-form";
+import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
@@ -10,23 +15,17 @@ export const useValues = () => {
   const [entries, setEntries] = useState<{ [x: string]: FieldValueProps[][] }>({});
 
   const addNewEntry = ({ addEntry, group }: FormatEntryProps) => {
-    const formatValues = objToArray(addEntry.initialValues);
+    const formatValues: FormValueProps[] = formatInitialFormValues(addEntry.initialValues);
     const { groupName } = addEntry;
-    const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, sharedKey: uniqueId(), group });
     // add properties all entrys should have
-    // console.log("fieldEntry :>> ", fieldEntry);
-    // console.log("addEntry :>> ", addEntry);
+    const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, addEntry, sharedKey: uniqueId(), group });
     // if additional entries are possible add them here
     setActiveEntry({ ...activeEntry, [groupName]: fieldEntry });
     // // add new entry to list
     if (entries[groupName]) setEntries({ ...entries, [groupName]: [...entries[groupName], fieldEntry] });
     else setEntries({ ...entries, [groupName]: [fieldEntry] });
 
-    // const newIdx = oldValues.findIndex((d) => d.name === group);
-    // const numCount = oldValues.filter((d) => d.groupName === groupName);
-    // // keep everything together; 0 is the number of element to be deleted
-    // oldValues.splice(newIdx + numCount.length + 1, 0, ...ent);
-    // return oldValues;
+    return fieldEntry;
   };
 
   const addExtraEntry = (props: FormatExtraEntryProps) => {
@@ -46,7 +45,7 @@ export const useValues = () => {
           [item]: val[item],
         }));
         // format entry
-        const payload = { formatValues: entryFormat, ...addEntry, sharedKey, group: target };
+        const payload = { formatValues: entryFormat, ...addEntry, addEntry, sharedKey, group: target };
         // if additional entries are possible add them here
         // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
         // entryData.push(...ent);

@@ -23,4 +23,5 @@ declare module "custom-props" {
     total: number;
     theme: string;
   }
+  export type ObjectToArray<P> = (obj?: { [key: string]: P }) => { [key: string]: P }[] | [];
 }

@@ -159,7 +159,7 @@ declare module "nxs-form" {
     placeholder: string;
     type: string;
     label: string;
-    fieldHeading?: string;
+    fieldHeading?: KeyStringProp;
     canMultiply?: boolean;
     canRemove?: boolean;
     group?: string;
@@ -181,13 +181,14 @@ declare module "nxs-form" {
     placeholder: string;
     type: string;
     label: string;
-    fieldHeading?: string;
-    canMultiply?: boolean;
-    canRemove?: boolean;
-    group?: string;
+    fieldHeading?: KeyStringProp;
+    fieldId: string;
+    // new entry values
     sharedKey?: string;
     groupName?: string;
-    fieldId: string;
+    group?: string;
+    canMultiply?: boolean;
+    canRemove?: boolean;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
   };
   export interface PaginateFormProps {
@@ -210,15 +211,15 @@ declare module "nxs-form" {
   export type AddEntryProps = {
     additionLabel: string;
     removalLabel: string;
-    initialValues: { [key: string]: FormInitialValue };
-    fieldHeading: string;
-    labels?: KeyStringProp;
-    max?: number;
     groupName: string;
-    placeholders?: KeyStringProp;
-    types?: KeyStringProp;
-    canMultiply?: boolean;
+    initialValues: { [key: string]: FormInitialValue };
+    types: KeyStringProp;
+    fieldHeading: KeyStringProp;
     onMultiply: { additionLabel: string; name: string; removalLabel: string };
+    labels: KeyStringProp;
+    max?: number;
+    placeholders?: KeyStringProp;
+    canMultiply?: boolean;
   };
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
 
@@ -233,7 +234,8 @@ declare module "nxs-form" {
     labels?: KeyStringProp;
     types?: KeyStringProp;
     placeholders?: KeyStringProp;
-    fieldHeading?: string;
+    addEntry?: AddEntryProps;
+    fieldHeading?: KeyStringProp;
     group?: string;
     sharedKey?: string;
     groupName?: string;
