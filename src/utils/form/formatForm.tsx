@@ -1,4 +1,7 @@
-import type { FieldValueData, FieldValueProps, FormInitialValue, FormValueProps } from "nxs-form";
+import type { FieldValueData, FieldValueProps, FormInitialValue, FormValueProps, AddEntryValueProps } from "nxs-form";
+import { uniqueId } from "../data/uniqueId";
+import { initLabels } from "./labels";
+import { initPlaceholders } from "./placeholders";
 
 export const formatFormData = (values: FieldValueProps[]) => {
   return Object.assign(
@@ -65,4 +68,32 @@ export const formatFilesData = (values: FieldValueProps[]) => {
     else if (typeof current.value === "boolean") formData.append(current.name, `${current.value}`);
   }
   return formData;
+};
+
+export const formatFieldEntry = (props: AddEntryValueProps): FieldValueProps[] => {
+  const { formatValues, labels, types, placeholders, fieldHeading, group, groupName, sharedKey } = props;
+  return formatValues.map((current) => {
+    // value name
+    const name = Object.keys(current)[0];
+    // get initial field data and extract field data
+    const data = {
+      name,
+      fieldHeading,
+      group,
+      groupName,
+      sharedKey,
+      value: current[name],
+      label: initLabels[name] || "No label added",
+      type: "text",
+      placeholder: initPlaceholders[name],
+      fieldId: uniqueId(),
+    };
+    // if null or undefined use appropriate values
+    if (types && types[name] === "checkbox") data.value = data.value || false;
+    if (labels && labels[name]) data.label = labels[name];
+    if (types && types[name]) data.type = types[name];
+    // use user placehodlers first if no placehodler use app placeholders
+    if (placeholders && placeholders[name]) data.placeholder = placeholders[name];
+    return data;
+  });
 };

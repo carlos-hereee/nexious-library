@@ -5,15 +5,16 @@ import Field from "./Field";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { disableForm, name, canRemove, isEntry, entries, entry, activeEntry } = props;
-  const { fieldHeading, canMultiply, onMultiply, onMultiplyClick, onRemovalClick, fieldId } = props;
+  const { disableForm, name, isEntry, entries, entry, activeEntry } = props;
+  const { fieldHeading, onMultiplyClick, onRemovalClick, fieldId } = props;
 
   if (isEntry && entry && activeEntry && entries) {
-    const activeId = entries.findIndex((e) => e.fieldId === activeEntry.fieldId);
-    console.log("activeId :>> ", activeId);
+    // const activeId = entries.findIndex((e) => e.fieldId === activeEntry.fieldId);
+    const activeId = 0;
+    // console.log("activeId :>> ", activeId);
     console.log("entries :>> ", entries);
-    console.log("entries :>> ", activeId >= 0 && entries[activeId]);
-    console.log("entry:>> ", activeEntry);
+    // console.log("entries :>> ", activeId >= 0 && entries[activeId]);
+    console.log("active:>> ", activeEntry);
     return (
       <div className="container" id={fieldId}>
         {entry.max && entry.max > 0 && (
@@ -29,18 +30,22 @@ const FormField = (props: FormFieldProps) => {
           </div>
         )}
         <Field {...props} />
-        {onMultiply && (
+        {activeEntry[activeId].onMultiply && (
           <div className="button-container">
-            {canRemove && (
+            {activeEntry[activeId].canRemove && (
               <Button
-                label={onMultiply.removalLabel}
+                label={activeEntry[activeId].onMultiply.removalLabel}
                 onClick={onRemovalClick}
                 // todo add confirmation removal
                 theme="btn-cancel"
               />
             )}
-            {canMultiply && (
-              <Button label={onMultiply?.additionLabel} onClick={onMultiplyClick} isDisable={disableForm} />
+            {activeEntry[activeId].canMultiply && (
+              <Button
+                label={activeEntry[activeId].onMultiply?.additionLabel}
+                onClick={onMultiplyClick}
+                isDisable={disableForm}
+              />
             )}
           </div>
         )}

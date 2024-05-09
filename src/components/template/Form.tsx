@@ -6,7 +6,13 @@ import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
-import { formatFilesData, formatFormData, formatFormEntryData, formatPreviewData } from "@nxs-utils/form/formatForm";
+import {
+  formatFieldEntry,
+  formatFilesData,
+  formatFormData,
+  formatFormEntryData,
+  formatPreviewData,
+} from "@nxs-utils/form/formatForm";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
 import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
@@ -22,13 +28,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     useFormValidation({ ...schema });
 
   // key variables
-  const { values, entries, activeEntry, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
+  const { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry } = useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
 
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
       let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
+      console.log("oldValues :>> ", oldValues);
       // clear prev values if any; avoid redundant data
       if (addEntry) {
         const entryData = objToArray(addEntry);
@@ -85,7 +92,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     oldValues[idx].value = isChecked;
     // if the checkbox is checked add entries
     if (isChecked && addEntry) {
-      setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
+      addNewEntry({ addEntry: addEntry[name], group: name });
+      setValues(oldValues);
+      // setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     } else if (!addEntry) setValues(oldValues);
     else {
       const removalTarget = addEntry[name].groupName;
@@ -106,12 +115,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
     if (addEntry) {
-      const name = e.onMultiply?.name || e.name;
+      // const name = e.onMultiply?.name || e.name;
       // move button to last appropriate field
       const oldValues = [...values];
       // if form has an entry value
       oldValues[fieldIndex].canMultiply = false;
-      setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
+      addNewEntry({ addEntry: addEntry[e.name], group: e.name });
+      // setValues
+      // setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     }
   };
   const handleRemovalClick = (e: FieldValueProps, idx: number) => {
@@ -209,9 +220,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             handleHeroChange={(e: string | File) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             countSchema={countSchema}
-            onMultiply={field.onMultiply}
             canMultiply={field.canMultiply}
-            canRemove={field.canRemove}
             clearSelection={clearSelection?.[field.name]}
             disableForm={disableForm}
             onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}

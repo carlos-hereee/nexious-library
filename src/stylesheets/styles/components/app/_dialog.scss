@@ -5,17 +5,22 @@
   flex-direction: column;
   padding: #{$rem};
   overflow-y: auto;
-  top: 15%;
+  top: 10%;
   aspect-ratio: 16/9;
   width: 95%;
   z-index: 99;
-  max-height: 80vh;
+  max-height: 85vh;
   min-height: 60vh;
 }
 .dialog-header {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: #{$rem};
+  .heading {
+    text-align: center;
+  }
 }
 .dialog-navigation {
   display: flex;

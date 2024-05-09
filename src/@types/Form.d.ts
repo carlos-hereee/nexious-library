@@ -218,12 +218,13 @@ declare module "nxs-form" {
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     canMultiply?: boolean;
+    onMultiply: { additionLabel: string; name: string; removalLabel: string };
   };
   export type EntryDataProps = { value: number; fieldHeading?: string; name: string };
 
   export type FormatEntryProps = {
-    target: string;
-    oldValues: FieldValueProps[];
+    group: string;
+    // oldValues: FieldValueProps[];
     addEntry: AddEntryProps;
   };
 
@@ -248,16 +249,14 @@ declare module "nxs-form" {
     selected?: string;
     hideLabels?: boolean;
     disableForm?: boolean;
-    canRemove?: boolean;
     group?: string;
     sharedKey?: string;
     canMultiply?: boolean;
     isEntry?: boolean;
     entry?: AddEntryProps;
-    entries?: FieldValueProps[];
-    activeEntry?: FieldValueProps;
+    entries?: FieldValueProps[][];
+    activeEntry?: FieldValueProps[];
     clearSelection?: boolean;
-    onMultiply?: { additionLabel: string; name: string; removalLabel: string };
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
     formError?: string;

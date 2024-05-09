@@ -1,73 +1,32 @@
 import { uniqueId } from "@nxs-utils/data/uniqueId";
-import { initLabels } from "@nxs-utils/form/labels";
-import { initPlaceholders as initHolder } from "@nxs-utils/form/placeholders";
 import { useState } from "react";
-import type {
-  FieldValueProps,
-  AddEntryValueProps,
-  FormatEntryProps,
-  FormatExtraEntryProps,
-  InitialExtraValue,
-} from "nxs-form";
+import type { FieldValueProps, FormatEntryProps, FormatExtraEntryProps, InitialExtraValue } from "nxs-form";
 import { objToArray } from "@nxs-utils/app/objLength";
+import { formatFieldEntry } from "@nxs-utils/form/formatForm";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
-  const [activeEntry, setActiveEntry] = useState<{ [x: string]: FieldValueProps }>({});
-  const [entries, setEntries] = useState<{ [x: string]: FieldValueProps[] }>({});
+  const [activeEntry, setActiveEntry] = useState<{ [x: string]: FieldValueProps[] }>({});
+  const [entries, setEntries] = useState<{ [x: string]: FieldValueProps[][] }>({});
 
-  const formatEntry = (props: FormatEntryProps) => {
-    const { addEntry, target, oldValues } = props;
-    const { canMultiply, additionLabel, removalLabel } = addEntry;
-    oldValues[oldValues.length - 1].canMultiply = canMultiply || false;
-    oldValues[oldValues.length - 1].canRemove = true;
-    oldValues[oldValues.length - 1].onMultiply = { additionLabel, name: target, removalLabel };
-    return oldValues;
-  };
-  const formatFieldEntry = (props: AddEntryValueProps): FieldValueProps[] => {
-    const { formatValues, fieldHeading, labels, types, placeholders } = props;
-    const { group, sharedKey, groupName } = props;
-    return formatValues.map((current) => {
-      // value name
-      const name = Object.keys(current)[0];
-      // get initial field data and extract field data
-      let value = current[name];
-      let label = initLabels[name] || "No label added";
-      let type = "text";
-      let placeholder = initHolder[name] || "";
-      // if null or undefined use appropriate values
-      if (types && types[name] === "checkbox") value = value || false;
-      if (labels && labels[name]) label = labels[name];
-      if (types && types[name]) type = types[name];
-      // use user placehodlers first if no placehodler use app placeholders
-      if (placeholders && placeholders[name]) placeholder = placeholders[name];
-
-      const payload = { value, name, label, placeholder, type, fieldHeading };
-      return { ...payload, group, sharedKey, groupName, fieldId: uniqueId() };
-    });
-  };
-
-  const addNewEntry = (props: FormatEntryProps) => {
-    const { addEntry, target, oldValues } = props;
-    const entryValues = objToArray(addEntry.initialValues);
+  const addNewEntry = ({ addEntry, group }: FormatEntryProps) => {
+    const formatValues = objToArray(addEntry.initialValues);
     const { groupName } = addEntry;
+    const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, sharedKey: uniqueId(), group });
     // add properties all entrys should have
-    const group = target;
-    const payload = { formatValues: entryValues, ...addEntry, group, sharedKey: uniqueId() };
-
+    // console.log("fieldEntry :>> ", fieldEntry);
+    // console.log("addEntry :>> ", addEntry);
     // if additional entries are possible add them here
-    const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
+    setActiveEntry({ ...activeEntry, [groupName]: fieldEntry });
+    // // add new entry to list
+    if (entries[groupName]) setEntries({ ...entries, [groupName]: [...entries[groupName], fieldEntry] });
+    else setEntries({ ...entries, [groupName]: [fieldEntry] });
 
-    setActiveEntry({ ...activeEntry, [groupName]: ent[0] });
-    // add new entry to list
-    if (entries[groupName]) setEntries({ ...entries, [groupName]: [...entries[groupName], ent[0]] });
-    else setEntries({ ...entries, [groupName]: [ent[0]] });
-
-    const newIdx = oldValues.findIndex((d) => d.name === group);
-    const numCount = oldValues.filter((d) => d.groupName === groupName);
-    // keep everything together; 0 is the number of element to be deleted
-    oldValues.splice(newIdx + numCount.length + 1, 0, ...ent);
-    return oldValues;
+    // const newIdx = oldValues.findIndex((d) => d.name === group);
+    // const numCount = oldValues.filter((d) => d.groupName === groupName);
+    // // keep everything together; 0 is the number of element to be deleted
+    // oldValues.splice(newIdx + numCount.length + 1, 0, ...ent);
+    // return oldValues;
   };
 
   const addExtraEntry = (props: FormatExtraEntryProps) => {
@@ -89,8 +48,8 @@ export const useValues = () => {
         // format entry
         const payload = { formatValues: entryFormat, ...addEntry, sharedKey, group: target };
         // if additional entries are possible add them here
-        const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
-        entryData.push(...ent);
+        // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
+        // entryData.push(...ent);
       });
       // update list
       oldValues.splice(groupingIdx, 1, ...entryData);
@@ -101,13 +60,13 @@ export const useValues = () => {
     setNewValues([]);
     setNewValues(oldValues);
   };
-  return {
-    values,
-    entries,
-    activeEntry,
-    setValues,
-    formatFieldEntry,
-    addNewEntry,
-    addExtraEntry,
-  };
+  return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry };
 };
+// const formatEntry = (props: FormatEntryProps) => {
+//   const { addEntry, target, oldValues } = props;
+//   const { canMultiply, additionLabel, removalLabel } = addEntry;
+//   oldValues[oldValues.length - 1].canMultiply = canMultiply || false;
+//   oldValues[oldValues.length - 1].canRemove = true;
+//   oldValues[oldValues.length - 1].onMultiply = { additionLabel, name: target, removalLabel };
+//   return oldValues;
+// };

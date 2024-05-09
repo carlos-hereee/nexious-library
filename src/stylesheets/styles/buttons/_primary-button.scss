@@ -8,6 +8,7 @@
 .btn-icon {
   // max-width: #{$min-icon-width};
   min-width: auto;
+  gap: 0;
 }
 .btn-submit {
   width: 100%;
@@ -24,7 +25,7 @@
   &:focus {
     border: 1px solid #{$dark-mode};
   }
-  @include devices(mobile){
+  @include devices(mobile) {
     white-space: wrap;
   }
 }

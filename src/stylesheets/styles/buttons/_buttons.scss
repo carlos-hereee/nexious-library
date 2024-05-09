@@ -2,6 +2,7 @@
   display: grid;
   gap: #{$rem};
   // justify-items: center;
+  width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
   grid-template-rows: auto auto;
   @include devices(mobile) {
