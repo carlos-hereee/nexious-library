@@ -4,7 +4,7 @@ import type { ItemDetailProps } from "nxs-card";
 const ItemDetail = ({ label, value, labelLayout, children, hint }: ItemDetailProps) => {
   if (hint) {
     return (
-      <div className="key-with-definition">
+      <div className="item-detail">
         <div className="key-with-hint">
           {labelLayout === "bolden" ? (
             <p className="w-fit">
@@ -20,7 +20,7 @@ const ItemDetail = ({ label, value, labelLayout, children, hint }: ItemDetailPro
     );
   }
   return (
-    <div className="key-with-definition">
+    <div className="item-detail">
       {labelLayout === "bolden" ? (
         <p>
           <strong>{label}</strong>
