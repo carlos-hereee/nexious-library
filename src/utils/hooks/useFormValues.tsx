@@ -24,12 +24,12 @@ export const useValues = () => {
     // if additional entries are possible add them here
     setActiveEntry({ ...activeEntry, [groupName]: fieldEntry[0].sharedKey || "" });
     // // add new entry to list
-    if (entries[groupName])
+    if (entries[groupName]) {
       setEntries({
         ...entries,
         [groupName]: { ...entries[groupName], [sharedKey]: fieldEntry },
       });
-    else setEntries({ ...entries, [groupName]: { [sharedKey]: fieldEntry } });
+    } else setEntries({ ...entries, [groupName]: { [sharedKey]: fieldEntry } });
 
     return fieldEntry;
   };
@@ -70,7 +70,7 @@ export const useValues = () => {
   //   // console.log("entries :>> ", entries);
   //   // setActiveEntry();
   // };
-  return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry };
+  return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry, setEntries };
 };
 // const formatEntry = (props: FormatEntryProps) => {
 //   const { addEntry, target, oldValues } = props;

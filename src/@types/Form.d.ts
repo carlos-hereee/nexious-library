@@ -274,6 +274,7 @@ declare module "nxs-form" {
     updateSelection?: (key: string, name: string) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;
+    handleHeroEntryChange?: (key: { [x: string]: { [id: string]: FieldValueProps[] } }) => void;
   }
   export interface LabelProps {
     label: string;

@@ -10,12 +10,36 @@ const FormField = (props: FormFieldProps) => {
 
   if (isEntry && entry && activeEntry && entries && setActiveEntry) {
     const targetEntry = entries[activeEntry];
+    const { groupName, onMultiply, canMultiply, canRemove } = entries[activeEntry][0];
     const targetList = Object.keys(entries);
     const activeIdx = targetList.findIndex((s) => s === activeEntry);
+    // require key variable
+    if (!groupName) throw Error("groupName is required");
+    if (!onMultiply) throw Error("onMultiply is required");
+    if (!canMultiply) throw Error("canMultiply is required");
+    if (!canRemove) throw Error("canRemove is required");
 
-    const handleToggleClick = (target: string) => {
-      const tGroupName = entries[target][0].groupName;
-      if (tGroupName) setActiveEntry({ [tGroupName]: target });
+    const handleSelect = (selectedFile: File | string, idx: number) => {
+      const { handleHeroEntryChange } = props;
+      // require key variable
+      if (!handleHeroEntryChange) throw Error("handleHeroEntryChange is required");
+      // const { groupName, sharedKey } = targetEntry[0];
+      console.log("targetEntry :>> ", targetEntry[idx]);
+      // targetEntry[idx].value = selectedFile;
+
+      // handleHeroEntryChange({
+      //   ...entries,
+      //   [groupName]: { ...entries[groupName], [sharedKey]: fieldEntry },
+      // });
+      // const { groupName, sharedKey } = oldValues[idx];
+      // if (groupName && sharedKey) {
+      //   // const entry = entries[groupName][sharedKey];
+      //   console.log("entry :>> ", entry);
+      //   // const groupName =
+      //   console.log("idx, selectedFile :>> ", selectedFile);
+      //   console.log("entries :>> ");
+      // }
+      console.log("selectedFile :>> ", selectedFile);
     };
     return (
       <div className="container" id={fieldId}>
@@ -27,27 +51,27 @@ const FormField = (props: FormFieldProps) => {
                 icon={{ icon: `${num}`, isNum: true }}
                 theme={activeIdx === num - 1 ? "btn-active highlight" : "highlight"}
                 isDisable={targetList.length < num}
-                onClick={() => handleToggleClick(targetList[num - 1])}
+                onClick={() => setActiveEntry({ [groupName]: targetList[num - 1] })}
               />
             ))}
           </div>
         )}
-        {targetEntry.map((p) => (
-          <Field key={p.fieldId} {...props} {...p} />
+        {targetEntry.map((p, idx) => (
+          <Field key={p.fieldId} {...props} {...p} handleHeroChange={(e) => handleSelect(e, idx)} />
         ))}
-        {targetEntry[0].onMultiply && (
+        {onMultiply && (
           <div className="button-container">
-            {targetEntry[0].canRemove && (
+            {canRemove && (
               <Button
-                label={targetEntry[0].onMultiply.removalLabel}
+                label={onMultiply.removalLabel}
                 onClick={onRemovalClick}
                 // todo add confirmation removal
                 theme="btn-cancel"
               />
             )}
-            {targetEntry[0].canMultiply && (
+            {canMultiply && (
               <Button
-                label={targetEntry[0].onMultiply?.additionLabel}
+                label={onMultiply?.additionLabel}
                 onClick={onMultiplyClick}
                 // isDisable={disableForm}
               />

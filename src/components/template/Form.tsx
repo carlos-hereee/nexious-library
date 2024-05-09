@@ -29,7 +29,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     useFormValidation({ ...schema });
 
   // key variables
-  const { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry } = useValues();
+  const { values, entries, activeEntry, setValues, setEntries, addNewEntry, addExtraEntry, setActiveEntry } =
+    useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
 
   useEffect(() => {
@@ -179,6 +180,16 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setValues(oldValues);
     if (onChange) onChange(oldValues[idx].value);
   };
+  const handleHeroEntryChange = () => {
+    // const { groupName, sharedKey } = oldValues[idx];
+    // if (groupName && sharedKey) {
+    //   const entry = entries[groupName][sharedKey];
+    //   console.log("entry :>> ", entry);
+    //   // const groupName =
+    //   console.log("idx, selectedFile :>> ", selectedFile);
+    //   console.log("entries :>> ");
+    // }
+  };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
   // console.log("values[1] :>> ", values[1]);
@@ -208,6 +219,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             dataList={dataList?.[field.name]}
             label={field.label}
             changeDataList={(e: string) => handleChangeDataList(e, keyIdx)}
+            handleHeroEntryChange={setEntries}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(e: OnchangeProps) => handleChange(e, keyIdx)}

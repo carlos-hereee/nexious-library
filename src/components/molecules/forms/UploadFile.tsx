@@ -66,7 +66,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         </button>
         {previewImage && (
           <button className="btn-main btn-cancel hide-on-mobile" type="button" onClick={handleRemoveImage}>
-            Remove
+            Remove File
           </button>
         )}
       </div>
