@@ -27,3 +27,22 @@
   justify-content: center;
   gap: 0.5rem;
 }
+
+.button-hint-container {
+  position: relative;
+}
+.hint-container {
+  min-width: 50vw;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  background-color: aliceblue;
+  padding: 1rem;
+  border-radius: 10px;
+  position: absolute;
+  top: 0;
+  left: 50%;
+}
+.hint-container .heading {
+  text-align: center;
+}
