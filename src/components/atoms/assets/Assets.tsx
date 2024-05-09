@@ -168,6 +168,16 @@ const svg: SVGProp = {
   eight: fa8,
   nine: fa9,
   zero: fa0,
+  1: fa1,
+  2: fa2,
+  3: fa3,
+  4: fa4,
+  5: fa5,
+  6: fa6,
+  7: fa7,
+  8: fa8,
+  9: fa9,
+  0: fa0,
 };
 library.add(svg);
 export { svg };

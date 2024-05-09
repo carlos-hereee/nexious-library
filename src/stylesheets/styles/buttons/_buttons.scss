@@ -1,18 +1,26 @@
-button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: transparent;
-  font: inherit;
-  color: inherit;
-  padding: #{$rem05} #{$rem};
-  max-width: #{$max-width-button};
-  min-width: #{$min-width};
-  border: none;
-  border-radius: #{$border-radius};
+.buttons-container {
+  display: grid;
   gap: #{$rem};
-  cursor: pointer;
+  // justify-items: center;
+  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
+  grid-template-rows: auto auto;
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
 }
+.buttons-container-row {
+  display: flex;
+  gap: #{$rem};
+}
+.button-container {
+  display: flex;
+  gap: #{$rem};
+  * {
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
 .bag-btns {
   display: flex;
   justify-content: center;

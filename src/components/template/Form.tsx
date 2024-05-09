@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, type ChangeEvent } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 import { formatInitialFormValues, objToArray } from "@nxs-utils/app/objLength";
@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     useFormValidation({ ...schema });
 
   // key variables
-  const { values, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
+  const { values, entries, activeEntry, setValues, formatFieldEntry, addNewEntry, addExtraEntry } = useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
 
   useEffect(() => {
@@ -173,6 +173,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
+  // console.log("values[1] :>> ", values[1]);
+  // console.log("values[2] :>> ", values[2]);
   return (
     <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
       {heading && <h2 className="heading">{heading}</h2>}
@@ -187,20 +189,24 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             name={field.name}
             type={field.type}
             value={field.value}
+            isEntry={!!(addEntry && field.group && addEntry[field.group])}
+            entry={addEntry && addEntry[field.group || ""]}
+            entries={entries[field.groupName || ""]}
+            activeEntry={activeEntry[field.groupName || ""]}
             theme={theme}
             placeholder={field.placeholder}
             hideLabels={hideLabels}
             populateLink={populateLink?.[field.name]}
             dataList={dataList?.[field.name]}
             label={field.label}
-            changeDataList={(e) => handleChangeDataList(e, keyIdx)}
+            changeDataList={(e: string) => handleChangeDataList(e, keyIdx)}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
-            handleChange={(e) => handleChange(e, keyIdx)}
-            handleCountChange={(e) => handleCountChange(e, keyIdx)}
-            handleCheckbox={(e) => handleCheckbox(e, field, keyIdx)}
-            updateSelection={(e) => handleSelection(e, keyIdx)}
-            handleHeroChange={(e) => handleHeroChange(keyIdx, e)}
+            handleChange={(e: OnchangeProps) => handleChange(e, keyIdx)}
+            handleCountChange={(e: ChangeEvent<HTMLInputElement>) => handleCountChange(e, keyIdx)}
+            handleCheckbox={(e: OnchangeProps) => handleCheckbox(e, field, keyIdx)}
+            updateSelection={(e: string) => handleSelection(e, keyIdx)}
+            handleHeroChange={(e: string | File) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             countSchema={countSchema}
             onMultiply={field.onMultiply}

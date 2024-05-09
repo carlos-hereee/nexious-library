@@ -1,20 +1,144 @@
-import { Input, Label } from "@nxs-atoms/index";
-import type { InputProps } from "nxs-form";
+import { Input, Label, InputCheckbox } from "@nxs-atoms/index";
+import type { FormFieldProps } from "nxs-form";
+import { auth } from "@nxs-utils/form/types";
+import { AuthField, DataList, FieldQuantity, Select, TextArea, UploadFile } from "@nxs-molecules";
+import FieldDateDay from "./FieldDateDay";
+import FieldDateWeek from "./FieldDateWeek";
+import FieldDateTime from "./FieldDateTime";
+import FieldPrice from "./FieldPrice";
 
-const Field: React.FC<InputProps> = (props) => {
-  const { name, value, placeholder, hideLabel, label, error, formMessage, isDisabled } = props;
-  const { onChange } = props;
-
-  return (
+const Field: React.FC<FormFieldProps> = (props) => {
+  const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection, populateLink } = props;
+  const { formError, updateSelection, handleCheckbox, theme, disableForm, handleCountChange } = props;
+  const { handleHeroChange, formMessage, dataList, changeDataList, countSchema } = props;
+  return auth.includes(name) ? (
+    <AuthField
+      name={name}
+      formMessage={formMessage}
+      value={typeof value === "string" ? value : ""}
+      onChange={handleChange}
+      placeholder={placeholder}
+      hideLabels={hideLabels}
+      labels={label}
+      errors={formError}
+      isDisabled={disableForm}
+    />
+  ) : type === "number" ? (
+    <FieldQuantity
+      name={name}
+      formMessage={formMessage}
+      value={value ? parseInt(value as string, 10) : 0}
+      label={label}
+      onChange={handleChange}
+      isDisabled={disableForm}
+    />
+  ) : type === "datalist" ? (
+    <DataList
+      name={name}
+      list={dataList || []}
+      formMessage={formMessage}
+      value={typeof value === "string" ? value : ""}
+      label={label}
+      onChange={changeDataList}
+      isDisabled={disableForm}
+    />
+  ) : type === "select" ? (
+    <Select
+      name={name}
+      formMessage={formMessage}
+      list={dataList || []}
+      active={typeof value === "string" ? value : ""}
+      theme={theme}
+      onChange={(e) => updateSelection && updateSelection(e, name)}
+      hideLabels={hideLabels}
+      label={label}
+      clearSelection={clearSelection}
+      error={formError}
+      isDisabled={disableForm}
+    />
+  ) : type === "textarea" ? (
+    <TextArea
+      input={{
+        name,
+        value: typeof value === "string" ? value : "",
+        placeholder,
+        label,
+        error: formError,
+        onChange: handleChange,
+        isDisabled: disableForm,
+      }}
+      hideLabels={hideLabels}
+      formMessage={formMessage}
+    />
+  ) : type === "checkbox" ? (
+    <InputCheckbox
+      name={name}
+      value={typeof value === "boolean" ? value : false}
+      onChange={handleCheckbox}
+      formMessage={formMessage}
+      error={formError}
+      label={label}
+      isDisabled={disableForm}
+      populateLink={populateLink}
+    />
+  ) : type === "file" ? (
+    <UploadFile
+      input={{ name, error: formError, isDisabled: disableForm }}
+      formMessage={formMessage}
+      value={typeof value === "string" ? value : value instanceof File ? value : ""}
+      label={label}
+      onSelect={(e) => handleHeroChange && handleHeroChange(e)}
+    />
+  ) : type === "price-dollars-cents" ? (
+    <FieldPrice
+      name={name}
+      formMessage={formMessage}
+      value={typeof value === "number" ? value : 0}
+      label={label}
+      schema={countSchema?.[name]}
+      type={type}
+      onChange={handleCountChange}
+    />
+  ) : type === "date-time" ? (
+    <FieldDateTime
+      name={name}
+      errors={formError}
+      placeholder={placeholder}
+      formMessage={formMessage}
+      value={typeof value === "string" ? value : ""}
+      label={label}
+      onChange={(e) => updateSelection && updateSelection(e, name)}
+    />
+  ) : type === "date-week" ? (
+    <FieldDateWeek
+      name={name}
+      placeholder={placeholder}
+      formMessage={formMessage}
+      errors={formError}
+      value={typeof value === "string" ? value : ""}
+      label={label}
+      onChange={changeDataList}
+    />
+  ) : type === "date-day" ? (
+    <FieldDateDay
+      name={name}
+      errors={formError}
+      placeholder={placeholder}
+      formMessage={formMessage}
+      value={typeof value === "string" ? value : ""}
+      label={label}
+      onChange={(e) => updateSelection && updateSelection(e, name)}
+    />
+  ) : (
     <>
-      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
+      {!hideLabels && label && <Label name={name} label={label} errors={formError} message={formMessage} />}
       <Input
-        value={value}
-        onChange={onChange}
+        value={value as string}
+        onChange={handleChange}
         name={name}
         theme="highlight"
         placeholder={placeholder}
-        isDisabled={isDisabled}
+        isDisabled={disableForm}
       />
     </>
   );

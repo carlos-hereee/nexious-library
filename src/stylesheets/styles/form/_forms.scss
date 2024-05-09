@@ -13,6 +13,7 @@
   display: flex;
   justify-content: flex-start;
   align-items: start;
+  cursor: pointer;
   input {
     min-width: #{$min-width-sm};
     width: fit-content;

@@ -5,6 +5,10 @@
   padding: #{$rem};
   border-radius: #{$border-radius};
 }
+.btn-icon {
+  // max-width: #{$min-icon-width};
+  min-width: auto;
+}
 .btn-submit {
   width: 100%;
 }
@@ -70,10 +74,7 @@
   padding: 0;
   // width: 100%;
 }
-.btn-icon {
-  max-width: #{$min-icon-width};
-  min-width: auto;
-}
+
 .btn-checkout {
   position: sticky;
   min-width: 100%;

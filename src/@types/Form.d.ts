@@ -213,6 +213,7 @@ declare module "nxs-form" {
     initialValues: { [key: string]: FormInitialValue };
     fieldHeading: string;
     labels?: KeyStringProp;
+    max?: number;
     groupName: string;
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
@@ -251,6 +252,10 @@ declare module "nxs-form" {
     group?: string;
     sharedKey?: string;
     canMultiply?: boolean;
+    isEntry?: boolean;
+    entry?: AddEntryProps;
+    entries?: FieldValueProps[];
+    activeEntry?: FieldValueProps;
     clearSelection?: boolean;
     onMultiply?: { additionLabel: string; name: string; removalLabel: string };
     onMultiplyClick?: () => void;

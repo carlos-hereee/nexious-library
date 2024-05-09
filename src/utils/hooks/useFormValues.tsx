@@ -13,18 +13,15 @@ import { objToArray } from "@nxs-utils/app/objLength";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
+  const [activeEntry, setActiveEntry] = useState<{ [x: string]: FieldValueProps }>({});
+  const [entries, setEntries] = useState<{ [x: string]: FieldValueProps[] }>({});
 
   const formatEntry = (props: FormatEntryProps) => {
     const { addEntry, target, oldValues } = props;
     const { canMultiply, additionLabel, removalLabel } = addEntry;
-
     oldValues[oldValues.length - 1].canMultiply = canMultiply || false;
     oldValues[oldValues.length - 1].canRemove = true;
-    oldValues[oldValues.length - 1].onMultiply = {
-      additionLabel,
-      name: target,
-      removalLabel,
-    };
+    oldValues[oldValues.length - 1].onMultiply = { additionLabel, name: target, removalLabel };
     return oldValues;
   };
   const formatFieldEntry = (props: AddEntryValueProps): FieldValueProps[] => {
@@ -57,8 +54,15 @@ export const useValues = () => {
     // add properties all entrys should have
     const group = target;
     const payload = { formatValues: entryValues, ...addEntry, group, sharedKey: uniqueId() };
+
     // if additional entries are possible add them here
     const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
+
+    setActiveEntry({ ...activeEntry, [groupName]: ent[0] });
+    // add new entry to list
+    if (entries[groupName]) setEntries({ ...entries, [groupName]: [...entries[groupName], ent[0]] });
+    else setEntries({ ...entries, [groupName]: [ent[0]] });
+
     const newIdx = oldValues.findIndex((d) => d.name === group);
     const numCount = oldValues.filter((d) => d.groupName === groupName);
     // keep everything together; 0 is the number of element to be deleted
@@ -97,13 +101,13 @@ export const useValues = () => {
     setNewValues([]);
     setNewValues(oldValues);
   };
-  const formatInitialEntry = () => {};
   return {
     values,
+    entries,
+    activeEntry,
     setValues,
     formatFieldEntry,
     addNewEntry,
     addExtraEntry,
-    formatInitialEntry,
   };
 };
