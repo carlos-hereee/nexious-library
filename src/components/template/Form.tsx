@@ -117,16 +117,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     // check validation status to contine
     if (validationStatus === "red" || !validationStatus) validateForm(values);
   };
-  const handleMultiplyClick = (e: FieldValueProps, fieldIndex: number) => {
-    if (addEntry) {
-      // const name = e.onMultiply?.name || e.name;
-      // move button to last appropriate field
-      const oldValues = [...values];
-      // if form has an entry value
-      oldValues[fieldIndex].canMultiply = false;
-      addNewEntry({ addEntry: addEntry[e.name], group: e.name });
-      // setValues
-      // setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
+  const handleMultiplyClick = (e: FieldValueProps) => {
+    if (addEntry && e.group) {
+      addNewEntry({ addEntry: addEntry[e.group], group: e.group });
     }
   };
   const handleRemovalClick = (e: FieldValueProps, idx: number) => {
@@ -227,7 +220,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             canMultiply={field.canMultiply}
             clearSelection={clearSelection?.[field.name]}
             disableForm={disableForm}
-            onMultiplyClick={() => handleMultiplyClick(field, keyIdx)}
+            onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={() => handleRemovalClick(field, keyIdx)}
           />
         ))}

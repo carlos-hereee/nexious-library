@@ -11,19 +11,24 @@ import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/forma
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
-  const [activeEntry, setActiveEntry] = useState<{ [x: string]: FieldValueProps[] }>({});
-  const [entries, setEntries] = useState<{ [x: string]: FieldValueProps[][] }>({});
+  const [activeEntry, setActiveEntry] = useState<{ [x: string]: string }>({});
+  const [entries, setEntries] = useState<{ [x: string]: { [id: string]: FieldValueProps[] } }>({});
 
   const addNewEntry = ({ addEntry, group }: FormatEntryProps) => {
     const formatValues: FormValueProps[] = formatInitialFormValues(addEntry.initialValues);
     const { groupName } = addEntry;
+    const sharedKey = uniqueId();
     // add properties all entrys should have
-    const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, addEntry, sharedKey: uniqueId(), group });
+    const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, addEntry, sharedKey, group });
     // if additional entries are possible add them here
-    setActiveEntry({ ...activeEntry, [groupName]: fieldEntry });
+    setActiveEntry({ ...activeEntry, [groupName]: fieldEntry[0].sharedKey || "" });
     // // add new entry to list
-    if (entries[groupName]) setEntries({ ...entries, [groupName]: [...entries[groupName], fieldEntry] });
-    else setEntries({ ...entries, [groupName]: [fieldEntry] });
+    if (entries[groupName])
+      setEntries({
+        ...entries,
+        [groupName]: { ...entries[groupName], [sharedKey]: fieldEntry },
+      });
+    else setEntries({ ...entries, [groupName]: { [sharedKey]: fieldEntry } });
 
     return fieldEntry;
   };

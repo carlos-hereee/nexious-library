@@ -256,8 +256,8 @@ declare module "nxs-form" {
     canMultiply?: boolean;
     isEntry?: boolean;
     entry?: AddEntryProps;
-    entries?: FieldValueProps[][];
-    activeEntry?: FieldValueProps[];
+    entries?: { [id: string]: FieldValueProps[] };
+    activeEntry?: string;
     clearSelection?: boolean;
     onMultiplyClick?: () => void;
     onRemovalClick?: () => void;
