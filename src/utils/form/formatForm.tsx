@@ -7,6 +7,7 @@ import type {
   FieldEntryProps,
 } from "nxs-form";
 import type { ObjectToArray } from "custom-props";
+import { isFile } from "@nxs-utils/app/isDefined";
 import { uniqueId } from "../data/uniqueId";
 import { initLabels } from "./labels";
 import { initPlaceholders } from "./placeholders";
@@ -80,11 +81,13 @@ export const formatPreviewData = (values: FieldValueProps[]) => {
 export const formatFilesData = (values: FieldValueProps[], formData: FormData) => {
   for (let item = 0; item < values.length; item += 1) {
     const current = values[item];
-    if (!current.sharedKey) appendValuesToFormData(current, current.name, formData);
-    else {
-      const keyName = `${current.groupName}-${current.sharedKey}`;
-      appendValuesToFormData(current, keyName, formData);
-    }
+    if (current.groupName && current.sharedKey) {
+      if (isFile(current.value)) appendValuesToFormData(current, current.groupName, formData);
+      else {
+        const keyName = `${current.groupName}-${current.sharedKey}`;
+        appendValuesToFormData(current, keyName, formData);
+      }
+    } else appendValuesToFormData(current, current.name, formData);
   }
   return formData;
 };
