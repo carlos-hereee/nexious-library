@@ -13,13 +13,14 @@ export { default as Total } from "@nxs-organism/table/Total";
 
 // card
 export { default as Card } from "@nxs-organism/card/Card";
+export { default as Banner } from "@nxs-organism/card/Banner";
 export { default as MerchCard } from "@nxs-organism/card/MerchCard";
 export { default as UserCard } from "@nxs-organism/card/UserCard";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as CardSection } from "@nxs-organism/card/CardSection";
 export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
 
-export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps, DialogProps } from "nxs-card";
+export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps, DialogProps, BannerProps } from "nxs-card";
 export type { TextBubbleProps } from "nxs-assets";
 
 // cart

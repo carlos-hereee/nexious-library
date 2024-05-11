@@ -22,6 +22,7 @@ declare module "nxs-button" {
     children?: React.ReactNode;
     theme?: string;
     isDisable?: boolean;
+    confirmSubmit?: boolean;
     title?: string;
     label?: string;
     name?: string;
