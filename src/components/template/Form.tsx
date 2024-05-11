@@ -123,28 +123,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       addNewEntry({ addEntry: addEntry[e.group], group: e.group });
     }
   };
-  const handleRemovalClick = (e: FieldValueProps, idx: number) => {
-    if (addEntry && e.onMultiply) {
-      // find the number of fields to delete
-      const groupName = e.group ? e.group : e.onMultiply.name;
-      if (addEntry[groupName]) {
-        const numCount = objToArray(addEntry[groupName].initialValues).length;
-        const groupList = values.filter((val) => val.groupName === groupName);
-        const neglectedKeys = groupList.filter((list) => list.sharedKey !== e.sharedKey);
-        const oldValues = [...values];
-        // if where add entry button is stored move button and down to last appropriate field
-        if (e.canMultiply) {
-          // if theres only been one entry; update checkbox
-          if (neglectedKeys.length === 0) oldValues[idx - numCount].value = false;
-          // otherwise move new entry button
-          else oldValues[idx - numCount].canMultiply = true;
-        }
-        // get removal list with the get shared key
-        const removalList = oldValues.filter((val) => val.sharedKey !== e.sharedKey);
-        setValues(removalList);
-      }
-    }
-  };
+
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
     const oldValues = [...values];
     if (selectedFile) {
@@ -188,10 +167,32 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     entryField[idx].value = selectedFile;
     setEntries({ ...entries, [groupName]: { ...entries[groupName], [entryKey]: entryField } });
   };
+  const handleRemovalClick = (groupName: string, idx: number) => {
+    // find field key
+    const entryKey = activeEntry[groupName];
+    const fieldEntry = entries[groupName][entryKey];
+    // remove field
+    delete entries[groupName][entryKey];
+    // if it was the only entry in list
+    if (Object.keys(entries[groupName]).length === 0) {
+      const { group } = fieldEntry[0];
+      // update group origin value
+      const valuesIdx = values.findIndex((val) => val.name === group);
+      values[valuesIdx].value = false;
+      //   remove group
+      const removedField = values.filter((val) => val.group !== group);
+      setValues(removedField);
+    } else {
+      // update active entry
+      const entryList = Object.keys(entries[groupName]);
+      if (entryList[idx]) setActiveEntry({ [groupName]: entryList[idx] });
+      else setActiveEntry({ [groupName]: entryList[idx - 1] });
+    }
+    // lastly update entries
+    setEntries({ ...entries, [groupName]: { ...entries[groupName] } });
+  };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
-  // console.log("values[1] :>> ", values[1]);
-  // console.log("values[2] :>> ", values[2]);
   return (
     <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
       {heading && <h2 className="heading">{heading}</h2>}
@@ -231,7 +232,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             disableForm={disableForm}
             handleHeroEntryChange={handleHeroEntryChange}
             onMultiplyClick={() => handleMultiplyClick(field)}
-            onRemovalClick={() => handleRemovalClick(field, keyIdx)}
+            onRemovalClick={handleRemovalClick}
             setActiveEntry={setActiveEntry}
           />
         ))}

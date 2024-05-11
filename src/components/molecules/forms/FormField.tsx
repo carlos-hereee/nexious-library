@@ -1,4 +1,4 @@
-import { Button } from "@nxs-atoms";
+import { Button, ButtonCancel } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 import { IconButton } from "@nxs-molecules";
 import Field from "./Field";
@@ -22,21 +22,6 @@ const FormField = (props: FormFieldProps) => {
     if (!handleHeroEntryChange) throw Error("handleHeroEntryChange is required");
     if (!canRemove) throw Error("canRemove is required");
 
-    // const handleSelect = (selectedFile: File | string, idx: number) => {
-    //   // const { groupName, sharedKey } = targetEntry[0];
-
-    //   // targetEntry[idx].value = selectedFile;
-
-    //   // const { groupName, sharedKey } = oldValues[idx];
-    //   // if (groupName && sharedKey) {
-    //   //   // const entry = entries[groupName][sharedKey];
-    //   //   console.log("entry :>> ", entry);
-    //   //   // const groupName =
-    //   //   console.log("idx, selectedFile :>> ", selectedFile);
-    //   //   console.log("entries :>> ");
-    //   // }
-    //   console.log("selectedFile :>> ", selectedFile);
-    // };
     return (
       <div className="container" id={fieldId}>
         {entry.max && entry.max > 0 && (
@@ -57,21 +42,10 @@ const FormField = (props: FormFieldProps) => {
         ))}
         {onMultiply && (
           <div className="button-container">
-            {canRemove && (
-              <Button
-                label={onMultiply.removalLabel}
-                onClick={onRemovalClick}
-                // todo add confirmation removal
-                theme="btn-cancel"
-              />
+            {canRemove && onRemovalClick && (
+              <ButtonCancel label={onMultiply.removalLabel} onClick={() => onRemovalClick(groupName, activeIdx)} />
             )}
-            {canMultiply && (
-              <Button
-                label={onMultiply?.additionLabel}
-                onClick={onMultiplyClick}
-                // isDisable={disableForm}
-              />
-            )}
+            {canMultiply && <Button label={onMultiply.additionLabel} onClick={onMultiplyClick} />}
           </div>
         )}
       </div>

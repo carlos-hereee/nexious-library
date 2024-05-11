@@ -261,7 +261,6 @@ declare module "nxs-form" {
     clearSelection?: boolean;
     onMultiplyClick?: () => void;
     setActiveEntry?: (n: KeyStringProp) => void;
-    onRemovalClick?: () => void;
     formError?: string;
     populateLink?: { word: string; link: string }[];
     formMessage?: string;
@@ -274,6 +273,7 @@ declare module "nxs-form" {
     updateSelection?: (key: string, name: string) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;
+    onRemovalClick?: (groupName: string, idx: number) => void;
     handleHeroEntryChange?: (selectedFile: File | string, activeEntry: string, idx: number) => void;
   }
   export interface LabelProps {
