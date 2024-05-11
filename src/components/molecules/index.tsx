@@ -44,13 +44,6 @@ export { default as UploadFile } from "@nxs-molecules/forms/UploadFile";
 export { default as DataList } from "@nxs-molecules/forms/DataList";
 export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
 
-// calendar
-export { default as CalendarNavigation } from "@nxs-molecules/calendar/CalendarNavigation";
-export { default as CalendarView } from "@nxs-molecules/calendar/CalendarView";
-export { default as CalendarEventList } from "@nxs-molecules/calendar/CalendarEventList";
-export type { CalendarEventListProps, CalendarViewProps } from "nxs-calendar";
-export type { CalendarNavProps } from "nxs-calendar";
-
 // TODO: ADD Tables types
 // // tables
 // export { default as ColumnGroup } from "@nxs-molecules/table/ColumnGroup";
