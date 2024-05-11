@@ -9,6 +9,7 @@ import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
 import {
   formatFieldEntry,
   formatFilesData,
+  formatFilesEntryData,
   formatFormData,
   formatFormEntryData,
   formatInitialFormValues,
@@ -34,6 +35,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { direction, setDirection, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
 
+  // require key variable
+  if (!onSubmit) throw Error("onSubmit is required");
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
@@ -56,17 +59,19 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   useEffect(() => {
     if (validationStatus === "green") {
-      if (!onSubmit) setStatus("red");
-      else if (withFileUpload) onSubmit(formatFilesData(values));
-      else if (addEntry) onSubmit(formatFormEntryData(values));
-      else onSubmit(formatFormData(values));
+      // submit regular form
+      if (!withFileUpload && !addEntry) onSubmit(formatFormData(values));
+      // submit regular form with entry values
+      if (!withFileUpload && addEntry) onSubmit(formatFormEntryData(values));
+      // submit form with file uploads
+      if (withFileUpload && !addEntry) onSubmit(formatFilesData(values, new FormData()));
+      // submit form with file uploads and entry values
+      if (withFileUpload && addEntry) onSubmit(formatFilesEntryData(values, entries));
       setStatus(null);
     }
     if (validationStatus === "yellow") {
-      if (onViewPreview) {
-        onViewPreview(formatPreviewData(values));
-        setStatus(null);
-      }
+      if (onViewPreview) onViewPreview(formatPreviewData(values));
+      setStatus(null);
     }
   }, [validationStatus]);
 
@@ -240,7 +245,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           />
         ))}
       </div>
-      {(onCancel || onViewPreview) && onSubmit ? (
+      {onCancel || onViewPreview ? (
         <div className="buttons-container">
           {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
           {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} />}
@@ -249,7 +254,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           )}
         </div>
       ) : (
-        onSubmit && !hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} theme="form-submit-btn" />
+        !hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} theme="form-submit-btn" />
       )}
     </form>
   );

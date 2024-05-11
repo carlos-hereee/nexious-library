@@ -96,7 +96,7 @@ declare module "nxs-form" {
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     addEntry?: { [key: string]: AddEntryProps };
-    onSubmit?: (e: any) => void;
+    onSubmit: (e: any) => void;
     onChange?: (e: any) => void;
     onCancel?: () => void;
     onViewPreview?: (e: any) => void;
@@ -176,6 +176,7 @@ declare module "nxs-form" {
     sharedKey: string;
     groupName: string;
   };
+  export type FieldEntryProps = { [id: string]: FieldValueProps[] };
   export type FieldValueProps = {
     value: FormInitialValue;
     name: string;

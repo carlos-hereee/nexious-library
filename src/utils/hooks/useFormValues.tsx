@@ -1,6 +1,7 @@
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import { useState } from "react";
 import type {
+  FieldEntryProps,
   FieldValueProps,
   FormValueProps,
   FormatEntryProps,
@@ -13,7 +14,7 @@ import type { KeyStringProp } from "custom-props";
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
   const [activeEntry, setActiveEntry] = useState<KeyStringProp>({});
-  const [entries, setEntries] = useState<{ [x: string]: { [id: string]: FieldValueProps[] } }>({});
+  const [entries, setEntries] = useState<{ [x: string]: FieldEntryProps }>({});
 
   const addNewEntry = ({ addEntry, group }: FormatEntryProps) => {
     const formatValues: FormValueProps[] = formatInitialFormValues(addEntry.initialValues);

@@ -1,9 +1,26 @@
-import type { FieldValueData, FieldValueProps, FormInitialValue, FormValueProps, AddEntryValueProps } from "nxs-form";
+import type {
+  FieldValueData,
+  FieldValueProps,
+  FormInitialValue,
+  FormValueProps,
+  AddEntryValueProps,
+  FieldEntryProps,
+} from "nxs-form";
 import type { ObjectToArray } from "custom-props";
 import { uniqueId } from "../data/uniqueId";
 import { initLabels } from "./labels";
 import { initPlaceholders } from "./placeholders";
 
+const appendValuesToFormData = (current: FieldValueProps, keyName: string, formData: FormData) => {
+  // field value is of type File or Blob or string
+  if (current.value instanceof File || current.value instanceof Blob || typeof current.value === "string") {
+    formData.append(keyName, current.value);
+  }
+  // field value is type boolean, or number
+  else formData.append(keyName, `${current.value}`);
+  // field value is a string
+  return formData;
+};
 export const formatInitialFormValues: ObjectToArray<FormInitialValue> = (obj) => {
   if (!obj) return [];
   if (typeof obj === "object") return Object.keys(obj).map((key) => ({ [key]: obj[key] }));
@@ -58,20 +75,33 @@ export const formatPreviewData = (values: FieldValueProps[]) => {
   });
   return payload;
 };
-export const formatFilesData = (values: FieldValueProps[]) => {
+
+// form data is tricky it wont show values in console, send to db and check there
+export const formatFilesData = (values: FieldValueProps[], formData: FormData) => {
+  for (let item = 0; item < values.length; item += 1) {
+    const current = values[item];
+    if (!current.sharedKey) appendValuesToFormData(current, current.name, formData);
+    else {
+      const keyName = `${current.groupName}-${current.sharedKey}`;
+      appendValuesToFormData(current, keyName, formData);
+    }
+  }
+  return formData;
+};
+
+export const formatFilesEntryData = (values: FieldValueProps[], entries: { [key: string]: FieldEntryProps }) => {
   // form data is tricky it wont show values in console, send to db and check there
   const formData = new FormData();
   for (let item = 0; item < values.length; item += 1) {
     const current = values[item];
-    if (typeof current.value === "number") formData.append(current.name, `${current.value}`);
-    else if (current.value instanceof File) formData.append(current.name, current.value);
-    else if (current.value instanceof Blob) formData.append(current.name, current.value);
-    else if (current.sharedKey) {
-      const keyName = `${current.name}-${current.group}-${current.sharedKey}`;
-      if (typeof current.value === "string") formData.append(keyName, current.value);
-      if (typeof current.value === "boolean") formData.append(keyName, `${current.value}`);
-    } else if (typeof current.value === "string") formData.append(current.name, current.value);
-    else if (typeof current.value === "boolean") formData.append(current.name, `${current.value}`);
+    // eslint-disable-next-line prefer-destructuring
+    const groupName = current.groupName;
+    // if its an entry field format the group
+    if (groupName) {
+      // list of each entry
+      const entryList = Object.keys(entries[groupName]);
+      entryList.forEach((sharedKey) => formatFilesData(entries[groupName][sharedKey], formData));
+    } else appendValuesToFormData(current, current.name, formData);
   }
   return formData;
 };
