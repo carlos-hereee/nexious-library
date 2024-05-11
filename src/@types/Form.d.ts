@@ -81,6 +81,7 @@ declare module "nxs-form" {
     cancelLabel?: string;
     hideLabels?: boolean;
     hideSubmit?: boolean;
+    confirmRemovals?: boolean;
     withFileUpload?: boolean;
     disableForm?: boolean;
     formScroll?: boolean;
@@ -250,6 +251,7 @@ declare module "nxs-form" {
     theme?: string;
     selected?: string;
     hideLabels?: boolean;
+    confirmRemoval?: boolean;
     disableForm?: boolean;
     group?: string;
     sharedKey?: string;
@@ -269,6 +271,7 @@ declare module "nxs-form" {
     fieldHeading?: { [key: string]: string };
     handleChange: (key: OnchangeProps) => void;
     changeDataList: (key: string) => void;
+    setConfirmRemovals: (key: boolean) => void;
     handleCountChange: React.ChangeEventHandler<HTMLInputElement>;
     updateSelection?: (key: string, name: string) => void;
     handleCheckbox?: (key: OnchangeProps) => void;

@@ -4,6 +4,8 @@ declare module "nxs-card" {
   export type DialogProps = {
     theme?: string;
     label?: string;
+    toggleLabel?: string;
+    toggleShow?: boolean;
     onDialogClose?: () => void;
     onConfirmClick?: () => void;
     onClick?: () => void;

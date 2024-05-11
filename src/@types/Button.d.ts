@@ -18,12 +18,13 @@ declare module "nxs-button" {
   export interface ButtonProps {
     // optional
     onClick?: () => void;
-    onSubmit?: (key: unknown) => void;
+    onSubmit?: () => void;
     children?: React.ReactNode;
     theme?: string;
     isDisable?: boolean;
     confirmSubmit?: boolean;
     title?: string;
+    toggleLabel?: string;
     label?: string;
     name?: string;
     data?: {

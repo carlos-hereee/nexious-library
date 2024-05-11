@@ -5,8 +5,8 @@ import Field from "./Field";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { name, isEntry, entries, entry, activeEntry } = props;
-  const { fieldHeading, onMultiplyClick, onRemovalClick, fieldId, setActiveEntry } = props;
+  const { name, isEntry, entries, entry, activeEntry, confirmRemoval } = props;
+  const { fieldHeading, onMultiplyClick, onRemovalClick, fieldId, setActiveEntry, setConfirmRemovals } = props;
 
   if (isEntry && entry && activeEntry && entries && setActiveEntry) {
     const targetEntry = entries[activeEntry];
@@ -45,8 +45,10 @@ const FormField = (props: FormFieldProps) => {
             {canRemove && onRemovalClick && (
               <ButtonCancel
                 label={onMultiply.removalLabel}
-                confirmSubmit
-                onClick={() => onRemovalClick(groupName, activeIdx)}
+                confirmSubmit={confirmRemoval}
+                toggleLabel="Don't show again"
+                onSubmit={() => onRemovalClick(groupName, activeIdx)}
+                onClick={() => setConfirmRemovals(!confirmRemoval)}
               />
             )}
             {canMultiply && <Button label={onMultiply.additionLabel} onClick={onMultiplyClick} />}

@@ -1,4 +1,4 @@
-import { useEffect, type ChangeEvent } from "react";
+import { useEffect, useState, type ChangeEvent } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 import { objToArray } from "@nxs-utils/app/objLength";
@@ -23,7 +23,7 @@ import type { CardinalDirectionProps } from "nxs-typography";
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema, theme } = props;
-  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll } = props;
+  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
   const { onChange, onCancel, onSubmit, onViewPreview } = props;
   const { formErrors, validationStatus, checkRequired, validateForm, setStatus, checkUniqueness, formMessage } =
     useFormValidation({ ...schema });
@@ -32,6 +32,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { values, entries, activeEntry, setValues, setEntries, addNewEntry, addExtraEntry, setActiveEntry } =
     useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
+  const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
 
   useEffect(() => {
     if (initialValues) {
@@ -214,6 +215,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             theme={theme}
             placeholder={field.placeholder}
             hideLabels={hideLabels}
+            confirmRemoval={confirmRemoval}
             populateLink={populateLink?.[field.name]}
             dataList={dataList?.[field.name]}
             label={field.label}
@@ -234,6 +236,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={handleRemovalClick}
             setActiveEntry={setActiveEntry}
+            setConfirmRemovals={(confirm: boolean) => setConfirmRemovals(confirm)}
           />
         ))}
       </div>
