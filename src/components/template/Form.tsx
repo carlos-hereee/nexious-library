@@ -180,15 +180,13 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setValues(oldValues);
     if (onChange) onChange(oldValues[idx].value);
   };
-  const handleHeroEntryChange = () => {
-    // const { groupName, sharedKey } = oldValues[idx];
-    // if (groupName && sharedKey) {
-    //   const entry = entries[groupName][sharedKey];
-    //   console.log("entry :>> ", entry);
-    //   // const groupName =
-    //   console.log("idx, selectedFile :>> ", selectedFile);
-    //   console.log("entries :>> ");
-    // }
+  const handleHeroEntryChange = (selectedFile: File | string, groupName: string, idx: number) => {
+    // find field key
+    const entryKey = activeEntry[groupName];
+    // update field value
+    const entryField = entries[groupName][entryKey];
+    entryField[idx].value = selectedFile;
+    setEntries({ ...entries, [groupName]: { ...entries[groupName], [entryKey]: entryField } });
   };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
@@ -219,7 +217,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             dataList={dataList?.[field.name]}
             label={field.label}
             changeDataList={(e: string) => handleChangeDataList(e, keyIdx)}
-            handleHeroEntryChange={setEntries}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(e: OnchangeProps) => handleChange(e, keyIdx)}
@@ -232,6 +229,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             canMultiply={field.canMultiply}
             clearSelection={clearSelection?.[field.name]}
             disableForm={disableForm}
+            handleHeroEntryChange={handleHeroEntryChange}
             onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={() => handleRemovalClick(field, keyIdx)}
             setActiveEntry={setActiveEntry}

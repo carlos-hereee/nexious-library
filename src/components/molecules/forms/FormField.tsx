@@ -17,30 +17,26 @@ const FormField = (props: FormFieldProps) => {
     if (!groupName) throw Error("groupName is required");
     if (!onMultiply) throw Error("onMultiply is required");
     if (!canMultiply) throw Error("canMultiply is required");
+    const { handleHeroEntryChange } = props;
+    // require key variable
+    if (!handleHeroEntryChange) throw Error("handleHeroEntryChange is required");
     if (!canRemove) throw Error("canRemove is required");
 
-    const handleSelect = (selectedFile: File | string, idx: number) => {
-      const { handleHeroEntryChange } = props;
-      // require key variable
-      if (!handleHeroEntryChange) throw Error("handleHeroEntryChange is required");
-      // const { groupName, sharedKey } = targetEntry[0];
-      console.log("targetEntry :>> ", targetEntry[idx]);
-      // targetEntry[idx].value = selectedFile;
+    // const handleSelect = (selectedFile: File | string, idx: number) => {
+    //   // const { groupName, sharedKey } = targetEntry[0];
 
-      // handleHeroEntryChange({
-      //   ...entries,
-      //   [groupName]: { ...entries[groupName], [sharedKey]: fieldEntry },
-      // });
-      // const { groupName, sharedKey } = oldValues[idx];
-      // if (groupName && sharedKey) {
-      //   // const entry = entries[groupName][sharedKey];
-      //   console.log("entry :>> ", entry);
-      //   // const groupName =
-      //   console.log("idx, selectedFile :>> ", selectedFile);
-      //   console.log("entries :>> ");
-      // }
-      console.log("selectedFile :>> ", selectedFile);
-    };
+    //   // targetEntry[idx].value = selectedFile;
+
+    //   // const { groupName, sharedKey } = oldValues[idx];
+    //   // if (groupName && sharedKey) {
+    //   //   // const entry = entries[groupName][sharedKey];
+    //   //   console.log("entry :>> ", entry);
+    //   //   // const groupName =
+    //   //   console.log("idx, selectedFile :>> ", selectedFile);
+    //   //   console.log("entries :>> ");
+    //   // }
+    //   console.log("selectedFile :>> ", selectedFile);
+    // };
     return (
       <div className="container" id={fieldId}>
         {entry.max && entry.max > 0 && (
@@ -57,7 +53,7 @@ const FormField = (props: FormFieldProps) => {
           </div>
         )}
         {targetEntry.map((p, idx) => (
-          <Field key={p.fieldId} {...props} {...p} handleHeroChange={(e) => handleSelect(e, idx)} />
+          <Field key={p.fieldId} {...props} {...p} handleHeroChange={(e) => handleHeroEntryChange(e, groupName, idx)} />
         ))}
         {onMultiply && (
           <div className="button-container">
