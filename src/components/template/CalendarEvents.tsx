@@ -1,6 +1,6 @@
 import { MeetingDetails } from "@nxs-atoms";
-import { CalendarEventList, IconButton } from "@nxs-molecules";
-import { UserCard } from "@nxs-organism";
+import { IconButton } from "@nxs-molecules";
+import { CalendarEventList, UserCard } from "@nxs-organism";
 import type { CalendarEventProps } from "nxs-calendar";
 
 const CalendarEvents: React.FC<CalendarEventProps> = (props) => {

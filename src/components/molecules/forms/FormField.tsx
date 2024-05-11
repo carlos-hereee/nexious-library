@@ -41,9 +41,13 @@ const FormField = (props: FormFieldProps) => {
           <Field key={p.fieldId} {...props} {...p} handleHeroChange={(e) => handleHeroEntryChange(e, groupName, idx)} />
         ))}
         {onMultiply && (
-          <div className="button-container">
+          <div className="buttons-container">
             {canRemove && onRemovalClick && (
-              <ButtonCancel label={onMultiply.removalLabel} onClick={() => onRemovalClick(groupName, activeIdx)} />
+              <ButtonCancel
+                label={onMultiply.removalLabel}
+                confirmSubmit
+                onClick={() => onRemovalClick(groupName, activeIdx)}
+              />
             )}
             {canMultiply && <Button label={onMultiply.additionLabel} onClick={onMultiplyClick} />}
           </div>

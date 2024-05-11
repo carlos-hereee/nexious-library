@@ -3,8 +3,11 @@ declare module "nxs-card" {
 
   export type DialogProps = {
     theme?: string;
+    label?: string;
     onDialogClose?: () => void;
-    children: React.ReactNode;
+    onConfirmClick?: () => void;
+    onClick?: () => void;
+    children?: React.ReactNode;
     header?: { heading?: string; subtitle?: string; data?: string };
   };
   export type CTAProp = {

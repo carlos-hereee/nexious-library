@@ -3,7 +3,7 @@ import { Button } from "@nxs-atoms";
 
 const Dialog = ({ theme, onDialogClose, children, header }: DialogProps) => {
   return (
-    <div className={`dialog ${theme ? `alt-${theme}` : "alt-light-mode"}`}>
+    <div className={`dialog ${theme ? `${theme}` : "alt-light-mode"}`}>
       <div className="dialog-navigation">
         <Button label="X" onClick={onDialogClose} theme="btn-dialog btn-cancel" />
       </div>
