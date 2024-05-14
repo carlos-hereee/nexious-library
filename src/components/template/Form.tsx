@@ -70,15 +70,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       // reset form submit
       setStatus(null);
     }
-    if (validationStatus === "yellow") {
+    if (validationStatus === "preview") {
       if (onViewPreview) onViewPreview(formatPreviewData(values));
       setStatus(null);
     }
     // scroll to error if validation failed
-    if (validationStatus === "red") {
-      console.log("formErrors :>> ", formErrors);
-      scrollToError(formErrors);
-    }
+    if (validationStatus === "error") scrollToError(formErrors);
   }, [validationStatus]);
 
   const handleChange = (event: OnchangeProps, idx: number) => {
@@ -87,7 +84,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     const oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
-    if (validationStatus === "red") validateForm(oldValues);
+    if (validationStatus === "error") validateForm(oldValues);
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
@@ -122,11 +119,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
-    console.log("validationStatus :>> ", validationStatus);
     // check validation status to contine
-    if (validationStatus === "red" || !validationStatus) validateForm(values);
-    // if status is validated validation was successfull
-    if (validationStatus === "validated") setStatus("green");
+    if (validationStatus === "error" || !validationStatus) validateForm(values, "green");
+    if (validationStatus === "validated") validateForm(values, "green");
   };
   const handleMultiplyClick = (e: FieldValueProps) => {
     if (addEntry && e.group) {
@@ -139,7 +134,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (selectedFile) {
       oldValues[idx].value = selectedFile;
       // // check schema if value is required for validation
-      if (validationStatus === "red") validateForm(oldValues);
+      if (validationStatus === "error") validateForm(oldValues);
       setValues(oldValues);
     } else {
       oldValues[idx].value = "";
@@ -154,7 +149,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   const handleViewPreview = () => {
     if (!validationStatus) validateForm(values);
-    if (validationStatus === "red") validateForm(values);
+    if (validationStatus === "error") validateForm(values);
   };
 
   const handleScroll = (target: CardinalDirectionProps) => {

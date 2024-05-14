@@ -318,6 +318,7 @@ declare module "nxs-form" {
     formMessage?: string;
     onChange?: (key: string) => void;
   }
+  export type ValidateFormStatus = "error" | "preview" | "validated" | "green" | null;
   export type ValidateProps = {
     required?: string[];
     unique?: { name: string; list: string[] }[];

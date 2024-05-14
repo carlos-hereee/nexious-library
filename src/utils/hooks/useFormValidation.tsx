@@ -1,4 +1,4 @@
-import type { FieldValueProps, ValidateProps } from "nxs-form";
+import type { FieldValueProps, ValidateFormStatus, ValidateProps } from "nxs-form";
 import { useEffect, useState } from "react";
 import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
@@ -8,12 +8,12 @@ export const useFormValidation = (schema: ValidateProps) => {
   const { required, unique, match } = schema;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});
-  const [validationStatus, setStatus] = useState<"red" | "yellow" | "validated" | "green" | null>(null);
+  const [validationStatus, setStatus] = useState<ValidateFormStatus>(null);
 
   useEffect(() => {
-    if (validationStatus) {
+    if (validationStatus !== null) {
       if (objLength(formErrors) === 0) setStatus("validated");
-      else setStatus("red");
+      else setStatus("error");
     }
   }, [formErrors]);
 
@@ -60,7 +60,7 @@ export const useFormValidation = (schema: ValidateProps) => {
     }
     return "";
   };
-  const validateForm = (values: FieldValueProps[]) => {
+  const validateForm = (values: FieldValueProps[], status?: ValidateFormStatus) => {
     const errors: KeyStringProp = {};
     values.forEach((current) => {
       // check required first and then uniqueness
@@ -71,8 +71,11 @@ export const useFormValidation = (schema: ValidateProps) => {
       const matchMsg = checkMatch(current);
       if (matchMsg) errors[current.fieldId] = matchMsg;
     });
+    // if no errors update status if given
+    if (status && Object.keys(errors).length === 0) setStatus(status);
+    // otherwise update status to validated
+    else setStatus("validated");
     setFormErrors(errors);
-    setStatus("validated");
   };
 
   return { validationStatus, formErrors, setFormErrors, setStatus, validateForm, formMessage };
