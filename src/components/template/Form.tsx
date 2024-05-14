@@ -6,18 +6,17 @@ import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import type { FieldValueProps, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
+import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
 import {
-  formatFieldEntry,
   formatFilesData,
   formatFilesEntryData,
   formatFormData,
   formatFormEntryData,
-  formatInitialFormValues,
   formatPreviewData,
-} from "@nxs-utils/form/formatForm";
+} from "@nxs-utils/form/handleFormSubmit";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
-import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
+import { scrollInDirection, scrollToError } from "@nxs-utils/app/scrollToElement";
 import { useScroll } from "@nxs-utils/hooks/useScroll";
 import type { CardinalDirectionProps } from "nxs-typography";
 
@@ -26,8 +25,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema, theme } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
   const { onChange, onCancel, onSubmit, onViewPreview } = props;
-  const { formErrors, validationStatus, checkRequired, validateForm, setStatus, checkUniqueness, formMessage } =
-    useFormValidation({ ...schema });
+  const { formErrors, validationStatus, validateForm, setStatus, formMessage } = useFormValidation({
+    ...schema,
+  });
 
   // key variables
   const { values, entries, activeEntry, setValues, setEntries, addNewEntry, addExtraEntry, setActiveEntry } =
@@ -67,11 +67,17 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       if (withFileUpload && !addEntry) onSubmit(formatFilesData(values, new FormData()));
       // submit form with file uploads and entry values
       if (withFileUpload && addEntry) onSubmit(formatFilesEntryData(values, entries));
+      // reset form submit
       setStatus(null);
     }
     if (validationStatus === "yellow") {
       if (onViewPreview) onViewPreview(formatPreviewData(values));
       setStatus(null);
+    }
+    // scroll to error if validation failed
+    if (validationStatus === "red") {
+      console.log("formErrors :>> ", formErrors);
+      scrollToError(formErrors);
     }
   }, [validationStatus]);
 
@@ -81,12 +87,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     const oldValues = [...values];
     oldValues[idx].value = value;
     // check schema if value is required for validation
-    if (validationStatus === "red" || !validationStatus) {
-      const current = values[idx].fieldId;
-      // check required first and then uniqueness
-      checkRequired(oldValues[idx], current);
-      checkUniqueness(oldValues[idx], current);
-    }
+    if (validationStatus === "red") validateForm(oldValues);
     if (onChange) onChange(oldValues);
     setValues(oldValues);
   };
@@ -121,8 +122,11 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
+    console.log("validationStatus :>> ", validationStatus);
     // check validation status to contine
     if (validationStatus === "red" || !validationStatus) validateForm(values);
+    // if status is validated validation was successfull
+    if (validationStatus === "validated") setStatus("green");
   };
   const handleMultiplyClick = (e: FieldValueProps) => {
     if (addEntry && e.group) {
@@ -133,10 +137,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
     const oldValues = [...values];
     if (selectedFile) {
-      const current = oldValues[idx].fieldId;
       oldValues[idx].value = selectedFile;
       // // check schema if value is required for validation
-      if (validationStatus === "red" || !validationStatus) checkRequired(oldValues[idx], current);
+      if (validationStatus === "red") validateForm(oldValues);
       setValues(oldValues);
     } else {
       oldValues[idx].value = "";

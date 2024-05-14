@@ -1,6 +1,5 @@
 import { InputPrice, Label } from "@nxs-atoms";
 import type { NumberInputProps } from "nxs-form";
-// import { useState } from "react";
 
 const FieldPrice: React.FC<NumberInputProps> = (props) => {
   const { max, value, onChange, onBlur, name, label, hideLabel, error, formMessage, type } = props;
@@ -20,7 +19,7 @@ const FieldPrice: React.FC<NumberInputProps> = (props) => {
   };
   return (
     <>
-      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
+      {!hideLabel && label && <Label name={name} label={label} error={error} message={formMessage} />}
       {type === "price-dollars-cents" ? (
         <div className="input-price-wrapper">
           <span className="size-2x">$ </span>

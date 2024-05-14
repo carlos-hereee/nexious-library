@@ -30,7 +30,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     isDisabled?: boolean;
     label?: string;
-    errors?: string;
+    error?: string;
     formMessage?: string;
   };
   export type FieldDateTimeProps = {
@@ -41,7 +41,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     isDisabled?: boolean;
     label?: string;
-    errors?: string;
+    error?: string;
     formMessage?: string;
   };
   export type AuthFieldProp = {
@@ -52,7 +52,7 @@ declare module "nxs-form" {
     hideLabels?: boolean;
     isDisabled?: boolean;
     labels?: string;
-    errors?: string;
+    error?: string;
     formMessage?: string;
   };
   export type SelectFileProp = {
@@ -284,7 +284,7 @@ declare module "nxs-form" {
     label: string;
     name: string;
     theme?: string;
-    errors?: string;
+    error?: string;
     message?: string;
   }
   export interface UploadFileProps {
@@ -301,6 +301,7 @@ declare module "nxs-form" {
   export interface TextAreaProps {
     input: InputProps;
     theme?: string;
+    error?: string;
     hideLabels?: boolean;
     formMessage?: string;
   }
@@ -320,6 +321,7 @@ declare module "nxs-form" {
   export type ValidateProps = {
     required?: string[];
     unique?: { name: string; list: string[] }[];
+    match?: { name: string; value: string }[];
   };
   export type DataListProps = {
     list: { [key: string]: string }[];

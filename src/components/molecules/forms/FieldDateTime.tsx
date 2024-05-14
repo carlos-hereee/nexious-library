@@ -6,7 +6,7 @@ import { useEffect } from "react";
 import Select from "./Select";
 
 const FieldDateTime = (props: FieldDateTimeProps) => {
-  const { value, onChange, name, formMessage, label, errors, hideLabels, isDisabled } = props;
+  const { value, onChange, name, formMessage, label, error, hideLabels, isDisabled } = props;
   const { toggle, handleToggle } = useToggle();
 
   useEffect(() => {
@@ -18,7 +18,7 @@ const FieldDateTime = (props: FieldDateTimeProps) => {
   };
   return (
     <>
-      {!hideLabels && label && <Label name={name} label={label} errors={errors} message={formMessage} />}
+      {!hideLabels && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <div className="flex-g">
         <Select
           list={cal.hours}

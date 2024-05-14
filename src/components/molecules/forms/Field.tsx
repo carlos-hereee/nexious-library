@@ -20,7 +20,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       placeholder={placeholder}
       hideLabels={hideLabels}
       labels={label}
-      errors={formError}
+      error={formError}
       isDisabled={disableForm}
     />
   ) : type === "number" ? (
@@ -31,10 +31,12 @@ const Field: React.FC<FormFieldProps> = (props) => {
       label={label}
       onChange={handleChange}
       isDisabled={disableForm}
+      error={formError}
     />
   ) : type === "datalist" ? (
     <DataList
       name={name}
+      error={formError}
       list={dataList || []}
       formMessage={formMessage}
       value={typeof value === "string" ? value : ""}
@@ -63,12 +65,12 @@ const Field: React.FC<FormFieldProps> = (props) => {
         value: typeof value === "string" ? value : "",
         placeholder,
         label,
-        error: formError,
         onChange: handleChange,
         isDisabled: disableForm,
       }}
       hideLabels={hideLabels}
       formMessage={formMessage}
+      error={formError}
     />
   ) : type === "checkbox" ? (
     <InputCheckbox
@@ -83,8 +85,9 @@ const Field: React.FC<FormFieldProps> = (props) => {
     />
   ) : type === "file" ? (
     <UploadFile
-      input={{ name, error: formError, isDisabled: disableForm }}
+      input={{ name, isDisabled: disableForm }}
       formMessage={formMessage}
+      error={formError}
       value={typeof value === "string" ? value : value instanceof File ? value : ""}
       label={label}
       onSelect={(e) => handleHeroChange && handleHeroChange(e)}
@@ -93,6 +96,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
     <FieldPrice
       name={name}
       formMessage={formMessage}
+      error={formError}
       value={typeof value === "number" ? value : 0}
       label={label}
       schema={countSchema?.[name]}
@@ -102,7 +106,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
   ) : type === "date-time" ? (
     <FieldDateTime
       name={name}
-      errors={formError}
+      error={formError}
       placeholder={placeholder}
       formMessage={formMessage}
       value={typeof value === "string" ? value : ""}
@@ -114,7 +118,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       name={name}
       placeholder={placeholder}
       formMessage={formMessage}
-      errors={formError}
+      error={formError}
       value={typeof value === "string" ? value : ""}
       label={label}
       onChange={changeDataList}
@@ -122,7 +126,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
   ) : type === "date-day" ? (
     <FieldDateDay
       name={name}
-      errors={formError}
+      error={formError}
       placeholder={placeholder}
       formMessage={formMessage}
       value={typeof value === "string" ? value : ""}
@@ -131,7 +135,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
     />
   ) : (
     <>
-      {!hideLabels && label && <Label name={name} label={label} errors={formError} message={formMessage} />}
+      {!hideLabels && label && <Label name={name} label={label} error={formError} message={formMessage} />}
       <Input
         value={value as string}
         onChange={handleChange}

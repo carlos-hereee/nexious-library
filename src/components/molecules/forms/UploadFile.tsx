@@ -1,15 +1,13 @@
 import { Button, Label } from "@nxs-atoms/index";
-// import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
 import { useEffect, useRef, useState } from "react";
 import { Hero } from "@nxs-molecules";
 import type { UploadFileProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage, input } = props;
-  const { name, error, isDisabled } = input;
+  const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage, input, error } = props;
+  const { name, isDisabled } = input;
   // required props
-  // const { lightColor, errors } = useRequiredProps({ name }, true);
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUploaderRef = useRef<HTMLInputElement>(null);
   const imageRef = useRef<HTMLImageElement>(null);
@@ -51,7 +49,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   return (
     <div className={`field-upload ${theme || ""}`}>
       <div className="field-upload-field">
-        {!hideLabels && <Label name={name} label={label} errors={error} message={formMessage} />}
+        {!hideLabels && <Label name={name} label={label} error={error} message={formMessage} />}
         <input
           type="file"
           onChange={selectImage}

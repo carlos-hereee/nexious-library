@@ -5,14 +5,14 @@ import type { AuthFieldProp } from "nxs-form";
 import { IconButton } from "@nxs-molecules";
 
 const AuthField = (props: AuthFieldProp) => {
-  const { value, onChange, name, placeholder, formMessage, labels, errors } = props;
+  const { value, onChange, name, placeholder, formMessage, labels, error } = props;
   const { hideLabels, isDisabled } = props;
   const { seePassword, togglePassword } = useSeePassword();
 
   const placeholders = placeholder || initPlaceholders[name];
   return (
     <>
-      {!hideLabels && labels && <Label name={name} label={labels} errors={errors} message={formMessage} />}
+      {!hideLabels && labels && <Label name={name} label={labels} error={error} message={formMessage} />}
       <div className="flex-g">
         <Input
           value={value}

@@ -4,11 +4,11 @@ import cal from "@nxs-utils/data/calendar.json";
 import Select from "./Select";
 
 const FieldDateDay = (props: FieldDateTimeProps) => {
-  const { value, onChange, name, formMessage, label, errors, hideLabels, isDisabled } = props;
+  const { value, onChange, name, formMessage, label, error, hideLabels, isDisabled } = props;
 
   return (
     <>
-      {!hideLabels && label && <Label name={name} label={label} errors={errors} message={formMessage} />}
+      {!hideLabels && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <Select
         list={cal.week}
         active={value}
