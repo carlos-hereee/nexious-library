@@ -1,5 +1,4 @@
 import type { ObjectToArray } from "custom-props";
-import type { FormInitialValue } from "nxs-form";
 
 export const objLength = (obj?: unknown) => {
   // if its not an object return undefined

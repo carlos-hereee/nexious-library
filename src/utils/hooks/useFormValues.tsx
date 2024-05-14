@@ -46,17 +46,17 @@ export const useValues = () => {
     // track group
     if (groupingIdx >= 0 && Array.isArray(oldValues[groupingIdx].value)) {
       const entryData: FieldValueProps[] = [];
-      (oldValues[groupingIdx].value as InitialExtraValue[]).forEach((val) => {
-        const sharedKey = val.sharedKey || uniqueId();
-        const entryFormat = Object.keys(initialValues).map((item) => ({
-          [item]: val[item],
-        }));
-        // format entry
-        const payload = { formatValues: entryFormat, ...addEntry, addEntry, sharedKey, group: target };
-        // if additional entries are possible add them here
-        // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
-        // entryData.push(...ent);
-      });
+      // (oldValues[groupingIdx].value as InitialExtraValue[]).forEach((val) => {
+      //   const sharedKey = val.sharedKey || uniqueId();
+      //   const entryFormat = Object.keys(initialValues).map((item) => ({
+      //     [item]: val[item],
+      //   }));
+      // format entry
+      // const payload = { formatValues: entryFormat, ...addEntry, addEntry, sharedKey, group: target };
+      // if additional entries are possible add them here
+      // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
+      // entryData.push(...ent);
+      // });
       // update list
       oldValues.splice(groupingIdx, 1, ...entryData);
     }

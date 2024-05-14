@@ -30,7 +30,7 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
               ))}
             </label>
           ) : (
-            <Label name={name} label={label} errors={error} message={formMessage} />
+            <Label name={name} label={label} error={error} message={formMessage} />
           ))}
       </div>
     </div>

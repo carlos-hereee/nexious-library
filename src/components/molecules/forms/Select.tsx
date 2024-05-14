@@ -24,7 +24,7 @@ const Select: React.FC<SelectProp> = (props) => {
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
-      {!hideLabels && label && <Label name={name} label={label} errors={error} message={formMessage} />}
+      {!hideLabels && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
         {active && icon && <Icon icon={icon} name={icon} theme="select-icon" />}
         <select

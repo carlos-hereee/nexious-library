@@ -18,7 +18,7 @@ const DataList = (props: DataListProps) => {
   };
   return (
     <>
-      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
+      {!hideLabel && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <div className="list-container">
         {list.map((l) => (
           <Button
