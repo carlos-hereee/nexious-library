@@ -20,6 +20,9 @@
   gap: #{$rem};
   justify-content: flex-start;
   flex: 1;
+  @include devices(mobile) {
+    justify-content: center;
+  }
 }
 .btn-selected,
 .btn-active {

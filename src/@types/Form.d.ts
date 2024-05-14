@@ -63,9 +63,13 @@ declare module "nxs-form" {
   export interface FormSchemaProps {
     required?: string[];
     unique?: { name: string; list: string[] }[];
+    match?: { name: string; value: string }[];
+    count?: { name: string; min?: number; max?: number }[];
   }
-  export interface FormCountSchemaProps {
-    [key: string]: { max?: number; min?: number };
+  export interface FieldCountSchemaProps {
+    name: string;
+    max?: number;
+    min?: number;
   }
   // Type declarations go here
   export type FormProps = {
@@ -89,15 +93,14 @@ declare module "nxs-form" {
     dataList?: { [key: string]: MenuItemProp[] };
     clearSelection?: { [key: string]: boolean };
     schema?: FormSchemaProps;
-    countSchema?: FormCountSchemaProps;
     fieldHeading?: KeyStringProp;
     populateLink?: { [key: string]: { word: string; link: string }[] };
     labels?: KeyStringProp;
     placeholders?: KeyStringProp;
     types?: KeyStringProp;
     addEntry?: { [key: string]: AddEntryProps };
-    onSubmit: (e: any) => void;
-    onChange?: (e: any) => void;
+    onSubmit?: (e: any) => void;
+    onChange?: (e: FormInitialValue) => void;
     onCancel?: () => void;
     onViewPreview?: (e: any) => void;
   };
@@ -268,7 +271,7 @@ declare module "nxs-form" {
     populateLink?: { word: string; link: string }[];
     formMessage?: string;
     dataList?: MenuItemProp[];
-    countSchema?: FormCountSchemaProps;
+    countSchema?: FieldCountSchemaProps[];
     fieldHeading?: { [key: string]: string };
     handleChange: (key: OnchangeProps) => void;
     changeDataList: (key: string) => void;

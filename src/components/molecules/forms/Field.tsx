@@ -32,6 +32,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       onChange={handleChange}
       isDisabled={disableForm}
       error={formError}
+      schema={countSchema?.filter((count) => count.name === name)[0]}
     />
   ) : type === "datalist" ? (
     <DataList
@@ -99,7 +100,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       error={formError}
       value={typeof value === "number" ? value : 0}
       label={label}
-      schema={countSchema?.[name]}
+      schema={countSchema?.filter((count) => count.name === name)[0]}
       type={type}
       onChange={handleCountChange}
     />

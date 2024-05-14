@@ -22,7 +22,7 @@ import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, countSchema, theme } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
   const { onChange, onCancel, onSubmit, onViewPreview } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage } = useFormValidation({
@@ -35,8 +35,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { direction, setDirection, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
 
-  // require key variable
-  if (!onSubmit) throw Error("onSubmit is required");
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
@@ -59,6 +57,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   useEffect(() => {
     if (validationStatus === "green") {
+      // require key variable
+      if (!onSubmit) throw Error("onSubmit is required");
       // submit regular form
       if (!withFileUpload && !addEntry) onSubmit(formatFormData(values));
       // submit regular form with entry values
@@ -85,7 +85,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     oldValues[idx].value = value;
     // check schema if value is required for validation
     if (validationStatus === "error") validateForm(oldValues);
-    if (onChange) onChange(oldValues);
+    if (onChange) onChange(oldValues[idx].value);
     setValues(oldValues);
   };
   const handleCheckbox = (event: OnchangeProps, field: FieldValueProps, idx: number) => {
@@ -144,7 +144,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const handleChangeDataList = (value: string, idx: number) => {
     const oldValues = [...values];
     oldValues[idx].value = value;
-    if (onChange) onChange(oldValues);
+    if (onChange) onChange(oldValues[idx].value);
     setValues(oldValues);
   };
   const handleViewPreview = () => {
@@ -231,7 +231,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             updateSelection={(e: string) => handleSelection(e, keyIdx)}
             handleHeroChange={(e: string | File) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
-            countSchema={countSchema}
+            countSchema={schema?.count}
             canMultiply={field.canMultiply}
             clearSelection={clearSelection?.[field.name]}
             disableForm={disableForm}

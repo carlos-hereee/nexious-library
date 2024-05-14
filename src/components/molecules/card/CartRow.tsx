@@ -3,10 +3,9 @@ import { Hero } from "@nxs-molecules";
 import type { CardProps } from "nxs-card";
 import { Form } from "@nxs-organism";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
+import type { FormInitialValue } from "nxs-form";
 
-const CartRow: React.FC<CardProps> = (props) => {
-  const { data, theme, setQuantity, showPrice } = props;
-
+const CartRow: React.FC<CardProps> = ({ data, theme, setQuantity, showPrice }) => {
   return (
     <div className={`cart-row ${theme || ""}`}>
       {data.hero && <Hero hero={{ url: data.hero, alt: `product ${data.name}` }} theme="thumbnail" />}
@@ -17,14 +16,14 @@ const CartRow: React.FC<CardProps> = (props) => {
       {data.inStock && setQuantity ? (
         <Form
           initialValues={{ quantity: data.quantity || 1 }}
-          onChange={(e) => setQuantity(e)}
+          onChange={(e: FormInitialValue) => setQuantity(parseInt(e as string, 10))}
           types={{ quantity: "number" }}
           fieldHeading={{ quantity: `In stock: ${data.inStock || "OUT OF STOCK"}` }}
           labels={{ quantity: "Quantity" }}
           placeholders={{ quantity: `1` }}
           formId={`${data.name || data.label}-form`}
-          countSchema={{ quantity: { max: data.inStock } }}
-          noScroll
+          schema={{ count: [{ name: "quantity", max: data.inStock, min: 1 }] }}
+          hideSubmit
         />
       ) : (
         <p>OUT OF STOCK</p>

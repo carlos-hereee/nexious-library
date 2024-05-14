@@ -6,7 +6,7 @@ const FieldQuantity: React.FC<NumberInputProps> = (props) => {
 
   return (
     <>
-      {!hideLabel && label && <Label name={name} label={label} errors={error} message={formMessage} />}
+      {!hideLabel && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <InputQuantity
         name={name}
         min={schema?.min || 0}
