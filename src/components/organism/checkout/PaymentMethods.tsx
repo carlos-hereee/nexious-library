@@ -3,28 +3,30 @@
 import { Hero } from "@nxs-molecules";
 import { Icon } from "@nxs-atoms";
 import type { PaymentMethodsProps, PaymentType } from "nxs-card";
+import { useState } from "react";
 
 const PaymentMethods: React.FC<PaymentMethodsProps> = (props) => {
-  const { data, onClick, active, heading } = props;
+  const { data, onClick, heading } = props;
   // const { data, visaPayment, paypalPayment, inStorePayment, onClick } = props;
-  // const [active, setActive] = useState<PaymentType>(data[0]);
+  const [activeType, setActive] = useState<PaymentType>();
 
   // const handlePaypal = () => paypalPayment && paypalPayment(active);
   // const handleStore = () => inStorePayment && inStorePayment(active);
-
-  // console.log("data :>> ", data);
+  const handleClick = (type: PaymentType) => {
+    setActive(type);
+    onClick(type);
+  };
   return (
     <div className="container">
       <h2 className="heading">{heading || "Pay with"}</h2>
       <div className="buttons-container">
         {data.map((d: PaymentType) => (
           <button
-            className={active?.uid === d.uid ? "btn-main btn-cta" : "btn-main btn-payment"}
+            className={activeType && activeType?.uid === d.uid ? "btn-main btn-cta" : "btn-main btn-payment"}
             type="button"
             key={d.uid}
-            onClick={() => onClick(d)}
+            onClick={() => handleClick(d)}
           >
-            {/* {active && <Icon icon={active.uid === d.uid ? "check" : "uncheck"} />} */}
             {d.hero ? (
               <Hero hero={d.hero} theme={`icon hero-icon icon-${d.icon}`} />
             ) : (
