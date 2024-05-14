@@ -5,8 +5,8 @@ import type {
   FieldValueProps,
   FormValueProps,
   FormatEntryProps,
-  FormatExtraEntryProps,
-  InitialExtraValue,
+  // FormatExtraEntryProps,
+  // InitialExtraValue,
 } from "nxs-form";
 import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
 import type { KeyStringProp } from "custom-props";
