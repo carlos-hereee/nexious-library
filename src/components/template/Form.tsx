@@ -30,26 +30,27 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   });
 
   // key variables
-  const { values, entries, activeEntry, setValues, setEntries, addNewEntry, addExtraEntry, setActiveEntry } =
-    useValues();
+  // const { values, entries, activeEntry, setValues, setEntries, addNewEntry, addExtraEntry, setActiveEntry } =
+  //   useValues();
+  const { values, entries, activeEntry, setValues, setEntries, addNewEntry, setActiveEntry } = useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
 
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
-      let oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
+      const oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
       // clear prev values if any; avoid redundant data
-      if (addEntry) {
-        const entryData = objToArray(addEntry);
-        for (let entryIdx = 0; entryIdx < entryData.length; entryIdx += 1) {
-          const target = Object.keys(entryData[entryIdx])[0];
-          const current = addEntry[target];
-          // check if checkbox is checked
-          if (initialValues[target]) addExtraEntry({ addEntry: current, target, oldValues });
-          else oldValues = oldValues.filter((val) => val.name !== current.groupName);
-        }
-      }
+      // if (addEntry) {
+      //   const entryData = objToArray(addEntry);
+      //   for (let entryIdx = 0; entryIdx < entryData.length; entryIdx += 1) {
+      //     const target = Object.keys(entryData[entryIdx])[0];
+      //     const current = addEntry[target];
+      //     // check if checkbox is checked
+      //     // if (initialValues[target]) addExtraEntry({ addEntry: current, target, oldValues });
+      //     // else oldValues = oldValues.filter((val) => val.name !== current.groupName);
+      //   }
+      // }
       setValues(oldValues);
     }
     if (formScroll) watchElement("form-field-container", { height: 900 });

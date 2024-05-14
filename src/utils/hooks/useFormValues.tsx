@@ -35,32 +35,32 @@ export const useValues = () => {
     return fieldEntry;
   };
 
-  const addExtraEntry = (props: FormatExtraEntryProps) => {
-    const { addEntry, target, oldValues } = props;
-    const { initialValues, groupName } = addEntry;
+  // const addExtraEntry = (props: FormatExtraEntryProps) => {
+  //   const { addEntry, target, oldValues } = props;
+  //   const { initialValues, groupName } = addEntry;
 
-    // TODO: REMOVE CAN MULTIPLY PROPERTY IF ITS NOT LAST ENTRY
+  //   // TODO: REMOVE CAN MULTIPLY PROPERTY IF ITS NOT LAST ENTRY
 
-    // add properties all entrys should have
-    const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
-    // track group
-    if (groupingIdx >= 0 && Array.isArray(oldValues[groupingIdx].value)) {
-      const entryData: FieldValueProps[] = [];
-      // (oldValues[groupingIdx].value as InitialExtraValue[]).forEach((val) => {
-      //   const sharedKey = val.sharedKey || uniqueId();
-      //   const entryFormat = Object.keys(initialValues).map((item) => ({
-      //     [item]: val[item],
-      //   }));
-      // format entry
-      // const payload = { formatValues: entryFormat, ...addEntry, addEntry, sharedKey, group: target };
-      // if additional entries are possible add them here
-      // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
-      // entryData.push(...ent);
-      // });
-      // update list
-      oldValues.splice(groupingIdx, 1, ...entryData);
-    }
-  };
+  //   // add properties all entrys should have
+  //   const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
+  //   // track group
+  //   if (groupingIdx >= 0 && Array.isArray(oldValues[groupingIdx].value)) {
+  //     const entryData: FieldValueProps[] = [];
+  //     // (oldValues[groupingIdx].value as InitialExtraValue[]).forEach((val) => {
+  //     //   const sharedKey = val.sharedKey || uniqueId();
+  //     //   const entryFormat = Object.keys(initialValues).map((item) => ({
+  //     //     [item]: val[item],
+  //     //   }));
+  //     // format entry
+  //     // const payload = { formatValues: entryFormat, ...addEntry, addEntry, sharedKey, group: target };
+  //     // if additional entries are possible add them here
+  //     // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
+  //     // entryData.push(...ent);
+  //     // });
+  //     // update list
+  //     oldValues.splice(groupingIdx, 1, ...entryData);
+  //   }
+  // };
 
   const setValues = (oldValues: FieldValueProps[]) => {
     setNewValues([]);
@@ -71,7 +71,8 @@ export const useValues = () => {
   //   // console.log("entries :>> ", entries);
   //   // setActiveEntry();
   // };
-  return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry, setEntries };
+  // return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry, setEntries };
+  return { values, entries, activeEntry, setValues, addNewEntry, setActiveEntry, setEntries };
 };
 // const formatEntry = (props: FormatEntryProps) => {
 //   const { addEntry, target, oldValues } = props;
