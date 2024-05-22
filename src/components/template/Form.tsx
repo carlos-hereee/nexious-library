@@ -34,7 +34,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
-  console.log("entryValues :>> ", entryValues);
 
   useEffect(() => {
     if (initialValues) {
@@ -89,13 +88,16 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     oldValues[idx].value = isChecked;
     // if the checkbox is checked add entries
     if (isChecked && addEntry) {
-      const entry = addNewEntry({ addEntry: addEntry[name], group: name });
-      const newIdx = oldValues.findIndex((d) => d.name === name);
-      const numCount = oldValues.filter((d) => d.groupName === addEntry[name].groupName);
-      // keep everything together; 0 is the number of element to be deleted
-      oldValues.splice(newIdx + numCount.length + 1, 0, ...entry);
+      const fieldEntry = addNewEntry({ addEntry: addEntry[name], group: name });
+      const { groupName, sharedKey } = fieldEntry[0];
+      if (groupName && sharedKey) {
+        const newIdx = oldValues.findIndex((d) => d.name === name);
+        const numCount = oldValues.filter((d) => d.groupName === groupName);
+        // keep everything together; 0 is the number of element to be deleted
+        oldValues.splice(newIdx + numCount.length + 1, 0, fieldEntry[0]);
+        setEntries({ ...entryValues, [groupName]: { [sharedKey]: fieldEntry } });
+      }
       setValues(oldValues);
-      // setValues(addNewEntry({ addEntry: addEntry[name], target: name, oldValues }));
     } else if (!addEntry) setValues(oldValues);
     else {
       const removalTarget = addEntry[name].groupName;
@@ -116,7 +118,19 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (validationStatus === "validated") validateForm(values, "green");
   };
   const handleMultiplyClick = (e: FieldValueProps) => {
-    if (addEntry && e.group) addNewEntry({ addEntry: addEntry[e.group], group: e.group });
+    if (addEntry && e.group) {
+      const fieldEntry = addNewEntry({ addEntry: addEntry[e.group], group: e.group });
+      const { groupName, sharedKey } = fieldEntry[0];
+      if (groupName && sharedKey) {
+        // // add new entry to list
+        if (entryValues[groupName]) {
+          setEntries({
+            ...entryValues,
+            [groupName]: { ...entryValues[groupName], [sharedKey]: fieldEntry },
+          });
+        } else setEntries({ ...entryValues, [groupName]: { [sharedKey]: fieldEntry } });
+      }
+    }
   };
 
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
@@ -228,7 +242,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             handleHeroEntryChange={handleHeroEntryChange}
             onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={handleRemovalClick}
-            setActiveEntry={setActiveEntry}
+            setActiveEntry={(n) => setActiveEntry({ ...activeEntry, ...n })}
             setConfirmRemovals={(confirm: boolean) => setConfirmRemovals(confirm)}
           />
         ))}

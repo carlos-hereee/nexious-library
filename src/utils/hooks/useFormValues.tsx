@@ -30,13 +30,7 @@ export const useValues = () => {
     const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, addEntry, sharedKey, group });
     // if additional entries are possible add them here
     setActiveEntry({ ...activeEntry, [groupName]: sharedKey });
-    // // add new entry to list
-    if (entryValues[groupName]) {
-      setEntries({
-        ...entryValues,
-        [groupName]: { ...entryValues[groupName], [sharedKey]: fieldEntry },
-      });
-    } else setEntries({ ...entryValues, [groupName]: { [sharedKey]: fieldEntry } });
+
     return fieldEntry;
   };
 
@@ -86,16 +80,7 @@ export const useValues = () => {
   //   // console.log("entries :>> ", entries);
   //   // setActiveEntry();
   // };
-  return {
-    values,
-    entryValues,
-    activeEntry,
-    setValues,
-    addNewEntry,
-    setActiveEntry,
-    setEntries,
-    addExtraEntry,
-  };
+  return { values, entryValues, activeEntry, setValues, addNewEntry, setActiveEntry, setEntries, addExtraEntry };
 };
 // const formatEntry = (props: FormatEntryProps) => {
 //   const { addEntry, target, oldValues } = props;
