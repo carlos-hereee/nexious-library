@@ -1,4 +1,4 @@
-import type { AddArrayInObject, ObjectToArray } from "custom-props";
+import type { ObjectToArray } from "custom-props";
 
 export const objLength = (obj?: unknown) => {
   // if its not an object return undefined

@@ -100,6 +100,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setValues(oldValues);
     } else if (!addEntry) setValues(oldValues);
     else {
+      // TODO: ADD REMOVAL CONFIRMATION
       const removalTarget = addEntry[name].groupName;
       // when button is unchecked removed all field created by checkbox
       const removalList = oldValues.filter((val) => val.groupName !== removalTarget);
