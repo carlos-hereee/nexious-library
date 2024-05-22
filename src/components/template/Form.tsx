@@ -22,7 +22,7 @@ import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
   const { onChange, onCancel, onSubmit, onViewPreview } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage } = useFormValidation({
@@ -30,27 +30,18 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   });
 
   // key variables
-  // const { values, entries, activeEntry, setValues, setEntries, addNewEntry, addExtraEntry, setActiveEntry } =
-  //   useValues();
-  const { values, entries, activeEntry, setValues, setEntries, addNewEntry, setActiveEntry } = useValues();
+  const { values, entryValues, activeEntry, setValues, setEntries, addNewEntry, setActiveEntry, addExtraEntry } =
+    useValues();
   const { direction, setDirection, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
+  console.log("entryValues :>> ", entryValues);
 
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
       const oldValues = formatFieldEntry({ formatValues, labels, types, placeholders });
-      // clear prev values if any; avoid redundant data
-      // if (addEntry) {
-      //   const entryData = objToArray(addEntry);
-      //   for (let entryIdx = 0; entryIdx < entryData.length; entryIdx += 1) {
-      //     const target = Object.keys(entryData[entryIdx])[0];
-      //     const current = addEntry[target];
-      //     // check if checkbox is checked
-      //     // if (initialValues[target]) addExtraEntry({ addEntry: current, target, oldValues });
-      //     // else oldValues = oldValues.filter((val) => val.name !== current.groupName);
-      //   }
-      // }
+      // add entry values if any
+      if (addEntry && entries) addExtraEntry({ oldValues, addEntry, entries });
       setValues(oldValues);
     }
     if (formScroll) watchElement("form-field-container", { height: 900 });
@@ -67,7 +58,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       // submit form with file uploads
       if (withFileUpload && !addEntry) onSubmit(formatFilesData(values, new FormData()));
       // submit form with file uploads and entry values
-      if (withFileUpload && addEntry) onSubmit(formatFilesEntryData(values, entries));
+      if (withFileUpload && addEntry) onSubmit(formatFilesEntryData(values, entryValues));
       // reset form submit
       setStatus(null);
     }
@@ -125,9 +116,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (validationStatus === "validated") validateForm(values, "green");
   };
   const handleMultiplyClick = (e: FieldValueProps) => {
-    if (addEntry && e.group) {
-      addNewEntry({ addEntry: addEntry[e.group], group: e.group });
-    }
+    if (addEntry && e.group) addNewEntry({ addEntry: addEntry[e.group], group: e.group });
   };
 
   const handleHeroChange = (idx: number, selectedFile: File | string) => {
@@ -168,18 +157,18 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     // find field key
     const entryKey = activeEntry[groupName];
     // update field value
-    const entryField = entries[groupName][entryKey];
+    const entryField = entryValues[groupName][entryKey];
     entryField[idx].value = selectedFile;
-    setEntries({ ...entries, [groupName]: { ...entries[groupName], [entryKey]: entryField } });
+    setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName], [entryKey]: entryField } });
   };
   const handleRemovalClick = (groupName: string, idx: number) => {
     // find field key
     const entryKey = activeEntry[groupName];
-    const fieldEntry = entries[groupName][entryKey];
+    const fieldEntry = entryValues[groupName][entryKey];
     // remove field
-    delete entries[groupName][entryKey];
+    delete entryValues[groupName][entryKey];
     // if it was the only entry in list
-    if (Object.keys(entries[groupName]).length === 0) {
+    if (Object.keys(entryValues[groupName]).length === 0) {
       const { group } = fieldEntry[0];
       // update group origin value
       const valuesIdx = values.findIndex((val) => val.name === group);
@@ -189,12 +178,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setValues(removedField);
     } else {
       // update active entry
-      const entryList = Object.keys(entries[groupName]);
+      const entryList = Object.keys(entryValues[groupName]);
       if (entryList[idx]) setActiveEntry({ [groupName]: entryList[idx] });
       else setActiveEntry({ [groupName]: entryList[idx - 1] });
     }
     // lastly update entries
-    setEntries({ ...entries, [groupName]: { ...entries[groupName] } });
+    setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName] } });
   };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
@@ -214,7 +203,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             value={field.value}
             isEntry={!!(addEntry && field.group && addEntry[field.group])}
             entry={addEntry && addEntry[field.group || ""]}
-            entries={entries[field.groupName || ""]}
+            entries={entryValues[field.groupName || ""]}
             activeEntry={activeEntry[field.groupName || ""]}
             theme={theme}
             placeholder={field.placeholder}

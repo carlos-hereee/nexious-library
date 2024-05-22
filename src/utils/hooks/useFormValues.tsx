@@ -5,16 +5,22 @@ import type {
   FieldValueProps,
   FormValueProps,
   FormatEntryProps,
-  // FormatExtraEntryProps,
-  // InitialExtraValue,
+  FormatExtraEntryProps,
 } from "nxs-form";
 import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
-import type { KeyStringProp } from "custom-props";
+import type { AddArrayInObject, KeyStringProp } from "custom-props";
 
 export const useValues = () => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
   const [activeEntry, setActiveEntry] = useState<KeyStringProp>({});
-  const [entries, setEntries] = useState<{ [x: string]: FieldEntryProps }>({});
+  const [entryValues, setEntries] = useState<{ [x: string]: FieldEntryProps }>({});
+
+  const addArrayInEntry = ({ obj, key, value }: AddArrayInObject<FieldEntryProps>) => {
+    // eslint-disable-next-line no-param-reassign
+    if (obj[key]) obj[key] = { ...obj[key], ...value };
+    // eslint-disable-next-line no-param-reassign
+    else obj[key] = { ...value };
+  };
 
   const addNewEntry = ({ addEntry, group }: FormatEntryProps) => {
     const formatValues: FormValueProps[] = formatInitialFormValues(addEntry.initialValues);
@@ -23,44 +29,53 @@ export const useValues = () => {
     // add properties all entrys should have
     const fieldEntry = formatFieldEntry({ formatValues, ...addEntry, addEntry, sharedKey, group });
     // if additional entries are possible add them here
-    setActiveEntry({ ...activeEntry, [groupName]: fieldEntry[0].sharedKey || "" });
+    setActiveEntry({ ...activeEntry, [groupName]: sharedKey });
     // // add new entry to list
-    if (entries[groupName]) {
+    if (entryValues[groupName]) {
       setEntries({
-        ...entries,
-        [groupName]: { ...entries[groupName], [sharedKey]: fieldEntry },
+        ...entryValues,
+        [groupName]: { ...entryValues[groupName], [sharedKey]: fieldEntry },
       });
-    } else setEntries({ ...entries, [groupName]: { [sharedKey]: fieldEntry } });
-
+    } else setEntries({ ...entryValues, [groupName]: { [sharedKey]: fieldEntry } });
     return fieldEntry;
   };
 
-  // const addExtraEntry = (props: FormatExtraEntryProps) => {
-  //   const { addEntry, target, oldValues } = props;
-  //   const { initialValues, groupName } = addEntry;
-
-  //   // TODO: REMOVE CAN MULTIPLY PROPERTY IF ITS NOT LAST ENTRY
-
-  //   // add properties all entrys should have
-  //   const groupingIdx = oldValues.findIndex((oldVal) => oldVal.name === groupName);
-  //   // track group
-  //   if (groupingIdx >= 0 && Array.isArray(oldValues[groupingIdx].value)) {
-  //     const entryData: FieldValueProps[] = [];
-  //     // (oldValues[groupingIdx].value as InitialExtraValue[]).forEach((val) => {
-  //     //   const sharedKey = val.sharedKey || uniqueId();
-  //     //   const entryFormat = Object.keys(initialValues).map((item) => ({
-  //     //     [item]: val[item],
-  //     //   }));
-  //     // format entry
-  //     // const payload = { formatValues: entryFormat, ...addEntry, addEntry, sharedKey, group: target };
-  //     // if additional entries are possible add them here
-  //     // // const ent = formatEntry({ addEntry, oldValues: formatFieldEntry(payload), target });
-  //     // entryData.push(...ent);
-  //     // });
-  //     // update list
-  //     oldValues.splice(groupingIdx, 1, ...entryData);
-  //   }
-  // };
+  const addExtraEntry = ({ addEntry, entries, oldValues }: FormatExtraEntryProps) => {
+    const targets = {};
+    let actives = {};
+    const newValues: FieldValueProps[][] = [];
+    // itirate values to find entry insertion
+    oldValues.forEach((oldVal) => {
+      const { name: group, value } = oldVal;
+      //  if field has entry and value is true
+      if (addEntry[group] && value) {
+        const entryObj = addEntry[group];
+        const { groupName } = addEntry[group];
+        entries[groupName].forEach((val) => {
+          // find sharedkey or create a new one if none exist
+          const sharedKey = val.sharedKey || uniqueId();
+          const formatValues: FormValueProps[] = formatInitialFormValues(val);
+          const fieldEntry = formatFieldEntry({ formatValues, addEntry: entryObj, ...entryObj, sharedKey, group });
+          newValues.push(fieldEntry);
+          // if additional entries are possible add them here
+          actives = { ...actives, [groupName]: sharedKey };
+          addArrayInEntry({ obj: targets, key: groupName, value: { [sharedKey]: fieldEntry } });
+        });
+      }
+    });
+    setEntries(targets);
+    setActiveEntry(actives);
+    newValues.forEach((val) => {
+      const { groupName, group } = val[0];
+      if (groupName && group) {
+        const payload = { ...val[0], name: groupName, groupName, group };
+        // eslint-disable-next-line no-param-reassign
+        const newIdx = oldValues.findIndex((d) => d.name === group);
+        // keep everything together; 0 is the number of element to be deleted
+        oldValues.splice(newIdx + 1, 0, payload);
+      }
+    });
+  };
 
   const setValues = (oldValues: FieldValueProps[]) => {
     setNewValues([]);
@@ -71,8 +86,16 @@ export const useValues = () => {
   //   // console.log("entries :>> ", entries);
   //   // setActiveEntry();
   // };
-  // return { values, entries, activeEntry, setValues, addNewEntry, addExtraEntry, setActiveEntry, setEntries };
-  return { values, entries, activeEntry, setValues, addNewEntry, setActiveEntry, setEntries };
+  return {
+    values,
+    entryValues,
+    activeEntry,
+    setValues,
+    addNewEntry,
+    setActiveEntry,
+    setEntries,
+    addExtraEntry,
+  };
 };
 // const formatEntry = (props: FormatEntryProps) => {
 //   const { addEntry, target, oldValues } = props;

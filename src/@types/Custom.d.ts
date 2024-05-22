@@ -24,4 +24,9 @@ declare module "custom-props" {
     theme: string;
   }
   export type ObjectToArray<P> = (obj?: { [key: string]: P }) => { [key: string]: P }[] | [];
+  export type AddArrayInObject<T = KeyStringProp> = {
+    obj: { [key: string]: T };
+    key: string;
+    value: T;
+  };
 }

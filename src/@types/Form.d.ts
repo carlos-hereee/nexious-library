@@ -3,6 +3,12 @@ declare module "nxs-form" {
   import type { MenuItemProp } from "nxs-navigation";
   import type { KeyStringProp, OnchangeProps } from "custom-props";
 
+  export interface AddFieldEntry {
+    entry: FieldValueProps;
+    oldValues: FieldValueProps[];
+    name: string;
+    groupName: string;
+  }
   export type FormInitialValue = File | Blob | string | number | boolean;
   export type FormValueProps = { [key: string]: FormInitialValue };
   export type InitialExtraValue = {
@@ -97,6 +103,7 @@ declare module "nxs-form" {
     populateLink?: { [key: string]: { word: string; link: string }[] };
     labels?: KeyStringProp;
     placeholders?: KeyStringProp;
+    entries?: { [key: string]: KeyStringProp[] };
     types?: KeyStringProp;
     addEntry?: { [key: string]: AddEntryProps };
     onSubmit?: (e: any) => void;
@@ -341,17 +348,8 @@ declare module "nxs-form" {
     onChange: (e: string) => void;
   };
   export type FormatExtraEntryProps = {
-    target: string;
-    oldValues: FieldInitialValueProps[];
-    addEntry: AddEntryProps;
+    entries: { [key: string]: KeyStringProp[] };
+    oldValues: FieldValueProps[];
+    addEntry: { [key: string]: AddEntryProps };
   };
 }
-// export type FormValueProps = {
-//   initialValues: FormInitialValues;
-//   labels?: KeyStringProp;
-//   types?: KeyStringProp;
-//   placeholders?: KeyStringProp;
-//   fieldHeading?: string;
-//   addEntry?: { [key: string]: AddEntryProps };
-// };
-// / <reference types="nxs-assets" />

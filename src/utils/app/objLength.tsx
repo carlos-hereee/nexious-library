@@ -1,4 +1,4 @@
-import type { ObjectToArray } from "custom-props";
+import type { AddArrayInObject, ObjectToArray } from "custom-props";
 
 export const objLength = (obj?: unknown) => {
   // if its not an object return undefined
@@ -10,3 +10,10 @@ export const objToArray: ObjectToArray<unknown> = (obj) => {
   if (typeof obj === "object") return Object.keys(obj).map((key) => ({ [key]: obj[key] }));
   return [];
 };
+
+// export const addArrayInObj =({ obj, key, value }:AddArrayInObject) => {
+//   // eslint-disable-next-line no-param-reassign
+//   if (obj[key]) obj[key] = [...obj[key], value];
+//   // eslint-disable-next-line no-param-reassign
+//   else obj[key] = [value];
+// };

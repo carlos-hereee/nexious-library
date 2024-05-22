@@ -17,7 +17,7 @@ declare module "nxs-errors" {
     component?: string;
     to?: string;
     children?: React.ReactNode;
-    errors: ErrorMessageProp[];
+    errors?: ErrorMessageProp[];
     timer?: number;
     handleClick?: () => void;
   }

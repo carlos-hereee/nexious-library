@@ -1,6 +1,6 @@
 import { Button, ButtonCancel } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
-import { IconButton } from "@nxs-molecules";
+import { IconButton, Loading } from "@nxs-molecules";
 import Field from "./Field";
 
 const FormField = (props: FormFieldProps) => {
@@ -10,6 +10,7 @@ const FormField = (props: FormFieldProps) => {
 
   if (isEntry && entry && activeEntry && entries && setActiveEntry) {
     const targetEntry = entries[activeEntry];
+    if (!entries[activeEntry]) return <Loading />;
     const { groupName, onMultiply, canMultiply, canRemove } = entries[activeEntry][0];
     const targetList = Object.keys(entries);
     const activeIdx = targetList.findIndex((s) => s === activeEntry);
