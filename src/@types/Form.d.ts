@@ -224,7 +224,7 @@ declare module "nxs-form" {
     additionLabel: string;
     removalLabel: string;
     groupName: string;
-    initialValues: { [key: string]: FormInitialValue };
+    initialValues: { [key: string]: string };
     types: KeyStringProp;
     fieldHeading: KeyStringProp;
     onMultiply: { additionLabel: string; name: string; removalLabel: string };
@@ -348,8 +348,15 @@ declare module "nxs-form" {
     onChange: (e: string) => void;
   };
   export type FormatExtraEntryProps = {
-    entries: { [key: string]: KeyStringProp[] };
+    entries: { [key: string]: KeyStringProp[] | KeyStringProp[][] };
     oldValues: FieldValueProps[];
     addEntry: { [key: string]: AddEntryProps };
+  };
+  export type FormatEntryProp = {
+    value: KeyStringProp;
+    addEntry: AddEntryProps;
+    group: string;
+    targets?: { [x: string]: FieldEntryProps };
+    actives?: KeyStringProp;
   };
 }

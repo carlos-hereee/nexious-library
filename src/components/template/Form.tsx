@@ -35,6 +35,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { direction, setDirection, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
 
+  // console.log("activeEntry :>> ", activeEntry);
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
