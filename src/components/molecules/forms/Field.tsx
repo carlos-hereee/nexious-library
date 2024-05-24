@@ -15,7 +15,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
     <AuthField
       name={name}
       formMessage={formMessage}
-      value={typeof value === "string" ? value : ""}
+      value={value as string}
       onChange={handleChange}
       placeholder={placeholder}
       hideLabels={hideLabels}
@@ -38,9 +38,9 @@ const Field: React.FC<FormFieldProps> = (props) => {
     <DataList
       name={name}
       error={formError}
-      list={dataList || []}
+      list={(dataList && dataList[name]) || []}
       formMessage={formMessage}
-      value={typeof value === "string" ? value : ""}
+      value={value as string}
       label={label}
       onChange={changeDataList}
       isDisabled={disableForm}
@@ -49,26 +49,19 @@ const Field: React.FC<FormFieldProps> = (props) => {
     <Select
       name={name}
       formMessage={formMessage}
-      list={dataList || []}
-      active={typeof value === "string" ? value : ""}
+      list={(dataList && dataList[name]) || []}
+      active={value as string}
       theme={theme}
-      onChange={(e) => updateSelection && updateSelection(e, name)}
+      onChange={(v) => updateSelection && updateSelection(v)}
       hideLabels={hideLabels}
       label={label}
-      clearSelection={clearSelection}
+      clearSelection={clearSelection && clearSelection[name]}
       error={formError}
       isDisabled={disableForm}
     />
   ) : type === "textarea" ? (
     <TextArea
-      input={{
-        name,
-        value: typeof value === "string" ? value : "",
-        placeholder,
-        label,
-        onChange: handleChange,
-        isDisabled: disableForm,
-      }}
+      input={{ name, value: value as string, placeholder, label, onChange: handleChange, isDisabled: disableForm }}
       hideLabels={hideLabels}
       formMessage={formMessage}
       error={formError}
@@ -110,9 +103,9 @@ const Field: React.FC<FormFieldProps> = (props) => {
       error={formError}
       placeholder={placeholder}
       formMessage={formMessage}
-      value={typeof value === "string" ? value : ""}
+      value={value as string}
       label={label}
-      onChange={(e) => updateSelection && updateSelection(e, name)}
+      onChange={(v) => updateSelection && updateSelection(v)}
     />
   ) : type === "date-week" ? (
     <FieldDateWeek
@@ -120,7 +113,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       placeholder={placeholder}
       formMessage={formMessage}
       error={formError}
-      value={typeof value === "string" ? value : ""}
+      value={value as string}
       label={label}
       onChange={changeDataList}
     />
@@ -130,9 +123,9 @@ const Field: React.FC<FormFieldProps> = (props) => {
       error={formError}
       placeholder={placeholder}
       formMessage={formMessage}
-      value={typeof value === "string" ? value : ""}
+      value={value as string}
       label={label}
-      onChange={(e) => updateSelection && updateSelection(e, name)}
+      onChange={(v) => updateSelection && updateSelection(v)}
     />
   ) : (
     <>

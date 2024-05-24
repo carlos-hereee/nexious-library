@@ -41,7 +41,7 @@ declare module "nxs-form" {
   };
   export type FieldDateTimeProps = {
     name: string;
-    onChange: (e: string) => void;
+    onChange?: (e: string) => void;
     value: string;
     placeholder: string;
     hideLabels?: boolean;
@@ -52,7 +52,7 @@ declare module "nxs-form" {
   };
   export type AuthFieldProp = {
     name: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    onChange: (value: string) => void;
     value: string;
     placeholder: string;
     hideLabels?: boolean;
@@ -143,7 +143,7 @@ declare module "nxs-form" {
     hideLabel?: boolean;
     checked?: boolean;
     isDisabled?: boolean;
-    onChange?: React.ChangeEventHandler<HTMLInputElement>;
+    onChange?: (value: string) => void;
     onBlur?: () => void;
     formMessage?: string;
   }
@@ -160,7 +160,7 @@ declare module "nxs-form" {
     hideLabel?: boolean;
     checked?: boolean;
     isDisabled?: boolean;
-    onChange?: React.ChangeEventHandler<HTMLInputElement | HTMLTextAreaElement>;
+    onChange?: (value: string) => void;
     onBlur?: () => void;
     formMessage?: string;
   };
@@ -271,20 +271,20 @@ declare module "nxs-form" {
     entry?: AddEntryProps;
     entries?: { [id: string]: FieldValueProps[] };
     activeEntry?: string;
-    clearSelection?: boolean;
+    clearSelection?: { [key: string]: boolean };
     onMultiplyClick?: () => void;
     setActiveEntry?: (n: KeyStringProp) => void;
     formError?: string;
     populateLink?: { word: string; link: string }[];
     formMessage?: string;
-    dataList?: MenuItemProp[];
+    dataList?: { [key: string]: MenuItemProp[] };
     countSchema?: FieldCountSchemaProps[];
     fieldHeading?: { [key: string]: string };
-    handleChange: (key: OnchangeProps) => void;
+    handleChange: (value: string) => void;
     changeDataList: (key: string) => void;
     setConfirmRemovals: (key: boolean) => void;
-    handleCountChange: React.ChangeEventHandler<HTMLInputElement>;
-    updateSelection?: (key: string, name: string) => void;
+    handleCountChange: (value: string) => void;
+    updateSelection?: (value: string, idx?: number) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;
     onRemovalClick?: (groupName: string, idx: number) => void;

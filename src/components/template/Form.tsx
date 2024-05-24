@@ -3,7 +3,7 @@ import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 // import { objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
-import type { FieldValueProps, FormProps } from "nxs-form";
+import type { FieldValueProps, FormInitialValue, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
 import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
@@ -70,11 +70,17 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (validationStatus === "error") scrollToError(formErrors);
   }, [validationStatus]);
 
-  const handleChange = (event: OnchangeProps, idx: number) => {
-    // key variables
-    const { value } = event.currentTarget;
+  const handleEntryChange = (target: FormInitialValue, groupName: string, idx: number) => {
+    // find field key
+    const entryKey = activeEntry[groupName];
+    // update field value
+    const entryField = entryValues[groupName][entryKey];
+    entryField[idx].value = target;
+    setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName], [entryKey]: entryField } });
+  };
+  const handleChange = (target: FormInitialValue, idx: number) => {
     const oldValues = [...values];
-    oldValues[idx].value = value;
+    oldValues[idx].value = target;
     // check schema if value is required for validation
     if (validationStatus === "error") validateForm(oldValues);
     if (onChange) onChange(oldValues[idx].value);
@@ -101,17 +107,17 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setValues(oldValues);
     } else if (!addEntry) setValues(oldValues);
     else {
-      // TODO: ADD REMOVAL CONFIRMATION
+      // TODO: ADD SCHEMA REMOVAL CONFIRMATION
       const removalTarget = addEntry[name].groupName;
       // when button is unchecked removed all field created by checkbox
       const removalList = oldValues.filter((val) => val.groupName !== removalTarget);
       setValues(removalList);
     }
   };
-  const handleSelection = (target: string, idx: number) => {
-    const oldValues = [...values];
-    oldValues[idx].value = target;
-    setValues(oldValues);
+  const handleSelection = (field: FieldValueProps, target: string, idx: number) => {
+    const { groupName, sharedKey } = field;
+    if (entryValues && groupName && sharedKey && idx) handleEntryChange(target, groupName, idx);
+    else handleChange(target, idx);
   };
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
@@ -162,21 +168,13 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     setDirection(target);
     scrollInDirection("form-field-container", target);
   };
-  const handleCountChange = (e: React.ChangeEvent<HTMLInputElement>, idx: number) => {
-    const { value } = e.target;
+  const handleCountChange = (target: string, idx: number) => {
     const oldValues = [...values];
-    oldValues[idx].value = parseInt(value, 10);
+    oldValues[idx].value = parseInt(target, 10);
     setValues(oldValues);
     if (onChange) onChange(oldValues[idx].value);
   };
-  const handleHeroEntryChange = (selectedFile: File | string, groupName: string, idx: number) => {
-    // find field key
-    const entryKey = activeEntry[groupName];
-    // update field value
-    const entryField = entryValues[groupName][entryKey];
-    entryField[idx].value = selectedFile;
-    setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName], [entryKey]: entryField } });
-  };
+
   const handleRemovalClick = (groupName: string, idx: number) => {
     // find field key
     const entryKey = activeEntry[groupName];
@@ -226,22 +224,22 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             hideLabels={hideLabels}
             confirmRemoval={confirmRemoval}
             populateLink={populateLink?.[field.name]}
-            dataList={dataList?.[field.name]}
+            dataList={dataList}
             label={field.label}
             changeDataList={(e: string) => handleChangeDataList(e, keyIdx)}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
-            handleChange={(e: OnchangeProps) => handleChange(e, keyIdx)}
-            handleCountChange={(e: ChangeEvent<HTMLInputElement>) => handleCountChange(e, keyIdx)}
+            handleChange={(target: string) => handleChange(target, keyIdx)}
+            handleCountChange={(target: string) => handleCountChange(target, keyIdx)}
             handleCheckbox={(e: OnchangeProps) => handleCheckbox(e, field, keyIdx)}
-            updateSelection={(e: string) => handleSelection(e, keyIdx)}
+            updateSelection={(value: string, idx?: number) => handleSelection(field, value, idx || keyIdx)}
             handleHeroChange={(e: string | File) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             countSchema={schema?.count}
             canMultiply={field.canMultiply}
-            clearSelection={clearSelection?.[field.name]}
+            clearSelection={clearSelection}
             disableForm={disableForm}
-            handleHeroEntryChange={handleHeroEntryChange}
+            handleHeroEntryChange={handleEntryChange}
             onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={handleRemovalClick}
             setActiveEntry={(n) => setActiveEntry({ ...activeEntry, ...n })}

@@ -9,6 +9,8 @@ const FieldDateTime = (props: FieldDateTimeProps) => {
   const { value, onChange, name, formMessage, label, error, hideLabels, isDisabled } = props;
   const { toggle, handleToggle } = useToggle();
 
+  // require key variable
+  if (!onChange) throw Error("onChange is required");
   useEffect(() => {
     if (value) onChange(`${value.split(toggle[name] ? "AM" : "PM").join("")} ${toggle[name] ? "PM" : "AM"}`);
   }, [toggle]);

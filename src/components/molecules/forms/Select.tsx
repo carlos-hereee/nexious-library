@@ -15,6 +15,8 @@ import type { SelectProp } from "nxs-form";
 const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
+  // require key variable
+  if (!onChange) throw Error("onChange is required");
   // required props
   const { lightColor, errors } = useRequiredProps({ name, list }, true);
 
@@ -27,18 +29,13 @@ const Select: React.FC<SelectProp> = (props) => {
       {!hideLabels && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
         {active && icon && <Icon icon={icon} name={icon} theme="select-icon" />}
-        <select
-          className="select"
-          value={activeLabel}
-          disabled={isDisabled}
-          onChange={(e) => onChange && onChange(e.target.value)}
-        >
+        <select className="select" value={activeLabel} disabled={isDisabled} onChange={(e) => onChange(e.target.value)}>
           <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />
           <Option data={{ label: "", name: "", value: "" }} hideOption />
           {list && list.map((l) => <Option key={l.uid} data={l} />)}
         </select>
         {active && clearSelection && (
-          <IconButton icon={{ icon: "close" }} onClick={() => onChange && onChange("")} theme="btn-icon" />
+          <IconButton icon={{ icon: "close" }} onClick={() => onChange("")} theme="btn-icon" />
         )}
       </div>
     </>

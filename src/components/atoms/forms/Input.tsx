@@ -10,7 +10,7 @@ const Input: React.FC<InputProps> = (props) => {
       type={type || "text"}
       value={value}
       placeholder={placeholder}
-      onChange={onChange}
+      onChange={(event) => onChange && onChange(event.currentTarget.value)}
       onBlur={onBlur}
       disabled={isDisabled}
       // give labels a reason to be there give inputs id

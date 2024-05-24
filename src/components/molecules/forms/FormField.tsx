@@ -18,11 +18,11 @@ const FormField = (props: FormFieldProps) => {
     if (!groupName) throw Error("groupName is required");
     if (!onMultiply) throw Error("onMultiply is required");
     if (!canMultiply) throw Error("canMultiply is required");
-    const { handleHeroEntryChange } = props;
+    const { handleHeroEntryChange, updateSelection } = props;
     // require key variable
-    if (!handleHeroEntryChange) throw Error("handleHeroEntryChange is required");
     if (!canRemove) throw Error("canRemove is required");
 
+    console.log("targetEntry :>> ", targetEntry);
     return (
       <div className="container" id={fieldId}>
         {entry.max && entry.max > 0 && (
@@ -39,7 +39,13 @@ const FormField = (props: FormFieldProps) => {
           </div>
         )}
         {targetEntry.map((p, idx) => (
-          <Field key={p.fieldId} {...props} {...p} handleHeroChange={(e) => handleHeroEntryChange(e, groupName, idx)} />
+          <Field
+            key={p.fieldId}
+            {...props}
+            {...p}
+            handleHeroChange={(e) => handleHeroEntryChange && handleHeroEntryChange(e, groupName, idx)}
+            updateSelection={(value: string) => updateSelection && updateSelection(value, idx)}
+          />
         ))}
         {onMultiply && (
           <div className="buttons-container">

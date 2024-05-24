@@ -9,7 +9,7 @@ const InputQuantity: React.FC<NumberInputProps> = (props) => {
       min={min}
       max={max}
       value={value}
-      onChange={onChange}
+      onChange={(event) => onChange && onChange(event.currentTarget.value)}
       onBlur={onBlur}
       disabled={isDisabled}
     />
