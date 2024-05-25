@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
-// import { objToArray } from "@nxs-utils/app/objLength";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 import type { FieldValueProps, FormInitialValue, FormProps } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
@@ -16,9 +15,8 @@ import {
 } from "@nxs-utils/form/handleFormSubmit";
 import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
-import { scrollInDirection, scrollToError } from "@nxs-utils/app/scrollToElement";
+import { scrollToError } from "@nxs-utils/app/scrollToElement";
 import { useScroll } from "@nxs-utils/hooks/useScroll";
-import type { CardinalDirectionProps } from "nxs-typography";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
@@ -32,10 +30,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   // key variables
   const { values, entryValues, activeEntry, setValues, setEntries, addNewEntry, setActiveEntry, addExtraEntry } =
     useValues();
-  const { direction, setDirection, showScroll, watchElement } = useScroll();
+  const { direction, handleScroll, showScroll, watchElement } = useScroll();
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
 
-  // console.log("activeEntry :>> ", activeEntry);
   useEffect(() => {
     if (initialValues) {
       const formatValues = formatInitialFormValues(initialValues);
@@ -145,38 +142,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     }
   };
 
-  const handleHeroChange = (idx: number, selectedFile: File | string) => {
-    const oldValues = [...values];
-    if (selectedFile) {
-      oldValues[idx].value = selectedFile;
-      // // check schema if value is required for validation
-      if (validationStatus === "error") validateForm(oldValues);
-      setValues(oldValues);
-    } else {
-      oldValues[idx].value = "";
-      setValues(oldValues);
-    }
-  };
-  const handleChangeDataList = (value: string, idx: number) => {
-    const oldValues = [...values];
-    oldValues[idx].value = value;
-    if (onChange) onChange(oldValues[idx].value);
-    setValues(oldValues);
-  };
   const handleViewPreview = () => {
     if (!validationStatus) validateForm(values);
     if (validationStatus === "error") validateForm(values);
-  };
-
-  const handleScroll = (target: CardinalDirectionProps) => {
-    setDirection(target);
-    scrollInDirection("form-field-container", target);
-  };
-  const handleCountChange = (target: string, idx: number) => {
-    const oldValues = [...values];
-    oldValues[idx].value = parseInt(target, 10);
-    setValues(oldValues);
-    if (onChange) onChange(oldValues[idx].value);
   };
 
   const handleRemovalClick = (groupName: string, idx: number) => {
@@ -210,8 +178,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className={formScroll ? "form-field-container" : "form-field-container no-scroll"} id="form-field-container">
-        {showScroll.up && <UpArrow onClick={() => handleScroll("up")} active={direction} />}
-        {showScroll.down && <DownArrow onClick={() => handleScroll("down")} active={direction} />}
+        {showScroll.up && <UpArrow onClick={() => handleScroll("up", "form-field-container")} active={direction} />}
+        {showScroll.down && (
+          <DownArrow onClick={() => handleScroll("down", "form-field-container")} active={direction} />
+        )}
         {values.map((field, keyIdx) => (
           <FormField
             key={field.fieldId}
@@ -230,13 +200,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             populateLink={populateLink?.[field.name]}
             dataList={dataList}
             label={field.label}
-            changeDataList={(e: string) => handleChangeDataList(e, keyIdx)}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(value: FormInitialValue, id?: string) => handleChange(field, value, id || field.fieldId)}
-            handleCountChange={(target: string) => handleCountChange(target, keyIdx)}
             handleCheckbox={(e: OnchangeProps) => handleCheckbox(e, field, keyIdx)}
-            handleHeroChange={(e: string | File) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             countSchema={schema?.count}
             canMultiply={field.canMultiply}

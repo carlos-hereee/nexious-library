@@ -7,9 +7,7 @@ import type { ButtonProps } from "nxs-button";
  * @param click Callback fired when button is click
  * @returns
  */
-const Button: React.FC<ButtonProps> = (props) => {
-  const { onClick, title, theme, label, isDisable, name } = props;
-
+const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable, name }) => {
   return (
     <button
       type="button"

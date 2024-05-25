@@ -5,10 +5,13 @@ import Field from "./Field";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { name, isEntry, entries, entry, activeEntry, confirmRemoval } = props;
-  const { fieldHeading, onMultiplyClick, onRemovalClick, fieldId, setActiveEntry, setConfirmRemovals } = props;
+  const { fieldHeading, name, isEntry, entries, entry, fieldId } = props;
 
-  if (isEntry && entry && activeEntry && entries && setActiveEntry) {
+  if (isEntry && entry && entries) {
+    const { activeEntry, confirmRemoval } = props;
+    const { onMultiplyClick, handleChange, onRemovalClick, setActiveEntry, setConfirmRemovals } = props;
+    // require key variable
+    if (!activeEntry) throw Error("activeEntry is required");
     const targetEntry = entries[activeEntry];
     if (!entries[activeEntry]) return <Loading />;
     const { groupName, onMultiply, canMultiply, canRemove } = entries[activeEntry][0];
@@ -18,9 +21,7 @@ const FormField = (props: FormFieldProps) => {
     if (!groupName) throw Error("groupName is required");
     if (!onMultiply) throw Error("onMultiply is required");
     if (!canMultiply) throw Error("canMultiply is required");
-    // require key variable
     if (!canRemove) throw Error("canRemove is required");
-    const { handleChange } = props;
 
     return (
       <div className="container" id={fieldId}>
@@ -32,19 +33,13 @@ const FormField = (props: FormFieldProps) => {
                 icon={{ icon: `${num}`, isNum: true }}
                 theme={activeIdx === num - 1 ? "btn-active highlight" : "highlight"}
                 isDisable={targetList.length < num}
-                onClick={() => setActiveEntry({ [groupName]: targetList[num - 1] })}
+                onClick={() => setActiveEntry && setActiveEntry({ [groupName]: targetList[num - 1] })}
               />
             ))}
           </div>
         )}
         {targetEntry.map((p) => (
-          <Field
-            key={p.fieldId}
-            {...props}
-            {...p}
-            // handleHeroChange={(e) => handleHeroEntryChange && handleHeroEntryChange(e, groupName, p.fieldId)}
-            handleChange={(e) => handleChange && handleChange(e, p.fieldId)}
-          />
+          <Field key={p.fieldId} {...props} {...p} handleChange={(e) => handleChange && handleChange(e, p.fieldId)} />
         ))}
         {onMultiply && (
           <div className="buttons-container">
@@ -54,10 +49,17 @@ const FormField = (props: FormFieldProps) => {
                 confirmSubmit={confirmRemoval}
                 toggleLabel="Don't show again"
                 onSubmit={() => onRemovalClick(groupName, activeIdx)}
-                onClick={() => setConfirmRemovals(!confirmRemoval)}
+                onClick={() => setConfirmRemovals && setConfirmRemovals(!confirmRemoval)}
               />
             )}
-            {canMultiply && <Button label={onMultiply.additionLabel} onClick={onMultiplyClick} />}
+            {canMultiply && (
+              <Button
+                label={onMultiply.additionLabel}
+                isDisable={targetList.length === entry.max}
+                title={targetList.length === entry.max ? "No more allowed" : "Add another"}
+                onClick={onMultiplyClick}
+              />
+            )}
           </div>
         )}
       </div>

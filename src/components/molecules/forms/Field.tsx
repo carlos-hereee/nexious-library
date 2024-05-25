@@ -9,8 +9,7 @@ import FieldPrice from "./FieldPrice";
 
 const Field: React.FC<FormFieldProps> = (props) => {
   const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection, populateLink } = props;
-  const { formError, handleCheckbox, theme, disableForm, handleCountChange } = props;
-  const { formMessage, dataList, changeDataList, countSchema } = props;
+  const { formError, handleCheckbox, theme, disableForm, formMessage, dataList, countSchema } = props;
   return auth.includes(name) ? (
     <AuthField
       name={name}
@@ -42,7 +41,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       formMessage={formMessage}
       value={value as string}
       label={label}
-      onChange={changeDataList}
+      onChange={handleChange}
       isDisabled={disableForm}
     />
   ) : type === "select" ? (
@@ -84,18 +83,18 @@ const Field: React.FC<FormFieldProps> = (props) => {
       error={formError}
       value={typeof value === "string" ? value : value instanceof File ? value : ""}
       label={label}
-      onSelect={(e) => handleChange && handleChange(e)}
+      onSelect={handleChange}
     />
   ) : type === "price-dollars-cents" ? (
     <FieldPrice
       name={name}
       formMessage={formMessage}
       error={formError}
-      value={typeof value === "number" ? value : 0}
+      value={typeof value === "number" ? value : typeof value === "string" ? parseInt(value || "0", 10) : 0}
       label={label}
       schema={countSchema?.filter((count) => count.name === name)[0]}
       type={type}
-      onChange={handleCountChange}
+      onChange={handleChange}
     />
   ) : type === "date-time" ? (
     <FieldDateTime
@@ -115,7 +114,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
       error={formError}
       value={value as string}
       label={label}
-      onChange={changeDataList}
+      onChange={handleChange}
     />
   ) : type === "date-day" ? (
     <FieldDateDay

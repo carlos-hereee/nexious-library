@@ -1,3 +1,4 @@
+import { scrollInDirection } from "@nxs-utils/app/scrollToElement";
 import type { CardinalDirectionProps, ShowScrollProps, ScrollTargetProps } from "nxs-typography";
 import { useState } from "react";
 
@@ -19,7 +20,7 @@ export const useScroll = () => {
     return setDimensions({ width: element.scrollWidth, height: element.scrollHeight });
   };
 
-  const handleScroll = (element: HTMLElement) => {
+  const scrollHandler = (element: HTMLElement) => {
     const currentPosition = element.scrollTop + element.offsetHeight;
     const elementHeight = element.offsetHeight;
     const maxHeight = element.scrollHeight;
@@ -49,9 +50,13 @@ export const useScroll = () => {
         setShow({ ...showScroll, left: isShow, right: isShow, east: isShow, west: isShow });
       }
       new ResizeObserver(() => outputElementDimensions(element)).observe(element);
-      element.addEventListener("scroll", () => handleScroll(element));
+      element.addEventListener("scroll", () => scrollHandler(element));
     }
   };
+  const handleScroll = (scrollDirection: CardinalDirectionProps, targetId: string) => {
+    setDirection(scrollDirection);
+    scrollInDirection("form-field-container", targetId);
+  };
 
-  return { dimensions, direction, setDirection, showScroll, watchElement };
+  return { dimensions, direction, handleScroll, showScroll, watchElement };
 };

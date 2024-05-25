@@ -281,11 +281,8 @@ declare module "nxs-form" {
     countSchema?: FieldCountSchemaProps[];
     fieldHeading?: { [key: string]: string };
     handleChange: (value: FormInitialValue, fieldId?: string) => void;
-    changeDataList: (key: string) => void;
-    setConfirmRemovals: (key: boolean) => void;
-    handleCountChange: (value: string) => void;
+    setConfirmRemovals?: (key: boolean) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
-    handleHeroChange?: (key: File | string) => void;
     onRemovalClick?: (groupName: string, idx: number) => void;
   }
   export interface LabelProps {
