@@ -280,15 +280,13 @@ declare module "nxs-form" {
     dataList?: { [key: string]: MenuItemProp[] };
     countSchema?: FieldCountSchemaProps[];
     fieldHeading?: { [key: string]: string };
-    handleChange: (value: string) => void;
+    handleChange: (value: FormInitialValue, fieldId?: string) => void;
     changeDataList: (key: string) => void;
     setConfirmRemovals: (key: boolean) => void;
     handleCountChange: (value: string) => void;
-    updateSelection?: (value: string, idx?: number) => void;
     handleCheckbox?: (key: OnchangeProps) => void;
     handleHeroChange?: (key: File | string) => void;
     onRemovalClick?: (groupName: string, idx: number) => void;
-    handleHeroEntryChange?: (selectedFile: File | string, activeEntry: string, idx: number) => void;
   }
   export interface LabelProps {
     label: string;

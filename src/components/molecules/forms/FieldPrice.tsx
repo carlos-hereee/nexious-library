@@ -4,17 +4,16 @@ import type { NumberInputProps } from "nxs-form";
 const FieldPrice: React.FC<NumberInputProps> = (props) => {
   const { max, value, onChange, onBlur, name, label, hideLabel, error, formMessage, type } = props;
 
-  const handlePriceChange = (e: React.ChangeEvent<HTMLInputElement>, t: string) => {
-    const { value: val } = e.target;
+  const handlePriceChange = (e: string, t: string) => {
     if (t === "pennies" && onChange) {
       const dollars = Math.floor(value / 100);
-      e.target.value = `${dollars * 100 + parseInt(val, 10)}`;
-      onChange(e);
+      const val = `${dollars * 100 + parseInt(e, 10)}`;
+      onChange(val);
     }
     if (t === "dollars" && onChange) {
       const pennies = value % 100;
-      e.target.value = `${parseInt(val, 10) * 100 + pennies}`;
-      onChange(e);
+      const val = `${parseInt(e, 10) * 100 + pennies}`;
+      onChange(val);
     }
   };
   return (

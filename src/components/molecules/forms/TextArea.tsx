@@ -14,7 +14,7 @@ const TextArea = (props: TextAreaProps) => {
         value={value}
         disabled={isDisabled}
         placeholder={placeholder}
-        onChange={onChange}
+        onChange={(event) => onChange && onChange(event.currentTarget.value)}
       />
     </>
   );

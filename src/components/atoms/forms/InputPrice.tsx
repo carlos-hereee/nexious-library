@@ -9,7 +9,7 @@ const InputPrice: React.FC<NumberInputProps> = ({ max, value, onChange, onBlur, 
       max={max}
       placeholder={`${value / 100}`}
       value={value < 10 ? `0${value}` : value}
-      onChange={onChange}
+      onChange={(event) => onChange && onChange(event.currentTarget.value)}
       onBlur={onBlur}
       disabled={isDisabled}
       inputMode="numeric"

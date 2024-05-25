@@ -1,4 +1,4 @@
-import { useEffect, useState, type ChangeEvent } from "react";
+import { useEffect, useState } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 // import { objToArray } from "@nxs-utils/app/objLength";
@@ -70,21 +70,29 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     if (validationStatus === "error") scrollToError(formErrors);
   }, [validationStatus]);
 
-  const handleEntryChange = (target: FormInitialValue, groupName: string, idx: number) => {
+  const handleEntryChange = (target: FormInitialValue, groupName: string, id: string) => {
     // find field key
     const entryKey = activeEntry[groupName];
     // update field value
     const entryField = entryValues[groupName][entryKey];
-    entryField[idx].value = target;
-    setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName], [entryKey]: entryField } });
+    const idx = entryField.findIndex((val) => val.fieldId === id);
+    if (entryField[idx]) {
+      entryField[idx].value = target;
+      setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName], [entryKey]: entryField } });
+    }
   };
-  const handleChange = (target: FormInitialValue, idx: number) => {
-    const oldValues = [...values];
-    oldValues[idx].value = target;
-    // check schema if value is required for validation
-    if (validationStatus === "error") validateForm(oldValues);
-    if (onChange) onChange(oldValues[idx].value);
-    setValues(oldValues);
+  const handleChange = (field: FieldValueProps, target: FormInitialValue, id: string) => {
+    const { groupName, sharedKey } = field;
+    if (entryValues && groupName && sharedKey) handleEntryChange(target, groupName, id);
+    else {
+      const oldValues = [...values];
+      const idx = oldValues.findIndex((val) => val.fieldId === id);
+      oldValues[idx].value = target;
+      // check schema if value is required for validation
+      if (validationStatus === "error") validateForm(oldValues);
+      if (onChange) onChange(oldValues[idx].value);
+      setValues(oldValues);
+    }
   };
   const handleCheckbox = (event: OnchangeProps, field: FieldValueProps, idx: number) => {
     const { name } = field;
@@ -114,11 +122,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setValues(removalList);
     }
   };
-  const handleSelection = (field: FieldValueProps, target: string, idx: number) => {
-    const { groupName, sharedKey } = field;
-    if (entryValues && groupName && sharedKey && idx) handleEntryChange(target, groupName, idx);
-    else handleChange(target, idx);
-  };
+
   const handleSubmit = (formProps: React.FormEvent<HTMLFormElement>) => {
     formProps.preventDefault();
     // check validation status to contine
@@ -229,17 +233,15 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             changeDataList={(e: string) => handleChangeDataList(e, keyIdx)}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
-            handleChange={(target: string) => handleChange(target, keyIdx)}
+            handleChange={(value: FormInitialValue, id?: string) => handleChange(field, value, id || field.fieldId)}
             handleCountChange={(target: string) => handleCountChange(target, keyIdx)}
             handleCheckbox={(e: OnchangeProps) => handleCheckbox(e, field, keyIdx)}
-            updateSelection={(value: string, idx?: number) => handleSelection(field, value, idx || keyIdx)}
             handleHeroChange={(e: string | File) => handleHeroChange(keyIdx, e)}
             fieldHeading={fieldHeading}
             countSchema={schema?.count}
             canMultiply={field.canMultiply}
             clearSelection={clearSelection}
             disableForm={disableForm}
-            handleHeroEntryChange={handleEntryChange}
             onMultiplyClick={() => handleMultiplyClick(field)}
             onRemovalClick={handleRemovalClick}
             setActiveEntry={(n) => setActiveEntry({ ...activeEntry, ...n })}
