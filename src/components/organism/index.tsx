@@ -9,7 +9,7 @@ export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navi
 // export { default as TableFooter } from "@nxs-organism/table/TableFooter";
 
 // TODO: Potential template
-export { default as Total } from "@nxs-organism/table/Total";
+export { default as Total } from "@nxs-organism/checkout/Total";
 
 // card
 export { default as Card } from "@nxs-organism/card/Card";
@@ -24,7 +24,7 @@ export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps, DialogP
 export type { TextBubbleProps } from "nxs-assets";
 
 // cart
-export { default as Cart } from "@nxs-organism/card/Cart";
+export { default as Cart } from "@nxs-organism/checkout/Cart";
 
 // forms
 export { default as Form } from "@nxs-template/Form";

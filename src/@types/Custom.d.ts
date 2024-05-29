@@ -22,6 +22,7 @@ declare module "custom-props" {
   export interface TotalProps {
     total: number;
     theme: string;
+    heading?: string;
   }
   export type ObjectToArray<P> = (obj?: { [key: string]: P }) => { [key: string]: P }[] | [];
   export type AddArrayInObject<T = KeyStringProp> = {

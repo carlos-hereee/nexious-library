@@ -115,6 +115,7 @@ declare module "nxs-card" {
     data: PaymentType[];
     active: PaymentType;
     heading?: string;
+    errorMessage?: string;
     onClick: (e: PaymentType) => void;
     visaPayment?: (a: unknown) => void;
     paypalPayment?: (e: unknown) => void;

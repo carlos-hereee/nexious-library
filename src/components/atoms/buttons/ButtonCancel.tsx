@@ -46,7 +46,7 @@ const ButtonCancel: React.FC<ButtonProps> = ({ onClick, label, theme, confirmSub
     );
   }
   return (
-    <button type="button" className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"} onClick={onSubmit}>
+    <button type="button" className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"} onClick={onClick}>
       <Icon icon="cancel" />
       {label || "Cancel"}
     </button>

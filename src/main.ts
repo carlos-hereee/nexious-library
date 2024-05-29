@@ -21,6 +21,10 @@ export { default as Loading } from "@nxs-molecules/errors/Loading";
 export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
+// checkout components
+export { default as PaymentMethods } from "@nxs-organism/checkout/PaymentMethods";
+export { default as Total } from "@nxs-organism/checkout/Total";
+export { default as Cart } from "@nxs-organism/checkout/Cart";
 export { default as Card } from "@nxs-organism/card/Card";
 export { default as ButtonCancel } from "@nxs-atoms/buttons/ButtonCancel";
 export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
