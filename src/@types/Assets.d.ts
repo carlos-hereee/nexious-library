@@ -37,6 +37,7 @@ declare module "nxs-assets" {
   export interface UserProps {
     hero?: string;
     name?: string;
+    nickname?: string;
     username?: string;
     email?: string;
     phone?: string;

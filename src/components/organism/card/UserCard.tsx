@@ -1,19 +1,20 @@
 import { Hero } from "@nxs-molecules";
 import type { UserCardProps } from "nxs-card";
 
-const UserCard: React.FC<UserCardProps> = (props) => {
-  const { user, hideLabels, theme, hideHero } = props;
+const UserCard: React.FC<UserCardProps> = ({ user, hideLabels, theme, hideHero }) => {
+  const name = user.nickname || user.name || user.username || "";
   return (
     <div className={theme ? `user-card ${theme}` : "user-card"}>
-      {!hideHero && <Hero hero={{ url: user.hero, alt: `avatar ${user.name || user.username}` }} theme="hero-user" />}
+      {!hideHero && user.hero && (
+        <Hero hero={{ url: user.hero, alt: `avatar ${user.name || user.username}` }} theme="hero-user" />
+      )}
       {!hideLabels && (
-        <div className="flex-d-column">
-          {user.name ||
-            (user.username && (
-              <p className="text-max">
-                <strong> Name:</strong> {user.name || user.username}
-              </p>
-            ))}
+        <>
+          {name && (
+            <p className="text-max">
+              <strong> Name:</strong> {user.name || user.nickname || user.username}
+            </p>
+          )}
           {user.email && (
             <p className="text-max">
               <strong>Email:</strong> {user.email}
@@ -24,7 +25,7 @@ const UserCard: React.FC<UserCardProps> = (props) => {
               <strong>Phone:</strong> {user.phone}
             </p>
           )}
-        </div>
+        </>
       )}
     </div>
   );
