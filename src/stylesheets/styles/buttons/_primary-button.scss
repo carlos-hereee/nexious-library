@@ -8,6 +8,7 @@
 .btn-icon {
   // max-width: #{$min-icon-width};
   min-width: auto;
+  position: relative;
   gap: 0;
 }
 .btn-submit {

@@ -22,7 +22,7 @@ const IconButton: React.FC<IconButtonProps> = ({ theme, onClick, ping, icon, tit
     const nums = icon.icon.split("");
     return (
       <button
-        className={`${theme ? `btn-icon ${theme}` : "btn-icon"}`}
+        className={theme ? `btn-icon ${theme}` : "btn-icon"}
         onClick={onClick}
         title={title || icon.icon || name || ""}
         type="button"
@@ -40,7 +40,7 @@ const IconButton: React.FC<IconButtonProps> = ({ theme, onClick, ping, icon, tit
   }
   return (
     <button
-      className={`${theme ? `btn-icon ${theme}` : "btn-icon"}`}
+      className={theme ? `btn-icon ${theme}` : "btn-icon"}
       onClick={onClick}
       title={title || icon.icon || name || ""}
       type="button"

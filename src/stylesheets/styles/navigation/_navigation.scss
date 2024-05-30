@@ -5,15 +5,6 @@
   gap: #{$rem};
   border-radius: #{$border-radius};
 }
-.ping-count {
-  position: absolute;
-  width: fit-content;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: #{$border-radius};
-  padding: 0.35rem;
-}
 
 .logo-link {
   display: flex;

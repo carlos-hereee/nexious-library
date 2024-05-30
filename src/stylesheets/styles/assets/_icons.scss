@@ -58,3 +58,22 @@
   aspect-ratio: 1/1;
   max-width: #{$min-width-sm};
 }
+.ping-count {
+  position: absolute;
+  width: fit-content;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100%;
+  aspect-ratio: 1/1;
+  padding: 0.25rem;
+  top: -0.5rem;
+  right: -0.5rem;
+  background-color: #{$ping-color};
+  max-width: 30px;
+  .icon {
+    max-width: 15px;
+    min-width: 10px;
+    aspect-ratio: 1/1;
+  }
+}
