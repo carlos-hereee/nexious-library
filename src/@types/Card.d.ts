@@ -47,6 +47,7 @@ declare module "nxs-card" {
     title?: string;
     tagline?: string;
     body?: string;
+    description?: string;
     name?: string;
     theme?: string;
     label?: string;
@@ -69,9 +70,11 @@ declare module "nxs-card" {
   export interface CardProps {
     data: CardProp;
     theme?: string;
-    canRemove?: string;
+    canRemove?: boolean;
     hero?: AssetProps;
     showPrice?: boolean;
+    hidePrice?: boolean;
+    hideButtons?: boolean;
     onClick?: (key: unknown) => void;
     onRemoveFromCart?: (key: unknown) => void;
     onAddToCart?: (key: unknown) => void;

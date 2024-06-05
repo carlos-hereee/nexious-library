@@ -51,7 +51,13 @@
     grid-template-columns: 1fr;
   }
 }
-
+.container-row {
+  display: flex;
+  gap: #{$rem};
+  > * {
+    flex: 1;
+  }
+}
 .navigation-container {
   width: 100%;
   display: grid;

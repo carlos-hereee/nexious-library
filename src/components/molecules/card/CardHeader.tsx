@@ -10,10 +10,9 @@ import type { HeroCardProps } from "nxs-card";
  * @param hasHero boolean; check if component needs assets
  * @returns
  */
-const CardHeader: React.FC<HeroCardProps> = (props) => {
-  const { data } = props;
+const CardHeader: React.FC<HeroCardProps> = ({ data, theme }) => {
   return (
-    <div className="card-header">
+    <div className={theme || "card-header"}>
       {data.title && <h2 className="heading">{data.title}</h2>}{" "}
       {data.tagline && <h3 className="heading">{data.tagline}</h3>}
       {data.subtitle && <Subtitle data={data.subtitle} />}
