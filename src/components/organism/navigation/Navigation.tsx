@@ -8,16 +8,22 @@ import type { NavigationProps } from "nxs-navigation";
  * @returns navbar
  */
 const Navigation: React.FC<NavigationProps> = (props) => {
-  const { onClick, menu, theme } = props;
+  const { onClick, menus, theme } = props;
+  // require key variable
+  if (!menus) throw Error("menus is required");
+  console.log("menus :>> ", menus);
 
   return (
-    <ul className={theme ? `navigation ${theme}` : "navigation"}>
-      {menu.map((m) => (
-        <li className="nav-btn" key={m.uid || m.menuId}>
-          {onClick && <IconButton icon={m} onClick={() => onClick(m)} />}
-        </li>
-      ))}
-    </ul>
+    <nav className="primary-navigation">
+      <ul className={theme ? `navigation ${theme}` : "navigation"}>
+        {menus.map((menu) => (
+          <li className="nav-btn" key={menu}>
+            {menu}
+            {/* {onClick && <IconButton icon={m} onClick={() => onClick(m)} />} */}
+          </li>
+        ))}
+      </ul>
+    </nav>
   );
 };
 

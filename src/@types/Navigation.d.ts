@@ -71,7 +71,7 @@ declare module "nxs-navigation" {
   }
   export interface NavigationProps {
     onClick?: (key: MenuProp) => void;
-    menu: MenuProp[];
+    menus: string[];
     theme?: string;
   }
   export type NavbarProps = {
@@ -80,6 +80,7 @@ declare module "nxs-navigation" {
     themeList?: ThemeList[];
     theme?: string;
     active?: string;
+    navLayout?: string;
     language?: MenuItemProp;
     includeHome?: boolean;
     click: (a: MenuProp) => void;
