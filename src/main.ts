@@ -17,6 +17,7 @@ export { urlFile } from "@nxs-utils/data/urlFile";
 // popular components
 export { default as Button } from "@nxs-atoms/buttons/Button";
 export { default as Hero } from "@nxs-molecules/assets/Hero";
+export { default as Spinner } from "@nxs-atoms/assets/Spinner";
 export { default as Loading } from "@nxs-molecules/errors/Loading";
 export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
