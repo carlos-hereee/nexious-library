@@ -75,6 +75,7 @@ declare module "nxs-card" {
     showPrice?: boolean;
     hidePrice?: boolean;
     hideButtons?: boolean;
+    children?: React.ReactNode;
     onClick?: (key: unknown) => void;
     onRemoveFromCart?: (key: unknown) => void;
     onAddToCart?: (key: unknown) => void;

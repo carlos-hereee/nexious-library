@@ -21,7 +21,7 @@ const MerchBody = ({ data, hidePrice }: CardProps) => {
   );
 };
 const MerchCard: React.FC<CardProps> = (props) => {
-  const { theme, data, hero, canRemove, onRemoveFromCart, onAddToCart, onClick, hideButtons } = props;
+  const { theme, data, hero, canRemove, onRemoveFromCart, onAddToCart, onClick, hideButtons, children } = props;
 
   if (hideButtons) {
     if (!data) return <p>Missing data</p>;
@@ -29,6 +29,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
       <div className={theme || "container"}>
         {data.title && <MerchHeader data={data} hero={hero} />}
         <MerchBody data={data} hidePrice />
+        {children}
       </div>
     );
   }
@@ -36,7 +37,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
     <div className={`merch-card ${theme || ""}`}>
       <button type="button" className="btn btn-card" aria-label={data.title} onClick={onClick}>
         {data.title && <MerchHeader data={data} hero={hero} />}
-        <MerchBody data={data} />
+        <MerchBody data={data} /> {children}
       </button>
       {!hideButtons && (
         <div className="flex-center">
