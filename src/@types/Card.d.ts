@@ -73,6 +73,7 @@ declare module "nxs-card" {
     canRemove?: boolean;
     hero?: AssetProps;
     showPrice?: boolean;
+    showItemTotal?: boolean;
     hidePrice?: boolean;
     hideButtons?: boolean;
     children?: React.ReactNode;
@@ -132,5 +133,7 @@ declare module "nxs-card" {
     onEditDetails: (e: MerchProps) => void;
     setQuantity: (e: MerchProps, count: number) => void;
     theme?: string;
+    readOnly?: boolean;
+    showItemTotal?: boolean;
   }
 }

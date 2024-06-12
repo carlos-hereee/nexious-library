@@ -4,7 +4,7 @@ import { CartRow, CartCancel, CTA } from "@nxs-molecules";
 import type { CartProps, MerchProps } from "nxs-card";
 
 const Cart: React.FC<CartProps> = (props) => {
-  const { data, heading, removeFromCart, setQuantity, theme } = props;
+  const { data, heading, removeFromCart, setQuantity, theme, readOnly } = props;
   const [cancel, setCancel] = useState<string>("");
 
   const cancelReq = (e: unknown, isConfirm: boolean) => {
@@ -20,6 +20,8 @@ const Cart: React.FC<CartProps> = (props) => {
       {data.map((c) =>
         cancel === c.uid ? (
           <CartCancel key={c.uid} click={(e) => cancelReq(c, e)} />
+        ) : readOnly ? (
+          <CartRow data={c} key={c.uid} showPrice showItemTotal />
         ) : (
           <div className="container" key={c.uid}>
             <CartRow data={c} setQuantity={(count) => setQuantity(c, count)} showPrice />

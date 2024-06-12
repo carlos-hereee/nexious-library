@@ -10,11 +10,11 @@ const MerchHeader = ({ data, hero }: CardProps) => {
   );
 };
 const MerchBody = ({ data, hidePrice }: CardProps) => {
-  const price = `${hidePrice && "Price: "}$${data?.cost || 0}`;
+  const price = `${hidePrice ? "Price: " : ""}$${data?.cost || 0}`;
 
   return (
     <div className="merch-card-body">
-      {data.description && <p className="text-max">Merchandise details: {data.description}</p>}
+      {data.description && <p className="text-max">Details: {data.description}</p>}
       {data.cost && hidePrice ? <p>{price}</p> : <strong className="merch-card-cost">{price}</strong>}
       {data.inStock ? <p className="quantity">In stock: {data.inStock}</p> : <p>OUT OF STOCK</p>}
     </div>
