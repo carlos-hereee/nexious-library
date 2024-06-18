@@ -70,9 +70,10 @@ declare module "nxs-navigation" {
     hero: AssetProps;
   }
   export interface NavigationProps {
-    onClick?: (key: MenuProp) => void;
+    onClick?: (key: MenuProp | string) => void;
     menus: string[];
     theme?: string;
+    active?: string;
   }
   export type NavbarProps = {
     show: { isActive: boolean; isClose: boolean };

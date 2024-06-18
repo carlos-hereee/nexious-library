@@ -1,4 +1,4 @@
-// import { IconButton } from "@nxs-molecules";
+import { Button } from "@nxs-atoms";
 import type { NavigationProps } from "nxs-navigation";
 
 /**
@@ -8,7 +8,7 @@ import type { NavigationProps } from "nxs-navigation";
  * @returns navbar
  */
 const Navigation: React.FC<NavigationProps> = (props) => {
-  const { onClick, menus, theme } = props;
+  const { onClick, menus, theme, active } = props;
   // require key variable
   if (!menus) throw Error("menus is required");
   // console.log("menus :>> ", menus);
@@ -16,12 +16,21 @@ const Navigation: React.FC<NavigationProps> = (props) => {
   return (
     <nav className={theme || "primary-navigation"}>
       <ul className="navigation">
-        {menus.map((menu) => (
-          <li className="nav-btn" key={menu}>
-            {menu}
-            {/* {onClick && <IconButton icon={m} onClick={() => onClick(m)} />} */}
-          </li>
-        ))}
+        {menus.map((menu) =>
+          onClick ? (
+            <Button
+              theme={menu === active ? "btn-main btn-active" : "btn-main"}
+              onClick={() => onClick(menu)}
+              key={menu}
+            >
+              <li className="nav-btn">{menu}</li>
+            </Button>
+          ) : (
+            <li className={menu === active ? "nav-btn btn-active" : "nav-btn"} key={menu}>
+              {menu}
+            </li>
+          )
+        )}
       </ul>
     </nav>
   );
