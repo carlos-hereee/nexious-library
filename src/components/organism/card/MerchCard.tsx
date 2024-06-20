@@ -53,7 +53,8 @@ const MerchCard: React.FC<CardProps> = (props) => {
                   onClick={() => onRemoveFromCart(data)}
                 />
               )
-            : onAddToCart && (
+            : onAddToCart &&
+              (typeof data.inStock === "number" && data.inStock > 0 ? (
                 <CTA
                   cta={{
                     name: data.title || "",
@@ -63,7 +64,9 @@ const MerchCard: React.FC<CardProps> = (props) => {
                   }}
                   onClick={() => onAddToCart(data)}
                 />
-              )}
+              ) : (
+                <p className="text-fit text-center">SOLD OUT</p>
+              ))}
         </div>
       )}
     </div>
