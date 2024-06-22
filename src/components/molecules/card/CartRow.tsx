@@ -23,7 +23,7 @@ const CartRow: React.FC<CardProps> = ({ data, theme, setQuantity, showPrice, sho
           labels={{ quantity: "Quantity" }}
           placeholders={{ quantity: `1` }}
           formId={`${data.name || data.label}-form`}
-          schema={{ count: [{ name: "quantity", max: data.inStock, min: 1 }] }}
+          schema={{ count: { quantity: { max: data.inStock, min: 1 } } }}
           hideSubmit
         />
       )}
