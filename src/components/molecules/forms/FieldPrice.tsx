@@ -3,7 +3,6 @@ import type { NumberInputProps } from "nxs-form";
 
 const FieldPrice: React.FC<NumberInputProps> = (props) => {
   const { max, value, onChange, onBlur, name, label, hideLabel, error, formMessage, type } = props;
-
   const handlePriceChange = (e: string, t: string) => {
     if (t === "pennies" && onChange) {
       const dollars = Math.floor(value / 100);

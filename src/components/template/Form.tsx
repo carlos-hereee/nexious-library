@@ -205,7 +205,6 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             handleChange={(value: FormInitialValue, id?: string) => handleChange(field, value, id || field.fieldId)}
             handleCheckbox={(e: OnchangeProps) => handleCheckbox(e, field, keyIdx)}
             fieldHeading={fieldHeading}
-            countSchema={schema?.count}
             canMultiply={field.canMultiply}
             clearSelection={clearSelection}
             disableForm={disableForm}

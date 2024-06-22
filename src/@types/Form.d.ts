@@ -70,7 +70,7 @@ declare module "nxs-form" {
     required?: string[];
     unique?: { name: string; list: string[] }[];
     match?: { name: string; value: string }[];
-    count?: { name: string; min?: number; max?: number }[];
+    count?: { [key: string]: { min: number; max: number } };
   }
   export interface FieldCountSchemaProps {
     name: string;
@@ -327,6 +327,7 @@ declare module "nxs-form" {
   export type ValidateProps = {
     required?: string[];
     unique?: { name: string; list: string[] }[];
+    count?: { [key: string]: { max: number; min: number } };
     match?: { name: string; value: string }[];
   };
   export type DataListProps = {

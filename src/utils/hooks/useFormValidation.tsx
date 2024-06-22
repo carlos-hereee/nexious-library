@@ -28,6 +28,17 @@ export const useFormValidation = (schema: ValidateProps) => {
     }
     return "";
   };
+  const checkCount = (current: FieldValueProps) => {
+    if (schema.count && schema.count[current.name]) {
+      if (schema.count[current.name].max < parseInt(current.value as string, 10)) {
+        return ` Value must be less than ${schema.count[current.name].max}`;
+      }
+      if (schema.count[current.name].min > parseInt(current.value ? (current.value as string) : "0", 10)) {
+        return ` Value must be greater than ${schema.count[current.name].min}`;
+      }
+    }
+    return "";
+  };
 
   const checkUniqueness = (field: FieldValueProps) => {
     if (unique) {
@@ -63,6 +74,8 @@ export const useFormValidation = (schema: ValidateProps) => {
   const validateForm = (values: FieldValueProps[], status?: ValidateFormStatus) => {
     const errors: KeyStringProp = {};
     values.forEach((current) => {
+      const c = checkCount(current);
+      if (c) errors[current.fieldId] = c;
       // check required first and then uniqueness
       const require = checkRequired(current);
       if (require) errors[current.fieldId] = require;

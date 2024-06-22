@@ -92,7 +92,6 @@ const Field: React.FC<FormFieldProps> = (props) => {
       error={formError}
       value={typeof value === "number" ? value : typeof value === "string" ? parseInt(value || "0", 10) : 0}
       label={label}
-      schema={countSchema?.filter((count) => count.name === name)[0]}
       type={type}
       onChange={handleChange}
     />
