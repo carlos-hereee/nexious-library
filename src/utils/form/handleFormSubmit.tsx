@@ -13,37 +13,22 @@ const appendValuesToFormData = (current: FieldValueProps, keyName: string, formD
 };
 
 export const formatFormData = (values: FieldValueProps[]) => {
-  return Object.assign(
-    {},
-    ...values.map((val) => {
-      if (val.group) {
-        const { group, sharedKey, name, value, groupName } = val;
-        const groupPayload = { value, name, sharedKey, group, groupName };
-        return { [val.name]: groupPayload };
-      }
-      return { [val.name]: val.value };
-    })
-  );
+  return Object.assign({}, ...values.map((val) => ({ [val.name]: val.value })));
 };
-export const formatFormEntryData = (values: FieldValueProps[]) => {
+export const formatFormEntryData = (values: FieldValueProps[], entries: { [key: string]: FieldEntryProps }) => {
   const data: { [key: string]: FormInitialValue | FieldValueData[] } = {};
-  values.forEach((val) => {
-    // if value is not in a group add value to data
-    if (!val.group) data[val.name] = val.value;
-    else if (val.groupName && val.sharedKey) {
-      const { group, sharedKey, name, value, groupName } = val;
-      const groupPayload: FieldValueData = { sharedKey, group, groupName };
-      // if group is already been added
-      if (data[val.groupName]) {
-        const fieldData = data[val.groupName] as FieldValueData[];
-        // to keep every together search shared key
-        const keyIdx = fieldData.findIndex((v) => v.sharedKey === sharedKey);
-        fieldData[keyIdx] = { ...fieldData[keyIdx], [name]: value };
-      }
-      // if value group has not been added to data
-      else data[val.groupName] = [{ ...groupPayload, [name]: value }];
-    }
-  });
+  for (let item = 0; item < values.length; item += 1) {
+    const current = values[item];
+    // eslint-disable-next-line prefer-destructuring
+    const groupName = current.groupName;
+    // if its an entry field format the group
+    if (groupName) {
+      // list of each entry
+      const entryList = Object.keys(entries[groupName]);
+      const entryValues = entryList.map((sharedKey) => formatFormData(entries[groupName][sharedKey]));
+      data[groupName] = entryValues;
+    } else data[current.name] = current.value;
+  }
   return data;
 };
 export const formatPreviewData = (values: FieldValueProps[]) => {

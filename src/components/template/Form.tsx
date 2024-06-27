@@ -51,7 +51,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       // submit regular form
       if (!withFileUpload && !addEntry) onSubmit(formatFormData(values));
       // submit regular form with entry values
-      if (!withFileUpload && addEntry) onSubmit(formatFormEntryData(values));
+      if (!withFileUpload && addEntry) onSubmit(formatFormEntryData(values, entryValues));
       // submit form with file uploads
       if (withFileUpload && !addEntry) onSubmit(formatFilesData(values, new FormData()));
       // submit form with file uploads and entry values
