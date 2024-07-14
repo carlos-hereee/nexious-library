@@ -1,4 +1,5 @@
 import { Icon } from "@nxs-atoms";
+import { uniqueId } from "@nxs-utils/data/uniqueId";
 import type { HybribDataProp } from "nxs-typography";
 
 export type ReverseCountProp = {
@@ -28,7 +29,7 @@ const PingCount: React.FC<HybribDataProp> = ({ data }) => {
   return (
     <span className="ping-count">
       {nums.map((n) => (
-        <Icon key={n} icon={n} />
+        <Icon key={uniqueId()} icon={n} />
       ))}
     </span>
   );
