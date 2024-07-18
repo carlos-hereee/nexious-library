@@ -6,8 +6,10 @@ import {
   faInstagram,
   faLinkedin,
   faPaypal,
+  faTiktok,
   faTwitter,
   faXTwitter,
+  faDiscord,
 } from "@fortawesome/free-brands-svg-icons";
 import {
   fa0,
@@ -74,7 +76,7 @@ import {
   faX,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import type { IconDefinition } from "@fortawesome/free-brands-svg-icons";
+import { type IconDefinition } from "@fortawesome/free-brands-svg-icons";
 
 type SVGProp = {
   [key: string]: IconDefinition;
@@ -153,6 +155,8 @@ const svg: SVGProp = {
   refresh: faRefresh,
   next: faRightLong,
   last: faCircleChevronRight,
+  discord: faDiscord,
+  tiktok: faTiktok,
   logout: faDoorClosed,
   linkedin: faLinkedin,
   visa: faCcVisa,
