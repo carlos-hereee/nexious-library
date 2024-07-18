@@ -38,6 +38,7 @@ declare module "nxs-assets" {
     hero?: string;
     name?: string;
     nickname?: string;
+    address?: string;
     username?: string;
     email?: string;
     phone?: string;

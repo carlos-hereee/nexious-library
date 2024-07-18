@@ -25,6 +25,11 @@ const UserCard: React.FC<UserCardProps> = ({ user, hideLabels, theme, hideHero }
               <strong>Phone:</strong> {user.phone}
             </p>
           )}
+          {user.address && (
+            <p className="text-max">
+              <strong>Address:</strong> {user.address}
+            </p>
+          )}
         </>
       )}
     </div>
