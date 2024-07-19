@@ -23,6 +23,7 @@ export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as UserCard } from "@nxs-organism/card/UserCard";
+export { default as NavBar } from "@nxs-organism/navigation/Navbar";
 export { default as MerchCard } from "@nxs-organism/card/MerchCard";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
 // checkout components
@@ -31,6 +32,7 @@ export { default as Total } from "@nxs-organism/checkout/Total";
 export { default as Cart } from "@nxs-organism/checkout/Cart";
 export { default as Card } from "@nxs-organism/card/Card";
 export { default as ButtonCancel } from "@nxs-atoms/buttons/ButtonCancel";
+export { default as Banner } from "@nxs-organism/card/Banner";
 export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
 export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
