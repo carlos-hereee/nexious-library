@@ -11,14 +11,13 @@ export const dayChange = (props: DayChangeProps) => {
     // events found
     if (events && events.length) {
       const match = findMatch({ events, calDay: active });
-      // console.log("filter", match);
       if (!match) {
         setActive(calendarValues(new Date(active.date)));
+        if (onDayClick) onDayClick(active);
       } else if (onDayClick) onDayClick(match);
     }
-    if (onDayClick) onDayClick(active);
     // no events found
-    setActive(active);
+    else setActive(active);
   }
   // next month
   if (active.day > today.maxDays) nextMonth(active, setActive);

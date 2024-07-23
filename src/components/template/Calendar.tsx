@@ -34,6 +34,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     // programatically setDay when new day is chosen
     if (active.date && setDay) setDay(active);
   }, [active]);
+
   useEffect(() => {
     if (events) {
       const data: CalEvent[] = [];
