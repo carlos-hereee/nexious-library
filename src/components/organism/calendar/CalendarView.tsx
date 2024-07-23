@@ -28,7 +28,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
               events={events?.filter((e) => isTileMatch({ day1: e, day, day2: data }))[0] || {}}
               data={{
                 tile: day,
-                isToday: isTileMatch({ day1: today, day, day2: data }),
+                isToday: today ? isTileMatch({ day1: today, day, day2: data }) : false,
                 isMuted: isTileMute({ day, minDate, data }),
                 isSelected: isTileMatch({ day1: data, day, day2: data }),
               }}
@@ -36,6 +36,7 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
           ) : (
             <Button
               key={d}
+              isDisable
               theme="btn-calendar-tile btn-calendar-tile--muted"
               onClick={() => click({ ...data, day })}
             />

@@ -6,8 +6,7 @@ type MonthChageProps = {
   active?: CalendarDayProp;
   setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
 };
-export const monthChange = (props: MonthChageProps) => {
-  const { label, active, setActive } = props;
+export const monthChange = ({ label, active, setActive }: MonthChageProps) => {
   if (label === "start" && active) {
     setActive(calendarValues(new Date(active.year, 0, 1)));
   }

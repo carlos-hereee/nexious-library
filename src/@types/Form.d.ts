@@ -43,7 +43,7 @@ declare module "nxs-form" {
     name: string;
     onChange?: (e: string) => void;
     value: string;
-    placeholder: string;
+    placeholder?: string;
     hideLabels?: boolean;
     isDisabled?: boolean;
     label?: string;

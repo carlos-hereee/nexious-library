@@ -40,6 +40,7 @@ declare module "nxs-calendar" {
     value: Date;
     minDate?: Date;
     theme?: string;
+    hideToday?: boolean;
     events?: {
       date: string;
       list: EventProp[];
@@ -83,7 +84,7 @@ declare module "nxs-calendar" {
   export interface CalendarViewProps {
     data: CalendarDayProp;
     click: (e: CalendarDayProp) => void;
-    today: CalendarDayProp;
+    today?: CalendarDayProp;
     minDate?: CalendarDayProp;
     events: CalendarDayProp[];
   }

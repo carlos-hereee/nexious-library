@@ -6,6 +6,7 @@ import FieldDateDay from "./FieldDateDay";
 import FieldDateWeek from "./FieldDateWeek";
 import FieldDateTime from "./FieldDateTime";
 import FieldPrice from "./FieldPrice";
+import FieldDate from "./FieldDate";
 
 const Field: React.FC<FormFieldProps> = (props) => {
   const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection, populateLink } = props;
@@ -93,6 +94,15 @@ const Field: React.FC<FormFieldProps> = (props) => {
       value={typeof value === "number" ? value : typeof value === "string" ? parseInt(value || "0", 10) : 0}
       label={label}
       type={type}
+      onChange={handleChange}
+    />
+  ) : type === "date" ? (
+    <FieldDate
+      name={name}
+      formMessage={formMessage}
+      error={formError}
+      value={`${value}`}
+      label={label}
       onChange={handleChange}
     />
   ) : type === "date-time" ? (

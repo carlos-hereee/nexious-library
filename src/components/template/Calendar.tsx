@@ -15,7 +15,7 @@ import { CalendarNavigation, CalendarView } from "@nxs-organism/index";
  * @returns
  */
 const Calendar: React.FC<CalendarProps> = (props) => {
-  const { value, events, minDate, theme, onDayClick, setDay } = props;
+  const { value, events, minDate, theme, onDayClick, setDay, hideToday } = props;
   // keep track of today, min date, and which calenday is active
   const [active, setActive] = useState<CalendarDayProp>(calendarValues(value));
   const [mininumDate, setMininumDate] = useState<CalendarDayProp>();
@@ -48,7 +48,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       {active && (
         <CalendarView
           data={active}
-          today={today}
+          today={hideToday ? undefined : today}
           minDate={mininumDate}
           click={(e) => dayChange({ today, active: e, setActive, events, onDayClick })}
           events={
