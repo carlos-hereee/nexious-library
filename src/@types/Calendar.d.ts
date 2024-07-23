@@ -41,10 +41,7 @@ declare module "nxs-calendar" {
     minDate?: Date;
     theme?: string;
     hideToday?: boolean;
-    events?: {
-      date: string;
-      list: EventProp[];
-    }[];
+    events?: EventProp[];
     onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
     setDay?: (a: unknown) => void;
   }

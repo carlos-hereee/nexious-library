@@ -6,8 +6,7 @@ import { isTileMatch } from "@nxs-utils/calendar/isTileMatch";
 import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import type { CalendarViewProps } from "nxs-calendar";
 
-const CalendarView: React.FC<CalendarViewProps> = (props) => {
-  const { data, click, events, minDate, today } = props;
+const CalendarView: React.FC<CalendarViewProps> = ({ data, click, events, minDate, today }) => {
   return (
     <div className="container">
       <div className="calendar-week">
@@ -36,7 +35,6 @@ const CalendarView: React.FC<CalendarViewProps> = (props) => {
           ) : (
             <Button
               key={d}
-              isDisable
               theme="btn-calendar-tile btn-calendar-tile--muted"
               onClick={() => click({ ...data, day })}
             />
