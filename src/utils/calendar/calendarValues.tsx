@@ -14,7 +14,7 @@ export const calendarValues = (e: Date): CalendarDayProp => {
     weeks: maxWeeks,
     start: startIdx,
     date: e.toDateString(),
-    yyyyddmm: e.toISOString().substring(0, 10),
+    yyyymmdd: e.toISOString().substring(0, 10),
   };
 };
 

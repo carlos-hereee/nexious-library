@@ -15,8 +15,8 @@ export const dayChange = (props: DayChangeProps) => {
         setActive(calendarValues(new Date(active.date)));
         if (onDayClick) onDayClick(active);
       } else if (onDayClick) onDayClick(match);
-    }
-    // no events found
+      // no events found
+    } else if (onDayClick) onDayClick(active);
     else setActive(active);
   }
   // next month

@@ -31,7 +31,7 @@ declare module "nxs-calendar" {
     weeks: number;
     start: number;
     day: number;
-    yyyyddmm: string;
+    yyyymmdd: string;
     ping?: number;
   };
   // Define your exported types here
