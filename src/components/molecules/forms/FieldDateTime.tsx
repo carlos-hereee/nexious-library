@@ -24,7 +24,7 @@ const FieldDateTime = (props: FieldDateTimeProps) => {
       <div className="flex-g">
         <Select
           list={cal.hours}
-          active={value}
+          active={value.replaceAll("AM", "").replaceAll("PM", "")}
           onChange={handleChange}
           name={name}
           isDisabled={isDisabled}
