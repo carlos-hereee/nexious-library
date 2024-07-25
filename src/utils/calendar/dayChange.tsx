@@ -16,8 +16,10 @@ export const dayChange = (props: DayChangeProps) => {
         if (onDayClick) onDayClick(active);
       } else if (onDayClick) onDayClick(match);
       // no events found
-    } else if (onDayClick) onDayClick(active);
-    else setActive(active);
+    } else {
+      setActive(active);
+      if (onDayClick) onDayClick(active);
+    }
   }
   // next month
   if (active.day > today.maxDays) nextMonth(active, setActive);
