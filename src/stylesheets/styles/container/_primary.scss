@@ -5,7 +5,7 @@
   align-items: center;
   gap: #{$rem};
   @include devices(mobile) {
-    flex: 0 0 100%;
+    // flex: 0 0 100%;
     width: auto;
   }
 }
