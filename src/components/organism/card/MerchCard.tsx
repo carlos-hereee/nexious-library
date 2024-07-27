@@ -4,7 +4,7 @@ import type { CardProps } from "nxs-card";
 const MerchHeader = ({ data, hero }: CardProps) => {
   return (
     <div className="merch-card-header">
-      <CardHeader data={data} />
+      {data && <CardHeader data={data} />}
       {hero && hero.url && <Hero hero={hero} theme="merch-card-hero" />}
     </div>
   );
@@ -36,7 +36,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
   return (
     <div className={`merch-card ${theme || ""}`}>
       <button type="button" className="btn btn-card" aria-label={data.title} onClick={onClick}>
-        {data.title && <MerchHeader data={data} hero={hero} />}
+        {(data.title || data.hero) && <MerchHeader data={data} hero={hero} />}
         <MerchBody data={data} /> {children}
       </button>
       {!hideButtons && (
