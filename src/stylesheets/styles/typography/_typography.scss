@@ -37,13 +37,7 @@
     width: 100%;
   }
 }
-.text-bubble {
-  height: fit-content;
-  background-color: #{$text-bubble};
-  padding: #{$rem};
-  border-radius: #{$border-radius};
-  max-width: 100%;
-}
+
 .rating {
   display: grid;
   grid-template-columns: repeat(6, 1fr);

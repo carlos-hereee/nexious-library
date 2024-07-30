@@ -70,12 +70,23 @@
 }
 
 .card-text-bubble {
+  flex: 1;
   background-color: #{$light-secondary};
   border-radius: #{$border-radius};
   display: grid;
   align-content: center;
   grid-template-columns: 1fr 5fr;
   gap: #{$rem};
+  padding: #{$rem};
+  width: 100%;
+}
+.text-bubble {
+  height: fit-content;
+  background-color: #{$text-bubble};
+  padding: #{$rem};
+  border-radius: #{$border-radius};
+  max-width: 100%;
+  width: 100%;
 }
 .app-card {
   display: grid;
