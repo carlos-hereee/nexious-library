@@ -27,6 +27,7 @@ export { default as UserCard } from "@nxs-organism/card/UserCard";
 export { default as NavBar } from "@nxs-organism/navigation/Navbar";
 export { default as MerchCard } from "@nxs-organism/card/MerchCard";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
+export { default as SectionList } from "@nxs-organism/lists/SectionList";
 // checkout components
 export { default as PaymentMethods } from "@nxs-organism/checkout/PaymentMethods";
 export { default as Total } from "@nxs-organism/checkout/Total";

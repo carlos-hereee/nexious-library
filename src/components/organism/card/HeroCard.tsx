@@ -1,21 +1,13 @@
-import { CTA, Hero } from "@nxs-molecules";
+import { CardHeader, Hero } from "@nxs-molecules";
 import type { HeroCardProps } from "nxs-card";
 
 const HeroCard: React.FC<HeroCardProps> = (props) => {
   const { hero, theme, onClick, data, viewAsPreview } = props;
 
   if (!data) return <div />;
-  const { title, tagline, cta } = data;
   return (
     <div className={`hero-card ${theme || ""}`}>
-      <div className="hero-card-header">
-        {title && <h1 className="hero-card-heading">{title}</h1>}
-        {tagline && <h2 className="tagline">{tagline}</h2>}
-        {cta &&
-          cta.map((c) => (
-            <CTA key={c.uid} cta={c} onClick={() => onClick && onClick(c)} viewAsPreview={viewAsPreview} />
-          ))}
-      </div>
+      <CardHeader data={data} theme="hero-card-header" onClick={onClick} viewAsPreview={viewAsPreview} />
       {hero && <Hero hero={hero} theme={hero?.theme} />}
     </div>
   );

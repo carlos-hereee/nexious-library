@@ -101,6 +101,21 @@ declare module "nxs-card" {
     data?: string;
     theme?: string;
   }
+  export interface Section {
+    title: string;
+    uid: string;
+    subtitle: string;
+    details: string;
+    body: string;
+    theme?: string;
+    sharedKey?: string;
+    heroId?: string;
+    sectionHero?: AssetProps;
+    hero?: AssetProps;
+  }
+  export interface CardSectionList {
+    sections: Section[];
+  }
 
   export interface UserCardProps {
     hideLabels?: boolean;
