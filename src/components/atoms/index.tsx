@@ -1,6 +1,7 @@
 // assets
 export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as Spinner } from "@nxs-atoms/assets/Spinner";
+export { default as Bubble } from "@nxs-atoms/assets/Bubble";
 export { default as Image } from "@nxs-atoms/assets/Image";
 // buttons
 export { default as Button } from "@nxs-atoms/buttons/Button";
