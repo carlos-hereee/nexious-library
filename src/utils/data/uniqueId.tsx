@@ -17,3 +17,6 @@ export const uniqueId = (length?: number) => {
   }
   return randomString;
 };
+export const uniqueRandomList = (range: number) => {
+  return Array.from({ length: range }, () => ({ id: uniqueId() }));
+};
