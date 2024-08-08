@@ -56,7 +56,6 @@ declare module "nxs-assets" {
   }
   export interface BubblyProps {
     bubbles?: number;
-    location?: "left" | "right";
   }
   export interface MediaProps {
     medias: AssetProps[];
