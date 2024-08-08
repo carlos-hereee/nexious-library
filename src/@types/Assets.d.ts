@@ -56,9 +56,10 @@ declare module "nxs-assets" {
   }
   export interface MediaProps {
     medias: AssetProps[];
-    hero: AssetProps;
+    hero?: AssetProps;
     theme?: string;
     label?: string;
+    heading?: string;
   }
   export type RatingProps = {
     star: number;

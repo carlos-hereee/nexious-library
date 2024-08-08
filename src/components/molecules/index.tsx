@@ -1,6 +1,5 @@
 // assets
 export { default as Logo } from "@nxs-molecules/assets/Logo";
-export { default as Socials } from "@nxs-molecules/assets/Socials";
 export { default as Rating } from "@nxs-molecules/assets/Rating";
 export { default as Hero } from "@nxs-molecules/assets/Hero";
 export { DownArrow, UpArrow } from "@nxs-molecules/assets/AssetsIcon";

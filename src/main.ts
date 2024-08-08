@@ -37,4 +37,4 @@ export { default as Banner } from "@nxs-organism/card/Banner";
 export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
 export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
-export { default as Socials } from "@nxs-molecules/assets/Socials";
+export { default as Socials } from "@nxs-template/Socials";

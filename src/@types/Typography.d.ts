@@ -11,7 +11,8 @@ declare module "nxs-typography" {
   export interface HyperlinkProp {
     isLink?: boolean;
     link?: string;
-    data: string;
+    children?: React.ReactNode;
+    data?: string;
   }
   export interface KeyValueProps {
     key: string;

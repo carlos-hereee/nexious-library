@@ -7,9 +7,11 @@ export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navi
 // export { default as TableBody } from "@nxs-organism/table/TableBody";
 // export { default as TableHeader } from "@nxs-organism/table/TableHeader";
 // export { default as TableFooter } from "@nxs-organism/table/TableFooter";
+export { default as NavList } from "@nxs-organism/lists/NavList";
 
 // TODO: Potential template
 export { default as Total } from "@nxs-organism/checkout/Total";
+export { default as Socials } from "@nxs-template/Socials";
 
 // card
 export { default as Card } from "@nxs-organism/card/Card";

@@ -8,16 +8,14 @@
  */
 import type { HyperlinkProp } from "nxs-typography";
 
-const Hyperlink: React.FC<HyperlinkProp> = (props) => {
-  const { data, isLink, link } = props;
-  return isLink ? (
-    // dont use just target="_blank" without  rel="noopener noreferrer"
-    // It Makes Your Site Vulnerable to Phishing Attacks
+const Hyperlink: React.FC<HyperlinkProp> = ({ data, isLink, link }) => {
+  if (!isLink) return <span>{data}</span>;
+  // dont use just target="_blank" without  rel="noopener noreferrer"
+  // It Makes Your Site Vulnerable to Phishing Attacks
+  return (
     <a href={link} className="link" rel="noopener noreferrer" target="_blank">
       {data}
     </a>
-  ) : (
-    <span>{data} </span>
   );
 };
 export default Hyperlink;

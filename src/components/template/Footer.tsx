@@ -1,4 +1,4 @@
-import { Socials } from "@nxs-molecules";
+import { Socials } from "@nxs-organism";
 import type { FooterProps } from "nxs-navigation";
 
 /**
@@ -6,10 +6,9 @@ import type { FooterProps } from "nxs-navigation";
  * @param appName string;
  * @returns
  */
-const Footer: React.FC<FooterProps> = (props) => {
-  const { appName, media, hero } = props;
+const Footer: React.FC<FooterProps> = ({ appName, media, hero }) => {
   return (
-    <footer className="container mt-2">
+    <footer className="container">
       {media && <Socials medias={media.medias || []} label={media.title} hero={hero} />}
       <div className="w-max">
         <span className="flex-center">
