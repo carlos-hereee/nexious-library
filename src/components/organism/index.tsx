@@ -10,6 +10,8 @@ export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navi
 export { default as NavList } from "@nxs-organism/lists/NavList";
 export { default as SectionList } from "@nxs-organism/lists/SectionList";
 
+// export background compentent styles
+export { default as Bubbly } from "@nxs-organism/styles/Bubbly";
 // TODO: Potential template
 export { default as Total } from "@nxs-organism/checkout/Total";
 export { default as Socials } from "@nxs-template/Socials";
