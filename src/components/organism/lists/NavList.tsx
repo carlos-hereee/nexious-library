@@ -3,7 +3,7 @@ import type { MediaProps } from "@nxs-molecules/index";
 
 const NavList: React.FC<MediaProps> = ({ medias, heading }) => {
   return (
-    <div className="container">
+    <div className="flex-d-column">
       {heading && <h2 className="heading">{heading}</h2>}
       <div className="card-container">
         {medias.map((d) => (

@@ -3,7 +3,7 @@ import { TextBubble } from "@nxs-atoms/index";
 import type { TextBubbleProps } from "nxs-assets";
 import { UserCard } from "@nxs-organism";
 
-const CardTextBubble: React.FC<TextBubbleProps> = ({ hero, data, theme }) => {
+const CardTextBubble: React.FC<TextBubbleProps> = ({ hero, data, theme, children }) => {
   return (
     <div className={theme ? `${theme} card-text-bubble` : "card-text-bubble"}>
       {hero ? <UserCard user={hero} hideLabels /> : <div />}
@@ -15,6 +15,7 @@ const CardTextBubble: React.FC<TextBubbleProps> = ({ hero, data, theme }) => {
       ) : (
         <TextBubble title={data.title} body={data.body} />
       )}
+      {children}
     </div>
   );
 };

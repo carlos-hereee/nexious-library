@@ -49,6 +49,7 @@ declare module "nxs-assets" {
     hero: AssetProps;
     data: { rating: number; title: string; body: string };
     theme?: string;
+    children?: React.ReactNode;
   }
   export interface BubbleProps {
     title: string;
