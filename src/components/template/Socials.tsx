@@ -1,4 +1,3 @@
-import { Icon, Navlink } from "@nxs-atoms";
 import type { MediaProps } from "nxs-assets";
 import { Hero } from "@nxs-molecules";
 import { NavList } from "@nxs-organism/index";
