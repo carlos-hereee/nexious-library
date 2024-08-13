@@ -13,3 +13,18 @@
     grid-template-rows: 1fr;
   }
 }
+// // theme dark mode
+// .dark-mode > .container {
+//   // -webkit-filter: blur(8px);
+//   // backdrop-filter: blur(5px);
+//   background-color: #{$dark-mode};
+//   color: #{$light-mode};
+// }
+// // theme light mode
+// .light-mode > .container {
+//   // -webkit-filter: blur(8px);
+//   // backdrop-filter: blur(5px);
+//   background-color: #{$light-mode};
+//   color: #{$dark-mode};
+//   // background: inherit;
+// }
