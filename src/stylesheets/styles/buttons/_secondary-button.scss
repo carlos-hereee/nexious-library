@@ -27,6 +27,7 @@
 .btn-selected,
 .btn-active {
   background-color: #{$action-color};
+  color: #{$dark-mode};
 }
 .btn-add {
   // border: 1px solid #{$dark-primary};
