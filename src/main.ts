@@ -18,6 +18,7 @@ export { urlFile } from "@nxs-utils/data/urlFile";
 export { default as Bubbly } from "@nxs-organism/styles/Bubbly";
 // popular components
 export { default as Button } from "@nxs-atoms/buttons/Button";
+export { default as ReadMore } from "@nxs-atoms/texts/ReadMore";
 export { default as Hero } from "@nxs-molecules/assets/Hero";
 export { default as Spinner } from "@nxs-atoms/assets/Spinner";
 export { default as Loading } from "@nxs-molecules/errors/Loading";

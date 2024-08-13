@@ -80,6 +80,12 @@
   padding: #{$rem};
   width: 100%;
 }
+.card-text-bubble:has(.card-text-sender) {
+  grid-template-columns: 5fr 1fr;
+  .card-text-sender {
+    order: 2;
+  }
+}
 .text-bubble {
   height: fit-content;
   background-color: #{$text-bubble};

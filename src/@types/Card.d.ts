@@ -120,7 +120,7 @@ declare module "nxs-card" {
   export interface UserCardProps {
     hideLabels?: boolean;
     hideHero?: boolean;
-    theme?: boolean;
+    theme?: string;
     user: UserProps;
   }
 

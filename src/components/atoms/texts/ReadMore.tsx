@@ -1,7 +1,6 @@
 import type { ReadMoreProps } from "nxs-typography";
 
-const ReadMore: React.FC<ReadMoreProps> = (props) => {
-  const { data, uid } = props;
+const ReadMore: React.FC<ReadMoreProps> = ({ data, uid }) => {
   const show = data.split(".");
   const target = show.map((s, idx) => (idx >= 1 ? s : "")).join(".");
   return (
