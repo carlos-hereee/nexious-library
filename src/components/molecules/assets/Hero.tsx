@@ -13,15 +13,37 @@ const Hero: React.FC<HeroProps> = (props) => {
   const { hero, theme, onImageClick, imageRef, isDisable, layout } = props;
   const [load, setLoad] = useState<boolean>();
 
-  if (!hero) {
-    return <ErrorMessage error={{ code: "missingProps", prop: "hero", value: hero }} />;
+  if (!hero) return <ErrorMessage error={{ code: "missingProps", prop: "hero", value: hero }} />;
+  if (!hero.url) {
+    return (
+      <Image
+        onImageClick={!isDisable ? onImageClick : undefined}
+        onImageLoad={() => setLoad(true)}
+        hero={hero}
+        imageRef={imageRef}
+        theme={theme}
+      />
+    );
   }
 
   const loadStyling = load ? "blur-load--loaded" : "blur-load";
   const designStyle = layout ? `${layout} ${loadStyling}` : loadStyling;
-
-  return hero?.url ? (
-    <div className={designStyle} style={{ backgroundImage: `url(${hero.small})` }}>
+  if (load) {
+    return (
+      <>
+        <Image
+          onImageClick={!isDisable ? onImageClick : undefined}
+          onImageLoad={() => setLoad(true)}
+          hero={hero}
+          imageRef={imageRef}
+          theme={theme}
+        />
+        {hero.creditTo && <UnsplashCredit creditTo={hero.creditTo} />}
+      </>
+    );
+  }
+  return (
+    <div className={load ? designStyle : undefined} style={{ backgroundImage: `url(${hero.small})` }}>
       <Image
         onImageClick={!isDisable ? onImageClick : undefined}
         onImageLoad={() => setLoad(true)}
@@ -31,14 +53,6 @@ const Hero: React.FC<HeroProps> = (props) => {
       />
       {hero.creditTo && <UnsplashCredit creditTo={hero.creditTo} />}
     </div>
-  ) : (
-    <Image
-      onImageClick={!isDisable ? onImageClick : undefined}
-      onImageLoad={() => setLoad(true)}
-      hero={hero}
-      imageRef={imageRef}
-      theme={theme}
-    />
   );
 };
 

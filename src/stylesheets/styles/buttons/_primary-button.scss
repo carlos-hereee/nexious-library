@@ -11,14 +11,12 @@
   position: relative;
   gap: 0;
 }
-.btn-submit {
-  width: 100%;
-}
 .btn-main {
   width: 100%;
   max-width: #{$max-width-button-lg};
   border: 1px solid #{$faded};
   // padding: 0;
+  background-color: #fafafa;
   white-space: nowrap;
   &:hover {
     border: 1px solid #{$dark-mode};

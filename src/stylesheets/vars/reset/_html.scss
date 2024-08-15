@@ -76,6 +76,7 @@ button {
   padding: #{$rem05} #{$rem};
   max-width: #{$max-width-button};
   min-width: #{$min-width};
+  width: 100%;
   border: none;
   border-radius: #{$border-radius};
   gap: #{$rem};
