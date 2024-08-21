@@ -42,3 +42,5 @@ export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
 export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Socials } from "@nxs-template/Socials";
+// form components
+export { default as Select } from "@nxs-molecules/forms/Select";

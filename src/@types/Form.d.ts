@@ -25,6 +25,7 @@ declare module "nxs-form" {
     value: string;
     label: string;
     icon?: string;
+    thumbnail?: string;
     uid?: string;
     listItemId?: string;
   };

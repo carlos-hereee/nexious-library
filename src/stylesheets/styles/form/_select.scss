@@ -6,6 +6,8 @@
   align-items: center;
   gap: #{$rem};
   width: 100%;
+  max-width: #{$max-width-sm};
+  min-width: 100%;
 }
 .select {
   display: flex;
@@ -14,8 +16,6 @@
   position: relative;
   outline: 1px solid #{$faded};
   border-radius: #{$border-radius};
-  max-width: #{$max-width-sm};
-  min-width: 100%;
   width: 100%;
   &:focus {
     outline: 1px solid #{$dark-mode};

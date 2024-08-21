@@ -1,6 +1,6 @@
 import { Icon, Label, Option } from "@nxs-atoms";
 import { useRequiredProps } from "@nxs-utils/hooks/useRequiredProps";
-import { ErrorMessages, IconButton } from "@nxs-molecules";
+import { ErrorMessages, Hero, IconButton } from "@nxs-molecules";
 import type { SelectProp } from "nxs-form";
 
 /**
@@ -22,13 +22,20 @@ const Select: React.FC<SelectProp> = (props) => {
 
   const activeLabel = active || "Choose Selection";
   const icon = active ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon : undefined;
+  const thumbnail = active ? list && list.filter((l) => l && l.value && l.value === active)[0]?.thumbnail : undefined;
 
   if (lightColor === "red") return <ErrorMessages errors={errors} component="select" />;
   return (
     <>
       {!hideLabels && label && <Label name={name} label={label} error={error} message={formMessage} />}
       <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
-        {active && icon && <Icon icon={icon} name={icon} theme="select-icon" />}
+        {active && icon ? (
+          <Icon icon={icon} name={icon} theme="select-icon" />
+        ) : thumbnail ? (
+          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} theme="thumbnail-select" />
+        ) : (
+          ""
+        )}
         <select className="select" value={activeLabel} disabled={isDisabled} onChange={(e) => onChange(e.target.value)}>
           <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />
           <Option data={{ label: "", name: "", value: "" }} hideOption />

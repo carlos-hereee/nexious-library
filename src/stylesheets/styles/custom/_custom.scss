@@ -109,3 +109,15 @@
 .hide-x-overflow {
   overflow-x: hidden;
 }
+.zero-deg {
+  transform: rotate(0deg);
+}
+.ninety-deg {
+  transform: rotate(90deg);
+}
+.one-hundred-eighty-deg {
+  transform: rotate(180deg);
+}
+.two-hundred-seventy-deg {
+  transform: rotate(270deg);
+}
