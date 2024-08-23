@@ -1,10 +1,10 @@
 import { Icon } from "@nxs-atoms";
 import type { ButtonProps } from "nxs-button";
 
-const SubmitButton: React.FC<ButtonProps> = ({ label, isDisable, theme }) => {
+const SubmitButton: React.FC<ButtonProps> = ({ label, isDisable, theme, icon }) => {
   return (
     <button type="submit" className={theme ? `btn-main ${theme}` : "btn-main btn-submit"} disabled={isDisable}>
-      <Icon icon="submit" /> {label || "Confirm"}
+      <Icon icon={icon || "submit"} /> {label || "Confirm"}
     </button>
   );
 };

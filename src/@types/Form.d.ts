@@ -89,6 +89,7 @@ declare module "nxs-form" {
     responseError?: string;
     submitLabel?: string;
     theme?: string;
+    submitIcon?: string;
     cancelLabel?: string;
     hideLabels?: boolean;
     hideSubmit?: boolean;

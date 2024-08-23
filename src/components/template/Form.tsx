@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
-  const { onChange, onCancel, onSubmit, onViewPreview } = props;
+  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage } = useFormValidation({
     ...schema,
   });
@@ -218,13 +218,19 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {onCancel || onViewPreview ? (
         <div className="buttons-container">
           {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
-          {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} />}
+          {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} icon={submitIcon} />}
           {onViewPreview && (
-            <IconButton icon={{ icon: "eye", label: previewLabel }} theme="btn-main" onClick={handleViewPreview} />
+            <IconButton
+              icon={{ icon: submitIcon || "eye", label: previewLabel }}
+              theme="btn-main"
+              onClick={handleViewPreview}
+            />
           )}
         </div>
       ) : (
-        !hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} theme="form-submit-btn" />
+        !hideSubmit && (
+          <SubmitButton label={submitLabel} isDisable={disableForm} icon={submitIcon} theme="form-submit-btn" />
+        )
       )}
     </form>
   );
