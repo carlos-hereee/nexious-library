@@ -23,9 +23,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
   const { submitIcon, onChange, onCancel, onSubmit, onViewPreview } = props;
-  const { formErrors, validationStatus, validateForm, setStatus, formMessage } = useFormValidation({
-    ...schema,
-  });
+  const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
+    useFormValidation({ ...schema });
 
   // key variables
   const { values, entryValues, activeEntry, setValues, setEntries, addNewEntry, setActiveEntry, addExtraEntry } =
@@ -91,13 +90,23 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       setValues(oldValues);
     }
   };
+  const inverseCheckbox = (targets: string[], targetValue: boolean, oldValues: FieldValueProps[]) => {
+    return oldValues.map((val) => {
+      // update checkbox value for each match found
+      if (targets.includes(val.name)) {
+        return { ...val, value: targetValue };
+      }
+      return val;
+    });
+  };
   const handleCheckbox = (event: OnchangeProps, field: FieldValueProps, idx: number) => {
     const { name } = field;
     // key variables
     const isChecked: boolean = event.currentTarget.checked;
     // update values
-    const oldValues = [...values];
+    let oldValues = [...values];
     oldValues[idx].value = isChecked;
+    oldValues = checkInverseCheckbox({ oldValues, current: field, inverseCheckbox });
     // if the checkbox is checked add entries
     if (isChecked && addEntry) {
       const fieldEntry = addNewEntry({ addEntry: addEntry[name], group: name });

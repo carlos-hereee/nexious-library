@@ -9,6 +9,11 @@ declare module "nxs-form" {
     name: string;
     groupName: string;
   }
+  export interface ValidateInverseCheckbox {
+    oldValues: FieldValueProps[];
+    current: FieldValueProps;
+    inverseCheckbox: (targets: string[], inverseValue: boolean, oldValues: FieldValueProps[]) => FieldValueProps[];
+  }
   export type FormInitialValue = File | Blob | string | number | boolean;
   export type FormValueProps = { [key: string]: FormInitialValue };
   export type InitialExtraValue = {
@@ -331,6 +336,7 @@ declare module "nxs-form" {
     unique?: { name: string; list: string[] }[];
     count?: { [key: string]: { max: number; min: number } };
     match?: { name: string; value: string }[];
+    strictCheckbox?: { main: string; inverse: string[] }[];
   };
   export type DataListProps = {
     list: { [key: string]: string }[];

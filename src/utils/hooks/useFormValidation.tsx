@@ -1,11 +1,11 @@
-import type { FieldValueProps, ValidateFormStatus, ValidateProps } from "nxs-form";
+import type { FieldValueProps, ValidateFormStatus, ValidateInverseCheckbox, ValidateProps } from "nxs-form";
 import { useEffect, useState } from "react";
 import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
 
 export const useFormValidation = (schema: ValidateProps) => {
-  const { required, unique, match } = schema;
+  const { required, unique, match, strictCheckbox } = schema;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});
   const [validationStatus, setStatus] = useState<ValidateFormStatus>(null);
@@ -27,6 +27,25 @@ export const useFormValidation = (schema: ValidateProps) => {
       }
     }
     return "";
+  };
+  const checkInverseCheckbox = ({ current, inverseCheckbox, oldValues }: ValidateInverseCheckbox) => {
+    // only check if its required
+    if (strictCheckbox) {
+      const isMain = strictCheckbox.findIndex((box) => box.main === current.name);
+      // inverse checkbox
+      if (isMain >= 0 && current.value) {
+        oldValues = inverseCheckbox(strictCheckbox[isMain].inverse, !current.value, oldValues);
+      } else if (current.value) {
+        const idx = strictCheckbox.findIndex((box) => box.inverse.includes(current.name));
+        // find main
+        const mainIdx = oldValues.findIndex((val) => val.name === strictCheckbox[idx].main);
+        // turn off main if on
+        if (oldValues[mainIdx].value) {
+          oldValues = inverseCheckbox([strictCheckbox[idx].main], false, oldValues);
+        }
+      }
+    }
+    return oldValues;
   };
   const checkCount = (current: FieldValueProps) => {
     if (schema.count && schema.count[current.name]) {
@@ -91,7 +110,7 @@ export const useFormValidation = (schema: ValidateProps) => {
     setFormErrors(errors);
   };
 
-  return { validationStatus, formErrors, setFormErrors, setStatus, validateForm, formMessage };
+  return { validationStatus, formErrors, setFormErrors, setStatus, validateForm, formMessage, checkInverseCheckbox };
 };
 
 /**
