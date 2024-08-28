@@ -44,3 +44,4 @@ export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Socials } from "@nxs-template/Socials";
 // form components
 export { default as Select } from "@nxs-molecules/forms/Select";
+export { default as Rating } from "@nxs-molecules/assets/Rating";
