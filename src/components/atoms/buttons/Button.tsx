@@ -15,7 +15,7 @@ const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable
         type="button"
         className={theme ? `btn-icon ${theme}` : "btn-main btn-icon"}
         title={title}
-        onClick={onClick}
+        onClick={() => onClick && onClick()}
         aria-label={title || label || name}
         disabled={isDisable}
       >
@@ -28,7 +28,7 @@ const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable
       type="button"
       className={theme || "btn-main"}
       title={title}
-      onClick={onClick}
+      onClick={() => onClick && onClick()}
       aria-label={title || label || name}
       disabled={isDisable}
     >

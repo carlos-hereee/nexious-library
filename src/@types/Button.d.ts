@@ -27,6 +27,7 @@ declare module "nxs-button" {
     title?: string;
     toggleLabel?: string;
     label?: string;
+    activeTheme?: string;
     ping?: number;
     name?: string;
     data?: string;

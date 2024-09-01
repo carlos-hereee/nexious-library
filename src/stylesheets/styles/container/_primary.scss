@@ -65,6 +65,12 @@
   align-items: center;
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width-sm}, 1fr));
+  .navigation {
+    justify-content: center;
+  }
+  @include devices(mobile) {
+    grid-template-columns: 1fr;
+  }
 }
 .mini-navigation-container {
   width: 100%;
