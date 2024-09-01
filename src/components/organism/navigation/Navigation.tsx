@@ -1,5 +1,6 @@
-import { Button } from "@nxs-atoms";
-import type { NavigationProps } from "nxs-navigation";
+import { Button, ErrorMessage, NavButton } from "@nxs-atoms";
+import { propChecker } from "@nxs-utils/tsChecker/propChecker";
+import type { NavigationProps, MenuProp } from "nxs-navigation";
 
 /**
  * Component - Navigation
@@ -7,30 +8,28 @@ import type { NavigationProps } from "nxs-navigation";
  * @param click   callback to be fired when button is click
  * @returns navbar
  */
-const Navigation: React.FC<NavigationProps> = (props) => {
-  const { onClick, menus, theme, active } = props;
+const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active }) => {
   // require key variable
-  if (!menus) throw Error("menus is required");
-  // console.log("menus :>> ", menus);
+  if (!menus) return <ErrorMessage error={{ code: "missingProps", prop: "menus", value: menus }} />;
+  const propType = propChecker<string>(menus, "string");
 
+  if (propType === "string") {
+    return (
+      <nav className={theme || "primary-navigation"}>
+        <ul className="navigation">
+          {(menus as string[]).map((menu) => (
+            <NavButton onClick={onClick} data={menu} key={menu} />
+          ))}
+        </ul>
+      </nav>
+    );
+  }
   return (
     <nav className={theme || "primary-navigation"}>
       <ul className="navigation">
-        {menus.map((menu) =>
-          onClick ? (
-            <Button
-              theme={menu === active ? "btn-main btn-active" : "btn-main"}
-              onClick={() => onClick(menu)}
-              key={menu}
-            >
-              <li className="nav-btn">{menu}</li>
-            </Button>
-          ) : (
-            <li className={menu === active ? "nav-btn btn-active" : "nav-btn"} key={menu}>
-              {menu}
-            </li>
-          )
-        )}
+        {(menus as MenuProp[]).map((menu) => (
+          <NavButton onClick={onClick} data={menu.value} key={menu.uid} />
+        ))}
       </ul>
     </nav>
   );

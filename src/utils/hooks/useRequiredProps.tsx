@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import type { RequiredTypesProps, ErrorMessageProp, LightSystem } from "nxs-errors";
 import { objLength } from "@nxs-utils/app/objLength";
-import { arrayLen } from "@nxs-utils/app/isArray";
+import { arrayLen } from "@nxs-utils/tsChecker/isArray";
 
 export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");

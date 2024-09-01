@@ -6,6 +6,7 @@ export { default as Image } from "@nxs-atoms/assets/Image";
 // buttons
 export { default as Button } from "@nxs-atoms/buttons/Button";
 export { default as BackButton } from "@nxs-atoms/buttons/BackButton";
+export { default as NavButton } from "@nxs-atoms/buttons/NavButton";
 export { default as ButtonCancel } from "@nxs-atoms/buttons/ButtonCancel";
 export type { IconProps, ButtonProps } from "nxs-button";
 

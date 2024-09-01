@@ -1,4 +1,4 @@
-import { isFile } from "@nxs-utils/app/isDefined";
+import { isFile } from "@nxs-utils/tsChecker/isDefined";
 import type { FieldEntryProps, FieldValueData, FieldValueProps, FormInitialValue, FormValueProps } from "nxs-form";
 
 const appendValuesToFormData = (current: FieldValueProps, keyName: string, formData: FormData) => {

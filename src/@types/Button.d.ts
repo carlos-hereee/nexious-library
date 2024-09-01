@@ -17,7 +17,7 @@ declare module "nxs-button" {
   };
   export interface ButtonProps {
     // optional
-    onClick?: () => void;
+    onClick?: (data?: string) => void;
     onSubmit?: () => void;
     children?: React.ReactNode;
     theme?: string;
@@ -29,10 +29,7 @@ declare module "nxs-button" {
     label?: string;
     ping?: number;
     name?: string;
-    data?: {
-      heading?: string;
-      body?: string;
-    };
+    data?: string;
     active?: CardinalDirectionProps;
   }
   export interface IconButtonProps {

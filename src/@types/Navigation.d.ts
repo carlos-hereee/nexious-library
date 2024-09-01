@@ -37,6 +37,7 @@ declare module "nxs-navigation" {
     icon: string;
     locale?: string;
     label?: string;
+    value?: string;
     isToggle?: boolean;
     isPrivate?: boolean;
     active: MenuItemProp;
@@ -69,9 +70,10 @@ declare module "nxs-navigation" {
     media: SectionProps;
     hero: AssetProps;
   }
+
   export interface NavigationProps {
-    onClick?: (key: MenuProp | string) => void;
-    menus: string[];
+    onClick?: (key?: MenuProp | string) => void;
+    menus: string[] | MenuProp[];
     theme?: string;
     active?: string;
   }
