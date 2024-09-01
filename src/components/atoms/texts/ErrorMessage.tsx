@@ -1,11 +1,9 @@
 /* eslint-disable no-console */
 import { findValueType } from "@nxs-utils/helpers/methods";
-import { messages } from "@nxs-utils/data/messages";
+import messages from "@nxs-utils/data/messages.json";
 import type { ErrorMessageProps } from "nxs-errors";
 
-const ErrorMessage: React.FC<ErrorMessageProps> = (props) => {
-  const { error } = props;
-
+const ErrorMessage: React.FC<ErrorMessageProps> = ({ error }) => {
   const handleClick = () => {
     const { isUndefined } = findValueType(error.value);
     console.log("error occurred in prop ", error.prop);

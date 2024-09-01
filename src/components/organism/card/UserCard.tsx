@@ -1,7 +1,10 @@
+import { ErrorMessage } from "@nxs-atoms/index";
 import { Hero } from "@nxs-molecules";
 import type { UserCardProps } from "nxs-card";
 
 const UserCard: React.FC<UserCardProps> = ({ user, hideLabels, theme, hideHero }) => {
+  if (!user) return <ErrorMessage error={{ code: "missingProps", prop: "user", value: user, isAProp: true }} />;
+
   const name = user.nickname || user.name || user.username || "";
   return (
     <div className={theme ? `user-card ${theme}` : "user-card"}>

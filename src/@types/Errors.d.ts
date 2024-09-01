@@ -3,6 +3,7 @@ declare module "nxs-errors" {
 
   export type LightSystem = "green" | "yellow" | "red" | null;
   export type RequiredTypesProps = { [key: string]: unknown };
+  export type ErrorCodes = "missingProps" | "iconNotFound" | "missingAsset" | "missingInitialValues";
   export interface ErrorMessageProp {
     prop: string;
     code: string;
@@ -23,7 +24,7 @@ declare module "nxs-errors" {
   }
   export type ErrorProp = {
     value: { [key: string]: unknown } | unknown;
-    code: string;
+    code: ErrorCodes;
     prop: string;
     component?: string;
     isAProp?: boolean;
