@@ -75,6 +75,7 @@ declare module "nxs-navigation" {
     onClick?: (key?: MenuProp | string) => void;
     menus: string[] | MenuProp[];
     theme?: string;
+    navItemTheme?: string;
     activeTheme?: string;
     active?: string;
   }
