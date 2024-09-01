@@ -13,7 +13,7 @@ const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable
     return (
       <button
         type="button"
-        className={theme ? `btn-icon ${theme}` : "btn-main btn-icon"}
+        className={theme ? `btn-ping ${theme}` : "btn-main btn-icon"}
         title={title}
         onClick={() => onClick && onClick()}
         aria-label={title || label || name}

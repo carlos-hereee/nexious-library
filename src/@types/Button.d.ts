@@ -31,6 +31,7 @@ declare module "nxs-button" {
     ping?: number;
     name?: string;
     data?: string;
+    body?: string;
     active?: CardinalDirectionProps;
   }
   export interface IconButtonProps {

@@ -1,12 +1,13 @@
 import { ErrorMessage } from "@nxs-atoms/index";
 import type { ErrorProps } from "nxs-errors";
 
-const ErrorMessages: React.FC<ErrorProps> = (props) => {
-  const { errors, component } = props;
+const ErrorMessages: React.FC<ErrorProps> = ({ errors, component }) => {
   if (!errors) {
-    const errorData = { prop: "errors", code: "missingProps", component: "error messages" };
-    return <ErrorMessage error={{ ...errorData, value: errors }} />;
+    const errorData = { prop: "errors", component: "error messages" };
+    return <ErrorMessage error={{ ...errorData, code: "missingProps", value: errors }} />;
   }
-  return errors.map((err) => <ErrorMessage key={err.name} error={{ ...err, component, value: err }} />);
+  return errors.map((err) => (
+    <ErrorMessage key={err.name} error={{ ...err, code: "missingProps", component, value: err }} />
+  ));
 };
 export default ErrorMessages;

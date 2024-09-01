@@ -5,12 +5,14 @@
   padding: #{$rem};
   border-radius: #{$border-radius};
 }
-.btn-icon {
+.btn-icon,
+.btn-ping {
   // max-width: #{$min-icon-width};
   min-width: auto;
   position: relative;
   gap: 0;
 }
+
 .btn-main {
   width: 100%;
   max-width: #{$max-width-button-lg};

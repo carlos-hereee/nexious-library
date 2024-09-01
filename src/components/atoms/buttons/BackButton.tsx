@@ -6,10 +6,9 @@ import type { ButtonProps } from "nxs-button";
  * @param click onClick Element(s)
  * @returns JSX.Element -> JSX Element
  */
-const BackButton: React.FC<ButtonProps> = (props) => {
-  const { onClick, label } = props;
+const BackButton: React.FC<ButtonProps> = ({ onClick, label }) => {
   return (
-    <button type="button" className="btn-back" onClick={onClick}>
+    <button type="button" className="btn-back" onClick={() => onClick && onClick()}>
       {label}
     </button>
   );
