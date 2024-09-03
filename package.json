@@ -1,6 +1,6 @@
 {
   "name": "nexious-library",
-  "version": "2.7.20",
+  "version": "2.7.21",
   "description": "Official database for nexious.tech",
   "type": "module",
   "types": "dist/@types",
