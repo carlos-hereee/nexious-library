@@ -23,10 +23,15 @@ declare module "nxs-button" {
     theme?: string;
     isDisable?: boolean;
     hideIcon?: boolean;
+    draggable?: boolean;
     icon?: string;
     confirmSubmit?: boolean;
+    onDragStart?: (e: React.DragEvent<HTMLButtonElement>) => void;
+    onDragEnd?: (e: React.DragEvent<HTMLButtonElement>) => void;
+    // onDragStart?: (event: React.DragEventHandler<HTMLButtonElement>) => void;
     title?: string;
     toggleLabel?: string;
+    ref?: React.RefObject<HTMLButtonElement>;
     label?: string;
     activeTheme?: string;
     ping?: number;

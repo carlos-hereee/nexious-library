@@ -8,7 +8,9 @@ import { PingCount } from "../index";
  * @param click Callback fired when button is click
  * @returns
  */
-const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable, name, ping, children }) => {
+const Button: React.FC<ButtonProps> = (props) => {
+  const { title, theme, label, isDisable, name, ping, children, draggable, ref } = props;
+  const { onDragStart, onDragEnd, onClick } = props;
   if (ping) {
     return (
       <button
@@ -18,6 +20,10 @@ const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable
         onClick={() => onClick && onClick()}
         aria-label={title || label || name}
         disabled={isDisable}
+        draggable={draggable}
+        ref={ref}
+        onDragStart={(e) => onDragStart && onDragStart(e)}
+        onDragEnd={(e) => onDragEnd && onDragEnd(e)}
       >
         {label && label} {ping && ping > 0 && <PingCount data={ping} />} {children}
       </button>
@@ -29,6 +35,10 @@ const Button: React.FC<ButtonProps> = ({ onClick, title, theme, label, isDisable
       className={theme || "btn-main"}
       title={title}
       onClick={() => onClick && onClick()}
+      draggable={draggable}
+      ref={ref}
+      onDragStart={(e) => onDragStart && onDragStart(e)}
+      onDragEnd={(e) => onDragEnd && onDragEnd(e)}
       aria-label={title || label || name}
       disabled={isDisable}
     >
