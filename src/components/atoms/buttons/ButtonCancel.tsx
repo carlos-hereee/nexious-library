@@ -3,7 +3,8 @@ import CancelDialog from "@nxs-organism/card/CancelDialog";
 import type { ButtonProps } from "nxs-button";
 import { useEffect, useState } from "react";
 
-const ButtonCancel: React.FC<ButtonProps> = ({ onClick, label, theme, confirmSubmit, onSubmit, toggleLabel }) => {
+const ButtonCancel: React.FC<ButtonProps> = (props) => {
+  const { onClick, label, theme, confirmSubmit, onSubmit, toggleLabel, hideIcon } = props;
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -40,7 +41,7 @@ const ButtonCancel: React.FC<ButtonProps> = ({ onClick, label, theme, confirmSub
         className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"}
         onClick={() => setShow(true)}
       >
-        <Icon icon="cancel" />
+        {!hideIcon && <Icon icon="cancel" />}
         {label || "Cancel"}
       </button>
     );
@@ -51,7 +52,7 @@ const ButtonCancel: React.FC<ButtonProps> = ({ onClick, label, theme, confirmSub
       className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"}
       onClick={() => onClick && onClick()}
     >
-      <Icon icon="cancel" />
+      {!hideIcon && <Icon icon="cancel" />}
       {label || "Cancel"}
     </button>
   );

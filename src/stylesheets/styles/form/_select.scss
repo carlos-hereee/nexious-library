@@ -6,8 +6,6 @@
   align-items: center;
   gap: #{$rem};
   width: 100%;
-  max-width: #{$max-width-sm};
-  min-width: 100%;
 }
 .select {
   display: flex;
