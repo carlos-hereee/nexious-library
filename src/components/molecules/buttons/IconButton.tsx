@@ -42,7 +42,7 @@ const IconButton: React.FC<IconButtonProps> = ({ theme, onClick, ping, icon, tit
     <button
       className={theme ? `btn-icon ${theme}` : "btn-icon"}
       onClick={onClick}
-      title={title || icon.icon || name || ""}
+      title={title || name || icon.icon || ""}
       type="button"
       disabled={isDisable}
     >
