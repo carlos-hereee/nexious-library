@@ -1,5 +1,12 @@
 declare module "nxs-typography" {
   export type LinkProp = { data: string; isLink: boolean; link: string };
+  export interface DataContent {
+    title?: string;
+    tagline?: string;
+    subtitle?: string;
+    description?: string;
+    details?: string;
+  }
   export interface DataProp {
     data?: string;
     message?: string;
@@ -7,6 +14,12 @@ declare module "nxs-typography" {
     name?: string;
     uid?: string;
     value?: string;
+    scale?: 1 | 2 | 3 | 4 | 5 | 6;
+  }
+  export interface PHeaderCotent {
+    data: DataContent;
+    children?: React.ReactNode;
+    theme?: string;
   }
   export interface HyperlinkProp {
     isLink?: boolean;

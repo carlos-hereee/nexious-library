@@ -17,6 +17,7 @@ export type { ButtonProps, IconButtonProps } from "nxs-button";
 
 // card
 export { default as CardHeader } from "@nxs-molecules/card/CardHeader";
+export { default as HeaderContent } from "@nxs-molecules/header/HeaderContent";
 export { default as CardBody } from "@nxs-molecules/card/CardBody";
 export { default as CTA } from "@nxs-molecules/card/CTA";
 export { default as CartRow } from "@nxs-molecules/card/CartRow";

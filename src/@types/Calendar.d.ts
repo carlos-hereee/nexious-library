@@ -1,4 +1,5 @@
 declare module "nxs-calendar" {
+  import type { DataContent } from "nxs-typography";
   import type { UserProps } from "nxs-assets";
 
   export type CalendarEventProp = {
@@ -45,16 +46,30 @@ declare module "nxs-calendar" {
     onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
     setDay?: (a: unknown) => void;
   }
+  export interface ICalEvent {
+    uid: string;
+    eventId: string;
+    date: string;
+    name: string;
+    details: string;
+    startTime: string;
+    createdAt?: string;
+    endTime: string;
+    isOpen: boolean;
+  }
   export interface CalendarEventProps {
-    selectedDay: CalendarEventProp;
+    data?: { header?: DataContent };
+
+    selectedDay?: CalendarEventProp;
+    user?: UserProps;
+    active?: string;
+    meeting?: MeetingProps;
+    events?: ICalEvent[];
+    children?: React.ReactNode;
     setMeeting: (value: unknown) => void;
     setActive: (value: unknown) => void;
     removeFromCart: (value: unknown) => void;
     handleCheckout: (value: unknown) => void;
-    user?: UserProps;
-    active?: string;
-    meeting?: MeetingProps;
-    events: CalendarEventProp;
   }
   export interface CalendarTileProps {
     data: {

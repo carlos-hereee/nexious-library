@@ -33,7 +33,6 @@ export { default as Heading } from "@nxs-atoms/texts/Heading";
 export { default as Title } from "@nxs-atoms/texts/Title";
 export { default as Hyperlink } from "@nxs-atoms/texts/Hyperlink";
 export { default as Ribbon } from "@nxs-atoms/texts/Ribbon";
-export { default as Subtitle } from "@nxs-atoms/texts/Subtitle";
 export { default as Navlink } from "@nxs-atoms/texts/Navlink";
 export { default as KeyValue } from "@nxs-atoms/texts/KeyValue";
 export { default as CamelSpace } from "@nxs-atoms/texts/CamelSpace";
