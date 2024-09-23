@@ -150,6 +150,7 @@ const svg: SVGProp = {
   prev: faLeftLong,
   nail: faHandSpock,
   loading: faSpinner,
+  listCheck: faListCheck,
   login: faUser,
   submit: faPaperPlane,
   save: faSave,
