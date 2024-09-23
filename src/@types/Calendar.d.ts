@@ -57,19 +57,23 @@ declare module "nxs-calendar" {
     endTime: string;
     isOpen: boolean;
   }
+  export interface ICalendarEventDetails {
+    event?: ICalEvent;
+    selectedDay?: ICalEvent;
+  }
   export interface CalendarEventProps {
     data?: { header?: DataContent };
 
-    selectedDay?: CalendarEventProp;
+    selectedDay?: ICalEvent;
     user?: UserProps;
     active?: string;
     meeting?: MeetingProps;
-    events?: ICalEvent[];
+    event?: ICalEvent;
     children?: React.ReactNode;
-    setMeeting: (value: unknown) => void;
-    setActive: (value: unknown) => void;
-    removeFromCart: (value: unknown) => void;
-    handleCheckout: (value: unknown) => void;
+    setMeeting?: (value: unknown) => void;
+    setActive?: (value: unknown) => void;
+    removeFromCart?: (value: unknown) => void;
+    handleCheckout?: (value: unknown) => void;
   }
   export interface CalendarTileProps {
     data: {
