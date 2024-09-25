@@ -1,11 +1,4 @@
-.event-wrapper {
-  width: 100%;
-  flex: 1;
-  @include devices(mobile) {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
+.cal-event-btn {
 }
 .event-list {
   display: flex;

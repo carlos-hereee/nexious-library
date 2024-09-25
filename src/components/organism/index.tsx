@@ -42,6 +42,5 @@ export type { PaymentMethodsProps, PaymentType, CartProps } from "nxs-card";
 // calendar
 export { default as CalendarNavigation } from "@nxs-organism/calendar/CalendarNavigation";
 export { default as CalendarView } from "@nxs-organism/calendar/CalendarView";
-export { default as CalendarEventList } from "@nxs-organism/calendar/CalendarEventList";
 export type { CalendarEventListProps, CalendarViewProps } from "nxs-calendar";
 export type { CalendarNavProps } from "nxs-calendar";

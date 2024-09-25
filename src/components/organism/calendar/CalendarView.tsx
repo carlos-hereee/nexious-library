@@ -1,10 +1,9 @@
 import { sundayFirst, monthWeeks } from "@nxs-utils/calendar/weeks";
 import { Button } from "@nxs-atoms";
 import { CalendarTile } from "@nxs-molecules";
-import { isTileMute } from "@nxs-utils/calendar/isTileMute";
-import { isTileMatch } from "@nxs-utils/calendar/isTileMatch";
 import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import type { CalendarViewProps } from "nxs-calendar";
+import { isTileMatch, isTileMute } from "@nxs-utils/calendar/findMatch";
 
 const CalendarView: React.FC<CalendarViewProps> = ({ data, click, events, minDate, today }) => {
   return (

@@ -1,15 +1,19 @@
-import { Icon } from "@nxs-atoms";
-import type { CalendarEventListProps } from "nxs-calendar";
+import { Button, ErrorMessage } from "@nxs-atoms/index";
+import type { ICalendarEventDetails } from "nxs-calendar";
 
-const CalendarEventList: React.FC<CalendarEventListProps> = (props) => {
-  const { list, onClick, meeting } = props;
+const CalendarEventList: React.FC<ICalendarEventDetails> = ({ events, event, onEventClick }) => {
+  if (!events) return <ErrorMessage error={{ code: "missingProps", prop: "events", value: events }} />;
+
   return (
     <div className="event-list">
-      {list.map((d) => (
-        <button key={d.uid} type="button" onClick={() => onClick(d)} className="btn-list-item" title={d.details}>
-          {meeting ? <Icon icon={d.uid === meeting.uid ? "check" : "uncheck"} /> : <Icon icon="uncheck" />}{" "}
-          {d.startTime} - {d.endTime}
-        </button>
+      {events.map((e) => (
+        <Button
+          key={e.uid}
+          theme={event && event.uid === e.uid ? "btn-active btn-main highlight" : "btn-main highlight"}
+          title={e.name}
+          label={e.name}
+          onClick={() => onEventClick && onEventClick(e)}
+        />
       ))}
     </div>
   );

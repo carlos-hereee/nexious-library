@@ -46,6 +46,15 @@ declare module "nxs-calendar" {
     onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
     setDay?: (a: unknown) => void;
   }
+  export interface EventAttendees {
+    uid: string;
+    userId: string;
+    username: string;
+    name: string;
+    avatar: string;
+    email: string;
+    phone: string;
+  }
   export interface ICalEvent {
     uid: string;
     eventId: string;
@@ -56,14 +65,16 @@ declare module "nxs-calendar" {
     createdAt?: string;
     endTime: string;
     isOpen: boolean;
+    attendees: EventAttendees[];
   }
   export interface ICalendarEventDetails {
+    events?: ICalEvent[];
     event?: ICalEvent;
-    selectedDay?: ICalEvent;
+    onEventClick?: (event: ICalEvent) => void;
   }
   export interface CalendarEventProps {
-    data?: { header?: DataContent };
-
+    data?: { header?: DataContent; events?: ICalEvent[] };
+    onEventClick?: (event: ICalEvent) => void;
     selectedDay?: ICalEvent;
     user?: UserProps;
     active?: string;

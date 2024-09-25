@@ -54,28 +54,28 @@ const Calendar: React.FC<CalendarProps> = (props) => {
         <IconButton onClick={() => setActive(today)} icon={{ icon: "refresh" }} theme="btn-small" />
       </div>
       {active && (
-        <CalendarNavigation
-          date={active}
-          click={(label) => monthChange({ label, active, setActive })}
-          previous={previous}
-          next={next}
-        />
-      )}
-      {active && (
-        <CalendarView
-          data={active}
-          today={hideToday ? undefined : today}
-          minDate={mininumDate}
-          click={(e) => dayChange({ today, active: e, setActive, events: calendarEvents, onDayClick })}
-          events={
-            calendarEvents
-              ? calendarEvents.map((e) => {
-                  const values = calendarValues(new Date(e.date));
-                  return { ...values, ping: e.list.length };
-                })
-              : []
-          }
-        />
+        <>
+          <CalendarNavigation
+            date={active}
+            click={(label) => monthChange({ label, active, setActive })}
+            previous={previous}
+            next={next}
+          />
+          <CalendarView
+            data={active}
+            today={hideToday ? undefined : today}
+            minDate={mininumDate}
+            click={(e) => dayChange({ today, active: e, setActive, events: calendarEvents, onDayClick })}
+            events={
+              calendarEvents
+                ? calendarEvents.map((e) => {
+                    const values = calendarValues(new Date(e.date));
+                    return { ...values, ping: e.list.length };
+                  })
+                : []
+            }
+          />
+        </>
       )}
     </div>
   );
