@@ -13,6 +13,7 @@ declare module "nxs-errors" {
   }
   export interface ErrorProps {
     heading?: string;
+    icon?: string;
     hero?: AssetProps;
     message?: string;
     component?: string;

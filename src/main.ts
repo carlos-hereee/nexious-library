@@ -31,6 +31,7 @@ export { default as NavBar } from "@nxs-organism/navigation/Navbar";
 export { default as MerchCard } from "@nxs-organism/card/MerchCard";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
 export { default as SectionList } from "@nxs-organism/lists/SectionList";
+export { default as HeaderContent } from "@nxs-molecules/header/HeaderContent";
 // checkout components
 export { default as PaymentMethods } from "@nxs-organism/checkout/PaymentMethods";
 export { default as Total } from "@nxs-organism/checkout/Total";
