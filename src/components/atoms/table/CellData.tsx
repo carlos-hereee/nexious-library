@@ -1,6 +1,6 @@
-import type { CellDataProp } from "custom-props";
+import type { PTableData } from "custom-props";
 
-const CellData: React.FC<CellDataProp> = ({ data }) => {
+const CellData: React.FC<PTableData> = ({ data }) => {
   return <td className="table-cell cell-data">{data}</td>;
 };
 export default CellData;

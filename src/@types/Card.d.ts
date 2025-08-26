@@ -43,6 +43,13 @@ declare module "nxs-card" {
     hero: string;
     uid: string;
   }
+  export interface PCardheader {
+    title?: string;
+    subtitle?: string;
+    theme?: string;
+    details?: string;
+    hero?: AssetProps;
+  }
   export interface CardProp {
     title?: string;
     tagline?: string;

@@ -37,7 +37,7 @@ export const nextMonth = (c: CalendarDayProp, cb: (a: CalendarDayProp) => void) 
 export const formatCalDayToDate = (d: CalendarDayProp) => {
   return `${d.month}/${d.day}/${d.year}`;
 };
-// export const findMonthEvents = (array: CalendarEventProps[], item: CalendarDayProp) => {
+// export const findMonthEvents = (array: CalendarPEventDays[], item: CalendarDayProp) => {
 //   return array.filter(({ date }) => {
 //     const c = new Date(date);
 //     return c.getMonth() === item?.month && c.getFullYear() === item?.year;

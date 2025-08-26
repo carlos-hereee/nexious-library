@@ -4,7 +4,7 @@ import { calendarValues } from "@nxs-utils/calendar/calendarValues";
 import { next, previous } from "@nxs-utils/calendar/navLabels";
 import { monthChange } from "@nxs-utils/calendar/monthChange";
 import { dayChange } from "@nxs-utils/calendar/dayChange";
-import type { CalendarDayProp, CalendarProps, EventProp } from "nxs-calendar";
+import type { CalendarDayProp, CalendarProps, PEventDay } from "nxs-calendar";
 import { CalendarNavigation, CalendarView } from "@nxs-organism/index";
 
 /**
@@ -16,7 +16,7 @@ import { CalendarNavigation, CalendarView } from "@nxs-organism/index";
  */
 type CalEvent = {
   date: string;
-  list: EventProp[];
+  list: PEventDay[];
 };
 const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, minDate, theme, onDayClick, setDay, hideToday } = props;
@@ -41,7 +41,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       events.forEach((event) => {
         const idx = data.findIndex((d) => d.date === event.date);
         // if no match add to data payload
-        if (idx <= 0) data.push({ date: event.date, list: [event] });
+        if (idx <= 0) data.push({ date: event.date || "", list: [event] });
         else data[idx].list.push(event);
       });
       setEvents(data);

@@ -2,9 +2,9 @@ declare module "nxs-calendar" {
   import type { DataContent } from "nxs-typography";
   import type { UserProps } from "nxs-assets";
 
-  export type CalendarEventProp = {
+  export type CalendarPEventDay = {
     date: string;
-    list: EventProp[];
+    list: PEventDay[];
   };
   export type MeetingProps = {
     response?: string;
@@ -14,14 +14,16 @@ declare module "nxs-calendar" {
     date?: string;
     endTime?: string;
   };
-  export type EventProp = {
-    date: string;
-    startTime: number;
-    endTime: number;
+  export type PEventDay = {
+    date?: string;
+    day?: string;
+    startTime?: number;
+    endTime?: number;
     uid?: string;
     eventId?: string;
     details?: string;
     isOpen?: boolean;
+    isHeader?: boolean;
   };
   export type CalendarDayProp = {
     dayIdx: number;
@@ -42,8 +44,8 @@ declare module "nxs-calendar" {
     minDate?: Date;
     theme?: string;
     hideToday?: boolean;
-    events?: EventProp[];
-    onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
+    events?: PEventDay[];
+    onDayClick?: (e: CalendarDayProp | CalendarPEventDay) => void;
     setDay?: (a: unknown) => void;
   }
   export interface EventAttendees {
@@ -72,7 +74,7 @@ declare module "nxs-calendar" {
     event?: ICalEvent;
     onEventClick?: (event: ICalEvent) => void;
   }
-  export interface CalendarEventProps {
+  export interface CalendarPEventDays {
     data?: { header?: DataContent; events?: ICalEvent[] };
     onEventClick?: (event: ICalEvent) => void;
     selectedDay?: ICalEvent;
@@ -104,7 +106,7 @@ declare module "nxs-calendar" {
   }
 
   export interface CalendarEventListProps {
-    list: EventProp[];
+    list: PEventDay[];
     onClick: (key: unknown) => void;
     meeting: MeetingProps;
   }
@@ -119,11 +121,11 @@ declare module "nxs-calendar" {
     today: CalendarDayProp;
     active: CalendarDayProp;
     setActive: React.Dispatch<React.SetStateAction<CalendarDayProp>>;
-    onDayClick?: (e: CalendarDayProp | CalendarEventProp) => void;
-    events?: CalendarEventProp[];
+    onDayClick?: (e: CalendarDayProp | CalendarPEventDay) => void;
+    events?: CalendarPEventDay[];
   }
   export interface FindMatchProps {
-    events?: CalendarEventProp[];
+    events?: CalendarPEventDay[];
     calDay: CalendarDayProp;
   }
 }

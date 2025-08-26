@@ -1,4 +1,6 @@
 declare module "nxs-navigation" {
+  import type { PEventDay } from "nxs-calendar";
+  import type { PCardheader } from "nxs-card";
   import type { AssetProps } from "nxs-assets";
   import type { SectionProps } from "custom-props";
 
@@ -65,10 +67,27 @@ declare module "nxs-navigation" {
     onLogoClick?: () => void;
     onHomeClick?: () => void;
   }
+
+  export interface HoursOfOperation {
+    header: PCardheader;
+    days: PEventDay[];
+    hours: {
+      monday: string;
+      tuesday: string;
+      wednesday: string;
+      thursday: string;
+      friday: string;
+      saturday: string;
+      sunday: string;
+    };
+  }
   export interface FooterProps {
-    appName: string;
-    media: SectionProps;
-    hero: AssetProps;
+    appName?: string;
+    title?: string;
+    media?: SectionProps;
+    theme?: string;
+    hero?: AssetProps;
+    hoursOfOperation?: HoursOfOperation;
   }
 
   export interface NavigationProps {
