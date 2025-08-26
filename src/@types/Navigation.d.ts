@@ -33,14 +33,14 @@ declare module "nxs-navigation" {
     uid?: string;
     menuId?: string;
     name: string;
-    link: string;
-    icon: string;
+    active?: MenuItemProp;
+    alternatives?: MenuItemProp[];
+    icon?: string;
+    link?: string;
     locale?: string;
     theme?: string;
     label?: string;
     value?: string;
-    active: MenuItemProp;
-    alternatives: MenuItemProp[];
   };
   export type UnsplashAsset = {
     artistName: string;

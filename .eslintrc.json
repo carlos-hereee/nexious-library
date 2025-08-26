@@ -18,12 +18,7 @@
     "sourceType": "module",
     "project": "./tsconfig.json"
   },
-  "plugins": [
-    "react",
-    "@typescript-eslint",
-    "import",
-    "prettier"
-  ],
+  "plugins": ["react", "@typescript-eslint", "import", "prettier"],
   "rules": {
     // Note: you must disable the base rule as it can report incorrect errors
     "quotes": 0,
@@ -38,6 +33,7 @@
     "import/no-cycle": 0,
     "jsx-a11y/label-has-associated-control": 0,
     "react/prop-types": 0,
+    "react/require-default-props": 0,
     "react/jsx-props-no-spreading": [
       2,
       {
@@ -73,10 +69,7 @@
   },
   "settings": {
     "import/parsers": {
-      "@typescript-eslint/parser": [
-        ".ts",
-        ".tsx"
-      ]
+      "@typescript-eslint/parser": [".ts", ".tsx"]
     },
     "import/resolver": {
       "typescript": {

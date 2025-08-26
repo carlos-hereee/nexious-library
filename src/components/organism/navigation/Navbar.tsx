@@ -1,30 +1,23 @@
-import { IconButton, ListItem, NavToggle, Select } from "@nxs-molecules";
-import { Button } from "@nxs-atoms";
+import { ListItem } from "@nxs-molecules";
 import type { NavbarProps } from "nxs-navigation";
+import SelectItem from "@nxs-molecules/navigation/SelectItem";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
   const { show, menu, theme, themeList, active, includeHome, hideIcons } = props;
   const { handleTheme, click, onHomeClick } = props;
 
-  const layout = "nav-item highlight";
   return (
     <ul
-      className={theme ? `navigation ${theme}` : "navigation"}
+      className={`navigation${theme ? ` ${theme}` : ""}`}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
       {themeList && (
-        <li className="nav-btn">
-          <Select list={themeList} name="themeList" theme={theme} onChange={handleTheme} active={active} />
-        </li>
+        <SelectItem active={active} list={themeList} theme={theme} handleChange={handleTheme} name="themeList" />
       )}
       {menu.map((m) => (
-        <ListItem key={m.menuId} theme={hideIcons ? "no-icon" : ""} item={m} handleClick={() => click(m)} />
+        <ListItem key={m.menuId} hideIcons={hideIcons} theme={theme} item={m} handleClick={() => click(m)} />
       ))}
-      {includeHome && (
-        <li className="nav-btn nav-order-first">
-          <Button label="Home" title="home" theme={layout} onClick={onHomeClick} />
-        </li>
-      )}
+      {includeHome && <ListItem hideIcons={hideIcons} handleClick={onHomeClick} theme="nav-btn nav-order-1" />}
     </ul>
   );
 };
