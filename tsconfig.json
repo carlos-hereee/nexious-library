@@ -18,45 +18,19 @@
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
     "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
     "paths": {
-      "@nxs-atoms/*": [
-        "components/atoms/*"
-      ],
-      "@nxs-atoms": [
-        "components/atoms"
-      ],
-      "@nxs-molecules/*": [
-        "components/molecules/*"
-      ],
-      "@nxs-molecules": [
-        "components/molecules"
-      ],
-      "@nxs-organism/*": [
-        "components/organism/*"
-      ],
-      "@nxs-organism": [
-        "components/organism"
-      ],
-      "@nxs-template/*": [
-        "components/template/*"
-      ],
-      "@nxs-template": [
-        "components/template"
-      ],
-      "@nxs-utils/*": [
-        "utils/*"
-      ],
-      "@nxs-utils": [
-        "utils"
-      ],
-      "@nxs-math/*": [
-        "math/*"
-      ],
-      "@nxs-math": [
-        "math"
-      ],
-      "@nxs-helpers/*": [
-        "helpers/*"
-      ],
+      "@nxs-atoms/*": ["components/atoms/*"],
+      "@nxs-atoms": ["components/atoms"],
+      "@nxs-molecules/*": ["components/molecules/*"],
+      "@nxs-molecules": ["components/molecules"],
+      "@nxs-organism/*": ["components/organism/*"],
+      "@nxs-organism": ["components/organism"],
+      "@nxs-template/*": ["components/template/*"],
+      "@nxs-template": ["components/template"],
+      "@nxs-utils/*": ["utils/*"],
+      "@nxs-utils": ["utils"],
+      "@nxs-math/*": ["math/*"],
+      "@nxs-math": ["math"],
+      "@nxs-helpers/*": ["helpers/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "forceConsistentCasingInFileNames": true,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
@@ -108,7 +82,7 @@
     // "checkJs": true,                                  /* Enable error reporting in type-checked JavaScript files. */
     // "maxNodeModuleJsDepth": 1,                        /* Specify the maximum folder depth used for checking JavaScript files from 'node_modules'. Only applicable with 'allowJs'. */
     /* Emit */
-    "declarationMap": true, /* Create sourcemaps for d.ts files. */
+    "declarationMap": true /* Create sourcemaps for d.ts files. */,
     // "emitDeclarationOnly": true,                      /* Only output d.ts files and not JavaScript files. */
     // "inlineSourceMap": true,                          /* Include sourcemap files inside the emitted JavaScript. */
     // "outFile": "/dist/@types", /* Specify a file that bundles all outputs into one JavaScript file. If 'declaration' is true, also designates a file that bundles all .d.ts output. */
@@ -128,8 +102,8 @@
     "declarationDir": "./dist/@types" /* Specify the output directory for generated declaration files. */,
     // "preserveValueImports": true,                     /* Preserve unused imported values in the JavaScript output that would otherwise be removed. */
     /* Interop Constraints */
-    "isolatedModules": true, /* Ensure that each file can be safely transpiled without relying on other imports. */
-    "verbatimModuleSyntax": true, /* Do not transform or elide any imports or exports not marked as type-only, ensuring they are written in the output file's format based on the 'module' setting. */
+    "isolatedModules": true /* Ensure that each file can be safely transpiled without relying on other imports. */,
+    "verbatimModuleSyntax": true /* Do not transform or elide any imports or exports not marked as type-only, ensuring they are written in the output file's format based on the 'module' setting. */,
     // "allowSyntheticDefaultImports": true,             /* Allow 'import x from y' when a module doesn't have a default export. */
     // "preserveSymlinks": true,                         /* Disable resolving symlinks to their realpath. This correlates to the same flag in node. */
     /* Type Checking */
@@ -140,9 +114,9 @@
     // "strictPropertyInitialization": true /* Check for class properties that are declared but not set in the constructor. */,
     "noImplicitThis": true /* Enable error reporting when 'this' is given the type 'any'. */,
     // // "useUnknownInCatchVariables": true /* Default catch clause variables as 'unknown' instead of 'any'. */,
-    "alwaysStrict": true, /* Ensure 'use strict' is always emitted. */
+    "alwaysStrict": true /* Ensure 'use strict' is always emitted. */,
     "noUnusedLocals": true /* Enable error reporting when local variables aren't read. */,
-    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */,
+    "noUnusedParameters": true /* Raise an error when a function parameter isn't read. */
     // // "exactOptionalPropertyTypes": true /* Interpret optional property types as written, rather than adding 'undefined'. */,
     // "noImplicitReturns": true /* Enable error reporting for codepaths that do not explicitly return in a function. */,
     // "noFallthroughCasesInSwitch": true /* Enable error reporting for fallthrough cases in switch statements. */,
@@ -153,18 +127,14 @@
     // "allowUnreachableCode": true ,/* Disable error reporting for unreachable code. */
     /* Completeness */
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
-    // "skipLibCheck": true /* Skip type checking all .d.ts files. */  
+    // "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
   "include": [
-    "src/**/*", // include all files in src files
-    // "package.json" 
-    // "src/**/*.ts", // include ts files 
+    "src/**/*" // include all files in src files
+    // "package.json"
+    // "src/**/*.ts", // include ts files
     // "src/**/*.tsx", // include tsx files
   ],
   "compileOnSave": true,
-  "exclude": [
-    "node_modules",
-    "dist",
-    ".vscode",
-  ]
+  "exclude": ["node_modules", "dist", ".vscode"]
 }
