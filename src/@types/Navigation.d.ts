@@ -6,6 +6,7 @@ declare module "nxs-navigation" {
     name: string;
     label: string;
     value: string;
+    theme?: string;
     uid?: string;
     menuItemId?: string;
     url?: string;
@@ -33,13 +34,11 @@ declare module "nxs-navigation" {
     menuId?: string;
     name: string;
     link: string;
-    category?: string;
     icon: string;
     locale?: string;
+    theme?: string;
     label?: string;
     value?: string;
-    isToggle?: boolean;
-    isPrivate?: boolean;
     active: MenuItemProp;
     alternatives: MenuItemProp[];
   };
@@ -57,6 +56,7 @@ declare module "nxs-navigation" {
     theme?: string;
     layout?: string;
     includeHome?: boolean;
+    hideIcons?: boolean;
     logo?: AssetProps;
     themeList?: ThemeList[];
     language?: MenuItemProp;
@@ -88,6 +88,7 @@ declare module "nxs-navigation" {
     navLayout?: string;
     language?: MenuItemProp;
     includeHome?: boolean;
+    hideIcons?: boolean;
     click: (a: MenuProp) => void;
     handleTheme?: (a: string) => void;
     onHomeClick?: () => void;
