@@ -17,7 +17,6 @@ const ListItem = ({ theme, item, hideIcons, handleClick }: ListItemProps) => {
         handleClick={handleClick}
       />
     );
-  console.log("hideIcons", hideIcons);
   if (hideIcons && item) return <ListItem theme={theme} item={{ ...item, icon: "" }} handleClick={handleClick} />;
 
   // default

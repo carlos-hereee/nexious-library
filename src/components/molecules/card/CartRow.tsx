@@ -9,7 +9,7 @@ const CartRow: React.FC<CardProps> = ({ data, theme, setQuantity, showPrice, sho
   const description = data.description || data.body;
   return (
     <div className={`cart-row ${theme || ""}`}>
-      {data.hero && <Hero hero={{ url: data.hero, alt: `product ${data.name}` }} theme="thumbnail" />}
+      {data.hero && <Hero hero={data.hero} theme="thumbnail" />}
       <div className="container">
         <h3 className="sub-title">{data.name} details: </h3>
         {description && <ReadMore data={description} uid={data.uid || uniqueId()} />}

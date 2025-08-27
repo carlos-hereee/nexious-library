@@ -14,7 +14,7 @@ const TableBody: React.FC<TableBodyProp> = ({ data }) => {
   return (
     <tbody>
       {data.map((d) => (
-        <TableRow key={d.uid} data={d.data} />
+        <TableRow key={d.uid} value={d.value} />
       ))}
     </tbody>
   );

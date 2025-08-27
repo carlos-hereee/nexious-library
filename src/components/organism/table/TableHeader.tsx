@@ -1,9 +1,7 @@
-import TableRow from "@nxs-molecules/table/TableRow";
+import TableColumn from "@nxs-molecules/table/TableColumn";
 import type { PEventDay } from "nxs-calendar";
-import type { PCardheader } from "nxs-card";
 
 type TableHeaderProp = {
-  header: PCardheader;
   data?: PEventDay[];
 };
 /**
@@ -12,15 +10,11 @@ type TableHeaderProp = {
  * @param span array for each section
  * @returns
  */
-const TableHeader: React.FC<TableHeaderProp> = ({ data, header }) => {
-  console.log("header", header);
-  console.log("data", data);
-  if (!data) return null;
+const TableHeader: React.FC<TableHeaderProp> = ({ data }) => {
+  if (!data) return <p className="error-message">No header data available</p>;
   return (
     <thead>
-      {data.map((d) => (
-        <TableRow key={d.uid} data={d.details} isHeader={d.isHeader} />
-      ))}
+      <TableColumn data={data} isHeader />
     </thead>
   );
 };

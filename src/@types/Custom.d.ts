@@ -1,8 +1,7 @@
 declare module "custom-props" {
   export type KeyStringProp = { [key: string]: string };
   // export type FormInitialValues = { [key: string]: unknown };
-  export type PTableData = { data?: string; isHeader?: boolean; uid?: string };
-  export type TableColumnProp = { span: number; name: string; uid?: string };
+  export type PTableData = { value?: string; isHeader?: boolean; uid?: string; theme?: string };
   export type OnchangeProps = React.ChangeEvent<HTMLInputElement>;
   export interface SectionProps {
     title?: string;

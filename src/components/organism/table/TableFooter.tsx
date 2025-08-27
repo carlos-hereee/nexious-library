@@ -14,7 +14,7 @@ const TableFooter: React.FC<TableBodyProp> = ({ data }) => {
   return (
     <tfoot>
       {data.map((d) => (
-        <TableRow key={d.uid} data={d.data} />
+        <TableRow key={d.uid} value={d.value} />
       ))}
     </tfoot>
   );

@@ -1,6 +1,6 @@
 declare module "nxs-calendar" {
   import type { DataContent } from "nxs-typography";
-  import type { UserProps } from "nxs-assets";
+  import type { AssetProps, UserProps } from "nxs-assets";
 
   export type CalendarPEventDay = {
     date: string;
@@ -16,6 +16,8 @@ declare module "nxs-calendar" {
   };
   export type PEventDay = {
     date?: string;
+    value?: string;
+    data?: string;
     day?: string;
     startTime?: number;
     endTime?: number;
@@ -24,6 +26,7 @@ declare module "nxs-calendar" {
     details?: string;
     isOpen?: boolean;
     isHeader?: boolean;
+    hero?: AssetProps;
   };
   export type CalendarDayProp = {
     dayIdx: number;

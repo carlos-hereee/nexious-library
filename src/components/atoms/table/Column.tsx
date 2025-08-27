@@ -1,11 +1,13 @@
-import type { TableColumnProp } from "custom-props";
-
 /**
  * Specifies column properties for each column within a <colgroup> element
  * @param span number for many columns to affect with styling
  * @returns
  */
-const Column: React.FC<TableColumnProp> = ({ span, name }) => {
-  return <col span={span} className={name} />;
-};
+
+interface PTableData {
+  data?: string;
+  theme?: string;
+}
+const Column: React.FC<PTableData> = ({ data, theme }) => <th className={theme}>{data}</th>;
+
 export default Column;

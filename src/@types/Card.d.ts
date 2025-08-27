@@ -40,7 +40,7 @@ declare module "nxs-card" {
     quantity: number;
     name: string;
     body: string;
-    hero: string;
+    hero?: AssetProps;
     uid: string;
   }
   export interface PCardheader {
@@ -58,7 +58,7 @@ declare module "nxs-card" {
     name?: string;
     theme?: string;
     label?: string;
-    hero?: string;
+    hero?: AssetProps;
     uid?: string;
     subtitle?: string;
     hasHero?: boolean;
