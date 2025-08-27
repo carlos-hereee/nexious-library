@@ -1,8 +1,9 @@
+import TableCaption from "@nxs-atoms/table/TableCaption";
 import TableRow from "@nxs-molecules/table/TableRow";
 import type { PTableData } from "custom-props";
 
 type TableBodyProp = {
-  data: PTableData[];
+  data?: PTableData[];
 };
 /**
  * element is used in conjunction with the <thead> and <tfoot>
@@ -13,9 +14,13 @@ type TableBodyProp = {
 const TableBody: React.FC<TableBodyProp> = ({ data }) => {
   return (
     <tbody>
-      {data.map((d) => (
-        <TableRow key={d.uid} value={d.value} />
-      ))}
+      {data && data.length > 0 ? (
+        data.map((d) => <TableRow key={d.uid} value={d.value} />)
+      ) : (
+        <tr className="table-row">
+          <TableCaption value="No data available" />
+        </tr>
+      )}
     </tbody>
   );
 };

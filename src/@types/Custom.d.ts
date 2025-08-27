@@ -1,8 +1,19 @@
 declare module "custom-props" {
+  import type { PEventDay } from "nxs-calendar";
+  import type { PCardheader } from "nxs-card";
+
   export type KeyStringProp = { [key: string]: string };
   // export type FormInitialValues = { [key: string]: unknown };
   export type PTableData = { value?: string; isHeader?: boolean; uid?: string; theme?: string };
   export type OnchangeProps = React.ChangeEvent<HTMLInputElement>;
+  export interface TableProps {
+    theme?: string;
+    headerData?: PCardheader;
+    list?: PEventDay[];
+    bodyData?: PTableData[];
+    columns?: number;
+    //   footerData?: PTableData[];
+  }
   export interface SectionProps {
     title?: string;
     subtitle?: string;

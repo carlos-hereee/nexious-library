@@ -1,10 +1,50 @@
 table {
-  margin: auto;
+  width: 100%; /* Make table span full width */
+  border-collapse: collapse; /* Collapse borders for a cleaner look */
+  margin: 1rem 0; /* Add some space below the table */
+  overflow-x: auto; /* Enable horizontal scrolling if needed */
 }
-.table {
-  padding: 1rem;
-}
+
 th,
 td {
-  text-align: left;
+  border: 1px solid #ddd; /* Light gray border for cells */
+  padding: 1rem; /* Padding inside cells */
+  text-align: left; /* Align text to the left */
+}
+
+th {
+  background-color: #f2f2f2; /* Light gray background for headers */
+  color: #333; /* Darker text color for headers */
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9; /* Zebra striping for readability */
+}
+
+tr:hover {
+  background-color: #e0e0e0; /* Highlight row on hover */
+}
+tfoot {
+  caption-side: bottom; /* Places the caption below the table */
+  font-weight: bold; /* Bold text for footer */
+  background-color: #f2f2f2; /* Light gray background for footer */
+}
+.table-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+.table-subtitle {
+  font-size: 1.2rem;
+  color: #666;
+  margin-bottom: 1rem;
+}
+.table-details {
+  font-size: 0.9rem;
+  color: #999;
+  margin-top: 0.5rem;
+}
+.table-footer {
+  font-weight: bold;
+  background-color: #f2f2f2;
 }

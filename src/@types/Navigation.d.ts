@@ -68,17 +68,11 @@ declare module "nxs-navigation" {
     onHomeClick?: () => void;
   }
 
-  export interface HoursOfOperation {
+  export interface PHoursOfOperation {
     header: PCardheader;
     days: PEventDay[];
-    hours: {
-      monday: string;
-      tuesday: string;
-      wednesday: string;
-      thursday: string;
-      friday: string;
-      saturday: string;
-      sunday: string;
+    footer: {
+      data: string;
     };
   }
   export interface FooterProps {
@@ -87,7 +81,7 @@ declare module "nxs-navigation" {
     media?: SectionProps;
     theme?: string;
     hero?: AssetProps;
-    hoursOfOperation?: HoursOfOperation;
+    hoursOfOperation?: PHoursOfOperation;
   }
 
   export interface NavigationProps {
