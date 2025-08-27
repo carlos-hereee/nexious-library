@@ -122,6 +122,8 @@ declare module "nxs-card" {
   }
   export interface CardSectionList {
     sections: Section[];
+    theme?: string;
+    handleClick: (link: unknown) => void;
   }
 
   export interface UserCardProps {
