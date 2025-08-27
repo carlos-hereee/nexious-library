@@ -4,7 +4,7 @@ import CalendarEventList from "@nxs-organism/calendar/CalendarEventList";
 import type { CalendarPEventDays } from "nxs-calendar";
 
 const CalendarEvents: React.FC<CalendarPEventDays> = ({ children, data, onEventClick, event }) => {
-  if (!data) return <p>No data found</p>;
+  if (!data) return <h3 className="heading text-center">No data found</h3>;
 
   return (
     <div className="container" id="calendar-events">
