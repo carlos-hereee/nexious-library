@@ -1,9 +1,9 @@
 import { Icon, Navlink } from "@nxs-atoms/index";
 import type { MediaProps } from "@nxs-molecules/index";
 
-const NavList: React.FC<MediaProps> = ({ medias, heading }) => {
+const NavList: React.FC<MediaProps> = ({ medias, heading, theme }) => {
   return (
-    <div className="flex-d-column">
+    <div className={theme || "container"}>
       {heading && <h2 className="heading">{heading}</h2>}
       <div className="card-container">
         {medias.map((d) => (

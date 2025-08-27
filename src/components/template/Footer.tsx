@@ -10,9 +10,10 @@ import HoursOfOperation from "./HoursOfOperation";
 const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOperation, theme }) => {
   return (
     <footer className={theme || "footer"}>
-      {media && <Socials medias={media.medias || []} label={media.title} hero={hero} />}
-
-      {hoursOfOperation && <HoursOfOperation data={hoursOfOperation} />}
+      <div className="split-container flex-center">
+        {media && <Socials medias={media.medias || []} label={media.title} hero={hero} theme="container text-center" />}
+        {hoursOfOperation && <HoursOfOperation data={hoursOfOperation} />}
+      </div>
 
       <div className="w-max">
         <span className="flex-center">
