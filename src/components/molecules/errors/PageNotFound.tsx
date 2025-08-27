@@ -1,19 +1,17 @@
 import { Button, Icon } from "@nxs-atoms";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import { Hero } from "@nxs-molecules";
 import type { ErrorProps } from "nxs-errors";
 
 const PageNotFound: React.FC<ErrorProps> = (props) => {
   const { hero, message, to, timer, handleClick } = props;
-  const navigate = useNavigate();
 
   const msg = message || `Page not found go to ${to === "/" ? "homepage" : to}`;
 
   useEffect(() => {
     // let client read error message and reroute to page
     if (timer) {
-      if (to) setTimeout(() => navigate(`/${to}`), timer);
+      if (to && handleClick) setTimeout(() => handleClick(), timer);
     }
   }, []);
 
