@@ -121,3 +121,11 @@
 .two-hundred-seventy-deg {
   transform: rotate(270deg);
 }
+.footer-content-wrapper {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.socials {
+  width: 100%;
+}

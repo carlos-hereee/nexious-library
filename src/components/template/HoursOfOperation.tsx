@@ -10,19 +10,21 @@ const HoursOfOperation = ({ data }: PHours) => {
   const { days, header, footer } = data;
 
   return (
-    <table className="hours-of-operation">
-      <TableCaption value={header?.title || ""} theme="table-title" />
-      <TableCaption value={header?.subtitle || ""} theme="table-subtitle" />
-      <TableHeader data={days.map((day) => ({ ...day, isHeader: true }))} />
-      <tbody className="table-body">
-        <TableColumn data={days.map((day) => ({ ...day, value: day.details }))} />
-      </tbody>
-      {footer && (
-        <tfoot className="table-footer">
-          <TableCaption value={footer?.data || ""} theme="table-footer-caption" />
-        </tfoot>
-      )}
-    </table>
+    <div className="hours-of-operation-wrapper">
+      <table className="table hours-of-operation">
+        <TableCaption value={header?.title || ""} theme="table-title" />
+        <TableCaption value={header?.subtitle || ""} theme="table-subtitle" />
+        <TableHeader data={days.map((day) => ({ ...day, isHeader: true }))} />
+        <tbody className="table-body">
+          <TableColumn data={days.map((day) => ({ ...day, value: day.details }))} />
+        </tbody>
+        {footer && (
+          <tfoot className="table-footer">
+            <TableCaption value={footer?.data || ""} theme="table-footer-caption" />
+          </tfoot>
+        )}
+      </table>
+    </div>
   );
 };
 export default HoursOfOperation;

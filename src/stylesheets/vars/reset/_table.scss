@@ -2,7 +2,6 @@ table {
   width: 100%; /* Make table span full width */
   border-collapse: collapse; /* Collapse borders for a cleaner look */
   margin: 1rem 0; /* Add some space below the table */
-  overflow-x: auto; /* Enable horizontal scrolling if needed */
 }
 
 th,
@@ -48,4 +47,29 @@ tfoot caption {
   color: #999;
   margin-top: 0.5rem;
 }
-/* Responsive adjustments */
+.hours-of-operation-wrapper {
+  overflow-x: auto;
+}
+.hours-of-operation-wrapper,
+.hours-of-operation {
+  width: 100%;
+}
+@include devices(mobile) {
+  th,
+  td {
+    padding: 0.5rem; /* Reduce padding on smaller screens */
+    font-size: 0.9rem; /* Slightly smaller text */
+  }
+  .table-title {
+    font-size: 1.2rem;
+  }
+  .table-subtitle {
+    font-size: 1rem;
+  }
+  .table-details {
+    font-size: 0.8rem;
+  }
+  caption {
+    text-align: left;
+  }
+}

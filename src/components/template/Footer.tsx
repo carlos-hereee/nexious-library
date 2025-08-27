@@ -1,5 +1,5 @@
-import { Socials } from "@nxs-organism";
 import type { FooterProps } from "nxs-navigation";
+import { Socials } from "@nxs-organism";
 import HoursOfOperation from "./HoursOfOperation";
 
 /**
@@ -10,8 +10,9 @@ import HoursOfOperation from "./HoursOfOperation";
 const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOperation, theme }) => {
   return (
     <footer className={theme || "footer"}>
-      <div className="split-container flex-center">
-        {media && <Socials medias={media.medias || []} label={media.title} hero={hero} theme="container text-center" />}
+      <div className="footer-content-wrapper">
+        {media && <Socials medias={media.medias || []} label={media.title} hero={hero} theme="socials" />}
+
         {hoursOfOperation && <HoursOfOperation data={hoursOfOperation} />}
       </div>
 
