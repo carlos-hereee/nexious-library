@@ -25,9 +25,13 @@ tr:hover {
   background-color: #e0e0e0; /* Highlight row on hover */
 }
 tfoot {
-  caption-side: bottom; /* Places the caption below the table */
   font-weight: bold; /* Bold text for footer */
-  background-color: #f2f2f2; /* Light gray background for footer */
+  font-weight: bold;
+  caption-side: bottom; /* Places the caption below the table */
+}
+tfoot caption {
+  caption-side: bottom; /* Places the caption below the table */
+  text-align: center; /* Centers the text within the caption */
 }
 .table-title {
   font-size: 1.5rem;
@@ -44,7 +48,4 @@ tfoot {
   color: #999;
   margin-top: 0.5rem;
 }
-.table-footer {
-  font-weight: bold;
-  background-color: #f2f2f2;
-}
+/* Responsive adjustments */

@@ -15,9 +15,11 @@ const HoursOfOperation = ({ data }: PHours) => {
       <TableCaption value={header?.subtitle || ""} theme="table-subtitle" />
       <TableHeader data={days.map((day) => ({ ...day, isHeader: true }))} />
       <TableColumn data={days.map((day) => ({ ...day, value: day.details }))} />
-      <tfoot className="table-footer">
-        <TableCaption value={footer?.data || ""} theme="table-footer-caption" />
-      </tfoot>
+      {footer && (
+        <tfoot className="table-footer">
+          <TableCaption value={footer?.data || ""} theme="table-footer-caption" />
+        </tfoot>
+      )}
     </table>
   );
 };
