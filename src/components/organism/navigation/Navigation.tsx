@@ -40,6 +40,7 @@ const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, 
             key={menu.uid}
             icon={menu.icon}
             theme={navItemTheme}
+            label={menu.label}
             activeTheme={active === menu.value ? activeTheme : undefined}
           />
         ))}

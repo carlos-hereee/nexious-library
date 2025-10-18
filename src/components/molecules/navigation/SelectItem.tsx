@@ -1,4 +1,4 @@
-import { Select } from "main";
+import Select from "@nxs-molecules/forms/Select";
 import type { ThemeList } from "nxs-navigation";
 
 interface SelectItemProps {
