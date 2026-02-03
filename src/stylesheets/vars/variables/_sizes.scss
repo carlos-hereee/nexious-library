@@ -1,3 +1,9 @@
+/*  media queries */
+$laptop: 1100px;
+$tablet: 770px;
+$mobile: 580px;
+$mini: 375px;
+
 // app/component sizes
 $min-height: 120px;
 $min-width: 100px;
@@ -44,3 +50,22 @@ $max-app-card-width: 250px;
 $min-app-card-width: 200px;
 $max-card-height: 400px;
 $min-card-height: 220px;
+
+/* readmore lines */
+$max-lines: 2;
+$line-height: 1.4;
+
+// rems
+$rem: 1rem;
+$rem05: 0.5rem;
+$rem025: 0.25rem;
+// border-radius :circle
+$rounded-full: 100%;
+$border-radius: 7px;
+$border-radius-sm: 5px;
+$border-radius-lg: 15px;
+$border-radius-full: 100%;
+
+// bubbly
+$startIndex: 0;
+$maxBubbles: 1000;

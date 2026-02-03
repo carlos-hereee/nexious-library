@@ -1,5 +1,2 @@
-@import "./_variables.scss";
-@import "./_sizes.scss";
-@import "./_media-query.scss";
-
-@import "./colors/";
+@use "./_sizes.scss";
+@use "./colors.scss";

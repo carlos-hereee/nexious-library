@@ -1,8 +1,12 @@
+@use "sass:math";
+
 .bubble {
   position: absolute;
   z-index: 0;
   border-radius: 100%;
+  background: radial-gradient(circle, rgba(122, 154, 189, 0.6), transparent);
   aspect-ratio: 1/1;
+  animation: float 6s ease-in-out infinite alternate;
   // blur background
   filter: blur(10px);
   -moz-filter: blur(10px);
@@ -17,10 +21,19 @@
 
 @for $i from $startIndex through $maxBubbles {
   .bubble:nth-child(#{$i}) {
-    top: random(100) * 1%;
-    left: random(90) * 1%;
-    opacity: random(100) / 100;
-    min-width: random($i + 100) + $i + 15 + px;
+    top: math.random(100) * 1%;
+    left: math.random(90) * 1%;
+    opacity: calc(math.random(100) / 100) + 0.2;
     max-width: 100vw;
+    width: math.random(120) + 40px;
+    height: auto;
+  }
+}
+@keyframes float {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-50px);
   }
 }

@@ -1,12 +1,12 @@
-@import "./buttons";
-@import "./grid";
-@import "./container";
-@import "./cards";
-@import "./assets";
-@import "./form";
-@import "./theme";
-@import "./typography";
-@import "./navigation";
+@use "./buttons";
+@use "./grid";
+@use "./container";
+@use "./cards";
+@use "./assets";
+@use "./form";
+@use "./theme";
+@use "./typography";
+@use "./navigation";
 
-@import "./components";
-@import "./custom";
+@use "./components";
+@use "./custom";
