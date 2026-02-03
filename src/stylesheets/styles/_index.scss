@@ -1,12 +1,12 @@
-@use "./buttons";
-@use "./grid";
-@use "./container";
-@use "./cards";
-@use "./assets";
-@use "./form";
-@use "./theme";
-@use "./typography";
-@use "./navigation";
+@forward "./buttons";
+@forward "./grid";
+@forward "./container";
+@forward "./cards";
+@forward "./assets";
+@forward "./form";
+@forward "./theme";
+@forward "./typography";
+@forward "./navigation";
 
-@use "./components";
-@use "./custom";
+@forward "./components";
+@forward "./custom";

@@ -1,5 +1,5 @@
-@use "./_navigation.scss";
-@use "./_navbar.scss";
-@use "./_primary-navigation.scss";
-@use "./_secondary-navigation.scss";
-@use "./_mobile-navigation.scss";
+@forward "./_navigation.scss";
+@forward "./_navbar.scss";
+@forward "./_primary-navigation.scss";
+@forward "./_secondary-navigation.scss";
+@forward "./_mobile-navigation.scss";

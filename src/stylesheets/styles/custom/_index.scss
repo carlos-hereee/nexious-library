@@ -1,6 +1,6 @@
-@use "./_flex.scss";
-@use "./_custom.scss";
-@use "./_error.scss";
-@use "./_padding.scss";
-@use "./_read-more.scss";
-@use "./_searchbar.scss";
+@forward "./_flex.scss";
+@forward "./_custom.scss";
+@forward "./_error.scss";
+@forward "./_padding.scss";
+@forward "./_read-more.scss";
+@forward "./_searchbar.scss";

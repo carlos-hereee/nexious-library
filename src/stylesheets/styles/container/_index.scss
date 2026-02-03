@@ -1,6 +1,6 @@
-@use "./_container.scss";
-@use "./_primary.scss";
-@use "./_section.scss";
-@use "./_secondary.scss";
-@use "./_component.scss";
-// @use "./_wrapper.scss";
+@forward "./_container.scss";
+@forward "./_primary.scss";
+@forward "./_section.scss";
+@forward "./_secondary.scss";
+@forward "./_component.scss";
+// @forward "./_wrapper.scss";

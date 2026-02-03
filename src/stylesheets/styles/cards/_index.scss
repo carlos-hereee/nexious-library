@@ -1,5 +1,5 @@
-@use "./_cards.scss";
-@use "./_card-row.scss";
-@use "./_card-section.scss";
-@use "./_cart-row.scss";
-@use "./_merch-card.scss";
+@forward "./_cards.scss";
+@forward "./_card-row.scss";
+@forward "./_card-section.scss";
+@forward "./_cart-row.scss";
+@forward "./_merch-card.scss";

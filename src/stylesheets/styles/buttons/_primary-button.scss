@@ -1,3 +1,5 @@
+@use "../../vars/variables/_index.scss" as variables;
+
 .btn {
   display: flex;
   gap: #{$rem};
@@ -18,7 +20,6 @@
   max-width: #{$max-width-button-lg};
   border: 1px solid #{$faded};
   // padding: 0;
-  background-color: #fafafa;
   white-space: nowrap;
   &:hover {
     border: 1px solid #{$dark-mode};
