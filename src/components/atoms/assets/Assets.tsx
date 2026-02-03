@@ -82,8 +82,8 @@ import {
   faUpLong,
   faUsd,
   faUser,
-  // faUserEdit,
   faX,
+  faBug,
 } from "@fortawesome/free-solid-svg-icons";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
@@ -108,6 +108,7 @@ const svg: SVGProp = {
   booking: faCalendarAlt as IconDefinition,
   booked: faSquareCheck as IconDefinition,
   burger: faBars as IconDefinition,
+  bug: faBug as IconDefinition,
   cashapp: faMoneyBill as IconDefinition,
   cancel: faCancel as IconDefinition,
   check: faCheckCircle as IconDefinition,
