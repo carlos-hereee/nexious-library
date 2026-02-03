@@ -1,24 +1,26 @@
+@use "../variables/_index.scss" as variables;
+
 // add basic styling
 form {
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: left;
-  gap: #{$rem};
-  max-width: #{$max-form-width};
+  gap: variables.$rem;
+  max-width: variables.$max-form-width;
   // position: relative;
   width: 100%;
 }
 input,
 textarea {
   font-family: sans-serif;
-  padding: #{$rem05} #{$rem};
-  min-width: #{$min-width};
-  border-radius: #{$border-radius};
+  padding: variables.$rem05 variables.$rem;
+  min-width: variables.$min-width;
+  border-radius: variables.$border-radius;
   border: none;
 }
 textarea {
-  min-height: #{$min-height};
+  min-height: variables.$min-height;
   width: 100%;
   resize: vertical;
 }
@@ -35,7 +37,7 @@ select {
   line-height: inherit;
   width: 100%;
   outline: none;
-  padding: #{$rem05};
+  padding: variables.$rem05;
   &::-ms-expand {
     display: none;
   }

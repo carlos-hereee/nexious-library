@@ -1,6 +1,18 @@
-@use "./_assesibility.scss";
-@use "./_html.scss";
-@use "./_forms.scss";
-@use "./_embeds.scss";
-@use "./_typography.scss";
-@use "./_table.scss";
+@forward "./_html.scss";
+@forward "./_forms.scss";
+@forward "./_embeds.scss";
+@forward "./_typography.scss";
+@forward "./_table.scss";
+// for accessibiblity
+@media (prefers-reduced-inputdirection: reduce) {
+  *,
+  ::before,
+  ::after {
+    animation-delay: -1ms !important;
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    background-attachment: initial !important;
+    transition-duration: 0s !important;
+    transition-delay: 0s !important;
+  }
+}

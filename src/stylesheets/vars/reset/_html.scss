@@ -1,3 +1,5 @@
+@use "../variables/index.scss" as variables;
+
 // consistent line-spacing even when element have different line-heights
 html {
   height: 100%;
@@ -21,7 +23,7 @@ body {
 // Add basic styling to disabled components
 [disabled] {
   cursor: not-allowed;
-  background: linear-gradient($dimmer, $dim);
+  background: linear-gradient(variables.$dimmer, variables.$dim);
 }
 
 *,
@@ -50,8 +52,8 @@ header {
   display: flex;
   justify-content: space-between;
   flex-wrap: wrap;
-  gap: #{$rem};
-  min-height: #{$min-height};
+  gap: variables.$rem;
+  min-height: variables.$min-height;
 }
 
 ul {
@@ -63,7 +65,7 @@ ul {
 a {
   color: inherit;
   display: inline-block;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
   user-select: none;
   white-space: nowrap;
 }
@@ -75,12 +77,12 @@ button {
   background-color: transparent;
   font: inherit;
   color: inherit;
-  padding: #{$rem05} #{$rem};
-  max-width: #{$max-width-button};
-  min-width: #{$min-width};
+  padding: variables.$rem05 variables.$rem;
+  max-width: variables.$max-width-button;
+  min-width: variables.$min-width;
   width: 100%;
   border: none;
-  border-radius: #{$border-radius};
-  gap: #{$rem};
+  border-radius: variables.$border-radius;
+  gap: variables.$rem;
   cursor: pointer;
 }

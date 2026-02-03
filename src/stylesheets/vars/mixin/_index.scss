@@ -1,24 +1,26 @@
+@use "../variables/_index.scss" as variables;
+
 // We define the mixins for two major breakpoints mobile and tablet
 // $breakpoint is the variable that can have several values
 @mixin devices($breakpoint) {
   //the name of the mixin is devices
   @if $breakpoint == laptop {
-    @media only screen and (max-width: #{$laptop}) {
+    @media only screen and (max-width: variables.$laptop) {
       @content;
     }
   }
   @if $breakpoint == tablet {
-    @media only screen and (max-width: #{$tablet}) {
+    @media only screen and (max-width: variables.$tablet) {
       @content;
     }
   }
   @if $breakpoint == mobile {
-    @media only screen and (max-width:  #{$mobile}) {
+    @media only screen and (max-width: variables.$mobile) {
       @content;
     }
   }
   @if $breakpoint == mini {
-    @media only screen and (max-width:  #{$mini}) {
+    @media only screen and (max-width: variables.$mini) {
       @content;
     }
   }

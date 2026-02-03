@@ -1,3 +1,5 @@
+@use "../mixin/_index.scss" as mixins;
+
 table {
   width: 100%; /* Make table span full width */
   border-collapse: collapse; /* Collapse borders for a cleaner look */
@@ -54,7 +56,7 @@ tfoot caption {
 .hours-of-operation {
   width: 100%;
 }
-@include devices(mobile) {
+@include mixins.devices(mobile) {
   th,
   td {
     padding: 0.5rem; /* Reduce padding on smaller screens */
