@@ -1,21 +1,24 @@
+@use "../../vars/variables/_index.scss" as variables;
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .buttons-container {
   display: grid;
-  gap: #{$rem};
+  gap: variables.$rem;
   // justify-items: center;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width}, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width, 1fr));
   grid-template-rows: auto auto;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }
 .buttons-container-row {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .button-container {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   * {
     width: 100%;
     max-width: 100%;
@@ -36,7 +39,6 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  background-color: aliceblue;
   padding: 1rem;
   border-radius: 10px;
   position: absolute;
