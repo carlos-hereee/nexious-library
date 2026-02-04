@@ -1,6 +1,6 @@
-@use '../../vars/mixin/_index.scss' as mixin;
+@use "../../vars/mixin/_index.scss" as mixin;
 
-@use '../../vars/variables/_index.scss' as variables;
+@use "../../vars/variables/_index.scss" as variables;
 
 .field-upload-field {
   display: flex;
