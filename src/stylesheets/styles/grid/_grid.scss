@@ -1,8 +1,9 @@
+@use "../../vars/mixin/_index.scss" as mixin;
 .grid {
   display: grid;
   gap: #{$rem};
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }
@@ -23,7 +24,7 @@
   gap: #{$rem};
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }

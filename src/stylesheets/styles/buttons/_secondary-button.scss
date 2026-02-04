@@ -1,3 +1,4 @@
+@use "../../vars/mixin/_index.scss" as mixin;
 .btn-link {
   text-decoration: underline;
 }
@@ -20,7 +21,7 @@
   gap: #{$rem};
   justify-content: flex-start;
   flex: 1;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     justify-content: center;
   }
 }

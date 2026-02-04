@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .card {
   display: flex;
   // flex-wrap: wrap;
@@ -11,7 +13,7 @@
     position: relative;
     max-width: 275px;
   }
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     min-width: auto;
     max-width: auto;
   }

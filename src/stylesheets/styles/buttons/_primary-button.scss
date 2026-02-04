@@ -1,5 +1,5 @@
 @use "../../vars/variables/_index.scss" as variables;
-
+@use "../../vars/mixin/_index.scss" as mixin;
 .btn {
   display: flex;
   gap: #{$rem};
@@ -27,7 +27,7 @@
   &:focus {
     border: 1px solid #{$dark-mode};
   }
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     white-space: wrap;
   }
 }

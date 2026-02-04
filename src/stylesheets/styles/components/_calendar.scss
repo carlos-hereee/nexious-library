@@ -1,3 +1,4 @@
+@use "../../vars/mixin/_index.scss" as mixin;
 .calendar {
   width: 100%;
   display: flex;
@@ -35,7 +36,7 @@
     border-radius: 100%;
     color: #{$dark-primary};
   }
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     min-height: 40px;
   }
 }
@@ -45,7 +46,7 @@
   justify-content: space-around;
   gap: #{$rem025};
   width: 100%;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     width: 100%;
     align-items: center;
   }
@@ -54,7 +55,7 @@
   display: flex;
   width: 100%;
   gap: #{$rem};
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     flex-direction: column;
   }
 }
@@ -69,7 +70,7 @@
 .calendar-navigation {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     .btn-start,
     .btn-last {
       display: none;

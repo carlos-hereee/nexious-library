@@ -1,9 +1,0 @@
-.primary-navigation {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
-  @include devices(tablet) {
-    display: none;
-  }
-}

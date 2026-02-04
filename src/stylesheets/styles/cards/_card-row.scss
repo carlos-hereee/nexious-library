@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .card-row-wrapper {
   display: flex;
   flex-direction: column;
@@ -15,7 +17,7 @@
   max-width: 100%;
   border-radius: #{$border-radius};
   text-align: left;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     flex-direction: column;
     align-items: center;
   }

@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .p-sm {
   padding: 0.5rem;
 }
@@ -68,7 +70,7 @@
 .danger-zone {
   display: flex;
   justify-content: flex-end;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     display: none;
   }
 }
@@ -77,16 +79,16 @@
   align-items: center;
   grid-template-columns: 2fr 3fr;
   gap: 1rem;
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }
 .hide-on-tablet,
 .hide-on-mobile {
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     display: none;
   }
-  @include devices(tablet) {
+  @include mixin.devices(tablet) {
     display: none;
   }
 }

@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .cart {
   display: flex;
   flex-direction: column;
@@ -10,10 +12,10 @@
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   // align-items: flex-start;
   // justify-items: flex-start;
-  // @include devices(mobile) {
+  // @include mixin.devices(mobile) {
   //   grid-template-columns: 1fr;
   // }
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }

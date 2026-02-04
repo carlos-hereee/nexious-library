@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .navigation {
   display: flex;
   align-items: center;
@@ -19,4 +21,18 @@
 }
 .nav-order-last {
   order: 1;
+}
+.primary-navigation {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  margin-left: auto;
+  @include mixin.devices(tablet) {
+    display: none;
+  }
+}
+.secondary-navigation {
+  display: flex;
+  align-items: flex-start;
+  padding: 1rem 0.5rem;
 }

@@ -1,10 +1,11 @@
+@use "../../vars/mixin/_index.scss" as mixin;
 .secondary-container {
   display: flex;
   flex-direction: column;
   min-height: 60vh;
   width: 100%;
   gap: #{$rem};
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     width: auto;
   }
 }
@@ -22,7 +23,7 @@
 .list-container {
   display: flex;
   gap: #{$rem};
-  @include devices(tablet) {
+  @include mixin.devices(tablet) {
     flex-wrap: wrap;
     justify-content: space-around;
     .btn-main {
@@ -37,7 +38,7 @@
   min-width: 100%;
   width: 100%;
   color: inherit;
-  @include devices(tablet) {
+  @include mixin.devices(tablet) {
     flex-wrap: wrap;
     justify-content: space-around;
     .btn-main {

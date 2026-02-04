@@ -1,3 +1,4 @@
+@use "../../vars/mixin/_index.scss" as mixin;
 .form-navigation {
   display: flex;
   flex-direction: column;
@@ -7,7 +8,7 @@
   display: grid;
   grid-template-columns: max-content;
   gap: #{$rem};
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: #{$rem};
@@ -16,7 +17,7 @@
 .form-buttons {
   display: flex;
   gap: #{$rem};
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-content: center;

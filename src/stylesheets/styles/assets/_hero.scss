@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 .hero {
   display: block;
   width: 100%;
@@ -42,7 +44,7 @@
   align-items: center;
   justify-content: space-around;
   gap: #{$rem};
-  @include devices(mobile) {
+  @include mixin.devices(mobile) {
     .hero,
     .credit-to {
       display: none;
