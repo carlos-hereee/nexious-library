@@ -1,7 +1,9 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .blur-load {
   background-size: cover;
   background-position: center;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
 }
 .blur-load--loaded {
   background-image: none !important;

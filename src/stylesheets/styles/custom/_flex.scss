@@ -1,3 +1,5 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .flex {
   display: flex;
 }
@@ -10,35 +12,35 @@
 .flex-g,
 .flex-gap {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-end {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   justify-content: flex-end;
 }
 .flex-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-d-row {
   display: flex;
   flex-direction: row;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-column,
 .flex-d-column {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-j-start {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-j-end {
   display: flex;
@@ -50,25 +52,25 @@
   justify-content: space-between;
   align-items: center;
   // flex-wrap: wrap;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-wrap,
 .flex-w {
   display: flex;
   flex-wrap: wrap;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .flex-start {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .align-center {
   align-items: center;

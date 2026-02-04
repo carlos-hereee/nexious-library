@@ -1,15 +1,17 @@
-@use "../../vars/variables/_index.scss" as variables;
 @use "../../vars/mixin/_index.scss" as mixin;
+
+@use "../../vars/variables/_index.scss" as variables;
+
 .btn {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   align-items: center;
-  padding: #{$rem};
-  border-radius: #{$border-radius};
+  padding: variables.$rem;
+  border-radius: variables.$border-radius;
 }
 .btn-icon,
 .btn-ping {
-  // max-width: #{$min-icon-width};
+  // max-width: variables.$min-icon-width;
   min-width: auto;
   position: relative;
   gap: 0;
@@ -17,15 +19,15 @@
 
 .btn-main {
   width: 100%;
-  max-width: #{$max-width-button-lg};
-  border: 1px solid #{$faded};
+  max-width: variables.$max-width-button-lg;
+  border: 1px solid variables.$faded;
   // padding: 0;
   white-space: nowrap;
   &:hover {
-    border: 1px solid #{$dark-mode};
+    border: 1px solid variables.$dark-mode;
   }
   &:focus {
-    border: 1px solid #{$dark-mode};
+    border: 1px solid variables.$dark-mode;
   }
   @include mixin.devices(mobile) {
     white-space: wrap;
@@ -36,19 +38,19 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: #{$rem};
+  gap: variables.$rem;
   min-width: 100%;
   padding: 0;
   // min-height: 100%;
 }
 .btn-cta {
-  background-color: #{$cta-color};
+  background-color: variables.$cta-color;
   width: 100%;
 }
 .btn-cancel {
   width: 100%;
-  background-color: #{$danger};
-  color: #{$light-primary};
+  background-color: variables.$danger;
+  color: variables.$light-primary;
 }
 .btn-removal,
 .btn-remove {
@@ -56,25 +58,25 @@
   position: absolute;
   top: 0;
   right: 0;
-  width: #{$icon-width-sm};
+  width: variables.$icon-width-sm;
   min-width: auto;
-  border-radius: #{$border-radius};
-  color: #{$light-primary};
-  background-color: #{$error};
+  border-radius: variables.$border-radius;
+  color: variables.$light-primary;
+  background-color: variables.$error;
   z-index: 3;
   &:hover {
-    background-color: #{$danger};
-    border: 1px solid #{$dark};
+    background-color: variables.$danger;
+    border: 1px solid variables.$dark;
   }
 }
 .btn-burger,
 .btn-x {
-  min-width: #{$min-width-sm};
+  min-width: variables.$min-width-sm;
   justify-content: center;
 }
 .btn-logo {
   font: initial;
-  max-width: #{$max-width-button-lg};
+  max-width: variables.$max-width-button-lg;
   padding: 0;
   // width: 100%;
 }

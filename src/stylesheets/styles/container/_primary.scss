@@ -1,11 +1,13 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
+@use "../../vars/variables/_index.scss" as variables;
+
 .primary-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     // flex: 0 0 100%;
     width: auto;
@@ -18,8 +20,8 @@
   justify-content: center;
   min-width: 200px;
   min-height: 80vh;
-  gap: #{$rem};
-  border-radius: #{$border-radius};
+  gap: variables.$rem;
+  border-radius: variables.$border-radius;
   .btn-cta {
     max-width: 500px;
     min-width: auto;
@@ -31,7 +33,7 @@
   flex-wrap: wrap;
   justify-items: center;
   position: relative;
-  gap: #{$rem};
+  gap: variables.$rem;
   justify-content: space-around;
   @include mixin.devices(tablet) {
     justify-content: center;
@@ -42,20 +44,20 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .container-split,
 .split-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }
 .container-row {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   > * {
     flex: 1;
   }
@@ -63,10 +65,10 @@
 .navigation-container {
   width: 100%;
   display: grid;
-  gap: #{$rem};
+  gap: variables.$rem;
   align-items: center;
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(#{$min-cell-width-sm}, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width-sm, 1fr));
   .navigation {
     justify-content: center;
   }
@@ -77,7 +79,7 @@
 .mini-navigation-container {
   width: 100%;
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   align-items: center;
   justify-content: center;
 }

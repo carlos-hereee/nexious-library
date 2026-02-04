@@ -1,8 +1,11 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
+
 .card-section {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 
 .card-section-title {
@@ -16,12 +19,12 @@
 .card-section-wrapper {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .card-section-row {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
   .card-section-cost {
     display: flex;
     justify-content: flex-end;
@@ -56,7 +59,7 @@
 }
 .details {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
 
   .read-more-wrapper {
     max-width: 350px;
@@ -64,11 +67,11 @@
   .row {
     flex-direction: column;
     align-items: center;
-    gap: #{$rem};
+    gap: variables.$rem;
     width: 100%;
     div {
       display: flex;
-      gap: #{$rem};
+      gap: variables.$rem;
       flex-wrap: wrap;
     }
   }

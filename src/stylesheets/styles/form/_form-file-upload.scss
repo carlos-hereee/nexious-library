@@ -1,14 +1,17 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
+
 .field-upload-field {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .field-upload {
   display: grid;
   grid-template-columns: 1fr 1fr;
   align-items: start;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }

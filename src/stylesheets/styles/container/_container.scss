@@ -1,16 +1,18 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .container {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .app-container {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 3fr auto;
   min-height: 100vh;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     grid-template-rows: 1fr;
   }
@@ -19,14 +21,14 @@
 // .dark-mode > .container {
 //   // -webkit-filter: blur(8px);
 //   // backdrop-filter: blur(5px);
-//   background-color: #{$dark-mode};
-//   color: #{$light-mode};
+//   background-color: variables.$dark-mode;
+//   color: variables.$light-mode;
 // }
 // // theme light mode
 // .light-mode > .container {
 //   // -webkit-filter: blur(8px);
 //   // backdrop-filter: blur(5px);
-//   background-color: #{$light-mode};
-//   color: #{$dark-mode};
+//   background-color: variables.$light-mode;
+//   color: variables.$dark-mode;
 //   // background: inherit;
 // }

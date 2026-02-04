@@ -1,13 +1,15 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .cart {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .cart-row {
   display: grid;
-  gap: #{$rem};
+  gap: variables.$rem;
   // grid-template-columns: 1fr 2fr;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   // align-items: flex-start;
@@ -22,7 +24,7 @@
 .cart-column {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
-  // padding-top: #{$rem};
+  gap: variables.$rem;
+  // padding-top: variables.$rem;
   position: relative;
 }

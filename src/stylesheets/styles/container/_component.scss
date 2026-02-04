@@ -1,16 +1,18 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .error-message-container {
-  border: 1px dotted #{$danger};
+  border: 1px dotted variables.$danger;
   // max-height: 200px;
   width: 100%;
-  padding: #{$rem};
+  padding: variables.$rem;
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .call-to-action {
   display: flex;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
   .btn {
     flex: 1;
   }

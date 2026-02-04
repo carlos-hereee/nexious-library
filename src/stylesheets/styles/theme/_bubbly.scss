@@ -1,3 +1,5 @@
+@use "../../vars/variables/_index.scss" as variables;
+
 @use "sass:math";
 
 .bubble {
@@ -19,7 +21,7 @@
   -o-transition: all 2s linear;
 }
 
-@for $i from $startIndex through $maxBubbles {
+@for $i from variables.$startIndex through variables.$maxBubbles {
   .bubble:nth-child(#{$i}) {
     top: math.random(100) * 1%;
     left: math.random(90) * 1%;

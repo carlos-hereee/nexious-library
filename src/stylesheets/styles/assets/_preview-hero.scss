@@ -1,15 +1,17 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .preview-hero-container {
   position: relative;
   display: flex;
   flex-direction: column;
   margin: auto;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 
 .preview-hero {
   aspect-ratio: 1/1;
   object-fit: contain;
-  max-height: #{$min-width};
+  max-height: variables.$min-width;
 }
 .preview-hero-empty {
   display: flex;
@@ -18,17 +20,17 @@
   font-size: xx-large;
   font-weight: bolder;
   aspect-ratio: 16/9;
-  max-height: #{$min-width};
-  max-width: #{$max-width-sm};
-  min-height: #{$min-thumbnail-height};
-  border-radius: #{$border-radius};
+  max-height: variables.$min-width;
+  max-width: variables.$max-width-sm;
+  min-height: variables.$min-thumbnail-height;
+  border-radius: variables.$border-radius;
 }
 .preview-cancel {
   position: absolute;
   top: 10%;
   left: 85%;
-  max-width: #{$min-icon-width};
-  min-width: #{$min-icon-width};
+  max-width: variables.$min-icon-width;
+  min-width: variables.$min-icon-width;
   aspect-ratio: 1/1;
   border-radius: 100%;
 }

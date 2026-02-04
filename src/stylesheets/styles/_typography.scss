@@ -1,9 +1,11 @@
+@use "../vars/variables/_index.scss" as variables;
+
 .error-message {
-  color: #{$danger};
+  color: variables.$danger;
   max-width: 100%;
 }
 .success {
-  color: #{$success};
+  color: variables.$success;
   max-width: 100%;
 }
 .heading-container {
@@ -15,7 +17,7 @@
   text-overflow: ellipsis;
 }
 .text-mute {
-  color: #{$muted};
+  color: variables.$muted;
 }
 .sub-title {
   text-align: left;
@@ -42,7 +44,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   align-items: center;
-  padding: #{$rem} 0;
+  padding: variables.$rem 0;
   width: max-content;
 }
 .btn-rating {
@@ -59,12 +61,12 @@
   .cost {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px dotted #{$dark};
+    border-bottom: 1px dotted variables.$dark;
   }
 }
 .heading {
   width: 100%;
-  // min-width: #{$min-heading-width};
+  // min-width: variables.$min-heading-width;
   text-align: left;
 }
 

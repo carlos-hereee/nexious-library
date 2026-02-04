@@ -1,33 +1,35 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .icon {
-  min-width: #{$min-icon-width};
+  min-width: variables.$min-icon-width;
 }
 .icon-instagram {
-  color: #{$instagram};
+  color: variables.$instagram;
 }
 .icon-twitter {
-  color: #{$twitter};
+  color: variables.$twitter;
 }
 .icon-twitter {
-  color: #{$github};
+  color: variables.$github;
 }
 .icon-x {
-  color: #{$xTwitter};
+  color: variables.$xTwitter;
 }
 .icon-linkedin {
-  color: #{$linkedin};
+  color: variables.$linkedin;
 }
 .icon-hero {
-  min-width: #{$min-width-sm};
+  min-width: variables.$min-width-sm;
   object-fit: cover;
   object-position: center;
 }
 .icon-star {
   color: white;
-  stroke: #{$star};
+  stroke: variables.$star;
   stroke-width: 3rem;
 }
 .icon-star-filled {
-  color: #{$star-filled};
+  color: variables.$star-filled;
 }
 .socials {
   display: flex;
@@ -37,13 +39,13 @@
 .socials-icons {
   margin: 1rem auto;
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .icon-visa {
-  color: #{$visa};
+  color: variables.$visa;
 }
 .icon-mastercard {
-  color: #{$mastercard-red};
+  color: variables.$mastercard-red;
 }
 .visa-credit {
   display: flex;
@@ -52,11 +54,11 @@
   color: brown;
 }
 .icon-facebook {
-  color: #{$facebook};
+  color: variables.$facebook;
 }
 .select-icon {
   aspect-ratio: 1/1;
-  max-width: #{$min-width-sm};
+  max-width: variables.$min-width-sm;
 }
 .ping-count {
   position: absolute;
@@ -69,7 +71,7 @@
   padding: 0.25rem;
   top: -0.5rem;
   right: -0.5rem;
-  background-color: #{$ping-color};
+  background-color: variables.$ping-color;
   max-width: 30px;
   .icon {
     max-width: 15px;

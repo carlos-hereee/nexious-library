@@ -1,7 +1,9 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 // .section-container {
 //   flex-direction: column;
 //   display: flex;
-//   border-radius: #{$border-radius};
+//   border-radius: variables.$border-radius;
 //   gap: 0.5rem;
 // }
 .secondary-section-container {
@@ -17,6 +19,6 @@
 }
 .section-card {
   display: grid;
-  gap: #{$rem};
+  gap: variables.$rem;
   grid-template-rows: 1fr 1fr;
 }

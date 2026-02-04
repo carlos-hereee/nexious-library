@@ -1,8 +1,10 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .form-submit {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .form-submit-btn {
   margin: auto;
@@ -14,12 +16,12 @@
   align-items: start;
   cursor: pointer;
   input {
-    min-width: #{$min-width-sm};
+    min-width: variables.$min-width-sm;
     width: fit-content;
   }
 }
 .label-name {
-  padding-right: #{$rem};
+  padding-right: variables.$rem;
 }
 .password {
   width: 100%;

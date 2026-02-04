@@ -1,14 +1,16 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .card {
   display: flex;
   // flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-between;
-  gap: #{$rem};
-  padding: #{$rem};
-  min-width: #{$min-card-width};
-  max-width: #{$max-card-width};
+  gap: variables.$rem;
+  padding: variables.$rem;
+  min-width: variables.$min-card-width;
+  max-width: variables.$max-card-width;
   &:has(> div > .ribbon) {
     position: relative;
     max-width: 275px;
@@ -21,7 +23,7 @@
 .card-header {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
   width: 100%;
 }
 
@@ -45,12 +47,12 @@
   flex-direction: column;
   justify-content: space-between;
   min-width: 200px;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .secondary-card-body {
   display: flex;
   flex-wrap: wrap;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .ribbon {
   position: absolute;
@@ -63,7 +65,7 @@
 
 .cancel-row-footer {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   padding-bottom: 2rem;
 }
 .card-item {
@@ -73,13 +75,13 @@
 
 .card-text-bubble {
   flex: 1;
-  background-color: #{$light-secondary};
-  border-radius: #{$border-radius};
+  background-color: variables.$light-secondary;
+  border-radius: variables.$border-radius;
   display: grid;
   align-content: center;
   grid-template-columns: 1fr 5fr;
-  gap: #{$rem};
-  padding: #{$rem};
+  gap: variables.$rem;
+  padding: variables.$rem;
   width: 100%;
 }
 .card-text-bubble:has(.card-text-sender) {
@@ -90,9 +92,9 @@
 }
 .text-bubble {
   height: fit-content;
-  background-color: #{$text-bubble};
-  padding: #{$rem};
-  border-radius: #{$border-radius};
+  background-color: variables.$text-bubble;
+  padding: variables.$rem;
+  border-radius: variables.$border-radius;
   max-width: 100%;
   width: 100%;
 }
@@ -100,13 +102,13 @@
   display: grid;
   justify-items: center;
   aspect-ratio: 2/3;
-  gap: #{$rem};
-  border-radius: #{$border-radius};
+  gap: variables.$rem;
+  border-radius: variables.$border-radius;
   grid-template-rows: auto 3fr;
-  padding: #{$rem};
-  // box-shadow: 1px 1px 4px 1px #{$action-color-alt};
-  max-width: #{$max-app-card-width};
-  min-width: #{$min-app-card-width};
+  padding: variables.$rem;
+  // box-shadow: 1px 1px 4px 1px variables.$action-color-alt;
+  max-width: variables.$max-app-card-width;
+  min-width: variables.$min-app-card-width;
   .card-row-body {
     display: grid;
     height: 100%;
@@ -119,9 +121,9 @@
   }
 }
 .preview-card {
-  max-height: #{$max-card-height};
+  max-height: variables.$max-card-height;
   overflow: hidden;
-  padding: #{$rem};
-  border-radius: #{$border-radius};
+  padding: variables.$rem;
+  border-radius: variables.$border-radius;
   position: relative;
 }

@@ -1,14 +1,16 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .hero {
   display: block;
   width: 100%;
-  max-width: #{$max-hero-width};
-  max-height: #{$max-hero-height};
-  min-width: #{$min-width};
+  max-width: variables.$max-hero-width;
+  max-height: variables.$max-hero-height;
+  min-width: variables.$min-width;
   // object-fit: cover;
   // object-position: center;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
 }
 .hero-wrapper {
   display: flex;
@@ -16,8 +18,8 @@
   flex-direction: column;
 }
 .hero-main {
-  max-width: #{$max-width-lg};
-  min-width: #{$min-width};
+  max-width: variables.$max-width-lg;
+  min-width: variables.$min-width;
 }
 .feature-hero {
   width: 100%;
@@ -31,7 +33,7 @@
   aspect-ratio: 16/9;
 }
 .hero-icon {
-  max-width: #{$min-width-sm};
+  max-width: variables.$min-width-sm;
   max-height: 35px;
   width: 100%;
   height: 100%;
@@ -43,7 +45,7 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     .hero,
     .credit-to {

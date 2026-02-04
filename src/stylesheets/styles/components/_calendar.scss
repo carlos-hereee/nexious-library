@@ -1,9 +1,12 @@
 @use "../../vars/mixin/_index.scss" as mixin;
+
+@use "../../vars/variables/_index.scss" as variables;
+
 .calendar {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .calendar-package-details {
   width: 100%;
@@ -13,10 +16,10 @@
   align-items: flex-start;
 }
 .btn-calendar-tile--today {
-  background-color: #{$action-color};
+  background-color: variables.$action-color;
 }
 .btn-calendar-tile--selected {
-  background-color: #{$action-color-accent};
+  background-color: variables.$action-color-accent;
 }
 
 .btn-calendar-tile--muted {
@@ -31,10 +34,10 @@
     position: absolute;
     top: -9%;
     right: -2%;
-    background-color: #{$ping-color};
-    padding: #{$rem025};
+    background-color: variables.$ping-color;
+    padding: variables.$rem025;
     border-radius: 100%;
-    color: #{$dark-primary};
+    color: variables.$dark-primary;
   }
   @include mixin.devices(mobile) {
     min-height: 40px;
@@ -44,7 +47,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: #{$rem025};
+  gap: variables.$rem025;
   width: 100%;
   @include mixin.devices(mobile) {
     width: 100%;
@@ -54,7 +57,7 @@
 .calendar-events {
   display: flex;
   width: 100%;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     flex-direction: column;
   }
@@ -62,7 +65,7 @@
 .calendar-event-cart {
   display: flex;
   width: 100%;
-  gap: #{$rem};
+  gap: variables.$rem;
   .hero {
     max-height: 15vh;
   }
@@ -87,5 +90,5 @@
 .calendar-view-month {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: #{$rem} 0;
+  padding: variables.$rem 0;
 }

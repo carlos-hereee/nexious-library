@@ -1,5 +1,7 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .message-success {
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
 }
 .read-more-wrapper {
   display: flex;

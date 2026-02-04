@@ -1,10 +1,12 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .hero-card {
   position: relative;
   display: grid;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   @include mixin.devices(mobile) {
     .hero-wrapper {
@@ -23,16 +25,16 @@
   display: grid;
   text-align: center;
   justify-content: center;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .hero-card-heading {
   width: 100%;
-  min-width: #{$min-width};
+  min-width: variables.$min-width;
   max-width: 28ch;
 }
 .hero-card-body-alt {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     flex-wrap: wrap;
   }

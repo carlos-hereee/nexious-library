@@ -1,4 +1,7 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
+
 .btn-link {
   text-decoration: underline;
 }
@@ -9,16 +12,16 @@
 .custom-btn-link {
   display: flex;
   justify-content: center;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
 }
 
 .btn-danger {
   border: none;
   color: white;
-  background-color: #{$danger};
+  background-color: variables.$danger;
 }
 .btn-payment {
-  gap: #{$rem};
+  gap: variables.$rem;
   justify-content: flex-start;
   flex: 1;
   @include mixin.devices(mobile) {
@@ -27,15 +30,15 @@
 }
 .btn-selected,
 .btn-active {
-  background-color: #{$action-color};
-  color: #{$dark-mode};
+  background-color: variables.$action-color;
+  color: variables.$dark-mode;
 }
 .btn-add {
-  // border: 1px solid #{$dark-primary};
-  background-color: #{$action-color-alt};
+  // border: 1px solid variables.$dark-primary;
+  background-color: variables.$action-color-alt;
 }
 .btn-subtract {
-  border: 1px solid #{$dark-primary};
-  // color: #{$light};
-  // background-color: #{$error};
+  border: 1px solid variables.$dark-primary;
+  // color: variables.$light;
+  // background-color: variables.$error;
 }

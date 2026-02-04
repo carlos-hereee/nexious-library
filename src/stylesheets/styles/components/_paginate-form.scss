@@ -1,13 +1,15 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .btn-arrow {
   position: fixed;
   right: 8%;
   z-index: 99;
-  background-color: #{$dimmer};
-  border-radius: #{$border-radius-full};
+  background-color: variables.$dimmer;
+  border-radius: variables.$border-radius-full;
   aspect-ratio: 1/1;
   min-width: auto;
   &:hover {
-    background-color: #{$dim};
+    background-color: variables.$dim;
   }
 }
 .up-arrow-container {

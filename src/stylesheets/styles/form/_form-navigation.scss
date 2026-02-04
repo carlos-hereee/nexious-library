@@ -1,26 +1,29 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
+
 .form-navigation {
   display: flex;
   flex-direction: column;
-  gap: #{$rem};
+  gap: variables.$rem;
 }
 .form-nav {
   display: grid;
   grid-template-columns: max-content;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: #{$rem};
+    gap: variables.$rem;
   }
 }
 .form-buttons {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-content: center;
-    gap: #{$rem};
+    gap: variables.$rem;
   }
 }

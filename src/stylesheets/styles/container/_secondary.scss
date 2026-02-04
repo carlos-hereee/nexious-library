@@ -1,40 +1,43 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
+
 .secondary-container {
   display: flex;
   flex-direction: column;
   min-height: 60vh;
   width: 100%;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(mobile) {
     width: auto;
   }
 }
 .alt-container {
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
   overflow-y: auto;
   overflow-x: hidden;
 }
 .feature-card-container {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   flex-wrap: wrap;
   justify-content: space-around;
 }
 .list-container {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   @include mixin.devices(tablet) {
     flex-wrap: wrap;
     justify-content: space-around;
     .btn-main {
-      max-width: #{$min-width};
+      max-width: variables.$min-width;
     }
   }
 }
 .list-selection-value {
   display: flex;
-  gap: #{$rem};
-  border-radius: #{$rem025};
+  gap: variables.$rem;
+  border-radius: variables.$rem025;
   min-width: 100%;
   width: 100%;
   color: inherit;
@@ -42,7 +45,7 @@
     flex-wrap: wrap;
     justify-content: space-around;
     .btn-main {
-      max-width: #{$min-width};
+      max-width: variables.$min-width;
     }
   }
 }

@@ -1,10 +1,12 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 // add basic styling
 .select-wrapper {
   display: flex;
   justify-content: flex-start;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
   align-items: center;
-  gap: #{$rem};
+  gap: variables.$rem;
   width: 100%;
 }
 .select {
@@ -12,13 +14,13 @@
   align-items: center;
   justify-content: space-between;
   position: relative;
-  outline: 1px solid #{$faded};
-  border-radius: #{$border-radius};
+  outline: 1px solid variables.$faded;
+  border-radius: variables.$border-radius;
   width: 100%;
   &:focus {
-    outline: 1px solid #{$dark-mode};
+    outline: 1px solid variables.$dark-mode;
   }
   &:hover {
-    outline: 1px solid #{$dark-mode};
+    outline: 1px solid variables.$dark-mode;
   }
 }

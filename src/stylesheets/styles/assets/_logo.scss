@@ -1,5 +1,7 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .logo {
   aspect-ratio: 1/1;
-  max-width: #{$max-logo-width};
-  min-width: #{$min-logo-width};
+  max-width: variables.$max-logo-width;
+  min-width: variables.$min-logo-width;
 }

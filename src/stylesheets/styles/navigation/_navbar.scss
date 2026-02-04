@@ -1,9 +1,11 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 .navbar {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: #{$rem};
-  padding: 0 #{$rem};
+  gap: variables.$rem;
+  padding: 0 variables.$rem;
 }
 .nav-link {
   display: flex;
@@ -24,12 +26,12 @@
 .nav-toggle {
   display: flex;
   width: 100%;
-  max-width: #{$max-width-sm};
+  max-width: variables.$max-width-sm;
   align-items: center;
 }
 .nav-btn {
   display: flex;
   align-self: stretch;
   width: 100%;
-  // min-width: #{$min-cell-width};
+  // min-width: variables.$min-cell-width;
 }

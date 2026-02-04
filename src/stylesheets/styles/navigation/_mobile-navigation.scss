@@ -1,4 +1,7 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
+
 .mobile-navigation {
   display: none;
   justify-content: flex-end;
@@ -10,9 +13,9 @@
     position: absolute;
     transition: clip-path ease-in-out 700ms;
     align-items: center;
-    padding: #{$rem};
-    min-width: #{$min-width-section};
-    min-height: #{$min-height-section};
+    padding: variables.$rem;
+    min-width: variables.$min-width-section;
+    min-height: variables.$min-height-section;
     z-index: 9999;
     right: 3%;
     top: 100%;

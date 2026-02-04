@@ -1,4 +1,6 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .p-sm {
   padding: 0.5rem;
@@ -26,7 +28,7 @@
   justify-content: center;
   position: absolute;
   aspect-ratio: 1/1;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
   width: 25px;
   height: 25px;
   right: -0.5rem;
@@ -52,20 +54,20 @@
   margin: 0 1rem;
 }
 .highlight {
-  border: 1px solid #{$faded};
+  border: 1px solid variables.$faded;
   &:focus {
-    border: 1px solid #{$dark-mode};
+    border: 1px solid variables.$dark-mode;
   }
   &:hover {
-    border: 1px solid #{$dark-mode};
+    border: 1px solid variables.$dark-mode;
   }
 }
 .required {
-  color: #{$danger};
+  color: variables.$danger;
 }
 .active {
-  background-color: #{$dark};
-  color: #{$light};
+  background-color: variables.$dark;
+  color: variables.$light;
 }
 .danger-zone {
   display: flex;

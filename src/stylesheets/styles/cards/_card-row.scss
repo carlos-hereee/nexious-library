@@ -1,21 +1,23 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .card-row-wrapper {
   display: flex;
   flex-direction: column;
 }
 .card-row-container {
-  padding-bottom: #{$rem};
-  border-bottom: 1px solid #{$dark};
+  padding-bottom: variables.$rem;
+  border-bottom: 1px solid variables.$dark;
 }
 .card-row {
   display: flex;
   align-items: center;
-  gap: #{$rem};
-  padding: #{$rem};
+  gap: variables.$rem;
+  padding: variables.$rem;
   width: 100%;
   max-width: 100%;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
   text-align: left;
   @include mixin.devices(mobile) {
     flex-direction: column;
@@ -24,14 +26,14 @@
 }
 .card-row--active {
   padding: 1rem 0;
-  background-color: #{$action-color};
-  border-radius: #{$border-radius};
+  background-color: variables.$action-color;
+  border-radius: variables.$border-radius;
 }
 .card-row-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: #{$rem};
+  gap: variables.$rem;
   width: 100%;
   .read-more-wrapper {
     width: 100%;
@@ -45,13 +47,13 @@
 }
 .card-row-footer {
   display: flex;
-  gap: #{$rem};
+  gap: variables.$rem;
   margin: auto;
 }
 .user-card-row {
   display: flex;
   flex-direction: row;
-  gap: #{$rem};
+  gap: variables.$rem;
   max-width: 100%;
   width: 100%;
 }

@@ -1,19 +1,21 @@
-@use "../../vars/mixin/_index.scss" as mixin;
+@use '../../vars/mixin/_index.scss' as mixin;
+
+@use '../../vars/variables/_index.scss' as variables;
 
 .navigation {
   display: flex;
   align-items: center;
   list-style: none;
-  gap: #{$rem};
+  gap: variables.$rem;
   width: 100%;
-  border-radius: #{$border-radius};
+  border-radius: variables.$border-radius;
 }
 
 .logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: #{$rem};
+  gap: variables.$rem;
   color: inherit;
 }
 .nav-order-first {

@@ -1,45 +1,47 @@
+@use '../../vars/variables/_index.scss' as variables;
+
 // primary light-mode
 .bg-light {
-  background-color: #{$light-primary};
-  color: #{$dark-primary};
+  background-color: variables.$light-primary;
+  color: variables.$dark-primary;
 }
 // primary dark-mode
 .bg-dark {
-  background-color: #{$dark-primary};
-  color: #{$light-primary};
+  background-color: variables.$dark-primary;
+  color: variables.$light-primary;
 }
 .active,
 .bg-dark-alt {
-  background-color: #{$dark};
-  color: #{$light};
+  background-color: variables.$dark;
+  color: variables.$light;
 }
 // dark-mode
 .dark-mode {
-  background-color: #{$dark-mode};
-  color: #{$light-mode};
+  background-color: variables.$dark-mode;
+  color: variables.$light-mode;
 }
 .alt-dark-mode {
-  background-color: #{$dark-mode-alt};
-  color: #{$light-mode};
+  background-color: variables.$dark-mode-alt;
+  color: variables.$light-mode;
   &:disabled {
-    background-color: #{$dark-mode};
-    color: #{$faded};
+    background-color: variables.$dark-mode;
+    color: variables.$faded;
   }
 }
 .bg-light-alt {
-  background-color: #{$light-secondary};
-  color: #{$dark};
+  background-color: variables.$light-secondary;
+  color: variables.$dark;
 }
 // theme light mode
 .light-mode {
-  background-color: #{$light-mode};
-  color: #{$dark-mode};
+  background-color: variables.$light-mode;
+  color: variables.$dark-mode;
 }
 .alt-light-mode {
-  background-color: #{$light-mode-alt};
-  color: #{$dark-mode};
+  background-color: variables.$light-mode-alt;
+  color: variables.$dark-mode;
   &:disabled {
-    background-color: #{$dark-mode-alt};
-    color: #{$faded};
+    background-color: variables.$dark-mode-alt;
+    color: variables.$faded;
   }
 }
