@@ -1,3 +1,4 @@
+import React from "react";
 import type { ButtonProps } from "nxs-button";
 import { PingCount } from "../index";
 
@@ -8,8 +9,11 @@ import { PingCount } from "../index";
  * @param click Callback fired when button is click
  * @returns
  */
-const Button: React.FC<ButtonProps> = (props) => {
-  const { title, theme, label, isDisable, name, ping, children, draggable, ref } = props;
+// React.forwardRef lets consumers attach a ref to the underlying <button> DOM node
+// (e.g. for focus management in modals, or programmatic click triggers).
+// Without forwardRef, passing ref={someRef} on <Button> would silently do nothing.
+const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => {
+  const { title, theme, label, isDisable, name, ping, children, draggable } = props;
   const { onDragStart, onDragEnd, onClick } = props;
 
   // Explicit aria-label from the caller takes priority; fall back to title → label → name.
@@ -19,9 +23,7 @@ const Button: React.FC<ButtonProps> = (props) => {
 
   // className differs only when ping is active (uses btn-ping prefix instead of btn-main).
   // Previously this was two full duplicate <button> blocks — consolidated into one.
-  const className = ping
-    ? theme ? `btn-ping ${theme}` : "btn-main btn-icon"
-    : theme || "btn-main";
+  const className = ping ? (theme ? `btn-ping ${theme}` : "btn-main btn-icon") : theme || "btn-main";
 
   return (
     <button
@@ -41,6 +43,7 @@ const Button: React.FC<ButtonProps> = (props) => {
       {children}
     </button>
   );
-};
+});
 
+Button.displayName = "Button";
 export default Button;

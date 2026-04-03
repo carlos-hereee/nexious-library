@@ -15,9 +15,7 @@ const field = (overrides: Partial<FieldValueProps>): FieldValueProps => ({
 
 describe("useFormValidation — checkRequired", () => {
   it("adds an error when a required field is empty", () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ required: ["username"] })
-    );
+    const { result } = renderHook(() => useFormValidation({ required: ["username"] }));
 
     act(() => {
       result.current.validateForm([field({ name: "username", value: "" })]);
@@ -28,9 +26,7 @@ describe("useFormValidation — checkRequired", () => {
   });
 
   it("passes when a required field has a value", () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ required: ["username"] })
-    );
+    const { result } = renderHook(() => useFormValidation({ required: ["username"] }));
 
     act(() => {
       result.current.validateForm([field({ name: "username", value: "carlos" })]);
@@ -41,9 +37,7 @@ describe("useFormValidation — checkRequired", () => {
   });
 
   it("does not flag non-required empty fields", () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ required: ["username"] })
-    );
+    const { result } = renderHook(() => useFormValidation({ required: ["username"] }));
 
     act(() => {
       result.current.validateForm([field({ name: "bio", value: "" })]);
@@ -102,9 +96,7 @@ describe("useFormValidation — checkEmail", () => {
 
 describe("useFormValidation — validateForm status", () => {
   it("sets status to 'error' when there are validation errors", () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ required: ["name"] })
-    );
+    const { result } = renderHook(() => useFormValidation({ required: ["name"] }));
 
     act(() => {
       result.current.validateForm([field({ name: "name", value: "" })]);
@@ -155,9 +147,7 @@ describe("useFormValidation — checkMatch", () => {
     );
 
     act(() => {
-      result.current.validateForm([
-        field({ name: "confirmPassword", value: "wrong" }),
-      ]);
+      result.current.validateForm([field({ name: "confirmPassword", value: "wrong" })]);
     });
 
     expect(result.current.validationStatus).toBe("error");
@@ -170,9 +160,7 @@ describe("useFormValidation — checkMatch", () => {
     );
 
     act(() => {
-      result.current.validateForm([
-        field({ name: "confirmPassword", value: "secret123" }),
-      ]);
+      result.current.validateForm([field({ name: "confirmPassword", value: "secret123" })]);
     });
 
     expect(result.current.validationStatus).toBe("validated");
@@ -194,9 +182,7 @@ describe("useFormValidation — checkUniqueness", () => {
   });
 
   it("passes when the value is not in the unique list", () => {
-    const { result } = renderHook(() =>
-      useFormValidation({ unique: [{ name: "appName", list: ["myapp"] }] })
-    );
+    const { result } = renderHook(() => useFormValidation({ unique: [{ name: "appName", list: ["myapp"] }] }));
 
     act(() => {
       result.current.validateForm([field({ name: "appName", value: "newapp" })]);

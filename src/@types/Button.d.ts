@@ -35,7 +35,6 @@ declare module "nxs-button" {
     // attribute would be silently dropped at runtime since Button doesn't spread props.
     "aria-label"?: string;
     toggleLabel?: string;
-    ref?: React.RefObject<HTMLButtonElement>;
     label?: string;
     activeTheme?: string;
     ping?: number;

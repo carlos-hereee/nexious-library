@@ -47,6 +47,14 @@ describe("propChecker", () => {
   });
 
   it("passes when every element is an array and target is also an array", () => {
-    expect(propChecker([[1, 2], [3, 4]], [])).toEqual([]);
+    expect(
+      propChecker(
+        [
+          [1, 2],
+          [3, 4],
+        ],
+        []
+      )
+    ).toEqual([]);
   });
 });

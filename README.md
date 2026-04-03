@@ -54,44 +54,44 @@ import { Button, Form, Icon, IconButton, Loading } from "nexious-library";
 
 ## Components
 
-| Component | Description |
-|-----------|-------------|
-| `Header` | App header with navigation, logo, and user menu |
-| `Footer` | App footer |
-| `Calendar` | Full calendar with event support |
-| `CalendarEvents` | Displays a list of calendar events |
-| `Form` | Dynamic form builder from field config |
-| `PaginateForm` | Multi-step paginated form |
-| `Dialog` | Modal dialog wrapper |
-| `ItemDetail` | Labeled detail row |
-| `Socials` | Social media links row |
-| `Button` | Primary button |
-| `ButtonCancel` | Cancel/destructive button |
-| `IconButton` | Icon-only button with accessible `title` prop |
-| `CopyButton` | Copy-to-clipboard button |
-| `HintButton` | Info/hint popover button |
-| `Icon` | FontAwesome icon wrapper |
-| `Hero` | Image/hero display with lazy loading |
-| `Spinner` | Animated loading spinner |
-| `Loading` | Full loading state component |
-| `PageNotFound` | 404 fallback page |
-| `Bubbly` | Decorative bubble background |
-| `Rating` | Star rating display |
-| `Navigation` | Horizontal/vertical nav from menu config |
-| `NavBar` | App navigation bar |
-| `SectionList` | Sectioned content list |
-| `HeroCard` | Card with hero image |
-| `CardTextBubble` | Card with text bubble overlay |
-| `UserCard` | User profile card |
-| `MerchCard` | Product/merch card |
-| `Card` | Generic card container |
-| `Banner` | Announcement banner |
-| `PaymentMethods` | Payment method icons row |
-| `Total` | Order total display |
-| `Cart` | Shopping cart list |
-| `Select` | Styled select dropdown |
-| `ReadMore` | Expandable text block |
-| `HeaderContent` | Header text content block |
+| Component        | Description                                     |
+| ---------------- | ----------------------------------------------- |
+| `Header`         | App header with navigation, logo, and user menu |
+| `Footer`         | App footer                                      |
+| `Calendar`       | Full calendar with event support                |
+| `CalendarEvents` | Displays a list of calendar events              |
+| `Form`           | Dynamic form builder from field config          |
+| `PaginateForm`   | Multi-step paginated form                       |
+| `Dialog`         | Modal dialog wrapper                            |
+| `ItemDetail`     | Labeled detail row                              |
+| `Socials`        | Social media links row                          |
+| `Button`         | Primary button                                  |
+| `ButtonCancel`   | Cancel/destructive button                       |
+| `IconButton`     | Icon-only button with accessible `title` prop   |
+| `CopyButton`     | Copy-to-clipboard button                        |
+| `HintButton`     | Info/hint popover button                        |
+| `Icon`           | FontAwesome icon wrapper                        |
+| `Hero`           | Image/hero display with lazy loading            |
+| `Spinner`        | Animated loading spinner                        |
+| `Loading`        | Full loading state component                    |
+| `PageNotFound`   | 404 fallback page                               |
+| `Bubbly`         | Decorative bubble background                    |
+| `Rating`         | Star rating display                             |
+| `Navigation`     | Horizontal/vertical nav from menu config        |
+| `NavBar`         | App navigation bar                              |
+| `SectionList`    | Sectioned content list                          |
+| `HeroCard`       | Card with hero image                            |
+| `CardTextBubble` | Card with text bubble overlay                   |
+| `UserCard`       | User profile card                               |
+| `MerchCard`      | Product/merch card                              |
+| `Card`           | Generic card container                          |
+| `Banner`         | Announcement banner                             |
+| `PaymentMethods` | Payment method icons row                        |
+| `Total`          | Order total display                             |
+| `Cart`           | Shopping cart list                              |
+| `Select`         | Styled select dropdown                          |
+| `ReadMore`       | Expandable text block                           |
+| `HeaderContent`  | Header text content block                       |
 
 ---
 
@@ -109,15 +109,15 @@ import { Button, Form, Icon, IconButton, Loading } from "nexious-library";
 
 **Key props:**
 
-| Prop | Type | Description |
-|------|------|-------------|
-| `initialValues` | `{ [key: string]: any }` | Required. Initial field values |
-| `onSubmit` | `(values) => void` | Required. Submit handler |
-| `labels` | `{ [key: string]: string }` | Custom field labels |
-| `placeholders` | `{ [key: string]: string }` | Custom placeholders |
-| `schema` | `{ required: string[] }` | Validation schema |
-| `heading` | `string` | Form title |
-| `submitLabel` | `string` | Custom submit button text |
+| Prop            | Type                        | Description                    |
+| --------------- | --------------------------- | ------------------------------ |
+| `initialValues` | `{ [key: string]: any }`    | Required. Initial field values |
+| `onSubmit`      | `(values) => void`          | Required. Submit handler       |
+| `labels`        | `{ [key: string]: string }` | Custom field labels            |
+| `placeholders`  | `{ [key: string]: string }` | Custom placeholders            |
+| `schema`        | `{ required: string[] }`    | Validation schema              |
+| `heading`       | `string`                    | Form title                     |
+| `submitLabel`   | `string`                    | Custom submit button text      |
 
 ---
 
@@ -144,13 +144,7 @@ Pass any icon name string to `Icon` or `IconButton` via the `icon` prop:
 ## Utilities
 
 ```ts
-import {
-  uniqueId,
-  combineArraysWithOutDups,
-  objToArray,
-  capFirstCharacter,
-  urlFile,
-} from "nexious-library";
+import { uniqueId, combineArraysWithOutDups, objToArray, capFirstCharacter, urlFile } from "nexious-library";
 ```
 
 ---

@@ -46,3 +46,6 @@ export { default as Socials } from "@nxs-template/Socials";
 // form components
 export { default as Select } from "@nxs-molecules/forms/Select";
 export { default as Rating } from "@nxs-molecules/assets/Rating";
+// public hooks — lets consumers build custom form UIs using the same validation and state logic
+export { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
+export { useValues } from "@nxs-utils/hooks/useFormValues";
