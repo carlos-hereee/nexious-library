@@ -4,9 +4,8 @@ const Image = (props: HeroProps) => {
   const { theme, onImageClick, imageRef, hero, onImageLoad } = props;
 
   if (!hero.url) {
+    // aria-label: visible content is "?" — give assistive tech a meaningful label
     return (
-      {/* Added aria-label: the visible content is just "?" which screen readers
-          would announce literally. This gives assistive tech a meaningful label. */}
       <button
         name="unknown-img"
         type="button"

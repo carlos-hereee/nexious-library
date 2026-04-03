@@ -1,12 +1,12 @@
 {
   "name": "nexious-library",
   "version": "2.9.5",
-  "description": "Official database for nexious.tech",
+  "description": "React component library powering companyuno.com — includes Calendar, Form, Dialog, Navigation, Checkout components and more",
   "type": "module",
   "types": "dist/@types",
   "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
-  "homepage": "https://github.com/carlos-hereee/nexious-library#readme",
+  "homepage": "https://www.companyuno.com",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
   "exports": {
@@ -122,13 +122,20 @@
     "modulePathIgnorePatterns": ["/.claude/"]
   },
   "keywords": [
-    "css",
+    "react",
+    "component-library",
+    "ui-library",
+    "ui-components",
+    "business",
+    "calendar",
+    "form",
+    "checkout",
+    "navigation",
+    "typescript",
     "sass",
     "mobile-first",
     "responsive",
-    "front-end",
-    "react",
-    "react-vite"
+    "companyuno"
   ],
   "repository": {
     "type": "git",

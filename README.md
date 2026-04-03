@@ -1,246 +1,175 @@
-# NEXIOUS LIBRARY
+# nexious-library
 
-<!-- - Official database for nexious.tech -->
+> React component library powering [companyuno.com](https://www.companyuno.com)
 
-## Download
+[![npm version](https://img.shields.io/npm/v/nexious-library)](https://www.npmjs.com/package/nexious-library)
+[![license](https://img.shields.io/npm/l/nexious-library)](./LICENSE)
 
-- npm
-  - npm i -S nexious-library
-- Yarn:
-  - yarn add nexious-library
+A TypeScript-first React component library with built-in Calendar, Form, Navigation, Checkout, and more — designed for business apps.
 
-## Setting up TS its a starter guide
+---
 
-1. download typescript and associated types as dev dependency
-2. create ts.config.json for ts linting
+## Install
 
-   - tsconfig.json
+```bash
+npm i nexious-library
+```
 
-   ```text
-       {
-         "compilerOptions": {
-           "target": "ES2022", // if code runs on the browser Set the JavaScript language version for emitted JavaScript and include compatible library declarations. */,
-           "module": "ES2020",
-           "moduleResolution": "Node",
-           "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
-           "allowSyntheticDefaultImports": true, // e.i import package from 'library'
-           "jsx": "react-jsx" /* Specify what JSX code is generated. */,
-           "baseUrl": "src" /* Specify the base directory to resolve non-relative module names. */,
-           "paths": {
-             // "@context/*": ["src/utils/context/*"]
-           } // Specify a set of entries that re-map imports to additional lookup locations. */,
-           "forceConsistentCasingInFileNames": true,
-           "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,
-           "sourceMap": true /* Create source map files for emitted JavaScript files. */,
-           "outDir": "dist" /* Specify an output folder for all emitted files. */,
-           "isolatedModules": true,
-           "strict": true /* Enable all strict type-checking options. */,
-           "lib": ["ES5", "ES2015", "ES2016", "DOM", "ESNext", "DOM.Iterable"],
-           "declarationMap": true /* Create sourcemaps for d.ts files. */,
-           "inlineSources": true /* Include source code in the sourcemaps inside the emitted JavaScript. */
-         },
-         "include": ["src/*"],
-         "exclude": ["node_modules"]
-       }
+## Setup
 
-   ```
+Import the stylesheet once in your app entry file:
 
-3. update index.html script tag to point to new ts file
-   - old index.html = `<script type="module" src="/src/main.jsx"></script>`
-   - new index.html = `<script type="module" src="/src/main.tsx"></script>`
-4. update scripts in package.json file to include a watch file to watch for changes
-   - add command `"watch": "tsc -p tsconfig.json -w"`
-5. if you are adding typescript to an existing application dont rename files manually.
-   - run terminal on root `cd node_modules/nexious-library && npm run renameFile src 'jsx' 'tsx'`
-   - this command takes 3 required arguments:
-     1. first is the path usually src
-     2. second is the file extension of the files you want to rename probably 'jsx'
-     3. third is the desired file extension name
-   - this will run a shell script. that will:
-     - rename all files to desired the extention name in the desired path
+```ts
+import "nexious-library/@index.css";
+```
 
-## Techstack
+---
 
-  <!-- 1. Style guide used [Eslint + Airbnb + Prettier configuration guide]( https://medium.com/@ErikKyleNielsen/setting-up-eslint-prettier-airbnb-base-and-typescript-27b3f9538f0d) -->
+## Quick Start
 
-1. This app was built using typescript scss and compiles to js and css
-2. Typescript
-3. Javascript
-4. Vite + React
+```tsx
+import { Button, Form, Icon, IconButton, Loading } from "nexious-library";
 
-## Import CSS
+// Button
+<Button label="Get started" onClick={() => {}} />
 
-- find your index file and add `import "nexious-library/@index.css"`
+// Icon (see icon list below)
+<Icon icon="heart" name="Like" />
 
-## Usage
+// IconButton — always pass a title for accessibility
+<IconButton icon={{ icon: "edit" }} title="Edit item" onClick={() => {}} />
 
-Works out of the box with following initial props:
+// Loading state
+<Loading />
 
-1. Calendar Usage
+// Form
+<Form
+  name="contact"
+  initialValues={{ email: "", message: "" }}
+  onSubmit={(values) => console.log(values)}
+/>
+```
 
-   - value is the only as required prop used to tell the component currentdate value
-   - Outputs Calendar with month as default view:
+---
 
-   ```text
-       <Calendar
-         <!-- required props -->
-           value: Date; for initial date use today = new Date();
-         <!-- optional props -->
-           minDate?: Date; the mininum date the calendar will go back
-           onDayClick?: (e: unknown) => void; when day is clicked
-           setDay?: (a: unknown) => void; set new current date
-           theme?: string;
-           events?: [
-             <!-- display calendar events on calendar -->
-             {
-             date: string;
-             list: [{
-                     date: string;
-                     start: number,
-                     end: number,
-                     isOpen:boolean,
-                     uid: string
-               }]}];
-       />
-   ```
+## Components
 
-2. Form Usage:
+| Component | Description |
+|-----------|-------------|
+| `Header` | App header with navigation, logo, and user menu |
+| `Footer` | App footer |
+| `Calendar` | Full calendar with event support |
+| `CalendarEvents` | Displays a list of calendar events |
+| `Form` | Dynamic form builder from field config |
+| `PaginateForm` | Multi-step paginated form |
+| `Dialog` | Modal dialog wrapper |
+| `ItemDetail` | Labeled detail row |
+| `Socials` | Social media links row |
+| `Button` | Primary button |
+| `ButtonCancel` | Cancel/destructive button |
+| `IconButton` | Icon-only button with accessible `title` prop |
+| `CopyButton` | Copy-to-clipboard button |
+| `HintButton` | Info/hint popover button |
+| `Icon` | FontAwesome icon wrapper |
+| `Hero` | Image/hero display with lazy loading |
+| `Spinner` | Animated loading spinner |
+| `Loading` | Full loading state component |
+| `PageNotFound` | 404 fallback page |
+| `Bubbly` | Decorative bubble background |
+| `Rating` | Star rating display |
+| `Navigation` | Horizontal/vertical nav from menu config |
+| `NavBar` | App navigation bar |
+| `SectionList` | Sectioned content list |
+| `HeroCard` | Card with hero image |
+| `CardTextBubble` | Card with text bubble overlay |
+| `UserCard` | User profile card |
+| `MerchCard` | Product/merch card |
+| `Card` | Generic card container |
+| `Banner` | Announcement banner |
+| `PaymentMethods` | Payment method icons row |
+| `Total` | Order total display |
+| `Cart` | Shopping cart list |
+| `Select` | Styled select dropdown |
+| `ReadMore` | Expandable text block |
+| `HeaderContent` | Header text content block |
 
-   - initialValues and onSubmit as required props
+---
 
-   ```text
-     <Form
-       <!-- required props -->
-       initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
-       formId: string;                        // give your form an Id, is only required with Paginate Form
-       <!-- optional -->
-       heading?: string;                      // title of the form
-       previewLabel?: string;                 // add preview label for button to view changes on form
-       responseErr?: string;                  // add error message after AJAX request failed
-       submitLabel?: string;                  // use your custom submit button label
-       theme?: string;                        // overwrite styling with your own
-       hideLabels?: boolean;                  // hide form labels
-       hideSubmit?: boolean;                  // hide submit button
-       withFileUpload?: boolean;              // this is required to upload files
-      dataList?: {[key:string]:  {            // name of field affected
-          name:"",
-         value:"",
-          label:""
-         } []} // data list for field with input type === select
-       labels?:  {[key: string]: string} ;      // use your custom labels for your form field  e.g. { appName:"enter new app name " }
-       placeholders?:  {[key: string]: string}; // use your custom placeholders
-       types?:  {[key: string]: string};       // use your custom field types
-       schema?: {
-         required: string[], // field name of required data
-          unique?: {
-            name: "" // field name affected
-            list: string[] // fist of string values that data cannot be
-            }
-        };       // enter your desired schema for
-       fieldHeading?: { [key: string]: string }; // enter custom field heading
-       addEntry?: {                           // works with type ="checkbox" and adds new field values when a
-         [key: string]: {                      // name of field affected
-           additionLabel: string;
-           removalLabel: string;
-           initialValues: {[key:string]:any};
-           fieldHeading: string;
-           labels?:  {[key: string]: string} ;
-           placeholders?:  {[key: string]: string} ;
-           types?:  {[key: string]: string} ;
-           canMultiply?: boolean;
-         };
-       };
-       onSubmit?: (e: any) => void;            // create your custom submit function it will work with out it but it will do nothing
-       onChange?: (e: any) => void;           // create your custom onChange event handlers
-       onCancel?: () => void;           // add custom function for cancelling
-       onViewPreview?: (e: any) => void;           // create your custom function to view data
-     />
-   ```
+## Form Usage
 
-3. PaginatedForm Usage
+```tsx
+<Form
+  name="contact"
+  initialValues={{ email: "", message: "" }}
+  onSubmit={(values) => handleSubmit(values)}
+  labels={{ email: "Your email", message: "Your message" }}
+  schema={{ required: ["email"] }}
+/>
+```
 
-   - paginate is array with initialValues and onSubmit as required props
+**Key props:**
 
-   ```text
-     <PaginateForm
-       <!-- required props -->
-         paginate: [
-           {
-                  <!-- required props -->
-            initialValues: { [key:string]:any };   // e.g. { appName:"", isNewApp:true }
-            formId: string;                        // give your form an Id, is only required with Paginate Form
-            <!-- optional -->
-            heading?: string;                      // title of the form
-            previewLabel?: string;                 // add preview label for button to view changes on form
-            responseErr?: string;                  // add error message after AJAX request failed
-            submitLabel?: string;                  // use your custom submit button label
-            theme?: string;                        // overwrite styling with your own
-            hideLabels?: boolean;                  // hide form labels
-            hideSubmit?: boolean;                  // hide submit button
-            withFileUpload?: boolean;              // this is required to upload files
-            dataList?: {[key:string]:  {            // name of field affected
-                name:"",
-              value:"",
-                label:""
-              } []} // data list for field with input type === select
-            labels?:  {[key: string]: string} ;      // use your custom labels for your form field  e.g. { appName:"enter new app name " }
-            placeholders?:  {[key: string]: string}; // use your custom placeholders
-            types?:  {[key: string]: string};       // use your custom field types
-            schema?: {
-              required: string[], // field name of required data
-                unique?: {
-                  name: "" // field name affected
-                  list: string[] // fist of string values that data cannot be
-                  }
-              };       // enter your desired schema for
-            fieldHeading?: { [key: string]: string }; // enter custom field heading
-            addEntry?: {                           // works with type ="checkbox" and adds new field values when a
-              [key: string]: {                      // name of field affected
-                additionLabel: string;
-                removalLabel: string;
-                initialValues: {[key:string]:any};
-                fieldHeading: string;
-                labels?:  {[key: string]: string} ;
-                placeholders?:  {[key: string]: string} ;
-                types?:  {[key: string]: string} ;
-                canMultiply?: boolean;
-              };
-            };
-            onSubmit?: (e: any) => void;            // create your custom submit function it will work with out it but it will do nothing
-            onChange?: (e: any) => void;           // create your custom onChange event handlers
-            onCancel?: () => void;           // add custom function for cancelling
-            onViewPreview?: (e: any) => void;           // create your custom function to view data
-      }   ];
-         onFormSumbit={(e:any)=>void }                     // create your custom onFormSubmit function
-       <!-- optional props -->
-         navigationHeading?: string ;                   // add custom navigation title
-            theme?: string;                        // overwrite styling with your own
-         page?: number;                                   //  default is 0
-         responseErr?: string;                  // add error message after AJAX request failed
-         order?: string[]; default is orginal order      // use your custom order to traverse form
-         previewPage?: <YourOwnComponent  preview={formData} />;                  // add your own custom component
-         hideNavigation?: boolean;                     //  hide paginated navigation
-         setNewPage={(e:any)=>void }                     //   create your custom setNewPage function
-         onCancel={(e:any)=>void }                     //   cancel form function
-         onPageClick={(e:any)=>void }                     //   navigation button pressed
-         onDialogClose={(e:any)=>void }                     //   Dialog close button pressed
-     />
-   ```
+| Prop | Type | Description |
+|------|------|-------------|
+| `initialValues` | `{ [key: string]: any }` | Required. Initial field values |
+| `onSubmit` | `(values) => void` | Required. Submit handler |
+| `labels` | `{ [key: string]: string }` | Custom field labels |
+| `placeholders` | `{ [key: string]: string }` | Custom placeholders |
+| `schema` | `{ required: string[] }` | Validation schema |
+| `heading` | `string` | Form title |
+| `submitLabel` | `string` | Custom submit button text |
 
-Visit <www.nexious.tech/docs> for more advanced settings
+---
 
-## MORE COMING SOON
+## Calendar Usage
 
-With more comming soon
+```tsx
+<Calendar
+  value={new Date()}
+  onDayClick={(date) => console.log(date)}
+  events={[{ date: "2025-06-15", list: [...] }]}
+/>
+```
 
-<!--
-TODO:
-## Rename files in directory
+---
 
-Auto rename files from .js to jsx run on terminal:
+## Icon System
 
-- npx nexious-library rename.sh
+Pass any icon name string to `Icon` or `IconButton` via the `icon` prop:
 
-Auto rename files from .jsx to tsx run on terminal:
+`about` `account` `all` `app` `apps` `appointments` `arrowUp` `arrowDown` `back` `bell` `bellSlash` `booking` `booked` `bug` `burger` `cancel` `cashapp` `check` `checkout` `circle` `close` `comment` `confirm` `contact` `copy` `cross` `dashboard` `discord` `dot` `edit` `explore` `eye` `eyeSlash` `facebook` `FAQ` `first` `flag` `flagEnglish` `games` `github` `goBack` `heart` `hint` `home` `instagram` `last` `left` `leftArrow` `linkedin` `listCheck` `loading` `login` `logout` `manicure` `mastercard` `minus` `nail` `next` `0`–`9` `paypal` `pedicure` `plus` `plusSquare` `prev` `pricing` `refresh` `reply` `right` `save` `schedule` `scroll` `secure` `services` `shopping` `spinner` `squarePlus` `star` `store` `submit` `testimonials` `thinking` `tiktok` `today` `top` `twitter` `uncheck` `user` `visa` `wig` `x`
 
-- npx nexious-library renameToTsx.sh -->
+---
+
+## Utilities
+
+```ts
+import {
+  uniqueId,
+  combineArraysWithOutDups,
+  objToArray,
+  capFirstCharacter,
+  urlFile,
+} from "nexious-library";
+```
+
+---
+
+## Peer Dependencies
+
+```json
+"react": ">=18.0.0",
+"react-dom": ">=18.0.0"
+```
+
+---
+
+## Documentation
+
+Full docs at [www.companyuno.com](https://www.companyuno.com)
+
+---
+
+## License
+
+MIT © [carlos-hereee](https://github.com/carlos-hereee)

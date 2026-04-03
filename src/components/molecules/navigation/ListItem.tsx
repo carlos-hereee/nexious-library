@@ -1,4 +1,5 @@
-import { Button, IconButton } from "main";
+import Button from "@nxs-atoms/buttons/Button";
+import IconButton from "@nxs-molecules/buttons/IconButton";
 import type { MenuProp } from "nxs-navigation";
 
 interface ListItemProps {
