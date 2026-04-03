@@ -1,6 +1,6 @@
 {
   "name": "nexious-library",
-  "version": "2.9.5",
+  "version": "3.0.0",
   "description": "React component library powering companyuno.com — includes Calendar, Form, Dialog, Navigation, Checkout components and more",
   "type": "module",
   "types": "dist/@types",
