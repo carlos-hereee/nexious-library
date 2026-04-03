@@ -4,6 +4,10 @@ import type { KeyStringProp } from "custom-props";
 import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
 
+// Minimal RFC-compliant email check: requires local@domain.tld with no spaces.
+// Covers the vast majority of real-world addresses without over-engineering.
+const validateEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
 export const useFormValidation = (schema: ValidateProps) => {
   const { required, unique, match, strictCheckbox } = schema;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
@@ -19,27 +23,32 @@ export const useFormValidation = (schema: ValidateProps) => {
 
   const checkRequired = (current: FieldValueProps) => {
     if (required) {
-      // only check if its required
       const { name, value } = current;
       if (required.includes(name)) {
-        // add error message based on value exists else remove error message
         if (!value) return `**Required`;
       }
     }
     return "";
   };
+
+  const checkEmail = (current: FieldValueProps): string => {
+    const { name, value } = current;
+    // only validate fields named "email" that have a value
+    // (empty email is caught by checkRequired if the field is required)
+    if (name === "email" && value) {
+      if (!validateEmail(value as string)) return "should be a valid email address";
+    }
+    return "";
+  };
+
   const checkInverseCheckbox = ({ current, inverseCheckbox, oldValues }: ValidateInverseCheckbox) => {
-    // only check if its required
     if (strictCheckbox) {
       const isMain = strictCheckbox.findIndex((box) => box.main === current.name);
-      // inverse checkbox
       if (isMain >= 0 && current.value) {
         oldValues = inverseCheckbox(strictCheckbox[isMain].inverse, !current.value, oldValues);
       } else if (current.value) {
         const idx = strictCheckbox.findIndex((box) => box.inverse.includes(current.name));
-        // find main
         const mainIdx = oldValues.findIndex((val) => val.name === strictCheckbox[idx].main);
-        // turn off main if on
         if (oldValues[mainIdx].value) {
           oldValues = inverseCheckbox([strictCheckbox[idx].main], false, oldValues);
         }
@@ -47,6 +56,7 @@ export const useFormValidation = (schema: ValidateProps) => {
     }
     return oldValues;
   };
+
   const checkCount = (current: FieldValueProps) => {
     if (schema.count && schema.count[current.name]) {
       if (schema.count[current.name].max < parseInt(current.value as string, 10)) {
@@ -62,15 +72,10 @@ export const useFormValidation = (schema: ValidateProps) => {
   const checkUniqueness = (field: FieldValueProps) => {
     if (unique) {
       const { fieldId, name, value } = field;
-      // find requirements list
       const uniqueIdx = unique.findIndex((list) => list.name === name);
-      // if requirements for unique schema are found
       if (uniqueIdx >= 0 && typeof value === "string") {
-        // find unique list
         const valueIdx = unique[uniqueIdx].list.findIndex((l) => l === value);
-        // if found add error
         if (valueIdx >= 0) {
-          // reset success message if any
           setFormMessage({ ...formMessage, [fieldId]: "" });
           return "already exist try a something different";
         }
@@ -79,62 +84,49 @@ export const useFormValidation = (schema: ValidateProps) => {
     }
     return "";
   };
+
   const checkMatch = (field: FieldValueProps) => {
     if (match) {
       const { name, value } = field;
       const matchIdx = match.findIndex((list) => list.name === name);
-      // must match found and values dont match
       if (matchIdx >= 0 && value !== match[matchIdx].value) {
         return `value must match ${match[matchIdx].value}`;
       }
     }
     return "";
   };
+
   const validateForm = (values: FieldValueProps[], status?: ValidateFormStatus) => {
     const errors: KeyStringProp = {};
     values.forEach((current) => {
       const c = checkCount(current);
       if (c) errors[current.fieldId] = c;
-      // check required first and then uniqueness
       const require = checkRequired(current);
       if (require) errors[current.fieldId] = require;
+      // validate email format when the field is named "email"
+      const emailMsg = checkEmail(current);
+      if (emailMsg) errors[current.fieldId] = emailMsg;
       const uniqueMsg = checkUniqueness(current);
       if (uniqueMsg) errors[current.fieldId] = uniqueMsg;
       const matchMsg = checkMatch(current);
       if (matchMsg) errors[current.fieldId] = matchMsg;
     });
-    // if no errors update status if given
-    if (status && Object.keys(errors).length === 0) setStatus(status);
-    // otherwise update status to validated
-    else setStatus("validated");
+
+    // BUG WAS HERE: the original else branch unconditionally set "validated" even
+    // when errors were found. This meant form submissions with errors could appear
+    // to succeed. Fix: check errors first, then honor the requested status.
+    if (Object.keys(errors).length > 0) {
+      // validation found problems — always signal error regardless of requested status
+      setStatus("error");
+    } else if (status) {
+      // no errors and caller requested a specific follow-up status (e.g. "green" to submit)
+      setStatus(status);
+    } else {
+      // no errors, no specific status requested — mark as clean
+      setStatus("validated");
+    }
     setFormErrors(errors);
   };
 
   return { validationStatus, formErrors, setFormErrors, setStatus, validateForm, formMessage, checkInverseCheckbox };
 };
-
-/**
- * 
- * TODO: OTHER VALIDATION
- *  // validate email
-        if (current === "email" && !validateEmail(values[current])) {
-          return getLabel(current, label) + " " + "should be a valid email address";
-        }
-        // confirm matching passwords
-        if (current === "newPassword") {
-          if (isMatch(values["oldPassword"], values["newPassword"])) {
-            return getLabel(current, label) + " " + "must be different than previous password";
-          }
-        }
-        if (current === "confirmNewPassword") {
-          if (!isMatch(values["newPassword"], values["confirmNewPassword"])) {
-            return getLabel(current, label) + " " + "must match new password";
-          }
-        }
-        if (current === "confirmPassword") {
-          if (!isMatch(values["password"], values[current])) {
-            return getLabel(current, label) + " " + " must match password";
-          }
-        }
-      }
- */

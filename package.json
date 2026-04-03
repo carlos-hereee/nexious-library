@@ -122,6 +122,10 @@
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.4.2",
     "@fortawesome/free-brands-svg-icons": "^6.4.2",

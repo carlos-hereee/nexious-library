@@ -6,36 +6,58 @@ import { arrayLen } from "@nxs-utils/tsChecker/isArray";
 export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
-  // const [warnings, setWarningsHandling] = useState<ErrorMessageProp[]>([]);
 
   useEffect(() => {
-    // use light system to determine danger levels
+    // reset on every run before checking
     setLightColor("green");
     setErrors([]);
-    // reset errors to avoid redundant data
+
     const missingProps = (name: string) => {
       setLightColor("red");
-      const oldValues = [...errors];
-      const errorIdx = oldValues.findIndex((oldVal) => oldVal.name === name);
-      oldValues[errorIdx] = {
-        prop: name,
-        code: "missingProps",
-        isAProp: !!isAProp,
-        value: props[name],
-        name,
-      };
-      setErrors(oldValues);
+      // Use the functional update form of setErrors so each call reads the latest
+      // array instead of the stale closure value captured when the effect first ran.
+      // Without this, every call overwrites with the initial [] and only the last
+      // error survives.
+      setErrors((prev) => {
+        const newError: ErrorMessageProp = {
+          prop: name,
+          code: "missingProps",
+          isAProp: !!isAProp,
+          value: props[name],
+          name,
+        };
+        const errorIdx = prev.findIndex((e) => e.name === name);
+        if (errorIdx >= 0) {
+          // update existing entry if already recorded
+          const updated = [...prev];
+          updated[errorIdx] = newError;
+          return updated;
+        }
+        return [...prev, newError];
+      });
     };
+
     Object.keys(props).forEach((key) => {
-      const propType = typeof props[key];
-      // check required
-      if (propType) return;
-      if (!propType || !props[key]) missingProps(key);
-      else if (propType === "object" && objLength(props[key]) < 0) missingProps(key);
-      else if (arrayLen(props[key]) === 0) missingProps(key);
+      const value = props[key];
+      const propType = typeof value;
+
+      // BUG WAS HERE: `if (typeof props[key]) return` always fired because typeof
+      // always returns a non-empty string ("undefined", "string", "object", etc.)
+      // which is always truthy — so validation never ran.
+      // Fix: check the actual value, not its type string.
+
+      if (value === undefined || value === null || value === "") {
+        // value is missing entirely
+        missingProps(key);
+      } else if (propType === "object" && !Array.isArray(value) && objLength(value) < 0) {
+        // object exists but has no valid keys
+        missingProps(key);
+      } else if (Array.isArray(value) && arrayLen(value) === 0) {
+        // array exists but is empty
+        missingProps(key);
+      }
     });
   }, []);
 
-  // return { lightColor, errors, setErrors, warnings, setLightColor };
   return { lightColor, errors, setErrors, setLightColor };
 };

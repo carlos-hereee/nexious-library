@@ -30,7 +30,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { values, entryValues, activeEntry, setValues, setEntries, addNewEntry, setActiveEntry, addExtraEntry } =
     useValues();
   const { direction, handleScroll, showScroll, watchElement } = useScroll();
-  const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals || true);
+  // BUG WAS HERE: `|| true` means even confirmRemovals={false} initialised to true.
+  // `??` (nullish coalescing) only falls back when the value is undefined or null.
+  const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals ?? true);
 
   useEffect(() => {
     if (initialValues) {
@@ -45,8 +47,13 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
 
   useEffect(() => {
     if (validationStatus === "green") {
-      // require key variable
-      if (!onSubmit) throw Error("onSubmit is required");
+      // BUG WAS HERE: throwing inside useEffect crashes the entire component tree with no
+      // recovery path. Log the error and bail gracefully instead.
+      if (!onSubmit) {
+        console.error("Form: onSubmit prop is required to handle form submission.");
+        setStatus(null);
+        return;
+      }
       // submit regular form
       if (!withFileUpload && !addEntry) onSubmit(formatFormData(values));
       // submit regular form with entry values
@@ -157,28 +164,30 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
 
   const handleRemovalClick = (groupName: string, idx: number) => {
-    // find field key
     const entryKey = activeEntry[groupName];
     const fieldEntry = entryValues[groupName][entryKey];
-    // remove field
-    delete entryValues[groupName][entryKey];
-    // if it was the only entry in list
-    if (Object.keys(entryValues[groupName]).length === 0) {
+
+    // BUG WAS HERE: `delete entryValues[groupName][entryKey]` mutated the state object
+    // directly. React compares references, so it couldn't detect the change and components
+    // wouldn't re-render. Fix: build a new copy and delete from that.
+    const updatedGroup = { ...entryValues[groupName] };
+    delete updatedGroup[entryKey];
+
+    if (Object.keys(updatedGroup).length === 0) {
       const { group } = fieldEntry[0];
-      // update group origin value
       const valuesIdx = values.findIndex((val) => val.name === group);
-      values[valuesIdx].value = false;
-      //   remove group
-      const removedField = values.filter((val) => val.group !== group);
+      // BUG WAS HERE: `values[valuesIdx].value = false` mutated state directly.
+      // Fix: use map to produce a new array with the updated item.
+      const removedField = values
+        .map((val, i) => (i === valuesIdx ? { ...val, value: false } : val))
+        .filter((val) => val.group !== group);
       setValues(removedField);
     } else {
-      // update active entry
-      const entryList = Object.keys(entryValues[groupName]);
+      const entryList = Object.keys(updatedGroup);
       if (entryList[idx]) setActiveEntry({ [groupName]: entryList[idx] });
       else setActiveEntry({ [groupName]: entryList[idx - 1] });
     }
-    // lastly update entries
-    setEntries({ ...entryValues, [groupName]: { ...entryValues[groupName] } });
+    setEntries({ ...entryValues, [groupName]: updatedGroup });
   };
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 

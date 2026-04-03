@@ -5,10 +5,13 @@ const Image = (props: HeroProps) => {
 
   if (!hero.url) {
     return (
+      {/* Added aria-label: the visible content is just "?" which screen readers
+          would announce literally. This gives assistive tech a meaningful label. */}
       <button
         name="unknown-img"
         type="button"
         className="preview-hero-empty highlight"
+        aria-label="No image available"
         onClick={onImageClick}
         disabled={!onImageClick}
       >

@@ -30,6 +30,10 @@ declare module "nxs-button" {
     onDragEnd?: (e: React.DragEvent<HTMLButtonElement>) => void;
     // onDragStart?: (event: React.DragEventHandler<HTMLButtonElement>) => void;
     title?: string;
+    // Added: callers (e.g. nexious-client's CardHeader/CloseHeader) pass aria-label="Close"
+    // directly on <Button>. Without this field, TypeScript would reject it and the
+    // attribute would be silently dropped at runtime since Button doesn't spread props.
+    "aria-label"?: string;
     toggleLabel?: string;
     ref?: React.RefObject<HTMLButtonElement>;
     label?: string;

@@ -95,21 +95,10 @@ export const useValues = () => {
   };
 
   const setValues = (oldValues: FieldValueProps[]) => {
-    setNewValues([]);
+    // BUG WAS HERE: clearing then immediately re-setting caused two renders where one is enough.
+    // The double-set was a workaround for React not detecting mutations to the same array reference.
+    // Now that Form.tsx never mutates state objects in place, a single set is correct.
     setNewValues(oldValues);
   };
-  // const setActiveEntryEntry = (n: KeyStringProp) => {
-  //   console.log("n :>> ", n);
-  //   // console.log("entries :>> ", entries);
-  //   // setActiveEntry();
-  // };
   return { values, entryValues, activeEntry, setValues, addNewEntry, setActiveEntry, setEntries, addExtraEntry };
 };
-// const formatEntry = (props: FormatEntryProps) => {
-//   const { addEntry, target, oldValues } = props;
-//   const { canMultiply, additionLabel, removalLabel } = addEntry;
-//   oldValues[oldValues.length - 1].canMultiply = canMultiply || false;
-//   oldValues[oldValues.length - 1].canRemove = true;
-//   oldValues[oldValues.length - 1].onMultiply = { additionLabel, name: target, removalLabel };
-//   return oldValues;
-// };

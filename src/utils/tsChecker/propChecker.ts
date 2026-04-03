@@ -1,13 +1,21 @@
+// Checks whether two values are the same type, handling the cases where
+// typeof alone is not enough:
+//   - typeof null === "object" (same as a real object)
+//   - typeof [] === "object"   (same as a plain object)
+// Without these guards, propChecker would accept an array where an object
+// is expected, or vice versa.
+const isSameType = (a: unknown, b: unknown): boolean => {
+  if (typeof a !== typeof b) return false;
+  // both are "object" — distinguish null, array, and plain object
+  if (a === null || b === null) return a === null && b === null;
+  if (Array.isArray(a) !== Array.isArray(b)) return false;
+  return true;
+};
+
 export const propChecker = <C>(arr: unknown, target: C): null | C => {
   if (!Array.isArray(arr)) return null;
 
-  // keep track if prop type is a match
-  let isMatch = true;
-  for (let index = 0; index < arr.length; index += 1) {
-    if (!isMatch) break;
-    // if element is not targets type update tracker
-    if (typeof arr[index] !== typeof target) isMatch = false;
-  }
-  // if match passes return target type else return null
-  return isMatch ? target : null;
+  // every element must match the type of the target value
+  const allMatch = arr.every((item) => isSameType(item, target));
+  return allMatch ? target : null;
 };
