@@ -16,21 +16,25 @@
     "esModuleInterop": true /* Emit additional JavaScript to ease support for importing CommonJS modules. This enables 'allowSyntheticDefaultImports' for type compatibility. */,
     "allowSyntheticDefaultImports": true, // e.i import package from 'library'
     "jsx": "react-jsx" /* Specify what JSX code is generated. */,
-    "baseUrl": "./src" /* Specify the base directory to resolve non-relative module names. */,
+    // rootDir tells TypeScript where source files start so the output structure
+    // mirrors src/ correctly inside dist/. Required when baseUrl is not set.
+    "rootDir": "./src",
+    // baseUrl was removed: it is deprecated in TS ≥6 with moduleResolution "Bundler"
+    // and will stop working in TS 7. Paths below are now relative to this config file.
     "paths": {
-      "@nxs-atoms/*": ["components/atoms/*"],
-      "@nxs-atoms": ["components/atoms"],
-      "@nxs-molecules/*": ["components/molecules/*"],
-      "@nxs-molecules": ["components/molecules"],
-      "@nxs-organism/*": ["components/organism/*"],
-      "@nxs-organism": ["components/organism"],
-      "@nxs-template/*": ["components/template/*"],
-      "@nxs-template": ["components/template"],
-      "@nxs-utils/*": ["utils/*"],
-      "@nxs-utils": ["utils"],
-      "@nxs-math/*": ["math/*"],
-      "@nxs-math": ["math"],
-      "@nxs-helpers/*": ["helpers/*"]
+      "@nxs-atoms/*": ["./src/components/atoms/*"],
+      "@nxs-atoms": ["./src/components/atoms"],
+      "@nxs-molecules/*": ["./src/components/molecules/*"],
+      "@nxs-molecules": ["./src/components/molecules"],
+      "@nxs-organism/*": ["./src/components/organism/*"],
+      "@nxs-organism": ["./src/components/organism"],
+      "@nxs-template/*": ["./src/components/template/*"],
+      "@nxs-template": ["./src/components/template"],
+      "@nxs-utils/*": ["./src/utils/*"],
+      "@nxs-utils": ["./src/utils"],
+      "@nxs-math/*": ["./src/math/*"],
+      "@nxs-math": ["./src/math"],
+      "@nxs-helpers/*": ["./src/helpers/*"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "forceConsistentCasingInFileNames": true,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,

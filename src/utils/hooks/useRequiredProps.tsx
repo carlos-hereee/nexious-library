@@ -49,8 +49,9 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
       if (value === undefined || value === null || value === "") {
         // value is missing entirely
         missingProps(key);
-      } else if (propType === "object" && !Array.isArray(value) && objLength(value) < 0) {
-        // object exists but has no valid keys
+      } else if (propType === "object" && !Array.isArray(value) && objLength(value) === 0) {
+        // object exists but is empty — objLength returns Object.keys().length which
+        // is always >= 0, so `< 0` could never fire; `=== 0` catches empty objects
         missingProps(key);
       } else if (Array.isArray(value) && arrayLen(value) === 0) {
         // array exists but is empty

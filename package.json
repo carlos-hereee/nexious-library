@@ -100,7 +100,26 @@
     "build:alias": "npm run clean && npm run compile:alias && npm run sass",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
-    "release:major": "npm run build && npm version major && npm publish"
+    "release:major": "npm run build && npm version major && npm publish",
+    "test": "jest",
+    "test:watch": "jest --watch"
+  },
+  "jest": {
+    "preset": "ts-jest",
+    "testEnvironment": "jsdom",
+    "testMatch": ["**/src/__tests__/**/*.test.ts", "**/src/__tests__/**/*.test.tsx"],
+    "moduleNameMapper": {
+      "@nxs-atoms/(.*)": "<rootDir>/src/components/atoms/$1",
+      "@nxs-molecules/(.*)": "<rootDir>/src/components/molecules/$1",
+      "@nxs-organism/(.*)": "<rootDir>/src/components/organism/$1",
+      "@nxs-template/(.*)": "<rootDir>/src/components/template/$1",
+      "@nxs-utils/(.*)": "<rootDir>/src/utils/$1",
+      "@nxs-math/(.*)": "<rootDir>/src/math/$1"
+    },
+    "transform": {
+      "^.+\\.(ts|tsx)$": ["ts-jest", { "tsconfig": { "jsx": "react-jsx" } }]
+    },
+    "modulePathIgnorePatterns": ["/.claude/"]
   },
   "keywords": [
     "css",
@@ -133,6 +152,8 @@
     "@fortawesome/react-fontawesome": "^0.2.0"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
     "@types/jest": "^29.5.2",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^24.3.0",
@@ -151,11 +172,14 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
     "prettier": "2.8.8",
     "rimraf": "^5.0.1",
     "sass": "^1.62.1",
     "sass-loader": "^13.3.2",
     "style-loader": "^3.3.3",
+    "ts-jest": "^29.4.9",
     "tsc-alias": "^1.8.6",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.2.0"

@@ -1,7 +1,6 @@
 import type { FieldValueProps, ValidateFormStatus, ValidateInverseCheckbox, ValidateProps } from "nxs-form";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import type { KeyStringProp } from "custom-props";
-import { objLength } from "@nxs-utils/app/objLength";
 import { emojis } from "@nxs-utils/data/emojis";
 
 // Minimal RFC-compliant email check: requires local@domain.tld with no spaces.
@@ -14,12 +13,10 @@ export const useFormValidation = (schema: ValidateProps) => {
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});
   const [validationStatus, setStatus] = useState<ValidateFormStatus>(null);
 
-  useEffect(() => {
-    if (validationStatus !== null) {
-      if (objLength(formErrors) === 0) setStatus("validated");
-      else setStatus("error");
-    }
-  }, [formErrors]);
+  // Removed: useEffect([formErrors]) that re-set status after every formErrors change.
+  // It was redundant because validateForm now sets status correctly in all cases,
+  // and the effect was causing an extra render cycle that overrode the "green" submit
+  // status with "validated" before Form.tsx could act on it.
 
   const checkRequired = (current: FieldValueProps) => {
     if (required) {
