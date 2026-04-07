@@ -1,0 +1,55 @@
+.text-bubble,
+.card-text-bubble {
+  padding: var(--space-extra-small) var(--space-medium);
+}
+.message-box {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: flex-start;
+  max-width: 100%;
+}
+.message-box .form-submit-btn {
+  max-width: 50px;
+  min-width: 30px;
+  margin: var(--space-small) var(--space-medium) 0 0;
+}
+.reply-reactions {
+  position: absolute;
+  bottom: -5%;
+  left: 15%;
+}
+.reply-reactions .btn-icon {
+  padding: 0.125rem;
+}
+
+.nested-reply-1 {
+  padding-left: 2rem;
+}
+.nested-reply-1 + .reply-reactions {
+  left: 2rem;
+}
+.nested-reply-2 {
+  padding-left: 3rem;
+}
+.nested-reply-2 + .reply-reactions {
+  left: 3rem;
+}
+.nested-reply-3 {
+  padding-left: 4rem;
+}
+.nested-reply-3 + .reply-reactions {
+  left: 4rem;
+}
+.nested-reply-4 {
+  padding-left: 5rem;
+}
+.nested-reply-4 + .reply-reactions {
+  left: 5rem;
+}
+.nested-reply-5 {
+  padding-left: 6rem;
+}
+.nested-reply-5 + .reply-reactions {
+  left: 6rem;
+}

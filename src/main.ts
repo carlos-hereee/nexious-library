@@ -46,6 +46,24 @@ export { default as Socials } from "@nxs-template/Socials";
 // form components
 export { default as Select } from "@nxs-molecules/forms/Select";
 export { default as Rating } from "@nxs-molecules/assets/Rating";
+// card components
+export { default as SettingsCard } from "@nxs-organism/card/SettingsCard";
+export { default as SettingsCardHeader } from "@nxs-molecules/card/SettingsCardHeader";
+export { default as ConfirmDialog } from "@nxs-organism/card/ConfirmDialog";
+export { default as AvatarCard } from "@nxs-molecules/card/AvatarCard";
+export { default as AvatarCardButton } from "@nxs-molecules/card/AvatarCardButton";
+export { default as CardDetails } from "@nxs-molecules/card/CardDetails";
+// header components
+export { default as ContainerHeader } from "@nxs-molecules/header/ContainerHeader";
+export { default as CloseHeader } from "@nxs-molecules/header/CloseHeader";
+// timer
+export { default as CountDown } from "@nxs-organism/timer/CountDown";
+// error components
+export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
+// reaction buttons
+export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
+// currency utils
+export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks — lets consumers build custom form UIs using the same validation and state logic
 export { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 export { useValues } from "@nxs-utils/hooks/useFormValues";

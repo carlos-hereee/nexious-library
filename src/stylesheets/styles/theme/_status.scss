@@ -1,0 +1,18 @@
+.status-pending,
+.status-due-soon {
+  background-color: var(--pending-accent-color);
+}
+.status-complete {
+  color: var(--text-success-color);
+  background-color: var(--complete-accent-color);
+}
+.status-success {
+  color: var(--text-success-color);
+  background-color: var(--success-accent-color);
+}
+.dark-mode .status-pending,
+.dark-mode .status-due-soon,
+.dark-mode .status-complete,
+.dark-mode .status-success {
+  color: var(--primary-text-light-mode-color);
+}

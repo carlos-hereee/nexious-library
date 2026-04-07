@@ -24,6 +24,11 @@ export { default as UserCard } from "@nxs-organism/card/UserCard";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as CardSection } from "@nxs-organism/card/CardSection";
 export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
+export { default as SettingsCard } from "@nxs-organism/card/SettingsCard";
+export { default as ConfirmDialog } from "@nxs-organism/card/ConfirmDialog";
+
+// timer
+export { default as CountDown } from "@nxs-organism/timer/CountDown";
 
 export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps, DialogProps, BannerProps } from "nxs-card";
 export type { TextBubbleProps } from "nxs-assets";

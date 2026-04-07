@@ -1,0 +1,17 @@
+.countdown-banner {
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-medium);
+  text-align: center;
+  background-color: var(--surface);
+  box-shadow: var(--shadow-small);
+}
+.countdown-timer {
+  font-size: var(--text-large);
+  font-weight: bold;
+  color: var(--main-brand-color);
+}
+.countdown-loading-timer {
+  height: 100%;
+  max-height: 25vh;
+}

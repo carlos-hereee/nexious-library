@@ -13,15 +13,22 @@ export { default as CalendarTile } from "@nxs-molecules/buttons/CalendarTile";
 export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
 export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
+export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
 export type { ButtonProps, IconButtonProps } from "nxs-button";
 
 // card
 export { default as CardHeader } from "@nxs-molecules/card/CardHeader";
 export { default as HeaderContent } from "@nxs-molecules/header/HeaderContent";
+export { default as ContainerHeader } from "@nxs-molecules/header/ContainerHeader";
+export { default as CloseHeader } from "@nxs-molecules/header/CloseHeader";
 export { default as CardBody } from "@nxs-molecules/card/CardBody";
 export { default as CTA } from "@nxs-molecules/card/CTA";
 export { default as CartRow } from "@nxs-molecules/card/CartRow";
 export { default as CartCancel } from "@nxs-molecules/card/CartCancelRow";
+export { default as AvatarCard } from "@nxs-molecules/card/AvatarCard";
+export { default as AvatarCardButton } from "@nxs-molecules/card/AvatarCardButton";
+export { default as SettingsCardHeader } from "@nxs-molecules/card/SettingsCardHeader";
+export { default as CardDetails } from "@nxs-molecules/card/CardDetails";
 export type { CardProps } from "nxs-card";
 
 // errors
@@ -32,6 +39,7 @@ export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Loading } from "@nxs-molecules/errors/Loading";
 export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
 export { default as ComingSoon } from "@nxs-molecules/errors/ComingSoon";
+export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
 export type { ErrorProps } from "nxs-errors";
 
 // forms

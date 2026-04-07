@@ -1,0 +1,19 @@
+.log-messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  position: absolute;
+  z-index: 999;
+  width: 100%;
+  max-height: 40vh;
+  overflow-y: auto;
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  box-shadow: var(--shadow-large);
+}
+.log-message-btn {
+  width: 75%;
+  margin: auto;
+  max-width: 100%;
+}

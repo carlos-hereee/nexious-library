@@ -1,0 +1,33 @@
+.settings-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+}
+.settings-card-header {
+  display: flex;
+  width: 100%;
+  max-width: 100%;
+}
+.settings-card-list {
+  width: 100%;
+}
+.btn-settings-card {
+  width: 100%;
+  display: flex;
+  text-align: left;
+}
+.btn-full {
+  max-width: var(--max-card-width);
+  width: 100%;
+}
+.btn-center {
+  margin: auto;
+}
+.btn-container {
+  flex-wrap: wrap;
+  display: flex;
+  gap: var(--space-medium);
+}
+.btn-container .btn-main {
+  flex: 1;
+}

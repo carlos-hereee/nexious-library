@@ -1,0 +1,11 @@
+.onboarding-card {
+  padding: var(--space-small) var(--space-medium);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-extra-large);
+  background-color: var(--surface);
+  box-shadow: var(--shadow-small);
+  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+}
+.onboarding-card:hover {
+  box-shadow: var(--shadow-medium);
+}
