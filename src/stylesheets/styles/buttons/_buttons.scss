@@ -35,7 +35,9 @@
   position: relative;
 }
 .hint-container {
-  min-width: 50vw;
+  min-width: 0;
+  width: max-content;
+  max-width: 90vw;
   display: flex;
   align-items: center;
   flex-direction: column;

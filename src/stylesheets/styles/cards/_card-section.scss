@@ -33,7 +33,7 @@
   .cost {
     display: flex;
     justify-content: flex-end;
-    min-width: 6rem;
+    min-width: 0;
     @include mixin.devices(mobile) {
       align-items: flex-end;
     }

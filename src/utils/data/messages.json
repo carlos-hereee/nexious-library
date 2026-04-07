@@ -1,6 +1,6 @@
 {
-  "missingProps": "is missing required props",
-  "iconNotFound": "icon not found double check list",
-  "missingAsset": "asset/image is missing required props",
-  "missingInitialValues": "Form is missing required initial value props"
+  "missingProps": "is missing a required prop — check that all required props are passed",
+  "iconNotFound": "could not find the requested icon — verify the icon name matches the library's icon list",
+  "missingAsset": "is missing a required image or asset — check that the hero/url prop is provided",
+  "missingInitialValues": "is missing initialValues — the Form component requires an initialValues object"
 }

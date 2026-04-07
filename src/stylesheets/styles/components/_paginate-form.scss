@@ -7,7 +7,6 @@
   background-color: variables.$dimmer;
   border-radius: variables.$border-radius-full;
   aspect-ratio: 1/1;
-  min-width: auto;
   &:hover {
     background-color: variables.$dim;
   }

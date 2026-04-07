@@ -1,7 +1,6 @@
 @use "../../vars/variables/_index.scss" as variables;
 
 .icon {
-  min-width: variables.$min-icon-width;
 }
 .icon-instagram {
   color: variables.$instagram;
@@ -19,7 +18,6 @@
   color: variables.$linkedin;
 }
 .icon-hero {
-  min-width: variables.$min-width-sm;
   object-fit: cover;
   object-position: center;
 }
@@ -58,7 +56,7 @@
 }
 .select-icon {
   aspect-ratio: 1/1;
-  max-width: variables.$min-width-sm;
+  max-width: variables.$small-element-width;
 }
 .ping-count {
   position: absolute;

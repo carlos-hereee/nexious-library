@@ -7,7 +7,6 @@
   width: 100%;
   max-width: variables.$max-hero-width;
   max-height: variables.$max-hero-height;
-  min-width: variables.$min-width;
   // object-fit: cover;
   // object-position: center;
   border-radius: variables.$border-radius;
@@ -19,7 +18,6 @@
 }
 .hero-main {
   max-width: variables.$max-width-lg;
-  min-width: variables.$min-width;
 }
 .feature-hero {
   width: 100%;
@@ -33,7 +31,6 @@
   aspect-ratio: 16/9;
 }
 .hero-icon {
-  max-width: variables.$min-width-sm;
   max-height: 35px;
   width: 100%;
   height: 100%;

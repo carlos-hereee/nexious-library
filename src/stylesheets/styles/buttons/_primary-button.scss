@@ -12,7 +12,6 @@
 .btn-icon,
 .btn-ping {
   // max-width: variables.$min-icon-width;
-  min-width: auto;
   position: relative;
   gap: 0;
 }
@@ -59,7 +58,6 @@
   top: 0;
   right: 0;
   width: variables.$icon-width-sm;
-  min-width: auto;
   border-radius: variables.$border-radius;
   color: variables.$light-primary;
   background-color: variables.$error;
@@ -71,7 +69,6 @@
 }
 .btn-burger,
 .btn-x {
-  min-width: variables.$min-width-sm;
   justify-content: center;
 }
 .btn-logo {

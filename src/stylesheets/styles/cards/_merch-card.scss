@@ -1,9 +1,9 @@
 @use "../../vars/variables/_index.scss" as variables;
 
 .merch-card {
-  min-height: variables.$min-card-height;
+  min-height: 220px;
   max-width: variables.$max-card-width;
-  min-width: variables.$min-card-width;
+  min-width: 0;
   display: flex;
   gap: variables.$rem;
   flex-direction: column;
@@ -27,7 +27,7 @@
   padding: variables.$rem025 variables.$rem;
   border-radius: 10px;
   background-color: variables.$cta-color;
-  min-width: variables.$min-cell-width;
+  min-width: 0;
   -webkit-transform: rotate(30deg);
   -moz-transform: rotate(30deg);
   -ms-transform: rotate(30deg);

@@ -39,7 +39,6 @@ p {
 
 p {
   max-width: 400px;
-  min-width: 150px;
   line-height: 1.6;
 }
 
@@ -48,9 +47,9 @@ pre {
   white-space: pre-wrap;
 }
 
-/* horizontal rule 
-    - solid, thin horizontal rules, 
-    - Firefox -- remove color: gray 
+/* horizontal rule
+    - solid, thin horizontal rules,
+    - Firefox -- remove color: gray
     - Remove default 1px height and common - overflow: hidden
 
 */

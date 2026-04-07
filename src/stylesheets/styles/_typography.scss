@@ -22,20 +22,15 @@
 .sub-title {
   text-align: left;
 }
-.credit-to {
-  min-width: auto;
-}
 .w-max,
 .w-full,
 .text-max {
-  min-width: 100%;
   max-width: 100%;
   width: 100%;
 }
 .w-full-child {
   width: 100%;
   * {
-    min-width: 100%;
     width: 100%;
   }
 }
@@ -48,11 +43,9 @@
   width: max-content;
 }
 .btn-rating {
-  min-width: fit-content;
   padding: 0;
   .icon-star,
   .icon-star-filled {
-    min-width: 30px;
     min-height: 30px;
   }
 }
@@ -66,7 +59,6 @@
 }
 .heading {
   width: 100%;
-  // min-width: variables.$min-heading-width;
   text-align: left;
 }
 

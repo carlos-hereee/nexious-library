@@ -27,8 +27,9 @@
 .primary-navigation {
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  margin-left: auto;
+  justify-content: center;
+  flex: 1;
+  min-width: 0;
   @include mixin.devices(tablet) {
     display: none;
   }

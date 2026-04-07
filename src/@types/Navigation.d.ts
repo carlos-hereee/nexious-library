@@ -62,6 +62,7 @@ declare module "nxs-navigation" {
     logo?: AssetProps;
     themeList?: ThemeList[];
     language?: MenuItemProp;
+    utilities?: React.ReactNode;
     updateMenu: (e: MenuProp) => void;
     handleTheme?: (a: string) => void;
     onLogoClick?: () => void;

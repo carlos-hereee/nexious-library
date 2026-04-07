@@ -33,5 +33,10 @@
   display: flex;
   align-self: stretch;
   width: 100%;
-  // min-width: variables.$min-cell-width;
+}
+.header-utilities {
+  display: flex;
+  align-items: center;
+  gap: variables.$rem05;
+  flex-shrink: 0;
 }

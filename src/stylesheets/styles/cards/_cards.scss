@@ -9,14 +9,13 @@
   justify-content: space-between;
   gap: variables.$rem;
   padding: variables.$rem;
-  min-width: variables.$min-card-width;
+  min-width: 0;
   max-width: variables.$max-card-width;
   &:has(> div > .ribbon) {
     position: relative;
     max-width: 275px;
   }
   @include mixin.devices(mobile) {
-    min-width: auto;
     max-width: auto;
   }
 }
@@ -46,7 +45,7 @@
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  min-width: 200px;
+  min-width: 0;
   gap: variables.$rem;
 }
 .secondary-card-body {
@@ -108,7 +107,7 @@
   padding: variables.$rem;
   // box-shadow: 1px 1px 4px 1px variables.$action-color-alt;
   max-width: variables.$max-app-card-width;
-  min-width: variables.$min-app-card-width;
+  min-width: 0;
   .card-row-body {
     display: grid;
     height: 100%;

@@ -18,13 +18,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-width: 200px;
+  min-width: 0;
   min-height: 80vh;
   gap: variables.$rem;
   border-radius: variables.$border-radius;
   .btn-cta {
     max-width: 500px;
-    min-width: auto;
   }
 }
 .card-container {

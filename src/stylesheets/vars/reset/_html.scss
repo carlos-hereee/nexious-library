@@ -50,10 +50,9 @@ section {
 // add basic styling
 header {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  align-items: center;
   gap: variables.$rem;
-  min-height: variables.$min-height;
+  padding: variables.$rem05 variables.$rem;
 }
 
 ul {
@@ -67,7 +66,6 @@ a {
   display: inline-block;
   border-radius: variables.$border-radius;
   user-select: none;
-  white-space: nowrap;
 }
 // add basic stying
 button {
@@ -79,7 +77,6 @@ button {
   color: inherit;
   padding: variables.$rem05 variables.$rem;
   max-width: variables.$max-width-button;
-  min-width: variables.$min-width;
   width: 100%;
   border: none;
   border-radius: variables.$border-radius;

@@ -1,7 +1,6 @@
 .user-avatar {
   border-radius: 100%;
   aspect-ratio: 1/1;
-  min-width: auto;
 }
 .user-avatar-container {
   display: flex;
@@ -10,13 +9,11 @@
 }
 .avatar-sm {
   max-width: 50px;
-  min-width: 50px;
   aspect-ratio: 1/1;
   border-radius: 100%;
 }
 .hero-contact-sm,
 .preview-hero-empty {
-  min-width: 50px;
   max-width: 50px;
   max-height: 50px;
   min-height: 50px;
