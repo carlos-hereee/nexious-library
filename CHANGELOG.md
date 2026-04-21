@@ -51,6 +51,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `tsconfig.json`: removed deprecated `baseUrl`; added explicit `rootDir`; updated all path aliases
 - `ThemeMenu` TS2322 where `wrapRef` was typed `HTMLDivElement` but attached to an `<li>`. Now typed as `HTMLLIElement`
 - `PostRow` no longer nests interactive elements
+- Added `@testing-library/dom` as an explicit devDependency. `@testing-library/react@16` requires it as a peer and it was previously missing, causing hook test suites to fail to load with `Cannot find module '@testing-library/dom'`
 
 ### Removed
 
