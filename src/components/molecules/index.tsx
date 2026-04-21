@@ -60,3 +60,9 @@ export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
 // navigation
 export { default as NavToggle } from "@nxs-molecules/navigation/NavToggle";
 export { default as ListItem } from "@nxs-molecules/navigation/ListItem";
+export { default as ThemeMenu } from "@nxs-molecules/navigation/ThemeMenu";
+
+// post
+export { default as Post } from "@nxs-molecules/post/Post";
+export { default as PostRow } from "@nxs-molecules/post/PostRow";
+export type { PostData, PostAuthor, PostReaction, PostProps, PostRowProps } from "nxs-post";

@@ -18,7 +18,7 @@ import type { HeaderProps, MenuProp } from "nxs-navigation";
  * @returns Header component
  */
 const Header: React.FC<HeaderProps> = (props) => {
-  const { menu, logo, ping, language, theme, uniqueId, themeList, includeHome, layout, hideIcons, utilities } = props;
+  const { menu, logo, ping, language, theme, uniqueId, themeList, includeHome, layout, hideIcons, utilities, activePath } = props;
   const { updateMenu, onLogoClick, handleTheme, onHomeClick } = props;
   const { lightColor, errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
@@ -55,7 +55,7 @@ const Header: React.FC<HeaderProps> = (props) => {
       {logo && <Logo hero={logo} label={logo.title} onLogoClick={onLogoClick} />}
       {menu && (
         <>
-          <nav className="primary-navigation">
+          <nav className="primary-navigation" aria-label="Primary">
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}
@@ -66,11 +66,12 @@ const Header: React.FC<HeaderProps> = (props) => {
               theme={theme}
               hideIcons={hideIcons}
               active={theme}
+              activePath={activePath}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}
             />
           </nav>
-          <nav className="mobile-navigation">
+          <nav className="mobile-navigation" aria-label="Mobile">
             <BurgerButton isBurger={isActive} onClick={() => setActive(!isActive)} ping={ping} />
             <Navbar
               show={{ isActive, isClose }}
@@ -80,6 +81,7 @@ const Header: React.FC<HeaderProps> = (props) => {
               language={language}
               themeList={themeList}
               active={theme}
+              activePath={activePath}
               theme={`alt-${theme}`}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}

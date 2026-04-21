@@ -39,6 +39,8 @@ declare module "nxs-navigation" {
     alternatives?: MenuItemProp[];
     icon?: string;
     link?: string;
+    href?: string;
+    external?: boolean;
     locale?: string;
     theme?: string;
     label?: string;
@@ -62,6 +64,7 @@ declare module "nxs-navigation" {
     logo?: AssetProps;
     themeList?: ThemeList[];
     language?: MenuItemProp;
+    activePath?: string;
     utilities?: React.ReactNode;
     updateMenu: (e: MenuProp) => void;
     handleTheme?: (a: string) => void;
@@ -76,6 +79,10 @@ declare module "nxs-navigation" {
       data: string;
     };
   }
+  export interface FooterLink {
+    label: string;
+    href: string;
+  }
   export interface FooterProps {
     appName?: string;
     title?: string;
@@ -83,6 +90,7 @@ declare module "nxs-navigation" {
     theme?: string;
     hero?: AssetProps;
     hoursOfOperation?: PHoursOfOperation;
+    links?: FooterLink[];
   }
 
   export interface NavigationProps {
@@ -99,6 +107,7 @@ declare module "nxs-navigation" {
     themeList?: ThemeList[];
     theme?: string;
     active?: string;
+    activePath?: string;
     navLayout?: string;
     language?: MenuItemProp;
     includeHome?: boolean;

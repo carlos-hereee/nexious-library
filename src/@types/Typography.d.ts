@@ -16,6 +16,19 @@ declare module "nxs-typography" {
     value?: string;
     scale?: 1 | 2 | 3 | 4 | 5 | 6;
   }
+  export type HeadingSize = "h1" | "h2" | "h3" | "h4" | "h5" | "h6";
+  export interface HeadingProps {
+    /** Content to render. Use children for JSX or data for plain strings. */
+    children?: React.ReactNode;
+    /** Plain string content (backward compat with DataProp) */
+    data?: string;
+    /** Semantic heading level: "h1" through "h6". Defaults to "h1". */
+    size?: HeadingSize;
+    /** Numeric heading level 1 through 6 (backward compat with DataProp.scale) */
+    scale?: 1 | 2 | 3 | 4 | 5 | 6;
+    /** Optional CSS class appended to "heading" */
+    theme?: string;
+  }
   export interface PHeaderCotent {
     data: DataContent;
     children?: React.ReactNode;

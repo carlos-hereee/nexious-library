@@ -1,5 +1,15 @@
 @use "../../vars/variables/_index.scss" as variables;
 
+/*
+ * Nav link styling
+ *
+ * Goals:
+ *  - Links should read as links, not rectangular buttons.
+ *  - Clear hover affordance (color shift + underline grow).
+ *  - Unambiguous active state (bolder weight + accent underline bar).
+ *  - Strong keyboard focus ring for a11y.
+ */
+
 .navbar {
   display: flex;
   justify-content: space-around;
@@ -7,36 +17,263 @@
   gap: variables.$rem;
   padding: 0 variables.$rem;
 }
-.nav-link {
-  display: flex;
-  text-decoration: none;
-  position: relative;
-}
-.nav-link[data-state="active"] {
-  border-top-left-radius: 1rem;
-  border-bottom-left-radius: 1rem;
-  width: 100%;
-}
 
 .nav-item {
   display: flex;
-  justify-content: flex-start;
-  width: 100%;
+  align-items: center;
+  list-style: none;
+
+  // Kill inherited button framing when a Button atom is used inside nav.
+  .btn,
+  .btn-main,
+  .btn-icon {
+    border: 0;
+    outline: 0;
+    background: transparent;
+    padding: variables.$rem05 variables.$rem;
+    width: auto;
+    max-width: none;
+  }
 }
+
+.nav-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: variables.$rem05;
+  padding: variables.$rem05 variables.$rem;
+  color: inherit;
+  text-decoration: none;
+  font-weight: 500;
+  line-height: 1.2;
+  border-radius: variables.$border-radius-sm;
+  transition: color 120ms ease, opacity 120ms ease;
+
+  // Hover underline grows from left.
+  &::after {
+    content: "";
+    position: absolute;
+    left: variables.$rem;
+    right: variables.$rem;
+    bottom: 0.25rem;
+    height: 2px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 160ms ease;
+    border-radius: 2px;
+    opacity: 0.7;
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+
+  // Current page state
+  &[aria-current="page"] {
+    font-weight: 700;
+
+    &::after {
+      transform: scaleX(1);
+      height: 2px;
+      opacity: 1;
+      background: variables.$cta-color;
+    }
+  }
+}
+
+.nav-icon {
+  opacity: 0.75;
+}
+
+.nav-label {
+  white-space: nowrap;
+}
+
+// Action buttons inside the nav (non-link items)
+.nav-action {
+  display: inline-flex;
+  align-items: center;
+  gap: variables.$rem05;
+  padding: variables.$rem05 variables.$rem;
+  border: 0;
+  background: transparent;
+  font-weight: 500;
+  border-radius: variables.$border-radius-sm;
+  color: inherit;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.85;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+}
+
+.nav-order-first {
+  order: -1;
+}
+.nav-order-last {
+  order: 1;
+}
+.nav-order-1 {
+  order: 1;
+}
+
 .nav-toggle {
   display: flex;
   width: 100%;
   max-width: variables.$max-width-sm;
   align-items: center;
 }
+
 .nav-btn {
   display: flex;
-  align-self: stretch;
-  width: 100%;
+  align-items: center;
 }
+
 .header-utilities {
   display: flex;
   align-items: center;
   gap: variables.$rem05;
   flex-shrink: 0;
+}
+
+/*
+ * Theme menu
+ *
+ * A proper menu button + listbox popover. Visually distinct from nav links
+ * so users read it as a control, not a page link.
+ */
+
+.theme-menu {
+  position: relative;
+  list-style: none;
+  display: flex;
+  align-items: center;
+}
+
+.theme-menu-trigger {
+  display: inline-flex;
+  align-items: center;
+  gap: variables.$rem05;
+  padding: variables.$rem05 variables.$rem;
+  background: transparent;
+  border: 1px solid variables.$faded;
+  border-radius: variables.$border-radius;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: border-color 120ms ease, box-shadow 120ms ease;
+
+  &:hover {
+    border-color: variables.$dark-mode;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+
+  &[aria-expanded="true"] {
+    border-color: variables.$dark-mode;
+    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.12);
+  }
+}
+
+.theme-menu-icon {
+  opacity: 0.8;
+}
+
+.theme-menu-label {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.theme-menu-swatch {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: variables.$rounded-full;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.theme-menu-chevron {
+  transition: transform 160ms ease;
+  opacity: 0.7;
+
+  &.is-open {
+    transform: rotate(180deg);
+  }
+}
+
+.theme-menu-list {
+  position: absolute;
+  top: calc(100% + 0.35rem);
+  right: 0;
+  min-width: 12rem;
+  margin: 0;
+  padding: variables.$rem025;
+  list-style: none;
+  background: variables.$light-mode;
+  color: variables.$icon-color;
+  border: 1px solid variables.$faded;
+  border-radius: variables.$border-radius;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.12);
+  z-index: 50;
+}
+
+.theme-menu-option {
+  display: flex;
+  align-items: center;
+  gap: variables.$rem05;
+  padding: variables.$rem05 variables.$rem;
+  border-radius: variables.$border-radius-sm;
+  cursor: pointer;
+  user-select: none;
+
+  &:focus,
+  &:focus-visible {
+    outline: none;
+    background: variables.$dimmer;
+  }
+
+  &[aria-selected="true"],
+  &.is-selected {
+    background: rgba(255, 165, 0, 0.12);
+    font-weight: 600;
+  }
+
+  &:hover {
+    background: variables.$dimmer;
+  }
+}
+
+.theme-menu-option-swatch {
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: variables.$rounded-full;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  flex-shrink: 0;
+}
+
+.theme-menu-option-label {
+  flex: 1;
+}
+
+.theme-menu-option-check {
+  opacity: 0.8;
 }

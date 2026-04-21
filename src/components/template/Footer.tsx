@@ -7,7 +7,7 @@ import HoursOfOperation from "./HoursOfOperation";
  * @param appName string;
  * @returns
  */
-const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOperation, theme }) => {
+const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOperation, theme, links }) => {
   return (
     <footer className={theme || "footer"}>
       <div className="footer-content-wrapper">
@@ -15,6 +15,16 @@ const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOpe
 
         {hoursOfOperation && <HoursOfOperation data={hoursOfOperation} />}
       </div>
+
+      {links && links.length > 0 && (
+        <nav className="footer-links" aria-label="Footer">
+          {links.map((link) => (
+            <a key={link.href} href={link.href} className="nav-link footer-link">
+              <span className="nav-label">{link.label}</span>
+            </a>
+          ))}
+        </nav>
+      )}
 
       <div className="w-max">
         <span className="flex-center">

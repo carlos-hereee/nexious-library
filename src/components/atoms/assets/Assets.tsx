@@ -62,6 +62,9 @@ import {
   faMinus,
   faMoneyBill,
   faPaperPlane,
+  faPalette,
+  faChevronDown,
+  faCheck,
   faPlus,
   faPlusSquare,
   faQuestion,
@@ -205,6 +208,9 @@ const svg: SVGProp = {
   8: fa8 as IconDefinition,
   9: fa9 as IconDefinition,
   0: fa0 as IconDefinition,
+  palette: faPalette as IconDefinition,
+  chevronDown: faChevronDown as IconDefinition,
+  checkMark: faCheck as IconDefinition,
 };
 library.add(svg);
 export { svg };

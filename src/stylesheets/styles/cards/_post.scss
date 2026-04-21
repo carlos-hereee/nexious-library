@@ -1,0 +1,574 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+@use "../../vars/variables/_index.scss" as variables;
+
+/*
+ * Editorial Post styles
+ *
+ * Aesthetic:
+ *  - Typography does the heavy lifting. Title is the anchor.
+ *  - Generous whitespace. Cards breathe.
+ *  - Subtle borders/shadows only. No heavy chrome.
+ *  - Thumbnail as a clean banner with a locked aspect ratio.
+ *  - Hover lifts the card a few pixels to signal interactivity.
+ *
+ * Three variants share a vocabulary of classes but each scopes its own layout.
+ */
+
+/* =========================================================================
+ * Feed card: .post-card
+ * ========================================================================= */
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$rem05;
+  max-width: variables.$max-card-width;
+  padding: variables.$rem variables.$rem;
+  background: variables.$light-mode;
+  border: 1px solid variables.$dimmer;
+  border-radius: variables.$border-radius-lg;
+  transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+
+  &:hover {
+    border-color: variables.$faded;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+    transform: translateY(-2px);
+  }
+}
+
+.post-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: variables.$rem05;
+  min-height: 2rem;
+}
+
+.post-card-byline {
+  display: flex;
+  align-items: center;
+  gap: variables.$rem05;
+  min-width: 0;
+}
+
+.post-card-avatar {
+  width: 2rem;
+  height: 2rem;
+  border-radius: variables.$rounded-full;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-card-author {
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+  white-space: nowrap;
+
+  &.post-card-author-btn {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+
+    &:hover {
+      text-decoration: underline;
+    }
+
+    &:focus-visible {
+      outline: 2px solid variables.$dark-mode;
+      outline-offset: 2px;
+      border-radius: 2px;
+    }
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.post-card-handle {
+  color: variables.$muted;
+  font-size: 0.9rem;
+}
+
+.post-card-date {
+  color: variables.$muted;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+}
+
+.post-card-title {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  text-align: left;
+  cursor: pointer;
+  font: inherit;
+
+  &.post-card-title-btn {
+    cursor: pointer;
+  }
+
+  &:hover .post-card-title-text {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+.post-card-title-text {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+
+  @include mixin.devices(mobile) {
+    font-size: 1.2rem;
+  }
+}
+
+.post-card-figure {
+  margin: variables.$rem05 0;
+  overflow: hidden;
+  border-radius: variables.$border-radius;
+  aspect-ratio: 16 / 9;
+  background: variables.$dimmer;
+
+  .post-card-thumbnail,
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.post-card-body {
+  margin: 0;
+  color: inherit;
+  font-size: 1rem;
+  line-height: 1.55;
+  opacity: 0.88;
+}
+
+.post-card-readmore {
+  display: inline;
+  margin-left: 0.25rem;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  color: variables.$cta-color;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+    border-radius: 2px;
+  }
+}
+
+.post-card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: variables.$rem025;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-card-tag {
+  font-size: 0.8rem;
+  color: variables.$muted;
+
+  &::before {
+    content: "";
+  }
+}
+
+.post-card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: variables.$rem05;
+  padding-top: variables.$rem05;
+  border-top: 1px solid variables.$dimmer;
+}
+
+.post-card-reactions {
+  display: flex;
+  gap: variables.$rem025;
+  align-items: center;
+}
+
+.post-card-reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.6rem;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.9rem;
+  transition: background 120ms ease, color 120ms ease;
+
+  &:hover {
+    background: variables.$dimmer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+
+  &.is-active,
+  &[aria-pressed="true"] {
+    color: variables.$cta-color;
+  }
+}
+
+.post-card-reaction-count {
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+.post-card-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.35rem;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  color: variables.$muted;
+  cursor: pointer;
+
+  &:hover {
+    color: variables.$danger;
+    background: variables.$dimmer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$danger;
+    outline-offset: 2px;
+  }
+}
+
+/* =========================================================================
+ * Row: .post-row
+ * ========================================================================= */
+
+.post-row {
+  position: relative;
+  display: flex;
+  align-items: stretch;
+  gap: variables.$rem05;
+  width: 100%;
+  padding: variables.$rem025;
+  border: 1px solid transparent;
+  border-radius: variables.$border-radius;
+  transition: border-color 120ms ease, background 120ms ease;
+
+  &:hover {
+    border-color: variables.$dimmer;
+    background: rgba(0, 0, 0, 0.02);
+  }
+}
+
+.post-row-select {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: variables.$rem;
+  padding: variables.$rem05;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  min-width: 0;
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+}
+
+.post-row-thumbnail,
+.post-row-select .hero {
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: variables.$border-radius;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-row-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  flex: 1;
+}
+
+.post-row-title {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-row-meta {
+  display: inline-flex;
+  gap: 0.4rem;
+  align-items: center;
+  font-size: 0.85rem;
+  color: variables.$muted;
+}
+
+.post-row-author {
+  font-weight: 500;
+}
+
+.post-row-date {
+  color: variables.$muted;
+}
+
+.post-row-preview {
+  font-size: 0.85rem;
+  color: variables.$muted;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.post-row-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.5rem;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  color: variables.$muted;
+  cursor: pointer;
+
+  &:hover {
+    color: variables.$danger;
+    background: variables.$dimmer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$danger;
+    outline-offset: 2px;
+  }
+}
+
+/* =========================================================================
+ * Detail: .post-detail
+ * ========================================================================= */
+
+.post-detail {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$rem;
+  max-width: 720px;
+  margin: 0 auto;
+  padding: variables.$rem;
+}
+
+.post-detail-figure {
+  margin: 0;
+  overflow: hidden;
+  border-radius: variables.$border-radius-lg;
+  aspect-ratio: 16 / 9;
+  background: variables.$dimmer;
+
+  .post-detail-thumbnail,
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}
+
+.post-detail-header {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$rem05;
+}
+
+.post-detail-byline {
+  display: flex;
+  align-items: center;
+  gap: variables.$rem05;
+}
+
+.post-detail-avatar {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: variables.$rounded-full;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.post-detail-byline-text {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.post-detail-author {
+  font-weight: 600;
+  color: inherit;
+  text-decoration: none;
+
+  &.post-detail-author-btn {
+    background: transparent;
+    border: 0;
+    padding: 0;
+    text-align: left;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+  }
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+.post-detail-date {
+  color: variables.$muted;
+  font-size: 0.9rem;
+}
+
+.post-detail-title {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+
+  @include mixin.devices(mobile) {
+    font-size: 1.75rem;
+  }
+}
+
+.post-detail-body {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  opacity: 0.9;
+
+  p + p {
+    margin-top: variables.$rem;
+  }
+}
+
+.post-detail-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: variables.$rem025;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.post-detail-tag {
+  font-size: 0.9rem;
+  color: variables.$muted;
+}
+
+.post-detail-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: variables.$rem05;
+  padding: variables.$rem05 0;
+  border-top: 1px solid variables.$dimmer;
+  border-bottom: 1px solid variables.$dimmer;
+}
+
+.post-detail-reactions {
+  display: flex;
+  gap: variables.$rem025;
+  align-items: center;
+}
+
+.post-detail-reaction {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.4rem 0.7rem;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  color: inherit;
+  cursor: pointer;
+  font: inherit;
+  font-size: 0.95rem;
+  transition: background 120ms ease, color 120ms ease;
+
+  &:hover {
+    background: variables.$dimmer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+
+  &.is-active,
+  &[aria-pressed="true"] {
+    color: variables.$cta-color;
+  }
+}
+
+.post-detail-reaction-count {
+  font-weight: 600;
+}
+
+.post-detail-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.4rem;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  color: variables.$muted;
+  cursor: pointer;
+
+  &:hover {
+    color: variables.$danger;
+    background: variables.$dimmer;
+  }
+}
+
+.post-detail-comments {
+  margin-top: variables.$rem;
+  padding-top: variables.$rem;
+  border-top: 1px solid variables.$dimmer;
+}

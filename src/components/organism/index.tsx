@@ -49,3 +49,7 @@ export { default as CalendarNavigation } from "@nxs-organism/calendar/CalendarNa
 export { default as CalendarView } from "@nxs-organism/calendar/CalendarView";
 export type { CalendarEventListProps, CalendarViewProps } from "nxs-calendar";
 export type { CalendarNavProps } from "nxs-calendar";
+
+// post
+export { default as PostDetail } from "@nxs-organism/post/PostDetail";
+export type { PostDetailProps } from "nxs-post";

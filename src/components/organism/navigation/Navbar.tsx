@@ -1,9 +1,9 @@
 import { ListItem } from "@nxs-molecules";
 import type { NavbarProps } from "nxs-navigation";
-import SelectItem from "@nxs-molecules/navigation/SelectItem";
+import ThemeMenu from "@nxs-molecules/navigation/ThemeMenu";
 
 const Navbar: React.FC<NavbarProps> = (props) => {
-  const { show, menu, theme, themeList, active, includeHome, hideIcons } = props;
+  const { show, menu, theme, themeList, active, activePath, includeHome, hideIcons } = props;
   const { handleTheme, click, onHomeClick } = props;
 
   return (
@@ -11,13 +11,27 @@ const Navbar: React.FC<NavbarProps> = (props) => {
       className={`navigation${theme ? ` ${theme}` : ""}`}
       data-state={show.isActive ? "open" : show.isClose ? "closing" : "close"}
     >
-      {themeList && (
-        <SelectItem active={active} list={themeList} theme={theme} handleChange={handleTheme} name="themeList" />
-      )}
       {menu.map((m) => (
-        <ListItem key={m.menuId} hideIcons={hideIcons} theme={theme} item={m} handleClick={() => click(m)} />
+        <ListItem
+          key={m.menuId}
+          hideIcons={hideIcons}
+          theme={theme}
+          item={m}
+          activePath={activePath}
+          handleClick={() => click(m)}
+        />
       ))}
-      {includeHome && <ListItem hideIcons={hideIcons} handleClick={onHomeClick} theme="nav-btn nav-order-1" />}
+      {includeHome && (
+        <ListItem
+          hideIcons={hideIcons}
+          handleClick={onHomeClick}
+          theme="nav-btn nav-order-1"
+          activePath={activePath}
+        />
+      )}
+      {themeList && (
+        <ThemeMenu active={active} list={themeList} theme={theme} handleChange={handleTheme} name="theme" />
+      )}
     </ul>
   );
 };

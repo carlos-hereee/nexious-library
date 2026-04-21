@@ -1,5 +1,4 @@
 @use "../../vars/mixin/_index.scss" as mixin;
-
 @use "../../vars/variables/_index.scss" as variables;
 
 .form-navigation {
@@ -7,6 +6,7 @@
   flex-direction: column;
   gap: variables.$rem;
 }
+
 .form-nav {
   display: grid;
   grid-template-columns: max-content;
@@ -17,6 +17,7 @@
     gap: variables.$rem;
   }
 }
+
 .form-buttons {
   display: flex;
   gap: variables.$rem;
@@ -26,4 +27,149 @@
     align-content: center;
     gap: variables.$rem;
   }
+}
+
+/*
+ * Step indicator
+ *
+ * Uses real <ol><li> so assistive tech announces "list of N items" and the
+ * order. Separate connector lines drawn with ::before.
+ */
+
+.form-steps {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: variables.$rem;
+  counter-reset: form-step;
+
+  @include mixin.devices(mobile) {
+    &.hide-on-mobile {
+      display: none;
+    }
+  }
+}
+
+.form-steps-mini {
+  display: none;
+  justify-content: center;
+  gap: variables.$rem05;
+
+  @include mixin.devices(mobile) {
+    display: flex;
+  }
+}
+
+.form-step {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  // Connector line between steps (skip on the first)
+  & + & {
+    &::before {
+      content: "";
+      display: block;
+      width: 2rem;
+      height: 2px;
+      background: variables.$faded;
+      margin: 0 variables.$rem05;
+      border-radius: 2px;
+    }
+  }
+
+  &.is-complete + &::before,
+  &.is-current + &::before {
+    background: variables.$cta-color;
+  }
+}
+
+.form-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: variables.$rem05;
+  padding: variables.$rem05 variables.$rem;
+  background: transparent;
+  border: 0;
+  border-radius: variables.$border-radius;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  transition: background 120ms ease, color 120ms ease;
+
+  &:hover {
+    background: variables.$dimmer;
+  }
+
+  &:focus-visible {
+    outline: 2px solid variables.$dark-mode;
+    outline-offset: 2px;
+  }
+}
+
+.form-step-btn-mini {
+  padding: variables.$rem025;
+  border-radius: variables.$rounded-full;
+  aspect-ratio: 1 / 1;
+}
+
+.form-step-label {
+  display: inline-flex;
+  align-items: center;
+  gap: variables.$rem05;
+  padding: variables.$rem05 variables.$rem;
+  border-radius: variables.$border-radius;
+  font-weight: 600;
+  background: rgba(255, 165, 0, 0.12);
+  color: inherit;
+}
+
+.form-step-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: variables.$rounded-full;
+  background: variables.$faded;
+  color: variables.$light-mode;
+  font-size: 0.8rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.form-step.is-current .form-step-index {
+  background: variables.$cta-color;
+  color: variables.$dark-mode;
+}
+
+.form-step.is-complete .form-step-btn .form-step-index {
+  background: variables.$success;
+  color: variables.$light-mode;
+}
+
+.form-step-name {
+  white-space: nowrap;
+}
+
+.form-step-marker {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+}
+
+.form-step.is-current .form-step-marker {
+  color: variables.$cta-color;
+}
+
+.form-steps-status {
+  margin: variables.$rem05 0 0;
+  font-size: 0.9rem;
+  opacity: 0.8;
+  text-align: center;
 }
