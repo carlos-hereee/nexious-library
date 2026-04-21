@@ -40,8 +40,7 @@ type Story = StoryObj<typeof Post>;
 const samplePost: PostData = {
   postId: "p-001",
   title: "Designing for the reader, not the template",
-  body:
-    "Line length is a container concern, not an element concern. When we slap a global max width on every paragraph, we break every paragraph that lives in a narrower or wider context. The fix is to put the cap on the container you control, and let the element breathe.",
+  body: "Line length is a container concern, not an element concern. When we slap a global max width on every paragraph, we break every paragraph that lives in a narrower or wider context. The fix is to put the cap on the container you control, and let the element breathe.",
   thumbnail: "https://images.unsplash.com/photo-1517842645767-c639042777db?w=1200",
   thumbnailAlt: "A reader with an open book",
   href: "/posts/designing-for-the-reader",

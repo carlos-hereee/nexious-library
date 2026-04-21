@@ -16,16 +16,14 @@ const ProseDemo = ({ size }: ProseArgs) => (
   <div className={size} style={{ padding: "1rem" }}>
     <h2>Designing for the reader, not the template</h2>
     <p>
-      Line length is a container concern, not an element concern. When a stylesheet puts a
-      global max width on every paragraph, it breaks every paragraph that lives in a narrower
-      or wider context. A paragraph inside a 300px card, a 720px post detail, a narrow
-      sidebar, a wide hero: they all get the same cap.
+      Line length is a container concern, not an element concern. When a stylesheet puts a global max width on every
+      paragraph, it breaks every paragraph that lives in a narrower or wider context. A paragraph inside a 300px card, a
+      720px post detail, a narrow sidebar, a wide hero: they all get the same cap.
     </p>
     <p>
-      The fix is to cap the measure on the container you own, and let the element breathe.
-      Using ch units is the cleanest way to do this, because a ch unit tracks the current
-      font size. Fifty five to seventy five characters per line is the generally accepted
-      readable range.
+      The fix is to cap the measure on the container you own, and let the element breathe. Using ch units is the
+      cleanest way to do this, because a ch unit tracks the current font size. Fifty five to seventy five characters per
+      line is the generally accepted readable range.
     </p>
   </div>
 );

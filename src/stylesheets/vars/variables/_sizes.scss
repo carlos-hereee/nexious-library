@@ -41,9 +41,9 @@ $min-height-section: 300px;
 
 // page level content width tokens.
 // Apply these on page layout wrappers, not on the card primitive.
-$content-max-narrow: 680px;  // reading views, single column forms
-$content-max: 960px;         // default page content
-$content-max-wide: 1200px;   // dashboards, grids, multi column
+$content-max-narrow: 680px; // reading views, single column forms
+$content-max: 960px; // default page content
+$content-max-wide: 1200px; // dashboards, grids, multi column
 
 // cards
 // The .card primitive does not cap its own width. Width is a page layout
@@ -53,9 +53,9 @@ $max-app-card-width: 250px;
 $max-card-height: 400px;
 
 // variant specific card caps
-$card-max-compact: 320px;       // ribbon cards, small tiles
-$max-merch-card-width: 320px;   // merch grid item
-$max-post-card-width: 620px;    // editorial feed card
+$card-max-compact: 320px; // ribbon cards, small tiles
+$max-merch-card-width: 320px; // merch grid item
+$max-post-card-width: 620px; // editorial feed card
 
 /* readmore lines */
 $max-lines: 2;
