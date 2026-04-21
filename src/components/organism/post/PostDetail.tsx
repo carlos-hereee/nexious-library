@@ -34,10 +34,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
     <article className={wrapperClass}>
       {post.thumbnail && (
         <figure className="post-detail-figure">
-          <Hero
-            hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }}
-            theme="post-detail-thumbnail"
-          />
+          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} theme="post-detail-thumbnail" />
         </figure>
       )}
 
@@ -45,10 +42,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
         {author && (
           <div className="post-detail-byline">
             {author.avatar && (
-              <Hero
-                hero={{ url: author.avatar, alt: author.name || "author" }}
-                theme="post-detail-avatar"
-              />
+              <Hero hero={{ url: author.avatar, alt: author.name || "author" }} theme="post-detail-avatar" />
             )}
             <div className="post-detail-byline-text">
               {onAuthorClick ? (
@@ -107,12 +101,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
               </button>
             ))}
             {onLike && !post.reactions?.some((r) => r.name === "like") && (
-              <button
-                type="button"
-                className="post-detail-reaction"
-                aria-label="Like"
-                onClick={() => onLike(post)}
-              >
+              <button type="button" className="post-detail-reaction" aria-label="Like" onClick={() => onLike(post)}>
                 <Icon icon="heart" name="like" theme="post-detail-reaction-icon" />
               </button>
             )}

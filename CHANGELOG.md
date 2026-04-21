@@ -15,10 +15,26 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `useFormValidation` and `useValues` exported as public hooks for custom form UIs
 - Storybook with Vite builder — live component documentation with stories for Button, IconButton, Input, and Icon
 - `CHANGELOG.md`
+- `ThemeMenu` molecule (`@nxs-molecules`). Listbox button theme picker that replaces the native `<select>` in the header. Follows the WAI ARIA authoring pattern for a listbox button (`aria-haspopup="listbox"`, `aria-expanded`, `aria-controls`, `role="listbox"`, `role="option"` with `aria-selected`). Full keyboard support (Arrow, Home, End, Enter, Space, Escape, Tab), color swatch per theme, scales to many themes without a redesign
+- `Post` molecule (`@nxs-molecules`). Editorial feed card with linkable title, author byline, locked 16:9 thumbnail, body with read more truncation, tags, and optional reactions footer
+- `PostRow` molecule (`@nxs-molecules`). Compact list row variant. Fixes the invalid nested interactive elements pattern from the prior client implementation (remove button was inside the selection button)
+- `PostDetail` organism (`@nxs-organism`). Full detail view with banner thumbnail, `h1` title, byline, reactions, and a `children` slot for the consumer's comment list
+- `nxs-post` type declarations: `PostData`, `PostAuthor`, `PostReaction`, `PostCallbacks`, `PostProps`, `PostRowProps`, `PostDetailProps`
+- Reading measure utilities: `.prose` (70ch), `.prose-narrow` (55ch), `.prose-wide` (80ch). Applied on the wrapper around body copy, not on individual paragraphs
+- SCSS width tokens: `$content-max-narrow` (680px), `$content-max` (960px), `$content-max-wide` (1200px), `$card-max-compact` (320px), `$max-merch-card-width` (320px), `$max-post-card-width` (620px)
+- Nav landmark `aria-label`s on primary, mobile, and footer navs
+- `activePath` on `HeaderProps` and `NavbarProps` so the active page is marked with `aria-current="page"`
+- Icons: `palette`, `chevronDown`, `checkMark`
 
 ### Changed
 
 - FontAwesome packages moved from `dependencies` to `peerDependencies` — prevents duplicate installs in consumer apps
+- `ListItem` renders a real `<a>` anchor when `href` or `link` is present and a `<button>` when the item is an action. Active items receive `aria-current="page"`. No longer wraps `Button` / `IconButton`, so nav links look like links again
+- `FormNavigation` rewritten with step semantics. Current step is a `<span>` with `aria-current="step"` instead of a disabled button (which dropped the current step out of the tab order). Numbered step circles, connector lines, and `aria-live="polite"` status
+- `Footer` nav gains `aria-label="Footer"` and footer links use `.nav-link.footer-link` so they read as supporting nav
+- `.post-detail-body` caps at `70ch` for proper reading measure
+- `.post-card` width driven by the dedicated `$max-post-card-width` token (620px)
+- `.merch-card` width driven by the dedicated `$max-merch-card-width` token (320px)
 
 ### Fixed
 
@@ -33,6 +49,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `propChecker`: failed to distinguish `null` from objects and arrays from plain objects — added `isSameType` helper
 - `Image`: missing `aria-label` on the "no image" button — added `aria-label="No image available"`
 - `tsconfig.json`: removed deprecated `baseUrl`; added explicit `rootDir`; updated all path aliases
+- `ThemeMenu` TS2322 where `wrapRef` was typed `HTMLDivElement` but attached to an `<li>`. Now typed as `HTMLLIElement`
+- `PostRow` no longer nests interactive elements
+
+### Removed
+
+- Global `p { max-width: 400px }` in the typography reset. Line length is a container concern and the global cap broke every paragraph that lived inside a narrower or wider context. Use `.prose` utilities on the wrapper or a page level `$content-max-*` token instead
+- `.card` no longer caps its own width. The base primitive is width agnostic; width is set by the page layout or by variant specific classes. The invalid `max-width: auto` mobile override was also removed
+- `$max-card-width` SASS variable. Consumers should migrate to a dedicated variant token (`$max-post-card-width`, `$max-merch-card-width`, `$card-max-compact`), a page level content width (`$content-max-narrow`, `$content-max`, `$content-max-wide`), or set width on the page layout wrapper
+
+### Migration notes
+
+- Grep for `$max-card-width`. Replace with the appropriate variant or content token, or remove the cap and let the page wrapper drive width
+- Grep for pages that relied on the global `p` max-width. Wrap body copy in a container with `.prose`, `.prose-narrow`, or `.prose-wide`
+- For Post adoption, delete client local copies and import from `@nxs-molecules` and `@nxs-organism`. Map your domain `Post` type to `PostData` at the call site
+- Pass `activePath` to `Header` so nav links mark the active page with `aria-current="page"`
 
 ---
 

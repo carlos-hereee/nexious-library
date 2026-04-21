@@ -37,25 +37,12 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
     );
   }
   if (hideIcons && item) {
-    return (
-      <ListItem
-        theme={theme}
-        item={{ ...item, icon: "" }}
-        activePath={activePath}
-        handleClick={handleClick}
-      />
-    );
+    return <ListItem theme={theme} item={{ ...item, icon: "" }} activePath={activePath} handleClick={handleClick} />;
   }
 
   const href = item.href || item.link;
   const isActive = !!href && !!activePath && activePath === href;
-  const liClass = [
-    "nav-item",
-    theme || "",
-    isActive ? "is-active" : "",
-  ]
-    .filter(Boolean)
-    .join(" ");
+  const liClass = ["nav-item", theme || "", isActive ? "is-active" : ""].filter(Boolean).join(" ");
 
   // Anchor path: when href exists, render a real link.
   if (href) {

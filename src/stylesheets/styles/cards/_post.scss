@@ -22,7 +22,7 @@
   display: flex;
   flex-direction: column;
   gap: variables.$rem05;
-  max-width: variables.$max-card-width;
+  max-width: variables.$max-post-card-width;
   padding: variables.$rem variables.$rem;
   background: variables.$light-mode;
   border: 1px solid variables.$dimmer;
@@ -478,6 +478,7 @@
 }
 
 .post-detail-body {
+  max-width: 70ch;
   font-size: 1.1rem;
   line-height: 1.7;
   opacity: 0.9;

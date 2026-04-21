@@ -30,7 +30,7 @@ interface ThemeMenuProps {
 const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange }: ThemeMenuProps) => {
   const [open, setOpen] = useState(false);
   const [focusIdx, setFocusIdx] = useState<number>(-1);
-  const wrapRef = useRef<HTMLDivElement>(null);
+  const wrapRef = useRef<HTMLLIElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
   const listRef = useRef<HTMLUListElement>(null);
   const listboxId = useId();
@@ -137,11 +137,7 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
         <Icon icon="palette" name="theme" theme="theme-menu-icon" />
         <span className="theme-menu-label">{activeLabel}</span>
         {activeItem?.colors && (
-          <span
-            className="theme-menu-swatch"
-            aria-hidden="true"
-            style={{ background: activeItem.colors.primary }}
-          />
+          <span className="theme-menu-swatch" aria-hidden="true" style={{ background: activeItem.colors.primary }} />
         )}
         <Icon icon="chevronDown" name="chevron" theme={`theme-menu-chevron${open ? " is-open" : ""}`} />
       </button>

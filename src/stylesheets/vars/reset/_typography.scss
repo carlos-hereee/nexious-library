@@ -37,8 +37,9 @@ p {
   z-index: 1;
 }
 
+// Line length is a container concern, not an element concern.
+// Use .prose / .prose-narrow / .prose-wide on the wrapper to cap reading measure.
 p {
-  max-width: 400px;
   line-height: 1.6;
 }
 

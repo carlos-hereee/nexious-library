@@ -67,10 +67,7 @@ const Post: React.FC<PostProps> = (props) => {
           {author && (
             <div className="post-card-byline">
               {author.avatar && (
-                <Hero
-                  hero={{ url: author.avatar, alt: author.name || "author" }}
-                  theme="post-card-avatar"
-                />
+                <Hero hero={{ url: author.avatar, alt: author.name || "author" }} theme="post-card-avatar" />
               )}
               {onAuthorClick ? (
                 <button
@@ -114,10 +111,7 @@ const Post: React.FC<PostProps> = (props) => {
       {/* Thumbnail */}
       {!hideThumbnail && post.thumbnail && (
         <figure className="post-card-figure">
-          <Hero
-            hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }}
-            theme="post-card-thumbnail"
-          />
+          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} theme="post-card-thumbnail" />
         </figure>
       )}
 
@@ -162,12 +156,7 @@ const Post: React.FC<PostProps> = (props) => {
               </button>
             ))}
             {onLike && !post.reactions?.some((r) => r.name === "like") && (
-              <button
-                type="button"
-                className="post-card-reaction"
-                aria-label="Like"
-                onClick={() => onLike(post)}
-              >
+              <button type="button" className="post-card-reaction" aria-label="Like" onClick={() => onLike(post)}>
                 <Icon icon="heart" name="like" theme="post-card-reaction-icon" />
               </button>
             )}

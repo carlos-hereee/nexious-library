@@ -22,12 +22,7 @@ const Navbar: React.FC<NavbarProps> = (props) => {
         />
       ))}
       {includeHome && (
-        <ListItem
-          hideIcons={hideIcons}
-          handleClick={onHomeClick}
-          theme="nav-btn nav-order-1"
-          activePath={activePath}
-        />
+        <ListItem hideIcons={hideIcons} handleClick={onHomeClick} theme="nav-btn nav-order-1" activePath={activePath} />
       )}
       {themeList && (
         <ThemeMenu active={active} list={themeList} theme={theme} handleChange={handleTheme} name="theme" />

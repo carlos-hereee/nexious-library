@@ -38,10 +38,7 @@ const PostRow: React.FC<PostRowProps> = (props) => {
         onClick={handleActivate}
       >
         {post.thumbnail && (
-          <Hero
-            hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }}
-            theme="post-row-thumbnail"
-          />
+          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} theme="post-row-thumbnail" />
         )}
         <span className="post-row-content">
           <span className="post-row-title">{post.title}</span>
@@ -62,11 +59,7 @@ const PostRow: React.FC<PostRowProps> = (props) => {
       {/* Sibling author click target when onAuthorClick is provided AND author exists.
           Rendered as a visually subtle overlay button so row click still dominates. */}
       {onAuthorClick && author && (
-        <button
-          type="button"
-          className="post-row-author-btn sr-only"
-          onClick={() => onAuthorClick(author, post)}
-        >
+        <button type="button" className="post-row-author-btn sr-only" onClick={() => onAuthorClick(author, post)}>
           View author {author.name || author.handle}
         </button>
       )}

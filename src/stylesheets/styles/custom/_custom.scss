@@ -134,6 +134,20 @@
   width: 100%;
 }
 
+// Reading measure helpers.
+// Apply to the CONTAINER that wraps body copy, not to individual paragraphs.
+// ch units scale with the font so the cap stays correct across themes.
+// 45 to 75 characters per line is the generally accepted readable range.
+.prose {
+  max-width: 70ch;
+}
+.prose-narrow {
+  max-width: 55ch;
+}
+.prose-wide {
+  max-width: 80ch;
+}
+
 // Visually hidden but announced by screen readers.
 // Use on labels that need to exist for accessibility but would be visual noise.
 .sr-only {
