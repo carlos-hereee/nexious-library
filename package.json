@@ -89,7 +89,8 @@
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage"
   },
   "jest": {
     "preset": "ts-jest",
@@ -99,6 +100,10 @@
       "**/src/__tests__/**/*.test.tsx"
     ],
     "moduleNameMapper": {
+      "^@nxs-atoms$": "<rootDir>/src/components/atoms/index.tsx",
+      "^@nxs-molecules$": "<rootDir>/src/components/molecules/index.tsx",
+      "^@nxs-organism$": "<rootDir>/src/components/organism/index.tsx",
+      "^@nxs-template$": "<rootDir>/src/components/template/index.tsx",
       "@nxs-atoms/(.*)": "<rootDir>/src/components/atoms/$1",
       "@nxs-molecules/(.*)": "<rootDir>/src/components/molecules/$1",
       "@nxs-organism/(.*)": "<rootDir>/src/components/organism/$1",
@@ -118,6 +123,20 @@
     },
     "modulePathIgnorePatterns": [
       "/.claude/"
+    ],
+    "collectCoverageFrom": [
+      "src/utils/**/*.{ts,tsx}",
+      "src/math/**/*.{ts,tsx}",
+      "src/components/**/*.{ts,tsx}",
+      "!src/**/*.stories.tsx",
+      "!src/**/*.d.ts",
+      "!src/@types/**",
+      "!src/utils/data/messages.json"
+    ],
+    "coverageReporters": [
+      "text",
+      "text-summary",
+      "lcov"
     ]
   },
   "keywords": [
