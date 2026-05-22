@@ -1,7 +1,7 @@
 {
   "name": "nexious-library",
   "version": "3.0.3",
-  "description": "React component library powering companyuno.com — includes Calendar, Form, Dialog, Navigation, Checkout components and more",
+  "description": "React component library powering companyuno.com. Includes Calendar, Form, Dialog, Navigation, Checkout components and more.",
   "type": "module",
   "types": "dist/@types",
   "main": "dist/esm/main.js",
@@ -144,6 +144,7 @@
     "dist",
     "src/**/*.d.ts"
   ],
+  "sideEffects": false,
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
