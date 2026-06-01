@@ -46,10 +46,19 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
 
   // Anchor path: when href exists, render a real link.
   if (href) {
+    // Intercept plain left-clicks so the consumer can route client-side instead of the
+    // browser doing a full page reload (the bug that made every nav click reload the whole
+    // app and wipe its caches). Modifier and middle clicks, plus external links, fall
+    // through to native behavior so "open in new tab" and external navigation still work.
+    const onAnchorClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+      if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey || item.external) return;
+      e.preventDefault();
+      handleClick?.();
+    };
     const aProps: React.AnchorHTMLAttributes<HTMLAnchorElement> = {
       href,
       className: "nav-link",
-      onClick: handleClick,
+      onClick: onAnchorClick,
     };
     if (isActive) aProps["aria-current"] = "page";
     if (item.external) {
