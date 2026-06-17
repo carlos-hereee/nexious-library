@@ -33,6 +33,10 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   // BUG WAS HERE: `|| true` means even confirmRemovals={false} initialised to true.
   // `??` (nullish coalescing) only falls back when the value is undefined or null.
   const [confirmRemoval, setConfirmRemovals] = useState<boolean>(confirmRemovals ?? true);
+  // Tracks an in-flight submission so the submit control can be disabled until
+  // onSubmit settles. Prevents double-submit (duplicate account/order/merch)
+  // when a handler is async and the form stays mounted during the request.
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     if (initialValues) {
@@ -54,16 +58,26 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         setStatus(null);
         return;
       }
-      // submit regular form
-      if (!withFileUpload && !addEntry) onSubmit(formatFormData(values));
-      // submit regular form with entry values
-      if (!withFileUpload && addEntry) onSubmit(formatFormEntryData(values, entryValues));
-      // submit form with file uploads
-      if (withFileUpload && !addEntry) onSubmit(formatFilesData(values, new FormData()));
-      // submit form with file uploads and entry values
-      if (withFileUpload && addEntry) onSubmit(formatFilesEntryData(values, entryValues));
-      // reset form submit
-      setStatus(null);
+      // Disable the submit control while onSubmit is in flight so a second
+      // click cannot fire a duplicate submission. await works whether the
+      // handler returns a promise or a plain value; isSubmitting flips back in
+      // finally either way, and setStatus(null) still resets the cycle.
+      const runSubmit = async () => {
+        setIsSubmitting(true);
+        try {
+          // Promise.resolve wraps the handler's return so this awaits correctly
+          // whether onSubmit is async (real promise) or sync (void) — and it
+          // keeps the await-thenable lint rule satisfied for a void-typed prop.
+          if (!withFileUpload && !addEntry) await Promise.resolve(onSubmit(formatFormData(values)));
+          else if (!withFileUpload && addEntry) await Promise.resolve(onSubmit(formatFormEntryData(values, entryValues)));
+          else if (withFileUpload && !addEntry) await Promise.resolve(onSubmit(formatFilesData(values, new FormData())));
+          else if (withFileUpload && addEntry) await Promise.resolve(onSubmit(formatFilesEntryData(values, entryValues)));
+        } finally {
+          setIsSubmitting(false);
+          setStatus(null);
+        }
+      };
+      void runSubmit();
     }
     if (validationStatus === "preview") {
       if (onViewPreview) onViewPreview(formatPreviewData(values));
@@ -236,7 +250,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {onCancel || onViewPreview ? (
         <div className="buttons-container">
           {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
-          {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm} icon={submitIcon} />}
+          {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} />}
           {onViewPreview && (
             <IconButton
               icon={{ icon: submitIcon || "eye", label: previewLabel }}
@@ -247,7 +261,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         </div>
       ) : (
         !hideSubmit && (
-          <SubmitButton label={submitLabel} isDisable={disableForm} icon={submitIcon} theme="form-submit-btn" />
+          <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} theme="form-submit-btn" />
         )
       )}
     </form>
