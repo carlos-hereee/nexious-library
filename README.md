@@ -23,6 +23,8 @@ Import the stylesheet once in your app entry file:
 import "nexious-library/@index.css";
 ```
 
+> **ESM only.** This package ships ES modules (no CommonJS build). Use it from a bundler (Vite, webpack 5, esbuild) or from Node with ESM enabled.
+
 ---
 
 ## Quick Start
@@ -154,6 +156,12 @@ import { uniqueId, combineArraysWithOutDups, objToArray, capFirstCharacter, urlF
 ```json
 "react": ">=18.0.0",
 "react-dom": ">=18.0.0"
+```
+
+FontAwesome is an **optional** peer dependency. It is only needed if you use icon-based components (`Icon`, `IconButton`, and anything built on them). Install it when you do:
+
+```bash
+npm i @fortawesome/fontawesome-svg-core @fortawesome/free-solid-svg-icons @fortawesome/free-brands-svg-icons @fortawesome/react-fontawesome
 ```
 
 ---

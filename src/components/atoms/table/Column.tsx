@@ -8,6 +8,10 @@ interface PTableData {
   data?: string;
   theme?: string;
 }
-const Column: React.FC<PTableData> = ({ data, theme }) => <th className={theme}>{data}</th>;
+const Column: React.FC<PTableData> = ({ data, theme }) => (
+  <th className={theme} scope="col">
+    {data}
+  </th>
+);
 
 export default Column;

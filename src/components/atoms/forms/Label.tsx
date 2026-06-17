@@ -9,7 +9,14 @@ const Label: React.FC<LabelProps> = (props) => {
 
   return (
     <label htmlFor={name} className={theme}>
-      <span className="label-name">{labelCap}</span> {error && <span className="required">{error}</span>}
+      <span className="label-name">{labelCap}</span>{" "}
+      {error && (
+        // role="alert" + the predictable `${name}-error` id let the matching input wire
+        // aria-describedby/aria-invalid so screen readers announce the validation error.
+        <span className="required" id={name ? `${name}-error` : undefined} role="alert">
+          {error}
+        </span>
+      )}
       {message && <span className="success">{message}</span>}
     </label>
   );

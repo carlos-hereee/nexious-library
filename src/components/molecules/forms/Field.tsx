@@ -145,6 +145,7 @@ const Field: React.FC<FormFieldProps> = (props) => {
         theme="highlight"
         placeholder={placeholder}
         isDisabled={disableForm}
+        error={formError}
       />
     </>
   );

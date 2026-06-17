@@ -57,6 +57,9 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           name={name}
           ref={imageUploaderRef}
           id={name}
+          // The input is visually hidden behind a custom trigger button, so it still needs
+          // an accessible name of its own for screen readers and file-picker tooling.
+          aria-label={label || "Choose a file"}
           hidden
         />
         <button className="btn-main" type="button" onClick={imageClick} disabled={isDisabled}>

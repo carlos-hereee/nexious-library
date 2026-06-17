@@ -12,7 +12,6 @@ $action-color-alt: #f5b200;
 $faded: rgb(184, 184, 184);
 $dimmer: rgba(230, 230, 230, 0.7);
 $dim: rgba(196, 196, 196, 0.7);
-$dim-color: rgba(196, 196, 196, 0.7);
 $dark-primary: #484b6a;
 $cta-color: #ffa500;
 $icon-color: #333;
@@ -47,4 +46,6 @@ $dark: #9394a5;
 $dark-mode: #2c3e50;
 $dark-mode-alt: rgb(94, 94, 94);
 
+// Canonical $dim-color (a duplicate earlier declaration was removed; this value was the
+// one already in effect via source order, so deduping changed no rendered color).
 $dim-color: #fafafa;

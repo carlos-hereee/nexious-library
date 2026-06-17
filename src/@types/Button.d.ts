@@ -17,11 +17,23 @@ declare module "nxs-button" {
   };
   export interface ButtonProps {
     // optional
+    // Called on click. Kept as an optional data string (not the DOM event) because internal
+    // callers such as NavButton pass a payload through it; widening to the event would break them.
     onClick?: (data?: string) => void;
     onSubmit?: () => void;
     children?: React.ReactNode;
     theme?: string;
+    // className merges with the computed theme/btn-main class rather than replacing it,
+    // so consumers can extend styling without losing the base button styles.
+    className?: string;
+    // type defaults to "button"; pass "submit" to use Button inside a form.
+    type?: "button" | "submit" | "reset";
+    id?: string;
+    style?: React.CSSProperties;
     isDisable?: boolean;
+    // isDisabled is the canonical spelling used by the form components; accepted here as
+    // an alias of isDisable so the whole library can converge on one name without a breaking rename.
+    isDisabled?: boolean;
     hideIcon?: boolean;
     draggable?: boolean;
     icon?: string;
@@ -49,8 +61,16 @@ declare module "nxs-button" {
     title?: string;
     theme?: string;
     isDisable?: boolean;
+    // alias of isDisable (see ButtonProps); lets callers use the canonical spelling.
+    isDisabled?: boolean;
     isBurger?: boolean;
     label?: string;
+    // Accessible name for icon-only buttons. Without it a button whose only content is an
+    // icon has no name for screen readers; the component falls back to title/label/name.
+    "aria-label"?: string;
+    // Disclosure wiring for buttons that toggle a panel (e.g. HintButton).
+    "aria-expanded"?: boolean;
+    "aria-controls"?: string;
     // notification count
     ping?: number;
     // icon props

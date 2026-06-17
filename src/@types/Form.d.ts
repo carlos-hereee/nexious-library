@@ -328,6 +328,9 @@ declare module "nxs-form" {
     clearSelection?: boolean;
     isDisabled?: boolean;
     formMessage?: string;
+    // Placeholder shown as the disabled first option when nothing is selected.
+    // Defaults to "Choose Selection"; pass a localized string to avoid hardcoded English.
+    placeholder?: string;
     onChange?: (key: string) => void;
   }
   export type ValidateFormStatus = "error" | "preview" | "validated" | "green" | null;

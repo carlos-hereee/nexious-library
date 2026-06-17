@@ -3,7 +3,7 @@
   "version": "3.0.7",
   "description": "React component library powering companyuno.com. Includes Calendar, Form, Dialog, Navigation, Checkout components and more.",
   "type": "module",
-  "types": "dist/@types",
+  "types": "./dist/@types/main.d.ts",
   "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
   "homepage": "https://www.companyuno.com",
@@ -88,17 +88,26 @@
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
     "release:major": "npm run build && npm version major && npm publish",
+    "lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
     "test": "jest",
-    "test:watch": "jest --watch"
+    "test:watch": "jest --watch",
+    "test:ci": "jest --ci --coverage",
+    "prepublishOnly": "npx tsc --noEmit && npm test"
   },
   "jest": {
     "preset": "ts-jest",
     "testEnvironment": "jsdom",
+    "setupFilesAfterEnv": [
+      "<rootDir>/jest.setup.ts"
+    ],
     "testMatch": [
       "**/src/__tests__/**/*.test.ts",
       "**/src/__tests__/**/*.test.tsx"
     ],
     "moduleNameMapper": {
+      "^@nxs-atoms$": "<rootDir>/src/components/atoms/index.tsx",
+      "^@nxs-molecules$": "<rootDir>/src/components/molecules/index.tsx",
+      "^@nxs-organism$": "<rootDir>/src/components/organism/index.tsx",
       "@nxs-atoms/(.*)": "<rootDir>/src/components/atoms/$1",
       "@nxs-molecules/(.*)": "<rootDir>/src/components/molecules/$1",
       "@nxs-organism/(.*)": "<rootDir>/src/components/organism/$1",
@@ -106,6 +115,13 @@
       "@nxs-utils/(.*)": "<rootDir>/src/utils/$1",
       "@nxs-math/(.*)": "<rootDir>/src/math/$1"
     },
+    "collectCoverageFrom": [
+      "src/**/*.{ts,tsx}",
+      "!src/**/*.stories.tsx",
+      "!src/**/*.d.ts",
+      "!src/__tests__/**"
+    ],
+    "coverageDirectory": "js/coverage",
     "transform": {
       "^.+\\.(ts|tsx)$": [
         "ts-jest",
@@ -141,10 +157,11 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist",
-    "src/**/*.d.ts"
+    "dist"
   ],
-  "sideEffects": false,
+  "sideEffects": [
+    "**/*.css"
+  ],
   "bugs": {
     "url": "https://github.com/carlos-hereee/nexious-library/issues"
   },
@@ -155,6 +172,20 @@
     "@fortawesome/react-fontawesome": ">=0.2.0",
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@fortawesome/fontawesome-svg-core": {
+      "optional": true
+    },
+    "@fortawesome/free-brands-svg-icons": {
+      "optional": true
+    },
+    "@fortawesome/free-solid-svg-icons": {
+      "optional": true
+    },
+    "@fortawesome/react-fontawesome": {
+      "optional": true
+    }
   },
   "devDependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.0.0",
@@ -167,6 +198,7 @@
     "@testing-library/jest-dom": "^6.9.1",
     "@testing-library/react": "^16.3.2",
     "@types/jest": "^29.5.14",
+    "@types/jest-axe": "^3.5.9",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^24.12.2",
     "@types/react": "^18.2.0",
@@ -185,6 +217,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "jest": "^29.7.0",
+    "jest-axe": "^10.0.0",
     "jest-environment-jsdom": "^30.3.0",
     "prettier": "2.8.8",
     "rimraf": "^5.0.1",

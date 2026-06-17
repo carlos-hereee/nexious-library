@@ -1,0 +1,46 @@
+// Default design tokens for nexious-library.
+//
+// Why this exists: button variants, status colors, spacing, radii and shadows across the
+// library reference CSS custom properties (var(--surface), var(--space-medium), ...). With
+// no :root defining them, those declarations resolve to nothing and the library renders
+// unstyled unless the consuming app happens to define the exact same token names. This
+// block ships sensible defaults so the library is self-contained.
+//
+// Non-breaking by design: a consumer that defines these tokens (e.g. nexious-client's
+// vars.css, imported AFTER the library stylesheet) overrides every value via normal source
+// order, so existing apps are unaffected; only the drop-it-in-unstyled case changes.
+:root {
+  // brand + surfaces
+  --main-brand-color: #484b6a;
+  --surface: #ffffff;
+  --border: #dddddd;
+  --text: #2c3e50;
+  --text-small: 0.875rem;
+  --text-large: 1.25rem;
+  // status accents
+  --danger-accent-color: crimson;
+  --pending-accent-color: #eaab4c;
+  --success-accent-color: #4bb161;
+  --complete-accent-color: #4bb161;
+  --text-success-color: #4bb161;
+  --primary-text-light-mode-color: #2c3e50;
+  // spacing scale
+  --space-extra-small: 0.25rem;
+  --space-small: 0.5rem;
+  --space-medium-small: 0.75rem;
+  --space-medium: 1rem;
+  --space-large: 2rem;
+  // radii
+  --radius-small: 5px;
+  --radius-medium: 7px;
+  --radius-extra-large: 15px;
+  --radius-full: 9999px;
+  // elevation
+  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.08);
+  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-large: 0 10px 28px rgba(0, 0, 0, 0.12);
+  // motion
+  --transition-fast: 150ms ease;
+  // sizing
+  --max-card-width: 600px;
+}

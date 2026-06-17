@@ -11,6 +11,11 @@ declare module "nxs-card" {
     onClick?: () => void;
     children?: React.ReactNode;
     header?: { heading?: string; subtitle?: string; data?: string };
+    // Opt-in modal semantics. When true Dialog adds role="dialog" + aria-modal, traps
+    // focus, and closes on Escape. Defaults off so consumers that already wrap Dialog in
+    // their own modal shell (e.g. a DialogOverlay with its own focus trap) are unaffected
+    // and do not get nested dialog roles or double Escape handling.
+    asModal?: boolean;
   };
   export type CTAProp = {
     name: string;
