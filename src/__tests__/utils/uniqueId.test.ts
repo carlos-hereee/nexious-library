@@ -55,6 +55,36 @@ describe("uniqueId", () => {
   });
 });
 
+describe("uniqueId urlSafe option (item 28)", () => {
+  // Only alphanumerics and the segment-joining dash; no ?, #, &, =, +, %, etc.
+  const urlSafeAllowed = /^[A-Za-z0-9-]+$/;
+
+  it("urlSafe ids contain only alphanumerics and dashes", () => {
+    for (let i = 0; i < 100; i++) {
+      const id = uniqueId(24, { urlSafe: true });
+      expect(id).toMatch(urlSafeAllowed);
+    }
+  });
+
+  it("urlSafe keeps the default 4x6 dashed shape", () => {
+    const id = uniqueId(undefined, { urlSafe: true });
+    expect(id).toMatch(/^.{6}-.{6}-.{6}-.{6}$/);
+  });
+
+  it("urlSafe short ids skip the dash splitter and carry no special chars", () => {
+    const id = uniqueId(8, { urlSafe: true });
+    expect(id.length).toBe(8);
+    expect(id.includes("-")).toBe(false);
+    expect(id).toMatch(/^[A-Za-z0-9]+$/);
+  });
+
+  it("default mode is unchanged (no options argument behaves exactly as before)", () => {
+    const id = uniqueId();
+    expect(id).toMatch(/^.{6}-.{6}-.{6}-.{6}$/);
+    expect(id.length).toBe(27);
+  });
+});
+
 describe("uniqueRandomList", () => {
   it("returns the requested count with unique ids", () => {
     const list = uniqueRandomList(10);
