@@ -85,6 +85,7 @@ import {
   faUpLong,
   faUsd,
   faUser,
+  faUsers,
   faX,
   faBug,
 } from "@fortawesome/free-solid-svg-icons";
@@ -175,6 +176,8 @@ const svg: SVGProp = {
   thinking: faEllipsis as IconDefinition,
   top: faUpLong as IconDefinition,
   user: faUser as IconDefinition,
+  users: faUsers as IconDefinition,
+  friends: faUsers as IconDefinition,
   uncheck: faCircle as IconDefinition,
   right: faRightLong as IconDefinition,
   refresh: faRefresh as IconDefinition,

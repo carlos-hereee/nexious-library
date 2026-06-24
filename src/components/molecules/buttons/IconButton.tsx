@@ -9,15 +9,31 @@ import type { IconButtonProps } from "nxs-button";
  *    @param spin string to specify the spin of an  *
  *    @param color string to specify the color of an  *
  * @param ping string to specify a notification count on icon
- * @param click callback fired when button is click
+ * @param onClick callback fired when button is clicked
  * @returns button with icon label
  */
-const IconButton: React.FC<IconButtonProps> = ({ theme, onClick, ping, icon, title, isDisable }) => {
+const IconButton: React.FC<IconButtonProps> = (props) => {
+  const {
+    theme,
+    onClick,
+    ping,
+    icon,
+    title,
+    isDisable,
+    isDisabled,
+    "aria-label": ariaLabelProp,
+    "aria-expanded": ariaExpanded,
+    "aria-controls": ariaControls,
+  } = props;
   if (!icon) return <p className="error-message">Double check icon prop</p>;
   const { color, label, size, spin, name } = icon;
   if (!icon.icon) {
     return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon.icon }} />;
   }
+  const disabled = isDisabled ?? isDisable;
+  // Icon-only buttons have no text node, so without a name a screen reader announces nothing.
+  // Prefer an explicit aria-label, then title/label/name, finally the icon key as a last resort.
+  const ariaLabel = ariaLabelProp || title || label || name || icon.icon;
   if (icon.isNum) {
     const nums = icon.icon.split("");
     return (
@@ -26,7 +42,10 @@ const IconButton: React.FC<IconButtonProps> = ({ theme, onClick, ping, icon, tit
         onClick={onClick}
         title={title || icon.icon || name || ""}
         type="button"
-        disabled={isDisable}
+        disabled={disabled}
+        aria-label={ariaLabel}
+        aria-expanded={ariaExpanded}
+        aria-controls={ariaControls}
       >
         {nums.map((n) => (
           <Icon key={n} icon={n} size={size} spin={spin} color={color} name={name} hideHints />
@@ -44,7 +63,10 @@ const IconButton: React.FC<IconButtonProps> = ({ theme, onClick, ping, icon, tit
       onClick={onClick}
       title={title || name || icon.icon || ""}
       type="button"
-      disabled={isDisable}
+      disabled={disabled}
+      aria-label={ariaLabel}
+      aria-expanded={ariaExpanded}
+      aria-controls={ariaControls}
     >
       <Icon icon={icon.icon} size={size} spin={spin} color={color} name={name} hideHints />
       {label && label}

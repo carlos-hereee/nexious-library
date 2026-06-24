@@ -1,6 +1,14 @@
 // Character pool for ID generation (alphanumeric + special characters)
 const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()_+=[]{}|;:,.<>?";
 
+// URL-safe pool: alphanumeric only. Segments are still joined with dashes, so a
+// urlSafe id reads as [A-Za-z0-9-]+, safe to drop into a URL path or query string
+// without encoding. The default pool above includes ?, #, &, =, +, %, etc., which
+// is fine for React keys and form ids but corrupts a value used as a primary
+// identifier in a URL (FUTURE_PLANS item 28). Callers that mint URL-facing ids
+// (e.g. App uids) pass { urlSafe: true }; React-key callers keep the default.
+const urlSafeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+
 // Default segment count and segment length
 // Produces 4 segments of 6 characters joined by dashes (e.g. "aB3$xZ-Kp9!mQ-rT2&wY-Jn7@cF")
 const DEFAULT_SEGMENTS = 4;
@@ -44,19 +52,29 @@ const randomIndex = (max: number): number => {
   return buf[0] % max;
 };
 
+interface UniqueIdOptions {
+  // When true, draw from the alphanumeric-only pool so the result is URL-safe.
+  // Defaults to false (the full pool), preserving every existing caller.
+  urlSafe?: boolean;
+}
+
 /**
  * Generate a cryptographically random unique ID.
  * @param length optional total character count (default is 24 which maps to 4 segments of 6)
+ * @param options optional flags; pass `{ urlSafe: true }` to restrict the pool to
+ *        alphanumeric characters so the id is safe in a URL path or query string
  * @returns a random string; if length > DASH_THRESHOLD, dashes are inserted every 6 characters
  */
-export const uniqueId = (length?: number) => {
+export const uniqueId = (length?: number, options?: UniqueIdOptions) => {
   // Total raw characters to generate
   const totalChars = length || DEFAULT_SEGMENTS * SEGMENT_LENGTH;
+  // Pick the pool once; reject-sampling in randomIndex is correct for any pool size.
+  const pool = options?.urlSafe ? urlSafeChars : chars;
 
   // Build raw random string
   let raw = "";
   for (let i = 0; i < totalChars; i++) {
-    raw += chars[randomIndex(chars.length)];
+    raw += pool[randomIndex(pool.length)];
   }
 
   // If the string is short, return it as is with no dashes

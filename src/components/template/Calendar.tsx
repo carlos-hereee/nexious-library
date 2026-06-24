@@ -40,8 +40,11 @@ const Calendar: React.FC<CalendarProps> = (props) => {
       const data: CalEvent[] = [];
       events.forEach((event) => {
         const idx = data.findIndex((d) => d.date === event.date);
-        // if no match add to data payload
-        if (idx <= 0) data.push({ date: event.date || "", list: [event] });
+        // findIndex returns -1 only when no group exists yet for this date; a real
+        // match can legitimately be index 0. Guarding on `idx <= 0` forked a second
+        // duplicate group whenever an event matched the FIRST grouped date, splitting
+        // that day's events and under-counting its ping badge.
+        if (idx === -1) data.push({ date: event.date || "", list: [event] });
         else data[idx].list.push(event);
       });
       setEvents(data);

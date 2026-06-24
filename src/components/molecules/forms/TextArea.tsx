@@ -15,6 +15,8 @@ const TextArea = (props: TextAreaProps) => {
         disabled={isDisabled}
         placeholder={placeholder}
         onChange={(event) => onChange && onChange(event.currentTarget.value)}
+        aria-invalid={error ? true : undefined}
+        aria-describedby={error ? `${name}-error` : undefined}
       />
     </>
   );

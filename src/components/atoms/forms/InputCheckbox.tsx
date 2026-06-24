@@ -9,7 +9,12 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
 
   return (
     <div className="container">
-      {error && <span className="required">{error}</span>}
+      {/* Single error node carrying the id the checkbox references; role="alert" announces it. */}
+      {error && (
+        <span className="required" id={`${name}-error`} role="alert">
+          {error}
+        </span>
+      )}
       <div className="input-checkbox ">
         <input
           className={theme}
@@ -18,6 +23,8 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
           disabled={isDisabled}
           checked={value}
           onChange={onChange}
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${name}-error` : undefined}
           // give lavels a reason to be there give inputs id
           id={name}
         />
@@ -30,7 +37,8 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
               ))}
             </label>
           ) : (
-            <Label name={name} label={label} error={error} message={formMessage} />
+            // error is rendered once above (with the describedby id); not repeated on the Label.
+            <Label name={name} label={label} message={formMessage} />
           ))}
       </div>
     </div>

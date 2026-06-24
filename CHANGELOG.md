@@ -25,6 +25,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Nav landmark `aria-label`s on primary, mobile, and footer navs
 - `activePath` on `HeaderProps` and `NavbarProps` so the active page is marked with `aria-current="page"`
 - Icons: `palette`, `chevronDown`, `checkMark`
+- `:root` design-token defaults (`vars/_tokens.scss`) so the library renders standalone instead of silently depending on consumer-defined CSS custom properties
+- `Button`: additive `className` (merges with the theme class rather than replacing it), `type` (enables a real form-submit button), `id`, and `style` props
+- `isDisabled` alias on `Button` and `IconButton` (alongside the legacy `isDisable`) so the API can converge on one spelling without a breaking rename
+- `Dialog`: opt-in `asModal` prop adding `role="dialog"`, `aria-modal`, `aria-labelledby`, a focus trap and Escape-to-close, backed by a new shared `useFocusTrap` hook (off by default so existing modal wrappers are unaffected)
+- `Select`: `placeholder` prop (defaults to the previously hardcoded "Choose Selection")
+- Component render tests (React Testing Library) for `Button`, `Select`, `Dialog`, the form inputs and the icon buttons; `jest-axe` accessibility assertions; `jest.setup.ts` wiring `@testing-library/jest-dom`
+- `lint` and `test:ci` scripts plus a `prepublishOnly` gate (`tsc --noEmit` + tests) so a failing build cannot be published
+- GitHub Actions CI running lint, type-check and tests on push and pull request
+
+### Accessibility
+
+- Form inputs (`Input`, `TextArea`, `InputCheckbox`) set `aria-invalid` and `aria-describedby`, and field errors render in a `role="alert"` live region (WCAG 3.3.1 / 4.1.3)
+- Icon-only controls get real accessible names: `IconButton` accepts `aria-label` / `aria-expanded` / `aria-controls`; `CopyButton` announces copy success via an `aria-live` region; the `AuthField` password toggle and the hidden `UploadFile` input are labeled; `HintButton` exposes its disclosure state
+- `Select` names its native control with the field name when the visible label is hidden, and associates the visible label via `id`
+- Table header cells (`<th>`) get `scope="col"`
 
 ### Changed
 
@@ -35,6 +50,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `.post-detail-body` caps at `70ch` for proper reading measure
 - `.post-card` width driven by the dedicated `$max-post-card-width` token (620px)
 - `.merch-card` width driven by the dedicated `$max-merch-card-width` token (320px)
+- Packaging: `sideEffects` changed from `false` to `["**/*.css"]` so bundlers never tree-shake the shipped stylesheet
+- Packaging: top-level `types` now points to `./dist/@types/main.d.ts` (was a directory, which only resolved by accident via the exports map); stale `src/**/*.d.ts` removed from the published `files` list
+- FontAwesome peer dependencies marked optional via `peerDependenciesMeta` (only the `Icon` / `Assets` path needs them)
+- Documented that the package is ESM-only (no CommonJS build; requires a bundler or Node ESM)
 
 ### Fixed
 
@@ -52,6 +71,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `ThemeMenu` TS2322 where `wrapRef` was typed `HTMLDivElement` but attached to an `<li>`. Now typed as `HTMLLIElement`
 - `PostRow` no longer nests interactive elements
 - Added `@testing-library/dom` as an explicit devDependency. `@testing-library/react@16` requires it as a peer and it was previously missing, causing hook test suites to fail to load with `Cannot find module '@testing-library/dom'`
+- `BurgerButton`: `aria-label` was inverted relative to the open/closed state (it said "open menu" while the menu was already open) — swapped
+- `Select`: no longer throws inside render when `onChange` is missing, and no longer renders an error card on missing `name`/`list`; it relies on the already-required types, so a misconfigured prop is a compile error instead of a runtime crash
+- `useRequiredProps`: now flags an empty string, array, or object as missing (previously only `null`/`undefined`), matching its test suite
+- Removed a duplicate `$dim-color` SCSS declaration (kept the value already in effect via source order, so no rendered color changed)
 
 ### Removed
 

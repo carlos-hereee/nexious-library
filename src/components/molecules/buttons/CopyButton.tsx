@@ -14,11 +14,19 @@ const CopyButton = ({ data, label }: CopyToClipboardProps) => {
     setCopy(true);
   };
   return (
-    <IconButton
-      icon={{ icon: isCopy ? "check" : "copy", label: label || "Copy link" }}
-      onClick={copyData}
-      theme="btn-main"
-    />
+    <>
+      <IconButton
+        icon={{ icon: isCopy ? "check" : "copy", label: label || "Copy link" }}
+        onClick={copyData}
+        theme="btn-main"
+        aria-label={label || "Copy link"}
+      />
+      {/* The icon swap (copy → check) is silent to screen readers; this polite live region
+          announces the success so non-sighted users know the copy happened. */}
+      <span aria-live="polite" className="sr-only">
+        {isCopy ? "Copied to clipboard" : ""}
+      </span>
+    </>
   );
 };
 export default CopyButton;
