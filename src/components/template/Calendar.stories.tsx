@@ -50,11 +50,7 @@ export const Default: Story = {
 export const WithEvents: Story = {
   args: {
     value: seed,
-    events: [
-      { date: "2026-06-18" },
-      { date: "2026-06-18" },
-      { date: "2026-06-22" },
-    ],
+    events: [{ date: "2026-06-18" }, { date: "2026-06-18" }, { date: "2026-06-22" }],
   },
 };
 

@@ -7,16 +7,7 @@ describe("Calendar event grouping", () => {
   const seed = new Date("2026-06-15T12:00:00");
 
   it("merges two events on the same (first) grouped date into a single ping of 2", () => {
-    render(
-      <Calendar
-        value={seed}
-        events={[
-          { date: "2026-06-18" },
-          { date: "2026-06-18" },
-          { date: "2026-06-22" },
-        ]}
-      />
-    );
+    render(<Calendar value={seed} events={[{ date: "2026-06-18" }, { date: "2026-06-18" }, { date: "2026-06-22" }]} />);
 
     // The first grouped date is the regression surface: for the second matching
     // event findIndex returns 0, and the old `idx <= 0` guard forked a duplicate

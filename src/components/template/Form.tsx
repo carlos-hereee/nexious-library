@@ -69,9 +69,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           // whether onSubmit is async (real promise) or sync (void) — and it
           // keeps the await-thenable lint rule satisfied for a void-typed prop.
           if (!withFileUpload && !addEntry) await Promise.resolve(onSubmit(formatFormData(values)));
-          else if (!withFileUpload && addEntry) await Promise.resolve(onSubmit(formatFormEntryData(values, entryValues)));
-          else if (withFileUpload && !addEntry) await Promise.resolve(onSubmit(formatFilesData(values, new FormData())));
-          else if (withFileUpload && addEntry) await Promise.resolve(onSubmit(formatFilesEntryData(values, entryValues)));
+          else if (!withFileUpload && addEntry)
+            await Promise.resolve(onSubmit(formatFormEntryData(values, entryValues)));
+          else if (withFileUpload && !addEntry)
+            await Promise.resolve(onSubmit(formatFilesData(values, new FormData())));
+          else if (withFileUpload && addEntry)
+            await Promise.resolve(onSubmit(formatFilesEntryData(values, entryValues)));
         } finally {
           setIsSubmitting(false);
           setStatus(null);
@@ -250,7 +253,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       {onCancel || onViewPreview ? (
         <div className="buttons-container">
           {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
-          {!hideSubmit && <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} />}
+          {!hideSubmit && (
+            <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} />
+          )}
           {onViewPreview && (
             <IconButton
               icon={{ icon: submitIcon || "eye", label: previewLabel }}
@@ -261,7 +266,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         </div>
       ) : (
         !hideSubmit && (
-          <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} theme="form-submit-btn" />
+          <SubmitButton
+            label={submitLabel}
+            isDisable={disableForm || isSubmitting}
+            icon={submitIcon}
+            theme="form-submit-btn"
+          />
         )
       )}
     </form>
