@@ -1,5 +1,5 @@
 import { ErrorMessage, Icon, PingCount } from "@nxs-atoms";
-import { svg } from "@nxs-atoms/assets/Assets";
+import { getIconRenderer, getRegisteredIconKeys } from "@nxs-atoms/assets/iconRegistry";
 import type { IconButtonProps } from "nxs-button";
 
 /**
@@ -53,8 +53,8 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
       </button>
     );
   }
-  if (!svg[icon.icon]) {
-    const message = `heres a list of availible icons: ${Object.keys(svg).map((s) => s)}`;
+  if (!getIconRenderer(icon.icon)) {
+    const message = `heres a list of availible icons: ${getRegisteredIconKeys().join(", ")}`;
     return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: message }} />;
   }
   return (

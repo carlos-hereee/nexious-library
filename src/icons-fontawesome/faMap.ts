@@ -41,7 +41,6 @@ import {
   faCopy,
   faDoorClosed,
   faEllipsis,
-  // faEdit,
   faEnvelope,
   faEye,
   faEyeSlash,
@@ -89,13 +88,15 @@ import {
   faX,
   faBug,
 } from "@fortawesome/free-solid-svg-icons";
-import { library } from "@fortawesome/fontawesome-svg-core";
 import type { IconDefinition } from "@fortawesome/fontawesome-common-types";
 
-type SVGProp = {
-  [key: string | number]: IconDefinition;
-};
-const svg: SVGProp = {
+// The full string-key -> fontawesome-icon-object map, lifted verbatim from the former
+// Assets.tsx. This is the ONLY place the library references fontawesome; it lives behind
+// the optional "./fontawesome-icons" subpath so the core ships no icon library. The old
+// global `library.add(svg)` side-effect is gone: <FontAwesomeIcon icon={def}> renders an
+// explicit icon object directly, so fontawesome-svg-core's registry is not needed.
+type FaMap = { [key: string | number]: IconDefinition };
+export const faMap: FaMap = {
   about: faInfo as IconDefinition,
   arrowUp: faArrowUp as IconDefinition,
   arrowDown: faArrowDown as IconDefinition,
@@ -127,9 +128,7 @@ const svg: SVGProp = {
   dot: faCircleDot as IconDefinition,
   dashboard: faUser as IconDefinition,
   eye: faEye as IconDefinition,
-  // edit: faEdit as IconDefinition,
   edit: faFileEdit as IconDefinition,
-  // edit: faUserEdit as IconDefinition,
   explore: faMagnifyingGlass as IconDefinition,
   eyeSlash: faEyeSlash as IconDefinition,
   flag: faGlobe as IconDefinition,
@@ -215,5 +214,3 @@ const svg: SVGProp = {
   chevronDown: faChevronDown as IconDefinition,
   checkMark: faCheck as IconDefinition,
 };
-library.add(svg);
-export { svg };

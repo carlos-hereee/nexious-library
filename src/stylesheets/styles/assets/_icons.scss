@@ -77,3 +77,27 @@
     aspect-ratio: 1/1;
   }
 }
+
+// Built-in SVG icons append .icon-spin / .icon-pulse when spin="spin"|"pulse".
+// fontawesome supplied these animations before v4; the dependency-free defaults need
+// their own. Distinct keyframe names so they do not collide with the background `pulse`.
+@keyframes icon-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@keyframes icon-pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+.icon-spin {
+  animation: icon-spin 2s linear infinite;
+}
+.icon-pulse {
+  animation: icon-pulse 1s steps(8) infinite;
+}

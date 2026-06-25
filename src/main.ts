@@ -24,6 +24,17 @@ export { default as Spinner } from "@nxs-atoms/assets/Spinner";
 export { default as Loading } from "@nxs-molecules/errors/Loading";
 export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as IconButton } from "@nxs-molecules/buttons/IconButton";
+// pluggable icon registry (register a custom set, or the fontawesome adapter, at app boot)
+export {
+  registerIcons,
+  getIconRenderer,
+  getRegisteredIconKeys,
+  LIBRARY_REQUIRED_ICON_KEYS,
+  type IconRegistry,
+  type IconComponent,
+  type IconRenderProps,
+  type LibraryIconKey,
+} from "@nxs-atoms/assets/iconRegistry";
 export { default as HeroCard } from "@nxs-organism/card/HeroCard";
 export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
 export { default as UserCard } from "@nxs-organism/card/UserCard";

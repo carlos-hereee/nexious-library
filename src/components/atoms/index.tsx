@@ -3,6 +3,17 @@ export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as Spinner } from "@nxs-atoms/assets/Spinner";
 export { default as Bubble } from "@nxs-atoms/assets/Bubble";
 export { default as Image } from "@nxs-atoms/assets/Image";
+// pluggable icon registry — lets a consumer supply its own icon set without forking
+export {
+  registerIcons,
+  getIconRenderer,
+  getRegisteredIconKeys,
+  LIBRARY_REQUIRED_ICON_KEYS,
+  type IconRegistry,
+  type IconComponent,
+  type IconRenderProps,
+  type LibraryIconKey,
+} from "@nxs-atoms/assets/iconRegistry";
 // buttons
 export { default as Button } from "@nxs-atoms/buttons/Button";
 export { default as BackButton } from "@nxs-atoms/buttons/BackButton";
