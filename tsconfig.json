@@ -35,7 +35,17 @@
       "@nxs-math/*": ["./src/math/*"],
       "@nxs-math": ["./src/math"],
       "@nxs-helpers/*": ["./src/utils/helpers/*"],
-      "@nxs-helpers": ["./src/utils/helpers"]
+      "@nxs-helpers": ["./src/utils/helpers"],
+      "nxs-assets": ["./src/@types/Assets"],
+      "nxs-button": ["./src/@types/Button"],
+      "nxs-calendar": ["./src/@types/Calendar"],
+      "nxs-card": ["./src/@types/Card"],
+      "nxs-errors": ["./src/@types/Errors"],
+      "nxs-form": ["./src/@types/Form"],
+      "nxs-navigation": ["./src/@types/Navigation"],
+      "nxs-post": ["./src/@types/Post"],
+      "nxs-typography": ["./src/@types/Typography"],
+      "custom-props": ["./src/@types/Custom"]
     } /* Specify a set of entries that re-map imports to additional lookup locations. */,
     "forceConsistentCasingInFileNames": true,
     "declaration": true /* Generate .d.ts files from TypeScript and JavaScript files in your project. */,

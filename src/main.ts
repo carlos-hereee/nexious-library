@@ -79,3 +79,12 @@ export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/curren
 // public hooks — lets consumers build custom form UIs using the same validation and state logic
 export { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 export { useValues } from "@nxs-utils/hooks/useFormValues";
+// public prop types — surfaced from the package entry so consumers can type their own
+// wrappers without reaching into subpaths. The underlying type modules now ship in dist
+// (the @types ambient `declare module` blocks were converted to real emitted modules).
+export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";
+export type { FormProps, PaginateFormProps, SelectProp } from "nxs-form";
+export type { ButtonProps, IconButtonProps } from "nxs-button";
+export type { CalendarProps } from "nxs-calendar";
+export type { CardProps } from "nxs-card";
+export type { PostProps, PostDetailProps } from "nxs-post";

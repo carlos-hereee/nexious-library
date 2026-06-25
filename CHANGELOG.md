@@ -66,6 +66,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- **Published types now resolve for consumers (was the biggest defect in the package).** Every component prop type was declared inside ambient `declare module "nxs-button"` / `"nxs-form"` / `"custom-props"` (etc.) blocks in `src/@types/*.d.ts`. Those blocks were never emitted into `dist`, yet ~118 shipped `.d.ts` files imported from them, so any consumer on `skipLibCheck:false` (or `node16`/`nodenext` resolution) got `TS2307 Cannot find module 'nxs-button'` across the whole prop surface, and everyone else silently got `any`. The ambient blocks are now real, exported modules (`src/@types/*.ts`) mapped via `tsconfig` `paths`, so `tsc-alias` rewrites the imports to relative paths and the type modules ship in `dist/@types/@types/`. Verified by a clean emit: 0 phantom `nxs-*`/`custom-props` specifiers remain in the emitted `.d.ts`. The headline prop types (`HeaderProps`, `FormProps`, `ButtonProps`, `SelectProp`, `CalendarProps`, `PostProps`, ...) are also re-exported from the package entry so consumers can import them by name from `nexious-library`
 - `useRequiredProps`: `objLength(value) < 0` can never be true — changed to `=== 0` so empty objects are correctly flagged
 - `useRequiredProps`: stale closure caused only the last error to survive — fixed with functional state update
 - `useFormValidation`: `validateForm` was setting "validated" even when errors existed — fixed priority check
