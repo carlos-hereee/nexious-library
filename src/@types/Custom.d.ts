@@ -33,6 +33,15 @@ declare module "custom-props" {
     total: number;
     theme: string;
     heading?: string;
+    // Precomputed tax amount (same unit as total). Wins over taxRate when both set.
+    tax?: number;
+    // Tax rate as a fraction (e.g. 0.0625 for 6.25%), applied when tax is omitted.
+    // No default rate is invented: a multi-jurisdiction primitive must be told.
+    taxRate?: number;
+    // Currency symbol prefix for displayed amounts. Defaults to "$".
+    currencySymbol?: string;
+    // Row labels, for i18n. Default to English Subtotal/Tax/Total.
+    labels?: { subtotal?: string; tax?: string; total?: string };
   }
   export type ObjectToArray<P> = (obj?: { [key: string]: P }) => { [key: string]: P }[] | [];
   export type AddArrayInObject<T = KeyStringProp> = {

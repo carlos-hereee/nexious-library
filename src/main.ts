@@ -14,6 +14,7 @@ export { combineArraysWithOutDups } from "@nxs-utils/app/combineArraysWithOutDup
 export { objToArray } from "@nxs-utils/app/objLength";
 export { capFirstCharacter } from "@nxs-utils/data/text";
 export { urlFile } from "@nxs-utils/data/urlFile";
+export { safeUrl } from "@nxs-utils/data/safeUrl";
 // background components
 export { default as Bubbly } from "@nxs-organism/styles/Bubbly";
 // popular components

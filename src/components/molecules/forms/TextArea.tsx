@@ -11,6 +11,9 @@ const TextArea = (props: TextAreaProps) => {
       <textarea
         className={theme ? `highlight ${theme}` : "highlight"}
         name={name}
+        // id matches the sibling Label's htmlFor={name} so the visible label is
+        // programmatically associated (WCAG 1.3.1/4.1.2); mirrors Input.tsx.
+        id={name}
         value={value}
         disabled={isDisabled}
         placeholder={placeholder}

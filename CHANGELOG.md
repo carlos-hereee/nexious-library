@@ -40,6 +40,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Icon-only controls get real accessible names: `IconButton` accepts `aria-label` / `aria-expanded` / `aria-controls`; `CopyButton` announces copy success via an `aria-live` region; the `AuthField` password toggle and the hidden `UploadFile` input are labeled; `HintButton` exposes its disclosure state
 - `Select` names its native control with the field name when the visible label is hidden, and associates the visible label via `id`
 - Table header cells (`<th>`) get `scope="col"`
+- `TextArea` and `InputQuantity` now set `id={name}` so the visible `<label htmlFor={name}>` is programmatically associated (WCAG 1.3.1 / 4.1.2); previously the textarea and quantity fields had a label pointing at no element
+- Status badges (`.status-pending`, `.status-due-soon`, `.status-complete`, `.status-success`) are now self-contained and meet WCAG 1.4.3 AA: each pins a text color that clears 4.5:1 on its own background. The greens are darkened to `#2e7d46` so white badge text passes (~5.1:1); the old rules rendered green text on a green background (invisible)
+
+### Security
+
+- `safeUrl()` URL-scheme guard added (`@nxs-utils/data/safeUrl`, also exported from the root). Every anchor that renders a consumer/user-supplied URL (`Post`, `PostDetail`, `Navlink`, `ListItem`, `Footer`, `Hyperlink`, `UnsplashCredit`) now routes its `href` through it, neutralizing `javascript:` / `data:` / `vbscript:` schemes (incl. control-char obfuscation like `java\tscript:`) to `#`. This closes a stored-XSS vector on the post/feed surfaces. `UnsplashCredit` external links also gained `rel="noopener noreferrer"`
 
 ### Changed
 
@@ -54,6 +60,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Packaging: top-level `types` now points to `./dist/@types/main.d.ts` (was a directory, which only resolved by accident via the exports map); stale `src/**/*.d.ts` removed from the published `files` list
 - FontAwesome peer dependencies marked optional via `peerDependenciesMeta` (only the `Icon` / `Assets` path needs them)
 - Documented that the package is ESM-only (no CommonJS build; requires a bundler or Node ESM)
+- **BEHAVIOR CHANGE — `Total` checkout primitive:** the hardcoded 6.25% US sales tax is gone. Tax is now consumer-driven via a precomputed `tax` prop or a `taxRate` fraction, and **defaults to 0** (a shared checkout primitive must not invent a jurisdiction's rate). Added `currencySymbol` (default `$`) and `labels` props for i18n. Consumers that relied on the implicit 6.25% must now pass `tax`/`taxRate`. The tax row hides when the amount is 0
+- `Form` `formId` is now optional (was required but only used by `PaginateForm`). When provided it is applied to the `<form>` element's `id`; `PaginateForm` falls back to the page index when a sub-form omits it
+- README corrected: the Icon System list conflated the dependency-free built-in set with the opt-in FontAwesome set. It is now split, with the `registerFontawesomeIcons()` boot step documented. The `Form` usage example no longer passes a non-existent `name` prop or omits a (previously required) `formId`
 
 ### Fixed
 
@@ -74,6 +83,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `BurgerButton`: `aria-label` was inverted relative to the open/closed state (it said "open menu" while the menu was already open) — swapped
 - `Select`: no longer throws inside render when `onChange` is missing, and no longer renders an error card on missing `name`/`list`; it relies on the already-required types, so a misconfigured prop is a compile error instead of a runtime crash
 - `useRequiredProps`: now flags an empty string, array, or object as missing (previously only `null`/`undefined`), matching its test suite
+- `Header`: an empty `menu` array no longer blanks the entire header. Once `useRequiredProps` began flagging `[]` as missing, the old `lightColor === "red"` gate replaced the whole header (logo + utilities included) with an error block on every menu-less page (public landings, minimal apps, initial load). The header now renders its chrome whenever `menu` is present and only draws the nav when there are items; a genuinely absent `menu` prop still surfaces the developer error
 - Removed a duplicate `$dim-color` SCSS declaration (kept the value already in effect via source order, so no rendered color changed)
 
 ### Removed

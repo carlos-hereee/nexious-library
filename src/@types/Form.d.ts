@@ -87,8 +87,10 @@ declare module "nxs-form" {
   export type FormProps = {
     // required props
     initialValues: { [key: string]: FormInitialValue };
-    formId: string;
     // optional
+    // Applied to the <form> element's id when provided (handy for testing/aria).
+    // Optional because Form works without it; was previously required but unused.
+    formId?: string;
     heading?: string;
     previewLabel?: string;
     responseError?: string;

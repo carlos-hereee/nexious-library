@@ -101,7 +101,6 @@ import { Button, Form, Icon, IconButton, Loading } from "nexious-library";
 
 ```tsx
 <Form
-  name="contact"
   initialValues={{ email: "", message: "" }}
   onSubmit={(values) => handleSubmit(values)}
   labels={{ email: "Your email", message: "Your message" }}
@@ -111,15 +110,16 @@ import { Button, Form, Icon, IconButton, Loading } from "nexious-library";
 
 **Key props:**
 
-| Prop            | Type                        | Description                    |
-| --------------- | --------------------------- | ------------------------------ |
-| `initialValues` | `{ [key: string]: any }`    | Required. Initial field values |
-| `onSubmit`      | `(values) => void`          | Required. Submit handler       |
-| `labels`        | `{ [key: string]: string }` | Custom field labels            |
-| `placeholders`  | `{ [key: string]: string }` | Custom placeholders            |
-| `schema`        | `{ required: string[] }`    | Validation schema              |
-| `heading`       | `string`                    | Form title                     |
-| `submitLabel`   | `string`                    | Custom submit button text      |
+| Prop            | Type                        | Description                         |
+| --------------- | --------------------------- | ----------------------------------- |
+| `initialValues` | `{ [key: string]: any }`    | Required. Initial field values      |
+| `onSubmit`      | `(values) => void`          | Submit handler (a no-op form errors otherwise) |
+| `formId`        | `string`                    | Optional. Sets the `<form>` id      |
+| `labels`        | `{ [key: string]: string }` | Custom field labels                 |
+| `placeholders`  | `{ [key: string]: string }` | Custom placeholders                 |
+| `schema`        | `{ required: string[] }`    | Validation schema                   |
+| `heading`       | `string`                    | Form title                          |
+| `submitLabel`   | `string`                    | Custom submit button text           |
 
 ---
 
@@ -137,9 +137,33 @@ import { Button, Form, Icon, IconButton, Loading } from "nexious-library";
 
 ## Icon System
 
-Pass any icon name string to `Icon` or `IconButton` via the `icon` prop:
+Icons resolve through a pluggable registry. Pass an icon name string to `Icon` or
+`IconButton` via the `icon` prop. An unregistered key renders a small error icon, so
+check `getRegisteredIconKeys()` if a glyph is missing.
 
-`about` `account` `all` `app` `apps` `appointments` `arrowUp` `arrowDown` `back` `bell` `bellSlash` `booking` `booked` `bug` `burger` `cancel` `cashapp` `check` `checkout` `circle` `close` `comment` `confirm` `contact` `copy` `cross` `dashboard` `discord` `dot` `edit` `explore` `eye` `eyeSlash` `facebook` `FAQ` `first` `flag` `flagEnglish` `games` `github` `goBack` `heart` `hint` `home` `instagram` `last` `left` `leftArrow` `linkedin` `listCheck` `loading` `login` `logout` `manicure` `mastercard` `minus` `nail` `next` `0`–`9` `paypal` `pedicure` `plus` `plusSquare` `prev` `pricing` `refresh` `reply` `right` `save` `schedule` `scroll` `secure` `services` `shopping` `spinner` `squarePlus` `star` `store` `submit` `testimonials` `thinking` `tiktok` `today` `top` `twitter` `uncheck` `user` `visa` `wig` `x`
+### Built in (work out of the box, zero setup)
+
+The core ships a dependency free SVG set seeded into the registry by default:
+
+`close` `cancel` `cross` `x` `check` `checkMark` `submit` `confirm` `reply` `comment` `heart` `star` `copy` `eye` `eyeSlash` `secure` `lock` `hint` `info` `loading` `spinner` `circle` `dot` `uncheck` `palette` `thinking` `refresh` `chevronDown` `arrowUp` `top` `arrowDown` `left` `leftArrow` `prev` `back` `goBack` `right` `next` `first` `last` `minus` `plus` `burger` `logout` `signOut` `bell` `bellSlash` `today` `hands` `book` `home` `edit` `cog`
+
+Digits `0`–`9` (and the words `zero`–`nine`) also resolve.
+
+### Extended set (FontAwesome, opt in)
+
+Social, payment, and domain glyphs (`facebook`, `instagram`, `linkedin`, `github`,
+`tiktok`, `twitter`, `discord`, `visa`, `mastercard`, `paypal`, `cashapp`, plus app
+domain icons) live in the optional FontAwesome adapter. Install the FontAwesome peers,
+then register the set once at app boot:
+
+```ts
+// main.tsx / app entry, called once before render
+import { registerFontawesomeIcons } from "nexious-library/fontawesome-icons";
+
+registerFontawesomeIcons();
+```
+
+You can also supply your own set with `registerIcons({ myIcon: MyIconComponent })`.
 
 ---
 

@@ -33,7 +33,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     activePath,
   } = props;
   const { updateMenu, onLogoClick, handleTheme, onHomeClick } = props;
-  const { lightColor, errors } = useRequiredProps({ menu }, true);
+  const { errors } = useRequiredProps({ menu }, true);
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -62,11 +62,16 @@ const Header: React.FC<HeaderProps> = (props) => {
     setActive(!isActive);
     if (onHomeClick) onHomeClick();
   };
-  if (lightColor === "red") return <ErrorMessages errors={errors} component="header" />;
+  // An empty menu is a valid runtime state: public landings and minimal app pages
+  // render a logo-only header. Only a genuinely absent menu prop is a developer
+  // integration error worth replacing the header with a message. useRequiredProps
+  // was hardened after 3.0.7 to also flag [] as "missing", so the old
+  // `lightColor === "red"` gate blanked the ENTIRE header on every menu-less page.
+  if (!menu) return <ErrorMessages errors={errors} component="header" />;
   return (
     <header className={layout} id={uniqueId} ref={headerRef}>
       {logo && <Logo hero={logo} label={logo.title} onLogoClick={onLogoClick} />}
-      {menu && (
+      {menu.length > 0 && (
         <>
           <nav className="primary-navigation" aria-label="Primary">
             <Navbar

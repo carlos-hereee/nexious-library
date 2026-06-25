@@ -17,13 +17,19 @@
   --text: #2c3e50;
   --text-small: 0.875rem;
   --text-large: 1.25rem;
-  // status accents
+  // status accents. Greens are darkened from #4bb161 to #2e7d46 so WHITE badge
+  // text (--status-on-accent) clears WCAG 1.4.3 AA (~5.1:1); the old #4bb161 only
+  // reached 2.7:1 against white. --text-success-color (success text on the white
+  // surface) is darkened to the same value for ~5.1:1.
   --danger-accent-color: crimson;
   --pending-accent-color: #eaab4c;
-  --success-accent-color: #4bb161;
-  --complete-accent-color: #4bb161;
-  --text-success-color: #4bb161;
+  --success-accent-color: #2e7d46;
+  --complete-accent-color: #2e7d46;
+  --text-success-color: #2e7d46;
   --primary-text-light-mode-color: #2c3e50;
+  // status badge text colors, each AA on its own badge background
+  --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
+  --status-on-pending: #2c3e50; // dark on the amber pending badge (~5.5:1)
   // spacing scale
   --space-extra-small: 0.25rem;
   --space-small: 0.5rem;
