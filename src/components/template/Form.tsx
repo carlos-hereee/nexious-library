@@ -209,7 +209,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
   return (
-    <form id={formId} className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
+    <form
+      id={formId}
+      className={theme}
+      onSubmit={handleSubmit}
+      encType={withFileUpload ? "multipart/form-data" : undefined}
+    >
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className={formScroll ? "form-field-container" : "form-field-container no-scroll"} id="form-field-container">

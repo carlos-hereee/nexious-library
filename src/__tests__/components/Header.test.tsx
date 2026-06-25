@@ -29,9 +29,7 @@ describe("Header", () => {
   });
 
   it("renders pass-through utilities alongside the header", () => {
-    render(
-      <Header menu={[]} logo={logo} updateMenu={jest.fn()} utilities={<button type="button">Account</button>} />
-    );
+    render(<Header menu={[]} logo={logo} updateMenu={jest.fn()} utilities={<button type="button">Account</button>} />);
 
     expect(screen.getByRole("button", { name: "Account" })).toBeInTheDocument();
   });
