@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.4.0] - 2026-06-30
+
 ### Added
 
 - `DialogOverlay` (`@nxs-template`, exported from the root): a complete, self-sufficient modal — `createPortal` to `document.body` + dimmed backdrop + body scroll-lock + click-outside-to-close, wrapping `Dialog` with `asModal`. `Dialog` itself stays a bare shell for consumers that own their modal shell
@@ -29,7 +31,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Design tokens: the highest-traffic SCSS vars (`$dark-primary`, `$danger`, `$rem` / `$rem05` / `$rem025`, `$border-radius` / `-sm` / `-lg`) now alias the canonical `:root` custom properties, so overriding a token re-skins the SCSS-driven partials too (they were previously frozen compiled literals). Values are unchanged, so light mode renders identically
 - `CancelDialog` opts into `asModal` (focus trap + Escape + dialog role; was a non-modal `div`)
-- Packaging: compiled tests and source maps are excluded from the published tarball (`.npmignore`); `prepublishOnly` now runs `npm run build`; `clean` no longer reformats `src/`; `inlineSources` is off
+- Packaging: compiled tests, Storybook stories, and source maps are excluded from the published tarball via `files`-field negation patterns (a `.npmignore` is ignored once a `files` allowlist is present — verified with `npm pack`, which dropped the tarball from 935 to 402 files); `prepublishOnly` now runs `npm run build`; `clean` no longer reformats `src/`; `inlineSources` is off
 - Dropped the inaccurate `mobile-first` keyword (the responsive system is desktop-first / max-width)
 - `LICENSE`: fixed a typo in the grant clause and named the copyright holder
 
@@ -471,7 +473,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ping count notification badge
 - Logo and app-name props on Header
 
-[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...HEAD
+[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.4.0...HEAD
+[3.4.0]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...v3.4.0
 [3.3.0]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...v3.3.0
 [2.9.5]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.4...v2.9.5
 [2.9.4]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.3...v2.9.4

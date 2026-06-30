@@ -163,7 +163,10 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/__tests__/**",
+    "!dist/**/*.stories.*",
+    "!dist/**/*.map"
   ],
   "sideEffects": [
     "**/*.css"
