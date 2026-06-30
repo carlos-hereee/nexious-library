@@ -1,9 +1,15 @@
 import type { CardinalDirectionProps } from "nxs-typography";
+import type { LibraryIconKey } from "@nxs-atoms/assets/iconRegistry";
 
 export type SizeProp = "2xs" | "xs" | "sm" | "lg" | "xl" | "2xl";
 export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9x" | "10x";
+// `LibraryIconKey | (string & {})` makes editors autocomplete the built-in icon keys while
+// ANY string still compiles (consumers register custom keys against an open registry, so we
+// cannot hard-restrict the union). Discoverability without locking the registry. The import
+// is type-only, so it is erased at emit and does not create a runtime cycle with iconRegistry.
+export type IconKey = LibraryIconKey | (string & {});
 export type IconProps = {
-  icon: string;
+  icon: IconKey;
   isNum?: boolean;
   size?: SizeProp | NumSize;
   spin?: string;
@@ -35,7 +41,7 @@ export interface ButtonProps {
   isDisabled?: boolean;
   hideIcon?: boolean;
   draggable?: boolean;
-  icon?: string;
+  icon?: IconKey;
   confirmSubmit?: boolean;
   onDragStart?: (e: React.DragEvent<HTMLButtonElement>) => void;
   onDragEnd?: (e: React.DragEvent<HTMLButtonElement>) => void;
@@ -82,6 +88,10 @@ export interface BurgerButtonProps {
   onClick?: React.MouseEventHandler<HTMLButtonElement>;
   // notification count
   ping?: number;
+  // id of the navigation region this button shows/hides. Rendered as aria-controls only
+  // when provided, so the reference never dangles (it previously hardcoded a non-existent
+  // "primary-navigation" id). Header wires this to the mobile nav it toggles.
+  controls?: string;
 }
 export interface CopyToClipboardProps {
   heading?: string;

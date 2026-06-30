@@ -89,8 +89,13 @@ const Header: React.FC<HeaderProps> = (props) => {
               onHomeClick={handleHomeClick}
             />
           </nav>
-          <nav className="mobile-navigation" aria-label="Mobile">
-            <BurgerButton isBurger={isActive} onClick={() => setActive(!isActive)} ping={ping} />
+          <nav className="mobile-navigation" aria-label="Mobile" id="mobile-navigation">
+            <BurgerButton
+              isBurger={isActive}
+              onClick={() => setActive(!isActive)}
+              ping={ping}
+              controls="mobile-navigation"
+            />
             <Navbar
               show={{ isActive, isClose }}
               menu={menu}

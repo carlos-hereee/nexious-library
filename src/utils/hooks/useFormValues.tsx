@@ -7,11 +7,12 @@ import type {
   FormatEntryProp,
   FormatEntryProps,
   FormatExtraEntryProps,
+  UseValuesApi,
 } from "nxs-form";
 import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
 import type { AddArrayInObject, KeyStringProp } from "custom-props";
 
-export const useValues = () => {
+export const useValues = (): UseValuesApi => {
   const [values, setNewValues] = useState<FieldValueProps[]>([]);
   const [activeEntry, setActiveEntry] = useState<KeyStringProp>({});
   const [entryValues, setEntries] = useState<{ [x: string]: FieldEntryProps }>({});

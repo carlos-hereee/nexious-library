@@ -1,3 +1,4 @@
+import { memo } from "react";
 import Button from "@nxs-atoms/buttons/Button";
 import IconButton from "@nxs-molecules/buttons/IconButton";
 import { Icon } from "@nxs-atoms";
@@ -89,4 +90,5 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
   );
 };
 
-export default ListItem;
+// Pure nav item — memo so a nav re-render skips items whose menu data + handler are stable.
+export default memo(ListItem);

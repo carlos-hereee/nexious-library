@@ -367,3 +367,28 @@ export type FormatEntryProp = {
   targets?: { [x: string]: FieldEntryProps };
   actives?: KeyStringProp;
 };
+
+// Public return contract of the useFormValidation hook. Named (not left to inference) so the
+// published surface is stable: a refactor that adds/renames/removes a member now fails the
+// type-check against this interface instead of silently shifting the type consumers depend on.
+export interface UseFormValidationApi {
+  validationStatus: ValidateFormStatus;
+  formErrors: KeyStringProp;
+  formMessage: KeyStringProp;
+  setFormErrors: React.Dispatch<React.SetStateAction<KeyStringProp>>;
+  setStatus: React.Dispatch<React.SetStateAction<ValidateFormStatus>>;
+  validateForm: (values: FieldValueProps[], status?: ValidateFormStatus) => void;
+  checkInverseCheckbox: (args: ValidateInverseCheckbox) => FieldValueProps[];
+}
+
+// Public return contract of the useValues hook (see UseFormValidationApi for the rationale).
+export interface UseValuesApi {
+  values: FieldValueProps[];
+  entryValues: { [x: string]: FieldEntryProps };
+  activeEntry: KeyStringProp;
+  setValues: (oldValues: FieldValueProps[]) => void;
+  addNewEntry: (args: FormatEntryProps) => FieldValueProps[];
+  setActiveEntry: React.Dispatch<React.SetStateAction<KeyStringProp>>;
+  setEntries: React.Dispatch<React.SetStateAction<{ [x: string]: FieldEntryProps }>>;
+  addExtraEntry: (args: FormatExtraEntryProps) => void;
+}

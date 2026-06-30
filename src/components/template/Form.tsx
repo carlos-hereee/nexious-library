@@ -176,8 +176,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
 
   const handleViewPreview = () => {
-    if (!validationStatus) validateForm(values);
-    if (validationStatus === "error") validateForm(values);
+    // Request the "preview" status explicitly. validateForm only honors a passed status
+    // when there are no errors (useFormValidation maps any errors to "error"), so a clean
+    // form transitions to "preview", which the submit effect handles to fire onViewPreview.
+    // Previously both branches called validateForm(values) with no status, so the status
+    // never became "preview" and the onViewPreview callback was unreachable dead code.
+    validateForm(values, "preview");
   };
 
   const handleRemovalClick = (groupName: string, idx: number) => {

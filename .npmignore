@@ -1,0 +1,11 @@
+# Keep the published tarball to runtime artifacts only.
+# Compiled tests and their type declarations are never imported by the barrels,
+# and source maps (with embedded TS source) only help when debugging into the
+# library, which consumers do not do. Excluding both halves the tarball.
+dist/**/__tests__
+**/*.test.js
+**/*.test.d.ts
+**/*.map
+# Storybook stories are dev-only docs, never imported by the package barrels.
+**/*.stories.js
+**/*.stories.d.ts

@@ -88,6 +88,9 @@ export interface CardProps {
   hidePrice?: boolean;
   hideButtons?: boolean;
   children?: React.ReactNode;
+  // NOTE: used inconsistently — Card.tsx calls onClick(cta: CTAProp) while MerchCard.tsx passes
+  // it straight to a <button onClick> (a MouseEvent). The `unknown` masks the conflict; narrowing
+  // it needs Card and MerchCard reconciled to one contract first (FUTURE_PLANS item 80 #6).
   onClick?: (key: unknown) => void;
   onRemoveFromCart?: (key: unknown) => void;
   onAddToCart?: (key: unknown) => void;

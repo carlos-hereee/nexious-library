@@ -11,6 +11,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
+- `DialogOverlay` (`@nxs-template`, exported from the root): a complete, self-sufficient modal — `createPortal` to `document.body` + dimmed backdrop + body scroll-lock + click-outside-to-close, wrapping `Dialog` with `asModal`. `Dialog` itself stays a bare shell for consumers that own their modal shell
+- The root entry now re-exports a prop type for every root-exported component (`DialogProps`, `DialogOverlayProps`, `CartProps`, `TotalProps`, `PaymentMethodsProps`, `CalendarPEventDays`, `ICalEvent`, `HeroProps`, `ErrorProps`, `IconProps`, `ItemDetailProps`, `BannerProps`, ...) plus the nested data types consumers construct (`PostData`, `PostAuthor`, `PostReaction`, `AssetProps`, `PEventDay`, `ThemeList`, `CTAProp`)
+- `IconKey` (`LibraryIconKey | (string & {})`) types `IconProps.icon` / `ButtonProps.icon` — editors autocomplete the built-in icon keys while any registered string still compiles
+- Dark-mode token layer: a `.dark-mode` / `[data-theme="dark"]` block reassigns `--surface` / `--border` / `--text` / `--text-success-color` / `--shadow-*`, so the theme switch re-themes every token-driven surface instead of leaving white cards on a dark page
+- `BurgerButton` `controls` prop (renders `aria-controls` only when provided); `Header` wires it to the toggled mobile nav's `id`
+
+### Accessibility
+
+- `prefers-reduced-motion` is now honored — the global motion kill-switch had a typo'd media feature (`prefers-reduced-inputdirection`) and never matched, so animations always ran (WCAG 2.3.3)
+- `Select` sets `aria-invalid` / `aria-describedby`; `Field` and `Select` render the `${name}-error` node even when the label is hidden, so `aria-describedby` no longer dangles (WCAG 1.3.1 / 4.1.2)
+- `BurgerButton` `aria-controls` no longer references a non-existent id
+- Perceivable `:focus-visible` outlines on `.btn-main` and the theme-menu options (were a faint border / background shift) — WCAG 2.4.7
+- `jest-axe` coverage extended to `Dialog` (asModal), `Select` (with and without a visible label), and `ThemeMenu` (open listbox)
+
+### Changed
+
+- Design tokens: the highest-traffic SCSS vars (`$dark-primary`, `$danger`, `$rem` / `$rem05` / `$rem025`, `$border-radius` / `-sm` / `-lg`) now alias the canonical `:root` custom properties, so overriding a token re-skins the SCSS-driven partials too (they were previously frozen compiled literals). Values are unchanged, so light mode renders identically
+- `CancelDialog` opts into `asModal` (focus trap + Escape + dialog role; was a non-modal `div`)
+- Packaging: compiled tests and source maps are excluded from the published tarball (`.npmignore`); `prepublishOnly` now runs `npm run build`; `clean` no longer reformats `src/`; `inlineSources` is off
+- Dropped the inaccurate `mobile-first` keyword (the responsive system is desktop-first / max-width)
+- `LICENSE`: fixed a typo in the grant clause and named the copyright holder
+
+### Fixed
+
+- `DataList` multi-select corrupted its saved set via substring matching (a value like `"category"` false-matched the item `"cat"`, and removal mangled overlapping entries) — replaced with an exact-token array model
+- `Form` `onViewPreview` was unreachable dead code; clicking the preview action now fires the callback
+- `FormField` threw raw `Error`s on the render path (crashing the consumer tree with no error boundary) — now degrades to a graceful fallback
+- `$success` was a literal `#4bb161` (2.7:1, fails WCAG 1.4.3 AA) on the SCSS path while the CSS token was already the compliant `#2e7d46` — aligned
+- `Input` coerces `value` to `""` so an initially-undefined value does not flip the input from uncontrolled to controlled
+- `CopyButton` guards the clipboard write (try/catch, success state only on resolve) and clears its reset timer; `PageNotFound` clears its redirect timer on unmount
+- `Bubbly` no longer runs ~2,400 `crypto.getRandomValues` calls per render to key decorative `div`s (uses the index)
+
+---
+
+## [3.3.0] - 2026-06-25
+
+> Consolidated entry. The 3.0.0–3.3.0 releases (3.1.0/3.2.0/3.3.0 tagged 2026-06-25, 3.0.0 on 2026-04-03) were never cut into the changelog per-release, so their combined changes are recorded here. Releases from this point are cut individually.
+
+### Added
+
 - `React.forwardRef` on `Button` and `Input` — consumers can now attach DOM refs for focus management
 - `useFormValidation` and `useValues` exported as public hooks for custom form UIs
 - Storybook with Vite builder — live component documentation with stories for Button, IconButton, Input, and Icon
@@ -431,7 +471,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ping count notification badge
 - Logo and app-name props on Header
 
-[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...HEAD
+[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...HEAD
+[3.3.0]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...v3.3.0
 [2.9.5]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.4...v2.9.5
 [2.9.4]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.3...v2.9.4
 [2.9.3]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.2...v2.9.3

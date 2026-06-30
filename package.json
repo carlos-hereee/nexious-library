@@ -85,7 +85,8 @@
     "watch:ts": "tsc -p tsconfig.json --watch",
     "watch:alias": "tsc-alias -p tsconfig.json --watch",
     "watch:lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "clean": "rimraf dist/ && npx prettier --write src/",
+    "clean": "rimraf dist/",
+    "format": "npx prettier --write src/",
     "compile": "npm run compile:tsc && npm run compile:tsc-alias && npm run compile:css",
     "compile:tsc": "tsc -p tsconfig.json",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
@@ -98,7 +99,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --coverage",
-    "prepublishOnly": "npx tsc --noEmit && npm test"
+    "prepublishOnly": "npm run build && npx tsc --noEmit && npm test"
   },
   "jest": {
     "preset": "ts-jest",
@@ -154,7 +155,6 @@
     "navigation",
     "typescript",
     "sass",
-    "mobile-first",
     "responsive",
     "companyuno"
   ],

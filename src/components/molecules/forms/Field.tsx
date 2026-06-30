@@ -137,7 +137,18 @@ const Field: React.FC<FormFieldProps> = (props) => {
     />
   ) : (
     <>
-      {!hideLabels && label && <Label name={name} label={label} error={formError} message={formMessage} />}
+      {!hideLabels && label ? (
+        <Label name={name} label={label} error={formError} message={formMessage} />
+      ) : (
+        // When the label is hidden/absent the Input still advertises aria-describedby=
+        // `${name}-error`, so render the error node anyway (matching Label's markup) or the
+        // reference dangles and screen readers announce "invalid" with no explanation.
+        formError && (
+          <span className="required" id={`${name}-error`} role="alert">
+            {formError}
+          </span>
+        )
+      )}
       <Input
         value={value as string}
         onChange={handleChange}

@@ -9,13 +9,16 @@ import type { BurgerButtonProps } from "nxs-button";
  * @returns
  */
 const BurgerButton: React.FC<BurgerButtonProps> = (props) => {
-  const { isBurger, onClick, ping } = props;
+  const { isBurger, onClick, ping, controls } = props;
   return (
     <button
       type="button"
       onClick={onClick}
       className={`btn-${isBurger ? "x" : "burger"}`}
-      aria-controls="primary-navigation"
+      // Only emit aria-controls when the caller supplies the controlled region's id; an
+      // undefined value omits the attribute, which is correct (a dangling idref is worse
+      // than none). Header passes the id of the mobile nav this toggles.
+      aria-controls={controls}
       aria-expanded={isBurger}
       aria-label={isBurger ? "close menu" : "open menu"}
     >

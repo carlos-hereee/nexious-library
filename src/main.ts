@@ -6,6 +6,9 @@ export { default as PaginateForm } from "@nxs-template/PaginateForm";
 export { default as Form } from "@nxs-template/Form";
 export { default as CalendarEvents } from "@nxs-template/CalendarEvents";
 export { default as Dialog } from "@nxs-template/Dialog";
+// DialogOverlay is the complete, drop-in modal (portal + backdrop + scroll-lock around
+// Dialog asModal); Dialog itself stays a bare shell for consumers with their own overlay.
+export { default as DialogOverlay } from "@nxs-template/DialogOverlay";
 export { default as ItemDetail } from "@nxs-template/ItemDetail";
 
 // utils
@@ -83,8 +86,36 @@ export { useValues } from "@nxs-utils/hooks/useFormValues";
 // wrappers without reaching into subpaths. The underlying type modules now ship in dist
 // (the @types ambient `declare module` blocks were converted to real emitted modules).
 export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";
-export type { FormProps, PaginateFormProps, SelectProp } from "nxs-form";
+export type { FormProps, PaginateFormProps, SelectProp, UseFormValidationApi, UseValuesApi } from "nxs-form";
 export type { ButtonProps, IconButtonProps } from "nxs-button";
 export type { CalendarProps } from "nxs-calendar";
 export type { CardProps } from "nxs-card";
 export type { PostProps, PostDetailProps } from "nxs-post";
+
+// ── Remaining public prop types (2026-06-29 type-surface pass) ───────────────────
+// Make the root `.` entry a COMPLETE type surface: every root-exported component now has
+// a root-reachable prop type, plus the nested data types consumers must construct to call
+// them (PostData, AssetProps, ICalEvent, ...). Previously Dialog/Cart/PaymentMethods/
+// CalendarEvents types were only on subpaths and TotalProps was reachable from no entry at
+// all, forcing consumers to hand-redeclare shapes that then drift. All type-only, no runtime.
+export type { NavigationProps, MenuItemProp, ThemeList } from "nxs-navigation";
+export type { ReadMoreProps, PHeaderCotent } from "nxs-typography";
+export type {
+  DialogProps,
+  CartProps,
+  BannerProps,
+  ItemDetailProps,
+  HeroCardProps,
+  UserCardProps,
+  MerchProps,
+  PaymentMethodsProps,
+  PaymentType,
+  CTAProp,
+} from "nxs-card";
+export type { TotalProps } from "custom-props";
+export type { ICalEvent, CalendarPEventDays, PEventDay } from "nxs-calendar";
+export type { ErrorProps, ErrorMessageProps } from "nxs-errors";
+export type { HeroProps, BubblyProps, TextBubbleProps, RatingProps, AssetProps, UserProps } from "nxs-assets";
+export type { IconProps, CopyToClipboardProps } from "nxs-button";
+export type { PostData, PostAuthor, PostReaction } from "nxs-post";
+export type { DialogOverlayProps } from "@nxs-template/DialogOverlay";

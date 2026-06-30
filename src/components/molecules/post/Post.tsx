@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Icon } from "@nxs-atoms";
 import Hero from "@nxs-molecules/assets/Hero";
 import { safeUrl } from "@nxs-utils/data/safeUrl";
@@ -191,4 +192,6 @@ const Post: React.FC<PostProps> = (props) => {
   );
 };
 
-export default Post;
+// Pure feed card in a list-rendered surface — memo so a feed re-render only re-renders the
+// cards whose post/callbacks actually changed (effective once the consumer stabilizes them).
+export default memo(Post);

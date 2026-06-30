@@ -103,7 +103,7 @@
     // "downlevelIteration": true,                       /* Emit more compliant, but verbose and less performant JavaScript for iteration. */
     // "sourceRoot": "",                                 /* Specify the root path for debuggers to find the reference source code. */
     // "mapRoot": "",                                    /* Specify the location where debugger should locate map files instead of generated locations. */
-    "inlineSources": true /* Include source code in the sourcemaps inside the emitted JavaScript. */,
+    "inlineSources": false /* Do not embed original TS source inside emitted JS sourcemaps; keeps published maps (excluded via .npmignore) from carrying full source. */,
     // "emitBOM": true,                                  /* Emit a UTF-8 Byte Order Mark (BOM) in the beginning of output files. */
     // "newLine": "crlf",                                /* Set the newline character for emitting files. */
     // "stripInternal": true,                            /* Disable emitting declarations that have '@internal' in their JSDoc comments. */

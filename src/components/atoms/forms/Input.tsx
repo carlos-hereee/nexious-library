@@ -11,7 +11,10 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       autoComplete="on"
       name={name}
       type={type || "text"}
-      value={value}
+      // Coalesce to "" so an initially-undefined value does not flip the input from
+      // uncontrolled to controlled (React warns and can drop keystrokes). Input is
+      // controlled-only by contract.
+      value={value ?? ""}
       placeholder={placeholder}
       onChange={(event) => onChange && onChange(event.currentTarget.value)}
       onBlur={onBlur}
