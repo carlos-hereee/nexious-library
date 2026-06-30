@@ -9,7 +9,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-## [3.4.0] - 2026-06-30
+## [3.3.2] - 2026-06-30
+
+> Shipped as a patch (the intended minor bump was run as `release:patch`); 3.3.1 was tagged
+> but its publish failed, so 3.3.2 is the first npm release carrying this work. Despite the
+> patch number it adds public API (DialogOverlay, new exports); future feature batches should
+> bump the minor.
 
 ### Added
 
@@ -473,8 +478,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ping count notification badge
 - Logo and app-name props on Header
 
-[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.4.0...HEAD
-[3.4.0]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...v3.4.0
+[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.2...HEAD
+[3.3.2]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...v3.3.2
 [3.3.0]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...v3.3.0
 [2.9.5]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.4...v2.9.5
 [2.9.4]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.3...v2.9.4
