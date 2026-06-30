@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Published `dist` no longer ships dangling sourcemap references. The tarball excludes `*.map`
+  to stay lean, but the emitted JS/CSS still carried `//# sourceMappingURL` / `/*# sourceMappingURL */`
+  comments pointing at the excluded maps, so consumers (e.g. Vite) logged "Failed to load source
+  map" for `index.css.map`. Sourcemap generation is now off for the build (`sourceMap` and
+  `declarationMap` off, `sass --no-source-map`), so no references are emitted. (Introduced in 3.3.2.)
+
 ## [3.3.2] - 2026-06-30
 
 > Shipped as a patch (the intended minor bump was run as `release:patch`); 3.3.1 was tagged

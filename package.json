@@ -90,7 +90,7 @@
     "compile": "npm run compile:tsc && npm run compile:tsc-alias && npm run compile:css",
     "compile:tsc": "tsc -p tsconfig.json",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
-    "compile:css": "npx sass src/stylesheets:dist/css",
+    "compile:css": "npx sass src/stylesheets:dist/css --no-source-map",
     "build": "npm run clean && npm run compile",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
