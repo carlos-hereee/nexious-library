@@ -1,6 +1,6 @@
 {
   "name": "nexious-library",
-  "version": "3.2.1",
+  "version": "3.3.2",
   "description": "React component library powering companyuno.com. Includes Calendar, Form, Dialog, Navigation, Checkout components and more.",
   "type": "module",
   "types": "./dist/@types/main.d.ts",
@@ -85,11 +85,12 @@
     "watch:ts": "tsc -p tsconfig.json --watch",
     "watch:alias": "tsc-alias -p tsconfig.json --watch",
     "watch:lint": "eslint \"src/**/*.{js,jsx,ts,tsx}\"",
-    "clean": "rimraf dist/ && npx prettier --write src/",
+    "clean": "rimraf dist/",
+    "format": "npx prettier --write src/",
     "compile": "npm run compile:tsc && npm run compile:tsc-alias && npm run compile:css",
     "compile:tsc": "tsc -p tsconfig.json",
     "compile:tsc-alias": "tsc-alias -p tsconfig.json dist/esm",
-    "compile:css": "npx sass src/stylesheets:dist/css",
+    "compile:css": "npx sass src/stylesheets:dist/css --no-source-map",
     "build": "npm run clean && npm run compile",
     "release:patch": "npm run build && npm version patch && npm publish",
     "release:minor": "npm run build && npm version minor && npm publish",
@@ -98,7 +99,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:ci": "jest --ci --coverage",
-    "prepublishOnly": "npx tsc --noEmit && npm test"
+    "prepublishOnly": "npm run build && npx tsc --noEmit && npm test"
   },
   "jest": {
     "preset": "ts-jest",
@@ -154,7 +155,6 @@
     "navigation",
     "typescript",
     "sass",
-    "mobile-first",
     "responsive",
     "companyuno"
   ],
@@ -163,7 +163,10 @@
     "url": "git+https://github.com/carlos-hereee/nexious-library.git"
   },
   "files": [
-    "dist"
+    "dist",
+    "!dist/**/__tests__/**",
+    "!dist/**/*.stories.*",
+    "!dist/**/*.map"
   ],
   "sideEffects": [
     "**/*.css"
@@ -206,6 +209,7 @@
     "@types/react-dom": "^18.2.0",
     "@typescript-eslint/eslint-plugin": "^5.59.8",
     "@typescript-eslint/parser": "^5.59.8",
+    "esbuild": "^0.25.12",
     "eslint": "^8.2.0",
     "eslint-config-airbnb": "^19.0.4",
     "eslint-config-airbnb-base": "^15.0.0",

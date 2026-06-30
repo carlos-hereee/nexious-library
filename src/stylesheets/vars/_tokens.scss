@@ -17,13 +17,19 @@
   --text: #2c3e50;
   --text-small: 0.875rem;
   --text-large: 1.25rem;
-  // status accents
+  // status accents. Greens are darkened from #4bb161 to #2e7d46 so WHITE badge
+  // text (--status-on-accent) clears WCAG 1.4.3 AA (~5.1:1); the old #4bb161 only
+  // reached 2.7:1 against white. --text-success-color (success text on the white
+  // surface) is darkened to the same value for ~5.1:1.
   --danger-accent-color: crimson;
   --pending-accent-color: #eaab4c;
-  --success-accent-color: #4bb161;
-  --complete-accent-color: #4bb161;
-  --text-success-color: #4bb161;
+  --success-accent-color: #2e7d46;
+  --complete-accent-color: #2e7d46;
+  --text-success-color: #2e7d46;
   --primary-text-light-mode-color: #2c3e50;
+  // status badge text colors, each AA on its own badge background
+  --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
+  --status-on-pending: #2c3e50; // dark on the amber pending badge (~5.5:1)
   // spacing scale
   --space-extra-small: 0.25rem;
   --space-small: 0.5rem;
@@ -43,4 +49,27 @@
   --transition-fast: 150ms ease;
   // sizing
   --max-card-width: 600px;
+}
+
+// ── Dark theme ──────────────────────────────────────────────────────────────────
+// Reassign the token layer for any subtree under the `dark-mode` class (the value the
+// theme menu applies, see utils/data/themeList) or a `[data-theme="dark"]` attribute.
+// Why this exists: previously the tokens were defined only once in :root with light
+// values, and the `.dark-mode` class merely repainted one wrapper's background/color, so
+// every descendant using var(--surface)/var(--text) stayed light (white cards on a dark
+// page). CSS custom properties cascade, so reassigning them here re-themes every
+// token-driven descendant of a dark-mode subtree. Light mode keeps the :root defaults
+// above. Values chosen for WCAG AA text contrast on --surface; verify visually before
+// publishing (the remaining hardcoded $light-mode surfaces are FUTURE_PLANS item 80).
+.dark-mode,
+[data-theme="dark"] {
+  --surface: #1f2a37; // card / panel surface
+  --border: #3a4756; // subtle divider on dark
+  --text: #e6eaf0; // body text (~11:1 on --surface)
+  // Success TEXT must lighten on a dark surface; the light-mode #2e7d46 is too dark here.
+  --text-success-color: #5dd07a;
+  // Deeper shadows so elevation still reads against a dark background.
+  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.5);
+  --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.55);
+  --shadow-large: 0 12px 30px rgba(0, 0, 0, 0.6);
 }

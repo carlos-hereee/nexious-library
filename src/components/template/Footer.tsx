@@ -1,5 +1,6 @@
 import type { FooterProps } from "nxs-navigation";
 import { Socials } from "@nxs-organism";
+import { safeUrl } from "@nxs-utils/data/safeUrl";
 import HoursOfOperation from "./HoursOfOperation";
 
 /**
@@ -19,7 +20,7 @@ const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOpe
       {links && links.length > 0 && (
         <nav className="footer-links" aria-label="Footer">
           {links.map((link) => (
-            <a key={link.href} href={link.href} className="nav-link footer-link">
+            <a key={link.href} href={safeUrl(link.href)} className="nav-link footer-link">
               <span className="nav-label">{link.label}</span>
             </a>
           ))}

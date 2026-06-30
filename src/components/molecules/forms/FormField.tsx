@@ -10,18 +10,28 @@ const FormField = (props: FormFieldProps) => {
   if (isEntry && entry && entries) {
     const { activeEntry, confirmRemoval } = props;
     const { onMultiplyClick, handleChange, onRemovalClick, setActiveEntry, setConfirmRemovals } = props;
-    // require key variable
-    if (!activeEntry) throw Error("activeEntry is required");
+    // Degrade gracefully instead of throwing. A throw on the render path crashes the whole
+    // consumer subtree (the library ships no error boundary), so a missing entry config
+    // would white-screen the form. This mirrors the deliberate fix in Form.tsx (a throw was
+    // replaced with console.error + bail) and the existing `return <Loading />` two lines down.
+    if (!activeEntry) {
+      console.error("FormField: activeEntry is required for entry/multiply fields");
+      return <Loading />;
+    }
     const targetEntry = entries[activeEntry];
     if (!entries[activeEntry]) return <Loading />;
     const { groupName, onMultiply, canMultiply, canRemove } = entries[activeEntry][0];
     const targetList = Object.keys(entries);
     const activeIdx = targetList.findIndex((s) => s === activeEntry);
-    // require key variable
-    if (!groupName) throw Error("groupName is required");
-    if (!onMultiply) throw Error("onMultiply is required");
-    if (!canMultiply) throw Error("canMultiply is required");
-    if (!canRemove) throw Error("canRemove is required");
+    // groupName drives the entry switcher and removal callbacks; without it the group cannot
+    // render, so bail to the loading state rather than throw.
+    if (!groupName) {
+      console.error("FormField: groupName is required for entry/multiply fields");
+      return <Loading />;
+    }
+    // onMultiply / canMultiply / canRemove are optional capabilities — the JSX below already
+    // guards on each ({onMultiply && ...}, {canMultiply && ...}, {canRemove && ...}), so a
+    // missing or false value simply hides that control. No throw needed.
 
     return (
       <div className="container" id={fieldId}>

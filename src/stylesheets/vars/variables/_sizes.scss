@@ -61,15 +61,20 @@ $max-post-card-width: 620px; // editorial feed card
 $max-lines: 2;
 $line-height: 1.4;
 
-// rems
-$rem: 1rem;
-$rem05: 0.5rem;
-$rem025: 0.25rem;
+// Canonical-token aliases (G5 single-source pass). These point at the CSS custom properties
+// in vars/_tokens.scss so spacing/radii have one source of truth and are consumer-overridable
+// across the SCSS-driven partials. Safe because none of these vars is used in Sass arithmetic,
+// calc(), interpolation, a color function, or a media query (verified by grep) — only as plain
+// CSS values. Values are identical to the tokens, so rendered output is unchanged.
+// rems → spacing scale
+$rem: var(--space-medium); // 1rem
+$rem05: var(--space-small); // 0.5rem
+$rem025: var(--space-extra-small); // 0.25rem
 // border-radius :circle
 $rounded-full: 100%;
-$border-radius: 7px;
-$border-radius-sm: 5px;
-$border-radius-lg: 15px;
+$border-radius: var(--radius-medium); // 7px
+$border-radius-sm: var(--radius-small); // 5px
+$border-radius-lg: var(--radius-extra-large); // 15px
 $border-radius-full: 100%;
 
 // bubbly
