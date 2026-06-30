@@ -32,6 +32,11 @@ export interface HeroProps {
   onImageLoad?: () => void;
   onImageClick?: (e: unknown) => void;
   onLogoClick?: () => void;
+  // Opt in to a CORS-enforced load (sets the img crossOrigin attribute). Default
+  // off so cross-origin assets without an Access-Control-Allow-Origin header (the
+  // production S3 bucket, FUTURE_PLANS item 68) still paint. Only set this when a
+  // caller actually needs a clean canvas read.
+  crossOrigin?: boolean;
 }
 export interface UserProps {
   hero?: string;
