@@ -38,6 +38,9 @@ export interface HyperlinkProp {
   link?: string;
   children?: React.ReactNode;
   data?: string;
+  // Accessible name for icon-only links (WCAG link-name): when the children
+  // are just an <Icon> there is no text for a screen reader to announce.
+  label?: string;
 }
 export interface KeyValueProps {
   key: string;
