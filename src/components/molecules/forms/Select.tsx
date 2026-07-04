@@ -22,7 +22,17 @@ const Select: React.FC<SelectProp> = (props) => {
 
   return (
     <>
-      {!hideLabels && label && <Label name={name} label={label} error={error} message={formMessage} />}
+      {!hideLabels && label ? (
+        <Label name={name} label={label} error={error} message={formMessage} />
+      ) : (
+        // The <select> below sets aria-describedby=`${name}-error` when invalid, so the
+        // error node must exist even with the label hidden, or the reference dangles.
+        error && (
+          <span className="required" id={`${name}-error`} role="alert">
+            {error}
+          </span>
+        )
+      )}
       <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
         {active && icon ? (
           <Icon icon={icon} name={icon} theme="select-icon" />
@@ -39,6 +49,11 @@ const Select: React.FC<SelectProp> = (props) => {
           disabled={isDisabled}
           // When the visible label is hidden the native control still needs a name for SR users.
           aria-label={hideLabels || !label ? name : undefined}
+          // Mirror Input/InputCheckbox/TextArea so a select with a validation error is
+          // announced as invalid and points at the Label's `${name}-error` node. Select
+          // was the one form control missing this wiring.
+          aria-invalid={error ? true : undefined}
+          aria-describedby={error ? `${name}-error` : undefined}
           onChange={(e) => onChange?.(e.target.value)}
         >
           <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />

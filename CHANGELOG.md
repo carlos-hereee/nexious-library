@@ -9,6 +9,61 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Published `dist` no longer ships dangling sourcemap references. The tarball excludes `*.map`
+  to stay lean, but the emitted JS/CSS still carried `//# sourceMappingURL` / `/*# sourceMappingURL */`
+  comments pointing at the excluded maps, so consumers (e.g. Vite) logged "Failed to load source
+  map" for `index.css.map`. Sourcemap generation is now off for the build (`sourceMap` and
+  `declarationMap` off, `sass --no-source-map`), so no references are emitted. (Introduced in 3.3.2.)
+
+## [3.3.2] - 2026-06-30
+
+> Shipped as a patch (the intended minor bump was run as `release:patch`); 3.3.1 was tagged
+> but its publish failed, so 3.3.2 is the first npm release carrying this work. Despite the
+> patch number it adds public API (DialogOverlay, new exports); future feature batches should
+> bump the minor.
+
+### Added
+
+- `DialogOverlay` (`@nxs-template`, exported from the root): a complete, self-sufficient modal — `createPortal` to `document.body` + dimmed backdrop + body scroll-lock + click-outside-to-close, wrapping `Dialog` with `asModal`. `Dialog` itself stays a bare shell for consumers that own their modal shell
+- The root entry now re-exports a prop type for every root-exported component (`DialogProps`, `DialogOverlayProps`, `CartProps`, `TotalProps`, `PaymentMethodsProps`, `CalendarPEventDays`, `ICalEvent`, `HeroProps`, `ErrorProps`, `IconProps`, `ItemDetailProps`, `BannerProps`, ...) plus the nested data types consumers construct (`PostData`, `PostAuthor`, `PostReaction`, `AssetProps`, `PEventDay`, `ThemeList`, `CTAProp`)
+- `IconKey` (`LibraryIconKey | (string & {})`) types `IconProps.icon` / `ButtonProps.icon` — editors autocomplete the built-in icon keys while any registered string still compiles
+- Dark-mode token layer: a `.dark-mode` / `[data-theme="dark"]` block reassigns `--surface` / `--border` / `--text` / `--text-success-color` / `--shadow-*`, so the theme switch re-themes every token-driven surface instead of leaving white cards on a dark page
+- `BurgerButton` `controls` prop (renders `aria-controls` only when provided); `Header` wires it to the toggled mobile nav's `id`
+
+### Accessibility
+
+- `prefers-reduced-motion` is now honored — the global motion kill-switch had a typo'd media feature (`prefers-reduced-inputdirection`) and never matched, so animations always ran (WCAG 2.3.3)
+- `Select` sets `aria-invalid` / `aria-describedby`; `Field` and `Select` render the `${name}-error` node even when the label is hidden, so `aria-describedby` no longer dangles (WCAG 1.3.1 / 4.1.2)
+- `BurgerButton` `aria-controls` no longer references a non-existent id
+- Perceivable `:focus-visible` outlines on `.btn-main` and the theme-menu options (were a faint border / background shift) — WCAG 2.4.7
+- `jest-axe` coverage extended to `Dialog` (asModal), `Select` (with and without a visible label), and `ThemeMenu` (open listbox)
+
+### Changed
+
+- Design tokens: the highest-traffic SCSS vars (`$dark-primary`, `$danger`, `$rem` / `$rem05` / `$rem025`, `$border-radius` / `-sm` / `-lg`) now alias the canonical `:root` custom properties, so overriding a token re-skins the SCSS-driven partials too (they were previously frozen compiled literals). Values are unchanged, so light mode renders identically
+- `CancelDialog` opts into `asModal` (focus trap + Escape + dialog role; was a non-modal `div`)
+- Packaging: compiled tests, Storybook stories, and source maps are excluded from the published tarball via `files`-field negation patterns (a `.npmignore` is ignored once a `files` allowlist is present — verified with `npm pack`, which dropped the tarball from 935 to 402 files); `prepublishOnly` now runs `npm run build`; `clean` no longer reformats `src/`; `inlineSources` is off
+- Dropped the inaccurate `mobile-first` keyword (the responsive system is desktop-first / max-width)
+- `LICENSE`: fixed a typo in the grant clause and named the copyright holder
+
+### Fixed
+
+- `DataList` multi-select corrupted its saved set via substring matching (a value like `"category"` false-matched the item `"cat"`, and removal mangled overlapping entries) — replaced with an exact-token array model
+- `Form` `onViewPreview` was unreachable dead code; clicking the preview action now fires the callback
+- `FormField` threw raw `Error`s on the render path (crashing the consumer tree with no error boundary) — now degrades to a graceful fallback
+- `$success` was a literal `#4bb161` (2.7:1, fails WCAG 1.4.3 AA) on the SCSS path while the CSS token was already the compliant `#2e7d46` — aligned
+- `Input` coerces `value` to `""` so an initially-undefined value does not flip the input from uncontrolled to controlled
+- `CopyButton` guards the clipboard write (try/catch, success state only on resolve) and clears its reset timer; `PageNotFound` clears its redirect timer on unmount
+- `Bubbly` no longer runs ~2,400 `crypto.getRandomValues` calls per render to key decorative `div`s (uses the index)
+
+---
+
+## [3.3.0] - 2026-06-25
+
+> Consolidated entry. The 3.0.0–3.3.0 releases (3.1.0/3.2.0/3.3.0 tagged 2026-06-25, 3.0.0 on 2026-04-03) were never cut into the changelog per-release, so their combined changes are recorded here. Releases from this point are cut individually.
+
 ### Added
 
 - `React.forwardRef` on `Button` and `Input` — consumers can now attach DOM refs for focus management
@@ -40,6 +95,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Icon-only controls get real accessible names: `IconButton` accepts `aria-label` / `aria-expanded` / `aria-controls`; `CopyButton` announces copy success via an `aria-live` region; the `AuthField` password toggle and the hidden `UploadFile` input are labeled; `HintButton` exposes its disclosure state
 - `Select` names its native control with the field name when the visible label is hidden, and associates the visible label via `id`
 - Table header cells (`<th>`) get `scope="col"`
+- `TextArea` and `InputQuantity` now set `id={name}` so the visible `<label htmlFor={name}>` is programmatically associated (WCAG 1.3.1 / 4.1.2); previously the textarea and quantity fields had a label pointing at no element
+- Status badges (`.status-pending`, `.status-due-soon`, `.status-complete`, `.status-success`) are now self-contained and meet WCAG 1.4.3 AA: each pins a text color that clears 4.5:1 on its own background. The greens are darkened to `#2e7d46` so white badge text passes (~5.1:1); the old rules rendered green text on a green background (invisible)
+
+### Security
+
+- `safeUrl()` URL-scheme guard added (`@nxs-utils/data/safeUrl`, also exported from the root). Every anchor that renders a consumer/user-supplied URL (`Post`, `PostDetail`, `Navlink`, `ListItem`, `Footer`, `Hyperlink`, `UnsplashCredit`) now routes its `href` through it, neutralizing `javascript:` / `data:` / `vbscript:` schemes (incl. control-char obfuscation like `java\tscript:`) to `#`. This closes a stored-XSS vector on the post/feed surfaces. `UnsplashCredit` external links also gained `rel="noopener noreferrer"`
 
 ### Changed
 
@@ -54,9 +115,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Packaging: top-level `types` now points to `./dist/@types/main.d.ts` (was a directory, which only resolved by accident via the exports map); stale `src/**/*.d.ts` removed from the published `files` list
 - FontAwesome peer dependencies marked optional via `peerDependenciesMeta` (only the `Icon` / `Assets` path needs them)
 - Documented that the package is ESM-only (no CommonJS build; requires a bundler or Node ESM)
+- **BEHAVIOR CHANGE — `Total` checkout primitive:** the hardcoded 6.25% US sales tax is gone. Tax is now consumer-driven via a precomputed `tax` prop or a `taxRate` fraction, and **defaults to 0** (a shared checkout primitive must not invent a jurisdiction's rate). Added `currencySymbol` (default `$`) and `labels` props for i18n. Consumers that relied on the implicit 6.25% must now pass `tax`/`taxRate`. The tax row hides when the amount is 0
+- `Form` `formId` is now optional (was required but only used by `PaginateForm`). When provided it is applied to the `<form>` element's `id`; `PaginateForm` falls back to the page index when a sub-form omits it
+- README corrected: the Icon System list conflated the dependency-free built-in set with the opt-in FontAwesome set. It is now split, with the `registerFontawesomeIcons()` boot step documented. The `Form` usage example no longer passes a non-existent `name` prop or omits a (previously required) `formId`
 
 ### Fixed
 
+- **Published types now resolve for consumers (was the biggest defect in the package).** Every component prop type was declared inside ambient `declare module "nxs-button"` / `"nxs-form"` / `"custom-props"` (etc.) blocks in `src/@types/*.d.ts`. Those blocks were never emitted into `dist`, yet ~118 shipped `.d.ts` files imported from them, so any consumer on `skipLibCheck:false` (or `node16`/`nodenext` resolution) got `TS2307 Cannot find module 'nxs-button'` across the whole prop surface, and everyone else silently got `any`. The ambient blocks are now real, exported modules (`src/@types/*.ts`) mapped via `tsconfig` `paths`, so `tsc-alias` rewrites the imports to relative paths and the type modules ship in `dist/@types/@types/`. Verified by a clean emit: 0 phantom `nxs-*`/`custom-props` specifiers remain in the emitted `.d.ts`. The headline prop types (`HeaderProps`, `FormProps`, `ButtonProps`, `SelectProp`, `CalendarProps`, `PostProps`, ...) are also re-exported from the package entry so consumers can import them by name from `nexious-library`
 - `useRequiredProps`: `objLength(value) < 0` can never be true — changed to `=== 0` so empty objects are correctly flagged
 - `useRequiredProps`: stale closure caused only the last error to survive — fixed with functional state update
 - `useFormValidation`: `validateForm` was setting "validated" even when errors existed — fixed priority check
@@ -74,6 +139,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `BurgerButton`: `aria-label` was inverted relative to the open/closed state (it said "open menu" while the menu was already open) — swapped
 - `Select`: no longer throws inside render when `onChange` is missing, and no longer renders an error card on missing `name`/`list`; it relies on the already-required types, so a misconfigured prop is a compile error instead of a runtime crash
 - `useRequiredProps`: now flags an empty string, array, or object as missing (previously only `null`/`undefined`), matching its test suite
+- `Header`: an empty `menu` array no longer blanks the entire header. Once `useRequiredProps` began flagging `[]` as missing, the old `lightColor === "red"` gate replaced the whole header (logo + utilities included) with an error block on every menu-less page (public landings, minimal apps, initial load). The header now renders its chrome whenever `menu` is present and only draws the nav when there are items; a genuinely absent `menu` prop still surfaces the developer error
 - Removed a duplicate `$dim-color` SCSS declaration (kept the value already in effect via source order, so no rendered color changed)
 
 ### Removed
@@ -420,7 +486,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ping count notification badge
 - Logo and app-name props on Header
 
-[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...HEAD
+[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.2...HEAD
+[3.3.2]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...v3.3.2
+[3.3.0]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...v3.3.0
 [2.9.5]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.4...v2.9.5
 [2.9.4]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.3...v2.9.4
 [2.9.3]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.2...v2.9.3

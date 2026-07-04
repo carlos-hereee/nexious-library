@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
-  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview } = props;
+  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
     useFormValidation({ ...schema });
 
@@ -176,8 +176,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   };
 
   const handleViewPreview = () => {
-    if (!validationStatus) validateForm(values);
-    if (validationStatus === "error") validateForm(values);
+    // Request the "preview" status explicitly. validateForm only honors a passed status
+    // when there are no errors (useFormValidation maps any errors to "error"), so a clean
+    // form transitions to "preview", which the submit effect handles to fire onViewPreview.
+    // Previously both branches called validateForm(values) with no status, so the status
+    // never became "preview" and the onViewPreview callback was unreachable dead code.
+    validateForm(values, "preview");
   };
 
   const handleRemovalClick = (groupName: string, idx: number) => {
@@ -209,7 +213,12 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
 
   return (
-    <form className={theme} onSubmit={handleSubmit} encType={withFileUpload ? "multipart/form-data" : undefined}>
+    <form
+      id={formId}
+      className={theme}
+      onSubmit={handleSubmit}
+      encType={withFileUpload ? "multipart/form-data" : undefined}
+    >
       {heading && <h2 className="heading">{heading}</h2>}
       {responseError && <p className="error-message">{responseError}</p>}
       <div className={formScroll ? "form-field-container" : "form-field-container no-scroll"} id="form-field-container">

@@ -6,7 +6,7 @@ import Dialog from "../../template/Dialog";
 const CancelDialog = (props: DialogProps) => {
   const { onDialogClose, theme, onClick, label, onConfirmClick, toggleShow, toggleLabel } = props;
   return (
-    <Dialog theme={theme || "dialog-cancel light-mode"} onDialogClose={onDialogClose}>
+    <Dialog asModal theme={theme || "dialog-cancel light-mode"} onDialogClose={onDialogClose}>
       <div className="primary-container">
         <p className="text-center">Are you sure you want to continue this will remove current progress</p>
         {typeof toggleShow === "boolean" && (

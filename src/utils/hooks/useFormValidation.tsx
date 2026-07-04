@@ -1,4 +1,10 @@
-import type { FieldValueProps, ValidateFormStatus, ValidateInverseCheckbox, ValidateProps } from "nxs-form";
+import type {
+  FieldValueProps,
+  UseFormValidationApi,
+  ValidateFormStatus,
+  ValidateInverseCheckbox,
+  ValidateProps,
+} from "nxs-form";
 import { useState } from "react";
 import type { KeyStringProp } from "custom-props";
 import { emojis } from "@nxs-utils/data/emojis";
@@ -7,7 +13,7 @@ import { emojis } from "@nxs-utils/data/emojis";
 // Covers the vast majority of real-world addresses without over-engineering.
 const validateEmail = (email: string): boolean => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
-export const useFormValidation = (schema: ValidateProps) => {
+export const useFormValidation = (schema: ValidateProps): UseFormValidationApi => {
   const { required, unique, match, strictCheckbox } = schema;
   const [formErrors, setFormErrors] = useState<KeyStringProp>({});
   const [formMessage, setFormMessage] = useState<KeyStringProp>({});

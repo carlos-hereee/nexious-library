@@ -14,9 +14,11 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   const [initialValues, setInitialValues] = useState<FormValueProps>();
   const [pageNumber, setPageNumber] = useState<number>(page || 0);
   const current = paginate[pageNumber];
-  const formOrder = order || paginate.map((f) => f.formId);
+  // formId is optional on a standalone Form, but PaginateForm uses it to key each
+  // page's submitted values, so fall back to the page index when a form omits it.
+  const formOrder = order || paginate.map((f, i) => f.formId ?? String(i));
   // const total = formOrder.length;
-  const formId = current?.formId;
+  const formId = current?.formId ?? String(pageNumber);
   const onViewPreview = current?.onViewPreview;
   const heading = current?.heading;
   const addEntry = current?.addEntry;

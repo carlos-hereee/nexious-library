@@ -15,10 +15,12 @@
   background-color: variables.$dark;
   color: variables.$light;
 }
-// dark-mode
+// dark-mode — paints from the token layer so the wrapper and its token-driven descendants
+// share one dark surface/text (the .dark-mode selector also reassigns those tokens in
+// vars/_tokens.scss). Mirrors how .light-mode below is byte-identical to the :root defaults.
 .dark-mode {
-  background-color: variables.$dark-mode;
-  color: variables.$light-mode;
+  background-color: var(--surface);
+  color: var(--text);
 }
 .alt-dark-mode {
   background-color: variables.$dark-mode-alt;
@@ -32,10 +34,12 @@
   background-color: variables.$light-secondary;
   color: variables.$dark;
 }
-// theme light mode
+// theme light mode — var(--surface)/var(--text) resolve to #fff / #2c3e50 at :root, the
+// same values $light-mode / $dark-mode held, so this is a no-op in light mode while letting
+// the same rule pick up dark values when nested under a dark-mode subtree.
 .light-mode {
-  background-color: variables.$light-mode;
-  color: variables.$dark-mode;
+  background-color: var(--surface);
+  color: var(--text);
 }
 .alt-light-mode {
   background-color: variables.$light-mode-alt;

@@ -24,7 +24,10 @@
   gap: variables.$rem05;
   max-width: variables.$max-post-card-width;
   padding: variables.$rem variables.$rem;
-  background: variables.$light-mode;
+  // var(--surface) is #fff at :root (== the old $light-mode) so light mode is unchanged;
+  // under a dark-mode subtree it becomes the dark surface. Post-card text is color:inherit
+  // / $muted, so it follows the wrapper's var(--text) and never goes dark-on-dark.
+  background: var(--surface);
   border: 1px solid variables.$dimmer;
   border-radius: variables.$border-radius-lg;
   transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;

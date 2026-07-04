@@ -6,15 +6,18 @@ import { emojis } from "@nxs-utils/data/emojis";
 const DataList = (props: DataListProps) => {
   const { name, value, onChange, hideLabel, label, error, formMessage, list, isDisabled, hideList } = props;
 
-  const selectList = (value && value.split(",")) || [];
+  // Selection is persisted as a comma-joined string on the form value. Parse it into an
+  // exact-token array so membership and removal compare whole values, never substrings.
+  // The previous model used value.includes(v) and value.split(v).join(""), so a value like
+  // "category" false-matched the item "cat" (wrong checked state) and removing one token
+  // mangled unrelated entries that shared a substring. The wire format (trailing comma) is
+  // preserved so the form state contract is unchanged.
+  const selected = (value ? value.split(",") : []).filter(Boolean);
+  const isSelected = (entry: string) => selected.includes(entry);
 
-  const handleDataChange = (v: string) => {
-    // toggle item selection if appropriate
-    if (value.includes(v)) {
-      // remove value
-      const payload = value.split(v).join("");
-      onChange(payload);
-    } else onChange(value + v);
+  const handleToggle = (entry: string) => {
+    const next = isSelected(entry) ? selected.filter((token) => token !== entry) : [...selected, entry];
+    onChange(next.length ? `${next.join(",")},` : "");
   };
   return (
     <>
@@ -22,12 +25,12 @@ const DataList = (props: DataListProps) => {
       <div className="list-container">
         {list.map((l) => (
           <Button
-            label={value.includes(l.value) ? `${emojis.checkedBox} ${l.label}` : `${emojis.emptyCircle} ${l.label}`}
+            label={isSelected(l.value) ? `${emojis.checkedBox} ${l.label}` : `${emojis.emptyCircle} ${l.label}`}
             key={l.uid}
             isDisable={isDisabled}
             theme={l.themeId ? l.name : ""}
-            onClick={() => handleDataChange(`${l.value},`)}
-            title={value.includes(l.value) ? `remove ${l.value}` : `add${l.value}`}
+            onClick={() => handleToggle(l.value)}
+            title={isSelected(l.value) ? `remove ${l.value}` : `add ${l.value}`}
           />
         ))}
       </div>
@@ -35,10 +38,14 @@ const DataList = (props: DataListProps) => {
         <div>
           <p>{capFirstCharacter(name)} selected list:</p>
           <div className="list-selection-value">
-            {selectList.map(
-              (v) =>
-                v && <Button key={v} title={`remove ${v}`} label={`X ${v}`} onClick={() => handleDataChange(`${v},`)} />
-            )}
+            {selected.map((entry) => (
+              <Button
+                key={entry}
+                title={`remove ${entry}`}
+                label={`X ${entry}`}
+                onClick={() => handleToggle(entry)}
+              />
+            ))}
           </div>
         </div>
       )}

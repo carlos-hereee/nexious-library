@@ -1,18 +1,18 @@
+// Self-contained status badges: each pins BOTH its background and a text color that
+// clears WCAG 1.4.3 AA (>=4.5:1) on that background, so a badge stays legible no
+// matter the inherited body text color or theme. The old rules put a green text
+// token on a green background (invisible) and leaned on a dark-mode override that
+// itself failed contrast on the green badge.
 .status-pending,
 .status-due-soon {
+  color: var(--status-on-pending);
   background-color: var(--pending-accent-color);
 }
 .status-complete {
-  color: var(--text-success-color);
+  color: var(--status-on-accent);
   background-color: var(--complete-accent-color);
 }
 .status-success {
-  color: var(--text-success-color);
+  color: var(--status-on-accent);
   background-color: var(--success-accent-color);
-}
-.dark-mode .status-pending,
-.dark-mode .status-due-soon,
-.dark-mode .status-complete,
-.dark-mode .status-success {
-  color: var(--primary-text-light-mode-color);
 }

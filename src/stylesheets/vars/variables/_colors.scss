@@ -1,7 +1,19 @@
+// Canonical-token aliases (G5 single-source pass). These SCSS vars now POINT at the CSS
+// custom properties in vars/_tokens.scss instead of re-declaring the literal, so brand/danger
+// have one source of truth and a consumer overriding the token re-skins the SCSS-driven
+// partials too (previously they were stuck at the compiled literal). Safe because these vars
+// are only ever used as plain color values — never inside a Sass color function (darken/rgba),
+// arithmetic, interpolation, or a media query, all of which need a static value. Values are
+// identical to the tokens, so light mode is unchanged.
 // common color
-$danger: crimson;
+$danger: var(--danger-accent-color);
 $error: rgb(241, 29, 26);
-$success: #4bb161;
+// Darkened from #4bb161 to match the --success-accent-color CSS token. The old value only
+// reached ~2.7:1 against white (fails WCAG 1.4.3 AA); SCSS-driven success surfaces
+// (_typography.scss .success text, _form-navigation.scss success state) read THIS var, so
+// they were rendering the failing green while var()-driven components rendered the compliant
+// one. ~5.1:1 against white. (Full token unification is FUTURE_PLANS item 80.)
+$success: #2e7d46;
 $ping-color: #eaab4c;
 
 // todo update action color
@@ -12,7 +24,7 @@ $action-color-alt: #f5b200;
 $faded: rgb(184, 184, 184);
 $dimmer: rgba(230, 230, 230, 0.7);
 $dim: rgba(196, 196, 196, 0.7);
-$dark-primary: #484b6a;
+$dark-primary: var(--main-brand-color); // brand; canonical source is --main-brand-color (see top note)
 $cta-color: #ffa500;
 $icon-color: #333;
 

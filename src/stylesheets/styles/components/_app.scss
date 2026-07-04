@@ -1,5 +1,16 @@
 @use "../../vars/variables/_index.scss" as variables;
 
+// Backdrop for the self-sufficient DialogOverlay modal. The Dialog inside is position:fixed
+// and lays itself out; this layer only dims the page, sits above content, and catches
+// outside clicks. overflow-y lets a tall dialog scroll while the page body is scroll-locked.
+.dialog-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: rgba(0, 0, 0, 0.55);
+  overflow-y: auto;
+}
+
 .dialog {
   position: fixed;
   border-radius: variables.$border-radius;

@@ -10,9 +10,11 @@ const PageNotFound: React.FC<ErrorProps> = (props) => {
 
   useEffect(() => {
     // let client read error message and reroute to page
-    if (timer) {
-      if (to && handleClick) setTimeout(() => handleClick(), timer);
-    }
+    if (!timer || !to || !handleClick) return undefined;
+    // Clear the timer on unmount so a user who navigates away manually before it fires is
+    // not yanked to another route by a stale redirect.
+    const id = setTimeout(() => handleClick(), timer);
+    return () => clearTimeout(id);
   }, []);
 
   return (

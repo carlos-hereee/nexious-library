@@ -1,5 +1,7 @@
+import { memo } from "react";
 import { Icon } from "@nxs-atoms";
 import Hero from "@nxs-molecules/assets/Hero";
+import { safeUrl } from "@nxs-utils/data/safeUrl";
 import type { PostProps } from "nxs-post";
 
 /**
@@ -78,7 +80,7 @@ const Post: React.FC<PostProps> = (props) => {
                   {author.name || author.handle || "Anonymous"}
                 </button>
               ) : author.href ? (
-                <a className="post-card-author" href={author.href}>
+                <a className="post-card-author" href={safeUrl(author.href)}>
                   {author.name || author.handle || "Anonymous"}
                 </a>
               ) : (
@@ -97,7 +99,7 @@ const Post: React.FC<PostProps> = (props) => {
 
       {/* Title */}
       {linkable && post.href ? (
-        <a className="post-card-title" href={post.href} onClick={handleCardActivate}>
+        <a className="post-card-title" href={safeUrl(post.href)} onClick={handleCardActivate}>
           <h2 className="post-card-title-text">{post.title}</h2>
         </a>
       ) : onView ? (
@@ -190,4 +192,6 @@ const Post: React.FC<PostProps> = (props) => {
   );
 };
 
-export default Post;
+// Pure feed card in a list-rendered surface — memo so a feed re-render only re-renders the
+// cards whose post/callbacks actually changed (effective once the consumer stabilizes them).
+export default memo(Post);

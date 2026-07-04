@@ -1,5 +1,6 @@
 import { Icon } from "@nxs-atoms";
 import Hero from "@nxs-molecules/assets/Hero";
+import { safeUrl } from "@nxs-utils/data/safeUrl";
 import type { PostDetailProps } from "nxs-post";
 
 /**
@@ -54,7 +55,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
                   {author.name || author.handle || "Anonymous"}
                 </button>
               ) : author.href ? (
-                <a className="post-detail-author" href={author.href}>
+                <a className="post-detail-author" href={safeUrl(author.href)}>
                   {author.name || author.handle || "Anonymous"}
                 </a>
               ) : (

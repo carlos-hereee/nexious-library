@@ -1,3 +1,4 @@
+import { memo } from "react";
 import { Icon } from "@nxs-atoms";
 import Hero from "@nxs-molecules/assets/Hero";
 import type { PostRowProps } from "nxs-post";
@@ -78,4 +79,5 @@ const PostRow: React.FC<PostRowProps> = (props) => {
   );
 };
 
-export default PostRow;
+// Pure list row — memo so an admin/feed list re-render skips rows with unchanged props.
+export default memo(PostRow);
