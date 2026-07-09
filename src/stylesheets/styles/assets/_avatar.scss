@@ -1,6 +1,11 @@
+// max-width caps the width:100% the base .hero class contributes; without it a
+// user-avatar balloons up to .hero's 550px cap. 50px matches the small-avatar
+// tier (.avatar-sm, .hero-contact-sm). Consumers that want a larger profile
+// avatar should use their own size-modifier class rather than removing this.
 .user-avatar {
   border-radius: 100%;
   aspect-ratio: 1/1;
+  max-width: 50px;
 }
 .user-avatar-container {
   display: flex;
