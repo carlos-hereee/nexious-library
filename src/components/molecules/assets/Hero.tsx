@@ -43,7 +43,14 @@ const Hero: React.FC<HeroProps> = (props) => {
     );
   }
   return (
-    <div className={load ? designStyle : undefined} style={{ backgroundImage: `url(${hero.small})` }}>
+    <div
+      className={load ? designStyle : undefined}
+      // Only paint the blur-up placeholder when a low-res `small` thumbnail exists.
+      // Without this guard a hero that has no `small` (e.g. user avatars, which pass
+      // only { url, alt }) emits `background-image: url(undefined)`; the browser then
+      // resolves the literal "undefined" as a relative URL and fires a 404.
+      style={hero.small ? { backgroundImage: `url(${hero.small})` } : undefined}
+    >
       <Image
         onImageClick={!isDisable ? onImageClick : undefined}
         onImageLoad={() => setLoad(true)}
