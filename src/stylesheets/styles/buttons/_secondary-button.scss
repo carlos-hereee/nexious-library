@@ -27,10 +27,16 @@
     justify-content: center;
   }
 }
+// Brand token, not $action-color: this is a "chosen" state, so it must read as brand AND match
+// nexious-client's own .btn-active rule (--main-brand-color + --primary-text-dark-mode-color).
+// Both rules are single-class, so whichever stylesheet loads last wins; keeping the two identical
+// means a flip in import order can no longer repaint these buttons (it would have turned them the
+// #ffee99 placeholder). $action-color stays the highlight yellow for the calendar today tile and
+// card-row active, which are highlight states, not brand states.
 .btn-selected,
 .btn-active {
-  background-color: variables.$action-color;
-  color: variables.$dark-mode;
+  background-color: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
 }
 .btn-add {
   // border: 1px solid variables.$dark-primary;

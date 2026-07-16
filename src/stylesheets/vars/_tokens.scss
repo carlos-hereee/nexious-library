@@ -27,6 +27,11 @@
   --complete-accent-color: #2e7d46;
   --text-success-color: #2e7d46;
   --primary-text-light-mode-color: #2c3e50;
+  // Light text for placement ON a brand fill (.btn-active / .btn-selected). Defaulted here because
+  // that rule now reads the brand token, and without a default the library would render dark text
+  // on a dark brand fill when used standalone. nexious-client's vars.css defines the same token
+  // with this exact value, so consumers override it identically and nothing shifts.
+  --primary-text-dark-mode-color: #f8fafc;
   // status badge text colors, each AA on its own badge background
   --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
   --status-on-pending: #2c3e50; // dark on the amber pending badge (~5.5:1)
