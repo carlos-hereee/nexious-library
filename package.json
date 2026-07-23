@@ -6,9 +6,12 @@
   "types": "./dist/@types/main.d.ts",
   "main": "dist/esm/main.js",
   "style": "dist/css/index.css",
-  "homepage": "https://www.companyuno.com",
+  "homepage": "https://www.companyuno.com/docs",
   "author": "carlos-hereee <97hernandez.c@gmail.com>(https://www.nexious.tech)",
   "license": "MIT",
+  "engines": {
+    "node": ">=18"
+  },
   "exports": {
     "./@nxs-atoms": {
       "import": {
@@ -148,6 +151,11 @@
     "component-library",
     "ui-library",
     "ui-components",
+    "design-system",
+    "accessible",
+    "a11y",
+    "dark-mode",
+    "hooks",
     "business",
     "calendar",
     "form",
@@ -156,6 +164,8 @@
     "typescript",
     "sass",
     "responsive",
+    "atomic-design",
+    "nexious",
     "companyuno"
   ],
   "repository": {
