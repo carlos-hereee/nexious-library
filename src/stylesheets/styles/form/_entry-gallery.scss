@@ -1,0 +1,140 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
+@use "../../vars/variables/_index.scss" as variables;
+
+// ── Catalog gallery ─────────────────────────────────────────────────────────────
+// Layout for a file-only entry group (FormField sets .entry-gallery when every field in the
+// group is an upload). The active image renders large, the other slots sit beside it as dimmed
+// thumbnails. Everything here is scoped under .entry-gallery so the numbered switcher used by
+// text entry groups (recurring store hours) is untouched.
+
+// Two tiles plus the gutter. Local because nothing outside this block sizes against the rail.
+$rail-width: 150px;
+// Roughly the height of the hero beside it; past this the rail scrolls instead of stretching
+// the grid row and pushing the form's action buttons off screen.
+$rail-max-height: 280px;
+
+.entry-gallery {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) $rail-width;
+  grid-template-areas:
+    "main rail"
+    "actions actions";
+  gap: variables.$rem;
+  align-items: start;
+
+  @include mixin.devices(mobile) {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "main"
+      "rail"
+      "actions";
+  }
+}
+.entry-gallery-main {
+  grid-area: main;
+  // Without this a wide image blows the 1fr track out past the rail instead of shrinking.
+  min-width: 0;
+}
+.entry-gallery > .buttons-container {
+  grid-area: actions;
+}
+
+// The stock .field-upload is a two column grid: file picker beside a 100px preview thumbnail.
+// Here the preview IS the subject of the screen, so stack them and hand the full column to the
+// image. order puts the image first (the sketch's large hero) while leaving the "Images" label
+// attached to the picker it names.
+.entry-gallery .field-upload {
+  grid-template-columns: 1fr;
+}
+.entry-gallery .preview-hero-container {
+  order: -1;
+  width: 100%;
+  margin: 0;
+}
+.entry-gallery .preview-hero,
+.entry-gallery .preview-hero-empty {
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+}
+// _avatar.scss pins .preview-hero-empty to a pill radius (it shares that rule with the small
+// contact avatar). At the stock 100px that reads as a rounded thumbnail; at full width it bows
+// into a blob, so the empty slot gets the plain radius of the image it is standing in for.
+// Two classes to clear the avatar rule's specificity. Scoped here so avatars are untouched.
+.entry-gallery .preview-hero-empty {
+  border-radius: variables.$border-radius;
+}
+// "Image Preview" earns its place as a caption for a 100px thumbnail. Above a full width hero it
+// only repeats what the image already says, so it is dropped rather than restyled.
+.entry-gallery .preview-hero-container > span {
+  display: none;
+}
+
+.entry-rail {
+  grid-area: rail;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$rem05;
+}
+.entry-rail-tiles {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: variables.$rem05;
+  max-height: $rail-max-height;
+  overflow-y: auto;
+
+  @include mixin.devices(mobile) {
+    // No vertical room under the hero on a phone, so the rail becomes a swipeable strip.
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: 64px;
+    max-height: none;
+    overflow-x: auto;
+  }
+}
+.entry-rail-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid var(--border);
+  border-radius: variables.$border-radius-sm;
+  // Dimming is the whole point of the rail: a supporting image has to read as "not the one you
+  // are editing" while staying legible enough to click back to.
+  opacity: 0.5;
+  transition: opacity var(--transition-fast), border-color var(--transition-fast);
+  &:hover,
+  &:focus-visible {
+    opacity: 1;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+.entry-rail-tile-active {
+  opacity: 1;
+  border-color: var(--main-brand-color);
+}
+.entry-rail-thumb {
+  // Only aspect-ratio and object-fit are set: .hero's own width/max-width already resolve to the
+  // tile at this size, so there is no specificity fight with the base class to win.
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.entry-rail-placeholder {
+  font-weight: bold;
+  color: variables.$muted;
+}
+.entry-rail-count {
+  font-size: var(--text-small);
+  color: variables.$muted;
+  text-align: center;
+}

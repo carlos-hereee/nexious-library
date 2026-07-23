@@ -293,6 +293,16 @@ export interface FormFieldProps {
   handleCheckbox?: (key: OnchangeProps) => void;
   onRemovalClick?: (groupName: string, idx: number) => void;
 }
+// Entry switcher for a file-only entry group (the merch catalog). `entries` is the whole group
+// so the rail can paint every slot's real upload, not just the active one.
+export interface EntryThumbnailRailProps {
+  entries: FieldEntryProps;
+  activeEntry: string;
+  max?: number;
+  isDisabled?: boolean;
+  railLabel?: string;
+  onSelect: (sharedKey: string) => void;
+}
 export interface LabelProps {
   label: string;
   name: string;
