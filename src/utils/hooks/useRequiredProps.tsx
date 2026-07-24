@@ -3,7 +3,7 @@ import type { RequiredTypesProps, ErrorMessageProp, LightSystem } from "nxs-erro
 
 // A required prop counts as "missing" when it is undefined, null, or empty
 // (empty string, empty array, empty object). Booleans and the number 0 are
-// intentionally valid values, never missing — flagging them would wrongly
+// intentionally valid values, never missing, flagging them would wrongly
 // reject legitimate `false`/`0` props.
 const isMissingValue = (value: unknown): boolean => {
   if (value === undefined || value === null) return true;
@@ -13,7 +13,7 @@ const isMissingValue = (value: unknown): boolean => {
   return false;
 };
 
-export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) => {
+export const useRequiredProps = (props: RequiredTypesProps) => {
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
 
@@ -40,7 +40,6 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
       missingProps.map((name) => ({
         prop: name,
         code: "missingProps",
-        isAProp: !!isAProp,
         value: props[name],
         name,
       }))
@@ -48,7 +47,7 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
     // `props` is intentionally absent: `signature` is its meaningful projection (see above),
     // and adding the object literal back would restore the infinite render loop.
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [signature, isAProp]);
+  }, [signature]);
 
   return { lightColor, errors, setErrors, setLightColor };
 };

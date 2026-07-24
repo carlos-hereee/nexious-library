@@ -9,7 +9,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
   const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, theme, isDev } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel, onDialogClose } = props;
-  const { errors, lightColor } = useRequiredProps({ paginate }, true);
+  const { errors, lightColor } = useRequiredProps({ paginate });
   // key variables
   const [initialValues, setInitialValues] = useState<FormValueProps>();
   const [pageNumber, setPageNumber] = useState<number>(page || 0);

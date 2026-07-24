@@ -34,7 +34,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     isDev,
   } = props;
   const { updateMenu, onLogoClick, handleTheme, onHomeClick } = props;
-  const { errors } = useRequiredProps({ menu }, true);
+  const { errors } = useRequiredProps({ menu });
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const headerRef = useRef<HTMLElement>(null);

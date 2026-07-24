@@ -14,7 +14,6 @@ export interface ErrorMessageProp {
   code: string;
   name: string;
   value?: unknown;
-  isAProp: boolean;
 }
 export interface ErrorProps {
   heading?: string;
@@ -35,7 +34,6 @@ export type ErrorProp = {
   code: ErrorCodes | string;
   prop: string;
   component?: string;
-  isAProp?: boolean;
   // Extra one-off guidance appended to the panel, for cases the static spec cannot
   // know (e.g. the runtime list of registered icon keys).
   hint?: string;

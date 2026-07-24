@@ -6,7 +6,7 @@ import type { ComponentSpec, ComponentSpecMap } from "nxs-errors";
 // A message that says "check that all required props are passed" costs the reader a trip
 // to the docs or the source; a message that names the shape, shows a working call, and
 // lists the two mistakes that actually cause this costs them nothing. The docs link is
-// the LAST line on purpose — it is the escape hatch, not the answer.
+// the LAST line on purpose, it is the escape hatch, not the answer.
 // WHO READS IT: consumers of the npm package, in their own dev build, mid-render.
 //
 // ACCURACY RULE: every `type` and `shape` below is copied from the real prop type in
@@ -273,7 +273,7 @@ export const COMPONENT_SPECS: ComponentSpecMap = {
         name: "errors",
         type: "ErrorMessageProp[]",
         required: true,
-        shape: "[{ name, prop, code, isAProp, value? }]",
+        shape: "[{ name, prop, code, value? }]",
         description: "The errors to render, normally the `errors` array returned by the useRequiredProps hook.",
       },
     ],
