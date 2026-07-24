@@ -12,6 +12,9 @@ export type ErrorReport = {
   headline: string;
   summary?: string;
   importStatement?: string;
+  /** The spec for the prop that FAILED. Rendered as the always-visible "expected" line. */
+  expected?: SpecProp;
+  /** Other required props, shown only inside the collapsible detail. Never includes `expected`. */
   props: SpecProp[];
   example?: string;
   fixes: string[];
@@ -55,9 +58,12 @@ export const buildErrorReport = (error: ErrorProp): ErrorReport => {
   const namesPropItself = error.code === "missingInitialValues";
   const headline = namesPropItself ? `${label} ${codePhrase}` : `${label} ${codePhrase}: ${error.prop}`;
 
-  // When a spec exists, show only the prop that actually failed plus any other required
-  // prop, so the panel teaches the requirement without dumping the whole API surface.
-  const specProps = spec ? spec.props.filter((p) => p.name === error.prop || p.required) : [];
+  // The failing prop leads, as the "expected" half of the received/expected pair; everything
+  // else required is supporting detail. Nested props report as "icon.icon", so match on the
+  // last segment too or IconButton's real failure would find no spec and lose its shape line.
+  const leafProp = error.prop.split(".").pop();
+  const expected = spec?.props.find((p) => p.name === error.prop || p.name === leafProp);
+  const specProps = spec ? spec.props.filter((p) => p.required && p !== expected) : [];
 
   return {
     componentName,
@@ -65,6 +71,7 @@ export const buildErrorReport = (error: ErrorProp): ErrorReport => {
     headline,
     summary: spec?.summary,
     importStatement: spec?.importStatement,
+    expected,
     props: specProps,
     example: spec?.example,
     fixes: spec?.fixes || [],
@@ -77,18 +84,23 @@ export const buildErrorReport = (error: ErrorProp): ErrorReport => {
 
 /** The same report as plain text, for console.warn. Indented so it reads as one block. */
 export const formatReportForConsole = (report: ErrorReport): string => {
-  const lines: string[] = [`[nexious-library] ${report.headline}`];
+  const lines: string[] = [`[nexious-library] ${report.headline}`, ""];
 
+  // Same two lines, same order, same wording as the panel's leading pair.
+  lines.push(`  received   ${report.received}`);
+  if (report.expected) {
+    lines.push(`  expected   ${report.expected.type}${report.expected.shape ? `  ${report.expected.shape}` : ""}`);
+    lines.push("", report.expected.description);
+  }
   if (report.summary) lines.push("", report.summary);
   if (report.props.length) {
-    lines.push("", "Required:");
+    lines.push("", "Also required:");
     report.props.forEach((p) => {
       lines.push(`  ${p.name}: ${p.type}`);
       if (p.shape) lines.push(`    shape  ${p.shape}`);
       lines.push(`    ${p.description}`);
     });
   }
-  lines.push("", `Received for "${report.prop}": ${report.received}`);
   if (report.example) lines.push("", "Working example:", report.example.replace(/^/gm, "  "));
   if (report.hint) lines.push("", report.hint);
   if (report.fixes.length) {

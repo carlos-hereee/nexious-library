@@ -1,88 +1,150 @@
 @use "../../vars/variables/_index.scss" as variables;
 
 // ── Dev-mode error panel ─────────────────────────────────────────────────────
-// Only ever rendered in a development build (see utils/app/devMode.ts), so this block
-// is styled to be UNMISTAKABLE rather than on-brand: a reader should never confuse it
-// with real UI or with a validation message meant for an end user. It deliberately does
-// not inherit the app's theme tokens for that reason.
+// Only ever rendered in a development build (see utils/app/devMode.ts), so this is styled
+// as a TERMINAL rather than on-brand: a dark monospace block cannot be mistaken for real
+// UI at a glance, which a red-bordered card can. It deliberately does not read the app's
+// theme tokens, and it looks the same in light and dark mode, because a reader switching
+// themes should not have to re-find their error.
 //
-// Everything here is namespaced .nxs-dev-error-* so a consumer's stylesheet cannot
-// accidentally restyle it, and so it cannot collide with the app-facing .error-message
-// class used for real form validation copy.
+// Everything is namespaced .nxs-dev-error-* so a consumer's stylesheet cannot accidentally
+// restyle it, and so it never collides with the app-facing .error-message class used for
+// real form validation copy.
+//
+// Palette is fixed hex, not variables: these are diagnostic colors, not brand colors, and
+// pinning them means a consumer who breaks their own token layer can still read the error
+// telling them so.
+
+$nxs-dev-bg: #1e1e2e;
+$nxs-dev-bg-sunken: #181825;
+$nxs-dev-border: #313244;
+$nxs-dev-text: #cdd6f4;
+$nxs-dev-muted: #7f849c;
+$nxs-dev-red: #f38ba8;
+$nxs-dev-amber: #f9e2af;
+$nxs-dev-green: #a6e3a1;
+$nxs-dev-mauve: #cba6f7;
+$nxs-dev-blue: #89b4fa;
+$nxs-dev-peach: #fab387;
 
 .nxs-dev-error {
-  border: 2px solid variables.$error;
-  border-left-width: 6px;
+  background: $nxs-dev-bg;
+  color: $nxs-dev-text;
+  border: 1px solid $nxs-dev-border;
   border-radius: variables.$border-radius;
-  background: #fff8f8;
-  color: #2b1a1a;
-  padding: variables.$rem;
+  padding: 0.75rem 0.9rem 0.9rem;
   margin: variables.$rem05 0;
   width: 100%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: variables.$rem05;
-  // A monospace stack signals "this is for you, the developer", and keeps the shape
-  // literals and code snippets aligned.
+  gap: 0.45rem;
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.85rem;
-  line-height: 1.5;
+  font-size: 0.82rem;
+  line-height: 1.6;
   text-align: left;
+  // Long shapes and snippets scroll inside their own boxes; the panel itself never
+  // widens its container.
+  overflow: hidden;
 }
 
-.nxs-dev-error-badge {
-  display: inline-block;
-  background: variables.$error;
-  color: #fff;
-  border-radius: variables.$border-radius-sm;
-  padding: 0.1rem 0.4rem;
-  margin-right: 0.5rem;
+// ── Title bar ──
+.nxs-dev-error-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  margin-bottom: 0.15rem;
+}
+
+.nxs-dev-error-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  flex: 0 0 auto;
+}
+.nxs-dev-error-dot-red {
+  background: $nxs-dev-red;
+}
+.nxs-dev-error-dot-amber {
+  background: $nxs-dev-amber;
+}
+.nxs-dev-error-dot-green {
+  background: $nxs-dev-green;
+}
+
+.nxs-dev-error-origin {
+  color: $nxs-dev-muted;
   font-size: 0.7rem;
-  font-weight: 700;
+  margin-left: 0.3rem;
   letter-spacing: 0.02em;
-  text-transform: uppercase;
-  vertical-align: middle;
 }
 
 .nxs-dev-error-headline {
+  margin: 0;
+  color: $nxs-dev-red;
   font-weight: 700;
-  font-size: 0.95rem;
-  margin: 0;
+  font-size: 0.88rem;
 }
 
-.nxs-dev-error-received {
-  margin: 0;
-  code {
-    background: #ffe9e9;
-    border-radius: variables.$border-radius-sm;
-    padding: 0.05rem 0.3rem;
+// ── The leading received / expected pair ──
+// A two-column grid keeps the values aligned under each other, which is what makes the
+// mismatch readable at a glance rather than as two sentences.
+.nxs-dev-error-pair {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 0.1rem 0.9rem;
+  margin: 0.15rem 0 0;
+
+  dt {
+    color: $nxs-dev-muted;
+    font-size: 0.78rem;
   }
-  // Only the FIRST code node (the prop name) butts against a ":" text node. Cancelling its
-  // right padding exactly keeps that colon tight; the received value after it must keep its
-  // normal padding, so this cannot be applied to both.
-  code:first-of-type {
-    margin-right: -0.3rem;
+  dd {
+    margin: 0;
+    min-width: 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.5rem;
   }
 }
 
+.nxs-dev-error-bad {
+  color: $nxs-dev-red;
+  word-break: break-word;
+}
+.nxs-dev-error-type {
+  color: $nxs-dev-mauve;
+}
+.nxs-dev-error-shape {
+  color: $nxs-dev-muted;
+  background: $nxs-dev-bg-sunken;
+  border-radius: variables.$border-radius-sm;
+  padding: 0.05rem 0.4rem;
+  // A long union type must scroll in its own box, never widen the panel.
+  max-width: 100%;
+  overflow-x: auto;
+  white-space: pre;
+}
+
+// ── Collapsible detail ──
 .nxs-dev-error-details {
-  border-top: 1px solid #f0d4d4;
-  padding-top: variables.$rem05;
+  border-top: 1px solid $nxs-dev-border;
+  padding-top: 0.45rem;
+  margin-top: 0.2rem;
 }
 
 .nxs-dev-error-summary {
   cursor: pointer;
+  color: $nxs-dev-peach;
   font-weight: 700;
-  // The default triangle is tiny and easy to miss; the panel needs to read as openable.
+  // The native marker is tiny and easy to miss; the panel must read as openable.
   list-style: none;
   &::-webkit-details-marker {
     display: none;
   }
   &::before {
     content: "▸ ";
-    display: inline-block;
-    transition: transform 0.15s ease;
   }
 }
 .nxs-dev-error-details[open] > .nxs-dev-error-summary::before {
@@ -90,81 +152,61 @@
 }
 
 .nxs-dev-error-text {
-  margin: variables.$rem05 0;
+  margin: 0.4rem 0 0;
+  color: $nxs-dev-text;
   // Prose, unlike the code around it, reads better in the app's own face.
   font-family: inherit;
+  font-size: 0.82rem;
 }
 
 .nxs-dev-error-label {
   display: block;
-  margin-top: variables.$rem05;
-  font-size: 0.7rem;
+  margin-top: 0.6rem;
+  color: $nxs-dev-muted;
+  font-size: 0.68rem;
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: #8a5252;
 }
 
-// ── Required-prop list ──
+// ── Remaining required props ──
 .nxs-dev-error-props {
-  margin: variables.$rem05 0;
+  margin: 0.25rem 0 0;
   display: flex;
   flex-direction: column;
-  gap: variables.$rem05;
+  gap: 0.4rem;
 }
 
 .nxs-dev-error-prop {
-  border-left: 3px solid #f0d4d4;
-  padding-left: variables.$rem05;
+  border-left: 2px solid $nxs-dev-border;
+  padding-left: 0.55rem;
   dt {
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
-    gap: 0.4rem;
+    align-items: baseline;
+    gap: 0.5rem;
   }
   dd {
-    margin: 0.2rem 0 0;
+    margin: 0.1rem 0 0;
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+    min-width: 0;
   }
 }
 
 .nxs-dev-error-prop-name {
+  color: $nxs-dev-text;
   font-weight: 700;
 }
 
-.nxs-dev-error-prop-type {
-  color: #7a4b8f;
-}
-
-.nxs-dev-error-required {
-  background: #ffe9e9;
-  border-radius: variables.$border-radius-sm;
-  padding: 0 0.3rem;
-  font-size: 0.65rem;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-}
-
-.nxs-dev-error-shape {
-  background: #f4f0ff;
-  border-radius: variables.$border-radius-sm;
-  padding: 0.15rem 0.35rem;
-  // A long union type must scroll inside its own box, never widen the panel.
-  overflow-x: auto;
-  white-space: pre;
-}
-
 .nxs-dev-error-prop-desc {
+  color: $nxs-dev-muted;
   font-family: inherit;
+  font-size: 0.8rem;
 }
 
 // ── Copyable example ──
-.nxs-dev-error-example {
-  margin-top: variables.$rem05;
-}
-
 .nxs-dev-error-example-bar {
   display: flex;
   align-items: center;
@@ -174,65 +216,81 @@
 
 .nxs-dev-error-copy {
   cursor: pointer;
-  background: #fff;
-  border: 1px solid #d9b3b3;
+  background: transparent;
+  border: 1px solid $nxs-dev-border;
   border-radius: variables.$border-radius-sm;
-  padding: 0.15rem 0.55rem;
+  color: $nxs-dev-muted;
+  padding: 0.1rem 0.5rem;
   font: inherit;
-  font-size: 0.7rem;
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
   // The library reset sets `button { width: 100%; max-width: 250px }` on the bare tag, and
-  // this rule declares no width of its own by default, so the button stretched across the
-  // whole bar. Both must be restated explicitly to shrink it back to its label.
+  // this rule would otherwise declare no width of its own, so the button stretched across
+  // the whole bar. Both must be restated explicitly to shrink it back to its label.
   width: auto;
   max-width: none;
   flex: 0 0 auto;
   &:hover {
-    background: #ffe9e9;
+    color: $nxs-dev-text;
+    border-color: $nxs-dev-muted;
   }
 }
 
 .nxs-dev-error-code {
-  background: #2b2b3a;
-  color: #f2f2f2;
+  background: $nxs-dev-bg-sunken;
+  color: $nxs-dev-text;
+  border-left: 2px solid $nxs-dev-blue;
   border-radius: variables.$border-radius-sm;
-  padding: variables.$rem05;
-  margin: 0.25rem 0 0;
+  padding: 0.4rem 0.6rem;
+  margin: 0.3rem 0 0;
   // Snippets are multi-line and pre-formatted; scroll them rather than wrap, so the
   // indentation a reader is about to copy stays truthful.
   overflow-x: auto;
   white-space: pre;
+  font-size: 0.8rem;
 }
 
 .nxs-dev-error-hint {
-  margin: variables.$rem05 0 0;
-  padding: variables.$rem05;
-  background: #fffbe6;
+  margin: 0.6rem 0 0;
+  padding: 0.4rem 0.55rem;
+  background: $nxs-dev-bg-sunken;
+  border-left: 2px solid $nxs-dev-amber;
   border-radius: variables.$border-radius-sm;
+  color: $nxs-dev-amber;
+  font-size: 0.78rem;
   // Runtime hints (the live icon-key list) can be long; wrap them.
   word-break: break-word;
 }
 
+// ── Common causes ──
+// Arrow-prefixed rather than bulleted: these are actions to take, and the arrow reads as
+// "do this" where a bullet reads as "another fact".
 .nxs-dev-error-fixes {
-  margin: 0.25rem 0 0;
-  padding-left: 1.1rem;
-  font-family: inherit;
+  margin: 0.5rem 0 0;
+  padding: 0;
+  list-style: none;
   li {
-    list-style: disc;
-    margin-bottom: 0.25rem;
+    list-style: none;
+    color: $nxs-dev-muted;
+    font-family: inherit;
+    font-size: 0.8rem;
+    margin-bottom: 0.2rem;
+    padding-left: 1.1rem;
+    text-indent: -1.1rem;
+    &::before {
+      content: "→ ";
+      color: $nxs-dev-border;
+    }
   }
 }
 
 .nxs-dev-error-docs {
-  margin-top: variables.$rem05;
-  font-weight: 700;
-  color: #7a2f2f;
-  text-decoration: underline;
+  margin-top: 0.65rem;
+  color: $nxs-dev-blue;
+  font-size: 0.78rem;
+  text-decoration: none;
   &:hover {
-    color: variables.$error;
+    text-decoration: underline;
   }
 }
-
-// The panel keeps its light treatment in dark mode. It is a build-time overlay, not part
-// of the themed surface, and a reader switching themes should not have to re-find it.

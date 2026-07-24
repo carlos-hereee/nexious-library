@@ -212,12 +212,30 @@ The source follows atomic design: `atoms` (leaf primitives), `molecules` (compos
 ## Dev diagnostics
 
 Call a component wrong and it renders a teaching panel in place of itself, instead of failing
-silently or throwing. The panel names the component and the prop, prints the shape it wanted
-next to the value it actually got, gives a copy-pasteable working call, and lists the mistakes
-that usually cause that error. The docs link is the last line, there if the panel was not enough.
+silently or throwing. It is styled as a terminal, deliberately: a build-time diagnostic should
+never be mistakable for real UI, and it means the panel and the `console.warn` render from one
+report with the same leading lines, so the two can never drift.
 
-The same report is written to `console.warn`, which matters when a component bails early and
-paints almost nothing.
+```
+● ● ●  nexious-library · dev only
+<Hero> is missing a required prop: hero
+
+received   undefined
+expected   AssetProps  { url?: string; alt?: string; small?: string }
+
+▾ How Hero works
+  ...summary, any other required props, a copy-pasteable example, common causes
+companyuno.com/docs/hero →
+```
+
+`received` and `expected` are always visible, collapsed or not, so a panel answers the question
+before you click anything. The detail below carries how the component works, a working call you
+can copy, and the mistakes that usually cause that error. The docs link is last, there if the
+panel was not enough.
+
+**When several panels render at once**, the first on the page expands and the rest collapse to
+their headline plus that received/expected pair. Five broken components give you five readable
+diagnoses instead of five walls of prose. Any panel can be toggled open.
 
 **These panels are development only.** Visibility resolves from three sources, most specific first:
 

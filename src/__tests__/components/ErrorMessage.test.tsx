@@ -4,12 +4,17 @@ import ErrorMessages from "@nxs-molecules/errors/ErrorMessages";
 import Hero from "@nxs-molecules/assets/Hero";
 import IconButton from "@nxs-molecules/buttons/IconButton";
 import { setDevMode } from "@nxs-utils/app/devMode";
+import { resetPanelRegistry } from "@nxs-utils/app/devPanelRegistry";
 import { formatReceived, buildErrorReport } from "@nxs-utils/app/buildErrorReport";
 
 // jest runs with NODE_ENV="test", so the env probe reports dev and the panels render by
-// default. Each test that changes the app-wide switch resets it, or the module-level
-// override would leak into every later test in the file.
-afterEach(() => setDevMode(undefined));
+// default. Both module-level registries are reset between tests: the dev-mode override
+// would otherwise leak into every later test, and a panel left registered by one test
+// would win the "first panel" election in the next.
+afterEach(() => {
+  setDevMode(undefined);
+  resetPanelRegistry();
+});
 
 describe("ErrorMessage dev panel", () => {
   const heroError = { code: "missingProps", prop: "hero", value: undefined, component: "Hero" };
@@ -49,9 +54,40 @@ describe("ErrorMessage dev panel", () => {
 
   it("links the component's own docs page last", () => {
     render(<ErrorMessage error={heroError} />);
-    const link = screen.getByRole("link", { name: /Full API reference for Hero/ });
+    const link = screen.getByRole("link", { name: /companyuno\.com\/docs\/hero/ });
 
     expect(link).toHaveAttribute("href", "https://www.companyuno.com/docs/hero");
+  });
+
+  // ── the leading received/expected pair ─────────────────────────────────────
+  it("puts received and expected side by side without needing a click", () => {
+    render(<ErrorMessage error={{ ...heroError, value: "/banner.jpg" }} />);
+    const panel = screen.getByRole("alert");
+
+    // Both terms and both values sit outside the <details>, so they read while collapsed.
+    expect(panel).toHaveTextContent("received");
+    expect(panel).toHaveTextContent('"/banner.jpg"');
+    expect(panel).toHaveTextContent("expected");
+    expect(panel).toHaveTextContent("AssetProps");
+  });
+
+  it("resolves the spec for a nested prop path so icon.icon still gets a shape", () => {
+    const report = buildErrorReport({
+      code: "iconNotFound",
+      prop: "icon.icon",
+      value: "nope",
+      component: "IconButton",
+    });
+
+    expect(report.expected?.name).toBe("icon");
+    expect(report.expected?.type).toBe("IconProps");
+  });
+
+  it("never repeats the failing prop in the 'also required' list", () => {
+    const report = buildErrorReport({ code: "missingProps", prop: "menu", value: undefined, component: "Header" });
+
+    expect(report.expected?.name).toBe("menu");
+    expect(report.props.map((p) => p.name)).toEqual(["updateMenu"]);
   });
 
   it("degrades to the docs home for a component with no spec yet", () => {
@@ -94,8 +130,8 @@ describe("ErrorMessage dev panel", () => {
 
 describe("ErrorMessages list", () => {
   const errors = [
-    { prop: "menu", code: "missingProps", name: "menu", value: undefined, isAProp: true },
-    { prop: "updateMenu", code: "missingProps", name: "updateMenu", value: undefined, isAProp: true },
+    { prop: "menu", code: "missingProps", name: "menu", value: undefined },
+    { prop: "updateMenu", code: "missingProps", name: "updateMenu", value: undefined },
   ];
 
   it("renders one panel per error, each naming the component", () => {
@@ -117,6 +153,35 @@ describe("ErrorMessages list", () => {
     render(<ErrorMessages errors={[{ ...errors[0], code: "iconNotFound" }]} component="Header" />);
 
     expect(screen.getByRole("alert")).toHaveTextContent("not in the registry");
+  });
+
+  // ── first open, rest collapsed ─────────────────────────────────────────────
+  it("expands only the first panel on the page", () => {
+    render(<ErrorMessages errors={errors} component="Header" />);
+    const details = document.querySelectorAll("details.nxs-dev-error-details");
+
+    expect(details).toHaveLength(2);
+    expect(details[0]).toHaveAttribute("open");
+    expect(details[1]).not.toHaveAttribute("open");
+  });
+
+  it("still shows every panel's headline and diagnosis while collapsed", () => {
+    render(<ErrorMessages errors={errors} component="Header" />);
+    const collapsed = screen.getAllByRole("alert")[1];
+
+    // A collapsed panel is not a silent one: the reader still gets the whole two-line
+    // diagnosis, which is the point of leading with received/expected.
+    expect(collapsed).toHaveTextContent("<Header> is missing a required prop: updateMenu");
+    expect(collapsed).toHaveTextContent("received");
+    expect(collapsed).toHaveTextContent("undefined");
+  });
+
+  it("re-elects a first panel after the previous one unmounts", () => {
+    const { unmount } = render(<ErrorMessages errors={errors} component="Header" />);
+    unmount();
+    render(<ErrorMessages errors={[errors[1]]} component="Header" />);
+
+    expect(document.querySelector("details.nxs-dev-error-details")).toHaveAttribute("open");
   });
 });
 
