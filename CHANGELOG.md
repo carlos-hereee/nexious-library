@@ -9,6 +9,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [3.3.9] - 2026-07-24
+
+> ⚠️ **This patch release contains a BREAKING type change.** `isAProp` was removed outright from
+> `ErrorMessageProp` (where it was REQUIRED) and from `ErrorProp`, so any caller constructing
+> either shape by hand stops compiling on upgrade from 3.3.8. It should have been a major bump.
+> The fix is to delete the key; nothing read it, so removing it changes no rendered output.
+>
+> ```diff
+> - errors={[{ prop: "menu", code: "missingProps", name: "menu", isAProp: true }]}
+> + errors={[{ prop: "menu", code: "missingProps", name: "menu" }]}
+> ```
+>
+> To keep a component named in the headline, pass `component` on `ErrorMessages` (or `component`
+> inside the `error` object on `ErrorMessage`). That is what replaced the flag.
+>
+> `useRequiredProps(props, isAProp)` also lost its second argument. It is not exported from any
+> entry point, so only forks are affected.
+
 ### Added
 
 - **Dev-mode error panels that teach the component instead of describing the failure.** Calling a
@@ -545,7 +563,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Ping count notification badge
 - Logo and app-name props on Header
 
-[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.2...HEAD
+[Unreleased]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.9...HEAD
+[3.3.9]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.2...v3.3.9
 [3.3.2]: https://github.com/carlos-hereee/nexious-library/compare/v3.3.0...v3.3.2
 [3.3.0]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.5...v3.3.0
 [2.9.5]: https://github.com/carlos-hereee/nexious-library/compare/v2.9.4...v2.9.5
