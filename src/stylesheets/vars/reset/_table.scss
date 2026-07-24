@@ -6,24 +6,37 @@ table {
   margin: 1rem 0; /* Add some space below the table */
 }
 
+/* Every color below reads from the token layer (vars/_tokens.scss) instead of a literal, so a
+   table re-themes with the rest of the library under `.dark-mode`.
+
+   WHY: this reset used to hardcode a light-only palette (#ddd cell borders, an #f2f2f2 header
+   fill with #333 text, an #f9f9f9 stripe and an #e0e0e0 hover) and shipped no dark counterpart.
+   A consumer could not recover from that on its own page, because these are ELEMENT selectors
+   and an element selector beats an inherited color: a dark page's `color: var(--text)` never
+   reached a `th`. The result on nexious-client's dark theme was a header row at 2.3:1, a
+   near-white first column, white grid lines and bright zebra bands across a navy page.
+
+   The stripe survives, deliberately: alternating rows are what make a wide row scannable, and
+   the ask was to keep that reading in BOTH themes rather than drop it. */
 th,
 td {
-  border: 1px solid #ddd; /* Light gray border for cells */
-  padding: 1rem; /* Padding inside cells */
-  text-align: left; /* Align text to the left */
+  border: 1px solid var(--border);
+  padding: 1rem;
+  text-align: left;
 }
 
 th {
-  background-color: #f2f2f2; /* Light gray background for headers */
-  color: #333; /* Darker text color for headers */
+  background-color: var(--table-header-bg);
+  color: var(--text);
 }
 
-tr:nth-child(even) {
-  background-color: #f9f9f9; /* Zebra striping for readability */
+/* Scoped to tbody so a multi-row thead or tfoot is never striped as if it were data. */
+tbody tr:nth-child(even) {
+  background-color: var(--table-stripe-bg);
 }
 
-tr:hover {
-  background-color: #e0e0e0; /* Highlight row on hover */
+tbody tr:hover {
+  background-color: var(--table-row-hover-bg);
 }
 tfoot {
   font-weight: bold; /* Bold text for footer */
@@ -39,14 +52,16 @@ tfoot caption {
   font-weight: bold;
   margin-bottom: 0.5rem;
 }
+/* Same defect as the cells above, one layer out: #666 and #999 are light-mode literals that
+   invert to unreadable on a dark page (#999 lands near 2.8:1 on white to begin with). */
 .table-subtitle {
   font-size: 1.2rem;
-  color: #666;
+  color: var(--text-secondary);
   margin-bottom: 1rem;
 }
 .table-details {
   font-size: 0.9rem;
-  color: #999;
+  color: var(--text-secondary);
   margin-top: 0.5rem;
 }
 .hours-of-operation-wrapper {
