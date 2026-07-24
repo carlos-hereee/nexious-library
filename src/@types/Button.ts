@@ -10,6 +10,8 @@ export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9
 export type IconKey = LibraryIconKey | (string & {});
 export type IconProps = {
   icon: IconKey;
+  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  isDev?: boolean;
   isNum?: boolean;
   size?: SizeProp | NumSize;
   spin?: string;
@@ -21,6 +23,8 @@ export type IconProps = {
   layout?: string;
 };
 export interface ButtonProps {
+  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  isDev?: boolean;
   // optional
   // Called on click. Kept as an optional data string (not the DOM event) because internal
   // callers such as NavButton pass a payload through it; widening to the event would break them.
@@ -61,6 +65,8 @@ export interface ButtonProps {
   active?: CardinalDirectionProps;
 }
 export interface IconButtonProps {
+  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  isDev?: boolean;
   // all of button props
   name?: string;
   title?: string;

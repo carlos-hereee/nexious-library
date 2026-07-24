@@ -35,6 +35,23 @@ export function getRegisteredIconKeys(): string[] {
   return Object.keys(registry);
 }
 
+/**
+ * One sentence naming the keys that WOULD have worked, for the dev-mode error panels.
+ * Lives here (not in the static component specs) because the registry is filled at runtime
+ * by the consumer, so only this module knows the answer. Icon and IconButton both render
+ * it, so it is written once here rather than duplicated at each call site.
+ * Capped at 40 keys: a consumer registering a full icon set would otherwise paste hundreds.
+ */
+export function registeredKeysHint(): string {
+  const keys = getRegisteredIconKeys();
+  if (!keys.length) {
+    return "No icons are registered at all. Call registerIcons(icons) once at app boot, or registerFontawesomeIcons() from nexious-library/fontawesome-icons.";
+  }
+  const shown = keys.slice(0, 40).join(", ");
+  const rest = keys.length > 40 ? `, and ${keys.length - 40} more` : "";
+  return `Currently registered keys: ${shown}${rest}.`;
+}
+
 // The keys the library's OWN components render. A consumer supplying a fully custom set
 // must cover these for the library to render without error icons (story-only keys such
 // as cog/bell/edit are not required for the components themselves to function).

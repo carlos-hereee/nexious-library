@@ -24,6 +24,9 @@ export type AssetProps = {
 export type UnsplashProps = { creditTo: UnplashAsset };
 export interface HeroProps {
   hero: AssetProps;
+  // Silences (or forces) this component's dev-mode error panel, overriding setDevMode and
+  // the NODE_ENV probe. Optional on every component that can render one. See utils/app/devMode.
+  isDev?: boolean;
   theme?: string;
   layout?: string;
   label?: string;

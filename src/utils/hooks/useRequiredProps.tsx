@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import type { RequiredTypesProps, ErrorMessageProp, LightSystem } from "nxs-errors";
 
 // A required prop counts as "missing" when it is undefined, null, or empty
@@ -17,34 +17,38 @@ export const useRequiredProps = (props: RequiredTypesProps, isAProp?: boolean) =
   const [lightColor, setLightColor] = useState<LightSystem>("green");
   const [errors, setErrors] = useState<ErrorMessageProp[]>([]);
 
+  // The set of currently-missing prop names, as a stable primitive. This is the effect's
+  // dependency because `props` is a fresh object literal on every render: depending on it
+  // directly would re-run the effect forever (each run setStates, which re-renders, which
+  // builds a new object). Depending on the DERIVED signature instead means the effect runs
+  // exactly when the missing set actually changes.
+  const missingProps = useMemo(() => Object.keys(props).filter((key) => isMissingValue(props[key])), [props]);
+  const signature = missingProps.join("|");
+
   useEffect(() => {
-    setLightColor("green");
-    setErrors([]);
-
-    const missingProps = (name: string) => {
-      setLightColor("red");
-      setErrors((prev) => {
-        const newError: ErrorMessageProp = {
-          prop: name,
-          code: "missingProps",
-          isAProp: !!isAProp,
-          value: props[name],
-          name,
-        };
-        const errorIdx = prev.findIndex((e) => e.name === name);
-        if (errorIdx >= 0) {
-          const updated = [...prev];
-          updated[errorIdx] = newError;
-          return updated;
-        }
-        return [...prev, newError];
-      });
-    };
-
-    Object.keys(props).forEach((key) => {
-      if (isMissingValue(props[key])) missingProps(key);
-    });
-  }, []);
+    // Re-derive from scratch rather than patching the previous list. This is what makes the
+    // panel CLEAR when the reader fixes the prop and hot-reloads; the effect previously ran
+    // once on mount ([] deps), so a corrected prop kept showing the stale error and the fix
+    // looked like it had not worked.
+    if (!missingProps.length) {
+      setLightColor("green");
+      setErrors([]);
+      return;
+    }
+    setLightColor("red");
+    setErrors(
+      missingProps.map((name) => ({
+        prop: name,
+        code: "missingProps",
+        isAProp: !!isAProp,
+        value: props[name],
+        name,
+      }))
+    );
+    // `props` is intentionally absent: `signature` is its meaningful projection (see above),
+    // and adding the object literal back would restore the infinite render loop.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [signature, isAProp]);
 
   return { lightColor, errors, setErrors, setLightColor };
 };

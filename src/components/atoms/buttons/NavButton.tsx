@@ -3,8 +3,11 @@ import ErrorMessage from "@nxs-atoms/texts/ErrorMessage";
 import IconButton from "@nxs-molecules/buttons/IconButton";
 import Button from "./Button";
 
-const NavButton = ({ onClick, data, theme, activeTheme, icon, label }: ButtonProps) => {
-  if (!data) return <ErrorMessage error={{ code: "missingProps", prop: "data", value: data }} />;
+const NavButton = ({ onClick, data, theme, activeTheme, icon, label, isDev }: ButtonProps) => {
+  if (!data)
+    return (
+      <ErrorMessage isDev={isDev} error={{ code: "missingProps", prop: "data", value: data, component: "NavButton" }} />
+    );
 
   if (icon && onClick) {
     return (

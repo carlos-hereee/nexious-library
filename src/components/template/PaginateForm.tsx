@@ -7,7 +7,7 @@ import Dialog from "./Dialog";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
-  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, theme } = props;
+  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, theme, isDev } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel, onDialogClose } = props;
   const { errors, lightColor } = useRequiredProps({ paginate }, true);
   // key variables
@@ -62,7 +62,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   };
 
   if (lightColor === "red") {
-    return <ErrorMessages errors={errors} component="PaginateForm" />;
+    return <ErrorMessages errors={errors} component="PaginateForm" isDev={isDev} />;
   }
   return (
     <div className="container">

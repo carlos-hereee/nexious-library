@@ -10,10 +10,11 @@ import type { HeroProps } from "nxs-assets";
  * @returns image component
  */
 const Hero: React.FC<HeroProps> = (props) => {
-  const { hero, theme, onImageClick, imageRef, isDisable, layout } = props;
+  const { hero, theme, onImageClick, imageRef, isDisable, layout, isDev } = props;
   const [load, setLoad] = useState<boolean>();
 
-  if (!hero) return <ErrorMessage error={{ code: "missingProps", prop: "hero", value: hero }} />;
+  if (!hero)
+    return <ErrorMessage isDev={isDev} error={{ code: "missingProps", prop: "hero", value: hero, component: "Hero" }} />;
   if (!hero.url) {
     return (
       <Image

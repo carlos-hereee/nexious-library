@@ -21,7 +21,7 @@ import { useScroll } from "@nxs-utils/hooks/useScroll";
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
-  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
+  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals, isDev } = props;
   const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
     useFormValidation({ ...schema });
@@ -210,7 +210,13 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     }
     setEntries({ ...entryValues, [groupName]: updatedGroup });
   };
-  if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
+  if (!initialValues)
+    return (
+      <ErrorMessage
+        isDev={isDev}
+        error={{ code: "missingInitialValues", prop: "initialValues", value: initialValues, component: "Form" }}
+      />
+    );
 
   return (
     <form

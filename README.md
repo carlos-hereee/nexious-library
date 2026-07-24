@@ -209,6 +209,39 @@ The source follows atomic design: `atoms` (leaf primitives), `molecules` (compos
 
 `Dialog asModal` traps focus and closes on Escape; `ThemeMenu` implements the WAI-ARIA listbox pattern; form fields wire `aria-invalid` / `aria-describedby`; and every built-in anchor is link-name and scheme safe. You are responsible for giving icon-only buttons a `title` or `aria-label`, and images meaningful `alt` text. See [Accessibility](https://www.companyuno.com/docs/accessibility).
 
+## Dev diagnostics
+
+Call a component wrong and it renders a teaching panel in place of itself, instead of failing
+silently or throwing. The panel names the component and the prop, prints the shape it wanted
+next to the value it actually got, gives a copy-pasteable working call, and lists the mistakes
+that usually cause that error. The docs link is the last line, there if the panel was not enough.
+
+The same report is written to `console.warn`, which matters when a component bails early and
+paints almost nothing.
+
+**These panels are development only.** Visibility resolves from three sources, most specific first:
+
+```tsx
+// ① per call, on any component that can render a panel
+<Hero hero={hero} isDev={false} />
+
+// ② app wide, once at boot. This is the recommended setup.
+import { setDevMode } from "nexious-library";
+setDevMode(import.meta.env.DEV);
+
+// ③ inherited default: process.env.NODE_ENV !== "production"
+```
+
+Prefer ② over relying on ③. A bare Vite app does not reliably replace `process.env.NODE_ENV`
+inside pre-bundled library code, so without an explicit setting the panels can be missing in
+development or, worse, visible in production. `import.meta.env.DEV` IS replaced correctly in
+your own build, so handing it to `setDevMode` is the one line that makes the gate deterministic.
+
+Adding a panel to a component you are writing: describe it in `src/utils/data/componentSpecs.ts`
+(summary, required prop shapes, working example, common causes, docs slug), then render
+`<ErrorMessage error={{ code, prop, value, component }} isDev={isDev} />` from the guard clause.
+A component with no spec still gets a headline, the received value, and a docs-home link.
+
 ## Known limitations
 
 - **ESM only.** There is no CommonJS build.

@@ -75,6 +75,8 @@ export interface ICalendarEventDetails {
   events?: ICalEvent[];
   event?: ICalEvent;
   onEventClick?: (event: ICalEvent) => void;
+  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  isDev?: boolean;
 }
 export interface CalendarPEventDays {
   data?: { header?: DataContent; events?: ICalEvent[] };

@@ -1,6 +1,6 @@
 import { ErrorMessage } from "@nxs-atoms";
 import type { IconProps } from "nxs-button";
-import { getIconRenderer } from "./iconRegistry";
+import { getIconRenderer, registeredKeysHint } from "./iconRegistry";
 
 /**
  * Component - Icon
@@ -12,7 +12,7 @@ import { getIconRenderer } from "./iconRegistry";
  * @returns JSX.Element
  */
 const Icon: React.FC<IconProps> = (props) => {
-  const { icon, size, spin, color, name, hideHints, theme, label } = props;
+  const { icon, size, spin, color, name, hideHints, theme, label, isDev } = props;
 
   const Renderer = icon ? getIconRenderer(icon) : undefined;
   if (!Renderer) {
@@ -20,7 +20,15 @@ const Icon: React.FC<IconProps> = (props) => {
     // rather than a dev error so a missing key never injects stray UI.
     if (hideHints) return null;
     const code = icon ? "iconNotFound" : "missingProps";
-    return <ErrorMessage error={{ code, prop: "icon", value: icon }} />;
+    // The registry is filled at runtime by the consumer, so the valid key list cannot live
+    // in the static spec. Pass it as a hint, and name the empty-registry case explicitly:
+    // "no icons are registered" is a completely different fix from "that key is a typo".
+    return (
+      <ErrorMessage
+        isDev={isDev}
+        error={{ code, prop: "icon", value: icon, component: "Icon", hint: registeredKeysHint() }}
+      />
+    );
   }
 
   const n = theme ? `icon${name ? ` icon-${name} ${theme}` : theme}` : `icon${name ? ` icon-${name}` : ""}`;

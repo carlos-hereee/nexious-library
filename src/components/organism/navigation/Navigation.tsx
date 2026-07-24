@@ -8,9 +8,12 @@ import type { NavigationProps, MenuProp } from "nxs-navigation";
  * @param click   callback to be fired when button is click
  * @returns navbar
  */
-const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, activeTheme, navItemTheme }) => {
+const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, activeTheme, navItemTheme, isDev }) => {
   // require key variable
-  if (!menus) return <ErrorMessage error={{ code: "missingProps", prop: "menus", value: menus }} />;
+  if (!menus)
+    return (
+      <ErrorMessage isDev={isDev} error={{ code: "missingProps", prop: "menus", value: menus, component: "Navigation" }} />
+    );
   const propType = propChecker<string>(menus, "string");
 
   if (propType === "string") {

@@ -1,5 +1,5 @@
 import { ErrorMessage, Icon, PingCount } from "@nxs-atoms";
-import { getIconRenderer, getRegisteredIconKeys } from "@nxs-atoms/assets/iconRegistry";
+import { getIconRenderer, registeredKeysHint } from "@nxs-atoms/assets/iconRegistry";
 import type { IconButtonProps } from "nxs-button";
 
 /**
@@ -24,11 +24,23 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
     "aria-label": ariaLabelProp,
     "aria-expanded": ariaExpanded,
     "aria-controls": ariaControls,
+    isDev,
   } = props;
-  if (!icon) return <p className="error-message">Double check icon prop</p>;
+  // Both branches route through ErrorMessage now. The first used to render a bare
+  // "Double check icon prop" paragraph, which bypassed the dev-mode gate entirely and so
+  // shipped that string to production users.
+  if (!icon)
+    return (
+      <ErrorMessage isDev={isDev} error={{ code: "missingProps", prop: "icon", value: icon, component: "IconButton" }} />
+    );
   const { color, label, size, spin, name } = icon;
   if (!icon.icon) {
-    return <ErrorMessage error={{ code: "missingProps", prop: "icon", value: icon.icon }} />;
+    return (
+      <ErrorMessage
+        isDev={isDev}
+        error={{ code: "missingProps", prop: "icon.icon", value: icon.icon, component: "IconButton" }}
+      />
+    );
   }
   const disabled = isDisabled ?? isDisable;
   // Icon-only buttons have no text node, so without a name a screen reader announces nothing.
@@ -54,8 +66,21 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
     );
   }
   if (!getIconRenderer(icon.icon)) {
-    const message = `heres a list of availible icons: ${getRegisteredIconKeys().join(", ")}`;
-    return <ErrorMessage error={{ code: "iconNotFound", prop: "icon", value: message }} />;
+    // `value` is the key that failed (what the reader passed); the valid key list is a
+    // hint. They used to be concatenated into `value`, which reported the whole catalog
+    // as if it were the received prop.
+    return (
+      <ErrorMessage
+        isDev={isDev}
+        error={{
+          code: "iconNotFound",
+          prop: "icon.icon",
+          value: icon.icon,
+          component: "IconButton",
+          hint: registeredKeysHint(),
+        }}
+      />
+    );
   }
   return (
     <button

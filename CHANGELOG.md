@@ -9,7 +9,38 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- **Dev-mode error panels that teach the component instead of describing the failure.** Calling a
+  component wrong now renders a panel naming the component and the prop, the required shape beside
+  the value actually received, a copy-pasteable working call with its import, the mistakes that
+  usually cause that error, and a link to that component's own `/docs/<slug>` page as the last
+  line. The same report is written to `console.warn`, which matters when a component bails early
+  and paints almost nothing. Component descriptions live in `utils/data/componentSpecs.ts`; a
+  component with no spec still gets a headline, the received value, and a docs-home link
+- `setDevMode(value?: boolean)` and `getDevMode()` (root entry) plus an `isDev?: boolean` prop on
+  every component that can render a panel (`Hero`, `Icon`, `IconButton`, `NavButton`, `Navigation`,
+  `UserCard`, `HeaderContent`, `CalendarEvents`, `Form`, `PaginateForm`, `Header`, `ErrorMessage`,
+  `ErrorMessages`). Visibility resolves prop → `setDevMode()` → `process.env.NODE_ENV`. Call
+  `setDevMode(import.meta.env.DEV)` once at boot: a bare Vite app does not reliably replace
+  `process.env.NODE_ENV` inside pre-bundled library code, so the env probe alone could hide the
+  panels in development or show them in production, both silently
+- `ErrorMessage` and `ErrorMessages` are now exported from the root entry, alongside the
+  `ErrorProp`, `ErrorCodes`, `ComponentSpec`, and `SpecProp` types
+
 ### Fixed
+
+- `IconButton` rendered a bare `<p>Double check icon prop</p>` when `icon` was absent, bypassing
+  the dev-mode gate entirely, so that string could reach production users. Both of its guard
+  clauses now route through the gated panel
+- `ErrorMessages` overwrote every error's `code` with `missingProps` (discarding a real code such
+  as `iconNotFound`) and passed the error record itself as the received value, so the panel
+  reported its own bookkeeping instead of the prop
+- `useRequiredProps` ran its check once on mount (`[]` deps), so a corrected prop kept showing the
+  stale error after a hot reload and the fix looked like it had not worked. It now re-derives when
+  the set of missing props actually changes
+- The dev panel no longer prints the PROP name inside angle brackets as though it were a component
+  (`<hero> is missing a required prop`); it names the real component
 
 - Published `dist` no longer ships dangling sourcemap references. The tarball excludes `*.map`
   to stay lean, but the emitted JS/CSS still carried `//# sourceMappingURL` / `/*# sourceMappingURL */`

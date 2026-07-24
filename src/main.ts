@@ -75,6 +75,11 @@ export { default as CloseHeader } from "@nxs-molecules/header/CloseHeader";
 export { default as CountDown } from "@nxs-organism/timer/CountDown";
 // error components
 export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
+export { default as ErrorMessage } from "@nxs-atoms/texts/ErrorMessage";
+export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
+// dev-diagnostics switch — call setDevMode(import.meta.env.DEV) once at boot so the
+// missing-prop panels are guaranteed off in production (see utils/app/devMode.ts).
+export { setDevMode, getDevMode } from "@nxs-utils/app/devMode";
 // reaction buttons
 export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
 // currency utils
@@ -114,7 +119,7 @@ export type {
 } from "nxs-card";
 export type { TotalProps } from "custom-props";
 export type { ICalEvent, CalendarPEventDays, PEventDay } from "nxs-calendar";
-export type { ErrorProps, ErrorMessageProps } from "nxs-errors";
+export type { ErrorProps, ErrorMessageProps, ErrorProp, ErrorCodes, ComponentSpec, SpecProp } from "nxs-errors";
 export type { HeroProps, BubblyProps, TextBubbleProps, RatingProps, AssetProps, UserProps } from "nxs-assets";
 export type { IconProps, CopyToClipboardProps } from "nxs-button";
 export type { PostData, PostAuthor, PostReaction } from "nxs-post";

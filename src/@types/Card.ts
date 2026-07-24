@@ -138,6 +138,8 @@ export interface UserCardProps {
   hideHero?: boolean;
   theme?: string;
   user: UserProps;
+  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  isDev?: boolean;
 }
 
 export type PaymentType = {
