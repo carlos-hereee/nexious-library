@@ -6,7 +6,7 @@
 // is expected, or vice versa.
 const isSameType = (a: unknown, b: unknown): boolean => {
   if (typeof a !== typeof b) return false;
-  // both are "object" — distinguish null, array, and plain object
+  // both are "object", distinguish null, array, and plain object
   if (a === null || b === null) return a === null && b === null;
   if (Array.isArray(a) !== Array.isArray(b)) return false;
   return true;

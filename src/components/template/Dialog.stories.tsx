@@ -25,7 +25,7 @@ const meta: Meta<typeof Dialog> = {
 export default meta;
 type Story = StoryObj<typeof Dialog>;
 
-/** Plain dialog (no focus trap) — the shape used inside a parent modal shell. */
+/** Plain dialog (no focus trap), the shape used inside a parent modal shell. */
 export const Default: Story = {
   args: {
     header: { heading: "Confirm action", subtitle: "This cannot be undone" },

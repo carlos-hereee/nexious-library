@@ -86,7 +86,7 @@ export interface FieldCountSchemaProps {
 export type FormProps = {
   // required props
   initialValues: { [key: string]: FormInitialValue };
-  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
   // optional
   // Applied to the <form> element's id when provided (handy for testing/aria).
@@ -216,7 +216,7 @@ export type FieldValueProps = {
 export interface PaginateFormProps {
   // required props
   paginate: FormProps[];
-  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
   page?: number;
   navigationHeading?: string;

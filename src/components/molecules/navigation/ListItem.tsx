@@ -90,5 +90,5 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
   );
 };
 
-// Pure nav item — memo so a nav re-render skips items whose menu data + handler are stable.
+// Pure nav item, memo so a nav re-render skips items whose menu data + handler are stable.
 export default memo(ListItem);

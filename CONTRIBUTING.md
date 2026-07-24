@@ -2,7 +2,7 @@
 
 Thanks for contributing. This is the shared component library behind
 [companyuno.com](https://www.companyuno.com); it is published to npm and auto-upgraded into the
-platform client, so changes here ripple widely — keep them additive and well-tested.
+platform client, so changes here ripple widely, keep them additive and well-tested.
 
 ## Local setup
 
@@ -25,7 +25,7 @@ src/
     template/     page-level shells (Form, Dialog, DialogOverlay, Header, ...)
   @types/         public prop types (one module per domain: Button.ts, Form.ts, ...)
   utils/          pure helpers + hooks (no component imports)
-  stylesheets/    SCSS — vars/_tokens.scss (CSS custom properties), variables/* (SCSS vars)
+  stylesheets/    SCSS, vars/_tokens.scss (CSS custom properties), variables/* (SCSS vars)
   main.ts         the public package entry (every export the package ships)
 ```
 
@@ -42,7 +42,7 @@ public components must be exported from `main.ts` **with their prop type**.
   can localize.
 - **Use design tokens, not literals.** Reach for the `:root` CSS custom properties
   (`var(--main-brand-color)`, `var(--space-medium)`, `var(--radius-medium)`) or the SCSS
-  variables that alias them — never raw hex / rem in component styles.
+  variables that alias them, never raw hex / rem in component styles.
 - **URLs from external data go through `safeUrl()`.** Never render `<a href={userData}>` directly.
 - **Comments explain _why_,** not what. See the existing files for the voice.
 

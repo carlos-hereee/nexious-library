@@ -2,7 +2,7 @@
 // custom properties in vars/_tokens.scss instead of re-declaring the literal, so brand/danger
 // have one source of truth and a consumer overriding the token re-skins the SCSS-driven
 // partials too (previously they were stuck at the compiled literal). Safe because these vars
-// are only ever used as plain color values — never inside a Sass color function (darken/rgba),
+// are only ever used as plain color values, never inside a Sass color function (darken/rgba),
 // arithmetic, interpolation, or a media query, all of which need a static value. Values are
 // identical to the tokens, so light mode is unchanged.
 // common color

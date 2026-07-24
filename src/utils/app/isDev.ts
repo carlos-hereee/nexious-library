@@ -5,6 +5,6 @@
 // not always replace process.env.NODE_ENV inside library code, so this probe alone can be wrong
 // in both directions. That unreliability is precisely why setDevMode() and the per-component
 // `isDev` prop exist to override it (see the README "Dev diagnostics" section).
-// import.meta.env.DEV would be the Vite-native check but cannot be used here — the bare
+// import.meta.env.DEV would be the Vite-native check but cannot be used here, the bare
 // `import.meta` token breaks the CommonJS test compile (ts-jest) and would need a jest ESM config.
 export const isDev = typeof process !== "undefined" && process.env?.NODE_ENV !== "production";

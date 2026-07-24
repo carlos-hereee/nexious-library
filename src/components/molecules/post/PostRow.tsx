@@ -79,5 +79,5 @@ const PostRow: React.FC<PostRowProps> = (props) => {
   );
 };
 
-// Pure list row — memo so an admin/feed list re-render skips rows with unchanged props.
+// Pure list row, memo so an admin/feed list re-render skips rows with unchanged props.
 export default memo(PostRow);

@@ -32,7 +32,7 @@ export interface PHeaderCotent {
   data: DataContent;
   children?: React.ReactNode;
   theme?: string;
-  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
 }
 export interface HyperlinkProp {

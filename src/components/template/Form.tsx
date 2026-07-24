@@ -66,7 +66,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         setIsSubmitting(true);
         try {
           // Promise.resolve wraps the handler's return so this awaits correctly
-          // whether onSubmit is async (real promise) or sync (void) — and it
+          // whether onSubmit is async (real promise) or sync (void), and it
           // keeps the await-thenable lint rule satisfied for a void-typed prop.
           if (!withFileUpload && !addEntry) await Promise.resolve(onSubmit(formatFormData(values)));
           else if (!withFileUpload && addEntry)

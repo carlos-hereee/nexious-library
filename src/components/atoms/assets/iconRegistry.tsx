@@ -19,7 +19,7 @@ export type IconRegistry = Record<string, IconComponent>;
 
 // Module-level registry seeded with the built-in defaults so library components render
 // standalone with no consumer setup. Matches the library's existing global side-effect
-// style (the old Assets.tsx `library.add`) — no provider to mount. A consumer calls
+// style (the old Assets.tsx `library.add`), no provider to mount. A consumer calls
 // registerIcons once at boot to override/extend by key.
 let registry: IconRegistry = { ...builtinIcons };
 

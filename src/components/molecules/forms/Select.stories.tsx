@@ -10,7 +10,7 @@ import Select from "./Select";
  * renders nothing / an error" symptom traces back to a missing name). Pass
  * `list` as `OptionProps[]` (`{ name, value, label, uid }`); `active` is the
  * currently selected value; `placeholder` is the disabled first row (defaults
- * to "Choose Selection" — pass a localized string to avoid hardcoded English).
+ * to "Choose Selection", pass a localized string to avoid hardcoded English).
  */
 const meta: Meta<typeof Select> = {
   title: "Molecules/Select",

@@ -10,7 +10,7 @@ const config: StorybookConfig = {
   },
   viteFinal(viteConfig) {
     // Mirror the path aliases from tsconfig.json so Storybook's Vite bundler
-    // can resolve @nxs-atoms, @nxs-molecules, etc. — without this, imports
+    // can resolve @nxs-atoms, @nxs-molecules, etc., without this, imports
     // like "@nxs-atoms/buttons/Button" would fail at Storybook build time.
     viteConfig.resolve ??= {};
     viteConfig.resolve.alias = {

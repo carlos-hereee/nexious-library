@@ -5,7 +5,7 @@ import Label from "./Label";
  * Label is the form field label. It auto-capitalizes the first letter of the
  * text, so pass lowercase keys (`email`) and let it title-case for display.
  *
- * Gotcha: `name` is what wires accessibility — it sets `htmlFor={name}` (so the
+ * Gotcha: `name` is what wires accessibility, it sets `htmlFor={name}` (so the
  * label only toggles/focuses its input when that input renders `id={name}`),
  * and when `error` is present the error span renders under the predictable id
  * `${name}-error` with role="alert" so the matching input can point

@@ -8,7 +8,7 @@ import { uniqueId, uniqueRandomList } from "../../utils/data/uniqueId";
 // What these tests lock in:
 //   ① uniqueId runs in a DOM-like env (jest is configured with jsdom) without
 //      throwing. If someone reintroduces `import crypto from "crypto"` and the
-//      Node crypto surface, these tests still pass in Node — but the import
+//      Node crypto surface, these tests still pass in Node, but the import
 //      itself would break browser bundles. So we also assert we never touch
 //      any Node-only symbol by exercising the function through the compiled
 //      path in integration, and by asserting shape/length here.

@@ -56,7 +56,7 @@ export const WithChildren: Story = {
 export const AriaLabelOverride: Story = {
   name: "Accessible (aria-label)",
   args: {
-    // icon-only close button — no visible label, aria-label provides the accessible name
+    // icon-only close button, no visible label, aria-label provides the accessible name
     "aria-label": "Close dialog",
     theme: "btn-icon",
   },

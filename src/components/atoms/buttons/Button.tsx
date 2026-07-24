@@ -24,7 +24,7 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>((props, ref) => 
   const ariaLabel = props["aria-label"] || title || label || name;
 
   // className differs only when ping is active (uses btn-ping prefix instead of btn-main).
-  // Previously this was two full duplicate <button> blocks — consolidated into one.
+  // Previously this was two full duplicate <button> blocks, consolidated into one.
   const baseClass = ping ? (theme ? `btn-ping ${theme}` : "btn-main btn-icon") : theme || "btn-main";
   // Merge a caller className onto the base class instead of replacing it, so consumers can
   // extend styling (the client's PagesList passes one) without losing btn-main/theme.

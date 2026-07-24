@@ -13,7 +13,7 @@ const field = (overrides: Partial<FieldValueProps>): FieldValueProps => ({
   ...overrides,
 });
 
-describe("useFormValidation — checkRequired", () => {
+describe("useFormValidation, checkRequired", () => {
   it("adds an error when a required field is empty", () => {
     const { result } = renderHook(() => useFormValidation({ required: ["username"] }));
 
@@ -48,7 +48,7 @@ describe("useFormValidation — checkRequired", () => {
   });
 });
 
-describe("useFormValidation — checkEmail", () => {
+describe("useFormValidation, checkEmail", () => {
   it("adds an error for an invalid email address", () => {
     const { result } = renderHook(() => useFormValidation({}));
 
@@ -94,7 +94,7 @@ describe("useFormValidation — checkEmail", () => {
   });
 });
 
-describe("useFormValidation — validateForm status", () => {
+describe("useFormValidation, validateForm status", () => {
   it("sets status to 'error' when there are validation errors", () => {
     const { result } = renderHook(() => useFormValidation({ required: ["name"] }));
 
@@ -140,7 +140,7 @@ describe("useFormValidation — validateForm status", () => {
   });
 });
 
-describe("useFormValidation — checkMatch", () => {
+describe("useFormValidation, checkMatch", () => {
   it("adds an error when field value does not match the expected value", () => {
     const { result } = renderHook(() =>
       useFormValidation({ match: [{ name: "confirmPassword", value: "secret123" }] })
@@ -167,7 +167,7 @@ describe("useFormValidation — checkMatch", () => {
   });
 });
 
-describe("useFormValidation — checkUniqueness", () => {
+describe("useFormValidation, checkUniqueness", () => {
   it("adds an error when field value already exists in the unique list", () => {
     const { result } = renderHook(() =>
       useFormValidation({ unique: [{ name: "appName", list: ["myapp", "otherapp"] }] })

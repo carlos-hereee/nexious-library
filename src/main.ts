@@ -77,17 +77,17 @@ export { default as CountDown } from "@nxs-organism/timer/CountDown";
 export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
 export { default as ErrorMessage } from "@nxs-atoms/texts/ErrorMessage";
 export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
-// dev-diagnostics switch — call setDevMode(import.meta.env.DEV) once at boot so the
+// dev-diagnostics switch, call setDevMode(import.meta.env.DEV) once at boot so the
 // missing-prop panels are guaranteed off in production (see utils/app/devMode.ts).
 export { setDevMode, getDevMode } from "@nxs-utils/app/devMode";
 // reaction buttons
 export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
-// public hooks — lets consumers build custom form UIs using the same validation and state logic
+// public hooks, lets consumers build custom form UIs using the same validation and state logic
 export { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 export { useValues } from "@nxs-utils/hooks/useFormValues";
-// public prop types — surfaced from the package entry so consumers can type their own
+// public prop types, surfaced from the package entry so consumers can type their own
 // wrappers without reaching into subpaths. The underlying type modules now ship in dist
 // (the @types ambient `declare module` blocks were converted to real emitted modules).
 export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";

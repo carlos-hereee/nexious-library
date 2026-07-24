@@ -9,9 +9,9 @@ import { isDev } from "@nxs-utils/app/isDev";
 // silent, which is the worst kind.
 //
 // So dev mode is resolved from three sources, most specific first:
-//   ① the `isDev` prop on <ErrorMessage> / <ErrorMessages>  — per-call override
-//   ② setDevMode(boolean) called once at app boot           — app-wide switch
-//   ③ process.env.NODE_ENV !== "production"                 — inherited default
+//   ① the `isDev` prop on <ErrorMessage> / <ErrorMessages>   (per-call override)
+//   ② setDevMode(boolean) called once at app boot            (app-wide switch)
+//   ③ process.env.NODE_ENV !== "production"                  (inherited default)
 //
 // ② mirrors `registerIcons`: a module-level registry the consumer configures at boot.
 // It is the practical answer for Vite, where the consumer CAN read import.meta.env.DEV

@@ -30,7 +30,7 @@ const FormField = (props: FormFieldProps) => {
       console.error("FormField: groupName is required for entry/multiply fields");
       return <Loading />;
     }
-    // onMultiply / canMultiply / canRemove are optional capabilities — the JSX below already
+    // onMultiply / canMultiply / canRemove are optional capabilities, the JSX below already
     // guards on each ({onMultiply && ...}, {canMultiply && ...}, {canRemove && ...}), so a
     // missing or false value simply hides that control. No throw needed.
 

@@ -4,7 +4,7 @@ import InputCheckbox from "./InputCheckbox";
 /**
  * InputCheckbox: a single checkbox with an associated `<label>`.
  *
- * Gotcha: label/input association is by `name` — the input renders `id={name}`
+ * Gotcha: label/input association is by `name`: the input renders `id={name}`
  * and the Label renders `htmlFor={name}`. They MUST match or clicking the label
  * will not toggle the box (this is the DOM-structure regression item 38 flags).
  * `value` is the checked boolean and the control is fully controlled, so wire

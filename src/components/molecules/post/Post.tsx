@@ -192,6 +192,6 @@ const Post: React.FC<PostProps> = (props) => {
   );
 };
 
-// Pure feed card in a list-rendered surface — memo so a feed re-render only re-renders the
+// Pure feed card in a list-rendered surface, memo so a feed re-render only re-renders the
 // cards whose post/callbacks actually changed (effective once the consumer stabilizes them).
 export default memo(Post);

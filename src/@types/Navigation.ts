@@ -53,7 +53,7 @@ export type UnsplashAsset = {
 // Define your exported types here
 export interface HeaderProps {
   menu: MenuProp[];
-  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
   ping?: number;
   heading?: string;
@@ -97,7 +97,7 @@ export interface FooterProps {
 export interface NavigationProps {
   onClick?: (key?: MenuProp | string) => void;
   menus: string[] | MenuProp[];
-  // See HeroProps.isDev — overrides dev-panel visibility for this component.
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
   theme?: string;
   navItemTheme?: string;

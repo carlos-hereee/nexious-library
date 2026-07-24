@@ -32,7 +32,7 @@ const DASH_THRESHOLD = 10;
 // Where: inline helper used only by uniqueId below; not exported.
 const randomIndex = (max: number): number => {
   // Prefer globalThis.crypto (browser + modern Node). If a runtime somehow
-  // lacks it, fall back to Math.random so the app still boots — uniqueId is
+  // lacks it, fall back to Math.random so the app still boots, uniqueId is
   // used for React keys and form uids, not for security-sensitive tokens.
   const g = (globalThis as unknown as { crypto?: Crypto }).crypto;
   if (!g?.getRandomValues) return Math.floor(Math.random() * max);

@@ -5,7 +5,7 @@ import Hero from "./Hero";
  * Hero renders an image with a blur-up load transition.
  *
  * Gotcha: pass `hero` as `{ url, alt }`. When `hero.url` is missing Hero does
- * NOT error — it falls back to the Image atom's placeholder, so a blank or
+ * NOT error, it falls back to the Image atom's placeholder, so a blank or
  * absent url renders a placeholder rather than crashing the tree. `theme` is the
  * className hook used to size/shape it (e.g. "thumbnail"); `onImageClick` makes
  * it interactive and is suppressed when `isDisable` is set.

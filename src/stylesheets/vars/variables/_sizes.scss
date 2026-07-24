@@ -64,7 +64,7 @@ $line-height: 1.4;
 // Canonical-token aliases (G5 single-source pass). These point at the CSS custom properties
 // in vars/_tokens.scss so spacing/radii have one source of truth and are consumer-overridable
 // across the SCSS-driven partials. Safe because none of these vars is used in Sass arithmetic,
-// calc(), interpolation, a color function, or a media query (verified by grep) — only as plain
+// calc(), interpolation, a color function, or a media query (verified by grep), only as plain
 // CSS values. Values are identical to the tokens, so rendered output is unchanged.
 // rems → spacing scale
 $rem: var(--space-medium); // 1rem
