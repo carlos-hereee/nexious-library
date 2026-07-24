@@ -11,21 +11,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [3.3.9] - 2026-07-24
 
-> ⚠️ **This patch release contains a BREAKING type change.** `isAProp` was removed outright from
-> `ErrorMessageProp` (where it was REQUIRED) and from `ErrorProp`, so any caller constructing
-> either shape by hand stops compiling on upgrade from 3.3.8. It should have been a major bump.
-> The fix is to delete the key; nothing read it, so removing it changes no rendered output.
+> **Should have been a MINOR bump** (it adds public API: `setDevMode`, `getDevMode`, root
+> `ErrorMessage` / `ErrorMessages` exports, and an `isDev` prop on ~13 components). It shipped
+> as a patch. The runtime surface is purely additive, nothing was removed.
+>
+> **One narrow type break.** `isAProp` is gone from `ErrorMessageProp` and `ErrorProp`. Because
+> TypeScript only excess-property-checks OBJECT LITERALS, this breaks exactly one authoring
+> pattern, an inline literal in the `errors` prop:
 >
 > ```diff
-> - errors={[{ prop: "menu", code: "missingProps", name: "menu", isAProp: true }]}
-> + errors={[{ prop: "menu", code: "missingProps", name: "menu" }]}
+>   <ErrorMessages
+>     component="Header"
+> -   errors={[{ prop: "menu", code: "missingProps", name: "menu", isAProp: true }]}
+> +   errors={[{ prop: "menu", code: "missingProps", name: "menu" }]}
+>   />
 > ```
 >
-> To keep a component named in the headline, pass `component` on `ErrorMessages` (or `component`
-> inside the `error` object on `ErrorMessage`). That is what replaced the flag.
+> The same data through an intermediate variable compiles unchanged (verified against the
+> published 3.3.9 types), and `ErrorMessageProp` is not exported from any entry point, so the
+> inline literal above is the only way to reach it. Nothing read the flag, so deleting the key
+> changes no rendered output. `component` is what names a component in the headline now.
 >
-> `useRequiredProps(props, isAProp)` also lost its second argument. It is not exported from any
-> entry point, so only forks are affected.
+> `useRequiredProps(props, isAProp)` also lost its second argument. The hook is not exported
+> from any entry point, so only forks are affected.
 
 ### Added
 
