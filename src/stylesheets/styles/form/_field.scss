@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   max-height: variables.$max-form-height;
   // padding: variables.$rem} variables.$rem025;
   width: 100%;
@@ -16,8 +16,8 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
-  padding: variables.$rem025;
+  gap: var(--space-medium);
+  padding: var(--space-extra-small);
 }
 
 // ── Date field ──────────────────────────────────────────────────────────────────

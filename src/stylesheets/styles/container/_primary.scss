@@ -7,12 +7,13 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
-    // flex: 0 0 100%;
     width: auto;
   }
 }
+// A full-height empty state is a Section, not a box: it has no fill and no border, so the
+// border-radius it used to carry rounded nothing. Space and centering are the whole layout.
 .container-empty {
   display: flex;
   flex-direction: column;
@@ -20,8 +21,7 @@
   justify-content: center;
   min-width: 0;
   min-height: 80vh;
-  gap: variables.$rem;
-  border-radius: variables.$border-radius;
+  gap: var(--space-medium);
   .btn-cta {
     max-width: 500px;
   }
@@ -32,7 +32,7 @@
   flex-wrap: wrap;
   justify-items: center;
   position: relative;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   justify-content: space-around;
   @include mixin.devices(tablet) {
     justify-content: center;
@@ -43,20 +43,20 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .container-split,
 .split-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
 }
 .container-row {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   > * {
     flex: 1;
   }
@@ -64,7 +64,7 @@
 .navigation-container {
   width: 100%;
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   align-items: center;
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width-sm, 1fr));
@@ -78,7 +78,7 @@
 .mini-navigation-container {
   width: 100%;
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   align-items: center;
   justify-content: center;
 }

@@ -1,0 +1,21 @@
+// The dialog panel's entrance (design language 5.9: "overlay in, 300ms scrim fade plus 200ms
+// panel scale 0.98 to 1").
+//
+// 0.98 and not something more dramatic on purpose. The job of this motion is to explain that a
+// layer arrived on top of the page, and two percent is enough for the eye to register direction.
+// A larger scale reads as a zoom, and a zoom on a form the user is about to type into delays the
+// moment they can aim at a field.
+//
+// It scales rather than translating because a dialog is horizontally and vertically centered:
+// a translate would have to pick a direction it came FROM, and there is no honest answer to that
+// for a centered modal.
+@keyframes dialogIn {
+  from {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

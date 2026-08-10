@@ -11,7 +11,7 @@
   opacity: 0;
   max-height: 0;
   font-size: 0;
-  transition: 0.25s ease;
+  transition: var(--transition-base);
 }
 .read-more-wrap {
   text-align: left;
@@ -28,16 +28,25 @@
 .read-more-state:checked ~ .read-more-trigger:before {
   content: "Show less";
 }
+// The toggle is a checkbox hack: the label is what the user sees and the checkbox is the
+// only focusable thing in the pair, so the ring has to be forwarded from the input to the
+// label or a keyboard user gets no indication at all. Written out rather than via the mixin
+// because the mixin styles the focused element itself and here the two are different nodes.
+.read-more-state:focus-visible ~ .read-more-trigger {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
 
 .read-more-trigger {
   cursor: pointer;
   display: inline-block;
-  padding: 0 0.5em;
+  padding-block: 0;
+  padding-inline: var(--space-small);
   margin-left: auto;
   width: max-content;
-  color: #666;
-  font-size: 0.9em;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
   line-height: 2;
-  border: 1px solid #ddd;
-  border-radius: 0.25em;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
 }

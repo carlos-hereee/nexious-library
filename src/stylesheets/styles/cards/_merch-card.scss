@@ -1,31 +1,58 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 @use "../../vars/variables/_index.scss" as variables;
 
+// A product tile: its whole body is a button that opens the product, so it NAVIGATES and
+// earns the translateY(-2px) lift (5.7). Border and not shadow at rest, same as .card.
+//
+// Padding stays at --space-medium rather than the recipe's --space-large: the tile is
+// capped at 320px and its content is a full-bleed button, so 24px a side eats an eighth of
+// the width the photo and title need.
 .merch-card {
   min-height: 220px;
   max-width: variables.$max-merch-card-width;
   min-width: 0;
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   flex-direction: column;
   flex: 1;
+  padding: var(--space-medium);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+    transform var(--transition-fast);
 
   position: relative;
   justify-content: space-between;
+
+  @include mixin.focus-ring;
+
+  &:hover {
+    border-color: var(--main-brand-color-accent);
+    box-shadow: var(--elevation-2);
+    transform: translateY(-2px);
+  }
 
   .btn-card,
   .merch-card-header {
     height: 100%;
   }
 }
+
+// The price sticker. A badge is the smallest step of the concentric scale, so the stray
+// 10px radius drops to --radius-small; it sits above the card's own button, which is what
+// --z-raised names. The size was the `xx-large` keyword (~32px), which was outside the
+// type scale entirely and did not respond to a consumer resizing the scale.
 .merch-card-cost {
   top: 0;
   right: -3%;
-  z-index: 1;
+  z-index: var(--z-raised);
   position: absolute;
-  font-size: xx-large;
+  font-size: var(--text-3x-large);
   text-align: center;
-  padding: variables.$rem025 variables.$rem;
-  border-radius: 10px;
+  padding: var(--space-extra-small) var(--space-medium);
+  border-radius: var(--radius-small);
   background-color: variables.$cta-color;
   min-width: 0;
   -webkit-transform: rotate(30deg);

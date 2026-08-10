@@ -7,7 +7,7 @@
   flex-direction: column;
   min-height: 60vh;
   width: 100%;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     width: auto;
   }
@@ -19,13 +19,13 @@
 }
 .feature-card-container {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   flex-wrap: wrap;
   justify-content: space-around;
 }
 .list-container {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(tablet) {
     flex-wrap: wrap;
     justify-content: space-around;
@@ -36,8 +36,10 @@
 }
 .list-selection-value {
   display: flex;
-  gap: variables.$rem;
-  border-radius: variables.$rem025;
+  gap: var(--space-medium);
+  // Was reading the 0.25rem SPACING variable as a radius, which is the exact drift this
+  // pass removes: it happened to equal 4px, so it looked right and meant nothing.
+  border-radius: var(--radius-small);
   min-width: 100%;
   width: 100%;
   color: inherit;

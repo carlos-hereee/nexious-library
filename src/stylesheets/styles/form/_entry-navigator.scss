@@ -1,7 +1,5 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
-@use "../../vars/variables/_index.scss" as variables;
-
 // ── Entry navigator ─────────────────────────────────────────────────────────────
 // The one entry switcher, in its two layouts. A file-only group (FormField sets .entry-gallery
 // when every field in the group is an upload) renders the active image large with the switcher
@@ -23,7 +21,7 @@ $rail-max-height: 280px;
   grid-template-areas:
     "main rail"
     "actions actions";
-  gap: variables.$rem;
+  gap: var(--space-medium);
   align-items: start;
 
   @include mixin.devices(mobile) {
@@ -80,12 +78,12 @@ $rail-max-height: 280px;
   grid-area: rail;
   display: flex;
   flex-direction: column;
-  gap: variables.$rem05;
+  gap: var(--space-small);
 }
 .entry-rail-tiles {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: variables.$rem05;
+  gap: var(--space-small);
   max-height: $rail-max-height;
   overflow-y: auto;
 

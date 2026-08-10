@@ -3,7 +3,7 @@
 
 .buttons-container {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   // justify-items: center;
   width: 100%;
   grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width, 1fr));
@@ -14,11 +14,11 @@
 }
 .buttons-container-row {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .button-container {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   * {
     width: 100%;
     max-width: 100%;
@@ -28,7 +28,7 @@
 .bag-btns {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-small);
 }
 
 .button-hint-container {
@@ -41,8 +41,10 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding: 1rem;
-  border-radius: 10px;
+  padding: var(--space-medium);
+  // Was a stray 10px, which is off the radius scale entirely. A hint is a floating panel, not a
+  // row, so it snaps UP to the panel step rather than down to the 8px button step.
+  border-radius: var(--radius-large);
   position: absolute;
   top: 0;
   left: 50%;

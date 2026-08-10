@@ -1,22 +1,24 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
-@use "../../vars/variables/_index.scss" as variables;
-
 .navigation {
   display: flex;
   align-items: center;
   list-style: none;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   width: 100%;
-  border-radius: variables.$border-radius;
+  border-radius: var(--radius-medium);
 }
 
+// A real link, so it takes the library's one focus treatment like every other nav item.
+// It had none, which made the logo the single keyboard-invisible stop in the header.
 .logo-link {
   display: flex;
   align-items: center;
   text-decoration: none;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   color: inherit;
+
+  @include mixin.focus-ring;
 }
 .nav-order-first {
   order: -1;
@@ -37,5 +39,5 @@
 .secondary-navigation {
   display: flex;
   align-items: flex-start;
-  padding: 1rem 0.5rem;
+  padding: var(--space-medium) var(--space-small);
 }

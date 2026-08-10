@@ -1,24 +1,29 @@
+@use "../../vars/mixin/_index.scss" as mixin;
 @use "../../vars/variables/_index.scss" as variables;
+@use "./_nav-grammar.scss" as grammar;
 
 /*
- * Nav link styling
+ * Navigation: three patterns, one grammar (design language 5.10).
  *
- * Goals:
- *  - Links should read as links, not rectangular buttons.
- *  - Clear hover affordance (color shift + underline grow).
- *  - Unambiguous active state (bolder weight + accent underline bar).
- *  - Strong keyboard focus ring for a11y.
+ * Top bar (.navbar / .navigation), left rail (.nav-rail) and bottom tab bar
+ * (.nav-tab-bar) all build their items from grammar.nav-item and mark the current
+ * item with grammar.nav-active, so hover, focus, tap size and the brand accent are
+ * written once and only the ACCENT EDGE differs per pattern. The count pip is the
+ * library's existing .ping-count (styles/assets/_icons.scss); nothing here redefines it.
  */
 
 .navbar {
   display: flex;
   justify-content: space-around;
   flex-wrap: wrap;
-  gap: variables.$rem;
-  padding: 0 variables.$rem;
+  gap: var(--space-medium);
+  // padding-inline rather than `0 var(--space-medium)`: the property states that the bar
+  // pads horizontally only, instead of a leading zero the reader has to interpret.
+  padding-inline: var(--space-medium);
 }
 
 .nav-item {
+  position: relative;
   display: flex;
   align-items: center;
   list-style: none;
@@ -28,68 +33,27 @@
   .btn-main,
   .btn-icon {
     border: 0;
-    outline: 0;
     background: transparent;
-    padding: variables.$rem05 variables.$rem;
+    padding: var(--control-padding-y) var(--control-padding-x);
     width: auto;
     max-width: none;
+
+    // This block used to carry `outline: 0`, which stripped the focus ring from every
+    // Button rendered inside a nav and left keyboard users with no visible position.
+    // The framing is what nav wants gone, not the ring.
+    @include mixin.focus-ring;
   }
 }
 
 .nav-link {
-  position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: variables.$rem05;
-  padding: variables.$rem05 variables.$rem;
-  color: inherit;
-  text-decoration: none;
-  font-weight: 500;
-  line-height: 1.2;
-  border-radius: variables.$border-radius-sm;
-  transition: color 120ms ease, opacity 120ms ease;
+  @include grammar.nav-item;
+}
 
-  // Hover underline grows from left.
-  &::after {
-    content: "";
-    position: absolute;
-    left: variables.$rem;
-    right: variables.$rem;
-    bottom: 0.25rem;
-    height: 2px;
-    background: currentColor;
-    transform: scaleX(0);
-    transform-origin: left center;
-    transition: transform 160ms ease;
-    border-radius: 2px;
-    opacity: 0.7;
-  }
-
-  &:hover::after,
-  &:focus-visible::after {
-    transform: scaleX(1);
-  }
-
-  &:hover {
-    opacity: 0.85;
-  }
-
-  &:focus-visible {
-    outline: 2px solid variables.$dark-mode;
-    outline-offset: 2px;
-  }
-
-  // Current page state
-  &[aria-current="page"] {
-    font-weight: 700;
-
-    &::after {
-      transform: scaleX(1);
-      height: 2px;
-      opacity: 1;
-      background: variables.$cta-color;
-    }
-  }
+// ListItem marks the <li> `.is-active` and the <a> `aria-current="page"` for the same
+// state, so both resolve to the one active rule rather than two that can drift apart.
+.nav-link[aria-current="page"],
+.nav-item.is-active .nav-link {
+  @include grammar.nav-active(bottom);
 }
 
 .nav-icon {
@@ -100,27 +64,10 @@
   white-space: nowrap;
 }
 
-// Action buttons inside the nav (non-link items)
+// Action buttons inside the nav (non-link items). Same grammar as a link because the user
+// cannot tell the two apart and should not have to.
 .nav-action {
-  display: inline-flex;
-  align-items: center;
-  gap: variables.$rem05;
-  padding: variables.$rem05 variables.$rem;
-  border: 0;
-  background: transparent;
-  font-weight: 500;
-  border-radius: variables.$border-radius-sm;
-  color: inherit;
-  cursor: pointer;
-
-  &:hover {
-    opacity: 0.85;
-  }
-
-  &:focus-visible {
-    outline: 2px solid variables.$dark-mode;
-    outline-offset: 2px;
-  }
+  @include grammar.nav-item;
 }
 
 .nav-order-first {
@@ -148,15 +95,86 @@
 .header-utilities {
   display: flex;
   align-items: center;
-  gap: variables.$rem05;
+  gap: var(--space-small);
   flex-shrink: 0;
+}
+
+/*
+ * Left rail
+ *
+ * In-app and plugin sections. Same items, stacked and full width, with the brand accent
+ * on the leading edge. Opt-in container class: the consumer supplies the markup, which is
+ * why the rail needs no new item class of its own.
+ */
+
+.nav-rail {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--space-extra-small);
+  list-style: none;
+  padding: var(--space-small);
+
+  .nav-link,
+  .nav-action {
+    width: 100%;
+    justify-content: flex-start;
+  }
+}
+
+.nav-rail .nav-link[aria-current="page"],
+.nav-rail .nav-item.is-active .nav-link {
+  @include grammar.nav-active(left);
+}
+
+/*
+ * Bottom tab bar
+ *
+ * The mobile counterpart of the rail: icon over label, brand accent on the top edge.
+ * Sticky rather than fixed so the last row of a scrolled list is never permanently
+ * hidden underneath it.
+ */
+
+.nav-tab-bar {
+  position: sticky;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  display: flex;
+  justify-content: space-around;
+  align-items: stretch;
+  gap: 0;
+  list-style: none;
+  padding: 0;
+  background: var(--surface);
+  // Border, no shadow: the bar sits ON the page rather than floating over it, and a
+  // hairline is the only separation that reads in both themes.
+  border-top: 1px solid var(--border);
+
+  .nav-item {
+    flex: 1;
+  }
+
+  .nav-link,
+  .nav-action {
+    width: 100%;
+    flex-direction: column;
+    justify-content: center;
+    gap: var(--space-extra-small);
+    border-radius: 0;
+    font-size: var(--text-extra-small);
+  }
+}
+
+.nav-tab-bar .nav-link[aria-current="page"],
+.nav-tab-bar .nav-item.is-active .nav-link {
+  @include grammar.nav-active(top);
 }
 
 /*
  * Theme menu
  *
- * A proper menu button + listbox popover. Visually distinct from nav links
- * so users read it as a control, not a page link.
+ * A menu button plus listbox popover. Visually distinct from nav links so users read it
+ * as a control, not a page link, but it borrows the same tap floor and focus ring.
  */
 
 .theme-menu {
@@ -169,28 +187,28 @@
 .theme-menu-trigger {
   display: inline-flex;
   align-items: center;
-  gap: variables.$rem05;
-  padding: variables.$rem05 variables.$rem;
+  gap: var(--space-small);
+  min-height: var(--tap-target-min);
+  padding: var(--control-padding-y) var(--control-padding-x);
   background: transparent;
-  border: 1px solid variables.$faded;
-  border-radius: variables.$border-radius;
+  border: 1px solid var(--border);
+  border-radius: var(--control-radius-button);
   color: inherit;
   font: inherit;
   cursor: pointer;
-  transition: border-color 120ms ease, box-shadow 120ms ease;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 
+  // Hover tints like every other nav item; the border is reserved for saying "this menu
+  // is open", which is a state change rather than a pointer position.
   &:hover {
-    border-color: variables.$dark-mode;
+    background: var(--hover-bg);
   }
 
-  &:focus-visible {
-    outline: 2px solid variables.$dark-mode;
-    outline-offset: 2px;
-  }
+  @include mixin.focus-ring;
 
   &[aria-expanded="true"] {
-    border-color: variables.$dark-mode;
-    box-shadow: 0 0 0 3px rgba(44, 62, 80, 0.12);
+    border-color: var(--main-brand-color);
+    background: var(--hover-bg);
   }
 }
 
@@ -199,20 +217,23 @@
 }
 
 .theme-menu-label {
-  font-weight: 500;
+  font-weight: var(--font-medium);
   white-space: nowrap;
 }
 
-.theme-menu-swatch {
+// The trigger swatch and the option swatch were two identical five-line blocks. One
+// selector list so a change to the swatch cannot land on only one of them.
+.theme-menu-swatch,
+.theme-menu-option-swatch {
   width: 0.9rem;
   height: 0.9rem;
-  border-radius: variables.$rounded-full;
-  border: 1px solid rgba(0, 0, 0, 0.12);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
   flex-shrink: 0;
 }
 
 .theme-menu-chevron {
-  transition: transform 160ms ease;
+  transition: transform var(--transition-fast);
   opacity: 0.7;
 
   &.is-open {
@@ -222,60 +243,67 @@
 
 .theme-menu-list {
   position: absolute;
-  top: calc(100% + 0.35rem);
+  top: calc(100% + var(--space-extra-small));
   right: 0;
   min-width: 12rem;
   margin: 0;
-  padding: variables.$rem025;
+  padding: var(--space-extra-small);
   list-style: none;
   // Token-driven so the theme menu's own popover (the dark-mode switcher) re-themes with
   // the rest of the UI instead of staying a white box with dark text under dark mode.
-  // var(--surface)/--text/--border/--shadow-large match the old literals at :root.
   background: var(--surface);
   color: var(--text);
+  border-radius: var(--radius-large);
+  // Border XOR shadow at rest. A popover floats, so light mode separates it with level-2
+  // elevation (level 3 is for dialogs, and this was borrowing it). Dark keeps the hairline
+  // instead, because a shadow barely reads against navy.
+  border: 0;
+  box-shadow: var(--elevation-2);
+  z-index: var(--z-dropdown);
+}
+
+.dark-mode .theme-menu-list,
+[data-theme="dark"] .theme-menu-list {
   border: 1px solid var(--border);
-  border-radius: variables.$border-radius;
-  box-shadow: var(--shadow-large);
-  z-index: 50;
+  box-shadow: none;
 }
 
 .theme-menu-option {
   display: flex;
   align-items: center;
-  gap: variables.$rem05;
-  padding: variables.$rem05 variables.$rem;
-  border-radius: variables.$border-radius-sm;
+  gap: var(--space-small);
+  min-height: var(--tap-target-min);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  // One step inside the popover's --radius-large, per the concentric radius rule.
+  border-radius: var(--radius-medium);
   cursor: pointer;
   user-select: none;
 
-  // Keyboard focus needs a perceivable ring, not just the faint $dimmer wash. Inset offset
-  // keeps the 2px outline inside the popover bounds. The wash stays as a secondary cue.
+  @include mixin.focus-ring;
+
+  // The popover pads its options by --space-extra-small, so the ring's outward offset
+  // would draw across the popover's own edge. Pulling the same ring inside keeps it whole.
   &:focus-visible {
-    outline: 2px solid var(--main-brand-color);
-    outline-offset: -2px;
-    background: variables.$dimmer;
-  }
-  &:focus {
-    background: variables.$dimmer;
+    outline-offset: calc(var(--focus-ring-offset) * -1);
+    background: var(--hover-bg);
   }
 
+  &:focus {
+    background: var(--hover-bg);
+  }
+
+  // Selected is the popover's flavor of active: the brand, at wash strength because a
+  // listbox row is a fill rather than an edge, plus the same semibold every other active
+  // nav item uses. It was an orange unrelated to any palette the product ships.
   &[aria-selected="true"],
   &.is-selected {
-    background: rgba(255, 165, 0, 0.12);
-    font-weight: 600;
+    background: var(--brand-wash);
+    font-weight: var(--font-semibold);
   }
 
   &:hover {
-    background: variables.$dimmer;
+    background: var(--hover-bg);
   }
-}
-
-.theme-menu-option-swatch {
-  width: 0.9rem;
-  height: 0.9rem;
-  border-radius: variables.$rounded-full;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  flex-shrink: 0;
 }
 
 .theme-menu-option-label {

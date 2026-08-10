@@ -77,6 +77,11 @@ export { default as CountDown } from "@nxs-organism/timer/CountDown";
 export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
 export { default as ErrorMessage } from "@nxs-atoms/texts/ErrorMessage";
 export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
+// Loading placeholders and the shared empty-state pattern (UI rework Phase 4). Loading still
+// renders a spinner by default; pass its `skeleton` prop to opt a surface into these.
+export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
+export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
+export type { SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
 // dev-diagnostics switch, call setDevMode(import.meta.env.DEV) once at boot so the
 // missing-prop panels are guaranteed off in production (see utils/app/devMode.ts).
 export { setDevMode, getDevMode } from "@nxs-utils/app/devMode";

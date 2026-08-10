@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 @use "../../vars/variables/_index.scss" as variables;
 
 .icon {
@@ -35,9 +37,9 @@
   text-align: center;
 }
 .socials-icons {
-  margin: 1rem auto;
+  margin: var(--space-medium) auto;
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .icon-visa {
   color: variables.$visa;
@@ -64,9 +66,9 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border-radius: 100%;
+  border-radius: var(--radius-full);
   aspect-ratio: 1/1;
-  padding: 0.25rem;
+  padding: var(--space-extra-small);
   top: -0.5rem;
   right: -0.5rem;
   background-color: variables.$ping-color;
@@ -100,4 +102,16 @@
 }
 .icon-pulse {
   animation: icon-pulse 1s steps(8) infinite;
+}
+
+// Both of the above loop forever, which is the case the global kill switch handles least
+// well: it clamps an animation to a single 1ms pass rather than removing it, so the intent
+// is stated here instead of inferred. A motionless icon is the right reduced-motion form of
+// a spinner anyway, the icon's PRESENCE is the "working on it" signal and the rotation was
+// only ever decoration on top of it.
+@include mixin.reduced-motion {
+  .icon-spin,
+  .icon-pulse {
+    animation: none;
+  }
 }

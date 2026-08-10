@@ -11,10 +11,15 @@ import type { ErrorMessageProps } from "nxs-errors";
 // copy-pasteable call, and the mistakes that really cause this. The docs link is last, an
 // escape hatch for the rare case the panel was not enough, not the answer itself.
 //
-// WHY IT IS STYLED AS A TERMINAL: this is a build-time diagnostic, never real UI, and a
-// dark monospace block cannot be mistaken for one at a glance the way a red-bordered card
-// can. It also lets the panel and the console.warn render from ONE report with the same
-// two leading lines, so the two can never describe the same mistake differently.
+// WHY IT READS AS A DIAGNOSTIC: this is a build-time message, never real UI, so it has to be
+// unmistakable at a glance. It used to buy that with a pinned dark terminal palette, which
+// also meant eleven hex literals that could not follow a consumer's theme and had no dark
+// counterpart. UI rework Phase 4 moved the fill to the --danger-* triple, so the panel IS a
+// red-bordered card now and the recognizability rests on the cheap half of the old idea
+// instead: the monospace face, the three terminal dots and the "dev only" origin line. That
+// half was always the part doing the work. The shared report matters just as much: the panel
+// and the console.warn render from ONE report with the same two leading lines, so the two can
+// never describe the same mistake differently.
 //
 // PRODUCTION: nothing below renders unless dev mode resolves true (prop > setDevMode > NODE_ENV),
 // because a diagnostic in front of a real user is worse than the missing component.

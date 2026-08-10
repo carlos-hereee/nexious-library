@@ -1,0 +1,69 @@
+// ── Panel ────────────────────────────────────────────────────────────────────
+// A labeled container for CONTROLS (design language 5.10). This is the generalization of
+// nexious-client's settings-panel system, and the part names mirror it deliberately so the
+// two cannot drift: header holds the title plus its actions, body holds the rows.
+//
+// A Panel is not a Card. A Card is a navigable or self-contained object and earns a hover
+// lift; a Panel is a grouping the reader configures in place, so it never lifts and never
+// moves. If the grouping needs neither a fill nor controls, it is a .section, not a Panel.
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  padding: var(--space-large);
+  background-color: var(--surface);
+  border-radius: var(--radius-large);
+  // Border XOR shadow at rest, never both: stacking them is most of the heaviness this
+  // rework exists to remove. Light mode reads depth from the shadow.
+  box-shadow: var(--elevation-1);
+}
+
+// On navy a small shadow barely registers, so dark swaps it for a hairline against the
+// lighter --surface rather than deepening a shadow nobody can see. Same rule, other half.
+.dark-mode .panel,
+[data-theme="dark"] .panel {
+  border: 1px solid var(--border);
+  box-shadow: none;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+}
+
+// H3 of the type scale (design language 5.4). Panel titles and card titles share this step
+// so a settings group and a card never label themselves at two different sizes.
+.panel-title {
+  margin: 0;
+  font-size: var(--text-extra-large);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.panel-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+}
+
+.panel-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  min-width: 0;
+}
+
+// The danger variant is a border change only. It keeps the panel's own surface so a delete
+// zone reads as serious rather than as an alarm the reader has to dismiss before working,
+// and dropping the shadow keeps the border-XOR-shadow rule true in both themes.
+//
+// Written as a two-class selector on purpose: the dark rule above is also two classes, so a
+// bare .panel-danger would lose the border to it on dark and the variant would silently
+// vanish in exactly one theme. Equal specificity plus later source order makes it win.
+.panel.panel-danger {
+  border: 1px solid var(--danger-border);
+  box-shadow: none;
+}

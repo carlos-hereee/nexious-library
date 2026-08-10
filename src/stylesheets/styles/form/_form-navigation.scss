@@ -82,7 +82,9 @@
       width: var(--space-extra-large);
       height: 2px;
       background: var(--border);
-      margin: 0 var(--space-small);
+      // margin-inline rather than the `0 var(--space-small)` shorthand: a pseudo-element has no
+      // vertical margin to reset, so naming only the axis that matters says what is intended.
+      margin-inline: var(--space-small);
       border-radius: var(--radius-full);
     }
   }

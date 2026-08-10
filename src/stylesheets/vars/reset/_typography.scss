@@ -1,28 +1,42 @@
+// ── Heading ramp ────────────────────────────────────────────────────────────────
+// Every size here was previously the browser's own default (2 / 1.5 / 1.17 / 1 / 0.83 / 0.67rem),
+// which means the library shipped a type scale it did not choose and the --text-* ramp it DID
+// choose reached only the components that opted in. h1 through h4 now take the four steps the
+// design language assigns them; h5 and h6 continue the ladder downward so they stay smaller than
+// body text, which is the role they are actually used in.
+//
+// The line-heights were the louder half of the problem: an h1 at 2.25 put roughly 40px of leading
+// around a 32px word, so a page of headings breathed far more than anything under it. Headings sit
+// at --line-height-tight now. The design language actually wants 1.2 / 1.25 / 1.3 / 1.35 stepping
+// down the ramp, but the token vocabulary is closed and has only tight (1.2) and base (1.5), so
+// tight is the nearest existing step for all four rather than four new numbers.
 h1 {
-  font-size: 2rem;
-  line-height: 2.25;
-  // keep h1 margins consistent, even when nested
-  margin: 0.67em 0;
+  font-size: var(--text-3x-large);
+  line-height: var(--line-height-tight);
+  // Keep h1 margins consistent, even when nested: the UA gives a nested h1 a different margin
+  // (and font-size) than a top level one, which is the drift this pins shut.
+  margin: var(--space-medium) 0;
 }
 h2 {
-  font-size: 1.5rem;
-  line-height: 2;
+  font-size: var(--text-2x-large);
+  line-height: var(--line-height-tight);
 }
 h3 {
-  font-size: 1.17rem;
-  line-height: 1.5;
+  font-size: var(--text-extra-large);
+  line-height: var(--line-height-tight);
 }
 h4 {
-  font-size: 1rem;
-  line-height: 1.4;
+  font-size: var(--text-large);
+  line-height: var(--line-height-tight);
 }
 h5 {
-  font-size: 0.83rem;
-  line-height: 1.25;
+  font-size: var(--text-small);
+  line-height: var(--line-height-tight);
 }
 h6 {
-  font-size: 0.67rem;
-  line-height: 1;
+  font-size: var(--text-extra-small);
+  // Was line-height: 1, which clips descenders on a g or a y at this size.
+  line-height: var(--line-height-tight);
 }
 
 //  consistent spacing
@@ -34,13 +48,29 @@ h5,
 h6,
 p {
   margin-top: 0;
+}
+
+// The one bare z-index left in the library, split out of the spacing rule above so it is
+// visible rather than hidden behind a comment about margins. It stays a literal on purpose:
+// the --z-* scale starts at 0 and steps to 10, so there is no token for 1, and promoting this
+// to --z-raised would lift every heading and paragraph above anything a consumer parked at 2
+// through 9. It is almost certainly cruft (z-index is inert on a static element and only bites
+// when a heading happens to be a flex or grid item), but deleting it changes stacking for those
+// cases, which is an owner call rather than a lint sweep's. Filed in TECH_DEBT.md.
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
   z-index: 1;
 }
 
 // Line length is a container concern, not an element concern.
 // Use .prose / .prose-narrow / .prose-wide on the wrapper to cap reading measure.
 p {
-  line-height: 1.6;
+  line-height: var(--line-height-base);
 }
 
 // pre wrapping overflow by default is bad

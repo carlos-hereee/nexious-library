@@ -2,8 +2,13 @@
 // user-avatar balloons up to .hero's 550px cap. 50px matches the small-avatar
 // tier (.avatar-sm, .hero-contact-sm). Consumers that want a larger profile
 // avatar should use their own size-modifier class rather than removing this.
+//
+// The radius is --radius-full rather than the 100% these rules used to carry. On a square
+// box the two draw the same circle, but 100% on anything that is NOT square draws an
+// ellipse, so naming the token keeps an avatar a circle even if a consumer's own rule
+// overrides the aspect ratio.
 .user-avatar {
-  border-radius: 100%;
+  border-radius: var(--radius-full);
   aspect-ratio: 1/1;
   max-width: 50px;
 }
@@ -15,7 +20,7 @@
 .avatar-sm {
   max-width: 50px;
   aspect-ratio: 1/1;
-  border-radius: 100%;
+  border-radius: var(--radius-full);
 }
 .hero-contact-sm,
 .preview-hero-empty {

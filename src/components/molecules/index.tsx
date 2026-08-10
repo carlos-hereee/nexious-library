@@ -40,7 +40,12 @@ export { default as Loading } from "@nxs-molecules/errors/Loading";
 export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
 export { default as ComingSoon } from "@nxs-molecules/errors/ComingSoon";
 export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
-export type { ErrorProps } from "nxs-errors";
+// Both are also exported from main.ts. They are repeated here because ./@nxs-molecules is a
+// published subpath, and a consumer that imports the rest of this family from it would
+// otherwise find the two newest members missing from the only barrel they use.
+export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
+export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
+export type { ErrorProps, SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
 
 // forms
 export { default as FieldQuantity } from "@nxs-molecules/forms/FieldQuantity";

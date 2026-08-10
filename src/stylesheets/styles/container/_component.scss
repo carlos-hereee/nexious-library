@@ -1,18 +1,23 @@
-@use "../../vars/variables/_index.scss" as variables;
-
+// A real, user-facing error grouping (distinct from the dev-only panel in _dev-error.scss).
+// It was a dotted crimson outline with no fill, which reads as a debug artifact and, worse,
+// was light-only: crimson on the page's own background is all it ever said. The --danger-*
+// triple gives it a fill, a hairline and text that all flip on dark together, and the panel
+// radius puts it one step above the rows it holds.
 .error-message-container {
-  border: 1px dotted variables.$danger;
-  // max-height: 200px;
   width: 100%;
-  padding: variables.$rem;
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
+  padding: var(--space-medium);
+  background-color: var(--danger-bg);
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-large);
+  color: var(--danger-text);
 }
 .call-to-action {
   display: flex;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   .btn {
     flex: 1;
   }

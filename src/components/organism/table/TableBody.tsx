@@ -15,7 +15,9 @@ const TableBody: React.FC<TableBodyProp> = ({ data }) => {
   return (
     <tbody>
       {data && data.length > 0 ? (
-        data.map((d) => <TableRow key={d.uid} value={d.value} />)
+        // isHeader is deliberately NOT forwarded: it would turn a body cell into a th, and any
+        // caller that set it on body data today is getting a td and expecting one.
+        data.map((d) => <TableRow key={d.uid} value={d.value} className={d.className} />)
       ) : (
         <tr className="table-row">
           <TableCaption value="No data available" />

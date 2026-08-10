@@ -19,7 +19,7 @@
 // now (it is token driven and part of the .btn-base system); this duplicate is deleted rather
 // than reconciled, because two rules for one class is the drift this rework exists to remove.
 .btn-payment {
-  gap: variables.$rem;
+  gap: var(--space-medium);
   justify-content: flex-start;
   flex: 1;
   @include mixin.devices(mobile) {

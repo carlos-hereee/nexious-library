@@ -4,7 +4,7 @@
 
 .bubble {
   position: absolute;
-  z-index: 0;
+  z-index: var(--z-base);
   border-radius: 100%;
   background: radial-gradient(circle, rgba(122, 154, 189, 0.6), transparent);
   aspect-ratio: 1/1;

@@ -1,0 +1,124 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// The two states where a region has no content to show, kept in one partial because they are
+// the same decision seen from either side: a skeleton says "content is on its way and this is
+// where it lands", an empty state says "content is not coming and here is what to do instead".
+// Splitting them across two files is how a product ends up with a considered loading state and
+// an afterthought of an empty one.
+
+// ── Skeleton placeholders (design language 5.10) ────────────────────────────────
+// Skeletons shaped like the incoming content, not spinners, for a full region. Every shape
+// below reserves real height so nothing shifts when the data arrives, which is the whole
+// reason to prefer this over a spinner: a spinner occupies no space and the page jumps.
+.skeleton {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  width: 100%;
+}
+
+.skeleton-bar {
+  display: block;
+  width: 100%;
+  border-radius: var(--radius-small);
+  background-color: var(--skeleton-bg);
+  // The sweep is a background-image gradient over the resting fill, not an opacity pulse: a
+  // pulse dims whatever sits behind the placeholder and reads as a flicker. 200% wide with the
+  // highlight in the middle is what makes the shimmer keyframe's travel cover the box exactly
+  // once per cycle; that keyframe counts DOWN from 100% because a percentage background-position
+  // inverts the direction, and its header explains why. See vars/keyframes/_shimmer.scss.
+  background-image: linear-gradient(90deg, transparent 0%, var(--skeleton-shimmer) 50%, transparent 100%);
+  background-repeat: no-repeat;
+  background-size: 200% 100%;
+  animation: shimmer var(--skeleton-duration) ease-in-out infinite;
+
+  @include mixins.reduced-motion {
+    // The global kill switch shortens animations to 1ms rather than removing them, which would
+    // make this sweep strobe instead of stop. Drop the gradient and rest on the flat fill.
+    animation: none;
+    background-image: none;
+  }
+}
+
+// A list row. Radius medium because a row is one step in from its card (radius rule 2), and
+// the dense row height so a skeleton row occupies exactly what the real row will.
+.skeleton-row .skeleton-bar {
+  height: var(--row-height-dense);
+  border-radius: var(--radius-medium);
+}
+
+// A card. Sized by ratio rather than a pixel height so the reserved area tracks the column it
+// sits in, and so there is no invented number to drift from whatever the real card measures.
+.skeleton-block .skeleton-bar {
+  aspect-ratio: 16 / 9;
+  border-radius: var(--radius-large);
+}
+
+.skeleton-text .skeleton-bar,
+.skeleton-page .skeleton-bar {
+  height: var(--text-base);
+}
+
+// The short last line is what makes a stack of bars read as a paragraph rather than as a
+// table. :not(:only-child) so a single-line skeleton is not arbitrarily narrowed.
+.skeleton-text .skeleton-bar:last-child:not(:only-child),
+.skeleton-page .skeleton-bar:last-child {
+  width: 60%;
+}
+
+// The page header bar: the title block, not a body line, so it is taller and short.
+.skeleton-page .skeleton-bar-header {
+  height: var(--text-3x-large);
+  width: 40%;
+  border-radius: var(--radius-medium);
+}
+
+// Loading's opt-in skeleton mode. Two classes on purpose: `.loading` pins a 90vh height for
+// the centered-spinner case and lives in styles/custom, which is forwarded AFTER this file, so
+// a single-class override here would lose on source order.
+.loading.loading-skeleton {
+  height: auto;
+  justify-content: flex-start;
+}
+
+// ── Empty states (design language 5.10) ─────────────────────────────────────────
+// A small glyph, a one-line headline, a sentence of guidance, and the next action. One block
+// serves EmptySection, ComingSoon and PageNotFound so the three cannot drift.
+//
+// Note `.empty-state-action` carries no rule of its own by design: it is a hook for consumer
+// CSS, and giving it a library rule would repaint PageNotFound's existing button, which today
+// renders with no class at all.
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  text-align: center;
+}
+
+.empty-state-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  // 24px, the small end of the design language's 24 to 32 range. Quiet on purpose: the glyph
+  // orients the reader, the headline and the action are what they act on.
+  font-size: var(--text-2x-large);
+  color: var(--text-muted);
+}
+
+.empty-state-heading {
+  margin: 0;
+  font-size: var(--text-large);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--text);
+}
+
+.empty-state-message {
+  margin: 0;
+  max-width: var(--max-card-width);
+  font-size: var(--text-small);
+  line-height: var(--line-height-base);
+  color: var(--text-secondary);
+}

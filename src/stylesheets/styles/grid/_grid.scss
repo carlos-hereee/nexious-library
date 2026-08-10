@@ -1,10 +1,11 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
-@use "../../vars/variables/_index.scss" as variables;
-
+// The gutter is the spacing scale, not a private 1rem, so a grid of cards breathes on the
+// same step as the padding inside those cards. That is what stops a page from reading as
+// several layouts stacked on top of each other.
 .grid {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
@@ -13,18 +14,17 @@
 
 .grid-row {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
 }
 .grid-start {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   align-items: flex-start;
-  // grid-template-rows: repeat(auto-fit, minmax(200px, 1fr));
 }
 .grid-center {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   @include mixin.devices(mobile) {

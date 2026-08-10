@@ -1,14 +1,27 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 @use "../../vars/variables/_index.scss" as variables;
 
-// Base card primitive is width agnostic.
-// Width is a page layout decision, not a card decision.
-// Page wrappers use $content-max-* tokens, variants below set their own caps.
+// ── The card recipe ─────────────────────────────────────────────────────────────
+// Design language 5.10: a level-1 surface, --radius-large, --space-large padding, optional
+// media on top, title, supporting line, optional footer actions. Everything below is that
+// recipe or a deliberate variant of it.
+//
+// Border and NOT shadow at rest (5.7). Light mode could take either, but a shadow barely
+// reads against a navy page, so the hairline plus the lighter --card-bg is the one
+// treatment that survives both themes. Opt into the shadow half with .card-shadow.
+//
+// Width stays a page layout decision rather than a card decision: page wrappers use the
+// $content-max-* tokens and the tile variants further down set their own caps.
 .card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: variables.$rem;
-  padding: variables.$rem;
+  gap: var(--space-medium);
+  padding: var(--space-large);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
   min-width: 0;
   &:has(> div > .ribbon) {
     position: relative;
@@ -18,7 +31,7 @@
 .card-header {
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   width: 100%;
 }
 
@@ -33,50 +46,65 @@
     }
   }
 }
+
+// The opt-in to the shadow half of border XOR shadow, replacing a hardcoded
+// `-6px 6px 10px rgba(209,209,209,0.411)` that was a light-grey smear with no dark
+// counterpart. When it lands on the same element as .card the two-class selector clears
+// the hairline instead of stacking both; the border-WIDTH stays so nothing reflows.
 .card-shadow {
-  box-shadow: -6px 6px 10px rgba(209, 209, 209, 0.411);
+  box-shadow: var(--elevation-1);
+}
+.card.card-shadow {
+  border-color: transparent;
 }
 
+// A layout grouping rather than a card face (no surface, no chrome), so it deliberately
+// gets no hover treatment at all: it is the wrapper things sit in, not a thing to click.
 .secondary-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   min-width: 0;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .secondary-card-body {
   display: flex;
   flex-wrap: wrap;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
+
+// The hairline was `1px solid white`, which vanished the moment the ribbon sat on a light
+// fill and inverted wrongly on dark. --border is the hairline token and flips with theme.
 .ribbon {
   position: absolute;
   top: 0.3rem;
   right: -2.5rem;
   rotate: 35deg;
-  border: 1px solid white;
-  padding: 0.25rem 4rem;
+  border: 1px solid var(--border);
+  padding: var(--space-extra-small) var(--space-page);
 }
 
 .cancel-row-footer {
   display: flex;
-  gap: variables.$rem;
-  padding-bottom: 2rem;
+  gap: var(--space-medium);
+  padding-bottom: var(--space-extra-large);
 }
 .card-item {
   display: flex;
   flex-direction: column;
 }
 
+// A message thread card. The fill was $light-secondary (#fafafa), a compiled literal that
+// stayed near-white on a dark page and took the bubble with it.
 .card-text-bubble {
   flex: 1;
-  background-color: variables.$light-secondary;
-  border-radius: variables.$border-radius;
+  background-color: var(--card-bg);
+  border-radius: var(--radius-large);
   display: grid;
   align-content: center;
   grid-template-columns: 1fr 5fr;
-  gap: variables.$rem;
-  padding: variables.$rem;
+  gap: var(--space-medium);
+  padding: var(--space-medium);
   width: 100%;
 }
 .card-text-bubble:has(.card-text-sender) {
@@ -85,25 +113,54 @@
     order: 2;
   }
 }
+
+// The bubble itself sits INSIDE .card-text-bubble, so it is one radius step smaller. Its
+// fill was $text-bubble (#aedfff), a fixed pale blue. --brand-wash is the named role for a
+// subtle brand-tinted surface and is derived with color-mix from whatever the brand token
+// actually is; the status tokens were the other candidate and are wrong here, since a
+// chat message is not an info banner.
 .text-bubble {
   height: fit-content;
-  background-color: variables.$text-bubble;
-  padding: variables.$rem;
-  border-radius: variables.$border-radius;
+  background-color: var(--brand-wash);
+  padding: var(--space-medium);
+  border-radius: var(--radius-medium);
   max-width: 100%;
   width: 100%;
 }
+
+// ── Navigational tiles ──────────────────────────────────────────────────────────
+// .app-card and .preview-card both open something when clicked, so per 5.7 they are the
+// card classes that earn the translateY(-2px) lift. The lift needs no reduced-motion block
+// of its own: the global kill switch in vars/reset strips transforms from the interaction
+// pseudo-classes outright.
+//
+// Both keep --space-medium padding rather than the recipe's --space-large. .app-card caps at
+// 250px wide (the client caps it tighter still, at 150px) and .preview-card is a clipped
+// 400px-tall thumbnail, so 24px a side would eat a third of the width the tile exists to
+// show. The deviation is size, not style.
 .app-card {
   display: grid;
   justify-items: center;
   aspect-ratio: 2/3;
-  gap: variables.$rem;
-  border-radius: variables.$border-radius;
+  gap: var(--space-medium);
+  padding: var(--space-medium);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
   grid-template-rows: auto 3fr;
-  padding: variables.$rem;
-  // box-shadow: 1px 1px 4px 1px variables.$action-color-alt;
   max-width: variables.$max-app-card-width;
   min-width: 0;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+
+  @include mixin.focus-ring;
+
+  &:hover {
+    border-color: var(--main-brand-color-accent);
+    box-shadow: var(--elevation-2);
+    transform: translateY(-2px);
+  }
+
   .card-row-body {
     display: grid;
     height: 100%;
@@ -111,14 +168,26 @@
       display: grid;
       grid-template-columns: auto;
       align-items: end;
-      // flex-direction: column;
     }
   }
 }
+
 .preview-card {
   max-height: variables.$max-card-height;
   overflow: hidden;
-  padding: variables.$rem;
-  border-radius: variables.$border-radius;
+  padding: var(--space-medium);
+  background-color: var(--card-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
   position: relative;
+  transition: border-color var(--transition-fast), box-shadow var(--transition-fast),
+    transform var(--transition-fast);
+
+  @include mixin.focus-ring;
+
+  &:hover {
+    border-color: var(--main-brand-color-accent);
+    box-shadow: var(--elevation-2);
+    transform: translateY(-2px);
+  }
 }

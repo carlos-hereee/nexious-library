@@ -1,39 +1,59 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
-@use "../../vars/variables/_index.scss" as variables;
-
 .card-row-wrapper {
   display: flex;
   flex-direction: column;
 }
+
+// The divider was $dark (#9394a5), a mid-grey literal that read as a heavy rule on white
+// and disappeared into the surface on navy. --border is the hairline in both themes.
 .card-row-container {
-  padding-bottom: variables.$rem;
-  border-bottom: 1px solid variables.$dark;
+  padding-bottom: var(--space-medium);
+  border-bottom: 1px solid var(--border);
 }
+
+// A list row, not a navigable card, so per 5.7 it tints on hover and never lifts. That
+// holds even though the row is usually clickable: the lift is what makes a dashboard of
+// rows feel restless, and the tint plus the focus ring already say "this is a target".
+// min-height pins the row to the comfortable density, which clears the 44px tap floor by
+// construction rather than by whatever the content happened to measure.
 .card-row {
   display: flex;
   align-items: center;
-  gap: variables.$rem;
-  padding: variables.$rem;
+  gap: var(--space-medium);
+  padding: var(--space-medium);
   width: 100%;
   max-width: 100%;
-  border-radius: variables.$border-radius;
+  min-height: var(--row-height);
+  border-radius: var(--radius-medium);
   text-align: left;
+  transition: background-color var(--transition-fast);
+
+  @include mixin.focus-ring;
+
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+
   @include mixin.devices(mobile) {
     flex-direction: column;
     align-items: center;
   }
 }
+
+// The selected row. Its fill was $action-color (#ffee99), a fixed pale yellow that assumes
+// dark text above it and turns into a glaring block on a dark page. --brand-wash is the
+// token named for exactly this (a selected-row tint) and tracks the brand on both themes.
 .card-row--active {
-  padding: 1rem 0;
-  background-color: variables.$action-color;
-  border-radius: variables.$border-radius;
+  padding: var(--space-medium) 0;
+  background-color: var(--brand-wash);
+  border-radius: var(--radius-medium);
 }
 .card-row-body {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   width: 100%;
   .read-more-wrapper {
     width: 100%;
@@ -47,13 +67,13 @@
 }
 .card-row-footer {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   margin: auto;
 }
 .user-card-row {
   display: flex;
   flex-direction: row;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   max-width: 100%;
   width: 100%;
 }

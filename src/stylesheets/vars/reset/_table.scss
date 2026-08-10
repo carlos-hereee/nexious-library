@@ -3,7 +3,33 @@
 table {
   width: 100%; /* Make table span full width */
   border-collapse: collapse; /* Collapse borders for a cleaner look */
-  margin: 1rem 0; /* Add some space below the table */
+  margin: var(--space-medium) 0;
+}
+
+/* -- Scroll container -- */
+/* The box Table.tsx wraps every table in, and the box HoursOfOperation has always wrapped its
+   own table in. Two jobs, and the second one is the reason this rule reads oddly.
+
+   ① A table is the one element that cannot be made to fit: it sizes to its widest row, so a
+   wide one widens whatever holds it. In a CSS grid that is silently fatal, because a grid item
+   defaults to min-width:auto and inherits its content's minimum, so one wide table stretches
+   the whole shell. Scrolling it inside its own box is the fix.
+
+   ② `overflow-x: auto` cannot be had on its own: per the CSS overflow spec, a `visible` on the
+   other axis computes to `auto` (and a `clip` computes to `hidden`), so this box is ALREADY a
+   vertical scrollport whether or not we ask for one. That matters because a scrollport is what
+   the sticky header below sticks to. Left uncapped the box never scrolls vertically, the header
+   never pins, and the sticky rule is inert. So the cap is what makes the feature real rather
+   than decorative. It bites only when a table is taller than the entire viewport, which is
+   exactly the case where losing the header hurts most. */
+.table-scroll,
+.hours-of-operation-wrapper {
+  width: 100%;
+  overflow: auto;
+  max-height: 100vh;
+  /* A scroll region is focusable in some browsers, and a consumer may add tabindex to make it
+     keyboard scrollable everywhere, so it rings like the rest of the library when it is. */
+  @include mixins.focus-ring;
 }
 
 /* Every color below reads from the token layer (vars/_tokens.scss) instead of a literal, so a
@@ -21,7 +47,7 @@ table {
 th,
 td {
   border: 1px solid var(--border);
-  padding: 1rem;
+  padding: var(--space-medium-small) var(--space-medium);
   text-align: left;
 }
 
@@ -30,61 +56,130 @@ th {
   color: var(--text);
 }
 
+/* -- Sticky header -- */
+/* Scoped to `thead th` rather than every `th`: a `th scope="row"` sits inside tbody as a row
+   label, and pinning that to the top of the scrollport would float a body cell over the data.
+   The overline treatment is scoped the same way, because uppercasing a row label mangles a
+   name while uppercasing a column label is the point.
+
+   Two gotchas are handled here and neither is obvious from the markup:
+
+   ① --table-header-bg is deliberately TRANSLUCENT (see the token comment) so a table can
+   composite over whatever surface holds it. A translucent SITTING header is fine; a translucent
+   PINNED header is not, because rows scroll visibly through it. So the tint is layered over an
+   opaque --surface via a flat gradient, which keeps one source of truth for the tint instead of
+   introducing a second opaque header token that could drift from it.
+
+   ② With `border-collapse: collapse` the cell borders belong to the TABLE, not the cell, so a
+   pinned header leaves its bottom hairline behind and scrolls away bare. The inset shadow is
+   that hairline redrawn as part of the cell. It is a border substitute, not elevation, so the
+   border-XOR-shadow rule is not in play; the alternative, `border-collapse: separate`, would
+   double every interior rule and is a much larger change than the bug deserves. */
+thead th {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--surface);
+  background-image: linear-gradient(var(--table-header-bg), var(--table-header-bg));
+  box-shadow: inset 0 -1px 0 var(--border);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+}
+
+/* -- Row density -- */
+/* `height` on a table row is a MINIMUM, not a fixed size, so a wrapping cell still grows.
+   Both densities are tokens rather than numbers because both have to clear the 44px tap floor
+   by construction: a "compact" row someone sets to 36px because it looked tighter is a WCAG
+   2.5.5 failure that no visual review catches. Comfortable is the default, `.table-dense` on
+   the table element is the toggle. */
+tbody tr {
+  height: var(--row-height);
+  transition: background-color var(--transition-fast);
+  @include mixins.focus-ring;
+}
+
+.table-dense tbody tr {
+  height: var(--row-height-dense);
+}
+
+.table-dense th,
+.table-dense td {
+  padding: var(--space-small) var(--space-medium-small);
+}
+
 /* Scoped to tbody so a multi-row thead or tfoot is never striped as if it were data. */
 tbody tr:nth-child(even) {
   background-color: var(--table-stripe-bg);
 }
 
+/* A row is a list row, not a navigational card, so the hover is a tint and never a lift.
+   A translateY here would make a long table ripple under the cursor. */
 tbody tr:hover {
   background-color: var(--table-row-hover-bg);
 }
-tfoot {
-  font-weight: bold; /* Bold text for footer */
-  font-weight: bold;
-  caption-side: bottom; /* Places the caption below the table */
+
+/* -- Numeric cells -- */
+/* Opt in per cell. tabular-nums forces the proportional digits most UI faces ship by default
+   onto a fixed advance width, which is what lets a column of numbers line up at the decimal;
+   ragged digits are the single most common tell of an unfinished table. The right alignment
+   comes with it because a number is read from its last digit. The class outranks the `th, td`
+   and `thead th` alignment above on specificity alone, so it works in a header and a body cell
+   without a second selector. */
+.cell-numeric {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
 }
+
+tfoot {
+  font-weight: var(--font-bold);
+}
+
 tfoot caption {
   caption-side: bottom; /* Places the caption below the table */
   text-align: center; /* Centers the text within the caption */
 }
+
 .table-title {
-  font-size: 1.5rem;
-  font-weight: bold;
-  margin-bottom: 0.5rem;
+  font-size: var(--text-2x-large);
+  font-weight: var(--font-bold);
+  margin-bottom: var(--space-small);
 }
+
 /* Same defect as the cells above, one layer out: #666 and #999 are light-mode literals that
    invert to unreadable on a dark page (#999 lands near 2.8:1 on white to begin with). */
 .table-subtitle {
-  font-size: 1.2rem;
+  font-size: var(--text-large);
   color: var(--text-secondary);
-  margin-bottom: 1rem;
+  margin-bottom: var(--space-medium);
 }
+
 .table-details {
-  font-size: 0.9rem;
+  font-size: var(--text-small);
   color: var(--text-secondary);
-  margin-top: 0.5rem;
+  margin-top: var(--space-small);
 }
-.hours-of-operation-wrapper {
-  overflow-x: auto;
-}
-.hours-of-operation-wrapper,
-.hours-of-operation {
-  width: 100%;
-}
+
+/* `.hours-of-operation-wrapper, .hours-of-operation { width: 100% }` used to sit here and is
+   gone: the wrapper now takes its width from the scroll-container rule above and the table from
+   the `table` rule at the top, both to the same 100%. Three rules setting one value is how they
+   drift apart. */
+
 @include mixins.devices(mobile) {
   th,
   td {
-    padding: 0.5rem; /* Reduce padding on smaller screens */
-    font-size: 0.9rem; /* Slightly smaller text */
+    padding: var(--space-small); /* Reduce padding on smaller screens */
+    font-size: var(--text-small); /* Slightly smaller text */
   }
   .table-title {
-    font-size: 1.2rem;
+    font-size: var(--text-large);
   }
   .table-subtitle {
-    font-size: 1rem;
+    font-size: var(--text-base);
   }
   .table-details {
-    font-size: 0.8rem;
+    font-size: var(--text-extra-small);
   }
   caption {
     text-align: left;

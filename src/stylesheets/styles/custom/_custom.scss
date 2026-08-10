@@ -3,17 +3,21 @@
 @use "../../vars/variables/_index.scss" as variables;
 
 .p-sm {
-  padding: 0.5rem;
+  padding: var(--space-small);
 }
 .p-1 {
-  padding: 1rem;
+  padding: var(--space-medium);
 }
 .p-verticle {
-  padding: 1rem 0;
+  padding: var(--space-medium) 0;
 }
+// Split into the two axes rather than written as `0 var(--space-medium)`. The shorthand
+// would say the same thing, but the split states the contract these two classes actually
+// have: no vertical padding at all, exactly one step of horizontal.
 .elbow-room,
 .elbow-space {
-  padding: 0 1rem;
+  padding-block: 0;
+  padding-inline: var(--space-medium);
 }
 .text-center {
   text-align: center;
@@ -36,6 +40,9 @@
 }
 .navlink {
   text-decoration: none;
+  // Stripping the underline removes the only affordance a link had, so the ring is not
+  // optional here: without it a keyboard user has nothing at all to follow.
+  @include mixin.focus-ring;
 }
 .w-100 {
   width: 100%;
@@ -43,31 +50,43 @@
 // add whitespace
 .m-tb,
 .white-space {
-  margin: 1rem 0;
+  margin: var(--space-medium) 0;
 }
 
 .mt-1 {
-  margin-top: 1rem;
+  margin-top: var(--space-medium);
 }
+// Same two-axis split as .elbow-room above, for the same reason.
 .m-sides,
 .m-horizontal {
-  margin: 0 1rem;
+  margin-block: 0;
+  margin-inline: var(--space-medium);
 }
+// The library's generic "this is an interactive control" hairline: it sits on inputs, text
+// areas and buttons alike (grep the class, it is on a dozen components), so it reads the
+// INPUT border token rather than the surface hairline. --text for the interaction state is
+// the faithful reading of the old $dark-mode literal, which was #2c3e50, the light value of
+// --text; unlike the literal it now inverts under dark instead of vanishing into the page.
+// The border change alone was never a focus signal, so the ring comes with it.
 .highlight {
-  border: 1px solid variables.$faded;
+  border: 1px solid var(--input-border);
   &:focus {
-    border: 1px solid variables.$dark-mode;
+    border: 1px solid var(--text);
   }
   &:hover {
-    border: 1px solid variables.$dark-mode;
+    border: 1px solid var(--text);
   }
+  @include mixin.focus-ring;
 }
 .required {
   color: variables.$danger;
 }
+// A selected state, so it takes the brand fill and the token that exists for text sitting ON
+// that fill. The old $dark / $light pair was a compiled light-only gray that a dark-mode
+// consumer could not recover from, and it read as "disabled" more than "selected" anyway.
 .active {
-  background-color: variables.$dark;
-  color: variables.$light;
+  background-color: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
 }
 .danger-zone {
   display: flex;
@@ -80,7 +99,7 @@
   display: grid;
   align-items: center;
   grid-template-columns: 2fr 3fr;
-  gap: 1rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     grid-template-columns: 1fr;
   }
@@ -127,7 +146,7 @@
 }
 .footer-content-wrapper {
   display: flex;
-  gap: 1rem;
+  gap: var(--space-medium);
   flex-wrap: wrap;
 }
 .socials {
@@ -155,7 +174,10 @@
   width: 1px;
   height: 1px;
   padding: 0;
-  margin: -1px;
+  // The classic recipe carries margin:-1px to keep its 1px box from nudging siblings. That
+  // was for the variants that stay IN flow; this one is absolutely positioned, so the
+  // negative margin only moved the invisible box a pixel and hid a raw value from the scale.
+  margin: 0;
   overflow: hidden;
   clip: rect(0, 0, 0, 0);
   white-space: nowrap;
@@ -168,14 +190,15 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
-  gap: 1rem;
-  padding: 1rem 0;
+  gap: var(--space-medium);
+  padding: var(--space-medium) 0;
 }
 
 // Footer flavor of .nav-link: same interaction but softer weight so it
-// reads as supporting nav, not primary.
+// reads as supporting nav, not primary. No focus ring of its own on purpose, it is only
+// ever applied alongside .nav-link (see template/Footer.tsx) and that class owns the ring.
 .footer-link {
-  font-weight: 400;
+  font-weight: var(--font-normal);
   opacity: 0.85;
 
   &:hover {

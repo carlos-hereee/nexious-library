@@ -1,47 +1,38 @@
-@use "../../vars/variables/_index.scss" as variables;
+@use "../../vars/mixin/_index.scss" as mixins;
 
 // ── Dev-mode error panel ─────────────────────────────────────────────────────
-// Only ever rendered in a development build (see utils/app/devMode.ts), so this is styled
-// as a TERMINAL rather than on-brand: a dark monospace block cannot be mistaken for real
-// UI at a glance, which a red-bordered card can. It deliberately does not read the app's
-// theme tokens, and it looks the same in light and dark mode, because a reader switching
-// themes should not have to re-find their error.
+// Only ever rendered in a development build (see utils/app/devMode.ts) and never in front
+// of a real user, so it is allowed to be the loudest surface the library ships.
+//
+// Loud is a color CHOICE, though, not a license to skip the token layer, and the panel used
+// to skip it: a pinned terminal palette of eleven hex literals. That bought recognizability
+// and cost the two things tokens are for. It could not follow a consumer who reskins the
+// library, and it had no dark counterpart, so a dark page got a light-mode diagnostic. It
+// now paints from the --danger-* triple and flips for free. What keeps it from being
+// mistaken for real UI is the cheap half of the old idea, which survives untouched: the
+// monospace face, the three terminal dots, and the "dev only" origin line.
 //
 // Everything is namespaced .nxs-dev-error-* so a consumer's stylesheet cannot accidentally
 // restyle it, and so it never collides with the app-facing .error-message class used for
 // real form validation copy.
-//
-// Palette is fixed hex, not variables: these are diagnostic colors, not brand colors, and
-// pinning them means a consumer who breaks their own token layer can still read the error
-// telling them so.
-
-$nxs-dev-bg: #1e1e2e;
-$nxs-dev-bg-sunken: #181825;
-$nxs-dev-border: #313244;
-$nxs-dev-text: #cdd6f4;
-$nxs-dev-muted: #7f849c;
-$nxs-dev-red: #f38ba8;
-$nxs-dev-amber: #f9e2af;
-$nxs-dev-green: #a6e3a1;
-$nxs-dev-mauve: #cba6f7;
-$nxs-dev-blue: #89b4fa;
-$nxs-dev-peach: #fab387;
 
 .nxs-dev-error {
-  background: $nxs-dev-bg;
-  color: $nxs-dev-text;
-  border: 1px solid $nxs-dev-border;
-  border-radius: variables.$border-radius;
-  padding: 0.75rem 0.9rem 0.9rem;
-  margin: variables.$rem05 0;
+  background-color: var(--danger-bg);
+  color: var(--text);
+  // Border and no shadow, per the border-XOR-shadow rule. The danger hairline is what
+  // separates the panel from the page now that the fill is a tint rather than a dark slab.
+  border: 1px solid var(--danger-border);
+  border-radius: var(--radius-large);
+  padding: var(--space-medium);
+  margin: var(--space-small) 0;
   width: 100%;
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  gap: 0.45rem;
+  gap: var(--space-small);
   font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
-  font-size: 0.82rem;
-  line-height: 1.6;
+  font-size: var(--text-small);
+  line-height: var(--line-height-base);
   text-align: left;
   // Long shapes and snippets scroll inside their own boxes; the panel itself never
   // widens its container.
@@ -52,38 +43,41 @@ $nxs-dev-peach: #fab387;
 .nxs-dev-error-bar {
   display: flex;
   align-items: center;
-  gap: 0.35rem;
-  margin-bottom: 0.15rem;
+  gap: var(--space-extra-small);
 }
 
+// The three window dots are decoration, not status, so they read the *-accent-color set
+// rather than the status surfaces: an accent is a single ink, and these are 10px circles
+// with nothing inside them to contrast against.
 .nxs-dev-error-dot {
   width: 10px;
   height: 10px;
-  border-radius: 50%;
+  border-radius: var(--radius-full);
   flex: 0 0 auto;
 }
 .nxs-dev-error-dot-red {
-  background: $nxs-dev-red;
+  background-color: var(--danger-accent-color);
 }
 .nxs-dev-error-dot-amber {
-  background: $nxs-dev-amber;
+  background-color: var(--pending-accent-color);
 }
 .nxs-dev-error-dot-green {
-  background: $nxs-dev-green;
+  background-color: var(--success-accent-color);
 }
 
+// --text-secondary, not --text-muted, everywhere quiet copy sits on this panel: muted is
+// tuned for AA on --surface, and on the deep --danger-bg of dark mode it drops under it.
 .nxs-dev-error-origin {
-  color: $nxs-dev-muted;
-  font-size: 0.7rem;
-  margin-left: 0.3rem;
-  letter-spacing: 0.02em;
+  color: var(--text-secondary);
+  font-size: var(--text-extra-small);
+  margin-left: var(--space-extra-small);
 }
 
 .nxs-dev-error-headline {
   margin: 0;
-  color: $nxs-dev-red;
-  font-weight: 700;
-  font-size: 0.88rem;
+  color: var(--danger-text);
+  font-weight: var(--font-bold);
+  font-size: var(--text-base);
 }
 
 // ── The leading received / expected pair ──
@@ -92,12 +86,12 @@ $nxs-dev-peach: #fab387;
 .nxs-dev-error-pair {
   display: grid;
   grid-template-columns: auto 1fr;
-  gap: 0.1rem 0.9rem;
-  margin: 0.15rem 0 0;
+  gap: var(--space-extra-small) var(--space-medium);
+  margin: 0;
 
   dt {
-    color: $nxs-dev-muted;
-    font-size: 0.78rem;
+    color: var(--text-secondary);
+    font-size: var(--text-extra-small);
   }
   dd {
     margin: 0;
@@ -105,22 +99,28 @@ $nxs-dev-peach: #fab387;
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: var(--space-small);
   }
 }
 
 .nxs-dev-error-bad {
-  color: $nxs-dev-red;
+  color: var(--danger-text);
   word-break: break-word;
 }
+// The expected TYPE was a distinct purple. The token vocabulary has no purple and inventing
+// one for a type annotation is not worth a token, so it demotes to quiet prose: the value
+// beside it is already the loud half of the pair.
 .nxs-dev-error-type {
-  color: $nxs-dev-mauve;
+  color: var(--text-secondary);
 }
+// The sunken code chips and blocks sit on --surface rather than a darker tint of the panel:
+// --surface is the one fill that is guaranteed to read as "a layer above" in both themes,
+// which a hand-mixed shade of --danger-bg would only manage in the theme it was mixed for.
 .nxs-dev-error-shape {
-  color: $nxs-dev-muted;
-  background: $nxs-dev-bg-sunken;
-  border-radius: variables.$border-radius-sm;
-  padding: 0.05rem 0.4rem;
+  color: var(--text-secondary);
+  background-color: var(--surface);
+  border-radius: var(--radius-small);
+  padding: var(--space-extra-small) var(--space-small);
   // A long union type must scroll in its own box, never widen the panel.
   max-width: 100%;
   overflow-x: auto;
@@ -129,17 +129,20 @@ $nxs-dev-peach: #fab387;
 
 // ── Collapsible detail ──
 .nxs-dev-error-details {
-  border-top: 1px solid $nxs-dev-border;
-  padding-top: 0.45rem;
-  margin-top: 0.2rem;
+  border-top: 1px solid var(--danger-border);
+  padding-top: var(--space-small);
+  margin-top: var(--space-extra-small);
 }
 
 .nxs-dev-error-summary {
   cursor: pointer;
-  color: $nxs-dev-peach;
-  font-weight: 700;
+  color: var(--warn-text);
+  font-weight: var(--font-bold);
   // The native marker is tiny and easy to miss; the panel must read as openable.
   list-style: none;
+  // A summary is focusable and toggles on Enter, so it is interactive by every definition
+  // the focus rule uses, even though it is not a button.
+  @include mixins.focus-ring;
   &::-webkit-details-marker {
     display: none;
   }
@@ -152,58 +155,58 @@ $nxs-dev-peach: #fab387;
 }
 
 .nxs-dev-error-text {
-  margin: 0.4rem 0 0;
-  color: $nxs-dev-text;
+  margin: var(--space-small) 0 0;
+  color: var(--text);
   // Prose, unlike the code around it, reads better in the app's own face.
   font-family: inherit;
-  font-size: 0.82rem;
+  font-size: var(--text-small);
 }
 
 .nxs-dev-error-label {
   display: block;
-  margin-top: 0.6rem;
-  color: $nxs-dev-muted;
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
+  margin-top: var(--space-medium-small);
+  color: var(--text-secondary);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-bold);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
 }
 
 // ── Remaining required props ──
 .nxs-dev-error-props {
-  margin: 0.25rem 0 0;
+  margin: var(--space-extra-small) 0 0;
   display: flex;
   flex-direction: column;
-  gap: 0.4rem;
+  gap: var(--space-small);
 }
 
 .nxs-dev-error-prop {
-  border-left: 2px solid $nxs-dev-border;
-  padding-left: 0.55rem;
+  border-left: 2px solid var(--danger-border);
+  padding-left: var(--space-small);
   dt {
     display: flex;
     flex-wrap: wrap;
     align-items: baseline;
-    gap: 0.5rem;
+    gap: var(--space-small);
   }
   dd {
-    margin: 0.1rem 0 0;
+    margin: var(--space-extra-small) 0 0;
     display: flex;
     flex-direction: column;
-    gap: 0.2rem;
+    gap: var(--space-extra-small);
     min-width: 0;
   }
 }
 
 .nxs-dev-error-prop-name {
-  color: $nxs-dev-text;
-  font-weight: 700;
+  color: var(--text);
+  font-weight: var(--font-bold);
 }
 
 .nxs-dev-error-prop-desc {
-  color: $nxs-dev-muted;
+  color: var(--text-secondary);
   font-family: inherit;
-  font-size: 0.8rem;
+  font-size: var(--text-extra-small);
 }
 
 // ── Copyable example ──
@@ -211,19 +214,19 @@ $nxs-dev-peach: #fab387;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: variables.$rem05;
+  gap: var(--space-small);
 }
 
 .nxs-dev-error-copy {
   cursor: pointer;
-  background: transparent;
-  border: 1px solid $nxs-dev-border;
-  border-radius: variables.$border-radius-sm;
-  color: $nxs-dev-muted;
-  padding: 0.1rem 0.5rem;
+  background-color: transparent;
+  border: 1px solid var(--danger-border);
+  border-radius: var(--control-radius-button);
+  color: var(--text-secondary);
+  padding: var(--control-padding-y-small) var(--control-padding-x-small);
   font: inherit;
-  font-size: 0.66rem;
-  letter-spacing: 0.06em;
+  font-size: var(--text-extra-small);
+  letter-spacing: var(--tracking-overline);
   text-transform: uppercase;
   // The library reset sets `button { width: 100%; max-width: 250px }` on the bare tag, and
   // this rule would otherwise declare no width of its own, so the button stretched across
@@ -231,34 +234,38 @@ $nxs-dev-peach: #fab387;
   width: auto;
   max-width: none;
   flex: 0 0 auto;
+  @include mixins.focus-ring;
   &:hover {
-    color: $nxs-dev-text;
-    border-color: $nxs-dev-muted;
+    color: var(--text);
+    border-color: var(--text-secondary);
   }
 }
 
 .nxs-dev-error-code {
-  background: $nxs-dev-bg-sunken;
-  color: $nxs-dev-text;
-  border-left: 2px solid $nxs-dev-blue;
-  border-radius: variables.$border-radius-sm;
-  padding: 0.4rem 0.6rem;
-  margin: 0.3rem 0 0;
+  background-color: var(--surface);
+  color: var(--text);
+  border-left: 2px solid var(--info-border);
+  border-radius: var(--radius-medium);
+  padding: var(--space-small) var(--space-medium-small);
+  margin: var(--space-extra-small) 0 0;
   // Snippets are multi-line and pre-formatted; scroll them rather than wrap, so the
   // indentation a reader is about to copy stays truthful.
   overflow-x: auto;
   white-space: pre;
-  font-size: 0.8rem;
+  font-size: var(--text-extra-small);
 }
 
+// A hint IS a warning in everything but name, so it stops improvising an amber-on-sunken
+// look and becomes the warn surface: fill, hairline and text that were picked together and
+// clear AA on both themes, which an accent color used as body text never did.
 .nxs-dev-error-hint {
-  margin: 0.6rem 0 0;
-  padding: 0.4rem 0.55rem;
-  background: $nxs-dev-bg-sunken;
-  border-left: 2px solid $nxs-dev-amber;
-  border-radius: variables.$border-radius-sm;
-  color: $nxs-dev-amber;
-  font-size: 0.78rem;
+  margin: var(--space-medium-small) 0 0;
+  padding: var(--space-small) var(--space-medium-small);
+  background-color: var(--warn-bg);
+  border-left: 2px solid var(--warn-border);
+  border-radius: var(--radius-medium);
+  color: var(--warn-text);
+  font-size: var(--text-extra-small);
   // Runtime hints (the live icon-key list) can be long; wrap them.
   word-break: break-word;
 }
@@ -267,29 +274,30 @@ $nxs-dev-peach: #fab387;
 // Arrow-prefixed rather than bulleted: these are actions to take, and the arrow reads as
 // "do this" where a bullet reads as "another fact".
 .nxs-dev-error-fixes {
-  margin: 0.5rem 0 0;
+  margin: var(--space-small) 0 0;
   padding: 0;
   list-style: none;
   li {
     list-style: none;
-    color: $nxs-dev-muted;
+    color: var(--text-secondary);
     font-family: inherit;
-    font-size: 0.8rem;
-    margin-bottom: 0.2rem;
+    font-size: var(--text-extra-small);
+    margin-bottom: var(--space-extra-small);
     padding-left: 1.1rem;
     text-indent: -1.1rem;
     &::before {
       content: "→ ";
-      color: $nxs-dev-border;
+      color: var(--text-secondary);
     }
   }
 }
 
 .nxs-dev-error-docs {
-  margin-top: 0.65rem;
-  color: $nxs-dev-blue;
-  font-size: 0.78rem;
+  margin-top: var(--space-medium-small);
+  color: var(--info-text);
+  font-size: var(--text-extra-small);
   text-decoration: none;
+  @include mixins.focus-ring;
   &:hover {
     text-decoration: underline;
   }

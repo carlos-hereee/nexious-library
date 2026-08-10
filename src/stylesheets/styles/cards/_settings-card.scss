@@ -1,12 +1,22 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
+// A settings card is a Panel in the design language's terms (a labeled container for
+// controls), not a Card, so it never navigates: no lift, and no hover on the container
+// itself. Only its two controls below react to the pointer.
 .settings-card {
   display: flex;
   flex-direction: column;
   gap: var(--space-medium);
 }
+
+// The accordion toggle. It is a real button, so rule 5 applies even though the button
+// family lives in another partial: the ring belongs on whatever selector is focusable.
 .settings-card-header {
   display: flex;
   width: 100%;
   max-width: 100%;
+
+  @include mixin.focus-ring;
 }
 .settings-card-list {
   width: 100%;
@@ -15,6 +25,8 @@
   width: 100%;
   display: flex;
   text-align: left;
+
+  @include mixin.focus-ring;
 }
 .btn-full {
   max-width: var(--max-card-width);
@@ -30,4 +42,13 @@
 }
 .btn-container .btn-main {
   flex: 1;
+}
+
+// WCAG 2.5.5, mobile only. Both controls render through the library Button, which since 4.0.0
+// attaches no implicit base class, so the library-wide .btn-* touch floor never reaches them.
+@include mixin.devices(mobile) {
+  .settings-card-header,
+  .btn-settings-card {
+    min-height: var(--tap-target-min);
+  }
 }

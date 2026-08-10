@@ -5,7 +5,7 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 
 .preview-hero {
@@ -31,5 +31,5 @@
   left: 85%;
   max-width: 25px;
   aspect-ratio: 1/1;
-  border-radius: 100%;
+  border-radius: var(--radius-full);
 }

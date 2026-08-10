@@ -1,34 +1,35 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
-@use "../../vars/variables/_index.scss" as variables;
-
 .card-section {
   display: grid;
   grid-template-columns: 1fr 2fr;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 
+// A section eyebrow. The 4px letter-spacing was a raw literal that did not scale with the
+// text it tracked; --tracking-overline is the em-based token the rest of the library's
+// overlines and field labels read, so the two can no longer drift apart.
 .card-section-title {
   display: flex;
-  letter-spacing: 4px;
+  letter-spacing: var(--tracking-overline);
 }
 .card-section-subtitle {
   display: flex;
-  letter-spacing: 4px;
+  letter-spacing: var(--tracking-overline);
 }
 .card-section-wrapper {
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .card-section-row {
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   .card-section-cost {
     display: flex;
     justify-content: flex-end;
-    gap: 0.5rem;
+    gap: var(--space-small);
   }
   .cost {
     display: flex;
@@ -40,7 +41,7 @@
   }
   .row {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-small);
     justify-content: space-around;
     flex-grow: 1;
   }
@@ -59,7 +60,7 @@
 }
 .details {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 
   .read-more-wrapper {
     max-width: 350px;
@@ -67,22 +68,22 @@
   .row {
     flex-direction: column;
     align-items: center;
-    gap: variables.$rem;
+    gap: var(--space-medium);
     width: 100%;
     div {
       display: flex;
-      gap: variables.$rem;
+      gap: var(--space-medium);
       flex-wrap: wrap;
     }
   }
 }
 .sections-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--space-medium);
   justify-items: center;
   grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   @include mixin.devices(tablet) {
-    margin-top: 1rem;
+    margin-top: var(--space-medium);
     grid-template-columns: 1fr;
   }
 }

@@ -1,34 +1,28 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 
-@use "../../vars/variables/_index.scss" as variables;
-
+// ── The neutral layout wrapper ───────────────────────────────────────────────
+// .container is a STACK, not a box: direction and gap, nothing else. It carries no fill,
+// no border, no radius and no shadow on purpose. It is the most reused class in the
+// library (the cart, checkout, calendar, form fields, nav lists and the loading state all
+// mount on it) and each of those wants a different surface underneath, so a catch-all that
+// painted itself would force every one of them to unpaint it first.
+//
+// The two intents it used to absorb now have names, both from design language 5.10:
+// .panel (_panel.scss) is a labeled container for controls and is allowed to be a box,
+// .section (_section.scss) is a heading plus space with no border at all. Reach for those
+// when the grouping is meant to be SEEN; reach for .container when it is only layout.
 .container {
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .app-container {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto 3fr auto;
   min-height: 100vh;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     grid-template-rows: 1fr;
   }
 }
-// // theme dark mode
-// .dark-mode > .container {
-//   // -webkit-filter: blur(8px);
-//   // backdrop-filter: blur(5px);
-//   background-color: variables.$dark-mode;
-//   color: variables.$light-mode;
-// }
-// // theme light mode
-// .light-mode > .container {
-//   // -webkit-filter: blur(8px);
-//   // backdrop-filter: blur(5px);
-//   background-color: variables.$light-mode;
-//   color: variables.$dark-mode;
-//   // background: inherit;
-// }

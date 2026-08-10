@@ -11,18 +11,29 @@
     float: inline-end;
     flex-direction: column;
     position: absolute;
-    transition: clip-path ease-in-out 700ms;
+    transition: clip-path var(--transition-slow);
     align-items: center;
-    padding: variables.$rem;
+    padding: var(--space-medium);
     min-height: variables.$min-height-section;
-    z-index: 9999;
+    // The drawer is a panel summoned from the nav, so it sits on the dropdown step rather
+    // than the improvised 9999 it used to carry. That number outranked every overlay in
+    // the ladder, so a dialog opened while the drawer was up rendered behind it.
+    z-index: var(--z-dropdown);
     right: 3%;
     top: 100%;
   }
+  // 750ms before, which broke the design language's 300ms ceiling for core-product motion
+  // (5.9). Deliberately NOT wrapped in a reduced-motion override: Header advances the
+  // drawer out of its open state on `animationend`, so removing the animation would strand
+  // it open, and the global kill switch already shortens it to 1ms, which is the snap a
+  // motion-sensitive user wants.
   .navigation[data-state="open"] {
     display: flex;
-    animation: circleOpen 750ms ease-in-out forwards;
+    animation: circleOpen var(--transition-slow) forwards;
   }
+  // No duration, so this state is effectively instant. Giving it one would expose the
+  // `display: block` below: the items reflow out of the column layout before the wipe, so
+  // the close would be a visible jump rather than a reveal in reverse.
   .navigation[data-state="closing"] {
     display: block;
     animation: circleClose ease-in-out forwards;

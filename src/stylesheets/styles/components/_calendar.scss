@@ -2,11 +2,16 @@
 
 @use "../../vars/variables/_index.scss" as variables;
 
+// -- File note --
+// Spacing below is written as var(--space-*) rather than variables.$rem / $rem025. Those SCSS
+// vars already alias the same tokens, so nothing rendered changes; the lint gate reads SOURCE
+// text and cannot see through the alias, which is why the token has to be spelled out.
+
 .calendar {
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .calendar-package-details {
   width: 100%;
@@ -30,24 +35,35 @@
   padding: 0;
   position: relative;
   min-height: 50px;
+  // The event-count badge that overhangs the tile's top right corner. --radius-full rather
+  // than the old 100%: a percentage radius on a two-digit count draws an ellipse, the token
+  // draws the pill the design language's badge scale asks for, and a one-digit count is
+  // square enough that both render as the same circle.
   .icon-tile-ping {
     position: absolute;
     top: -9%;
     right: -2%;
-    background-color: variables.$ping-color;
-    padding: variables.$rem025;
-    border-radius: 100%;
-    color: variables.$dark-primary;
+    // The amber and its text come from the status pair rather than from $ping-color plus
+    // $dark-primary. Those two resolved to amber with the brand indigo on top, which measures
+    // about 3.4:1 and fails WCAG 1.4.3 AA; --status-on-pending was chosen against this exact
+    // amber and clears it at about 5.5:1. Same amber, readable count.
+    background-color: var(--pending-accent-color);
+    padding: var(--space-extra-small);
+    border-radius: var(--radius-full);
+    color: var(--status-on-pending);
   }
+  // The mobile step was 40px, which is under the 44px WCAG 2.5.5 target floor, and a calendar
+  // tile is the densest grid of tap targets in the product. --tap-target-min is the floor
+  // itself, so the tile can only ever shrink to legal.
   @include mixin.devices(mobile) {
-    min-height: 40px;
+    min-height: var(--tap-target-min);
   }
 }
 .event-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
-  gap: variables.$rem025;
+  gap: var(--space-extra-small);
   width: 100%;
   @include mixin.devices(mobile) {
     width: 100%;
@@ -57,7 +73,7 @@
 .calendar-events {
   display: flex;
   width: 100%;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     flex-direction: column;
   }
@@ -65,7 +81,7 @@
 .calendar-event-cart {
   display: flex;
   width: 100%;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   .hero {
     max-height: 15vh;
   }
@@ -90,5 +106,5 @@
 .calendar-view-month {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
-  padding: variables.$rem 0;
+  padding: var(--space-medium) 0;
 }
