@@ -36,8 +36,12 @@
   // The library reset gives a bare button width:100%;max-width:250px. A field control is as wide
   // as its field, so the cap is cleared here rather than fought with !important at the call site.
   max-width: none;
+  // A hard height for the same reason the inputs have one: a button's content box is not the
+  // same size as an input's, so a shared min-height still leaves them a pixel or two apart.
+  height: var(--control-height);
   min-height: var(--control-height);
   padding: var(--control-padding-y) var(--control-padding-x);
+  line-height: var(--line-height-tight);
   text-align: left;
   cursor: pointer;
   background-color: var(--input-bg);

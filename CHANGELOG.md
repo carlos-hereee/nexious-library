@@ -100,7 +100,25 @@ are no back-compat wrappers. `EntryThumbnailRailProps` survives as a deprecated 
 `npx tsc --noEmit` clean, `npm test` **217 passed / 19 suites** (from 122 / 15), `npm run lint`
 **0 errors in Phase 2 files** (32 pre-existing errors remain in files this phase did not touch),
 `npm run lint:css` **247 warnings, 0 errors** (down from the 266 baseline). Compiled CSS 86,432
-bytes before Phase 1 to 93,249 after Phase 2, **+7.9% cumulative**, inside the 10% ceiling.
+bytes before Phase 1 to 93,555 after Phase 2, **+8.2% cumulative**, inside the 10% ceiling.
+
+**Verified by rasterizing the Storybook stories in a real browser, not by reading the CSS**, and
+that is how the last three defects in this phase were found. All three read as correct markup:
+
+1. **Controls were 36 / 37 / 38px, not uniform**, under a shared `min-height`. Identical padding
+   is necessary but not sufficient: a select carries a 1px border the reset strips from an input,
+   and a time input's internal segment rendering is intrinsically taller than a text input's line
+   box, so each control's own content was still deciding its height. Single-line controls now take
+   a hard `height` plus a pinned `line-height`; a textarea keeps a floor because it is sized to
+   its content. Re-measured: every control **exactly 36px, at the same top edge, in both themes**.
+2. **A text input and a textarea rendered WHITE in dark mode.** The reset strips an input's border
+   and background and nothing put one back, so they fell through to the browser default while the
+   select and date trigger (which do set a background) rendered dark. `nexious-client` masks this
+   by setting the same tokens itself, which is exactly why it survived: the only place it showed
+   is standalone, and standalone is this rework's review surface.
+3. **Error text failed AA in dark mode at 3.77:1.** `.required` carries the danger ACCENT color,
+   which has no dark counterpart. `.field-error` now uses `--danger-text`, half of the Phase 1
+   status pair. Re-measured: **6.19:1 light, 9.92:1 dark**.
 
 > **Q3 is answered by the code, not by a decision.** The plan asks whether to keep, gate or retire
 > the 600px `.form-field-container` scroll region. It is already opt-in behind `Form`'s `formScroll`

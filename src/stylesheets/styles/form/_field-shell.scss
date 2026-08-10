@@ -32,6 +32,15 @@
 
 // The error node lives after the control now, which is both the convention and where the design
 // language puts it. It keeps the `required` class so consumer styling for error text still lands.
+//
+// The color is --danger-text rather than the --danger-accent-color that `.required` carries, and
+// that was measured rather than assumed: rendered in a dark subtree the accent red came out at
+// 3.77:1 against the surface, which FAILS WCAG 1.4.3 AA for normal-size text. --danger-text is
+// half of the status pair added in Phase 1 and flips to a light red on dark, so the same rule
+// clears AA in both themes. This overrides `.required` by source order (form partials are
+// forwarded after custom is not true, so the two-class selector below settles it explicitly).
+.required.field-error,
 .field-error {
   font-size: var(--text-small);
+  color: var(--danger-text);
 }

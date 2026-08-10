@@ -22,15 +22,37 @@ form {
 // radius) but sets NO padding or height, so the library really is the source of geometry in
 // production, not just standalone.
 //
-// min-height rather than height on purpose. It is a floor, so a control never collapses below
-// the scale, while a longer font stack or a zoomed browser can still grow it. Identical padding
-// and font on both elements is what makes the heights EQUAL; the token makes them a known size.
+// A hard height on the single-line controls, not a min-height, and that distinction was settled
+// by measuring rather than by preference. Identical padding is necessary but NOT sufficient:
+// with min-height the three controls came out 36 / 37 / 38px in a real browser, because a select
+// carries a 1px border the reset strips from an input, and a time input's internal segment
+// rendering is intrinsically taller than a text input's line box. Each control's own content was
+// deciding the height, which is the whole problem. box-sizing is border-box globally, so a fixed
+// height absorbs both the border difference and the content difference and every control lands
+// on the token exactly.
+//
+// A textarea is deliberately excluded: it is sized to its content, so it keeps a floor instead.
+input:not([type="checkbox"]):not([type="radio"]),
+select {
+  height: var(--control-height);
+}
 input:not([type="checkbox"]):not([type="radio"]),
 textarea,
 select {
   min-height: var(--control-height);
   padding: var(--control-padding-y) var(--control-padding-x);
   border-radius: var(--control-radius-input);
+  // Pinned so the text box is a known size rather than whatever the inherited line-height
+  // happens to be, which is what centers the label text identically across control types.
+  line-height: var(--line-height-tight);
+  // Found by rasterizing the alignment story in dark mode, not by reading the CSS. The reset
+  // strips an input's border and background, and nothing put one back, so an input and a
+  // textarea fell through to the browser's default WHITE fill on a dark page while the select
+  // and the date trigger (which do set a background) rendered dark. nexious-client masks this by
+  // setting the same two tokens itself, which is exactly why it survived: the only place it was
+  // visible is standalone, and standalone is the Storybook review surface for this whole rework.
+  background-color: var(--input-bg);
+  color: var(--text);
 }
 input,
 textarea {
