@@ -25,3 +25,69 @@
     }
   }
 }
+
+// The mobile-first counterpart to devices(), which is desktop-first (max-width). It sits
+// BESIDE devices() rather than replacing it: converting in place would invert every
+// breakpoint in the library in one commit, and there is no safe way to review that. Both
+// coexist while partials migrate one at a time, and devices() is deleted when its last
+// call site is gone (item 50 lane 9).
+//
+// The +0.02px is the reason a migration can be mechanical rather than a judgment call per
+// rule. devices(tablet) is `max-width: 770px`, so its exact complement is "anything wider
+// than 770px". Writing `min-width: 770px` would double-apply at exactly 770px, and
+// `min-width: 771px` would leave fractional viewports (browser zoom, hidpi, a 770.5px
+// window) matching neither. A hundredth of a pixel is below any real device step, so the
+// two mixins tile the range with no gap and no overlap and a flip is provably equivalent.
+@mixin respond-from($breakpoint) {
+  @if $breakpoint == laptop {
+    @media only screen and (min-width: variables.$laptop + 0.02px) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet {
+    @media only screen and (min-width: variables.$tablet + 0.02px) {
+      @content;
+    }
+  }
+  @if $breakpoint == mobile {
+    @media only screen and (min-width: variables.$mobile + 0.02px) {
+      @content;
+    }
+  }
+  @if $breakpoint == mini {
+    @media only screen and (min-width: variables.$mini + 0.02px) {
+      @content;
+    }
+  }
+}
+
+// The library's one focus treatment. Include it on every interactive selector.
+//
+// Why a mixin and not a rule each component writes: there are four different focus
+// treatments in the tree today, and two of them are accessibility defects rather than
+// drift. .select outlines identically on :hover and :focus, so a keyboard user cannot tell
+// focus from a passing mouse; .entry-rail-tile has no outline at all and signals focus with
+// an opacity change, which is effectively invisible. Both would pass a review that only
+// asked "does it have a focus style". One mixin makes the correct answer the easy one.
+//
+// :focus-visible rather than :focus so the ring shows for keyboard and assistive-tech
+// users without firing on every mouse click, and outline rather than box-shadow so it
+// cannot shift layout or be clipped by an ancestor's overflow.
+@mixin focus-ring {
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+// Wraps @content in the reduced-motion query. The global kill switch in vars/reset already
+// neutralizes animations and transitions library-wide; this is for the cases that need a
+// specific alternative rather than a blanket off, and it exists so the media feature name
+// is written in exactly one place. It has been misspelled here before
+// (`prefers-reduced-inputdirection`), which silently disabled the whole guard for months
+// and is not the kind of bug a screenshot catches.
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

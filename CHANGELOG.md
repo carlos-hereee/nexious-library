@@ -9,6 +9,108 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### UI rework Phase 1: token and primitive foundation
+
+Phase 1 of `roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md`, executed under
+FUTURE_PLANS items 50 (lanes 2, 3, 7, 9) and 51. **Token values and new tokens only. No `.tsx`
+file was touched, and no component rule changed except the one noted under Changed.**
+
+Why the values moved: this library and `nexious-client` share token NAMES but disagreed on
+VALUES for `--space-large`, `--text-large` and the radius scale. Because the client imports
+`nexious-library/@index.css` before its own `vars.css`, a shared name with a different value
+means the client silently changes what a library token MEANS, not just how it looks. Those
+three collisions are now resolved in the library's favour of the design language.
+
+#### Added
+
+- **Type scale**: `--text-extra-small` (12px), `--text-base` (16px), `--text-extra-large` (20px),
+  `--text-2x-large` (24px), `--text-3x-large` (30px), plus `--line-height-tight`,
+  `--line-height-base`, `--tracking-overline`, and `--font-normal` / `--font-medium` /
+  `--font-semibold` / `--font-bold`.
+- **Spacing**: `--space-extra-large` (2rem), `--space-section` (3rem), `--space-page` (4rem).
+- **Radius**: `--radius-large` (12px), which was simply missing, so cards and panels had no
+  radius to reach for and drifted to raw `10px` literals instead.
+- **Motion**: `--transition-base` (200ms) and `--transition-slow` (300ms) beside the existing
+  `--transition-fast`.
+- **Surfaces**: `--bg`, `--card-bg`, `--input-bg`, `--input-border`, `--text-muted`,
+  `--hover-bg`, `--scrim`, `--brand-wash`, and the brand shades `--main-brand-hover-color` and
+  `--main-brand-color-accent`. `--brand-wash` is derived with `color-mix()` from the brand token
+  rather than pinned as an rgba literal, so it tracks a consumer's brand override instead of
+  desyncing from it.
+- **Status surfaces**: `--success-bg` / `-border` / `-text`, and the same triple for `--warn-*`,
+  `--danger-*` and `--info-*`, in both themes. The library previously had status ACCENTS with no
+  paired background, which is why every status surface had to invent its own fill.
+- **Elevation aliases** `--elevation-1` / `-2` / `-3` naming the ladder by role.
+- **Neutral ramp** `--slate-900` / `-700` / `-600` / `-500` / `-300` / `-200` / `-50`. Nothing
+  reads these yet; they exist so item 50 lane 2 has a scale to migrate the ad-hoc `$faded` /
+  `$dim` / `$muted` literals onto.
+- **Stacking scale**: `--z-base`, `--z-raised`, `--z-sticky`, `--z-dropdown`, `--z-overlay`,
+  `--z-toast`, `--z-command`.
+- **`vars/_control.scss`**, a new file holding the geometry that makes controls line up:
+  `--control-height-small` / `--control-height` / `--control-height-large` (28 / 36 / 44px),
+  `--control-padding-{x,y}` per size, `--control-radius-input` and `--control-radius-button`,
+  `--focus-ring-width` / `-offset` / `-color` plus a `--focus-ring` shorthand, and
+  `--tap-target-min`. Nothing includes these yet; Phase 2 rebuilds the Form family on them.
+- **Three mixins** in `vars/mixin/_index.scss`: `focus-ring` (the library's one focus treatment,
+  `:focus-visible` plus outline, promoted from the only correct existing implementation),
+  `respond-from($breakpoint)` (the mobile-first min-width complement to `devices()`, added
+  beside it rather than replacing it so partials can migrate one at a time), and
+  `reduced-motion` (wraps content in the reduced-motion query so the media feature name is
+  written in exactly one place; it has been misspelled here before).
+- **`.stylelintrc.json` and a `lint:css` script**, mirroring `nexious-client`'s config, at
+  **warning** severity. Baseline recorded 2026-08-09: **266 warnings, 0 errors** (244
+  `declaration-property-value-allowed-list`, 22 `color-no-hex`). Phase 4 drives that to zero and
+  flips the severity to error. `stylelint` and `postcss-scss` added as devDependencies.
+
+#### Changed
+
+- **`--space-large` 2rem to 1.5rem (32px to 24px)** and **`--text-large` 1.25rem to 1.125rem
+  (20px to 18px)**, matching the design language. Neither is renamed, because renaming would
+  break a consumer reading it. `nexious-client` already overrides both to the new values, so
+  **production rendering is unchanged**; only the standalone and Storybook cases move.
+- Radius scale corrected from the off-scale **5 / 7 / 15px to 4 / 8 / 16px**. The concentric
+  nesting rule (a 12px card holds 8px rows holds 4px chips) does not work on an off-scale set.
+  The client already overrides all three, so production is unchanged.
+- Shadows and the dark navy ramp (`--surface`, `--card-bg`, `--border`, `--text`,
+  `--text-secondary`) pinned to the client's values. Standalone dark previously used its own
+  slate-blue set, which meant a Storybook dark review showed a palette the product never ships,
+  and Storybook is the review surface for the rest of this rework. The client overrides every
+  one of these, so production is unchanged.
+- `--text-success-color` is now an alias for `--success-text` so the two cannot disagree. It has
+  no readers inside this library and none in `nexious-client`.
+- **`.countdown-timer` font size moves from `--text-large` to `--text-extra-large`.** This is the
+  one component declaration that changes, and the one place a consumer will see a difference. It
+  is the visual anchor of the banner and wanted the 20px step; under the client it had already
+  been silently shrunk to 18px by the client's `--text-large` override, which is precisely the
+  collision this phase removes.
+- `.btn-lg` keeps `var(--space-large)` and `var(--text-large)`. Its declarations are textually
+  unchanged but its resolved standalone values move from 32px/20px to 24px/18px. That was a
+  per-site decision, not an oversight: 24px horizontal padding and an 18px label are correct for
+  a large button, and it is what the client has always rendered. The class has zero call sites in
+  `nexious-client`.
+
+#### Accessibility
+
+- The reduced-motion guard in `vars/reset/_index.scss` now also drops `transform` on `:hover`,
+  `:focus`, `:focus-visible` and `:active`. Zeroing the transition duration stopped a hover lift
+  from ANIMATING but not from HAPPENING, so a motion-sensitive user still got an instant
+  positional jump. Scoped to the interaction pseudo-classes rather than `*` because plenty of
+  transforms are layout, not motion.
+- `--focus-ring-color` flips to the lighter brand accent in dark mode. The base brand fails
+  contrast against a dark navy surface, and the per-component inlined outlines it replaces could
+  never have flipped.
+
+#### Verification
+
+Compiled CSS diffed before and after (`sass src/stylesheets/index.scss`, expanded). Every changed
+declaration is a token definition, plus the two rules named above and nothing else. Size 86,432
+to 89,368 bytes, **+3.4%**, inside the 10% ceiling. `npm test` green, 122 tests across 15 suites.
+
+> Note for anyone repeating that diff: `styles/theme/_bubbly.scss` calls `math.random()`, so
+> `dist/css/index.css` is **not reproducible between builds** and a raw diff shows ~200 spurious
+> changed declarations under `.bubble:nth-child(n)`. Filter that block out before reading a CSS
+> diff, and see TECH_DEBT for the underlying issue.
+
 ## [3.3.9] - 2026-07-24
 
 > **Should have been a MINOR bump** (it adds public API: `setDevMode`, `getDevMode`, root

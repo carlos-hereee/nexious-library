@@ -1,3 +1,5 @@
+@use "../mixin" as mixin;
+
 @forward "./_html.scss";
 @forward "./_forms.scss";
 @forward "./_embeds.scss";
@@ -7,7 +9,8 @@
 // The feature name was previously misspelled `prefers-reduced-inputdirection`, which is
 // not a real media feature, so this whole kill-switch silently never matched and the
 // library's animations (mobile-nav circleOpen/circleClose, slide/pulse/fade) always ran.
-@media (prefers-reduced-motion: reduce) {
+// It now goes through the reduced-motion mixin so the feature name is written once.
+@include mixin.reduced-motion {
   *,
   ::before,
   ::after {
@@ -17,5 +20,20 @@
     background-attachment: initial !important;
     transition-duration: 0s !important;
     transition-delay: 0s !important;
+  }
+
+  // Zeroing the transition duration above stops a lift from ANIMATING but not from
+  // HAPPENING: `:hover { transform: translateY(-1px) }` still moves the element, now
+  // instantly, which is a sudden positional jump rather than a gentle one. The design
+  // language's rule is to drop translate and scale entirely and keep opacity, so the
+  // interaction states lose their transform and the hover reads as a color change only.
+  // Scoped to the interaction pseudo-classes rather than `*` because plenty of transforms
+  // are layout, not motion (the mobile-nav circle reveal, centering, icon rotation at
+  // rest), and killing those would break the component instead of calming it.
+  *:hover,
+  *:focus,
+  *:focus-visible,
+  *:active {
+    transform: none !important;
   }
 }

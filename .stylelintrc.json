@@ -1,0 +1,52 @@
+{
+  "//": "CompanyUno design-system governance for nexious-library, mirroring nexious-client's .stylelintrc.json. Lean on purpose: this config only enforces token adherence, it does NOT own formatting (prettier does). See roadmaps/specs/companyuno-design-language-and-redesign.md Section 5 for the token reference and roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md for the rework this governs. Severity is 'warning' as of Phase 1 (2026-08-09): the library's hex-to-token and radii sweep has NOT run yet, so erroring here would just be a permanently red gate that everyone learns to ignore. Phase 1 records the warning count as the baseline; Phase 4 drives it to zero and flips this to 'error'. This affects `npm run lint:css` only, not `npm run build`. The client hit exactly this ordering and the lesson from item 81 was that the token layer was always fine and what failed was governance, which is why this file exists before the sweep rather than after it.",
+  "customSyntax": "postcss-scss",
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "severity": "warning",
+        "message": "Use a design token (var(--...)) instead of a raw hex color. Hex belongs in vars/_tokens.scss, vars/_control.scss and vars/variables/_colors.scss only."
+      }
+    ],
+    "declaration-property-value-allowed-list": [
+      {
+        "border-radius": [
+          "/^var\\(--radius/",
+          "/^var\\(--control-radius/",
+          "/^variables\\.\\$border-radius/",
+          "0",
+          "50%",
+          "100%",
+          "9999px",
+          "inherit",
+          "4px",
+          "8px",
+          "12px",
+          "16px"
+        ],
+        "gap": ["/^var\\(--space/", "0", "inherit"],
+        "padding": ["/^var\\(--space/", "/^var\\(--control-padding/", "0", "inherit"],
+        "margin": ["/^var\\(--space/", "0", "auto", "inherit", "0 auto"]
+      },
+      {
+        "severity": "warning",
+        "message": "Use a scale token. Radius: var(--radius-*) or a canonical step (4/8/12/16px). Spacing: var(--space-*). Stray radii (5/6/7/10/15px) and raw rem spacing are the drift this rework is removing."
+      }
+    ]
+  },
+  "overrides": [
+    {
+      "//": "The token layer is where raw hex legitimately lives. vars/_tokens.scss defines the design-language tokens and their dark counterparts, vars/_control.scss defines the control geometry, and vars/variables/_colors.scss is the SCSS palette those partials still read from (unifying it onto the token layer is item 50 lane 2).",
+      "files": [
+        "src/stylesheets/vars/_tokens.scss",
+        "src/stylesheets/vars/_control.scss",
+        "src/stylesheets/vars/variables/_colors.scss"
+      ],
+      "rules": {
+        "color-no-hex": null,
+        "declaration-property-value-allowed-list": null
+      }
+    }
+  ]
+}

@@ -7,7 +7,12 @@
   box-shadow: var(--shadow-small);
 }
 .countdown-timer {
-  font-size: var(--text-large);
+  // Moved from --text-large when that token was corrected to 18px. This is the visual
+  // anchor of the banner (bold, brand colored, the thing the component exists to show),
+  // so it wanted the 20px step, which is now --text-extra-large. Under nexious-client it
+  // had already been silently shrunk to 18px by the client's own --text-large override,
+  // which is exactly the token-name collision this pass is removing.
+  font-size: var(--text-extra-large);
   font-weight: bold;
   color: var(--main-brand-color);
 }

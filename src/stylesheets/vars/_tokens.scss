@@ -9,17 +9,53 @@
 // Non-breaking by design: a consumer that defines these tokens (e.g. nexious-client's
 // vars.css, imported AFTER the library stylesheet) overrides every value via normal source
 // order, so existing apps are unaffected; only the drop-it-in-unstyled case changes.
+//
+// ── Conformance (2026-08-09, UI rework Phase 1) ──────────────────────────────────
+// This layer is now NAME compatible and VALUE compatible with the CompanyUno Design
+// Language (roadmaps/specs/companyuno-design-language-and-redesign.md sections 5.3
+// through 5.9), whose shipped reference implementation is nexious-client's vars.css
+// plus theme.css. That matters more than it sounds: the client's tokens override these
+// by source order, so a token NAME we share but VALUE we disagree on means the client
+// silently changes what a library rule MEANS, not just how it looks. Three names were
+// colliding that way (--space-large, --text-large, and the radius scale) and are
+// corrected below. Where a value is pinned to the client's, it is because the client is
+// the reference; where it deliberately is NOT, there is a comment saying why.
 :root {
-  // brand + surfaces
+  // ── Brand ───────────────────────────────────────────────────────────────────────
+  // --main-brand-color stays at the library's own neutral slate rather than the design
+  // language's indigo #4f46e5, pending an owner decision (UI rework plan Q1). The client
+  // overrides it, so this value only reaches the standalone and Storybook cases.
   --main-brand-color: #484b6a;
+  // The hover and accent shades of the brand, named exactly as nexious-client names them
+  // so a client override flows into library components instead of sitting beside them.
+  // The design language's shorthand names (--brand-hover, --brand-accent) are deliberately
+  // NOT introduced: the client implements the long names, and shipping both would be two
+  // names for one concept, which is the drift this pass exists to remove.
+  --main-brand-hover-color: #4338ca;
+  --main-brand-color-accent: #818cf8;
+  // The brand at low alpha, for selected-row tints and subtle brand backgrounds. Derived
+  // with color-mix rather than pinned as an rgba literal so it tracks whatever the brand
+  // token actually is, including a consumer override. A pinned rgba would desync from an
+  // overridden brand, which is exactly the class of bug this pass is closing.
+  --brand-wash: color-mix(in srgb, var(--main-brand-color) 6%, transparent);
+
+  // ── Surfaces and text ───────────────────────────────────────────────────────────
+  --bg: #f9fafb;
   --surface: #ffffff;
+  --card-bg: #ffffff;
   --border: #dddddd;
+  --input-bg: #ffffff;
+  --input-border: #cbd5e1;
   --text: #2c3e50;
   // Quieter prose (table captions, detail lines). Darker than the #666/#999 literals it
   // replaces, which only reached ~2.8:1 on white and failed WCAG 1.4.3 AA.
   --text-secondary: #4b5563;
-  --text-small: 0.875rem;
-  --text-large: 1.25rem;
+  // One step quieter than --text-secondary, still AA on white (~4.6:1). Timestamps, meta.
+  --text-muted: #6b7280;
+  // The subtle row and cell hover tint, and the modal backdrop. Both were improvised per
+  // component before the design language named them (section 5.3).
+  --hover-bg: rgba(15, 23, 42, 0.04);
+  --scrim: rgba(15, 23, 42, 0.45);
   // Table surfaces. TRANSLUCENT rather than opaque hex on purpose: a table composites over
   // whatever sits beneath it (page background, card, panel, dialog), and an opaque fill has
   // to assume that surface is white. Over white these resolve to the #f2f2f2 / #f9f9f9 /
@@ -27,15 +63,103 @@
   --table-header-bg: rgba(0, 0, 0, 0.05);
   --table-stripe-bg: rgba(0, 0, 0, 0.04);
   --table-row-hover-bg: rgba(0, 0, 0, 0.12);
-  // status accents. Greens are darkened from #4bb161 to #2e7d46 so WHITE badge
-  // text (--status-on-accent) clears WCAG 1.4.3 AA (~5.1:1); the old #4bb161 only
-  // reached 2.7:1 against white. --text-success-color (success text on the white
-  // surface) is darkened to the same value for ~5.1:1.
+
+  // ── Neutral ramp (slate) ────────────────────────────────────────────────────────
+  // Formalized so every gray in the library is an intentional step rather than one of the
+  // ad-hoc $faded / $dim / $muted literals in variables/_colors.scss. Nothing reads these
+  // yet; they exist so item 50 lane 2 (the palette tail) has a scale to migrate onto
+  // instead of inventing one mid-refactor.
+  --slate-900: #0f172a;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #6b7280;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-50: #f9fafb;
+
+  // ── Type scale ──────────────────────────────────────────────────────────────────
+  // --text-large moves from 1.25rem (20px) to 1.125rem (18px) to match the design
+  // language. It is NOT renamed: renaming would break any consumer reading it, and the
+  // client already overrides it to 1.125rem, so production already renders 18px here.
+  // Every library rule that genuinely wanted 20px moved to --text-extra-large in the
+  // same commit; that was a per-site decision, not a find and replace.
+  --text-extra-small: 0.75rem;
+  --text-small: 0.875rem;
+  --text-base: 1rem;
+  --text-large: 1.125rem;
+  --text-extra-large: 1.25rem;
+  --text-2x-large: 1.5rem;
+  --text-3x-large: 1.875rem;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  // The overline/eyebrow tracking (12px, 600, uppercase). One token so a field label and a
+  // section eyebrow cannot drift apart by a hundredth of an em.
+  --tracking-overline: 0.06em;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  // ── Spacing scale ───────────────────────────────────────────────────────────────
+  // --space-large moves from 2rem (32px) to 1.5rem (24px) to match the design language,
+  // and the old value is now --space-extra-large. Same reasoning as --text-large above:
+  // redeclared, never renamed, and the client already overrides it to 24px.
+  --space-extra-small: 0.25rem;
+  --space-small: 0.5rem;
+  --space-medium-small: 0.75rem;
+  --space-medium: 1rem;
+  --space-large: 1.5rem;
+  --space-extra-large: 2rem;
+  --space-section: 3rem;
+  --space-page: 4rem;
+
+  // ── Radii ───────────────────────────────────────────────────────────────────────
+  // Corrected from the off-scale 5 / 7 / 15 to the design language's 4 / 8 / 16, and
+  // --radius-large (12px) is added because it was simply missing: cards and panels had no
+  // radius to reach for and drifted to raw 10px literals instead. The scale has to be
+  // exact for the concentric nesting rule to work at all (a 12px card holds 8px rows holds
+  // 4px chips); one step being 7px instead of 8px makes every nested corner slightly wrong.
+  --radius-small: 4px;
+  --radius-medium: 8px;
+  --radius-large: 12px;
+  --radius-extra-large: 16px;
+  --radius-full: 9999px;
+
+  // ── Elevation ───────────────────────────────────────────────────────────────────
+  // Pinned to the client's shadow values so a Storybook review shows the same depth the
+  // product ships. The --elevation-* aliases name the ladder from design language 5.7 by
+  // ROLE, so a rule says what a surface is rather than which blur radius it wanted. Note
+  // the rule that comes with them: a surface gets a border OR a shadow at rest, never both.
+  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --elevation-1: var(--shadow-small); // cards, panels at rest
+  --elevation-2: var(--shadow-medium); // dropdowns, popovers
+  --elevation-3: var(--shadow-large); // modals, dialogs
+
+  // ── Motion ──────────────────────────────────────────────────────────────────────
+  // Three named speeds so a component picks a role, not a number. The library had one
+  // (--transition-fast) and anything slower was hardcoded, which is how _form-navigation
+  // ended up with a bare `120ms ease` sitting next to a token-driven sibling.
+  --transition-fast: 150ms ease; // hover, focus, color changes
+  --transition-base: 200ms ease; // enter and exit, expand and collapse
+  --transition-slow: 300ms ease; // overlays and dialogs
+
+  // ── Status accents ──────────────────────────────────────────────────────────────
+  // These keep the library's own values rather than snapping to the client's, because the
+  // pairs below were chosen together for contrast: white --status-on-accent on the
+  // darkened green clears WCAG 1.4.3 AA (~5.1:1) where the old #4bb161 reached only 2.7:1,
+  // and crimson clears AA against white where the client's #ef4444 does not (3.8:1).
+  // Adopting the client's values would import a contrast regression, so the divergence is
+  // deliberate and the client side is recorded in TECH_DEBT instead.
   --danger-accent-color: crimson;
   --pending-accent-color: #eaab4c;
   --success-accent-color: #2e7d46;
+  // Kept even though nexious-client deleted its copy as a dead token: it is NOT dead here.
+  // styles/theme/_status.scss reads it for .status-complete, so dropping the default would
+  // leave that badge with no background at all in every consumer, including the client
+  // (which no longer defines it and therefore relies on this line).
   --complete-accent-color: #2e7d46;
-  --text-success-color: #2e7d46;
   --primary-text-light-mode-color: #2c3e50;
   // Light text for placement ON a brand fill (.btn-active / .btn-selected). Defaulted here because
   // that rule now reads the brand token, and without a default the library would render dark text
@@ -45,24 +169,40 @@
   // status badge text colors, each AA on its own badge background
   --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
   --status-on-pending: #2c3e50; // dark on the amber pending badge (~5.5:1)
-  // spacing scale
-  --space-extra-small: 0.25rem;
-  --space-small: 0.5rem;
-  --space-medium-small: 0.75rem;
-  --space-medium: 1rem;
-  --space-large: 2rem;
-  // radii
-  --radius-small: 5px;
-  --radius-medium: 7px;
-  --radius-extra-large: 15px;
-  --radius-full: 9999px;
-  // elevation
-  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --shadow-large: 0 10px 28px rgba(0, 0, 0, 0.12);
-  // motion
-  --transition-fast: 150ms ease;
-  // sizing
+
+  // ── Status surfaces ─────────────────────────────────────────────────────────────
+  // Each status gets a background, a border and a text color as a set, so a badge or a
+  // banner can be built from tokens alone and inherits dark correctness for free. Before
+  // this the library had status ACCENTS with no paired background, which is why every
+  // status surface had to invent its own fill. Values match the client exactly.
+  --success-bg: #dcfce7;
+  --success-border: #86efac;
+  --success-text: #15803d;
+  --warn-bg: #fef3c7;
+  --warn-border: #f59e0b;
+  --warn-text: #92400e;
+  --danger-bg: #fef2f2;
+  --danger-border: #fca5a5;
+  --danger-text: #b91c1c;
+  --info-bg: #dbeafe;
+  --info-border: #93c5fd;
+  --info-text: #1e40af;
+  // The library's older name for success text, now an alias so the two cannot disagree.
+  // Kept rather than deleted because removing a published token is a consumer-visible
+  // change for no gain; nothing inside this library reads it.
+  --text-success-color: var(--success-text);
+
+  // ── Stacking ────────────────────────────────────────────────────────────────────
+  // Named steps so two layered surfaces can never fight over an improvised z-index.
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-dropdown: 1000;
+  --z-overlay: 2000;
+  --z-toast: 3000;
+  --z-command: 4000;
+
+  // ── Sizing ──────────────────────────────────────────────────────────────────────
   --max-card-width: 600px;
 }
 
@@ -74,21 +214,51 @@
 // every descendant using var(--surface)/var(--text) stayed light (white cards on a dark
 // page). CSS custom properties cascade, so reassigning them here re-themes every
 // token-driven descendant of a dark-mode subtree. Light mode keeps the :root defaults
-// above. Values chosen for WCAG AA text contrast on --surface; verify visually before
-// publishing (the remaining hardcoded $light-mode surfaces are FUTURE_PLANS item 80).
+// above. Values chosen for WCAG AA text contrast on --surface.
+//
+// The navy ramp is pinned to the client's theme.css values (2026-08-09). Standalone dark
+// previously used its own slate-blue set, which meant a Storybook dark review showed a
+// palette the product never ships, and Storybook is the review surface for the rest of
+// this rework. Note what is NOT reassigned here: --main-brand-hover-color and
+// --main-brand-color-accent. The client declares both and does not flip them on dark, so
+// flipping them here would repaint client surfaces from a library-only decision. The
+// design language does specify dark values for that pair; closing that gap is a client
+// change, recorded in TECH_DEBT rather than smuggled in from the library.
 .dark-mode,
 [data-theme="dark"] {
-  --surface: #1f2a37; // card / panel surface
-  --border: #3a4756; // subtle divider on dark
-  --text: #e6eaf0; // body text (~11:1 on --surface)
-  --text-secondary: #aab4c2; // quieter prose, still AA on --surface
-  // Dark counterparts for the table surfaces. A lift on dark needs MORE alpha than a
-  // darken on light does to read as the same step, hence the asymmetry with :root.
+  --bg: #0b1120; // page background
+  --surface: #111c2e; // card / panel surface
+  --card-bg: #111c2e;
+  --border: #1e293b; // subtle divider on dark
+  --input-bg: #111c2e;
+  --input-border: #334155;
+  --text: #f8fafc; // body text
+  --text-secondary: #94a3b8; // quieter prose, still AA on --surface
+  --text-muted: #64748b;
+  // A lift on dark needs MORE alpha than a darken on light does to read as the same step,
+  // hence the asymmetry with :root for the hover tint and the table surfaces. The scrim
+  // goes to plain black because a slate-tinted scrim over a navy page reads as haze.
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --scrim: rgba(0, 0, 0, 0.6);
   --table-header-bg: rgba(255, 255, 255, 0.09);
   --table-stripe-bg: rgba(255, 255, 255, 0.06);
   --table-row-hover-bg: rgba(255, 255, 255, 0.12);
-  // Success TEXT must lighten on a dark surface; the light-mode #2e7d46 is too dark here.
-  --text-success-color: #5dd07a;
+  // The wash follows the lighter brand accent on dark, and needs more alpha for the same
+  // reason the hover tint does.
+  --brand-wash: color-mix(in srgb, var(--main-brand-color-accent) 16%, transparent);
+  // Status surfaces flip so a badge or banner built from tokens can never ship light-only.
+  --success-bg: #052e1a;
+  --success-border: #14532d;
+  --success-text: #4ade80;
+  --warn-bg: #78350f;
+  --warn-border: #f59e0b;
+  --warn-text: #fde68a;
+  --danger-bg: #450a0a;
+  --danger-border: #991b1b;
+  --danger-text: #fca5a5;
+  --info-bg: #1e3a5f;
+  --info-border: #1d4ed8;
+  --info-text: #93c5fd;
   // Deeper shadows so elevation still reads against a dark background.
   --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.5);
   --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.55);

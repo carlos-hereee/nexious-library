@@ -1,0 +1,69 @@
+// Control tokens: the shared geometry of every interactive element in the library.
+//
+// Why this file exists at all: today an Input, a Select and a Button each size themselves.
+// There is no token that says "a control is this tall," so each one derives its height
+// from its own padding and font size and they land a few pixels apart. That is the single
+// largest source of the "nothing lines up" feeling in a form, and no amount of color or
+// radius work fixes it. Naming height, padding, radius and the focus ring here means a
+// control declares which SIZE it is and the geometry follows, so a text input, a select
+// and a submit button in the same row have the same top and bottom edge by construction.
+//
+// Nothing includes these yet. Phase 1 lands the vocabulary; Phase 2 rebuilds the Form
+// family on it. Kept separate from _tokens.scss so the two files have one job each: that
+// one is the design language's shared palette and scale, this one is the library's own
+// control system built on top of it.
+:root {
+  // ── Control height ──────────────────────────────────────────────────────────────
+  // Three sizes, not a continuum. 36px is the default because it is comfortable at desktop
+  // density without dominating a form; 28px is for dense rows and toolbars; 44px is both
+  // the large size and the mobile touch floor, which is why those two numbers are the same
+  // and not a coincidence.
+  --control-height-small: 28px;
+  --control-height: 36px;
+  --control-height-large: 44px;
+
+  // ── Control padding ─────────────────────────────────────────────────────────────
+  // Every value is a step on the spacing scale (4 / 8 / 12 / 16), so a control's interior
+  // rhythm matches the layout rhythm around it rather than being an independent invention.
+  --control-padding-y-small: 4px;
+  --control-padding-x-small: 8px;
+  --control-padding-y: 8px;
+  --control-padding-x: 12px;
+  --control-padding-y-large: 12px;
+  --control-padding-x-large: 16px;
+
+  // ── Control radius ──────────────────────────────────────────────────────────────
+  // Inputs and buttons deliberately differ by one step of the radius scale: inputs read as
+  // fields cut into a surface (4px), buttons read as objects sitting on it (8px). Pointing
+  // at the radius tokens rather than repeating the numbers means a consumer that reskins
+  // the radius scale reskins the controls with it.
+  --control-radius-input: var(--radius-small);
+  --control-radius-button: var(--radius-medium);
+
+  // ── Focus ring ──────────────────────────────────────────────────────────────────
+  // One ring, defined once. The library currently carries four different focus treatments,
+  // including a select whose focus and hover render the same outline (so a keyboard user
+  // cannot tell where they are) and an entry tile whose only focus signal is an opacity
+  // change (so effectively no visible focus at all). .btn-main already had the correct
+  // treatment; these tokens promote it to the standard, and the focus-ring mixin in
+  // vars/mixin applies it. --focus-ring is a shorthand for the `outline` shorthand, so a
+  // rule reads `outline: var(--focus-ring)` and cannot get the width and style out of sync.
+  --focus-ring-width: 2px;
+  --focus-ring-offset: 2px;
+  --focus-ring-color: var(--main-brand-color);
+  --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+
+  // ── Touch ───────────────────────────────────────────────────────────────────────
+  // WCAG 2.5.5 target size. Applied at mobile width only, in Phase 3; naming it here so
+  // every control that needs the floor reads the same number.
+  --tap-target-min: 44px;
+}
+
+// The base brand indigo fails contrast against a dark navy surface, so the ring swaps to
+// the lighter brand accent on dark. Mirrors what nexious-client's theme.css already does,
+// which is why the ring is a token rather than an inlined `2px solid var(--main-brand-color)`
+// repeated per component: those inlined copies could never have flipped.
+.dark-mode,
+[data-theme="dark"] {
+  --focus-ring-color: var(--main-brand-color-accent);
+}
