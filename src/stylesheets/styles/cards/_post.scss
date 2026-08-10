@@ -1,44 +1,43 @@
 @use "../../vars/mixin/_index.scss" as mixin;
 @use "../../vars/variables/_index.scss" as variables;
 
-/*
- * Editorial Post styles
- *
- * Aesthetic:
- *  - Typography does the heavy lifting. Title is the anchor.
- *  - Generous whitespace. Cards breathe.
- *  - Subtle borders/shadows only. No heavy chrome.
- *  - Thumbnail as a clean banner with a locked aspect ratio.
- *  - Hover lifts the card a few pixels to signal interactivity.
- *
- * Three variants share a vocabulary of classes but each scopes its own layout.
- *
- * Phase 4 note on color: this file used to paint itself from $dimmer, $faded, $muted and
- * $dark-mode, which are compiled light-mode literals with no dark counterpart. Because they
- * arrive via class selectors they beat an inherited color, so a consumer could not recover
- * from them and every hairline, thumbnail placeholder and focus ring here was light-only
- * forever. Each is now the token that names its ROLE.
- */
+//
+// Editorial Post styles
+//
+// Aesthetic:
+//  - Typography does the heavy lifting. Title is the anchor.
+//  - Generous whitespace. Cards breathe.
+//  - Subtle borders/shadows only. No heavy chrome.
+//  - Thumbnail as a clean banner with a locked aspect ratio.
+//  - Hover lifts the card a few pixels to signal interactivity.
+//
+// Three variants share a vocabulary of classes but each scopes its own layout.
+//
+// Phase 4 note on color: this file used to paint itself from $dimmer, $faded, $muted and
+// $dark-mode, which are compiled light-mode literals with no dark counterpart. Because they
+// arrive via class selectors they beat an inherited color, so a consumer could not recover
+// from them and every hairline, thumbnail placeholder and focus ring here was light-only
+// forever. Each is now the token that names its ROLE.
 
-/* =========================================================================
- * Feed card: .post-card
- * ========================================================================= */
+// =========================================================================
+// Feed card: .post-card
+// =========================================================================
 
-/* The one card class in this file that NAVIGATES (its title opens the post), so it is the
-   one that keeps the translateY(-2px) lift. .post-row and .post-detail do not get it.
-   Border and not shadow at rest per 5.7; the shadow appears only on hover. The lift needs
-   no reduced-motion block of its own, the global kill switch in vars/reset strips
-   transforms from the interaction pseudo-classes. */
+// The one card class in this file that NAVIGATES (its title opens the post), so it is the
+// one that keeps the translateY(-2px) lift. .post-row and .post-detail do not get it.
+// Border and not shadow at rest per 5.7; the shadow appears only on hover. The lift needs
+// no reduced-motion block of its own, the global kill switch in vars/reset strips
+// transforms from the interaction pseudo-classes.
 .post-card {
   display: flex;
   flex-direction: column;
   gap: var(--space-small);
   max-width: variables.$max-post-card-width;
   padding: var(--space-large);
-  /* --card-bg rather than --surface: same value in both themes today, but it names this as
-     a card face, so a consumer that lightens panels without lightening cards gets it right.
-     Post-card text is color:inherit, so it follows the wrapper's --text and never goes
-     dark-on-dark. */
+  // --card-bg rather than --surface: same value in both themes today, but it names this as
+  // a card face, so a consumer that lightens panels without lightening cards gets it right.
+  // Post-card text is color:inherit, so it follows the wrapper's --text and never goes
+  // dark-on-dark.
   background: var(--card-bg);
   border: 1px solid var(--border);
   border-radius: var(--radius-large);
@@ -146,8 +145,8 @@
   }
 }
 
-/* One radius step inside the --radius-large card. The fill is what shows while the image
-   loads or when it fails, which is the skeleton token's job, not a grey literal's. */
+// One radius step inside the --radius-large card. The fill is what shows while the image
+// loads or when it fails, which is the skeleton token's job, not a grey literal's.
 .post-card-figure {
   margin: var(--space-small) 0;
   overflow: hidden;
@@ -223,8 +222,8 @@
   align-items: center;
 }
 
-/* A control inside a card, so it takes the control padding tokens rather than the 0.35rem
-   / 0.6rem pair it had, and the button radius step. */
+// A control inside a card, so it takes the control padding tokens rather than the 0.35rem
+// / 0.6rem pair it had, and the button radius step.
 .post-card-reaction {
   display: inline-flex;
   align-items: center;
@@ -256,9 +255,9 @@
   font-size: var(--text-small);
 }
 
-/* --danger-text rather than the $danger accent: this is destructive text on a surface, and
-   --danger-text is the half of the danger set that flips for dark (crimson only reaches
-   ~3.6:1 against the navy surface). */
+// --danger-text rather than the $danger accent: this is destructive text on a surface, and
+// --danger-text is the half of the danger set that flips for dark (crimson only reaches
+// ~3.6:1 against the navy surface).
 .post-card-remove {
   display: inline-flex;
   align-items: center;
@@ -278,13 +277,13 @@
   @include mixin.focus-ring;
 }
 
-/* =========================================================================
- * Row: .post-row
- * ========================================================================= */
+// =========================================================================
+// Row: .post-row
+// =========================================================================
 
-/* A list row, so per 5.7 it tints on hover and never lifts, even though the whole row is a
-   button. The tint was rgba(0,0,0,0.02), a darken that does nothing on a dark page;
-   --hover-bg is a darken on light and a lift on dark. */
+// A list row, so per 5.7 it tints on hover and never lifts, even though the whole row is a
+// button. The tint was rgba(0,0,0,0.02), a darken that does nothing on a dark page;
+// --hover-bg is a darken on light and a lift on dark.
 .post-row {
   position: relative;
   display: flex;
@@ -387,9 +386,9 @@
   @include mixin.focus-ring;
 }
 
-/* =========================================================================
- * Detail: .post-detail
- * ========================================================================= */
+// =========================================================================
+// Detail: .post-detail
+// =========================================================================
 
 .post-detail {
   display: flex;
@@ -400,8 +399,8 @@
   padding: var(--space-medium);
 }
 
-/* The hero image of a reading view, not a child of a card, so it takes the card step
-   rather than the --radius-extra-large modal step it was using. */
+// The hero image of a reading view, not a child of a card, so it takes the card step
+// rather than the --radius-extra-large modal step it was using.
 .post-detail-figure {
   margin: 0;
   overflow: hidden;
@@ -579,28 +578,28 @@
   border-top: 1px solid var(--border);
 }
 
-/* =========================================================================
- * Touch floor
- * ========================================================================= */
+// =========================================================================
+// Touch floor
+// =========================================================================
 
-/* WCAG 2.5.5. The library-wide floor in styles/buttons only reaches elements carrying a
-   .btn-* class, and every control in this file is a bare <button> with a post-* class, so
-   the reaction and remove targets were free to render at whatever their icon measured
-   (roughly 24px). Still wanted at mobile only, for the same reason the buttons partial
-   gives: 44px at desktop density turns a reaction strip into a toolbar.
+// WCAG 2.5.5. The library-wide floor in styles/buttons only reaches elements carrying a
+// .btn-* class, and every control in this file is a bare <button> with a post-* class, so
+// the reaction and remove targets were free to render at whatever their icon measured
+// (roughly 24px). Still wanted at mobile only, for the same reason the buttons partial
+// gives: 44px at desktop density turns a reaction strip into a toolbar.
+//
+// Mobile-first inverts the shape rather than the intent. The floor is now the unconditional
+// default and respond-from(mobile) lifts it back to the initial `auto`, which is exactly what
+// these selectors resolved to above mobile before: this block is the library's only
+// declaration of min-width or min-height on any of them.
+//
+// justify-content stays unconditional and needs no counterpart in the wider band. The reset in
+// vars/reset/_html.scss already gives every bare <button> `justify-content: center`, and the
+// three remove buttons restate it in their own base rules, so `center` was the desktop value
+// too and the old mobile-only copy never changed anything.
 
-   Mobile-first inverts the shape rather than the intent. The floor is now the unconditional
-   default and respond-from(mobile) lifts it back to the initial `auto`, which is exactly what
-   these selectors resolved to above mobile before: this block is the library's only
-   declaration of min-width or min-height on any of them.
-
-   justify-content stays unconditional and needs no counterpart in the wider band. The reset in
-   vars/reset/_html.scss already gives every bare <button> `justify-content: center`, and the
-   three remove buttons restate it in their own base rules, so `center` was the desktop value
-   too and the old mobile-only copy never changed anything. */
-
-/* The full-width row button already owns its horizontal extent, so it takes the height
-   floor only. Centering it would drag its thumbnail and title into the middle. */
+// The full-width row button already owns its horizontal extent, so it takes the height
+// floor only. Centering it would drag its thumbnail and title into the middle.
 .post-row-select {
   min-height: var(--tap-target-min);
 }

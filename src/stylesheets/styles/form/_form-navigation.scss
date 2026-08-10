@@ -29,19 +29,18 @@
   }
 }
 
-/*
- * Step indicator
- *
- * Uses real <ol><li> so assistive tech announces "list of N items" and the
- * order. Separate connector lines drawn with ::before.
- *
- * Every value here now comes from the scale. Before this pass the block carried a hardcoded
- * `120ms ease` beside a token-driven sibling, three off-scale sizes (2rem, 1.5rem, 1.25rem),
- * two off-scale font sizes (0.8rem, 0.9rem) and an `rgba(255, 165, 0, 0.12)` literal. The hue
- * change matters most: the connector used the orange CTA color while the completed state used
- * green, so a progress bar changed hue family halfway along its own run. It is one family now,
- * brand for in-progress and green only for done.
- */
+//
+// Step indicator
+//
+// Uses real <ol><li> so assistive tech announces "list of N items" and the
+// order. Separate connector lines drawn with ::before.
+//
+// Every value here now comes from the scale. Before this pass the block carried a hardcoded
+// `120ms ease` beside a token-driven sibling, three off-scale sizes (2rem, 1.5rem, 1.25rem),
+// two off-scale font sizes (0.8rem, 0.9rem) and an `rgba(255, 165, 0, 0.12)` literal. The hue
+// change matters most: the connector used the orange CTA color while the completed state used
+// green, so a progress bar changed hue family halfway along its own run. It is one family now,
+// brand for in-progress and green only for done.
 
 .form-steps {
   list-style: none;

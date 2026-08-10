@@ -6,44 +6,44 @@ table {
   margin: var(--space-medium) 0;
 }
 
-/* -- Scroll container -- */
-/* The box Table.tsx wraps every table in, and the box HoursOfOperation has always wrapped its
-   own table in. Two jobs, and the second one is the reason this rule reads oddly.
-
-   ① A table is the one element that cannot be made to fit: it sizes to its widest row, so a
-   wide one widens whatever holds it. In a CSS grid that is silently fatal, because a grid item
-   defaults to min-width:auto and inherits its content's minimum, so one wide table stretches
-   the whole shell. Scrolling it inside its own box is the fix.
-
-   ② `overflow-x: auto` cannot be had on its own: per the CSS overflow spec, a `visible` on the
-   other axis computes to `auto` (and a `clip` computes to `hidden`), so this box is ALREADY a
-   vertical scrollport whether or not we ask for one. That matters because a scrollport is what
-   the sticky header below sticks to. Left uncapped the box never scrolls vertically, the header
-   never pins, and the sticky rule is inert. So the cap is what makes the feature real rather
-   than decorative. It bites only when a table is taller than the entire viewport, which is
-   exactly the case where losing the header hurts most. */
+// -- Scroll container --
+// The box Table.tsx wraps every table in, and the box HoursOfOperation has always wrapped its
+// own table in. Two jobs, and the second one is the reason this rule reads oddly.
+//
+// ① A table is the one element that cannot be made to fit: it sizes to its widest row, so a
+// wide one widens whatever holds it. In a CSS grid that is silently fatal, because a grid item
+// defaults to min-width:auto and inherits its content's minimum, so one wide table stretches
+// the whole shell. Scrolling it inside its own box is the fix.
+//
+// ② `overflow-x: auto` cannot be had on its own: per the CSS overflow spec, a `visible` on the
+// other axis computes to `auto` (and a `clip` computes to `hidden`), so this box is ALREADY a
+// vertical scrollport whether or not we ask for one. That matters because a scrollport is what
+// the sticky header below sticks to. Left uncapped the box never scrolls vertically, the header
+// never pins, and the sticky rule is inert. So the cap is what makes the feature real rather
+// than decorative. It bites only when a table is taller than the entire viewport, which is
+// exactly the case where losing the header hurts most.
 .table-scroll,
 .hours-of-operation-wrapper {
   width: 100%;
   overflow: auto;
   max-height: 100vh;
-  /* A scroll region is focusable in some browsers, and a consumer may add tabindex to make it
-     keyboard scrollable everywhere, so it rings like the rest of the library when it is. */
+  // A scroll region is focusable in some browsers, and a consumer may add tabindex to make it
+  // keyboard scrollable everywhere, so it rings like the rest of the library when it is.
   @include mixins.focus-ring;
 }
 
-/* Every color below reads from the token layer (vars/_tokens.scss) instead of a literal, so a
-   table re-themes with the rest of the library under `.dark-mode`.
-
-   WHY: this reset used to hardcode a light-only palette (#ddd cell borders, an #f2f2f2 header
-   fill with #333 text, an #f9f9f9 stripe and an #e0e0e0 hover) and shipped no dark counterpart.
-   A consumer could not recover from that on its own page, because these are ELEMENT selectors
-   and an element selector beats an inherited color: a dark page's `color: var(--text)` never
-   reached a `th`. The result on nexious-client's dark theme was a header row at 2.3:1, a
-   near-white first column, white grid lines and bright zebra bands across a navy page.
-
-   The stripe survives, deliberately: alternating rows are what make a wide row scannable, and
-   the ask was to keep that reading in BOTH themes rather than drop it. */
+// Every color below reads from the token layer (vars/_tokens.scss) instead of a literal, so a
+// table re-themes with the rest of the library under `.dark-mode`.
+//
+// WHY: this reset used to hardcode a light-only palette (#ddd cell borders, an #f2f2f2 header
+// fill with #333 text, an #f9f9f9 stripe and an #e0e0e0 hover) and shipped no dark counterpart.
+// A consumer could not recover from that on its own page, because these are ELEMENT selectors
+// and an element selector beats an inherited color: a dark page's `color: var(--text)` never
+// reached a `th`. The result on nexious-client's dark theme was a header row at 2.3:1, a
+// near-white first column, white grid lines and bright zebra bands across a navy page.
+//
+// The stripe survives, deliberately: alternating rows are what make a wide row scannable, and
+// the ask was to keep that reading in BOTH themes rather than drop it.
 th,
 td {
   border: 1px solid var(--border);
@@ -57,25 +57,25 @@ th {
   color: var(--text);
 }
 
-/* -- Sticky header -- */
-/* Scoped to `thead th` rather than every `th`: a `th scope="row"` sits inside tbody as a row
-   label, and pinning that to the top of the scrollport would float a body cell over the data.
-   The overline treatment is scoped the same way, because uppercasing a row label mangles a
-   name while uppercasing a column label is the point.
-
-   Two gotchas are handled here and neither is obvious from the markup:
-
-   ① --table-header-bg is deliberately TRANSLUCENT (see the token comment) so a table can
-   composite over whatever surface holds it. A translucent SITTING header is fine; a translucent
-   PINNED header is not, because rows scroll visibly through it. So the tint is layered over an
-   opaque --surface via a flat gradient, which keeps one source of truth for the tint instead of
-   introducing a second opaque header token that could drift from it.
-
-   ② With `border-collapse: collapse` the cell borders belong to the TABLE, not the cell, so a
-   pinned header leaves its bottom hairline behind and scrolls away bare. The inset shadow is
-   that hairline redrawn as part of the cell. It is a border substitute, not elevation, so the
-   border-XOR-shadow rule is not in play; the alternative, `border-collapse: separate`, would
-   double every interior rule and is a much larger change than the bug deserves. */
+// -- Sticky header --
+// Scoped to `thead th` rather than every `th`: a `th scope="row"` sits inside tbody as a row
+// label, and pinning that to the top of the scrollport would float a body cell over the data.
+// The overline treatment is scoped the same way, because uppercasing a row label mangles a
+// name while uppercasing a column label is the point.
+//
+// Two gotchas are handled here and neither is obvious from the markup:
+//
+// ① --table-header-bg is deliberately TRANSLUCENT (see the token comment) so a table can
+// composite over whatever surface holds it. A translucent SITTING header is fine; a translucent
+// PINNED header is not, because rows scroll visibly through it. So the tint is layered over an
+// opaque --surface via a flat gradient, which keeps one source of truth for the tint instead of
+// introducing a second opaque header token that could drift from it.
+//
+// ② With `border-collapse: collapse` the cell borders belong to the TABLE, not the cell, so a
+// pinned header leaves its bottom hairline behind and scrolls away bare. The inset shadow is
+// that hairline redrawn as part of the cell. It is a border substitute, not elevation, so the
+// border-XOR-shadow rule is not in play; the alternative, `border-collapse: separate`, would
+// double every interior rule and is a much larger change than the bug deserves.
 thead th {
   position: sticky;
   top: 0;
@@ -89,12 +89,12 @@ thead th {
   text-transform: uppercase;
 }
 
-/* -- Row density -- */
-/* `height` on a table row is a MINIMUM, not a fixed size, so a wrapping cell still grows.
-   Both densities are tokens rather than numbers because both have to clear the 44px tap floor
-   by construction: a "compact" row someone sets to 36px because it looked tighter is a WCAG
-   2.5.5 failure that no visual review catches. Comfortable is the default, `.table-dense` on
-   the table element is the toggle. */
+// -- Row density --
+// `height` on a table row is a MINIMUM, not a fixed size, so a wrapping cell still grows.
+// Both densities are tokens rather than numbers because both have to clear the 44px tap floor
+// by construction: a "compact" row someone sets to 36px because it looked tighter is a WCAG
+// 2.5.5 failure that no visual review catches. Comfortable is the default, `.table-dense` on
+// the table element is the toggle.
 tbody tr {
   height: var(--row-height);
   transition: background-color var(--transition-fast);
@@ -110,24 +110,24 @@ tbody tr {
   padding: var(--space-small) var(--space-medium-small);
 }
 
-/* Scoped to tbody so a multi-row thead or tfoot is never striped as if it were data. */
+// Scoped to tbody so a multi-row thead or tfoot is never striped as if it were data.
 tbody tr:nth-child(even) {
   background-color: var(--table-stripe-bg);
 }
 
-/* A row is a list row, not a navigational card, so the hover is a tint and never a lift.
-   A translateY here would make a long table ripple under the cursor. */
+// A row is a list row, not a navigational card, so the hover is a tint and never a lift.
+// A translateY here would make a long table ripple under the cursor.
 tbody tr:hover {
   background-color: var(--table-row-hover-bg);
 }
 
-/* -- Numeric cells -- */
-/* Opt in per cell. tabular-nums forces the proportional digits most UI faces ship by default
-   onto a fixed advance width, which is what lets a column of numbers line up at the decimal;
-   ragged digits are the single most common tell of an unfinished table. The right alignment
-   comes with it because a number is read from its last digit. The class outranks the `th, td`
-   and `thead th` alignment above on specificity alone, so it works in a header and a body cell
-   without a second selector. */
+// -- Numeric cells --
+// Opt in per cell. tabular-nums forces the proportional digits most UI faces ship by default
+// onto a fixed advance width, which is what lets a column of numbers line up at the decimal;
+// ragged digits are the single most common tell of an unfinished table. The right alignment
+// comes with it because a number is read from its last digit. The class outranks the `th, td`
+// and `thead th` alignment above on specificity alone, so it works in a header and a body cell
+// without a second selector.
 .cell-numeric {
   text-align: right;
   font-variant-numeric: tabular-nums;
@@ -148,8 +148,8 @@ tfoot caption {
   margin-bottom: var(--space-small);
 }
 
-/* Same defect as the cells above, one layer out: #666 and #999 are light-mode literals that
-   invert to unreadable on a dark page (#999 lands near 2.8:1 on white to begin with). */
+// Same defect as the cells above, one layer out: #666 and #999 are light-mode literals that
+// invert to unreadable on a dark page (#999 lands near 2.8:1 on white to begin with).
 .table-subtitle {
   font-size: var(--text-base);
   color: var(--text-secondary);
@@ -162,19 +162,19 @@ tfoot caption {
   margin-top: var(--space-small);
 }
 
-/* `.hours-of-operation-wrapper, .hours-of-operation { width: 100% }` used to sit here and is
-   gone: the wrapper now takes its width from the scroll-container rule above and the table from
-   the `table` rule at the top, both to the same 100%. Three rules setting one value is how they
-   drift apart. */
+// `.hours-of-operation-wrapper, .hours-of-operation { width: 100% }` used to sit here and is
+// gone: the wrapper now takes its width from the scroll-container rule above and the table from
+// the `table` rule at the top, both to the same 100%. Three rules setting one value is how they
+// drift apart.
 
-/* The small-screen values now sit in the base rules above, so this block holds what the wide
-   layout gets: the roomier cell and the larger type scale. */
+// The small-screen values now sit in the base rules above, so this block holds what the wide
+// layout gets: the roomier cell and the larger type scale.
 @include mixins.respond-from(mobile) {
   th,
   td {
     padding: var(--space-medium-small) var(--space-medium);
-    /* A wide table never declared a cell font-size at all, so a cell simply took the table's.
-       `inherit` is that same inherited value written out, not a size picked here. */
+    // A wide table never declared a cell font-size at all, so a cell simply took the table's.
+    // `inherit` is that same inherited value written out, not a size picked here.
     font-size: inherit;
   }
   .table-title {
@@ -188,10 +188,10 @@ tfoot caption {
   }
 }
 
-/* Deliberately still desktop-first. A bare caption takes its alignment from the UA stylesheet,
-   which is `-webkit-center` in Blink and `center` in Gecko, so there is no one portable value to
-   state under respond-from, and `center` would quietly change how block children inside a
-   caption sit in Chrome. */
+// Deliberately still desktop-first. A bare caption takes its alignment from the UA stylesheet,
+// which is `-webkit-center` in Blink and `center` in Gecko, so there is no one portable value to
+// state under respond-from, and `center` would quietly change how block children inside a
+// caption sit in Chrome.
 @include mixins.devices(mobile) {
   caption {
     text-align: left;

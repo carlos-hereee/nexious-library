@@ -2,15 +2,14 @@
 @use "../../vars/variables/_index.scss" as variables;
 @use "./_nav-grammar.scss" as grammar;
 
-/*
- * Navigation: three patterns, one grammar (design language 5.10).
- *
- * Top bar (.navbar / .navigation), left rail (.nav-rail) and bottom tab bar
- * (.nav-tab-bar) all build their items from grammar.nav-item and mark the current
- * item with grammar.nav-active, so hover, focus, tap size and the brand accent are
- * written once and only the ACCENT EDGE differs per pattern. The count pip is the
- * library's existing .ping-count (styles/assets/_icons.scss); nothing here redefines it.
- */
+//
+// Navigation: three patterns, one grammar (design language 5.10).
+//
+// Top bar (.navbar / .navigation), left rail (.nav-rail) and bottom tab bar
+// (.nav-tab-bar) all build their items from grammar.nav-item and mark the current
+// item with grammar.nav-active, so hover, focus, tap size and the brand accent are
+// written once and only the ACCENT EDGE differs per pattern. The count pip is the
+// library's existing .ping-count (styles/assets/_icons.scss); nothing here redefines it.
 
 .navbar {
   display: flex;
@@ -99,13 +98,12 @@
   flex-shrink: 0;
 }
 
-/*
- * Left rail
- *
- * In-app and plugin sections. Same items, stacked and full width, with the brand accent
- * on the leading edge. Opt-in container class: the consumer supplies the markup, which is
- * why the rail needs no new item class of its own.
- */
+//
+// Left rail
+//
+// In-app and plugin sections. Same items, stacked and full width, with the brand accent
+// on the leading edge. Opt-in container class: the consumer supplies the markup, which is
+// why the rail needs no new item class of its own.
 
 .nav-rail {
   display: flex;
@@ -127,13 +125,12 @@
   @include grammar.nav-active(left);
 }
 
-/*
- * Bottom tab bar
- *
- * The mobile counterpart of the rail: icon over label, brand accent on the top edge.
- * Sticky rather than fixed so the last row of a scrolled list is never permanently
- * hidden underneath it.
- */
+//
+// Bottom tab bar
+//
+// The mobile counterpart of the rail: icon over label, brand accent on the top edge.
+// Sticky rather than fixed so the last row of a scrolled list is never permanently
+// hidden underneath it.
 
 .nav-tab-bar {
   position: sticky;
@@ -170,12 +167,11 @@
   @include grammar.nav-active(top);
 }
 
-/*
- * Theme menu
- *
- * A menu button plus listbox popover. Visually distinct from nav links so users read it
- * as a control, not a page link, but it borrows the same tap floor and focus ring.
- */
+//
+// Theme menu
+//
+// A menu button plus listbox popover. Visually distinct from nav links so users read it
+// as a control, not a page link, but it borrows the same tap floor and focus ring.
 
 .theme-menu {
   position: relative;
