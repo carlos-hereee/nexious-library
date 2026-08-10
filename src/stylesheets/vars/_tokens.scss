@@ -22,10 +22,12 @@
 // the reference; where it deliberately is NOT, there is a comment saying why.
 :root {
   // ── Brand ───────────────────────────────────────────────────────────────────────
-  // --main-brand-color stays at the library's own neutral slate rather than the design
-  // language's indigo #4f46e5, pending an owner decision (UI rework plan Q1). The client
-  // overrides it, so this value only reaches the standalone and Storybook cases.
-  --main-brand-color: #484b6a;
+  // The design language's indigo, replacing the library's old neutral slate #484b6a (owner
+  // decision on plan Q1, 2026-08-09). The client overrides this token, so the change reaches
+  // only the standalone and Storybook cases, and Storybook is exactly why it matters: it is
+  // the review surface for the rest of this rework, and a states matrix rendered in a brand
+  // the product never ships reviews the wrong thing.
+  --main-brand-color: #4f46e5;
   // The hover and accent shades of the brand, named exactly as nexious-client names them
   // so a client override flows into library components instead of sitting beside them.
   // The design language's shorthand names (--brand-hover, --brand-accent) are deliberately

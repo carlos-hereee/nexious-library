@@ -78,6 +78,10 @@ three collisions are now resolved in the library's favour of the design language
   one of these, so production is unchanged.
 - `--text-success-color` is now an alias for `--success-text` so the two cannot disagree. It has
   no readers inside this library and none in `nexious-client`.
+- **`--main-brand-color` default moves from `#484b6a` to the design language's indigo `#4f46e5`**
+  (owner decision on plan Q1). `nexious-client` overrides this token, so production is unchanged;
+  what moves is the standalone and Storybook rendering, which is the point, since Storybook is
+  the review surface for the rest of the rework.
 - **`.countdown-timer` font size moves from `--text-large` to `--text-extra-large`.** This is the
   one component declaration that changes, and the one place a consumer will see a difference. It
   is the visual anchor of the banner and wanted the 20px step; under the client it had already
@@ -104,7 +108,10 @@ three collisions are now resolved in the library's favour of the design language
 
 Compiled CSS diffed before and after (`sass src/stylesheets/index.scss`, expanded). Every changed
 declaration is a token definition, plus the two rules named above and nothing else. Size 86,432
-to 89,368 bytes, **+3.4%**, inside the 10% ceiling. `npm test` green, 122 tests across 15 suites.
+to 89,362 bytes, **+3.4%**, inside the 10% ceiling. `npm test` green, 122 tests across 15 suites.
+The three new mixins were each compiled through a throwaway call site rather than assumed to
+work, since an uninvoked Sass mixin body is parsed but never evaluated: `respond-from(tablet)`
+emits `min-width: 770.02px`, `respond-from(mini)` emits `375.02px`.
 
 > Note for anyone repeating that diff: `styles/theme/_bubbly.scss` calls `math.random()`, so
 > `dist/css/index.css` is **not reproducible between builds** and a raw diff shows ~200 spurious
