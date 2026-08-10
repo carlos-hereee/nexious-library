@@ -1,31 +1,30 @@
 @use "../../vars/mixin/_index.scss" as mixin;
-@use "../../vars/variables/_index.scss" as variables;
 
 .form-navigation {
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 
 .form-nav {
   display: grid;
   grid-template-columns: max-content;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: variables.$rem;
+    gap: var(--space-medium);
   }
 }
 
 .form-buttons {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   @include mixin.devices(mobile) {
     display: grid;
     grid-template-columns: 1fr 1fr;
     align-content: center;
-    gap: variables.$rem;
+    gap: var(--space-medium);
   }
 }
 
@@ -34,6 +33,13 @@
  *
  * Uses real <ol><li> so assistive tech announces "list of N items" and the
  * order. Separate connector lines drawn with ::before.
+ *
+ * Every value here now comes from the scale. Before this pass the block carried a hardcoded
+ * `120ms ease` beside a token-driven sibling, three off-scale sizes (2rem, 1.5rem, 1.25rem),
+ * two off-scale font sizes (0.8rem, 0.9rem) and an `rgba(255, 165, 0, 0.12)` literal. The hue
+ * change matters most: the connector used the orange CTA color while the completed state used
+ * green, so a progress bar changed hue family halfway along its own run. It is one family now,
+ * brand for in-progress and green only for done.
  */
 
 .form-steps {
@@ -43,7 +49,7 @@
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   counter-reset: form-step;
 
   @include mixin.devices(mobile) {
@@ -56,7 +62,7 @@
 .form-steps-mini {
   display: none;
   justify-content: center;
-  gap: variables.$rem05;
+  gap: var(--space-small);
 
   @include mixin.devices(mobile) {
     display: flex;
@@ -73,57 +79,62 @@
     &::before {
       content: "";
       display: block;
-      width: 2rem;
+      width: var(--space-extra-large);
       height: 2px;
-      background: variables.$faded;
-      margin: 0 variables.$rem05;
-      border-radius: 2px;
+      background: var(--border);
+      margin: 0 var(--space-small);
+      border-radius: var(--radius-full);
     }
   }
 
   &.is-complete + &::before,
   &.is-current + &::before {
-    background: variables.$cta-color;
+    background: var(--main-brand-color);
   }
 }
 
 .form-step-btn {
   display: inline-flex;
   align-items: center;
-  gap: variables.$rem05;
-  padding: variables.$rem05 variables.$rem;
+  gap: var(--space-small);
+  // The touch floor (WCAG 2.5.5). A step control is one of the smallest targets in the library
+  // and was never measured against it.
+  min-height: var(--tap-target-min);
+  padding: var(--control-padding-y) var(--control-padding-x);
   background: transparent;
   border: 0;
-  border-radius: variables.$border-radius;
+  border-radius: var(--control-radius-button);
   color: inherit;
   font: inherit;
   cursor: pointer;
-  transition: background 120ms ease, color 120ms ease;
+  transition: background var(--transition-fast), color var(--transition-fast);
 
   &:hover {
-    background: variables.$dimmer;
+    background: var(--hover-bg);
   }
 
-  &:focus-visible {
-    outline: 2px solid variables.$dark-mode;
-    outline-offset: 2px;
-  }
+  // Was its own `outline: 2px solid $dark-mode`, one of four different focus treatments in the
+  // library. It is the shared ring now, so it cannot drift again and it flips correctly on dark.
+  @include mixin.focus-ring;
 }
 
 .form-step-btn-mini {
-  padding: variables.$rem025;
-  border-radius: variables.$rounded-full;
+  min-width: var(--tap-target-min);
+  min-height: var(--tap-target-min);
+  padding: var(--space-extra-small);
+  border-radius: var(--radius-full);
   aspect-ratio: 1 / 1;
 }
 
 .form-step-label {
   display: inline-flex;
   align-items: center;
-  gap: variables.$rem05;
-  padding: variables.$rem05 variables.$rem;
-  border-radius: variables.$border-radius;
-  font-weight: 600;
-  background: rgba(255, 165, 0, 0.12);
+  gap: var(--space-small);
+  min-height: var(--tap-target-min);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  border-radius: var(--control-radius-button);
+  font-weight: var(--font-semibold);
+  background: var(--brand-wash);
   color: inherit;
 }
 
@@ -131,45 +142,47 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.5rem;
-  height: 1.5rem;
-  border-radius: variables.$rounded-full;
-  background: variables.$faded;
-  color: variables.$light-mode;
-  font-size: 0.8rem;
-  font-weight: 600;
+  width: var(--space-large);
+  height: var(--space-large);
+  border-radius: var(--radius-full);
+  background: var(--border);
+  color: var(--text);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
   flex-shrink: 0;
 }
 
 .form-step.is-current .form-step-index {
-  background: variables.$cta-color;
-  color: variables.$dark-mode;
+  background: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
 }
 
 .form-step.is-complete .form-step-btn .form-step-index {
-  background: variables.$success;
-  color: variables.$light-mode;
+  background: var(--success-text);
+  color: var(--primary-text-dark-mode-color);
 }
 
 .form-step-name {
-  white-space: nowrap;
+  // NOT nowrap. A localized step name ("Información de contacto") is materially longer than its
+  // English original, and nowrap clipped it with no way for the user to read the rest.
+  overflow-wrap: anywhere;
 }
 
 .form-step-marker {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 1.25rem;
-  height: 1.25rem;
+  width: var(--space-medium);
+  height: var(--space-medium);
 }
 
 .form-step.is-current .form-step-marker {
-  color: variables.$cta-color;
+  color: var(--main-brand-color);
 }
 
 .form-steps-status {
-  margin: variables.$rem05 0 0;
-  font-size: 0.9rem;
-  opacity: 0.8;
+  margin: var(--space-small) 0 0;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
   text-align: center;
 }

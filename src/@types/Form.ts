@@ -55,6 +55,40 @@ export type FieldDateTimeProps = {
   error?: string;
   formMessage?: string;
 };
+// The date trigger plus its calendar popover. Label, message and the error node are the shell's
+// job now, so they are not on this type; only what the control itself needs is.
+export type FieldDateProps = {
+  name: string;
+  value: string;
+  onChange?: (e: string) => void;
+  placeholder?: string;
+  isDisabled?: boolean;
+  error?: string;
+  // Opt back in to the old behavior where merely rendering the field emitted today's date.
+  // OFF by default: with it on, an optional date field can never be left blank.
+  defaultToToday?: boolean;
+};
+// One time control (native <input type="time">). `list` renders a <datalist> of suggestions on
+// that same input, so a constrained slot set stays ONE control rather than becoming two.
+export type FieldTimeProps = {
+  name: string;
+  value: string;
+  onChange?: (e: string) => void;
+  isDisabled?: boolean;
+  error?: string;
+  list?: OptionProps[];
+};
+// Serves both "date-day" and "date-week". `dayLabels` localizes the seven visible labels; the
+// stored VALUE stays the English day name, because that is what consumers already have saved.
+export type FieldDayProps = {
+  name: string;
+  value: string;
+  onChange?: (e: string) => void;
+  placeholder?: string;
+  isDisabled?: boolean;
+  error?: string;
+  dayLabels?: string[];
+};
 export type AuthFieldProp = {
   name: string;
   onChange: (value: string) => void;
@@ -297,22 +331,45 @@ export interface FormFieldProps {
   handleCheckbox?: (key: OnchangeProps) => void;
   onRemovalClick?: (groupName: string, idx: number) => void;
 }
-// Entry switcher for a file-only entry group (the merch catalog). `entries` is the whole group
-// so the rail can paint every slot's real upload, not just the active one.
-export interface EntryThumbnailRailProps {
+// The one entry switcher. `entries` is the whole group, not just the active slot, because the
+// tile content is derived from each slot's own data (its upload, or its first text value).
+export interface EntryNavigatorProps {
   entries: FieldEntryProps;
   activeEntry: string;
   max?: number;
   isDisabled?: boolean;
   railLabel?: string;
+  // Names the thing being switched between, for the accessible label ("Image 3 of 7"). Defaults
+  // to "Item" because the switcher is no longer image-only; a store-hours group is not images.
+  itemNoun?: string;
+  // "rail" is the vertical column beside a large hero (the catalog); "strip" is the horizontal
+  // row above the fields (everything else).
+  orientation?: "rail" | "strip";
+  // Consumer override for a tile's text, consulted only when the slot's own data yields nothing.
+  getTileLabel?: (key: string, index: number) => string;
   onSelect: (sharedKey: string) => void;
 }
+/** @deprecated Renamed to EntryNavigatorProps when the numbered and thumbnail switchers merged. */
+export type EntryThumbnailRailProps = EntryNavigatorProps;
 export interface LabelProps {
   label: string;
   name: string;
   theme?: string;
   error?: string;
   message?: string;
+}
+// The one field layout: label, control, optional help, error. `error` is rendered by the shell
+// and must NOT also be passed to a Label inside it, or two nodes share the `${name}-error` id
+// that every control's aria-describedby points at.
+export interface FieldShellProps {
+  name: string;
+  children: React.ReactNode;
+  label?: string;
+  hideLabel?: boolean;
+  error?: string;
+  message?: string;
+  help?: string;
+  theme?: string;
 }
 export interface UploadFileProps {
   input: InputProps;
@@ -342,6 +399,12 @@ export interface SelectProp {
   error?: string;
   clearSelection?: boolean;
   isDisabled?: boolean;
+  // Set when a FieldShell above this control owns the label and the `${name}-error` node. The
+  // control then renders neither, and drops its fallback aria-label so the shell's real (possibly
+  // visually hidden) <label htmlFor> is what names it. Two nodes sharing the error id would make
+  // aria-describedby ambiguous, and a leftover aria-label would beat the real label and announce
+  // the raw field name. Standalone Select leaves this off and keeps owning all three.
+  inShell?: boolean;
   formMessage?: string;
   // Placeholder shown as the disabled first option when nothing is selected.
   // Defaults to "Choose Selection"; pass a localized string to avoid hardcoded English.

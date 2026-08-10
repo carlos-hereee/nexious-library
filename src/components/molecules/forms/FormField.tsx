@@ -1,8 +1,8 @@
 import { Button, ButtonCancel } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
-import { IconButton, Loading } from "@nxs-molecules";
+import { Loading } from "@nxs-molecules";
 import Field from "./Field";
-import EntryThumbnailRail from "./EntryThumbnailRail";
+import EntryNavigator from "./EntryNavigator";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
@@ -34,12 +34,14 @@ const FormField = (props: FormFieldProps) => {
     // guards on each ({onMultiply && ...}, {canMultiply && ...}, {canRemove && ...}), so a
     // missing or false value simply hides that control. No throw needed.
 
-    // A group whose every field is an upload (the merch catalog) is a gallery, so the switcher
-    // shows the images themselves rather than numbers you have to click through to identify.
-    // Groups with any non-file field (recurring store hours) keep the numbered strip, which is
-    // all a text entry can offer. Derived from the group's own field config, so a consumer opts
-    // in by declaring the field types it already declares. The length guard matters because
-    // [].every() is true, and an empty group has no gallery to show.
+    // A group whose every field is an upload (the merch catalog) is a gallery: the active image
+    // renders large with the switcher as a vertical rail beside it. Every other group puts the
+    // switcher as a horizontal strip above the fields. Derived from the group's own field config,
+    // so a consumer opts in by declaring the field types it already declares. The length guard
+    // matters because [].every() is true, and an empty group has no gallery to show.
+    //
+    // What changed: isGallery now chooses only the LAYOUT. It used to choose between two entirely
+    // different switcher components, one showing thumbnails and one showing numbered boxes.
     const isGallery = targetEntry.length > 0 && targetEntry.every((field) => field.type === "file");
     const fields = targetEntry.map((p) => (
       <Field key={p.fieldId} {...props} {...p} handleChange={(e) => handleChange && handleChange(e, p.fieldId)} />
@@ -47,29 +49,18 @@ const FormField = (props: FormFieldProps) => {
 
     return (
       <div className={isGallery ? "container entry-gallery" : "container"} id={fieldId}>
-        {!isGallery && entry.max && entry.max > 0 && (
-          <div className="button-container">
-            {Array.from(Array(entry.max), (_, n) => n + 1).map((num) => (
-              <IconButton
-                key={num}
-                icon={{ icon: `${num}`, isNum: true }}
-                theme={activeIdx === num - 1 ? "btn-active highlight" : "highlight"}
-                isDisable={targetList.length < num}
-                onClick={() => setActiveEntry && setActiveEntry({ [groupName]: targetList[num - 1] })}
-              />
-            ))}
-          </div>
-        )}
-        {isGallery ? <div className="entry-gallery-main">{fields}</div> : fields}
-        {isGallery && (
-          <EntryThumbnailRail
-            entries={entries}
-            activeEntry={activeEntry}
-            max={entry.max}
-            isDisabled={disableForm}
-            onSelect={(sharedKey) => setActiveEntry && setActiveEntry({ [groupName]: sharedKey })}
-          />
-        )}
+        {isGallery ? <div className="entry-gallery-main">{fields}</div> : null}
+        <EntryNavigator
+          entries={entries}
+          activeEntry={activeEntry}
+          max={entry.max}
+          isDisabled={disableForm}
+          itemNoun={isGallery ? "Image" : "Entry"}
+          orientation={isGallery ? "rail" : "strip"}
+          railLabel={onMultiply?.name || groupName}
+          onSelect={(sharedKey) => setActiveEntry && setActiveEntry({ [groupName]: sharedKey })}
+        />
+        {!isGallery ? fields : null}
         {onMultiply && (
           <div className="buttons-container">
             {canRemove && onRemovalClick && (

@@ -2,11 +2,14 @@
 
 @use "../../vars/variables/_index.scss" as variables;
 
-// ── Catalog gallery ─────────────────────────────────────────────────────────────
-// Layout for a file-only entry group (FormField sets .entry-gallery when every field in the
-// group is an upload). The active image renders large, the other slots sit beside it as dimmed
-// thumbnails. Everything here is scoped under .entry-gallery so the numbered switcher used by
-// text entry groups (recurring store hours) is untouched.
+// ── Entry navigator ─────────────────────────────────────────────────────────────
+// The one entry switcher, in its two layouts. A file-only group (FormField sets .entry-gallery
+// when every field in the group is an upload) renders the active image large with the switcher
+// as a vertical rail beside it. Every other group gets the horizontal strip below.
+//
+// Both used to be separate: this file styled the gallery rail and the numbered box strip was
+// styled by generic button classes. One switcher now serves both, so the tile rules are shared
+// and only the container layout differs.
 
 // Two tiles plus the gutter. Local because nothing outside this block sizes against the rail.
 $rail-width: 150px;
@@ -65,7 +68,7 @@ $rail-max-height: 280px;
 // into a blob, so the empty slot gets the plain radius of the image it is standing in for.
 // Two classes to clear the avatar rule's specificity. Scoped here so avatars are untouched.
 .entry-gallery .preview-hero-empty {
-  border-radius: variables.$border-radius;
+  border-radius: var(--radius-medium);
 }
 // "Image Preview" earns its place as a caption for a 100px thumbnail. Above a full width hero it
 // only repeats what the image already says, so it is dropped rather than restyled.
@@ -95,22 +98,55 @@ $rail-max-height: 280px;
     overflow-x: auto;
   }
 }
+// The horizontal layout, used by every non-gallery group. It replaces the row of numbered
+// IconButtons that used to sit above the fields, so it reads as a strip of tabs rather than a
+// column beside a hero.
+.entry-rail-strip {
+  grid-area: auto;
+  width: 100%;
+  .entry-rail-tiles {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(var(--tap-target-min), 1fr);
+    max-height: none;
+    overflow-x: auto;
+  }
+  // A tile carrying a day name is a label, not a thumbnail, so it must not be forced square.
+  .entry-rail-tile {
+    aspect-ratio: auto;
+    min-height: var(--control-height-large);
+    padding: var(--control-padding-y) var(--control-padding-x);
+  }
+  .entry-rail-count {
+    text-align: left;
+  }
+}
+
 .entry-rail-tile {
   display: flex;
   align-items: center;
   justify-content: center;
   aspect-ratio: 1/1;
+  // The touch floor (WCAG 2.5.5). The old numbered boxes were never measured against it.
+  min-width: var(--tap-target-min);
+  min-height: var(--tap-target-min);
   padding: 0;
   overflow: hidden;
   cursor: pointer;
   background-color: transparent;
   border: 2px solid var(--border);
-  border-radius: variables.$border-radius-sm;
+  border-radius: var(--radius-small);
   // Dimming is the whole point of the rail: a supporting image has to read as "not the one you
   // are editing" while staying legible enough to click back to.
   opacity: 0.5;
   transition: opacity var(--transition-fast), border-color var(--transition-fast);
-  &:hover,
+  &:hover {
+    opacity: 1;
+  }
+  // Focus used to be signalled by the opacity change alone, which is effectively invisible: a
+  // keyboard user tabbing along the rail could not tell where they were. The opacity change
+  // stays as a SECONDARY signal, never the only one.
+  @include mixin.focus-ring;
   &:focus-visible {
     opacity: 1;
   }
@@ -130,11 +166,17 @@ $rail-max-height: 280px;
   object-fit: cover;
 }
 .entry-rail-placeholder {
-  font-weight: bold;
-  color: variables.$muted;
+  font-weight: var(--font-semibold);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  // A derived label ("Wednesday") can be longer than its tile. Clip rather than wrap, since the
+  // full string is already on the button's title and aria-label.
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .entry-rail-count {
   font-size: var(--text-small);
-  color: variables.$muted;
+  color: var(--text-secondary);
   text-align: center;
 }

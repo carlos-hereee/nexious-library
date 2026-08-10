@@ -8,13 +8,11 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
   const { value, onChange, name, theme, hideLabel, label, error, formMessage, isDisabled, populateLink } = props;
 
   return (
-    <div className="container">
-      {/* Single error node carrying the id the checkbox references; role="alert" announces it. */}
-      {error && (
-        <span className="required" id={`${name}-error`} role="alert">
-          {error}
-        </span>
-      )}
+    // field-shell so a checkbox stacks and spaces like every other field. It keeps rendering its
+    // own error node rather than deferring to a FieldShell wrapper, because its label sits BESIDE
+    // the control instead of above it, and because it is exported for standalone use where no
+    // shell exists. One node, one `${name}-error` id, no duplicate for aria to be ambiguous about.
+    <div className="field-shell">
       <div className="input-checkbox ">
         <input
           className={theme}
@@ -41,6 +39,13 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
             <Label name={name} label={label} message={formMessage} />
           ))}
       </div>
+      {/* After the control, matching every other field. role="alert" announces it, and the id is
+          what the checkbox's aria-describedby points at. */}
+      {error && (
+        <span className="required field-error" id={`${name}-error`} role="alert">
+          {error}
+        </span>
+      )}
     </div>
   );
 };

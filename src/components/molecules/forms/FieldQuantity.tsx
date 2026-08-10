@@ -12,6 +12,7 @@ const FieldQuantity: React.FC<NumberInputProps> = (props) => {
         min={schema?.min || 0}
         max={schema?.max}
         value={value}
+        error={error}
         onChange={onChange}
         onBlur={onBlur}
       />

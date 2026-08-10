@@ -14,7 +14,7 @@ import type { SelectProp } from "nxs-form";
 const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, theme, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
-  const { placeholder } = props;
+  const { placeholder, inShell } = props;
 
   const activeLabel = active || placeholder || "Choose Selection";
   const icon = active ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon : undefined;
@@ -22,11 +22,18 @@ const Select: React.FC<SelectProp> = (props) => {
 
   return (
     <>
-      {!hideLabels && label ? (
+      {/* Select is the one form control exported from the package root, so it has to stand alone
+          as well as sit inside a Field. Standalone it owns its label, its error node and its
+          fallback aria-label. Inside a Field it is passed inShell and gives up all three, because
+          the FieldShell already renders a (possibly visually hidden) <label htmlFor> and one
+          `${name}-error` node: a second error node would make aria-describedby ambiguous, and a
+          leftover aria-label would beat the real label and announce the raw field name instead.
+          The standalone bare-error branch must survive, since the <select> advertises the error
+          id whether or not the label is visible. */}
+      {!inShell && !hideLabels && label ? (
         <Label name={name} label={label} error={error} message={formMessage} />
       ) : (
-        // The <select> below sets aria-describedby=`${name}-error` when invalid, so the
-        // error node must exist even with the label hidden, or the reference dangles.
+        !inShell &&
         error && (
           <span className="required" id={`${name}-error`} role="alert">
             {error}
@@ -48,7 +55,7 @@ const Select: React.FC<SelectProp> = (props) => {
           value={activeLabel}
           disabled={isDisabled}
           // When the visible label is hidden the native control still needs a name for SR users.
-          aria-label={hideLabels || !label ? name : undefined}
+          aria-label={!inShell && (hideLabels || !label) ? name : undefined}
           // Mirror Input/InputCheckbox/TextArea so a select with a validation error is
           // announced as invalid and points at the Label's `${name}-error` node. Select
           // was the one form control missing this wiring.

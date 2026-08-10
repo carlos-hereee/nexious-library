@@ -1,164 +1,41 @@
-import { Input, Label, InputCheckbox } from "@nxs-atoms/index";
 import type { FormFieldProps } from "nxs-form";
 import { auth } from "@nxs-utils/form/types";
-import { AuthField, DataList, FieldQuantity, Select, TextArea, UploadFile } from "@nxs-molecules";
-import FieldDateDay from "./FieldDateDay";
-import FieldDateWeek from "./FieldDateWeek";
-import FieldDateTime from "./FieldDateTime";
-import FieldPrice from "./FieldPrice";
-import FieldDate from "./FieldDate";
+import { AuthField } from "@nxs-molecules";
+import FieldShell from "./FieldShell";
+import { fieldRegistry, renderDefaultField } from "./fieldRegistry";
 
+/**
+ * Dispatches a field config to the control that renders it.
+ *
+ * This was a thirteen branch nested ternary. The behavior is unchanged; the shape is now a
+ * lookup, so adding a type is one entry in fieldRegistry rather than an edit in the middle of a
+ * chain. Every branch renders inside the same FieldShell, which is what makes a form read as one
+ * component instead of nine.
+ */
 const Field: React.FC<FormFieldProps> = (props) => {
-  const { type, name, value, handleChange, placeholder, hideLabels, label, clearSelection, populateLink } = props;
-  const { formError, handleCheckbox, theme, disableForm, formMessage, dataList, countSchema } = props;
-  return auth.includes(name) ? (
-    <AuthField
-      name={name}
-      formMessage={formMessage}
-      value={value as string}
-      onChange={handleChange}
-      placeholder={placeholder}
-      hideLabels={hideLabels}
-      labels={label}
-      error={formError}
-      isDisabled={disableForm}
-    />
-  ) : type === "number" ? (
-    <FieldQuantity
-      name={name}
-      formMessage={formMessage}
-      value={value ? parseInt(value as string, 10) : 0}
-      label={label}
-      onChange={handleChange}
-      isDisabled={disableForm}
-      error={formError}
-      schema={countSchema?.filter((count) => count.name === name)[0]}
-    />
-  ) : type === "datalist" ? (
-    <DataList
-      name={name}
-      error={formError}
-      list={(dataList && dataList[name]) || []}
-      formMessage={formMessage}
-      value={value as string}
-      label={label}
-      onChange={handleChange}
-      isDisabled={disableForm}
-    />
-  ) : type === "select" ? (
-    <Select
-      name={name}
-      formMessage={formMessage}
-      list={(dataList && dataList[name]) || []}
-      active={value as string}
-      theme={theme}
-      onChange={handleChange}
-      hideLabels={hideLabels}
-      label={label}
-      clearSelection={clearSelection && clearSelection[name]}
-      error={formError}
-      isDisabled={disableForm}
-    />
-  ) : type === "textarea" ? (
-    <TextArea
-      input={{ name, value: value as string, placeholder, label, onChange: handleChange, isDisabled: disableForm }}
-      hideLabels={hideLabels}
-      formMessage={formMessage}
-      error={formError}
-    />
-  ) : type === "checkbox" ? (
-    <InputCheckbox
-      name={name}
-      value={typeof value === "boolean" ? value : false}
-      onChange={handleCheckbox}
-      formMessage={formMessage}
-      error={formError}
-      label={label}
-      isDisabled={disableForm}
-      populateLink={populateLink}
-    />
-  ) : type === "file" ? (
-    <UploadFile
-      input={{ name, isDisabled: disableForm }}
-      formMessage={formMessage}
-      error={formError}
-      value={typeof value === "string" ? value : value instanceof File ? value : ""}
-      label={label}
-      onSelect={handleChange}
-    />
-  ) : type === "price-dollars-cents" ? (
-    <FieldPrice
-      name={name}
-      formMessage={formMessage}
-      error={formError}
-      value={typeof value === "number" ? value : typeof value === "string" ? parseInt(value || "0", 10) : 0}
-      label={label}
-      type={type}
-      onChange={handleChange}
-    />
-  ) : type === "date" ? (
-    <FieldDate
-      name={name}
-      formMessage={formMessage}
-      error={formError}
-      value={`${value}`}
-      label={label}
-      onChange={handleChange}
-    />
-  ) : type === "date-time" ? (
-    <FieldDateTime
-      name={name}
-      error={formError}
-      placeholder={placeholder}
-      formMessage={formMessage}
-      value={value as string}
-      label={label}
-      onChange={handleChange}
-    />
-  ) : type === "date-week" ? (
-    <FieldDateWeek
-      name={name}
-      placeholder={placeholder}
-      formMessage={formMessage}
-      error={formError}
-      value={value as string}
-      label={label}
-      onChange={handleChange}
-    />
-  ) : type === "date-day" ? (
-    <FieldDateDay
-      name={name}
-      error={formError}
-      placeholder={placeholder}
-      formMessage={formMessage}
-      value={value as string}
-      label={label}
-      onChange={handleChange}
-    />
-  ) : (
-    <>
-      {!hideLabels && label ? (
-        <Label name={name} label={label} error={formError} message={formMessage} />
-      ) : (
-        // When the label is hidden/absent the Input still advertises aria-describedby=
-        // `${name}-error`, so render the error node anyway (matching Label's markup) or the
-        // reference dangles and screen readers announce "invalid" with no explanation.
-        formError && (
-          <span className="required" id={`${name}-error`} role="alert">
-            {formError}
-          </span>
-        )
-      )}
-      <Input
-        value={value as string}
-        onChange={handleChange}
-        name={name}
-        theme="highlight"
-        placeholder={placeholder}
-        isDisabled={disableForm}
-        error={formError}
-      />
-    </>
-  );
+  const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
+  const { formError, disableForm, formMessage } = props;
+
+  // Auth fields dispatch on the field NAME, not its type, so this stays a pre-check ahead of the
+  // registry. Folding it into the type map would route a password field by its type and silently
+  // lose the show/hide toggle and the password-manager wiring.
+  if (auth.includes(name)) {
+    return (
+      <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+        <AuthField
+          name={name}
+          value={value as string}
+          onChange={handleChange}
+          placeholder={placeholder}
+          hideLabels
+          error={formError}
+          isDisabled={disableForm}
+        />
+      </FieldShell>
+    );
+  }
+
+  const render = fieldRegistry[type] || renderDefaultField;
+  return render(props);
 };
 export default Field;

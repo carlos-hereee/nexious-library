@@ -11,14 +11,35 @@ form {
   // position: relative;
   width: 100%;
 }
+// ── Control geometry ────────────────────────────────────────────────────────────
+// This is where the "nothing lines up" feeling actually came from. An input used to get
+// 8px/16px padding and a select 8px/8px, so text in a select started eight pixels left of text
+// in the input above it, and the two controls resolved to different heights from the same font.
+// Neither was wrong on its own; having two was. They now read the same control tokens, which is
+// what makes a stacked form line up without any component doing arithmetic.
+//
+// The consumer matters here: nexious-client restyles these elements (background, border, color,
+// radius) but sets NO padding or height, so the library really is the source of geometry in
+// production, not just standalone.
+//
+// min-height rather than height on purpose. It is a floor, so a control never collapses below
+// the scale, while a longer font stack or a zoomed browser can still grow it. Identical padding
+// and font on both elements is what makes the heights EQUAL; the token makes them a known size.
+input:not([type="checkbox"]):not([type="radio"]),
+textarea,
+select {
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  border-radius: var(--control-radius-input);
+}
 input,
 textarea {
   font-family: sans-serif;
-  padding: variables.$rem05 variables.$rem;
-  border-radius: variables.$border-radius;
   border: none;
 }
 textarea {
+  // A textarea is the one control that is deliberately taller than the control height: it is
+  // sized to its content, not to the scale, so its own floor wins.
   min-height: variables.$min-height;
   width: 100%;
   resize: vertical;
@@ -36,7 +57,6 @@ select {
   line-height: inherit;
   width: 100%;
   outline: none;
-  padding: variables.$rem05;
   &::-ms-expand {
     display: none;
   }

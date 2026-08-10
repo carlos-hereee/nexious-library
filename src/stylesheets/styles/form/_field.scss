@@ -1,4 +1,5 @@
 @use "../../vars/variables/_index.scss" as variables;
+@use "../../vars/mixin/_index.scss" as mixin;
 
 .form-field-container {
   display: flex;
@@ -17,6 +18,65 @@
   flex-direction: column;
   gap: variables.$rem;
   padding: variables.$rem025;
+}
+
+// ── Date field ──────────────────────────────────────────────────────────────────
+// The trigger has to be exactly as tall as a text input and a select sitting above it, so it
+// reads the same control tokens rather than inheriting whatever a button happens to be. The
+// calendar is a popover because a permanently mounted month grid meant a repeating entry group
+// rendered one full calendar PER ITEM.
+.field-date {
+  position: relative;
+  width: 100%;
+}
+.field-date-trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  // The library reset gives a bare button width:100%;max-width:250px. A field control is as wide
+  // as its field, so the cap is cleared here rather than fought with !important at the call site.
+  max-width: none;
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  text-align: left;
+  cursor: pointer;
+  background-color: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  border-radius: var(--control-radius-input);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  &:hover:not(:disabled) {
+    border-color: var(--main-brand-color);
+    background-color: var(--hover-bg);
+  }
+  @include mixin.focus-ring;
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+// An empty date field says "Choose a date" rather than rendering blank, because a blank trigger
+// reads as a broken control. Quieter than a real value so the two are distinguishable at a glance.
+.field-date-placeholder {
+  color: var(--text-secondary);
+}
+.field-date-popover {
+  position: absolute;
+  z-index: var(--z-dropdown);
+  top: calc(100% + var(--space-extra-small));
+  left: 0;
+  min-width: 100%;
+  padding: var(--space-small);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--elevation-2);
+}
+
+// The native time input renders its own spinner and picker, so it needs no chrome of its own,
+// only the same geometry as its neighbours (which the reset already gives it). This exists so
+// the control has a class hook and so its width matches a select in the same row.
+.field-time {
+  width: 100%;
 }
 
 .input-price-wrapper {

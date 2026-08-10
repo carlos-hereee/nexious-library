@@ -1,0 +1,37 @@
+// ── The field shell ─────────────────────────────────────────────────────────────
+// One layout for every field type: label, control, optional help, error. The spacing here is
+// the whole point. Each field used to be a bare fragment inside .form-field, so the 16px gap
+// meant for SEPARATING fields also sat between a label and the control it names, and a form
+// read as a flat list of parts rather than a stack of grouped fields. Inside a field the gap
+// is one step down, which is what makes the grouping visible without adding a single border.
+.field-shell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  width: 100%;
+  // The shell is a flex item inside .form-field. Without this, a wide control (a long select
+  // option, a preview image) pushes the shell past its column instead of shrinking, because a
+  // flex item's default min-width is auto rather than 0.
+  min-width: 0;
+}
+
+// Typography is deliberately NOT pinned here. A consumer's own `label` rule governs the size,
+// weight and color, and the design language's 12px uppercase overline treatment is a visible
+// change to every form in the product, so it belongs in an owner-reviewed pass rather than
+// arriving as a side effect of a layout refactor. This class exists as the hook that pass will
+// use, and carries only what no consumer sets.
+.field-label {
+  line-height: var(--line-height-tight);
+}
+
+.field-help {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+// The error node lives after the control now, which is both the convention and where the design
+// language puts it. It keeps the `required` class so consumer styling for error text still lands.
+.field-error {
+  font-size: var(--text-small);
+}

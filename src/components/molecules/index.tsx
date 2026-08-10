@@ -50,7 +50,21 @@ export { default as Field } from "@nxs-molecules/forms/Field";
 export { default as TextArea } from "@nxs-molecules/forms/TextArea";
 export { default as UploadFile } from "@nxs-molecules/forms/UploadFile";
 export { default as DataList } from "@nxs-molecules/forms/DataList";
-export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
+export { default as FieldShell } from "@nxs-molecules/forms/FieldShell";
+export { default as EntryNavigator } from "@nxs-molecules/forms/EntryNavigator";
+export { default as FieldDate } from "@nxs-molecules/forms/FieldDate";
+export { default as FieldTime } from "@nxs-molecules/forms/FieldTime";
+export { default as FieldDay } from "@nxs-molecules/forms/FieldDay";
+export type {
+  InputProps,
+  SelectProp,
+  UploadFileProps,
+  FieldShellProps,
+  EntryNavigatorProps,
+  FieldDateProps,
+  FieldTimeProps,
+  FieldDayProps,
+} from "nxs-form";
 
 // TODO: ADD Tables types
 // // tables

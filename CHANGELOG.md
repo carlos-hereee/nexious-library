@@ -9,6 +9,104 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### UI rework Phase 2: the Form family rebuilt on the foundation
+
+Phase 2 of `roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md`. Every form control
+now renders through one field shell at one control height with one focus ring, the numbered entry
+strip is gone, and the four time and date types speak one grammar.
+
+**Nothing was removed from a public entry point.** `EntryThumbnailRail`, `FieldDateDay`,
+`FieldDateWeek` and `FieldDateTime` are deleted, and all four were private: none appeared in
+`main.ts` or in the `@nxs-molecules` barrel. Verified by grep before deleting, which is why there
+are no back-compat wrappers. `EntryThumbnailRailProps` survives as a deprecated type alias.
+
+#### Added
+
+- **`FieldShell`**, the one field layout: label, control, optional help, error. Exported from
+  `@nxs-molecules` with `FieldShellProps`.
+- **`EntryNavigator`**, the one entry switcher, replacing both the thumbnail rail and the numbered
+  strip. Tile content resolves in order: a thumbnail, then a label derived from the slot's own
+  first text value, then a `getTileLabel` override, then the index. `orientation` picks the
+  vertical rail or the horizontal strip.
+- **`FieldTime`**, built on the native `<input type="time">`, and **`FieldDay`**, serving both
+  `date-day` and `date-week`.
+- **`fieldRegistry`**, a `Record<type, renderer>` map replacing the thirteen branch nested ternary
+  in `Field.tsx`. Adding a field type is now one entry. The `auth.includes(name)` case stays a
+  pre-check ahead of the map, because it dispatches on the field NAME rather than its type.
+- **`utils/form/time`** (`to24Hour`, `toWireTime`), the conversion at the FieldTime boundary.
+- `SelectProp.inShell`, set when a shell above the control owns the label and the error node.
+- `styles/form/_field-shell.scss`, and `_entry-gallery.scss` renamed to `_entry-navigator.scss`.
+- Storybook: `Foundation/States/Field` (10 types x 6 states, light and dark on one page),
+  `Foundation/States/EntryNavigator`, `Foundation/Control Alignment` (the uniformity acceptance
+  test, controls on 4px rules) and `Foundation/Design Language` (the rules, each citing its spec
+  section). Story layout CSS lives outside `src/stylesheets` so it is never compiled into
+  `dist/css`.
+- 95 new tests across `FieldShell`, `EntryNavigator`, `FieldDate` and `FieldTime`, plus axe
+  coverage of every field type in an error state, with the label shown and hidden, and again
+  inside a `.dark-mode` subtree.
+
+#### Fixed
+
+- **`FieldDate` no longer emits `onChange(today)` on mount.** An OPTIONAL date field could never
+  be left blank, because merely rendering the form filled it in. This is why the Press page kind
+  stores `publishedOn` as a plain string and why `type: "date"` never entered the page kind
+  vocabulary. `defaultToToday` (default **false**) opts back in.
+- **`FieldDate` and `FieldDateTime` no longer `throw` on the render path.** The library ships no
+  error boundary, so a throw white-screened the consumer's entire subtree. Both now log and bail,
+  matching `Form.tsx` and `FormField.tsx`.
+- **The meridiem is no longer flipped by string surgery.** The old control did
+  `value.split("AM").join("")`, so any value carrying those letters elsewhere was silently
+  corrupted. The native input removes the problem, and the parser is anchored to the end of the
+  string so nothing in the middle can reach it.
+- **`.select` no longer renders the same outline on hover and on focus.** A keyboard user could
+  not distinguish focus from a passing mouse. Hover is now a border shift plus the hover tint;
+  focus is the shared ring.
+
+#### Accessibility
+
+- **`aria-describedby` can no longer dangle.** Seven of the nine field types rendered the error
+  node inside the Label, so hiding the label deleted the node the description pointed at and a
+  screen reader announced "invalid" with no reason. The shell owns the node and renders it
+  whenever there is an error, label or not.
+- **`hideLabels` now hides the label visually instead of deleting it.** A visually hidden
+  `<label htmlFor>` plus the control's `id={name}` names every field type, including the time
+  input, the date trigger and the quantity input that had no accessible name at all, and it
+  announces the human label rather than the raw field name.
+- `.entry-rail-tile` gains a real focus ring. Its only focus signal was an opacity change, which
+  is effectively invisible; the opacity change stays as a secondary signal.
+- Entry tiles and form step controls reach the 44px touch floor.
+- `InputQuantity` gains `aria-invalid` / `aria-describedby`; it was the one text-entry control in
+  the library with no aria wiring.
+- `.form-step-name` loses `white-space: nowrap`, which clipped a localized step name.
+
+#### Changed
+
+- **Empty entry slots are no longer pre-rendered as disabled boxes.** The numbered strip rendered
+  `entry.max` buttons up front, so a max of ten showed eight dead boxes before the user had done
+  anything. Only real slots render; remaining capacity is the "X of MAX" count line.
+- **Control geometry moves to the tokens.** An input had 8px/16px padding and a select 8px/8px, so
+  their text started eight pixels apart and the two resolved to different heights from the same
+  font. Both now read `--control-height` and `--control-padding-*`. This one IS visible in
+  `nexious-client`: the client restyles these elements but sets no padding or height, so the
+  library really is the source of control geometry in production.
+- `_form-navigation.scss` rebuilt on tokens. The progress connector used the orange CTA color
+  while the completed state used green, so a progress bar changed hue family halfway along its own
+  run; it is one family now, brand for in progress and green only for done.
+- `date-week` renders as a Select rather than a DataList. `DataList` is unchanged and remains the
+  right control for a genuinely open set.
+
+#### Verification
+
+`npx tsc --noEmit` clean, `npm test` **217 passed / 19 suites** (from 122 / 15), `npm run lint`
+**0 errors in Phase 2 files** (32 pre-existing errors remain in files this phase did not touch),
+`npm run lint:css` **247 warnings, 0 errors** (down from the 266 baseline). Compiled CSS 86,432
+bytes before Phase 1 to 93,249 after Phase 2, **+7.9% cumulative**, inside the 10% ceiling.
+
+> **Q3 is answered by the code, not by a decision.** The plan asks whether to keep, gate or retire
+> the 600px `.form-field-container` scroll region. It is already opt-in behind `Form`'s `formScroll`
+> prop, `.no-scroll` correctly wins the cascade when the prop is off, and `nexious-client` never
+> passes it. There is nothing live to retire, so nothing was changed.
+
 ### UI rework Phase 1: token and primitive foundation
 
 Phase 1 of `roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md`, executed under

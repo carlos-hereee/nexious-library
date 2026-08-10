@@ -7,6 +7,9 @@ import Input from "@nxs-atoms/forms/Input";
 import Label from "@nxs-atoms/forms/Label";
 import BurgerButton from "@nxs-molecules/buttons/BurgerButton";
 import Select from "@nxs-molecules/forms/Select";
+import Field from "@nxs-molecules/forms/Field";
+import EntryNavigator from "@nxs-molecules/forms/EntryNavigator";
+import type { FormFieldProps } from "nxs-form";
 import ThemeMenu from "@nxs-molecules/navigation/ThemeMenu";
 import DialogOverlay from "@nxs-template/DialogOverlay";
 import Dialog from "@nxs-template/Dialog";
@@ -71,10 +74,77 @@ describe("axe accessibility (no violations on isolated renders)", () => {
 
   it("Select with a HIDDEN label and error has no dangling aria-describedby", async () => {
     // Regression guard: the <select> sets aria-describedby=`role-error`; with the label
-    // hidden the error node must still render or axe flags an invalid attribute reference.
+    // hidden the error node must still render or the description resolves to nothing.
+    const { container } = render(
+      <Select name="role" label="Role" hideLabels error="Required" list={selectList} onChange={() => {}} />
+    );
+    // Asserted directly, not left to axe. axe does NOT currently flag a dangling
+    // aria-describedby, so this suite went on passing when the fallback node was briefly removed
+    // during the Phase 2 shell work. The explicit assertion is the thing that catches it.
+    const described = container.querySelector("select")?.getAttribute("aria-describedby");
+    expect(described).toBe("role-error");
+    expect(container.querySelector(`#${described}`)).toBeInTheDocument();
+    expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  // ── The Form family, in error and in dark mode ────────────────────────────────
+  // Every field type, invalid, with the label both shown and hidden, and the whole set again
+  // inside a .dark-mode subtree. Error states are where aria wiring is actually exercised, and
+  // dark mode is where a component that hardcoded a color instead of reading a token shows up.
+  const fieldTypes = ["text", "textarea", "select", "number", "date", "date-time", "date-day", "date-week", "datalist"];
+
+  const fieldProps = (type: string, hideLabels: boolean): FormFieldProps => ({
+    name: "title",
+    value: "",
+    placeholder: "",
+    label: "Title",
+    type,
+    fieldId: "title-id",
+    formError: "This field is required",
+    hideLabels,
+    dataList: { title: selectList },
+    handleChange: () => {},
+  });
+
+  it.each(fieldTypes)("Field type %s in an error state has no violations", async (type) => {
+    expect(await check(<Field {...fieldProps(type, false)} />)).toHaveNoViolations();
+  });
+
+  it.each(fieldTypes)("Field type %s in an error state with a HIDDEN label has no violations", async (type) => {
+    expect(await check(<Field {...fieldProps(type, true)} />)).toHaveNoViolations();
+  });
+
+  it.each(fieldTypes)("Field type %s resolves its aria-describedby to a real node", async (type) => {
+    // The assertion axe will not make for us. Seven of the nine types used to render the error
+    // inside the Label, so hiding the label deleted the node the description pointed at.
+    const { container } = render(<Field {...fieldProps(type, true)} />);
+    const described = container.querySelector("[aria-describedby]");
+    if (described) {
+      const id = described.getAttribute("aria-describedby");
+      expect(container.querySelector(`#${id}`)).toBeInTheDocument();
+    }
+    // Whether or not the control wires a description, exactly one error node must exist.
+    expect(container.querySelectorAll("#title-error")).toHaveLength(1);
+  });
+
+  it.each(fieldTypes)("Field type %s has no violations inside a dark-mode subtree", async (type) => {
     expect(
       await check(
-        <Select name="role" label="Role" hideLabels error="Required" list={selectList} onChange={() => {}} />
+        <div className="dark-mode">
+          <Field {...fieldProps(type, false)} />
+        </div>
+      )
+    ).toHaveNoViolations();
+  });
+
+  it("EntryNavigator has no violations", async () => {
+    const entries = {
+      "slot-0": [{ name: "day", value: "Monday", type: "text", label: "Day", placeholder: "", fieldId: "a" }],
+      "slot-1": [{ name: "day", value: "Tuesday", type: "text", label: "Day", placeholder: "", fieldId: "b" }],
+    };
+    expect(
+      await check(
+        <EntryNavigator entries={entries} activeEntry="slot-0" max={5} railLabel="Store hours" onSelect={() => {}} />
       )
     ).toHaveNoViolations();
   });
