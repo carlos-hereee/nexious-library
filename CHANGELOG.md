@@ -9,6 +9,95 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### UI rework Phase 4: the fan-out (no API break)
+
+Phases 1 to 3 built a token foundation and rebuilt the Form family on it. Phase 4 applies it to
+everything else: cards, navigation, tables, containers, overlays, loading and empty states, and
+the custom / assets / buttons / reset tail. **No public prop changed and no class was renamed or
+deleted**, so a consumer already on 4.0.0 needs no migration for any of this.
+
+#### The part that matters most is not the linter
+
+`lint:css` went from 244 warnings to zero and the gate flipped from `warning` to `error`, but that
+is the receipt, not the work. The work is that the library's surfaces were painted from **compiled
+SCSS color literals with no dark counterpart**: `$light-secondary`, `$light-mode`, `$dark-mode`,
+`$faded`, `$dim`, `$muted` and the rest. Because those paint CLASS selectors, and a class selector
+beats an inherited color, **a consumer could not recover from them on its own page** (this is the
+same defect that put nexious-client's dark tables at 2.3:1). Each is now the token that names its
+role, so those surfaces theme for the first time.
+
+#### Added
+
+- **`Skeleton`**, a loading placeholder with `row`, `block`, `text` and `page` shapes and a `count`.
+  It reserves the height the real content will take, which is the whole reason to prefer it over a
+  spinner: a spinner occupies no space, so the page jumps when the data lands. One `role="status"`
+  for the region with every bar `aria-hidden`, so a screen reader says "loading" once instead of
+  reading N empty boxes. Carries its own `prefers-reduced-motion` guard because the global kill
+  switch shortens animations to 1ms rather than removing them, which would strobe.
+- **`EmptyState`**, the one layout behind `EmptySection`, `ComingSoon` and `PageNotFound`: glyph,
+  headline, one sentence, next action. Every slot is optional and nothing renders by default, so
+  none of the three sprouted content its consumers did not ask for.
+- **`.panel` / `.panel-danger` / `.section`**, so `.container` can stop being a catch-all. See
+  Changed for what `.container` gives up.
+- **Table density and numerics**: `.table-dense` (44px rows against the default 52px, both above
+  the WCAG 2.5.5 floor by construction), a sticky overline header, `.cell-numeric` for
+  `tabular-nums` and right alignment, and a `.table-scroll` wrapper so a wide table scrolls itself
+  instead of widening its grid column.
+- **Tokens**: `--skeleton-bg`, `--skeleton-shimmer`, `--skeleton-duration`, `--row-height`,
+  `--row-height-dense`. Keyframes `shimmer` and `dialogIn`.
+
+#### Changed
+
+- **The hover lift is now reserved for cards that navigate.** `.app-card`, `.preview-card`,
+  `.merch-card` and `.post-card` keep `translateY(-2px)`; containers get no hover and rows get a
+  `--hover-bg` tint instead. Design language 5.7, and it is most of why a dashboard reads as busy.
+- **Border XOR shadow at rest.** No surface stacks both any more.
+- **`.container` keeps its name and loses its opinions**: it is spacing and width only, with no
+  fill, border or shadow. It is a published class the consumers select on, so retiring it by
+  DELETING it was never available; the named intents moved to `.panel` and `.section` beside it.
+- **One navigation grammar.** Active, hover and focus are each defined once (`nav-item` /
+  `nav-active` mixins) and the top bar, rail and mobile tab bar reference them, rather than the
+  three hand-rolled treatments they carried.
+- **Dialogs sit at `--elevation-3`** with the 5.9 enter motion (300ms scrim fade, 200ms panel
+  scale from 0.98), and every layered surface now reads the `--z-*` scale instead of an improvised
+  literal (50, 99, 999, 9999 were all in the tree).
+- Radii step concentrically now: dialog 16, card 12, row 8, chip 4. Several cards moved up a step
+  and `.post-card` moved down from the modal step.
+- `Loading` gained an opt-in `skeleton` prop. **The spinner is still the default**, deliberately:
+  it is rendered on dozens of client surfaces, and switching the default would repaint all of them
+  as a side effect of a CSS refactor. Making skeleton the default is a Phase 5 owner decision.
+
+#### Accessibility
+
+- The calendar tile's mobile floor was **40px, under the WCAG 2.5.5 minimum**, in the densest grid
+  of tap targets in the product. It now reads `--tap-target-min`.
+- The calendar's event-count pip rendered the brand indigo on amber at about **3.4:1**. It now uses
+  the `--pending-accent-color` / `--status-on-pending` pair, chosen together, at about 5.5:1.
+- Nav items, cards that click, table scroll regions and search inputs all take the shared focus
+  ring. Adoption goes from **17 `focus-ring` sites to 58** across the stylesheets, and the
+  hand-rolled `outline: 2px solid $dark-mode` treatments (which could not flip on dark, because a
+  compiled literal has no theme) are gone with them.
+
+#### Fixed
+
+- The shimmer keyframe swept **right to left**. A percentage `background-position` on an oversized
+  image inverts direction, so the intuitive `-100%` to `100%` runs backwards; it counts down now,
+  and the keyframe header explains why so the next reader does not "fix" it back.
+- `ErrorMessage`'s header comment claimed the dev panel is styled as a terminal *because* a
+  red-bordered card could be mistaken for real UI. Phase 4 made it a red-bordered card, so the
+  comment was rewritten rather than left to mislead.
+
+#### Deliberately NOT done
+
+- **`devices()` to `respond-from()` ships as its own commit**, because it INVERTS each breakpoint
+  rather than renaming it and a regression there is invisible until someone resizes a browser.
+  Keeping it separate keeps it revertible on its own.
+- The CTA orange (`$cta-color`, `$action-color-alt`, `$error`) is untouched across buttons, post
+  reactions and the calendar's today/selected tiles. None is on the banned list, but all are fixed
+  hues with no token naming their role. Picking a home for them is a design decision.
+- Form labels still are not the 12px uppercase overline. Same reason as in Phase 3: it is a visible
+  change to every form in the product and belongs in an owner-reviewed pass.
+
 ### UI rework Phase 3: `theme` becomes `className`, plus a variant enum (BREAKING, 4.0.0)
 
 **`theme` is removed from every component. There is no shim.** With one owner-controlled consumer
