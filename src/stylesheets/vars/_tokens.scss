@@ -194,6 +194,26 @@
   // change for no gain; nothing inside this library reads it.
   --text-success-color: var(--success-text);
 
+  // ── Loading placeholders ────────────────────────────────────────────────────────
+  // A skeleton is two colors, not one: a resting fill and the lighter band that sweeps
+  // across it. Naming both means the sweep can be tuned per theme without a component
+  // knowing how it is drawn, and it is why the shimmer is a background-image gradient over
+  // --skeleton-bg rather than an opacity pulse (a pulse on a real surface dims whatever is
+  // behind it, which reads as a flicker rather than as loading).
+  --skeleton-bg: var(--slate-200);
+  --skeleton-shimmer: rgba(255, 255, 255, 0.65);
+  // 1.2s per design language 5.9. Long enough to read as deliberate, short enough that a
+  // slow request still shows motion rather than appearing frozen.
+  --skeleton-duration: 1200ms;
+
+  // ── List rows ───────────────────────────────────────────────────────────────────
+  // The design language's two row densities (5.10 Tables and Lists). Both clear the 44px
+  // tap floor by construction, which is the point of naming them: a "compact" row that
+  // someone sets to 36px because it looked tighter is a WCAG 2.5.5 failure that no visual
+  // review catches. Comfortable is the default; compact is the density toggle.
+  --row-height: 52px;
+  --row-height-dense: 44px;
+
   // ── Stacking ────────────────────────────────────────────────────────────────────
   // Named steps so two layered surfaces can never fight over an improvised z-index.
   --z-base: 0;
@@ -245,6 +265,12 @@
   --table-header-bg: rgba(255, 255, 255, 0.09);
   --table-stripe-bg: rgba(255, 255, 255, 0.06);
   --table-row-hover-bg: rgba(255, 255, 255, 0.12);
+  // The light skeleton pair is a solid slate with a white sweep, which on a navy page would
+  // be a bright rectangle where content is ABSENT: the loudest thing on screen would be the
+  // part with nothing in it. Both sides drop to low-alpha white so the placeholder reads as
+  // a dimmer patch of the surface it will become.
+  --skeleton-bg: rgba(255, 255, 255, 0.08);
+  --skeleton-shimmer: rgba(255, 255, 255, 0.16);
   // The wash follows the lighter brand accent on dark, and needs more alpha for the same
   // reason the hover tint does.
   --brand-wash: color-mix(in srgb, var(--main-brand-color-accent) 16%, transparent);
