@@ -8,23 +8,24 @@
 
 .form-nav {
   display: grid;
-  grid-template-columns: max-content;
+  grid-template-columns: 1fr 1fr;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: var(--space-medium);
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: max-content;
   }
 }
 
 .form-buttons {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-content: center;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    align-content: center;
-    gap: var(--space-medium);
+  @include mixin.respond-from(mobile) {
+    display: flex;
+    // The base is the phone grid now, so switching back to the desktop flex row has to also put
+    // the two grid properties back to their initial values, not leave them standing on a flex box.
+    grid-template-columns: none;
+    align-content: normal;
   }
 }
 
@@ -52,6 +53,11 @@
   gap: var(--space-medium);
   counter-reset: form-step;
 
+  // Deliberately still desktop-first while the rest of this file is mobile-first. Inverting it
+  // would lift this override out of the media query and into the unconditional base, where its
+  // two-class specificity outranks the `.hide-on-mobile` utility in styles/custom/_custom.scss
+  // (max-width 770px) and would un-hide the list across the 581 to 770 band it is hidden in
+  // today. It flips when that utility flips, not before.
   @include mixin.devices(mobile) {
     &.hide-on-mobile {
       display: none;
@@ -60,12 +66,12 @@
 }
 
 .form-steps-mini {
-  display: none;
+  display: flex;
   justify-content: center;
   gap: var(--space-small);
 
-  @include mixin.devices(mobile) {
-    display: flex;
+  @include mixin.respond-from(mobile) {
+    display: none;
   }
 }
 

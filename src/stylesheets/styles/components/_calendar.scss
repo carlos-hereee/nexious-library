@@ -34,7 +34,10 @@
   min-width: 0;
   padding: 0;
   position: relative;
-  min-height: 50px;
+  // The mobile step was 40px, which is under the 44px WCAG 2.5.5 target floor, and a calendar
+  // tile is the densest grid of tap targets in the product. --tap-target-min is the floor
+  // itself, so the tile can only ever shrink to legal.
+  min-height: var(--tap-target-min);
   // The event-count badge that overhangs the tile's top right corner. --radius-full rather
   // than the old 100%: a percentage radius on a two-digit count draws an ellipse, the token
   // draws the pill the design language's badge scale asks for, and a one-digit count is
@@ -52,11 +55,8 @@
     border-radius: var(--radius-full);
     color: var(--status-on-pending);
   }
-  // The mobile step was 40px, which is under the 44px WCAG 2.5.5 target floor, and a calendar
-  // tile is the densest grid of tap targets in the product. --tap-target-min is the floor
-  // itself, so the tile can only ever shrink to legal.
-  @include mixin.devices(mobile) {
-    min-height: var(--tap-target-min);
+  @include mixin.respond-from(mobile) {
+    min-height: 50px;
   }
 }
 .event-list {
@@ -65,17 +65,21 @@
   justify-content: space-around;
   gap: var(--space-extra-small);
   width: 100%;
-  @include mixin.devices(mobile) {
-    width: 100%;
-    align-items: center;
+  align-items: center;
+  // Wide screens never declared align-items, so the row resolved to the initial `normal`.
+  // Centering is the base now, so that default has to be written out to stay unchanged.
+  @include mixin.respond-from(mobile) {
+    align-items: normal;
   }
 }
 .calendar-events {
   display: flex;
   width: 100%;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    flex-direction: column;
+  flex-direction: column;
+  // Wide screens never declared a direction, so they took flex's initial `row`.
+  @include mixin.respond-from(mobile) {
+    flex-direction: row;
   }
 }
 .calendar-event-cart {
@@ -89,6 +93,10 @@
 .calendar-navigation {
   display: grid;
   grid-template-columns: 1fr 2fr 1fr;
+  // Deliberately still desktop-first. Inverting it means declaring what these two show as on a
+  // wide screen, and neither class is emitted anywhere in the library or its consumers, so the
+  // carrying element's tag (and therefore its display) is unknown. A wrong guess here hides or
+  // misaligns the nav on every screen instead of none.
   @include mixin.devices(mobile) {
     .btn-start,
     .btn-last {

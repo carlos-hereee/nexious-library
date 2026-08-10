@@ -31,15 +31,15 @@
   // page the resting hairline disappeared into the surface and the hover border painted itself the
   // LIGHT mode text color. --border and --text both flip, so each state reads in either theme.
   border: 1px solid var(--border);
-  white-space: nowrap;
+  white-space: wrap;
   &:hover {
     border: 1px solid var(--text);
   }
   // Was a hand-written outline, one of the four different focus treatments the library carried.
   // It is the shared ring now, so it flips correctly on dark and cannot drift again.
   @include mixin.focus-ring;
-  @include mixin.devices(mobile) {
-    white-space: wrap;
+  @include mixin.respond-from(mobile) {
+    white-space: nowrap;
   }
 }
 

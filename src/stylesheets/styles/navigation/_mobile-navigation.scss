@@ -3,7 +3,7 @@
 @use "../../vars/variables/_index.scss" as variables;
 
 .mobile-navigation {
-  display: none;
+  display: flex;
   justify-content: flex-end;
   position: relative;
   // overflow: hidden;
@@ -45,7 +45,7 @@
     content: "";
     clear: both;
   }
-  @include mixin.devices(tablet) {
-    display: flex;
+  @include mixin.respond-from(tablet) {
+    display: none;
   }
 }

@@ -6,10 +6,10 @@
   display: flex;
   flex-direction: column;
   min-height: 60vh;
-  width: 100%;
+  width: auto;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    width: auto;
+  @include mixin.respond-from(mobile) {
+    width: 100%;
   }
 }
 .alt-container {
@@ -26,11 +26,20 @@
 .list-container {
   display: flex;
   gap: var(--space-medium);
-  @include mixin.devices(tablet) {
-    flex-wrap: wrap;
-    justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .btn-main {
+    max-width: 100px;
+  }
+  // Above the tablet band none of these three had a declaration at all, so the wide values are
+  // the ones they already resolved to: `nowrap` and `normal` are the initial values of flex-wrap
+  // and justify-content, and `none` is the max-width .btn-main sets on itself in
+  // styles/buttons/_primary-button.scss (which the reset's `button` max-width loses to).
+  @include mixin.respond-from(tablet) {
+    flex-wrap: nowrap;
+    justify-content: normal;
     .btn-main {
-      max-width: 100px;
+      max-width: none;
     }
   }
 }
@@ -43,11 +52,18 @@
   min-width: 100%;
   width: 100%;
   color: inherit;
-  @include mixin.devices(tablet) {
-    flex-wrap: wrap;
-    justify-content: space-around;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  .btn-main {
+    max-width: 100px;
+  }
+  // Same derivation as .list-container above: the wide values are the initial flex-wrap and
+  // justify-content, plus .btn-main's own `max-width: none`.
+  @include mixin.respond-from(tablet) {
+    flex-wrap: nowrap;
+    justify-content: normal;
     .btn-main {
-      max-width: 100px;
+      max-width: none;
     }
   }
 }

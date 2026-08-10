@@ -26,18 +26,36 @@
   }
 }
 
-// The mobile-first counterpart to devices(), which is desktop-first (max-width). It sits
-// BESIDE devices() rather than replacing it: converting in place would invert every
-// breakpoint in the library in one commit, and there is no safe way to review that. Both
-// coexist while partials migrate one at a time, and devices() is deleted when its last
-// call site is gone (item 50 lane 9).
+// The mobile-first counterpart to devices(), which is desktop-first (max-width).
 //
-// The +0.02px is the reason a migration can be mechanical rather than a judgment call per
-// rule. devices(tablet) is `max-width: 770px`, so its exact complement is "anything wider
-// than 770px". Writing `min-width: 770px` would double-apply at exactly 770px, and
-// `min-width: 771px` would leave fractional viewports (browser zoom, hidpi, a 770.5px
-// window) matching neither. A hundredth of a pixel is below any real device step, so the
-// two mixins tile the range with no gap and no overlap and a flip is provably equivalent.
+// The +0.02px is what makes the two tile the range exactly. devices(tablet) is
+// `max-width: 770px`, so its exact complement is "anything wider than 770px". Writing
+// `min-width: 770px` would double-apply at exactly 770px, and `min-width: 771px` would leave
+// fractional viewports (browser zoom, hidpi, a 770.5px window) matching neither. A hundredth of
+// a pixel is below any real device step, so there is no gap and no overlap.
+//
+// ── Why devices() is still here (item 50 lane 9, closed) ────────────────────────
+// Phase 4 migrated 39 of the library's 44 call sites. **The last five are permanent, not
+// pending**, so plan on both mixins living here rather than on deleting this one.
+//
+// Note first that the two are COMPLEMENTS, not synonyms, so a rename is always wrong: it moves a
+// rule to the opposite side of the breakpoint. A real conversion moves the small-screen values
+// into the base and states the wide-screen value under respond-from. Every survivor fails at
+// exactly that second step, because its declarations exist ONLY inside the max-width block and
+// there is no correct wide-screen value to state:
+//
+//   - `.hide-on-mobile` / `.hide-on-tablet` (styles/custom/_custom.scss, plus the .form-steps
+//     nesting of it in styles/form/_form-navigation.scss) are display utilities a consumer
+//     applies to ARBITRARY elements. There is no one desktop display for "whatever this was",
+//     and writing one would add an author-level declaration where none exists today, which would
+//     start winning cascade fights the utility currently loses.
+//   - `.btn-start` / `.btn-last` (styles/components/_calendar.scss) are emitted nowhere in this
+//     library or in its consumers, so the carrying tag, and therefore its display, is unknown.
+//   - `caption` (vars/reset/_table.scss) takes its alignment from the UA stylesheet, and that is
+//     `-webkit-center` in Blink against `center` in Gecko. There is no portable value.
+//
+// Each of the five carries this reasoning at its own call site too, so a later sweep does not
+// have to rediscover it. Converting one anyway is not a cleanup, it is a rendering change.
 @mixin respond-from($breakpoint) {
   @if $breakpoint == laptop {
     @media only screen and (min-width: variables.$laptop + 0.02px) {

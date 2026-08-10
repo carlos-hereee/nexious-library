@@ -8,9 +8,10 @@
   justify-content: center;
   align-items: center;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    width: auto;
-  }
+  // Mobile-first base, and it needs no respond-from(mobile) counterpart: nothing in the library
+  // declares a width on .primary-container, so above the mobile band it resolved to the initial
+  // `auto` on its own. The narrow value and the wide value are the same value.
+  width: auto;
 }
 // A full-height empty state is a Section, not a box: it has no fill and no border, so the
 // border-radius it used to carry rounded nothing. Space and centering are the whole layout.
@@ -33,9 +34,9 @@
   justify-items: center;
   position: relative;
   gap: var(--space-medium);
-  justify-content: space-around;
-  @include mixin.devices(tablet) {
-    justify-content: center;
+  justify-content: center;
+  @include mixin.respond-from(tablet) {
+    justify-content: space-around;
   }
 }
 .page-center {
@@ -48,10 +49,10 @@
 .container-split,
 .split-container {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: 1fr 1fr;
   }
 }
 .container-row {
@@ -67,12 +68,12 @@
   gap: var(--space-medium);
   align-items: center;
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width-sm, 1fr));
+  grid-template-columns: 1fr;
   .navigation {
     justify-content: center;
   }
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width-sm, 1fr));
   }
 }
 .mini-navigation-container {

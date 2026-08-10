@@ -136,13 +136,13 @@
 
 .post-card-title-text {
   margin: 0;
-  font-size: var(--text-extra-large);
+  font-size: var(--text-large);
   font-weight: var(--font-bold);
   line-height: var(--line-height-tight);
   letter-spacing: -0.01em;
 
-  @include mixin.devices(mobile) {
-    font-size: var(--text-large);
+  @include mixin.respond-from(mobile) {
+    font-size: var(--text-extra-large);
   }
 }
 
@@ -473,13 +473,13 @@
 
 .post-detail-title {
   margin: 0;
-  font-size: var(--text-3x-large);
+  font-size: var(--text-2x-large);
   font-weight: var(--font-bold);
   line-height: var(--line-height-tight);
   letter-spacing: -0.02em;
 
-  @include mixin.devices(mobile) {
-    font-size: var(--text-2x-large);
+  @include mixin.respond-from(mobile) {
+    font-size: var(--text-3x-large);
   }
 }
 
@@ -586,13 +586,38 @@
 /* WCAG 2.5.5. The library-wide floor in styles/buttons only reaches elements carrying a
    .btn-* class, and every control in this file is a bare <button> with a post-* class, so
    the reaction and remove targets were free to render at whatever their icon measured
-   (roughly 24px). Mobile only, for the same reason the buttons partial gives: 44px at
-   desktop density turns a reaction strip into a toolbar. */
-@include mixin.devices(mobile) {
-  /* The full-width row button already owns its horizontal extent, so it takes the height
-     floor only. Centering it would drag its thumbnail and title into the middle. */
+   (roughly 24px). Still wanted at mobile only, for the same reason the buttons partial
+   gives: 44px at desktop density turns a reaction strip into a toolbar.
+
+   Mobile-first inverts the shape rather than the intent. The floor is now the unconditional
+   default and respond-from(mobile) lifts it back to the initial `auto`, which is exactly what
+   these selectors resolved to above mobile before: this block is the library's only
+   declaration of min-width or min-height on any of them.
+
+   justify-content stays unconditional and needs no counterpart in the wider band. The reset in
+   vars/reset/_html.scss already gives every bare <button> `justify-content: center`, and the
+   three remove buttons restate it in their own base rules, so `center` was the desktop value
+   too and the old mobile-only copy never changed anything. */
+
+/* The full-width row button already owns its horizontal extent, so it takes the height
+   floor only. Centering it would drag its thumbnail and title into the middle. */
+.post-row-select {
+  min-height: var(--tap-target-min);
+}
+
+.post-card-reaction,
+.post-card-remove,
+.post-row-remove,
+.post-detail-reaction,
+.post-detail-remove {
+  min-width: var(--tap-target-min);
+  min-height: var(--tap-target-min);
+  justify-content: center;
+}
+
+@include mixin.respond-from(mobile) {
   .post-row-select {
-    min-height: var(--tap-target-min);
+    min-height: auto;
   }
 
   .post-card-reaction,
@@ -600,8 +625,13 @@
   .post-row-remove,
   .post-detail-reaction,
   .post-detail-remove {
-    min-width: var(--tap-target-min);
-    min-height: var(--tap-target-min);
-    justify-content: center;
+    min-width: auto;
+    min-height: auto;
+    // Reset too, not just the two sizes. The touch floor hoisted justify-content into the base
+    // along with the min-* pair, but above the breakpoint the old rule declared none of the
+    // three, and .post-card-reaction and .post-detail-reaction (unlike the three remove
+    // buttons) do not set justify-content anywhere else. Without this the two reaction buttons
+    // would centre on desktop where they previously did not.
+    justify-content: normal;
   }
 }

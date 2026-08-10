@@ -17,19 +17,19 @@ $rail-max-height: 280px;
 
 .entry-gallery {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) $rail-width;
+  grid-template-columns: 1fr;
   grid-template-areas:
-    "main rail"
-    "actions actions";
+    "main"
+    "rail"
+    "actions";
   gap: var(--space-medium);
   align-items: start;
 
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: minmax(0, 1fr) $rail-width;
     grid-template-areas:
-      "main"
-      "rail"
-      "actions";
+      "main rail"
+      "actions actions";
   }
 }
 .entry-gallery-main {
@@ -82,18 +82,22 @@ $rail-max-height: 280px;
 }
 .entry-rail-tiles {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  // No vertical room under the hero on a phone, so the rail starts as a swipeable strip.
+  grid-auto-flow: column;
+  grid-auto-columns: 64px;
   gap: var(--space-small);
-  max-height: $rail-max-height;
+  // Both axes are unconditional: overflow-y is what the tall two-column rail scrolls on, and an
+  // overflow-x of visible beside it computes to auto anyway, so stating it costs nothing above.
+  overflow-x: auto;
   overflow-y: auto;
 
-  @include mixin.devices(mobile) {
-    // No vertical room under the hero on a phone, so the rail becomes a swipeable strip.
-    grid-template-columns: none;
-    grid-auto-flow: column;
-    grid-auto-columns: 64px;
-    max-height: none;
-    overflow-x: auto;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: repeat(2, 1fr);
+    // The strip is the base now, so the two-column rail has to put the flow and the implicit
+    // column size back to their initial values, or the tiles keep running sideways past the tracks.
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    max-height: $rail-max-height;
   }
 }
 // The horizontal layout, used by every non-gallery group. It replaces the row of numbered

@@ -19,6 +19,7 @@
 // construction rather than by whatever the content happened to measure.
 .card-row {
   display: flex;
+  flex-direction: column;
   align-items: center;
   gap: var(--space-medium);
   padding: var(--space-medium);
@@ -35,9 +36,11 @@
     background-color: var(--hover-bg);
   }
 
-  @include mixin.devices(mobile) {
-    flex-direction: column;
-    align-items: center;
+  // flex-direction was declared only inside the old mobile-only block, so above mobile it has to
+  // be stated: `row` is the initial value and nothing else in the library declares it here.
+  // align-items was `center` in both bands, so it stays in the base rule and is not repeated.
+  @include mixin.respond-from(mobile) {
+    flex-direction: row;
   }
 }
 

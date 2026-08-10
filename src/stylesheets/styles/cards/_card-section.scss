@@ -35,8 +35,12 @@
     display: flex;
     justify-content: flex-end;
     min-width: 0;
-    @include mixin.devices(mobile) {
-      align-items: flex-end;
+    align-items: flex-end;
+    // align-items was declared only inside the old mobile-only block, so above mobile it has to
+    // be stated. No other .cost rule in the library declares it (typography's .total .cost and
+    // card-row's .card-row-body .cost do not), so the desktop value is the initial `normal`.
+    @include mixin.respond-from(mobile) {
+      align-items: normal;
     }
   }
   .row {
@@ -81,10 +85,14 @@
   display: grid;
   gap: var(--space-medium);
   justify-items: center;
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  @include mixin.devices(tablet) {
-    margin-top: var(--space-medium);
-    grid-template-columns: 1fr;
+  margin-top: var(--space-medium);
+  grid-template-columns: 1fr;
+  // margin-top was declared only inside the old tablet-and-below block, so above tablet it has to
+  // be stated as 0: nothing else declares a margin on .sections-grid and the reset sets one only
+  // on body and the heading/paragraph tags.
+  @include mixin.respond-from(tablet) {
+    margin-top: 0;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   }
 }
 

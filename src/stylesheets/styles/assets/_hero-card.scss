@@ -5,17 +5,26 @@
   display: grid;
   align-items: center;
   gap: var(--space-medium);
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  @include mixin.devices(mobile) {
-    .hero-wrapper {
+  grid-template-columns: 1fr;
+  .hero-wrapper {
+    order: 0;
+  }
+  .hero-card-header {
+    order: 1;
+  }
+  // Above mobile the header goes back to order 0, which is the initial value and therefore what
+  // it resolved to when this block was a max-width override: nothing in the library or in
+  // nexious-client declares order on either child, so above mobile the two follow source order.
+  @include mixin.respond-from(mobile) {
+    .hero-card-header {
       order: 0;
     }
-    .hero-card-header {
-      order: 1;
-    }
   }
-  @include mixin.devices(tablet) {
-    grid-template-columns: 1fr;
+  // Ascending order matters here: the base is the narrowest band, then mobile, then tablet. The
+  // two queries touch different properties, but the file reads wrong if they are not stacked
+  // smallest to largest.
+  @include mixin.respond-from(tablet) {
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   }
 }
 .hero-card-header {
@@ -31,8 +40,11 @@
 .hero-card-body-alt {
   display: flex;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    flex-wrap: wrap;
+  flex-wrap: wrap;
+  // nowrap is the flex-wrap initial value, so it is what this row resolved to above mobile
+  // before the flip. No other rule in the library or in nexious-client declares flex-wrap here.
+  @include mixin.respond-from(mobile) {
+    flex-wrap: nowrap;
   }
 }
 // The max-width is load bearing: the base .hero class contributes width:100% up to 550px, so

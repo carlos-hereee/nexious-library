@@ -43,10 +43,17 @@
   align-items: center;
   justify-content: space-around;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
+  .hero,
+  .credit-to {
+    display: none;
+  }
+  // Both desktop values are the elements' own defaults, read off the source rather than guessed:
+  // .hero is an img, which the reset and the .hero rule above both set to block, and .credit-to is
+  // the <p> from UnsplashCredit, which no rule in the library or in nexious-client touches.
+  @include mixin.respond-from(mobile) {
     .hero,
     .credit-to {
-      display: none;
+      display: block;
     }
   }
 }

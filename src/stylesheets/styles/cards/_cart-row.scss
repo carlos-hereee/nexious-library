@@ -8,9 +8,9 @@
 .cart-row {
   display: grid;
   gap: var(--space-medium);
-  grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
   }
 }
 .cart-column {

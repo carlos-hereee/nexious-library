@@ -89,19 +89,19 @@
   color: var(--primary-text-dark-mode-color);
 }
 .danger-zone {
-  display: flex;
+  display: none;
   justify-content: flex-end;
-  @include mixin.devices(mobile) {
-    display: none;
+  @include mixin.respond-from(mobile) {
+    display: flex;
   }
 }
 .banner {
   display: grid;
   align-items: center;
-  grid-template-columns: 2fr 3fr;
+  grid-template-columns: 1fr;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: 2fr 3fr;
   }
 }
 .hide-on-tablet,

@@ -27,13 +27,13 @@
   order: 1;
 }
 .primary-navigation {
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   flex: 1;
   min-width: 0;
-  @include mixin.devices(tablet) {
-    display: none;
+  @include mixin.respond-from(tablet) {
+    display: flex;
   }
 }
 .secondary-navigation {

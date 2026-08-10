@@ -19,10 +19,10 @@
 .app-container {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto 3fr auto;
+  grid-template-rows: 1fr;
   min-height: 100vh;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    grid-template-rows: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-rows: auto 3fr auto;
   }
 }

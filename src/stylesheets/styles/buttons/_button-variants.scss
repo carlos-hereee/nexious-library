@@ -30,7 +30,9 @@ a,
   // Height and padding match the form controls exactly. A button in a row with an input and a
   // select is the last piece of the alignment proof.
   height: var(--control-height);
-  min-height: var(--control-height);
+  // min-height is deliberately NOT here. It is the WCAG tap floor at base width and drops back to
+  // this control height above mobile, so both bands are stated together in the touch floor section
+  // at the bottom of this file rather than split between a rule and a query.
   padding: var(--control-padding-y) var(--control-padding-x);
   border: 1px solid transparent;
   border-radius: var(--control-radius-button);
@@ -109,34 +111,51 @@ a,
 // caller can say the size explicitly rather than relying on an omission to mean medium.
 .btn-sm {
   height: var(--control-height-small);
-  min-height: var(--control-height-small);
   padding: var(--control-padding-y-small) var(--control-padding-x-small);
   font-size: var(--text-extra-small);
   border-radius: var(--radius-small);
 }
 .btn-md {
   height: var(--control-height);
-  min-height: var(--control-height);
   padding: var(--control-padding-y) var(--control-padding-x);
   font-size: var(--text-small);
 }
 .btn-lg {
   height: var(--control-height-large);
-  min-height: var(--control-height-large);
   padding: var(--control-padding-y-large) var(--control-padding-x-large);
   font-size: var(--text-base);
   border-radius: var(--control-radius-button);
 }
 
 // ── Touch floor ─────────────────────────────────────────────────────────────────
-// WCAG 2.5.5. Applied at mobile width only, because a 44px control at desktop density makes a
-// dense toolbar unusable, and pointer accuracy is not the constraint there.
-@include mixin.devices(mobile) {
-  .btn-base,
-  .btn-sm,
-  .btn-md,
+// WCAG 2.5.5. Now that the file is mobile first the floor is the BASE, and each size opts back
+// down to its own control height above mobile width, because a 44px control at desktop density
+// makes a dense toolbar unusable and pointer accuracy is not the constraint there.
+//
+// This section owns min-height for all four classes, in both bands. Two things about it are
+// load bearing. It has to sit AFTER the size rules above, since the floor overrides all of them
+// unconditionally. And the restores below have to keep the same relative order as those size
+// rules, because a button carrying two of these classes (.btn-base plus .btn-sm, say) is resolved
+// by source order at equal specificity, and reordering them would silently change which height
+// such a button lands on.
+.btn-base,
+.btn-sm,
+.btn-md,
+.btn-lg {
+  min-height: var(--tap-target-min);
+}
+@include mixin.respond-from(mobile) {
+  .btn-base {
+    min-height: var(--control-height);
+  }
+  .btn-sm {
+    min-height: var(--control-height-small);
+  }
+  .btn-md {
+    min-height: var(--control-height);
+  }
   .btn-lg {
-    min-height: var(--tap-target-min);
+    min-height: var(--control-height-large);
   }
 }
 

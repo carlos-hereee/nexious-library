@@ -6,10 +6,10 @@
   gap: var(--space-medium);
   // justify-items: center;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width, 1fr));
+  grid-template-columns: 1fr;
   grid-template-rows: auto auto;
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width, 1fr));
   }
 }
 .buttons-container-row {

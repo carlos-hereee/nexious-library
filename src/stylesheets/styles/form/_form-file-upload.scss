@@ -7,10 +7,10 @@
 }
 .field-upload {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   align-items: start;
   gap: var(--space-medium);
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: 1fr 1fr;
   }
 }

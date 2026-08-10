@@ -44,11 +44,22 @@
   flex: 1;
 }
 
-// WCAG 2.5.5, mobile only. Both controls render through the library Button, which since 4.0.0
-// attaches no implicit base class, so the library-wide .btn-* touch floor never reaches them.
-@include mixin.devices(mobile) {
+// WCAG 2.5.5. Both controls render through the library Button, which since 4.0.0 attaches no
+// implicit base class, so the library-wide .btn-* touch floor never reaches them (that floor
+// lists .btn-base / .btn-sm / .btn-md / .btn-lg explicitly, and neither of these is one).
+//
+// Mobile-first inverts the shape: the floor is now the unconditional default and the wider band
+// lifts it, because the floor is still wanted only at mobile (44px at desktop density turns a
+// settings list into a ladder). The desktop value is the initial `auto`, since these two
+// selectors are the library's only declaration of min-height on either class.
+.settings-card-header,
+.btn-settings-card {
+  min-height: var(--tap-target-min);
+}
+
+@include mixin.respond-from(mobile) {
   .settings-card-header,
   .btn-settings-card {
-    min-height: var(--tap-target-min);
+    min-height: auto;
   }
 }

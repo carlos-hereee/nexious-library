@@ -47,7 +47,8 @@ table {
 th,
 td {
   border: 1px solid var(--border);
-  padding: var(--space-medium-small) var(--space-medium);
+  padding: var(--space-small); /* Tight cells are the small-screen default */
+  font-size: var(--text-small); /* Smaller cell text is the small-screen default */
   text-align: left;
 }
 
@@ -142,7 +143,7 @@ tfoot caption {
 }
 
 .table-title {
-  font-size: var(--text-2x-large);
+  font-size: var(--text-large);
   font-weight: var(--font-bold);
   margin-bottom: var(--space-small);
 }
@@ -150,13 +151,13 @@ tfoot caption {
 /* Same defect as the cells above, one layer out: #666 and #999 are light-mode literals that
    invert to unreadable on a dark page (#999 lands near 2.8:1 on white to begin with). */
 .table-subtitle {
-  font-size: var(--text-large);
+  font-size: var(--text-base);
   color: var(--text-secondary);
   margin-bottom: var(--space-medium);
 }
 
 .table-details {
-  font-size: var(--text-small);
+  font-size: var(--text-extra-small);
   color: var(--text-secondary);
   margin-top: var(--space-small);
 }
@@ -166,21 +167,32 @@ tfoot caption {
    the `table` rule at the top, both to the same 100%. Three rules setting one value is how they
    drift apart. */
 
-@include mixins.devices(mobile) {
+/* The small-screen values now sit in the base rules above, so this block holds what the wide
+   layout gets: the roomier cell and the larger type scale. */
+@include mixins.respond-from(mobile) {
   th,
   td {
-    padding: var(--space-small); /* Reduce padding on smaller screens */
-    font-size: var(--text-small); /* Slightly smaller text */
+    padding: var(--space-medium-small) var(--space-medium);
+    /* A wide table never declared a cell font-size at all, so a cell simply took the table's.
+       `inherit` is that same inherited value written out, not a size picked here. */
+    font-size: inherit;
   }
   .table-title {
-    font-size: var(--text-large);
+    font-size: var(--text-2x-large);
   }
   .table-subtitle {
-    font-size: var(--text-base);
+    font-size: var(--text-large);
   }
   .table-details {
-    font-size: var(--text-extra-small);
+    font-size: var(--text-small);
   }
+}
+
+/* Deliberately still desktop-first. A bare caption takes its alignment from the UA stylesheet,
+   which is `-webkit-center` in Blink and `center` in Gecko, so there is no one portable value to
+   state under respond-from, and `center` would quietly change how block children inside a
+   caption sit in Chrome. */
+@include mixins.devices(mobile) {
   caption {
     text-align: left;
   }
