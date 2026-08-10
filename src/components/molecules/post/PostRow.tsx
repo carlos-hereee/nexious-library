@@ -19,9 +19,9 @@ import type { PostRowProps } from "nxs-post";
  *    title so screen reader users know what they are deleting.
  */
 const PostRow: React.FC<PostRowProps> = (props) => {
-  const { post, theme, allowRemoval, onView, onRemove, onAuthorClick } = props;
+  const { post, className, allowRemoval, onView, onRemove, onAuthorClick } = props;
 
-  const wrapperClass = ["post-row", theme || ""].filter(Boolean).join(" ");
+  const wrapperClass = ["post-row", className || ""].filter(Boolean).join(" ");
   const author = post.createdBy;
   const date = post.createdAt || post.updatedAt;
   const dateObj = date ? new Date(date) : null;
@@ -39,7 +39,7 @@ const PostRow: React.FC<PostRowProps> = (props) => {
         onClick={handleActivate}
       >
         {post.thumbnail && (
-          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} theme="post-row-thumbnail" />
+          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} className="post-row-thumbnail" />
         )}
         <span className="post-row-content">
           <span className="post-row-title">{post.title}</span>
@@ -72,7 +72,7 @@ const PostRow: React.FC<PostRowProps> = (props) => {
           aria-label={`Remove post: ${post.title}`}
           onClick={() => onRemove(post)}
         >
-          <Icon icon="close" name="remove" theme="post-row-remove-icon" />
+          <Icon icon="close" name="remove" className="post-row-remove-icon" />
         </button>
       )}
     </div>

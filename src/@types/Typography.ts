@@ -9,7 +9,7 @@ export interface DataContent {
 export interface DataProp {
   data?: string;
   message?: string;
-  theme?: string;
+  className?: string;
   name?: string;
   uid?: string;
   value?: string;
@@ -26,12 +26,12 @@ export interface HeadingProps {
   /** Numeric heading level 1 through 6 (backward compat with DataProp.scale) */
   scale?: 1 | 2 | 3 | 4 | 5 | 6;
   /** Optional CSS class appended to "heading" */
-  theme?: string;
+  className?: string;
 }
 export interface PHeaderCotent {
   data: DataContent;
   children?: React.ReactNode;
-  theme?: string;
+  className?: string;
   // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
 }

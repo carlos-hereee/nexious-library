@@ -16,7 +16,7 @@ const meta: Meta<typeof Dialog> = {
   component: Dialog,
   tags: ["autodocs"],
   argTypes: {
-    theme: { control: "text" },
+    className: { control: "text" },
     asModal: { control: "boolean" },
     onDialogClose: { action: "close" },
   },

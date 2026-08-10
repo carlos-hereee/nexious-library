@@ -130,7 +130,7 @@ export type FormProps = {
   previewLabel?: string;
   responseError?: string;
   submitLabel?: string;
-  theme?: string;
+  className?: string;
   submitIcon?: string;
   cancelLabel?: string;
   hideLabels?: boolean;
@@ -159,7 +159,7 @@ export type InputCheckBoxProps = {
   name: string;
   value: boolean;
   label?: string;
-  theme?: string;
+  className?: string;
   error?: string;
   type?: string;
   placeholder?: string;
@@ -177,7 +177,7 @@ export interface NumberInputProps {
   name: string;
   value: number;
   label?: string;
-  theme?: string;
+  className?: string;
   error?: string;
   type?: string;
   placeholder?: string;
@@ -195,7 +195,7 @@ export type InputProps = {
   name: string;
   value?: string;
   label?: string;
-  theme?: string;
+  className?: string;
   error?: string;
   type?: string;
   placeholder?: string;
@@ -258,7 +258,7 @@ export interface PaginateFormProps {
   order?: string[]; // defaults set to first form on list
   hideNavigation?: boolean;
   responseError?: string;
-  theme?: string;
+  className?: string;
   previewPage?: React.JSX.Element | null;
   onFormSubmit?: (e: unknown) => void;
   onCancel?: () => void;
@@ -305,7 +305,7 @@ export interface FormFieldProps {
   label: string;
   type: string;
   fieldId: string;
-  theme?: string;
+  className?: string;
   selected?: string;
   hideLabels?: boolean;
   confirmRemoval?: boolean;
@@ -354,7 +354,7 @@ export type EntryThumbnailRailProps = EntryNavigatorProps;
 export interface LabelProps {
   label: string;
   name: string;
-  theme?: string;
+  className?: string;
   error?: string;
   message?: string;
 }
@@ -369,13 +369,13 @@ export interface FieldShellProps {
   error?: string;
   message?: string;
   help?: string;
-  theme?: string;
+  className?: string;
 }
 export interface UploadFileProps {
   input: InputProps;
   label: string;
   value: File | string;
-  theme?: string;
+  className?: string;
   hideLabels?: boolean;
   selectLabel?: string;
   error?: string;
@@ -384,7 +384,7 @@ export interface UploadFileProps {
 }
 export interface TextAreaProps {
   input: InputProps;
-  theme?: string;
+  className?: string;
   error?: string;
   hideLabels?: boolean;
   formMessage?: string;
@@ -393,7 +393,7 @@ export interface SelectProp {
   name: string;
   list: OptionProps[];
   active?: string;
-  theme?: string;
+  className?: string;
   hideLabels?: boolean;
   label?: string;
   error?: string;

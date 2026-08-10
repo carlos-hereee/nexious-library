@@ -16,7 +16,7 @@ const meta: Meta<typeof PostRow> = {
     onRemove: { action: "remove" },
     onAuthorClick: { action: "author-click" },
     allowRemoval: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
   decorators: [
     (Story) => (

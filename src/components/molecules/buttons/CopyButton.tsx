@@ -33,7 +33,7 @@ const CopyButton = ({ data, label }: CopyToClipboardProps) => {
       <IconButton
         icon={{ icon: isCopy ? "check" : "copy", label: label || "Copy link" }}
         onClick={copyData}
-        theme="btn-main"
+        className="btn-main"
         aria-label={label || "Copy link"}
       />
       {/* The icon swap (copy → check) is silent to screen readers; this polite live region

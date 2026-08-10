@@ -13,7 +13,7 @@ export type AssetProps = {
   label?: string;
   link?: string;
   creditTo?: UnplashAsset;
-  theme?: string;
+  className?: string;
   // variable id
   uid?: string;
   sharedKey?: string;
@@ -27,7 +27,7 @@ export interface HeroProps {
   // Silences (or forces) this component's dev-mode error panel, overriding setDevMode and
   // the NODE_ENV probe. Optional on every component that can render one. See utils/app/devMode.
   isDev?: boolean;
-  theme?: string;
+  className?: string;
   layout?: string;
   label?: string;
   isDisable?: boolean;
@@ -55,7 +55,7 @@ export interface UserProps {
 export interface TextBubbleProps {
   hero: AssetProps;
   data: { rating: number; title: string; body: string; data: string };
-  theme?: string;
+  className?: string;
   sender?: boolean;
   children?: React.ReactNode;
 }
@@ -70,7 +70,7 @@ export interface BubblyProps {
 export interface MediaProps {
   medias: AssetProps[];
   hero?: AssetProps;
-  theme?: string;
+  className?: string;
   label?: string;
   heading?: string;
 }

@@ -3,7 +3,7 @@ import { useEffect, useId } from "react";
 import { Button } from "@nxs-atoms";
 import { useFocusTrap } from "@nxs-utils/hooks/useFocusTrap";
 
-const Dialog = ({ theme, onDialogClose, children, header, asModal }: DialogProps) => {
+const Dialog = ({ className, onDialogClose, children, header, asModal }: DialogProps) => {
   // Focus trap + Escape are opt-in (asModal). Consumers that already wrap Dialog in their
   // own modal shell leave asModal off and get the plain markup, avoiding nested dialog
   // semantics and double Escape handling.
@@ -22,13 +22,13 @@ const Dialog = ({ theme, onDialogClose, children, header, asModal }: DialogProps
   return (
     <div
       ref={containerRef}
-      className={`dialog ${theme ? `${theme}` : "alt-light-mode"}`}
+      className={`dialog ${className ? `${className}` : "alt-light-mode"}`}
       role={asModal ? "dialog" : undefined}
       aria-modal={asModal ? true : undefined}
       aria-labelledby={asModal && header?.heading ? headingId : undefined}
     >
       <div className="dialog-navigation">
-        <Button label="X" aria-label="Close" onClick={onDialogClose} theme="btn-dialog btn-cancel" />
+        <Button label="X" aria-label="Close" onClick={onDialogClose} className="btn-dialog btn-cancel" />
       </div>
       {header && (
         <div className="dialog-header">

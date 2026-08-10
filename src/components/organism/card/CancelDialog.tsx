@@ -4,9 +4,9 @@ import { IconButton } from "@nxs-molecules";
 import Dialog from "../../template/Dialog";
 
 const CancelDialog = (props: DialogProps) => {
-  const { onDialogClose, theme, onClick, label, onConfirmClick, toggleShow, toggleLabel } = props;
+  const { onDialogClose, className, onClick, label, onConfirmClick, toggleShow, toggleLabel } = props;
   return (
-    <Dialog asModal theme={theme || "dialog-cancel light-mode"} onDialogClose={onDialogClose}>
+    <Dialog asModal className={className || "dialog-cancel light-mode"} onDialogClose={onDialogClose}>
       <div className="primary-container">
         <p className="text-center">Are you sure you want to continue this will remove current progress</p>
         {typeof toggleShow === "boolean" && (
@@ -15,7 +15,7 @@ const CancelDialog = (props: DialogProps) => {
         <div className="buttons-container">
           <button
             type="button"
-            className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"}
+            className={className ? `btn-main btn-cancel ${className}` : "btn-main btn-cancel"}
             onClick={onConfirmClick}
           >
             <Icon icon="cancel" />

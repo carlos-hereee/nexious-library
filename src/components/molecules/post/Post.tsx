@@ -29,7 +29,7 @@ import type { PostProps } from "nxs-post";
 const Post: React.FC<PostProps> = (props) => {
   const {
     post,
-    theme,
+    className,
     bodyPreviewLength = 280,
     showFullBody,
     hideThumbnail,
@@ -55,7 +55,7 @@ const Post: React.FC<PostProps> = (props) => {
   const needsTruncation = !showFullBody && rawBody.length > bodyPreviewLength;
   const body = needsTruncation ? `${rawBody.slice(0, bodyPreviewLength).trimEnd()}...` : rawBody;
 
-  const wrapperClass = ["post-card", theme || ""].filter(Boolean).join(" ");
+  const wrapperClass = ["post-card", className || ""].filter(Boolean).join(" ");
 
   const handleCardActivate = () => {
     if (onView) onView(post);
@@ -69,7 +69,7 @@ const Post: React.FC<PostProps> = (props) => {
           {author && (
             <div className="post-card-byline">
               {author.avatar && (
-                <Hero hero={{ url: author.avatar, alt: author.name || "author" }} theme="post-card-avatar" />
+                <Hero hero={{ url: author.avatar, alt: author.name || "author" }} className="post-card-avatar" />
               )}
               {onAuthorClick ? (
                 <button
@@ -113,7 +113,7 @@ const Post: React.FC<PostProps> = (props) => {
       {/* Thumbnail */}
       {!hideThumbnail && post.thumbnail && (
         <figure className="post-card-figure">
-          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} theme="post-card-thumbnail" />
+          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} className="post-card-thumbnail" />
         </figure>
       )}
 
@@ -153,13 +153,13 @@ const Post: React.FC<PostProps> = (props) => {
                 aria-label={`${r.name}${typeof r.count === "number" ? `, ${r.count}` : ""}`}
                 onClick={() => onReactionClick && onReactionClick(r, post)}
               >
-                {r.icon && <Icon icon={r.icon} name={r.name} theme="post-card-reaction-icon" />}
+                {r.icon && <Icon icon={r.icon} name={r.name} className="post-card-reaction-icon" />}
                 {typeof r.count === "number" && <span className="post-card-reaction-count">{r.count}</span>}
               </button>
             ))}
             {onLike && !post.reactions?.some((r) => r.name === "like") && (
               <button type="button" className="post-card-reaction" aria-label="Like" onClick={() => onLike(post)}>
-                <Icon icon="heart" name="like" theme="post-card-reaction-icon" />
+                <Icon icon="heart" name="like" className="post-card-reaction-icon" />
               </button>
             )}
             {onReply && (
@@ -169,7 +169,7 @@ const Post: React.FC<PostProps> = (props) => {
                 aria-label={`Comment${typeof post.commentCount === "number" ? `, ${post.commentCount} comments` : ""}`}
                 onClick={() => onReply(post)}
               >
-                <Icon icon="comment" name="reply" theme="post-card-reaction-icon" />
+                <Icon icon="comment" name="reply" className="post-card-reaction-icon" />
                 {typeof post.commentCount === "number" && (
                   <span className="post-card-reaction-count">{post.commentCount}</span>
                 )}
@@ -183,7 +183,7 @@ const Post: React.FC<PostProps> = (props) => {
               aria-label={`Remove post: ${post.title}`}
               onClick={() => onRemove(post)}
             >
-              <Icon icon="close" name="remove" theme="post-card-remove-icon" />
+              <Icon icon="close" name="remove" className="post-card-remove-icon" />
             </button>
           )}
         </footer>

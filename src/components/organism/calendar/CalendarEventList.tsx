@@ -15,7 +15,7 @@ const CalendarEventList: React.FC<ICalendarEventDetails> = ({ events, event, onE
       {events.map((e) => (
         <Button
           key={e.uid}
-          theme={event && event.uid === e.uid ? "btn-active btn-main highlight" : "btn-main highlight"}
+          className={event && event.uid === e.uid ? "btn-active btn-main highlight" : "btn-main highlight"}
           title={e.name}
           label={e.name}
           onClick={() => onEventClick && onEventClick(e)}

@@ -16,21 +16,25 @@
   gap: 0;
 }
 
+// LEGACY. `.btn-main` is what `theme` defaulted to before 4.0.0, and it is kept so the call
+// sites that were migrated verbatim (`theme="btn-main"` became `className="btn-main"`) render
+// exactly as they did. New work uses `variant`, which resolves to the .btn-base plus .btn-*
+// system in _button-variants.scss. This rule is scheduled for deletion once those call sites
+// have moved; it is not a second system to build on.
 .btn-main {
-  width: 100%;
-  max-width: variables.$max-width-button-lg;
+  // `width: 100%; max-width: 450px` REMOVED in 4.0.0. Width is owned by the container, and the
+  // reset's own `button { width: 100% }` is neutralized by .btn-base or by .nxs-button-group /
+  // the consumer's own wrapper. Those two declarations are what the !important war was about.
+  width: auto;
+  max-width: none;
   border: 1px solid variables.$faded;
-  // padding: 0;
   white-space: nowrap;
   &:hover {
     border: 1px solid variables.$dark-mode;
   }
-  // A 2px outline (not just a border-color shift) is a perceivable focus indicator;
-  // :focus-visible so it only shows for keyboard users, and outline doesn't shift layout.
-  &:focus-visible {
-    outline: 2px solid var(--main-brand-color);
-    outline-offset: 2px;
-  }
+  // Was a hand-written outline, one of the four different focus treatments the library carried.
+  // It is the shared ring now, so it flips correctly on dark and cannot drift again.
+  @include mixin.focus-ring;
   @include mixin.devices(mobile) {
     white-space: wrap;
   }

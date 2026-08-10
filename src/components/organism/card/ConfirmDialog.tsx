@@ -44,8 +44,8 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       )}
       {securityLevel === "low" && (
         <>
-          {onCancel && <Button theme="btn-main highlight" label={cancelLabel} onClick={onCancel} />}
-          <Button theme="btn-main btn-danger highlight" label={confirmLabel} onClick={onConfirm} />
+          {onCancel && <Button className="btn-main highlight" label={cancelLabel} onClick={onCancel} />}
+          <Button className="btn-main btn-danger highlight" label={confirmLabel} onClick={onConfirm} />
         </>
       )}
     </div>

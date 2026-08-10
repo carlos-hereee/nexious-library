@@ -28,7 +28,7 @@ const DataList = (props: DataListProps) => {
             label={isSelected(l.value) ? `${emojis.checkedBox} ${l.label}` : `${emojis.emptyCircle} ${l.label}`}
             key={l.uid}
             isDisable={isDisabled}
-            theme={l.themeId ? l.name : ""}
+            className={l.themeId ? l.name : ""}
             onClick={() => handleToggle(l.value)}
             title={isSelected(l.value) ? `remove ${l.value}` : `add ${l.value}`}
           />

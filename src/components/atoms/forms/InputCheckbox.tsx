@@ -5,7 +5,7 @@ import { uniqueId } from "@nxs-utils/data/uniqueId";
 import Label from "./Label";
 
 const InputCheckbox = (props: InputCheckBoxProps) => {
-  const { value, onChange, name, theme, hideLabel, label, error, formMessage, isDisabled, populateLink } = props;
+  const { value, onChange, name, className, hideLabel, label, error, formMessage, isDisabled, populateLink } = props;
 
   return (
     // field-shell so a checkbox stacks and spaces like every other field. It keeps rendering its
@@ -15,7 +15,7 @@ const InputCheckbox = (props: InputCheckBoxProps) => {
     <div className="field-shell">
       <div className="input-checkbox ">
         <input
-          className={theme}
+          className={className}
           name={name}
           type="checkbox"
           disabled={isDisabled}

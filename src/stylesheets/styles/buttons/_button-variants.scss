@@ -1,3 +1,5 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
 /* Global transition baseline for interactive elements */
 button,
 a,
@@ -9,45 +11,150 @@ a,
     box-shadow var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
-.btn-ghost {
-  background-color: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-.btn-ghost:hover {
-  background-color: var(--surface);
-  border-color: var(--main-brand-color);
-  box-shadow: var(--shadow-small);
+// ── The button system ───────────────────────────────────────────────────────────
+// One base plus five variants plus three sizes, all from the control tokens, so a button lines
+// up with the input beside it by construction rather than by anyone measuring.
+//
+// Reached for only when a caller passes `variant`. There is no implicit base class in 4.0.0, so a
+// caller that brings its own design-system classes gets exactly those. That matters here more
+// than it sounds: nexious-client styles 319 of its 335 button call sites with its own `cu-btn`
+// primitives, so a library base class underneath would be a specificity fight at every one.
+//
+// This file is the one that was already fully token driven before the rework, which is why it is
+// the file that absorbed the other three rather than the other way round.
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  // Height and padding match the form controls exactly. A button in a row with an input and a
+  // select is the last piece of the alignment proof.
+  height: var(--control-height);
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  border: 1px solid transparent;
+  border-radius: var(--control-radius-button);
+  font-size: var(--text-small);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  cursor: pointer;
+  // The library reset ships `button { width: 100%; max-width: 250px }`, so width has to be
+  // reclaimed here or every variant inherits a cap it did not ask for. Width belongs to the
+  // container (.nxs-button-group), never to the button.
+  width: auto;
+  max-width: none;
+  @include mixin.focus-ring;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
-.btn-outline {
-  background-color: transparent;
-  border: 1px solid var(--main-brand-color);
-  color: var(--main-brand-color);
-}
-.btn-outline:hover {
+.btn-primary {
   background-color: var(--main-brand-color);
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-small);
+  color: var(--primary-text-dark-mode-color);
+  border-color: var(--main-brand-color);
+  &:hover:not(:disabled) {
+    background-color: var(--main-brand-hover-color);
+    border-color: var(--main-brand-hover-color);
+  }
+}
+
+// Secondary is a NEUTRAL, not a second brand hue. The design language is explicit about this
+// (section 5.3): a competing saturated color fights indigo for attention and makes the product
+// louder, which is the opposite of the goal.
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+  &:hover:not(:disabled) {
+    background-color: var(--hover-bg);
+    border-color: var(--main-brand-color);
+  }
+}
+
+.btn-tertiary {
+  background-color: transparent;
+  color: var(--main-brand-color);
+  border-color: transparent;
+  &:hover:not(:disabled) {
+    background-color: var(--brand-wash);
+  }
 }
 
 .btn-danger {
   background-color: var(--danger-accent-color);
-  color: #ffffff;
-  border: none;
-}
-.btn-danger:hover {
-  background-color: #dc2626;
+  color: var(--status-on-accent);
+  border-color: var(--danger-accent-color);
+  &:hover:not(:disabled) {
+    background-color: var(--danger-text);
+    border-color: var(--danger-text);
+  }
 }
 
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--border);
+  &:hover:not(:disabled) {
+    background-color: var(--surface);
+    border-color: var(--main-brand-color);
+    box-shadow: var(--elevation-1);
+  }
+}
+
+// ── Sizes ───────────────────────────────────────────────────────────────────────
+// Three, matching the three control heights. `btn-md` is the same as the base and exists so a
+// caller can say the size explicitly rather than relying on an omission to mean medium.
 .btn-sm {
-  padding: var(--space-extra-small) var(--space-small);
-  font-size: var(--text-small);
+  height: var(--control-height-small);
+  min-height: var(--control-height-small);
+  padding: var(--control-padding-y-small) var(--control-padding-x-small);
+  font-size: var(--text-extra-small);
   border-radius: var(--radius-small);
 }
+.btn-md {
+  height: var(--control-height);
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  font-size: var(--text-small);
+}
 .btn-lg {
-  padding: var(--space-medium-small) var(--space-large);
-  font-size: var(--text-large);
-  border-radius: var(--radius-medium);
+  height: var(--control-height-large);
+  min-height: var(--control-height-large);
+  padding: var(--control-padding-y-large) var(--control-padding-x-large);
+  font-size: var(--text-base);
+  border-radius: var(--control-radius-button);
+}
+
+// ── Touch floor ─────────────────────────────────────────────────────────────────
+// WCAG 2.5.5. Applied at mobile width only, because a 44px control at desktop density makes a
+// dense toolbar unusable, and pointer accuracy is not the constraint there.
+@include mixin.devices(mobile) {
+  .btn-base,
+  .btn-sm,
+  .btn-md,
+  .btn-lg {
+    min-height: var(--tap-target-min);
+  }
+}
+
+// ── The width handshake ─────────────────────────────────────────────────────────
+// Button width is owned by the CONTAINER, never by the button. This is the library half of the
+// handshake nexious-client already shipped as `cu-button-group`: the client built its side to
+// neutralize `.btn-main`'s `width: 100%; max-width: 450px` at the wrapper, and the library side
+// was never done, which is what kept the !important war alive.
+.nxs-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+  align-items: center;
+  > * {
+    width: auto;
+    max-width: none;
+  }
+}
+.nxs-button-group-stretch > * {
+  flex: 1 1 0;
 }

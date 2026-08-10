@@ -19,7 +19,7 @@ import type { PostDetailProps } from "nxs-post";
  * list, because that is business logic tied to the client's data model.
  */
 const PostDetail: React.FC<PostDetailProps> = (props) => {
-  const { post, theme, allowRemoval, children, onLike, onReply, onRemove, onAuthorClick, onReactionClick } = props;
+  const { post, className, allowRemoval, children, onLike, onReply, onRemove, onAuthorClick, onReactionClick } = props;
 
   const author = post.createdBy;
   const date = post.createdAt || post.updatedAt;
@@ -29,13 +29,13 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
     ? dateObj.toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" })
     : null;
 
-  const wrapperClass = ["post-detail", theme || ""].filter(Boolean).join(" ");
+  const wrapperClass = ["post-detail", className || ""].filter(Boolean).join(" ");
 
   return (
     <article className={wrapperClass}>
       {post.thumbnail && (
         <figure className="post-detail-figure">
-          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} theme="post-detail-thumbnail" />
+          <Hero hero={{ url: post.thumbnail, alt: post.thumbnailAlt || post.title }} className="post-detail-thumbnail" />
         </figure>
       )}
 
@@ -43,7 +43,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
         {author && (
           <div className="post-detail-byline">
             {author.avatar && (
-              <Hero hero={{ url: author.avatar, alt: author.name || "author" }} theme="post-detail-avatar" />
+              <Hero hero={{ url: author.avatar, alt: author.name || "author" }} className="post-detail-avatar" />
             )}
             <div className="post-detail-byline-text">
               {onAuthorClick ? (
@@ -97,13 +97,13 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
                 aria-label={`${r.name}${typeof r.count === "number" ? `, ${r.count}` : ""}`}
                 onClick={() => onReactionClick && onReactionClick(r, post)}
               >
-                {r.icon && <Icon icon={r.icon} name={r.name} theme="post-detail-reaction-icon" />}
+                {r.icon && <Icon icon={r.icon} name={r.name} className="post-detail-reaction-icon" />}
                 {typeof r.count === "number" && <span className="post-detail-reaction-count">{r.count}</span>}
               </button>
             ))}
             {onLike && !post.reactions?.some((r) => r.name === "like") && (
               <button type="button" className="post-detail-reaction" aria-label="Like" onClick={() => onLike(post)}>
-                <Icon icon="heart" name="like" theme="post-detail-reaction-icon" />
+                <Icon icon="heart" name="like" className="post-detail-reaction-icon" />
               </button>
             )}
             {onReply && (
@@ -113,7 +113,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
                 aria-label={`Comment${typeof post.commentCount === "number" ? `, ${post.commentCount} comments` : ""}`}
                 onClick={() => onReply(post)}
               >
-                <Icon icon="comment" name="reply" theme="post-detail-reaction-icon" />
+                <Icon icon="comment" name="reply" className="post-detail-reaction-icon" />
                 {typeof post.commentCount === "number" && (
                   <span className="post-detail-reaction-count">{post.commentCount}</span>
                 )}
@@ -127,7 +127,7 @@ const PostDetail: React.FC<PostDetailProps> = (props) => {
               aria-label={`Remove post: ${post.title}`}
               onClick={() => onRemove(post)}
             >
-              <Icon icon="close" name="remove" theme="post-detail-remove-icon" />
+              <Icon icon="close" name="remove" className="post-detail-remove-icon" />
             </button>
           )}
         </footer>

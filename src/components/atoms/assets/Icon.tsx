@@ -12,7 +12,7 @@ import { getIconRenderer, registeredKeysHint } from "./iconRegistry";
  * @returns JSX.Element
  */
 const Icon: React.FC<IconProps> = (props) => {
-  const { icon, size, spin, color, name, hideHints, theme, label, isDev } = props;
+  const { icon, size, spin, color, name, hideHints, className, label, isDev } = props;
 
   const Renderer = icon ? getIconRenderer(icon) : undefined;
   if (!Renderer) {
@@ -31,7 +31,7 @@ const Icon: React.FC<IconProps> = (props) => {
     );
   }
 
-  const n = theme ? `icon${name ? ` icon-${name} ${theme}` : theme}` : `icon${name ? ` icon-${name}` : ""}`;
+  const n = className ? `icon${name ? ` icon-${name} ${className}` : className}` : `icon${name ? ` icon-${name}` : ""}`;
   const spinMode = spin === "spin" || spin === "pulse" ? spin : false;
 
   return <Renderer size={size} spin={spinMode} color={color} className={n} label={label} />;

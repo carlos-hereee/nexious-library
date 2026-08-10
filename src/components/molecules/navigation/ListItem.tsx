@@ -6,7 +6,7 @@ import { safeUrl } from "@nxs-utils/data/safeUrl";
 import type { MenuProp } from "nxs-navigation";
 
 interface ListItemProps {
-  theme?: string;
+  className?: string;
   item?: MenuProp;
   hideIcons?: boolean;
   activePath?: string;
@@ -27,11 +27,11 @@ interface ListItemProps {
  * The old behavior of wrapping every item in .btn-main is removed so nav
  * links no longer look like rectangular buttons.
  */
-const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemProps) => {
+const ListItem = ({ className, item, hideIcons, activePath, handleClick }: ListItemProps) => {
   if (!item) {
     return (
       <ListItem
-        theme={theme}
+        className={className}
         item={{ name: "home", label: "Home", value: "/", icon: "home", href: "/" }}
         activePath={activePath}
         handleClick={handleClick}
@@ -39,12 +39,12 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
     );
   }
   if (hideIcons && item) {
-    return <ListItem theme={theme} item={{ ...item, icon: "" }} activePath={activePath} handleClick={handleClick} />;
+    return <ListItem className={className} item={{ ...item, icon: "" }} activePath={activePath} handleClick={handleClick} />;
   }
 
   const href = item.href || item.link;
   const isActive = !!href && !!activePath && activePath === href;
-  const liClass = ["nav-item", theme || "", isActive ? "is-active" : ""].filter(Boolean).join(" ");
+  const liClass = ["nav-item", className || "", isActive ? "is-active" : ""].filter(Boolean).join(" ");
 
   // Anchor path: when href exists, render a real link.
   if (href) {
@@ -71,7 +71,7 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
     return (
       <li className={liClass}>
         <a {...aProps}>
-          {item.icon && <Icon icon={item.icon} name={item.name} theme="nav-icon" />}
+          {item.icon && <Icon icon={item.icon} name={item.name} className="nav-icon" />}
           <span className="nav-label">{item.label || item.name}</span>
         </a>
       </li>
@@ -82,9 +82,9 @@ const ListItem = ({ theme, item, hideIcons, activePath, handleClick }: ListItemP
   return (
     <li className={liClass}>
       {item.icon ? (
-        <IconButton icon={{ ...item, icon: item.icon }} onClick={handleClick} theme={item.theme || "nav-action"} />
+        <IconButton icon={{ ...item, icon: item.icon }} onClick={handleClick} className={item.className || "nav-action"} />
       ) : (
-        <Button label={item.label} theme={item.theme || "nav-action"} onClick={handleClick} />
+        <Button label={item.label} className={item.className || "nav-action"} onClick={handleClick} />
       )}
     </li>
   );

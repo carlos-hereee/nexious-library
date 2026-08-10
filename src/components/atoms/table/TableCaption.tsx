@@ -5,7 +5,7 @@ import type { PTableData } from "custom-props";
  * @param param0 table tittle
  * @returns caption
  */
-const TableCaption: React.FC<PTableData> = ({ value, theme }) => (
-  <caption className={theme || "table-caption"}>{value}</caption>
+const TableCaption: React.FC<PTableData> = ({ value, className }) => (
+  <caption className={className || "table-caption"}>{value}</caption>
 );
 export default TableCaption;

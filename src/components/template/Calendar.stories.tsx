@@ -22,7 +22,7 @@ const meta: Meta<typeof Calendar> = {
   component: Calendar,
   tags: ["autodocs"],
   argTypes: {
-    theme: { control: "text" },
+    className: { control: "text" },
     hideToday: { control: "boolean" },
     onDayClick: { action: "day-click" },
     setDay: { action: "set-day" },

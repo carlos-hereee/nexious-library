@@ -33,7 +33,7 @@ export type { CardProps } from "nxs-card";
 
 // errors
 export { default as EmptySection } from "@nxs-molecules/errors/EmptySection";
-// TODO: remove message required. same result with classname theme
+// TODO: remove message required. same result with a classname
 // export { default as MessageRequired } from "@nxs-molecules/errors/MessageRequired";
 export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Loading } from "@nxs-molecules/errors/Loading";

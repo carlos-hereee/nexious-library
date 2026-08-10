@@ -35,7 +35,7 @@ const FieldDay: React.FC<FieldDayProps> = (props) => {
       isDisabled={isDisabled}
       // The FieldShell above owns the label and the error node; see SelectProp.inShell.
       inShell
-      theme="highlight"
+      className="highlight"
     />
   );
 };

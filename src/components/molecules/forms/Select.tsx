@@ -12,7 +12,7 @@ import type { SelectProp } from "nxs-form";
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
+  const { list, onChange, className, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
   const { placeholder, inShell } = props;
 
@@ -40,11 +40,11 @@ const Select: React.FC<SelectProp> = (props) => {
           </span>
         )
       )}
-      <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
+      <div className={className ? `select-wrapper ${className}` : "select-wrapper"}>
         {active && icon ? (
-          <Icon icon={icon} name={icon} theme="select-icon" />
+          <Icon icon={icon} name={icon} className="select-icon" />
         ) : thumbnail ? (
-          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} theme="thumbnail-select" />
+          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} className="thumbnail-select" />
         ) : (
           ""
         )}
@@ -71,7 +71,7 @@ const Select: React.FC<SelectProp> = (props) => {
           <IconButton
             icon={{ icon: "close" }}
             onClick={() => onChange?.("")}
-            theme="btn-icon"
+            className="btn-icon"
             aria-label="Clear selection"
           />
         )}

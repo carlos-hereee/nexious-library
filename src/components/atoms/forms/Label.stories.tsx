@@ -21,7 +21,7 @@ const meta: Meta<typeof Label> = {
     label: { control: "text" },
     error: { control: "text" },
     message: { control: "text" },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
 };
 

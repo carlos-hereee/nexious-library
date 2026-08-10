@@ -5,11 +5,11 @@ import { Form } from "@nxs-organism";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
 import type { FormInitialValue } from "nxs-form";
 
-const CartRow: React.FC<CardProps> = ({ data, theme, setQuantity, showPrice, showItemTotal }) => {
+const CartRow: React.FC<CardProps> = ({ data, className, setQuantity, showPrice, showItemTotal }) => {
   const description = data.description || data.body;
   return (
-    <div className={`cart-row ${theme || ""}`}>
-      {data.hero && <Hero hero={data.hero} theme="thumbnail" />}
+    <div className={`cart-row ${className || ""}`}>
+      {data.hero && <Hero hero={data.hero} className="thumbnail" />}
       <div className="container">
         <h3 className="sub-title">{data.name} details: </h3>
         {description && <ReadMore data={description} uid={data.uid || uniqueId()} />}

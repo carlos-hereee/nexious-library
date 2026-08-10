@@ -6,7 +6,7 @@ interface CloseHeaderProps {
 
 const CloseHeader = ({ onClose }: CloseHeaderProps) => (
   <div className="container-header">
-    <Button theme="btn-cancel highlight ml" aria-label="Close" onClick={onClose}>
+    <Button className="btn-cancel highlight ml" aria-label="Close" onClick={onClose}>
       &#10005;
     </Button>
   </div>

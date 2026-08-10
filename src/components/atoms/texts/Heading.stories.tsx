@@ -20,7 +20,7 @@ const meta: Meta<typeof Heading> = {
     data: { control: "text" },
     size: { control: "select", options: ["h1", "h2", "h3", "h4", "h5", "h6"] },
     scale: { control: "select", options: [1, 2, 3, 4, 5, 6] },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
 };
 
@@ -44,12 +44,12 @@ export const Legacy: Story = {
   },
 };
 
-/** With a theme class appended to the base `heading` class. */
+/** With an extra class appended to the base `heading` class. */
 export const Themed: Story = {
   args: {
     size: "h3",
     children: "Themed heading",
-    theme: "text-center",
+    className: "text-center",
   },
 };
 

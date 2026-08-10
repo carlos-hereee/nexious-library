@@ -34,7 +34,7 @@ const CalendarView: React.FC<CalendarViewProps> = ({ data, click, events, minDat
           ) : (
             <Button
               key={d}
-              theme="btn-calendar-tile btn-calendar-tile--muted"
+              className="btn-calendar-tile btn-calendar-tile--muted"
               onClick={() => click({ ...data, day })}
             />
           );

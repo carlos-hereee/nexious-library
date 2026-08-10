@@ -8,7 +8,7 @@ import type { NavigationProps, MenuProp } from "nxs-navigation";
  * @param click   callback to be fired when button is click
  * @returns navbar
  */
-const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, activeTheme, navItemTheme, isDev }) => {
+const Navigation: React.FC<NavigationProps> = ({ onClick, menus, className, active, activeTheme, navItemTheme, isDev }) => {
   // require key variable
   if (!menus)
     return (
@@ -18,14 +18,14 @@ const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, 
 
   if (propType === "string") {
     return (
-      <nav className={theme || "primary-navigation"}>
+      <nav className={className || "primary-navigation"}>
         <ul className="navigation">
           {(menus as string[]).map((menu) => (
             <NavButton
               onClick={onClick}
               data={menu}
               key={menu}
-              theme={navItemTheme}
+              className={navItemTheme}
               activeTheme={active === menu ? activeTheme : undefined}
             />
           ))}
@@ -34,7 +34,7 @@ const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, 
     );
   }
   return (
-    <nav className={theme || "primary-navigation"}>
+    <nav className={className || "primary-navigation"}>
       <ul className="navigation">
         {(menus as MenuProp[]).map((menu) => (
           <NavButton
@@ -42,7 +42,7 @@ const Navigation: React.FC<NavigationProps> = ({ onClick, menus, theme, active, 
             data={menu.value}
             key={menu.uid}
             icon={menu.icon}
-            theme={navItemTheme}
+            className={navItemTheme}
             label={menu.label}
             activeTheme={active === menu.value ? activeTheme : undefined}
           />

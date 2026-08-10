@@ -1,5 +1,6 @@
 import type { CardinalDirectionProps } from "nxs-typography";
 import type { LibraryIconKey } from "@nxs-atoms/assets/iconRegistry";
+import type { Variant, Size } from "./Variant";
 
 export type SizeProp = "2xs" | "xs" | "sm" | "lg" | "xl" | "2xl";
 export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9x" | "10x";
@@ -19,7 +20,7 @@ export type IconProps = {
   label?: string;
   name?: string;
   hideHints?: boolean;
-  theme?: string;
+  className?: string;
   layout?: string;
 };
 export interface ButtonProps {
@@ -31,9 +32,14 @@ export interface ButtonProps {
   onClick?: (data?: string) => void;
   onSubmit?: () => void;
   children?: React.ReactNode;
-  theme?: string;
-  // className merges with the computed theme/btn-main class rather than replacing it,
-  // so consumers can extend styling without losing the base button styles.
+  // The semantic API, new in 4.0.0. A typo is a compile error instead of an unstyled control.
+  // There is NO default variant: a Button with no variant renders only its className, which is
+  // exactly what the removed `theme` prop did (it REPLACED the base class), so every existing
+  // call site keeps its rendered output through the migration.
+  variant?: Variant;
+  size?: Size;
+  // The escape hatch, and the direct replacement for `theme`. Appended AFTER the variant and
+  // size classes so an equal-specificity consumer rule wins on source order without !important.
   className?: string;
   // type defaults to "button"; pass "submit" to use Button inside a form.
   type?: "button" | "submit" | "reset";
@@ -70,7 +76,9 @@ export interface IconButtonProps {
   // all of button props
   name?: string;
   title?: string;
-  theme?: string;
+  variant?: Variant;
+  size?: Size;
+  className?: string;
   isDisable?: boolean;
   // alias of isDisable (see ButtonProps); lets callers use the canonical spelling.
   isDisabled?: boolean;
@@ -103,7 +111,7 @@ export interface CopyToClipboardProps {
   heading?: string;
   label?: string;
   labelLayout?: string;
-  theme?: string;
+  className?: string;
   data: string;
   isCopy?: boolean;
 }

@@ -1,7 +1,7 @@
 import { ErrorMessage, Heading } from "@nxs-atoms/index";
 import type { PHeaderCotent } from "nxs-typography";
 
-const HeaderContent: React.FC<PHeaderCotent> = ({ data, children, theme, isDev }) => {
+const HeaderContent: React.FC<PHeaderCotent> = ({ data, children, className, isDev }) => {
   if (!data)
     return (
       <ErrorMessage
@@ -10,7 +10,7 @@ const HeaderContent: React.FC<PHeaderCotent> = ({ data, children, theme, isDev }
       />
     );
   return (
-    <div className={theme || "header-content"}>
+    <div className={className || "header-content"}>
       {data.title && <Heading data={data.title} />}
       {data.tagline && <Heading data={data.tagline} scale={2} />}
       {data.subtitle && <Heading data={data.subtitle} scale={4} />}

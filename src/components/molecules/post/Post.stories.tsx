@@ -24,7 +24,7 @@ const meta: Meta<typeof Post> = {
     showFullBody: { control: "boolean" },
     linkable: { control: "boolean" },
     allowRemoval: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
   decorators: [
     (Story) => (

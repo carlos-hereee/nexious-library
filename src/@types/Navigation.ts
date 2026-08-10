@@ -7,7 +7,7 @@ export type MenuItemProp = {
   name: string;
   label: string;
   value: string;
-  theme?: string;
+  className?: string;
   uid?: string;
   menuItemId?: string;
   url?: string;
@@ -41,7 +41,7 @@ export type MenuProp = {
   href?: string;
   external?: boolean;
   locale?: string;
-  theme?: string;
+  className?: string;
   label?: string;
   value?: string;
 };
@@ -58,7 +58,7 @@ export interface HeaderProps {
   ping?: number;
   heading?: string;
   uniqueId?: string;
-  theme?: string;
+  className?: string;
   layout?: string;
   includeHome?: boolean;
   hideIcons?: boolean;
@@ -88,7 +88,7 @@ export interface FooterProps {
   appName?: string;
   title?: string;
   media?: SectionProps;
-  theme?: string;
+  className?: string;
   hero?: AssetProps;
   hoursOfOperation?: PHoursOfOperation;
   links?: FooterLink[];
@@ -99,7 +99,7 @@ export interface NavigationProps {
   menus: string[] | MenuProp[];
   // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
-  theme?: string;
+  className?: string;
   navItemTheme?: string;
   activeTheme?: string;
   active?: string;
@@ -108,7 +108,7 @@ export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
   menu: MenuProp[];
   themeList?: ThemeList[];
-  theme?: string;
+  className?: string;
   active?: string;
   activePath?: string;
   navLayout?: string;
@@ -121,7 +121,7 @@ export type NavbarProps = {
 };
 export interface NavigationToggleProps {
   data: MenuProp;
-  theme?: string;
+  className?: string;
   onSelect: (a: MenuProp) => void;
   language?: MenuItemProp;
 }

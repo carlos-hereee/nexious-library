@@ -6,7 +6,7 @@ interface ThemeMenuProps {
   list: ThemeList[];
   active?: string;
   name?: string;
-  theme?: string;
+  className?: string;
   btnTheme?: string;
   handleChange?: (value: string) => void;
 }
@@ -27,7 +27,7 @@ interface ThemeMenuProps {
  * This scales to many themes later without needing a redesign. It also means
  * the active theme can show a color swatch next to its label.
  */
-const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange }: ThemeMenuProps) => {
+const ThemeMenu = ({ list, active, name = "theme", className, btnTheme, handleChange }: ThemeMenuProps) => {
   const [open, setOpen] = useState(false);
   const [focusIdx, setFocusIdx] = useState<number>(-1);
   const wrapRef = useRef<HTMLLIElement>(null);
@@ -119,7 +119,7 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
     }
   };
 
-  const wrapClass = ["theme-menu", theme || "", btnTheme || ""].filter(Boolean).join(" ");
+  const wrapClass = ["theme-menu", className || "", btnTheme || ""].filter(Boolean).join(" ");
 
   return (
     <li className={wrapClass} ref={wrapRef}>
@@ -134,12 +134,12 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
         onClick={() => setOpen((v) => !v)}
         onKeyDown={onTriggerKey}
       >
-        <Icon icon="palette" name="theme" theme="theme-menu-icon" />
+        <Icon icon="palette" name="theme" className="theme-menu-icon" />
         <span className="theme-menu-label">{activeLabel}</span>
         {activeItem?.colors && (
           <span className="theme-menu-swatch" aria-hidden="true" style={{ background: activeItem.colors.primary }} />
         )}
-        <Icon icon="chevronDown" name="chevron" theme={`theme-menu-chevron${open ? " is-open" : ""}`} />
+        <Icon icon="chevronDown" name="chevron" className={`theme-menu-chevron${open ? " is-open" : ""}`} />
       </button>
 
       {open && (
@@ -171,7 +171,7 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
                   />
                 )}
                 <span className="theme-menu-option-label">{t.label}</span>
-                {selected && <Icon icon="checkMark" name="check" theme="theme-menu-option-check" />}
+                {selected && <Icon icon="checkMark" name="check" className="theme-menu-option-check" />}
               </li>
             );
           })}

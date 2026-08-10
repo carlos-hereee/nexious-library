@@ -6,7 +6,7 @@ const Logo: React.FC<HeroProps> = (props) => {
 
   return (
     <button type="button" className="btn-logo" onClick={onLogoClick}>
-      {hero && <Hero hero={hero} theme="logo" />}
+      {hero && <Hero hero={hero} className="logo" />}
       {label && <h2 className="hide-on-mobile heading">{label}</h2>}
     </button>
   );

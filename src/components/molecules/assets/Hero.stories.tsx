@@ -6,8 +6,8 @@ import Hero from "./Hero";
  *
  * Gotcha: pass `hero` as `{ url, alt }`. When `hero.url` is missing Hero does
  * NOT error, it falls back to the Image atom's placeholder, so a blank or
- * absent url renders a placeholder rather than crashing the tree. `theme` is the
- * className hook used to size/shape it (e.g. "thumbnail"); `onImageClick` makes
+ * absent url renders a placeholder rather than crashing the tree. `className` is the
+ * class hook used to size/shape it (e.g. "thumbnail"); `onImageClick` makes
  * it interactive and is suppressed when `isDisable` is set.
  */
 const meta: Meta<typeof Hero> = {
@@ -15,7 +15,7 @@ const meta: Meta<typeof Hero> = {
   component: Hero,
   tags: ["autodocs"],
   argTypes: {
-    theme: { control: "text" },
+    className: { control: "text" },
     isDisable: { control: "boolean" },
     onImageClick: { action: "image-click" },
   },

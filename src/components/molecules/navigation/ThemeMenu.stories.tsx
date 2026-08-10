@@ -18,7 +18,7 @@ const meta: Meta<typeof ThemeMenu> = {
   argTypes: {
     active: { control: "text" },
     name: { control: "text" },
-    theme: { control: "text" },
+    className: { control: "text" },
     btnTheme: { control: "text" },
     handleChange: { action: "theme-selected" },
   },
@@ -80,7 +80,7 @@ const manyThemes: ThemeList[] = [
   },
 ];
 
-/** Two theme choice (the current nexious use case). */
+/** Two theme choices (the current nexious use case). */
 export const TwoThemes: Story = {
   render: (args) => {
     const [active, setActive] = useState(args.active || "light");

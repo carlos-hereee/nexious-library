@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     logo,
     ping,
     language,
-    theme,
+    className,
     uniqueId,
     themeList,
     includeHome,
@@ -82,9 +82,9 @@ const Header: React.FC<HeaderProps> = (props) => {
               handleTheme={handleTheme}
               language={language}
               themeList={themeList}
-              theme={theme}
+              className={className}
               hideIcons={hideIcons}
-              active={theme}
+              active={className}
               activePath={activePath}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}
@@ -104,9 +104,9 @@ const Header: React.FC<HeaderProps> = (props) => {
               hideIcons={hideIcons}
               language={language}
               themeList={themeList}
-              active={theme}
+              active={className}
               activePath={activePath}
-              theme={`alt-${theme}`}
+              className={`alt-${className}`}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}
               handleTheme={handleTheme}

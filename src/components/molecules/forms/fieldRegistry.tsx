@@ -57,7 +57,7 @@ const renderDatalist: FieldRenderer = (props) => {
 };
 
 const renderSelect: FieldRenderer = (props) => {
-  const { name, formMessage, dataList, value, theme, handleChange, hideLabels, label } = props;
+  const { name, formMessage, dataList, value, className, handleChange, hideLabels, label } = props;
   const { clearSelection, formError, disableForm } = props;
   return (
     <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
@@ -65,7 +65,7 @@ const renderSelect: FieldRenderer = (props) => {
         name={name}
         list={(dataList && dataList[name]) || []}
         active={value as string}
-        theme={theme}
+        className={className}
         onChange={handleChange}
         inShell
         clearSelection={clearSelection && clearSelection[name]}
@@ -184,7 +184,7 @@ const renderText: FieldRenderer = (props) => {
         value={value as string}
         onChange={handleChange}
         name={name}
-        theme="highlight"
+        className="highlight"
         placeholder={placeholder}
         isDisabled={disableForm}
         error={formError}

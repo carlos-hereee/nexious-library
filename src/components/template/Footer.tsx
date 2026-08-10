@@ -8,11 +8,11 @@ import HoursOfOperation from "./HoursOfOperation";
  * @param appName string;
  * @returns
  */
-const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOperation, theme, links }) => {
+const Footer: React.FC<FooterProps> = ({ appName, media, hero, title, hoursOfOperation, className, links }) => {
   return (
-    <footer className={theme || "footer"}>
+    <footer className={className || "footer"}>
       <div className="footer-content-wrapper">
-        {media && <Socials medias={media.medias || []} label={media.title} hero={hero} theme="socials" />}
+        {media && <Socials medias={media.medias || []} label={media.title} hero={hero} className="socials" />}
 
         {hoursOfOperation && <HoursOfOperation data={hoursOfOperation} />}
       </div>

@@ -23,10 +23,10 @@ import type { FieldShellProps } from "nxs-form";
  * for error text keeps applying.
  */
 const FieldShell: React.FC<FieldShellProps> = (props) => {
-  const { name, label, hideLabel, error, message, help, theme, children } = props;
+  const { name, label, hideLabel, error, message, help, className, children } = props;
 
   return (
-    <div className={theme ? `field-shell ${theme}` : "field-shell"}>
+    <div className={className ? `field-shell ${className}` : "field-shell"}>
       {/* hideLabel hides the label VISUALLY, it does not delete it. A hidden <label htmlFor> plus
           the control's own id={name} gives every field type an accessible name for free, which is
           strictly better than the per-control aria-label hack it replaces: it works for the time
@@ -38,7 +38,7 @@ const FieldShell: React.FC<FieldShellProps> = (props) => {
           (other call sites rely on that), and two nodes sharing `${name}-error` would make the
           aria reference ambiguous. */}
       {label && (
-        <Label name={name} label={label} message={message} theme={hideLabel ? "field-label sr-only" : "field-label"} />
+        <Label name={name} label={label} message={message} className={hideLabel ? "field-label sr-only" : "field-label"} />
       )}
       {children}
       {help && <p className="field-help">{help}</p>}

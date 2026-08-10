@@ -10,7 +10,7 @@ import type { NavigationToggleProps } from "nxs-navigation";
  * @returns navigation button
  */
 const NavToggle: React.FC<NavigationToggleProps> = (props) => {
-  const { data, onSelect, theme } = props;
+  const { data, onSelect, className } = props;
   const { active, alternatives } = data;
 
   const handleSelect = (value: string) => {
@@ -25,11 +25,11 @@ const NavToggle: React.FC<NavigationToggleProps> = (props) => {
   }
   return (
     <div className="nav-toggle">
-      {active.icon ? <Icon icon={active.icon} /> : active.url && <Hero hero={active} theme="hero-icon" />}
+      {active.icon ? <Icon icon={active.icon} /> : active.url && <Hero hero={active} className="hero-icon" />}
       <Select
         list={alternatives}
         name={active?.name || active.value}
-        theme={theme}
+        className={className}
         onChange={(value) => handleSelect(value)}
         active={active?.label || ""}
       />

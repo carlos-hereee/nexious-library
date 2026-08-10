@@ -25,7 +25,7 @@ export interface DialogOverlayProps extends DialogProps {
  * drop-in modal that is conformant on its own.
  */
 const DialogOverlay = (props: DialogOverlayProps) => {
-  const { closeOnBackdropClick = true, onDialogClose, theme, header, children } = props;
+  const { closeOnBackdropClick = true, onDialogClose, className, header, children } = props;
 
   useEffect(() => {
     // Lock body scroll for the modal's lifetime; restore the PRIOR value (not a hardcoded
@@ -59,7 +59,7 @@ const DialogOverlay = (props: DialogOverlayProps) => {
           : undefined
       }
     >
-      <Dialog asModal theme={theme} header={header} onDialogClose={onDialogClose}>
+      <Dialog asModal className={className} header={header} onDialogClose={onDialogClose}>
         {children}
       </Dialog>
     </div>,

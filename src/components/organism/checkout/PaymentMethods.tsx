@@ -23,9 +23,9 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({ data, onClick, heading,
             onClick={() => handleClick(d)}
           >
             {d.hero ? (
-              <Hero hero={d.hero} theme={`icon hero-icon icon-${d.icon}`} />
+              <Hero hero={d.hero} className={`icon hero-icon icon-${d.icon}`} />
             ) : (
-              d.icon && <Icon icon={d.icon} name={d.icon} theme="hero-icon" />
+              d.icon && <Icon icon={d.icon} name={d.icon} className="hero-icon" />
             )}
             <span> {d.name}</span>
           </button>

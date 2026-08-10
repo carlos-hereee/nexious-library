@@ -11,10 +11,10 @@ import CTA from "./CTA";
  * @param hasHero boolean; check if component needs assets
  * @returns
  */
-const CardHeader: React.FC<HeroCardProps> = ({ data, theme, onClick, viewAsPreview }) => {
+const CardHeader: React.FC<HeroCardProps> = ({ data, className, onClick, viewAsPreview }) => {
   return (
-    <div className={theme || "card-header"}>
-      <HeaderContent data={data} theme={theme || "card-header"}>
+    <div className={className || "card-header"}>
+      <HeaderContent data={data} className={className || "card-header"}>
         {data.cta &&
           data.cta.map((c) => (
             <CTA key={c.uid} cta={c} onClick={() => onClick && onClick(c)} viewAsPreview={viewAsPreview} />

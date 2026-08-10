@@ -19,7 +19,7 @@ const meta: Meta<typeof PostDetail> = {
     onAuthorClick: { action: "author-click" },
     onReactionClick: { action: "reaction-click" },
     allowRemoval: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
 };
 export default meta;

@@ -1,8 +1,8 @@
 import type { BannerProps } from "nxs-card";
 
-const Banner: React.FC<BannerProps> = ({ message, theme, children }) => {
+const Banner: React.FC<BannerProps> = ({ message, className, children }) => {
   return (
-    <div className={theme ? `banner ${theme}` : "banner"}>
+    <div className={className ? `banner ${className}` : "banner"}>
       {message && <h2 className="heading">{message}</h2>}
       {children}
     </div>

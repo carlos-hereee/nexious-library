@@ -21,7 +21,7 @@ const meta: Meta<typeof Select> = {
     label: { control: "text" },
     active: { control: "text" },
     placeholder: { control: "text" },
-    theme: { control: "text" },
+    className: { control: "text" },
     hideLabels: { control: "boolean" },
     clearSelection: { control: "boolean" },
     isDisabled: { control: "boolean" },

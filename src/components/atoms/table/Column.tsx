@@ -6,10 +6,10 @@
 
 interface PTableData {
   data?: string;
-  theme?: string;
+  className?: string;
 }
-const Column: React.FC<PTableData> = ({ data, theme }) => (
-  <th className={theme} scope="col">
+const Column: React.FC<PTableData> = ({ data, className }) => (
+  <th className={className} scope="col">
     {data}
   </th>
 );

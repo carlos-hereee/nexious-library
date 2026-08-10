@@ -92,6 +92,10 @@ export { useValues } from "@nxs-utils/hooks/useFormValues";
 // (the @types ambient `declare module` blocks were converted to real emitted modules).
 export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";
 export type { FormProps, PaginateFormProps, SelectProp, UseFormValidationApi, UseValuesApi } from "nxs-form";
+// The 4.0.0 variant system. VARIANT_CLASS / SIZE_CLASS are exported so a consumer can target the
+// same class hooks from its own CSS instead of guessing at them.
+export type { Variant, Size, Density } from "./@types/Variant";
+export { VARIANT_CLASS, SIZE_CLASS, buildControlClass } from "./@types/Variant";
 export type { ButtonProps, IconButtonProps } from "nxs-button";
 export type { CalendarProps } from "nxs-calendar";
 export type { CardProps } from "nxs-card";

@@ -44,7 +44,7 @@ export type EventMeetingProps = { meeting: MeetingProps };
 export interface CalendarProps {
   value: Date;
   minDate?: Date;
-  theme?: string;
+  className?: string;
   hideToday?: boolean;
   events?: PEventDay[];
   onDayClick?: (e: CalendarDayProp | CalendarPEventDay) => void;

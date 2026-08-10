@@ -20,7 +20,7 @@ import { useScroll } from "@nxs-utils/hooks/useScroll";
 
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, className, entries } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals, isDev } = props;
   const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
@@ -221,7 +221,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   return (
     <form
       id={formId}
-      className={theme}
+      className={className}
       onSubmit={handleSubmit}
       encType={withFileUpload ? "multipart/form-data" : undefined}
     >
@@ -243,7 +243,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             entry={addEntry && addEntry[field.group || ""]}
             entries={entryValues[field.groupName || ""]}
             activeEntry={activeEntry[field.groupName || ""]}
-            theme={theme}
+            className={className}
             placeholder={field.placeholder}
             hideLabels={hideLabels}
             confirmRemoval={confirmRemoval}
@@ -267,14 +267,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       </div>
       {onCancel || onViewPreview ? (
         <div className="buttons-container">
-          {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
+          {onCancel && <ButtonCancel onClick={onCancel} className="btn-main" label={cancelLabel} />}
           {!hideSubmit && (
             <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} />
           )}
           {onViewPreview && (
             <IconButton
               icon={{ icon: submitIcon || "eye", label: previewLabel }}
-              theme="btn-main"
+              className="btn-main"
               onClick={handleViewPreview}
             />
           )}
@@ -285,7 +285,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             label={submitLabel}
             isDisable={disableForm || isSubmitting}
             icon={submitIcon}
-            theme="form-submit-btn"
+            className="form-submit-btn"
           />
         )
       )}

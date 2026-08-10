@@ -9,6 +9,82 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### UI rework Phase 3: `theme` becomes `className`, plus a variant enum (BREAKING, 4.0.0)
+
+**`theme` is removed from every component. There is no shim.** With one owner-controlled consumer
+a shim protects nobody, and its cost is permanent: a dual resolution path, dev-warning machinery,
+"which one wins" tests, and a second migration later that never happens.
+
+#### Migration
+
+| Before | After |
+|---|---|
+| `theme="cu-btn cu-btn-primary"` | `className="cu-btn cu-btn-primary"` |
+| `theme="entry-rail-thumb"` | `className="entry-rail-thumb"` |
+| `<Button />` (no theme) | `<Button className="btn-main" />`, or `variant="secondary"` for the new system |
+| n/a | `variant="primary" size="large"` |
+
+**The rename is the whole breaking change, and TypeScript finds every site.** Removing `theme`
+from the props types means a missed call site fails the build loudly instead of silently dropping
+a class. In `nexious-client` that was 333 attributes across 125 files.
+
+#### Why a rename and not a variant migration
+
+Measured across both repos before touching anything: **roughly 85 percent of `theme` call sites
+passed a layout hook** (`entry-rail-thumb`, `select-icon`, `user-chip-compact`) **or the consuming
+app's own design-system classes** (`cu-btn cu-btn-primary`, at 270 sites), and only about a dozen
+passed anything that was genuinely a variant. `theme` was `className` with a misleading name, with
+an untypeable variant selector welded onto it. 4.0.0 splits the two jobs.
+
+#### Added
+
+- **`variant` and `size`** on `Button` and `IconButton`, typed as `Variant`
+  (`primary | secondary | tertiary | danger | ghost`) and `Size` (`small | medium | large`,
+  mapping onto the three control heights). `Density` is declared for the Phase 4 table work.
+- `Variant`, `Size`, `Density`, `VARIANT_CLASS`, `SIZE_CLASS` and `buildControlClass` exported
+  from the package root, so a consumer can target the same class hooks from its own CSS.
+- **`.btn-base` plus five variants and three sizes**, all from the control tokens, so a button is
+  the same height as the input beside it by construction. `.nxs-button-group` is the library half
+  of the width handshake the client already shipped as `cu-button-group`.
+
+#### Changed
+
+- **No implicit base class.** A `Button` with no `variant` renders exactly its `className` and
+  nothing else. That is deliberate and it is what makes this migration pixel-neutral: `theme`
+  REPLACED the base class, so a call site that moves from `theme="X"` to `className="X"` renders
+  an identical string. A default variant would have appended a library class underneath the 270
+  app-owned ones and started a specificity fight at every one of them. A `Button` with neither
+  variant nor className now renders **no class attribute at all**.
+- **`.btn-main` loses `width: 100%; max-width: 450px`.** Those two declarations were the
+  `!important` war. Width belongs to the container. `.btn-main` itself is kept as LEGACY so the
+  call sites migrated verbatim render as before; it is not a second system to build on.
+- `.btn-danger` was declared twice, in `_button-variants.scss` and `_secondary-button.scss`, with
+  different rules, and which won depended on forward order. The duplicate is deleted.
+- `.btn-main`'s hand-written focus outline becomes the shared focus ring, so it flips correctly
+  on dark. That was the last of the four focus treatments the library carried.
+- `Heading` keeps its implicit `heading` base class and appends `className`. The difference from
+  Button is deliberate: `heading` is the element's own typography, not a variant a caller picks
+  between, so appending is right there and replacing is right on a button.
+
+#### Accessibility
+
+- The 44px touch floor applies to every button variant and size at mobile width.
+
+#### Verification
+
+Library: `npx tsc --noEmit` clean, `npm test` **219 passed / 19 suites**, `npm run lint` **0 new
+errors** (32 pre-existing remain), `sass` clean.
+
+Client, verified against a locally built copy of this version rather than against the published
+one: `npx tsc --noEmit` **clean**, `npm run test` **1129 passed / 84 files**, `npm run lint`
+**0 errors**.
+
+> **⚠️ Publishing 4.0.0 auto-lands it, major or not.** `nexious-client`'s postinstall runs
+> `npm i nexious-library@latest`, and `@latest` ignores the `^3.3.10` range, so the next
+> `npm install` in the client picks this up whether or not the range allows it. A major buys no
+> protection here. Publish `4.0.0-rc.0` under a `next` dist-tag first: `@latest` will not pick up
+> a prerelease on another tag, so the install can be tested without arming the auto-upgrade.
+
 ### UI rework Phase 2: the Form family rebuilt on the foundation
 
 Phase 2 of `roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md`. Every form control

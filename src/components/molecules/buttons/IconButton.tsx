@@ -14,7 +14,7 @@ import type { IconButtonProps } from "nxs-button";
  */
 const IconButton: React.FC<IconButtonProps> = (props) => {
   const {
-    theme,
+    className,
     onClick,
     ping,
     icon,
@@ -50,7 +50,7 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
     const nums = icon.icon.split("");
     return (
       <button
-        className={theme ? `btn-icon ${theme}` : "btn-icon"}
+        className={className ? `btn-icon ${className}` : "btn-icon"}
         onClick={onClick}
         title={title || icon.icon || name || ""}
         type="button"
@@ -84,7 +84,7 @@ const IconButton: React.FC<IconButtonProps> = (props) => {
   }
   return (
     <button
-      className={theme ? `btn-icon ${theme}` : "btn-icon"}
+      className={className ? `btn-icon ${className}` : "btn-icon"}
       onClick={onClick}
       title={title || name || icon.icon || ""}
       type="button"

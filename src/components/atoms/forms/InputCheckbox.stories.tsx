@@ -20,7 +20,7 @@ const meta: Meta<typeof InputCheckbox> = {
     name: { control: "text" },
     label: { control: "text" },
     value: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
     hideLabel: { control: "boolean" },
     error: { control: "text" },
     isDisabled: { control: "boolean" },

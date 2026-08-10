@@ -7,7 +7,7 @@ import Dialog from "./Dialog";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
-  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, theme, isDev } = props;
+  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, className, isDev } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel, onDialogClose } = props;
   const { errors, lightColor } = useRequiredProps({ paginate });
   // key variables
@@ -84,7 +84,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           placeholders={placeholders}
           submitLabel={submitLabel}
           types={types}
-          theme={theme}
+          className={className}
           withFileUpload={withFileUpload}
           responseError={responseError}
           schema={schema}
@@ -98,7 +98,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         />
       )}
       {previewPage && (
-        <Dialog onDialogClose={onDialogClose} theme={theme}>
+        <Dialog onDialogClose={onDialogClose} className={className}>
           {previewPage}
         </Dialog>
       )}

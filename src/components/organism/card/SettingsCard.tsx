@@ -50,7 +50,7 @@ const SettingsCard = (props: SettingsCardProps) => {
             <Button
               label={labels?.onRemoveClick || `Delete ${title}`}
               onClick={onRemoveClick}
-              theme="btn-full required highlight"
+              className="btn-full required highlight"
             />
           )}
         </div>

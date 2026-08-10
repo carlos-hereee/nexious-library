@@ -5,7 +5,7 @@ const MerchHeader = ({ data, hero }: CardProps) => {
   return (
     <div className="merch-card-header">
       {data && <CardHeader data={data} />}
-      {hero && hero.url && <Hero hero={hero} theme="merch-card-hero" />}
+      {hero && hero.url && <Hero hero={hero} className="merch-card-hero" />}
     </div>
   );
 };
@@ -21,12 +21,12 @@ const MerchBody = ({ data, hidePrice }: CardProps) => {
   );
 };
 const MerchCard: React.FC<CardProps> = (props) => {
-  const { theme, data, hero, canRemove, onRemoveFromCart, onAddToCart, onClick, hideButtons, children } = props;
+  const { className, data, hero, canRemove, onRemoveFromCart, onAddToCart, onClick, hideButtons, children } = props;
 
   if (hideButtons) {
     if (!data) return <p>Missing data</p>;
     return (
-      <div className={theme || "container"}>
+      <div className={className || "container"}>
         {data.title && <MerchHeader data={data} hero={hero} />}
         <MerchBody data={data} hidePrice />
         {children}
@@ -34,7 +34,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
     );
   }
   return (
-    <div className={`merch-card ${theme || ""}`}>
+    <div className={`merch-card ${className || ""}`}>
       <button type="button" className="btn btn-card" aria-label={data.title} onClick={onClick}>
         {(data.title || data.hero) && <MerchHeader data={data} hero={hero} />}
         <MerchBody data={data} /> {children}
@@ -48,7 +48,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
                     name: data.title || "",
                     label: "- remove from cart",
                     uid: "-subtract",
-                    theme: "btn-main btn-subtract",
+                    className: "btn-main btn-subtract",
                   }}
                   onClick={() => onRemoveFromCart(data)}
                 />
@@ -60,7 +60,7 @@ const MerchCard: React.FC<CardProps> = (props) => {
                     name: data.title || "",
                     label: "+ add to cart",
                     uid: "+add",
-                    theme: "btn-main btn-add",
+                    className: "btn-main btn-add",
                   }}
                   onClick={() => onAddToCart(data)}
                 />

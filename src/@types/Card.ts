@@ -1,7 +1,7 @@
 import type { AssetProps, UserProps } from "nxs-assets";
 
 export type DialogProps = {
-  theme?: string;
+  className?: string;
   label?: string;
   toggleLabel?: string;
   toggleShow?: boolean;
@@ -18,7 +18,7 @@ export type DialogProps = {
 };
 export type CTAProp = {
   name: string;
-  theme?: string;
+  className?: string;
   label: string;
   icon?: string;
   uid?: string;
@@ -27,7 +27,7 @@ export type CTAProp = {
   // onClick?: (key: unknown) => void;
 };
 export interface BannerProps {
-  theme?: string;
+  className?: string;
   message?: string;
   children?: React.ReactNode;
 }
@@ -50,7 +50,7 @@ export interface MerchProps {
 export interface PCardheader {
   title?: string;
   subtitle?: string;
-  theme?: string;
+  className?: string;
   details?: string;
   hero?: AssetProps;
 }
@@ -60,7 +60,7 @@ export interface CardProp {
   body?: string;
   description?: string;
   name?: string;
-  theme?: string;
+  className?: string;
   label?: string;
   hero?: AssetProps;
   uid?: string;
@@ -80,7 +80,7 @@ export interface CardProp {
 }
 export interface CardProps {
   data: CardProp;
-  theme?: string;
+  className?: string;
   canRemove?: boolean;
   hero?: AssetProps;
   showPrice?: boolean;
@@ -99,7 +99,7 @@ export interface CardProps {
 export interface HeroCardProps {
   data: CardProp;
   hero?: AssetProps;
-  theme?: string;
+  className?: string;
   onClick?: (key: unknown) => void;
   viewAsPreview?: boolean;
 }
@@ -113,7 +113,7 @@ export interface CardSectionProps {
   hero?: AssetProps;
   hideReadMore?: boolean;
   data?: string;
-  theme?: string;
+  className?: string;
 }
 export interface Section {
   title: string;
@@ -121,7 +121,7 @@ export interface Section {
   subtitle: string;
   details: string;
   body: string;
-  theme?: string;
+  className?: string;
   sharedKey?: string;
   heroId?: string;
   sectionHero?: AssetProps;
@@ -129,14 +129,14 @@ export interface Section {
 }
 export interface CardSectionList {
   sections: Section[];
-  theme?: string;
+  className?: string;
   handleClick: (link: unknown) => void;
 }
 
 export interface UserCardProps {
   hideLabels?: boolean;
   hideHero?: boolean;
-  theme?: string;
+  className?: string;
   user: UserProps;
   // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;
@@ -165,7 +165,7 @@ export interface CartProps {
   removeFromCart: (e: MerchProps) => void;
   onEditDetails: (e: MerchProps) => void;
   setQuantity: (e: MerchProps, count: number) => void;
-  theme?: string;
+  className?: string;
   readOnly?: boolean;
   showItemTotal?: boolean;
 }

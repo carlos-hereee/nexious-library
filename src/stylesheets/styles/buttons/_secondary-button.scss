@@ -14,11 +14,10 @@
   border-radius: variables.$border-radius;
 }
 
-.btn-danger {
-  border: none;
-  color: white;
-  background-color: variables.$danger;
-}
+// `.btn-danger` was declared HERE and again in _button-variants.scss, with different rules, and
+// which one won depended on forward order in styles/buttons/_index.scss. The variant file owns it
+// now (it is token driven and part of the .btn-base system); this duplicate is deleted rather
+// than reconciled, because two rules for one class is the drift this rework exists to remove.
 .btn-payment {
   gap: variables.$rem;
   justify-content: flex-start;

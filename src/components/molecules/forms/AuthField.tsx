@@ -21,12 +21,12 @@ const AuthField = (props: AuthFieldProp) => {
           isDisabled={isDisabled}
           type={seePassword[name] ? "text" : "password"}
           placeholder={placeholders}
-          theme="highlight password"
+          className="highlight password"
           error={error}
         />
         <IconButton
           icon={{ icon: seePassword[name] ? "eyeSlash" : "eye" }}
-          theme="btn-main btn-small highlight"
+          className="btn-main btn-small highlight"
           onClick={() => togglePassword(name)}
           aria-label={seePassword[name] ? "Hide password" : "Show password"}
         />

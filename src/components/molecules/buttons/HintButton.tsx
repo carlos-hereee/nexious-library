@@ -16,7 +16,7 @@ const HintButton = ({ data, title, body }: ButtonProps) => {
         aria-expanded={show}
         aria-controls={panelId}
         onClick={() => setShow(!show)}
-        theme="btn-icon"
+        className="btn-icon"
       />
       {data && show && (
         <div className="hint-container" id={panelId} role="region" aria-label={title || "Hint"}>

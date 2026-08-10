@@ -24,7 +24,7 @@ const FieldPrice: React.FC<NumberInputProps> = (props) => {
           <InputPrice
             name={name}
             max={max}
-            theme="field-dollars"
+            className="field-dollars"
             value={Math.floor(value / 100)}
             onChange={(e) => handlePriceChange(e, "dollars")}
             onBlur={onBlur}

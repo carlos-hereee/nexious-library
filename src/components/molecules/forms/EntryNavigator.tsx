@@ -105,7 +105,7 @@ const EntryNavigator: React.FC<EntryNavigatorProps> = (props) => {
               onClick={() => onSelect(key)}
             >
               {url ? (
-                <Hero hero={{ url, alt: position }} theme="entry-rail-thumb" />
+                <Hero hero={{ url, alt: position }} className="entry-rail-thumb" />
               ) : (
                 <span className="entry-rail-placeholder">{tileText}</span>
               )}

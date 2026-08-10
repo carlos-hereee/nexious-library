@@ -4,10 +4,10 @@ import type { InputProps } from "nxs-form";
 // React.forwardRef lets consumers attach a ref to the underlying <input> DOM node
 // (e.g. for autofocus on mount, or programmatic focus from a parent component).
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { value, onChange, onBlur, name, theme, isDisabled, placeholder, type, error } = props;
+  const { value, onChange, onBlur, name, className, isDisabled, placeholder, type, error } = props;
   return (
     <input
-      className={theme}
+      className={className}
       autoComplete="on"
       name={name}
       type={type || "text"}

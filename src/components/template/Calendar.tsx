@@ -19,7 +19,7 @@ type CalEvent = {
   list: PEventDay[];
 };
 const Calendar: React.FC<CalendarProps> = (props) => {
-  const { value, events, minDate, theme, onDayClick, setDay, hideToday } = props;
+  const { value, events, minDate, className, onDayClick, setDay, hideToday } = props;
   // keep track of today, min date, and which calenday is active
   const [active, setActive] = useState<CalendarDayProp>(calendarValues(value));
   const [mininumDate, setMininumDate] = useState<CalendarDayProp>();
@@ -52,9 +52,9 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   }, [events]);
 
   return (
-    <div className={theme ? `${theme} calendar` : "calendar"}>
+    <div className={className ? `${className} calendar` : "calendar"}>
       <div className="flex-j-end">
-        <IconButton onClick={() => setActive(today)} icon={{ icon: "refresh" }} theme="btn-small" />
+        <IconButton onClick={() => setActive(today)} icon={{ icon: "refresh" }} className="btn-small" />
       </div>
       {active && (
         <>
