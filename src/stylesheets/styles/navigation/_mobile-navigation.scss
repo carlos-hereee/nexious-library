@@ -23,17 +23,33 @@
     top: 100%;
   }
   // 750ms before, which broke the design language's 300ms ceiling for core-product motion
-  // (5.9). Deliberately NOT wrapped in a reduced-motion override: Header advances the
-  // drawer out of its open state on `animationend`, so removing the animation would strand
-  // it open, and the global kill switch already shortens it to 1ms, which is the snap a
-  // motion-sensitive user wants.
+  // (5.9). Deliberately NOT wrapped in a reduced-motion override, and the reason is that an
+  // override would buy nothing rather than that it would break something. Measured under
+  // `chrome --force-prefers-reduced-motion`: the kill switch's `animation-delay: -1ms` with
+  // `animation-duration: 1ms` starts this animation already finished, so clip-path reads
+  // `circle(250%)` on the FIRST synchronous frame (against a 0% to 250% wipe with the flag
+  // off). That is the end state instantly, which is exactly what `animation: none` would
+  // produce, and `animationend` still fires at 1ms so Header's listener keeps working.
+  //
+  // An earlier note here claimed an override would "strand it open". It would not: Navbar
+  // computes `isActive ? "open" : isClose ? "closing" : "close"`, so `isClose` never holds
+  // the drawer open, and without an animationend the drawer would fall to "close" and
+  // `display: none`. Leave the rule alone because it already degrades correctly.
   .navigation[data-state="open"] {
     display: flex;
     animation: circleOpen var(--transition-slow) forwards;
   }
-  // No duration, so this state is effectively instant. Giving it one would expose the
-  // `display: block` below: the items reflow out of the column layout before the wipe, so
-  // the close would be a visible jump rather than a reveal in reverse.
+  // No duration, so animation-duration resolves to 0s and `forwards` parks the drawer at
+  // `circle(0%)` in the same frame (verified in Chrome; reduced motion only moves it to 1ms,
+  // so there is nothing here for a reduced-motion guard to do).
+  //
+  // The stated reason to leave it instant holds: `.navigation` is `display: flex` with
+  // `flex-direction: column` and a gap, so flipping to `display: block` drops both the gaps
+  // and the centering, and a real duration would play that reflow underneath the wipe. Note
+  // though that the constraint is the `display: block`, not the duration. Nothing reads that
+  // block value (the open and closing attribute selectors never match together, so it only
+  // overrides the base flex), so giving the close a real 300ms wipe is a matter of keeping
+  // the state on flex, not of finding a duration that hides the jump.
   .navigation[data-state="closing"] {
     display: block;
     animation: circleClose ease-in-out forwards;

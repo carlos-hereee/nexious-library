@@ -149,6 +149,21 @@
 
   .nav-item {
     flex: 1;
+    // A flex item's default min-width is auto, so `flex: 1` alone still refuses to shrink below
+    // the label it holds. With .nav-label set to nowrap that made the bar's own minimum the SUM
+    // of its labels, and a localized label or two pushed a full-width sticky bar past the
+    // viewport into horizontal page scroll. Same floor .field-shell documents for form fields.
+    min-width: 0;
+  }
+
+  // The tab bar is the one pattern with no room to spare: icon over label, four or five tabs
+  // across a phone. So a label that outgrows its tab clips here rather than shoving its
+  // neighbours sideways. Scoped to this pattern on purpose, the top bar wraps to a second line
+  // and the rail is full width, and both of those can afford the whole string.
+  .nav-label {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   .nav-link,
@@ -234,13 +249,36 @@
 
   &.is-open {
     transform: rotate(180deg);
+
+    // Restated under the interaction pseudo-classes because the global reduced-motion kill switch
+    // in vars/reset says `*:hover, *:focus, *:focus-visible, *:active { transform: none !important }`,
+    // and author-!important beats an author-normal declaration at any specificity. So a reduced-motion
+    // user who merely POINTS AT the open theme menu sees this chevron snap back to its closed
+    // rotation: a state indicator reporting the wrong state, to the one audience least able to
+    // ignore it. Measured under `chrome --force-prefers-reduced-motion`.
+    //
+    // This is a rotation at REST, not motion, so it is not what the kill switch is for. The clean
+    // fix would be for the kill switch to neutralize the independent `translate` property instead
+    // of the `transform` shorthand, but nexious-client has ~30 hover `transform` declarations of
+    // its own and this switch is the only reduced-motion handling any of them get, so narrowing it
+    // would trade one small defect for thirty. Two selectors beat one `*`, so the state wins here.
+    &:hover,
+    &:focus,
+    &:focus-visible,
+    &:active {
+      transform: rotate(180deg) !important;
+    }
   }
 }
 
 .theme-menu-list {
   position: absolute;
   top: calc(100% + var(--space-extra-small));
-  right: 0;
+  // Logical, not `right: 0`, and identical in LTR. A 12rem popover anchored to a fixed physical
+  // edge opens AWAY from its trigger under dir="rtl" (the header flows the other way, so the
+  // trigger sits near the opposite margin) and the list runs off screen. Matches the
+  // inset-inline pair the search affordances already use in styles/custom/_searchbar.scss.
+  inset-inline-end: 0;
   min-width: 12rem;
   margin: 0;
   padding: var(--space-extra-small);

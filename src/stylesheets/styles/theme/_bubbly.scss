@@ -1,4 +1,5 @@
 @use "../../vars/variables/_index.scss" as variables;
+@use "../../vars/mixin/_index.scss" as mixins;
 
 @use "sass:math";
 
@@ -19,6 +20,16 @@
   -moz-transition: all 2s linear;
   -webkit-transition: all 2s linear;
   -o-transition: all 2s linear;
+
+  // float runs `infinite alternate`, which is the one shape the global kill switch handles
+  // wrong: it clamps to a single 1ms pass instead of removing the animation, so every bubble
+  // would jump 50px up and drop back inside one frame. Measured under
+  // `chrome --force-prefers-reduced-motion`, this rule was missing and animation-name still
+  // resolved to `float`. Resting at translateY(0) is the honest degrade: the bubbles are pure
+  // decoration, so there is no end state worth preserving, only the drift to remove.
+  @include mixins.reduced-motion {
+    animation: none;
+  }
 }
 
 @for $i from variables.$startIndex through variables.$maxBubbles {

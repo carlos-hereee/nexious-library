@@ -60,6 +60,10 @@
   gap: var(--space-medium);
   > * {
     flex: 1;
+    // The equal-columns promise only holds with a shrink floor. Without it a child that sizes to
+    // its content (a table, a pasted id, a long url) sets the row's minimum and takes more than
+    // its share, which is the grid failure vars/reset/_table.scss documents, one layout over.
+    min-width: 0;
   }
 }
 .navigation-container {

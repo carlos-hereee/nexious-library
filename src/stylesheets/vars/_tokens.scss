@@ -256,7 +256,18 @@
   --input-border: #334155;
   --text: #f8fafc; // body text
   --text-secondary: #94a3b8; // quieter prose, still AA on --surface
-  --text-muted: #64748b;
+  // Was #64748b, which measured 3.59:1 on --surface and 3.96:1 on --bg and FAILED WCAG 1.4.3 AA.
+  // It is not rescued by the large-text exemption either: .text-mute sets no font-size at all, and
+  // .post-card-handle / .post-card-date pin it at --text-small (14px). #7c8ba1 clears the bar with
+  // margin (4.93:1 and 5.44:1) while staying a visible step below --text-secondary at 6.66:1, so
+  // the hierarchy the two tokens exist to express survives.
+  //
+  // This DIVERGES from nexious-client, which declares the same #64748b and wins by source order,
+  // so production still renders the failing value until the client moves too (filed in
+  // TECH_DEBT.md). The divergence is deliberate and follows the precedent set by
+  // --danger-accent-color above: where the client's value imports a contrast regression, the
+  // library keeps the compliant one rather than matching a defect.
+  --text-muted: #7c8ba1;
   // A lift on dark needs MORE alpha than a darken on light does to read as the same step,
   // hence the asymmetry with :root for the hover tint and the table surfaces. The scrim
   // goes to plain black because a slate-tinted scrim over a navy page reads as haze.

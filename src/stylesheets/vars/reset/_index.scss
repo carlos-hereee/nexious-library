@@ -27,9 +27,34 @@
   // instantly, which is a sudden positional jump rather than a gentle one. The design
   // language's rule is to drop translate and scale entirely and keep opacity, so the
   // interaction states lose their transform and the hover reads as a color change only.
-  // Scoped to the interaction pseudo-classes rather than `*` because plenty of transforms
-  // are layout, not motion (the mobile-nav circle reveal, centering, icon rotation at
-  // rest), and killing those would break the component instead of calming it.
+  // Scoped to the interaction pseudo-classes rather than `*` so a transform that is pure
+  // layout survives at rest: centering, icon rotation, the mobile-nav circle reveal.
+  //
+  // CAUTION: that scoping is narrower than it looks, and the rest-transform guarantee only holds
+  // while the element is NOT interacted with. `!important` outranks a normal declaration at
+  // any specificity, so the moment a rest-transformed element is itself hovered, focused or
+  // pressed, its rest transform is wiped too. Measured under
+  // `chrome --force-prefers-reduced-motion`: `.merch-card-cost` (rotate 30deg),
+  // `.theme-menu-chevron.is-open` (rotate 180deg) and the `.ninety-deg` family all compute to
+  // `transform: none` while focused, and to their real matrix with the flag off. The affected
+  // elements are small and sit inside larger hit areas, so the pointer reaches them rarely,
+  // which is why this has never been reported.
+  //
+  // **The textbook fix is NOT available here, and that is worth writing down so nobody
+  // re-proposes it.** Switching the library's four hover lifts to the independent `translate`
+  // property would let this block say `translate: none !important` and stop touching `transform`
+  // at all. Measured before acting on that: nexious-client carries about THIRTY hover, focus and
+  // active `transform` declarations of its own, across dashboard, landing, dero, docs, store,
+  // stream and study, and this switch is the ONLY reduced-motion handling any of them get.
+  // Narrowing the selector would silently drop coverage from all thirty in order to repair a
+  // handful of small rest transforms, so the trade runs the wrong way. It stays broad.
+  //
+  // Where a rest transform actually MEANS something, the fix is local instead: restate it under
+  // these same pseudo-classes with `!important` and let specificity win, since two classes beat
+  // `*`. `.theme-menu-chevron.is-open` does exactly that, because a chevron that flips back to
+  // "closed" under the pointer is a state indicator lying to the user, and lying specifically to
+  // the audience that asked for less motion. `.merch-card-cost` and `.ninety-deg` are decorative,
+  // so they are left alone.
   *:hover,
   *:focus,
   *:focus-visible,
