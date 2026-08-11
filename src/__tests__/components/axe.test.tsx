@@ -25,6 +25,14 @@ const check = async (ui: ReactElement) => {
   return axe(container, { rules: { region: { enabled: false } } });
 };
 
+// React's useId mints a document-unique id on every render, so rendering one tree twice produces
+// markup that differs by that string alone (FieldTime's datalist is the live case). Any test that
+// compares two renders has to blank those out first or it reports a difference that has nothing
+// to do with what it is testing. Both React id spellings are covered because the library is built
+// against React 18 and consumed on 19.
+const normalizeGeneratedIds = (html?: string): string =>
+  (html ?? "").replace(/:r[0-9a-z]+:|_r_[0-9a-z]+_/g, "generated-id");
+
 describe("axe accessibility (no violations on isolated renders)", () => {
   it("Button has an accessible name and no violations", async () => {
     expect(await check(<Button label="Save" />)).toHaveNoViolations();
@@ -87,10 +95,16 @@ describe("axe accessibility (no violations on isolated renders)", () => {
     expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
   });
 
-  // ── The Form family, in error and in dark mode ────────────────────────────────
-  // Every field type, invalid, with the label both shown and hidden, and the whole set again
-  // inside a .dark-mode subtree. Error states are where aria wiring is actually exercised, and
-  // dark mode is where a component that hardcoded a color instead of reading a token shows up.
+  // ── The Form family, in error, disabled, and in dark mode ─────────────────────
+  // Every field type, invalid, with the label both shown and hidden, again disabled, and the
+  // whole set again inside a .dark-mode subtree. Error and disabled states are where aria wiring
+  // is actually exercised.
+  //
+  // Be precise about what the dark-mode pass proves, because the obvious reading is wrong: jsdom
+  // loads no stylesheet, so `.dark-mode` resolves to no styles here and axe's color-contrast rule
+  // cannot run at all (it needs computed colors). These cases assert that no field branches on
+  // theme to emit different markup or a different accessible name. Dark CONTRAST is asserted
+  // against the real token values elsewhere, never here.
   const fieldTypes = ["text", "textarea", "select", "number", "date", "date-time", "date-day", "date-week", "datalist"];
 
   const fieldProps = (type: string, hideLabels: boolean): FormFieldProps => ({
@@ -127,14 +141,41 @@ describe("axe accessibility (no violations on isolated renders)", () => {
     expect(container.querySelectorAll("#title-error")).toHaveLength(1);
   });
 
-  it.each(fieldTypes)("Field type %s has no violations inside a dark-mode subtree", async (type) => {
-    expect(
-      await check(
-        <div className="dark-mode">
-          <Field {...fieldProps(type, false)} />
-        </div>
-      )
-    ).toHaveNoViolations();
+  it.each(fieldTypes)("Field type %s has no violations while the form is disabled", async (type) => {
+    // No formError here: a disabled control is the state a submitting form is in, and pairing it
+    // with a validation message would test two states at once and hide which one broke.
+    expect(await check(<Field {...fieldProps(type, false)} formError={undefined} disableForm />)).toHaveNoViolations();
+  });
+
+  // Every type, "number" included. It was excluded for one pass: this sweep found that
+  // FieldQuantity destructured its props without isDisabled, so the value fieldRegistry passed it
+  // was dropped and a `type: "number"` control stayed editable inside a submitting form while
+  // every sibling was disabled. The chain was declared, passed and consumed correctly and broke at
+  // exactly one missing forward, which is why nothing caught it: it type-checks and it looks fine
+  // on screen. Fixed in FieldQuantity.tsx in the same pass, and this loop is now the regression
+  // test, so a new field type that ignores disableForm fails here.
+  it.each(fieldTypes)("Field type %s disables every control it renders", async (type) => {
+    // A single editable input inside a submitting form is enough to double-submit.
+    const { container } = render(<Field {...fieldProps(type, false)} formError={undefined} disableForm />);
+    const controls = container.querySelectorAll("input, select, textarea, button");
+
+    expect(controls.length).toBeGreaterThan(0);
+    controls.forEach((control) => expect(control).toBeDisabled());
+  });
+
+  it.each(fieldTypes)("Field type %s renders identically inside a dark-mode subtree", async (type) => {
+    // The markup comparison is what gives this case its teeth. "No violations under .dark-mode"
+    // alone would pass on a field that swapped its labelled control for an icon-only one, since
+    // axe judges each render on its own; comparing the two subtrees byte for byte does not.
+    const light = render(<Field {...fieldProps(type, false)} />).container;
+    const dark = render(
+      <div className="dark-mode">
+        <Field {...fieldProps(type, false)} />
+      </div>
+    ).container;
+
+    expect(await axe(dark, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    expect(normalizeGeneratedIds(dark.firstElementChild?.innerHTML)).toBe(normalizeGeneratedIds(light.innerHTML));
   });
 
   it("EntryNavigator has no violations", async () => {
@@ -147,6 +188,35 @@ describe("axe accessibility (no violations on isolated renders)", () => {
         <EntryNavigator entries={entries} activeEntry="slot-0" max={5} railLabel="Store hours" onSelect={() => {}} />
       )
     ).toHaveNoViolations();
+  });
+
+  it("EntryNavigator with zero entries still names its group and has no violations", async () => {
+    // The empty state the switcher spends its first render in. The group must keep its
+    // accessible name with nothing inside it, because that name is the only thing telling a
+    // screen reader user what the add button they are about to press will add to.
+    const { container } = render(
+      <EntryNavigator entries={{}} activeEntry="" max={5} railLabel="Store hours" onSelect={() => {}} />
+    );
+
+    expect(container.querySelectorAll(".entry-rail-tile")).toHaveLength(0);
+    expect(container.querySelector('[role="group"]')).toHaveAccessibleName("Store hours");
+    expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  it("EntryNavigator with every tile disabled keeps its names and has no violations", async () => {
+    const entries = {
+      "slot-0": [{ name: "day", value: "Monday", type: "text", label: "Day", placeholder: "", fieldId: "a" }],
+    };
+    const { container } = render(
+      <EntryNavigator entries={entries} activeEntry="slot-0" isDisabled railLabel="Store hours" onSelect={() => {}} />
+    );
+    const tile = container.querySelector(".entry-rail-tile");
+
+    // A disabled tile is still read out, so losing the name here is worse than losing it on an
+    // enabled one: the user cannot click it to find out what it was.
+    expect(tile).toBeDisabled();
+    expect(tile).toHaveAccessibleName("Item 1 of 1, Monday");
+    expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
   });
 
   it("ThemeMenu open listbox has no violations", async () => {

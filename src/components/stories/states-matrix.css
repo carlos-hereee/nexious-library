@@ -97,3 +97,60 @@
   font-size: var(--text-small);
   color: var(--text-secondary);
 }
+
+/* ── The resilience axes ──
+   Long strings, RTL and zero/one/many share one property: the component looks correct until its
+   container has an EDGE to overflow. So every specimen sits in a frame with a visible boundary
+   and a real width cap. Without the frame a blown-out row just reads as "wide" and the reviewer
+   has nothing to compare it against.
+
+   The frame deliberately does NOT scroll. Giving it overflow-x would turn "the content escaped
+   its card" into "there is a scrollbar", which is a much quieter signal and is exactly the
+   failure this matrix exists to make loud. min-width: 0 is what keeps the frame at its declared
+   size so the content visibly escapes it instead of stretching it. */
+.sb-frame {
+  min-width: 0;
+  padding: var(--space-small);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-medium);
+  background-color: var(--surface);
+}
+
+/* 320px is a phone at its narrowest. Every missing shrink floor and every nowrap on user text
+   shows up here first, and several of them show up ONLY here. */
+.sb-frame-narrow {
+  max-width: 320px;
+}
+
+.sb-frame-label {
+  margin: 0 0 var(--space-small);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* LTR and RTL of the same specimen, side by side and never behind a toggle. A mirrored
+   affordance is only obvious against its unmirrored twin: on its own, a chevron pointing the
+   wrong way reads as a deliberate design choice. */
+.sb-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-medium);
+  align-items: start;
+}
+
+.sb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  min-width: 0;
+}
+
+/* The theme popover is absolutely positioned against its trigger, so a specimen of it needs a
+   positioned box tall enough to hold the open list or the next section renders on top of it. */
+.sb-popover-slot {
+  position: relative;
+  min-height: 14rem;
+}
