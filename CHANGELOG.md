@@ -9,6 +9,73 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### UI rework Phase 5: verify and document (no API break)
+
+The pass that proves the previous four. Tests go **232 across 20 suites to 361 across 24**, and
+the point of the new coverage is that it catches what a build, a type check and a lint all miss.
+
+#### Added
+
+- **`./@nxs-template` finally resolves.** The exports map has pointed at
+  `dist/esm/components/template/index.js` since it was written, and **that barrel never existed**,
+  unlike atoms, molecules and organism. Any consumer following the exports map to that subpath got
+  a module-not-found. It now exports exactly the ten names `main.ts` already exports, so this adds
+  no public API and only delivers what package.json was already promising. Found by checking that
+  every declared entry resolves, not by `npm pack` itself, which happily packs a working tree with
+  a broken exports map.
+- **Executable contrast assertions** (`__tests__/a11y/contrast.test.ts`, 44 cases). It reads the
+  declarations out of `vars/_tokens.scss` and `vars/_control.scss` at runtime, follows `var()`
+  indirection, models dark as light-plus-overrides so it matches the real cascade, and implements
+  WCAG relative luminance inline rather than adding a dependency. **Nothing is hardcoded**, so
+  moving a token either keeps this green or fails it here. Seven cases pin the math against
+  published reference values before any of it is trusted about tokens.
+- **A reduced-motion suite and a resilience suite** (long strings, RTL, zero-one-many), plus a
+  states story for the resilience axes.
+- **The README's full token table and the `theme`-to-`variant` migration map.**
+
+#### Accessibility
+
+- **Dark `--text-muted` failed AA and the token's own comment said otherwise.** `#64748b` measures
+  **3.59:1 on `--surface` and 3.96:1 on `--bg`**; the comment claimed AA by citing a light-mode
+  number. It is not rescued by the large-text exemption either: `.text-mute` sets no font-size at
+  all, and the post byline pins it at 14px. Raised to `#7c8ba1` (4.93 and 5.44), still a visible
+  step below `--text-secondary` so the two tokens keep meaning different things. **This diverges
+  from nexious-client**, which declares the same failing value and wins by source order, so
+  production is unchanged until the client moves.
+- **A `type: "number"` field stayed editable while its form was disabled.** `FieldQuantity`
+  destructured its props without `isDisabled`. The prop was declared on the type, passed by
+  `fieldRegistry` and consumed by `InputQuantity`: the chain broke at exactly one missing forward,
+  which is why it type-checked and looked correct on screen.
+- **The theme-menu chevron reported the wrong state under reduced motion.** The global kill
+  switch's `*:hover { transform: none !important }` outranks a normal declaration at any
+  specificity, so merely pointing at an open menu snapped the chevron back to its closed rotation,
+  lying about state to the audience that asked for less motion.
+- **`.bubble` looped with no reduced-motion guard**, the only unguarded loop in the bundle. The
+  kill switch clamps to a single 1ms pass rather than removing the animation, so it produced a
+  50px jump-and-snap inside one frame, worse than the drift it replaced.
+- The axe sweep goes **45 cases to 91**, adding Skeleton, both Loading modes, EmptyState and the
+  three components rendering through it, the table markup, the post card, and the states the suite
+  skipped: disabled, zero-entry and hidden-label.
+
+#### Fixed
+
+- **Three flex rows had no shrink floor**, so a long user-supplied string set the row's own minimum
+  and blew it out. `.post-card-author` (nowrap, no ellipsis, pushed the date out of the card),
+  `.post-card-handle`, and `.nav-tab-bar .nav-item`, whose minimum was the **sum of its labels**,
+  so a localized set pushes a sticky full-width bar into horizontal page scroll. Plus
+  `.container-row > *`, which promised equal columns with `flex: 1` and no `min-width: 0`.
+- **`.theme-menu-list` opened off screen in RTL.** It was pinned to `right: 0`, so a 12rem popover
+  opened away from its trigger when the header flowed the other way. Now `inset-inline-end`, a
+  literal no-op in LTR.
+- The README taught two things 4.0.0 had already deleted: a wrapper example still typing `theme`,
+  and a theming example recommending an off-scale `--radius-medium: 10px`.
+
+#### A note on what the dark-mode tests do and do not prove
+
+jsdom applies no stylesheet, so axe's color-contrast rule cannot run there and wrapping a render in
+`.dark-mode` proves nothing about color. Those cases assert **markup and naming parity** between
+the two renders and say so in a comment. Contrast is the token suite's job, against real values.
+
 ### UI rework Phase 4: the fan-out (no API break)
 
 Phases 1 to 3 built a token foundation and rebuilt the Form family on it. Phase 4 applies it to
