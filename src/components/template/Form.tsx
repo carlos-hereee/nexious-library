@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
@@ -37,6 +37,15 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   // onSubmit settles. Prevents double-submit (duplicate account/order/merch)
   // when a handler is async and the form stays mounted during the request.
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Where a failed submit lands. Focus moves to the error paragraph when responseError changes to
+  // a value, so a keyboard user reaches the problem instead of hunting for it. Keyed on the text,
+  // not on every render: re-focusing while the user is already correcting a field would steal the
+  // caret from them.
+  const responseErrorRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (responseError) responseErrorRef.current?.focus();
+  }, [responseError]);
+
 
   useEffect(() => {
     if (initialValues) {
@@ -226,7 +235,17 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       encType={withFileUpload ? "multipart/form-data" : undefined}
     >
       {heading && <h2 className="heading">{heading}</h2>}
-      {responseError && <p className="error-message">{responseError}</p>}
+      {/* role="alert" announces the failed submit the moment it renders and the focus move lands a
+          keyboard user on it; before this the paragraph was silent, and this one element is every
+          form on the platform (the client wrappers AccountForm, AppForm, CalendarForm, MediaForm,
+          StoreForm twice and TaskboardForm all feed it: login, sign up, recovery, app create and
+          edit, events, posts, store, merch, taskboards). tabIndex -1 keeps it out of the tab order
+          while still focusable; the classname stays because client CSS targets it. */}
+      {responseError && (
+        <p ref={responseErrorRef} className="error-message" role="alert" tabIndex={-1}>
+          {responseError}
+        </p>
+      )}
       <div className={formScroll ? "form-field-container" : "form-field-container no-scroll"} id="form-field-container">
         {showScroll.up && <UpArrow onClick={() => handleScroll("up", "form-field-container")} active={direction} />}
         {showScroll.down && (

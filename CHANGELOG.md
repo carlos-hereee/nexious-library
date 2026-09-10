@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Form announces a failed submit (no API break)
+
+#### Fixed
+
+- **`Form`'s `responseError` paragraph is a live region and takes focus.** It rendered as a bare
+  `<p className="error-message">`, so a screen reader user who submitted a wrong password heard
+  nothing and a keyboard user stayed parked on the button. It now carries `role="alert"` and
+  `tabIndex={-1}`, and focus moves to it when `responseError` changes to a value (keyed on the
+  text, so a re-render while the user is correcting a field does not steal the caret). No prop
+  changed and the classname is untouched, so consumers on 4.0.1 need no migration. In the
+  Company Uno client this one element is every form on the platform (AccountForm, AppForm,
+  CalendarForm, MediaForm, StoreForm twice, TaskboardForm). Pinned by
+  `formResponseError.test.tsx`, including the axe sweep in the error state.
+
 ### UI rework Phase 5: verify and document (no API break)
 
 The pass that proves the previous four. Tests go **232 across 20 suites to 361 across 24**, and
