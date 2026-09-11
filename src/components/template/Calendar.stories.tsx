@@ -51,8 +51,11 @@ const meta: Meta<typeof Calendar> = {
     setDay: { action: "set-day" },
   },
   decorators: [
-    (Story) => (
-      <div style={{ maxWidth: 420, padding: "1rem" }}>
+    // Month stories sit in a 420px frame; a time grid needs more, so a story opts into a wider
+    // frame through `parameters.frameWidth` (a per story decorator cannot, because Storybook
+    // composes it INSIDE this one and the outer cap wins).
+    (Story, context) => (
+      <div style={{ maxWidth: (context.parameters.frameWidth as number | undefined) ?? 420, padding: "1rem" }}>
         <Story />
       </div>
     ),
@@ -64,12 +67,8 @@ type Story = StoryObj<typeof Calendar>;
 
 const seed = new Date("2026-06-15T12:00:00");
 
-// A time grid needs more room than a month tile grid; the week stories widen the frame.
-const wide = (Story: React.FC) => (
-  <div style={{ maxWidth: 960, padding: "1rem" }}>
-    <Story />
-  </div>
-);
+// A time grid needs more room than a month tile grid; the week and day stories widen the frame.
+const wide = { frameWidth: 960 };
 
 // Friday 2026-09-11 at 14:30 local: the now line sits mid afternoon in the rendered week.
 const now = new Date("2026-09-11T14:30:00");
@@ -108,19 +107,19 @@ export const HideToday: Story = {
 
 /** Week: seven columns, an all day row, the hour gutter, the now line, opening at 8 AM. */
 export const Week: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: { value: now, view: "week", now, timedEvents: weekEvents, locale: "en-US" },
 };
 
 /** Day: the same grid with one column and the full weekday date as its heading. */
 export const Day: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: { value: now, view: "day", now, timedEvents: weekEvents, locale: "en-US" },
 };
 
 /** Overlapping: four events at once share the column in four equal lanes; a fifth tucks back into lane 0. */
 export const Overlapping: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: {
     value: now,
     view: "day",
@@ -139,7 +138,7 @@ export const Overlapping: Story = {
 
 /** AllDayOverflow: more than two all day items fold behind a "+N more" control that unfolds in place. */
 export const AllDayOverflow: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: {
     value: now,
     view: "week",
@@ -157,13 +156,13 @@ export const AllDayOverflow: Story = {
 
 /** EmptyWeek: the grid still renders, and every day carries a visually hidden "No events". */
 export const EmptyWeek: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: { value: now, view: "week", now, locale: "en-US", timedEvents: [] },
 };
 
 /** LongTitles: one line with an ellipsis; blocks tall enough wrap to two. The full title is always in the accessible name. */
 export const LongTitles: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: {
     value: now,
     view: "week",
@@ -196,13 +195,13 @@ export const LongTitles: Story = {
 
 /** MondayFirst: `weekStartsOn={1}`. */
 export const MondayFirst: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: { value: now, view: "week", now, weekStartsOn: 1, timedEvents: weekEvents, locale: "en-US" },
 };
 
 /** Spanish day names and dates through `locale`, with the visible labels overridden. */
 export const Localized: Story = {
-  decorators: [wide],
+  parameters: wide,
   args: {
     value: now,
     view: "week",
@@ -276,13 +275,13 @@ const ConsumerHeader: React.FC = () => {
  * view switcher of its own.
  */
 export const ControlledWithHeader: Story = {
-  decorators: [wide],
+  parameters: wide,
   render: () => <ConsumerHeader />,
 };
 
 /** Both themes side by side: every tone is a token pair, so the dark twin is the same markup under `.dark-mode`. */
 export const LightAndDark: Story = {
-  decorators: [wide],
+  parameters: wide,
   render: () => (
     <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
       <Calendar value={now} view="week" now={now} timedEvents={weekEvents} locale="en-US" />

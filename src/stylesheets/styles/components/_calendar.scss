@@ -437,6 +437,15 @@
     display: none;
   }
 }
+// At the fifteen minute floor (12px at the default hour height) the vertical padding alone
+// would swallow the text, so it goes and the title's first line is what the block shows.
+@container (max-height: 1.25rem) {
+  .calendar-event-block {
+    justify-content: center;
+    padding-block: 0;
+    line-height: 1;
+  }
+}
 @container (min-height: 4.5rem) {
   .calendar-event-block-title {
     display: -webkit-box;
