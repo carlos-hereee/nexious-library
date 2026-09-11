@@ -116,3 +116,374 @@
   grid-template-columns: repeat(7, 1fr);
   padding: var(--space-medium) 0;
 }
+
+// ── Week and day time grid ──────────────────────────────────────────────────────
+// Every length below rides on --calendar-hour-height. The component writes exactly four numbers
+// per block as custom properties (start and length in minutes, column and column count) and
+// one for the now line, and the calc() here turns them into geometry, so a consumer that
+// overrides the hour height on .calendar-time-grid rescales the gutter, every block and the
+// now line together with no JS in the loop. The other four properties are the consumer facing
+// knobs: gutter width, the scroll viewport's height, and the per day floor under which the body
+// scrolls on its inline axis instead of letting the page scroll sideways.
+.calendar-time-grid {
+  --calendar-hour-height: 48px;
+  --calendar-gutter-width: 3.5rem;
+  --calendar-grid-max-height: 65vh;
+  --calendar-day-min-width: 7.5rem;
+  --calendar-day-count: 7;
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background-color: var(--surface);
+}
+.calendar-time-grid--day {
+  --calendar-day-count: 1;
+}
+.calendar-time-grid-scroll {
+  position: relative;
+  max-height: var(--calendar-grid-max-height);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+// The head (day names plus the all day row) and every row share one floor width so the sticky
+// head's background always covers the tracks it sits over while the body scrolls sideways.
+.calendar-time-grid-head,
+.calendar-time-grid-row {
+  min-width: calc(var(--calendar-gutter-width) + var(--calendar-day-count) * var(--calendar-day-min-width));
+}
+.calendar-time-grid-row {
+  display: grid;
+  grid-template-columns: var(--calendar-gutter-width) repeat(var(--calendar-day-count), minmax(0, 1fr));
+}
+.calendar-time-grid-head {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--surface);
+}
+// The gutter column is pinned at the inline start in both the head and the body. It sits ABOVE
+// the blocks (which carry no z-index of their own) and BELOW the head, so hour labels never
+// show through the sticky day names when the body is scrolled down.
+.calendar-time-grid-corner,
+.calendar-time-grid-gutter {
+  position: sticky;
+  inset-inline-start: 0;
+  z-index: var(--z-raised);
+  background-color: var(--surface);
+}
+
+// ── Day headers ──
+.calendar-day-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+  min-height: var(--tap-target-min);
+  margin: 0;
+  padding-block: var(--space-extra-small);
+  padding-inline: var(--space-extra-small);
+  border: 0;
+  border-inline-start: 1px solid var(--border);
+  background-color: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--text-small);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  @include mixin.focus-ring;
+  // The ring is drawn inward here and on every control inside the scroll viewport: the
+  // viewport's overflow would clip an outset ring on a control sitting at its edge, and a
+  // clipped ring is a missing ring.
+  &:focus-visible {
+    outline-offset: calc(-1 * var(--focus-ring-width));
+  }
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+}
+.calendar-day-header-name {
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-overline);
+  font-size: var(--text-extra-small);
+}
+.calendar-day-header-number {
+  min-width: 2rem;
+  line-height: 2rem;
+  border-radius: var(--radius-full);
+  color: var(--text);
+  font-size: var(--text-large);
+  font-weight: var(--font-semibold);
+}
+// Today is a filled disc behind the date number, the same pair the primary button paints,
+// plus the visually hidden "Today" text and aria-current the component adds: never color alone.
+.calendar-day-header--today .calendar-day-header-number {
+  background-color: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
+}
+
+// ── All day row ──
+.calendar-time-grid-allday {
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+.calendar-time-grid-allday-label {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-inline: var(--space-small);
+  color: var(--text-muted);
+  font-size: var(--text-extra-small);
+}
+.calendar-allday-cell {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  min-width: 0;
+  min-height: var(--space-large);
+  padding-block: var(--space-extra-small);
+  padding-inline: var(--space-extra-small);
+  border-inline-start: 1px solid var(--border);
+}
+.calendar-allday-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.calendar-allday-more {
+  align-self: flex-start;
+  min-height: var(--tap-target-min);
+  margin: 0;
+  padding-block: 0;
+  padding-inline: var(--space-small);
+  border: 0;
+  border-radius: var(--radius-medium);
+  background-color: transparent;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-medium);
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  @include mixin.focus-ring;
+  &:focus-visible {
+    outline-offset: calc(-1 * var(--focus-ring-width));
+  }
+  &:hover {
+    background-color: var(--hover-bg);
+  }
+  // The 44px floor is a touch rule; with a pointer the control shrinks to its text.
+  @include mixin.respond-from(mobile) {
+    min-height: var(--space-large);
+  }
+}
+
+// ── Body: gutter and day columns ──
+.calendar-time-grid-body {
+  align-items: start;
+}
+.calendar-time-grid-hour {
+  position: relative;
+  height: var(--calendar-hour-height);
+}
+.calendar-time-grid-hour-label {
+  position: absolute;
+  top: 0;
+  inset-inline-end: var(--space-small);
+  transform: translateY(-50%);
+  color: var(--text-muted);
+  font-size: var(--text-extra-small);
+  white-space: nowrap;
+}
+.calendar-day-column {
+  position: relative;
+  // Its own stacking context, so the now line's z-index is resolved INSIDE the column and the
+  // whole column still slides under the pinned gutter.
+  z-index: var(--z-base);
+  height: calc(var(--calendar-hour-height) * 24);
+  border-inline-start: 1px solid var(--border);
+  // Hour lines drawn by the same hour height the blocks use, so the two cannot drift.
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--border) 0 1px,
+    transparent 1px var(--calendar-hour-height)
+  );
+}
+.calendar-day-column--today {
+  background-color: var(--brand-wash);
+}
+.calendar-day-events {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+// The positioned slot. This is where the four per block numbers become a rectangle.
+.calendar-event-slot {
+  position: absolute;
+  top: calc(var(--calendar-hour-height) * var(--block-start) / 60);
+  inset-inline-start: calc(100% * var(--block-column) / var(--block-columns));
+  box-sizing: border-box;
+  width: calc(100% / var(--block-columns));
+  height: calc(var(--calendar-hour-height) * var(--block-length) / 60);
+  padding-inline-end: 2px;
+  padding-block-end: 1px;
+  // Size containment lets the block's own height decide how much text it shows (below).
+  container-type: size;
+}
+
+// ── Event blocks and all day chips share one recipe ──
+// Tone maps onto an EXISTING token pair: the fill, the 3px start edge and the text. No shadow at
+// rest (border XOR shadow), and the muted state drops the fill to the surface, dashes the edge
+// and lowers the text to --text-muted, so it is never signalled by opacity or color alone.
+.calendar-event-block,
+.calendar-allday-chip {
+  --block-fill: var(--brand-wash);
+  --block-edge: var(--main-brand-color);
+  --block-text: var(--text);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0;
+  width: 100%;
+  min-width: 0;
+  margin: 0;
+  padding-block: var(--space-extra-small);
+  padding-inline: var(--space-small);
+  overflow: hidden;
+  border: 0;
+  border-inline-start: 3px solid var(--block-edge);
+  border-radius: var(--radius-medium);
+  background-color: var(--block-fill);
+  color: var(--block-text);
+  font: inherit;
+  font-size: var(--text-small);
+  line-height: var(--line-height-tight);
+  text-align: start;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  @include mixin.focus-ring;
+  &:focus-visible {
+    outline-offset: calc(-1 * var(--focus-ring-width));
+  }
+  &:hover {
+    background-image: linear-gradient(var(--hover-bg), var(--hover-bg));
+  }
+  &--info {
+    --block-fill: var(--info-bg);
+    --block-edge: var(--info-border);
+    --block-text: var(--info-text);
+  }
+  &--success {
+    --block-fill: var(--success-bg);
+    --block-edge: var(--success-border);
+    --block-text: var(--success-text);
+  }
+  &--warn {
+    --block-fill: var(--warn-bg);
+    --block-edge: var(--warn-border);
+    --block-text: var(--warn-text);
+  }
+  &--danger {
+    --block-fill: var(--danger-bg);
+    --block-edge: var(--danger-border);
+    --block-text: var(--danger-text);
+  }
+  &--neutral {
+    --block-fill: var(--surface);
+    --block-edge: var(--border);
+    --block-text: var(--text-secondary);
+  }
+  &--muted {
+    --block-fill: var(--surface);
+    --block-text: var(--text-muted);
+    border-inline-start-style: dashed;
+  }
+}
+.calendar-event-block {
+  height: 100%;
+}
+.calendar-event-block-title,
+.calendar-allday-chip-title {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-weight: var(--font-medium);
+  .icon {
+    margin-inline-end: var(--space-extra-small);
+  }
+}
+.calendar-event-block-subtitle {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: var(--text-extra-small);
+}
+// A block is as tall as its event. Under about two text lines the time line is dropped so the
+// title stays legible; from about three lines the title may wrap to two. The full title and
+// time range are always in the button's accessible name, so nothing is lost, only folded.
+@container (max-height: 2.5rem) {
+  .calendar-event-block-subtitle {
+    display: none;
+  }
+}
+@container (min-height: 4.5rem) {
+  .calendar-event-block-title {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    white-space: normal;
+  }
+}
+// Clipped at midnight: the bottom edge is dashed and square so the block reads as cut, not ended.
+.calendar-event-slot--continues .calendar-event-block {
+  border-bottom: 2px dashed var(--block-edge);
+  border-end-start-radius: 0;
+  border-end-end-radius: 0;
+}
+
+// ── The now line ──
+// No animation, ever: it moves once a minute by re-render, which needs no transition and so
+// needs no reduced-motion guard.
+.calendar-now-line {
+  position: absolute;
+  top: calc(var(--calendar-hour-height) * var(--now-minutes) / 60);
+  inset-inline: 0;
+  z-index: var(--z-raised);
+  border-top: 2px solid var(--main-brand-color);
+  pointer-events: none;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    inset-inline-start: 0;
+    width: var(--space-small);
+    height: var(--space-small);
+    border-radius: var(--radius-full);
+    background-color: var(--main-brand-color);
+    transform: translate(-50%, calc(-50% - 1px));
+  }
+}
+.calendar-now-line-label {
+  position: absolute;
+  top: 0;
+  inset-inline-start: var(--space-small);
+  padding-inline: var(--space-extra-small);
+  border-radius: var(--radius-small);
+  background-color: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  transform: translateY(-50%);
+}

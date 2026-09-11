@@ -128,6 +128,18 @@ export type {
 } from "nxs-card";
 export type { TotalProps } from "custom-props";
 export type { ICalEvent, CalendarPEventDays, PEventDay } from "nxs-calendar";
+// Calendar week and day views (additive). The grid is public so a consumer can compose it under
+// its own header without the template; the time parsers are the SAME rules FieldTime writes the
+// stored "3:00 PM" wire format with, exported so no consumer copies the regex.
+export { default as CalendarTimeGrid } from "@nxs-organism/calendar/CalendarTimeGrid";
+export type {
+  CalendarViewMode,
+  CalendarEventTone,
+  CalendarTimedEvent,
+  CalendarLabels,
+  CalendarTimeGridProps,
+} from "nxs-calendar";
+export { to24Hour, toWireTime } from "@nxs-utils/form/time";
 export type { ErrorProps, ErrorMessageProps, ErrorProp, ErrorCodes, ComponentSpec, SpecProp } from "nxs-errors";
 export type { HeroProps, BubblyProps, TextBubbleProps, RatingProps, AssetProps, UserProps } from "nxs-assets";
 export type { IconProps, CopyToClipboardProps } from "nxs-button";

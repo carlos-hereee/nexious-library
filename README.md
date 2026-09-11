@@ -208,6 +208,49 @@ The submit control disables itself while an async `onSubmit` resolves, so a doub
 />
 ```
 
+### Week and day views
+
+`view="week"` (seven columns) or `view="day"` (one) swaps the month tiles for a time grid: day
+headers with today marked, an all day row, an hour gutter, event blocks positioned by start and end
+with overlaps packed side by side, and a now line. Timed data arrives through `timedEvents`; the
+month grid keeps reading `events`, and nothing about it changes when `view` is omitted.
+
+```tsx
+<Calendar
+  value={new Date()}
+  view="week"
+  timedEvents={[
+    { id: "1", title: "Design review", start: new Date(2026, 8, 11, 9), end: new Date(2026, 8, 11, 10, 30), tone: "info" },
+    { id: "2", title: "Launch day", start: new Date(2026, 8, 11), allDay: true },
+  ]}
+  onEventClick={(event) => console.log(event.id)}
+  onDayClick={(day) => console.log(day)} // a day header click, for drilling week into day
+  scrollToHour={8}
+  weekStartsOn={0}
+  locale="en-US"
+  labels={{ allDay: "All day", today: "Today", moreEvents: (n) => `+${n} more` }}
+/>
+```
+
+**Time zones.** The grid renders `start` and `end` with local getters and never converts. Turn an
+instant into the wall clock you want shown before building the Dates, and build a date-only value
+as `new Date(y, m, d)`, never `new Date("YYYY-MM-DD")`, which is midnight UTC and the previous
+evening west of Greenwich. `to24Hour` and `toWireTime` are exported from the root so a consumer
+can parse the stored `"3:00 PM"` wire format with the same rules `FieldTime` writes it.
+
+**Controlled date and a consumer header.** `value` only seeds. Pass `date` to control the focus
+date (changing it moves every view), `onDateChange` to hear the library's own navigation, and
+`hideNavigation` to drop the refresh button and the navigation row so your header owns previous,
+today, next and the view switch (the library ships no view switcher of its own).
+
+```tsx
+const [date, setDate] = useState(new Date());
+<Calendar value={date} date={date} onDateChange={setDate} view="week" hideNavigation timedEvents={events} />
+```
+
+Geometry is one CSS custom property, `--calendar-hour-height` (48px), set on `.calendar-time-grid`
+and overridable by a consumer; blocks, gutter rows and the now line all rescale from it.
+
 ## Icon system
 
 Icons resolve through a pluggable registry. Pass a name string to `Icon` or `IconButton`. A dependency-free SVG set is seeded by default (`close`, `check`, `heart`, `star`, `copy`, `edit`, `home`, arrows, digits, and more). For social, payment, and domain glyphs, install the FontAwesome peers and register the adapter once at boot:

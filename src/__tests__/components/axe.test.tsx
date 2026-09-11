@@ -13,6 +13,8 @@ import type { FormFieldProps } from "nxs-form";
 import ThemeMenu from "@nxs-molecules/navigation/ThemeMenu";
 import DialogOverlay from "@nxs-template/DialogOverlay";
 import Dialog from "@nxs-template/Dialog";
+import Calendar from "@nxs-template/Calendar";
+import type { CalendarTimedEvent } from "nxs-calendar";
 
 const selectList = [{ uid: "1", name: "Admin", label: "Admin", value: "admin" }];
 
@@ -234,5 +236,64 @@ describe("axe accessibility (no violations on isolated renders)", () => {
     );
     fireEvent.click(container.querySelector(".theme-menu-trigger") as HTMLElement);
     expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
+  // ── Calendar week and day views ──
+  // Free positioned blocks, sticky rows, an aria-hidden gutter and a hand-rolled today marker:
+  // exactly the kind of markup axe catches drifting. A fixed local clock keeps "today" inside
+  // the rendered week on every machine, and the overlap and all day overflow cases are the ones
+  // with the most generated ARIA.
+  describe("Calendar week and day views", () => {
+    const calendarNow = new Date(2026, 8, 11, 14, 30);
+    const at = (day: number, hour: number, minute = 0) => new Date(2026, 8, day, hour, minute);
+    const timedEvents: CalendarTimedEvent[] = [
+      { id: "a", title: "Design review", start: at(11, 9), end: at(11, 10, 30), tone: "info", icon: "edit" },
+      { id: "b", title: "Standup", start: at(11, 9, 30), end: at(11, 10), tone: "success" },
+      { id: "c", title: "Lunch", start: at(11, 12), end: at(11, 13), tone: "neutral", isMuted: true },
+      { id: "d", title: "Late shift", start: at(11, 22), end: at(12, 2), tone: "warn" },
+      { id: "e", title: "Launch day", start: at(11, 0), allDay: true },
+      { id: "f", title: "Conference", start: at(11, 0), allDay: true, tone: "danger" },
+      { id: "g", title: "Birthday", start: at(11, 0), allDay: true },
+    ];
+
+    it("week view with overlapping and folded all day events has no violations", async () => {
+      expect(
+        await check(<Calendar value={calendarNow} view="week" now={calendarNow} locale="en-US" timedEvents={timedEvents} />)
+      ).toHaveNoViolations();
+    });
+
+    it("week view with the all day row unfolded has no violations", async () => {
+      const { container } = render(
+        <Calendar value={calendarNow} view="week" now={calendarNow} locale="en-US" timedEvents={timedEvents} />
+      );
+      fireEvent.click(container.querySelector(".calendar-allday-more") as HTMLElement);
+      expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+    });
+
+    it("day view under a consumer header (hideNavigation, controlled date) has no violations", async () => {
+      expect(
+        await check(
+          <Calendar
+            value={calendarNow}
+            view="day"
+            now={calendarNow}
+            date={calendarNow}
+            hideNavigation
+            locale="en-US"
+            timedEvents={timedEvents}
+          />
+        )
+      ).toHaveNoViolations();
+    });
+
+    it("week view in an RTL wrapper has no violations", async () => {
+      expect(
+        await check(
+          <div dir="rtl">
+            <Calendar value={calendarNow} view="week" now={calendarNow} locale="ar" timedEvents={timedEvents} />
+          </div>
+        )
+      ).toHaveNoViolations();
+    });
   });
 });

@@ -9,6 +9,104 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Calendar week and day views (additive, minor)
+
+`<Calendar view="week" timedEvents={...} />` renders a seven column time grid (`view="day"` renders
+one): day headers with today marked, an all day row, an hour gutter, event blocks positioned by
+local start and end with overlaps packed into equal side by side lanes, a now line in today's
+column, and a body that opens scrolled to `scrollToHour` (or to the now line when today is in
+range and later). **The month view is unchanged.** Every new prop is optional, `view` defaults to
+`"month"`, and no existing exported type changed a field: `PEventDay.startTime` and `endTime` stay
+`number`, and the month grid's markup, class names and `Calendar.test.tsx` are byte for byte what
+they were.
+
+#### Added
+
+- **Types** in `nxs-calendar`: `CalendarViewMode`, `CalendarEventTone` (a closed set of `brand`,
+  `info`, `success`, `warn`, `danger`, `neutral`, each mapped onto an EXISTING token pair),
+  `CalendarTimedEvent` (`id`, `title`, `start`, optional `end`, `allDay`, `tone`, `icon`,
+  `subtitle`, `isMuted`), `CalendarLabels` (every rendered string, with English defaults), and
+  `CalendarTimeGridProps`. All exported from the root.
+- **`CalendarProps` gains** `view`, `date` (CONTROLLED focus; `value` only seeds), `onDateChange`
+  (fired by the library's own navigation in every view, month included), `hideNavigation`,
+  `timedEvents`, `onEventClick`, `weekStartsOn` (0 or 1), `scrollToHour`, `defaultDurationMinutes`,
+  `now` (an injectable clock, refreshed once a minute while a time grid is mounted), `locale` (a
+  BCP 47 tag for Intl) and `labels`. With `date` present the library reports navigation and does
+  not move by itself. In week and day views `onDayClick` fires from a day HEADER with the same
+  `CalendarDayProp` shape month emits, so a consumer can drill week into day. A week or day view
+  given `events` and no `timedEvents` renders those as all day chips on their LOCAL day, so a month
+  consumer that flips the view never sees an empty grid.
+- **`CalendarTimeGrid`** (organism, exported from the root and `@nxs-organism`): the grid itself,
+  stateless apart from which crowded all day rows are unfolded, so a consumer can mount it under
+  its own header. **`WeekNavigation`** (organism): previous / range heading / next for the time
+  views, added rather than teaching `CalendarNavigation` to print a range so the month path stayed
+  untouched.
+- **Pure helpers** under `utils/calendar/`: `weekRange.ts` (`startOfWeek`, `weekDays`, `addDays`,
+  `isSameLocalDay`, `localDayKey`, `minutesSinceMidnight`, all on LOCAL getters, all stepping by
+  the Date constructor and never by 86 400 000 ms, so the 2026-11-01 daylight saving week is seven
+  distinct days), `layoutDay.ts` (the overlap packing: sort by start then longer first, sweep into
+  collision groups, first free lane, equal widths per group, a 15 minute floor so a 5 minute event
+  stays clickable, midnight clipping with a `continuesNextDay` flag), `formatDate.ts` (every
+  visible and spoken date string through Intl in `locale`), `allDayFromPEventDay.ts` and
+  `calendarLabels.ts`.
+- **`to24Hour` and `toWireTime` are exported from the root.** They are the rules `FieldTime`
+  already writes the stored `"3:00 PM"` wire format with; exporting them means no consumer copies
+  the regex to read it back.
+- **Styles**, in `_calendar.scss`: geometry rides on one custom property, `--calendar-hour-height`
+  (48px, on `.calendar-time-grid`, overridable), and the component writes ONLY the four per block
+  numbers (`--block-start`, `--block-length`, `--block-column`, `--block-columns`) plus the now
+  line's minute as inline custom properties; the stylesheet does the math, so a consumer that
+  changes the hour height rescales everything with no JS. Tokens only, logical properties
+  throughout (RTL mirrors), the head and gutter sticky on `--z-sticky` and `--z-raised`, a per day
+  min width so a narrow container scrolls the body on its inline axis while the page never scrolls
+  sideways, and the tone recipe on the status `-bg`, `-border` and `-text` sets plus `--brand-wash`.
+  `lint:css` stays at zero.
+- **Stories**: `Week`, `Day`, `Overlapping`, `AllDayOverflow`, `EmptyWeek`, `LongTitles`,
+  `MondayFirst`, `Localized`, `ControlledWithHeader` (a story local header driving `date` and
+  `view` with `hideNavigation`) and `LightAndDark`, all pinned to a fixed `now` so the rendered
+  week is the same on every machine. The story header's gotcha list grew the four that matter:
+  `timedEvents` is read only by week and day, Dates are local and the consumer converts zones,
+  `date` is controlled while `value` only seeds, and `hideNavigation` exists for consumer headers.
+- README: a "Week and day views" section with the time zone rule and the controlled header shape.
+
+#### Accessibility
+
+- **No fake ARIA grid.** A real `role="grid"` promises full arrow key cell navigation that a canvas
+  of free positioned blocks cannot honor. Instead the view is a `<section>` named by the visible
+  range heading (or by the formatted range itself under `hideNavigation`), each day header is a
+  `<button>` whose accessible name is the full date with `aria-current="date"` and a visually
+  hidden "Today" on today (the disc behind the date number is never the only signal), each day
+  column is a `role="group"` labelled by its full date holding a `<ul>` of event `<button>`s in
+  start order named "title, 3:00 PM to 5:00 PM" (or "title, All day"), so DOM and reading order
+  are chronological and position is CSS only. An empty day says "No events" in visually hidden
+  text. The hour gutter, gridlines and the now line are `aria-hidden`.
+- The all day row is its own labelled group per day; past two items it shows a "+N more" control
+  (`aria-expanded`) that unfolds in place and never drops an item.
+- Every control includes the focus-ring mixin, drawn inward inside the scroll viewport so the
+  viewport's overflow cannot clip it. Day headers hold the `--tap-target-min` floor; a focused
+  block partly scrolled out of view is scrolled into view without `behavior: "smooth"`, so reduced
+  motion is respected by construction. The now line has no animation.
+- `isMuted` lowers a block to `--text-muted` on `--surface` with a dashed edge, never opacity or
+  color alone. Every tone pair is one the contrast suite already asserts in both themes (the
+  status text on bg sets, `--text-secondary` and `--text-muted` on `--surface`); the brand tone
+  puts `--text` on `--brand-wash`, a 6% tint over the surface that the suite cannot compute
+  (`color-mix`) and that sits within a hair of the already asserted `--text` on `--surface`.
+- The axe sweep gains week view with overlapping and folded all day events, the same row
+  unfolded, day view under a consumer header, and week view inside a `dir="rtl"` wrapper.
+
+#### Tests
+
+- Suites go **25 to 28, tests 364 to 425.** `weekRange.test.ts` (local keys against the UTC trap,
+  the daylight saving week, year rollover, Monday first), `layoutDay.test.ts` (no overlap, two,
+  three with one falling back into lane 0, four simultaneous, midnight crossing, missing end, end
+  before start, the 15 minute floor, the previous day's run-in ignored) and
+  `CalendarTimeGrid.test.tsx` (7 and 1 groups, local date placement, the four inline numbers and
+  nothing else, `onEventClick` with the original object, `onDayClick` with the `calendarValues`
+  shape, `aria-current` on an injected today, the fold and unfold, consumer labels, and through
+  the template: month untouched, range headings across a month and a year, Monday first, `es`
+  day names, `onDateChange` by 7 and by 1 and from the month view, controlled `date`,
+  `hideNavigation`, the `events` fallback, and the once a minute clock under fake timers).
+
 ### Form announces a failed submit (no API break)
 
 #### Fixed
@@ -257,7 +355,7 @@ one: `npx tsc --noEmit` **clean**, `npm run test` **1129 passed / 84 files**, `n
 
 ### UI rework Phase 2: the Form family rebuilt on the foundation
 
-Phase 2 of `roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md`. Every form control
+Phase 2 of `TODO-PLANS/nexious-library-ui-rework-master-plan-2026-08-09.md`. Every form control
 now renders through one field shell at one control height with one focus ring, the numbered entry
 strip is gone, and the four time and date types speak one grammar.
 
@@ -373,7 +471,7 @@ that is how the last three defects in this phase were found. All three read as c
 
 ### UI rework Phase 1: token and primitive foundation
 
-Phase 1 of `roadmaps/specs/nexious-library-ui-rework-master-plan-2026-08-09.md`, executed under
+Phase 1 of `TODO-PLANS/nexious-library-ui-rework-master-plan-2026-08-09.md`, executed under
 FUTURE_PLANS items 50 (lanes 2, 3, 7, 9) and 51. **Token values and new tokens only. No `.tsx`
 file was touched, and no component rule changed except the one noted under Changed.**
 
