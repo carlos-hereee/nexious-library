@@ -7,7 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
-## [4.1.0] - 2026-09-20
+## [4.2.0] - 2026-09-20
+
+> 4.1.0 was version bumped but never published; npm goes 4.0.1 straight to 4.2.0. The number is
+> burned, not missing, so nothing should be released as 4.1.0 later.
 
 ### Calendar week and day views (additive, minor)
 
