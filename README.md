@@ -4,7 +4,7 @@
 
 [![npm version](https://img.shields.io/npm/v/nexious-library)](https://www.npmjs.com/package/nexious-library)
 [![types](https://img.shields.io/npm/types/nexious-library)](https://www.npmjs.com/package/nexious-library)
-[![license](https://img.shields.io/npm/l/nexious-library)](./LICENSE)
+[![license](https://img.shields.io/npm/l/nexious-library)](LICENSE)
 
 A TypeScript-first React component library with a built-in **Calendar**, a schema-driven **Form** engine, **Navigation**, **Checkout**, and a pluggable **icon** system. It ships accessible, themeable primitives (buttons, dialogs, cards) alongside the larger composed surfaces (a `Header`/`Footer` app shell, a full month calendar, a cart), so one dependency covers the whole design language instead of four.
 
@@ -653,7 +653,7 @@ npm run lint         # eslint
 npm run storybook    # component workbench
 ```
 
-See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.
+See [CONTRIBUTING.md](CONTRIBUTING.md) for the full workflow.
 
 ## Support
 

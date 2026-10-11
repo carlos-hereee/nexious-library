@@ -297,7 +297,7 @@ a shim protects nobody, and its cost is permanent: a dual resolution path, dev-w
 
 **The rename is the whole breaking change, and TypeScript finds every site.** Removing `theme`
 from the props types means a missed call site fails the build loudly instead of silently dropping
-a class. In `nexious-client` that was 333 attributes across 125 files.
+a class. In `companyuno-client/nexious-client` that was 333 attributes across 125 files.
 
 #### Why a rename and not a variant migration
 
@@ -350,7 +350,7 @@ Client, verified against a locally built copy of this version rather than agains
 one: `npx tsc --noEmit` **clean**, `npm run test` **1129 passed / 84 files**, `npm run lint`
 **0 errors**.
 
-> **⚠️ Publishing 4.0.0 auto-lands it, major or not.** `nexious-client`'s postinstall runs
+> **⚠️ Publishing 4.0.0 auto-lands it, major or not.** `companyuno-client/nexious-client`'s postinstall runs
 > `npm i nexious-library@latest`, and `@latest` ignores the `^3.3.10` range, so the next
 > `npm install` in the client picks this up whether or not the range allows it. A major buys no
 > protection here. Publish `4.0.0-rc.0` under a `next` dist-tag first: `@latest` will not pick up
@@ -358,7 +358,7 @@ one: `npx tsc --noEmit` **clean**, `npm run test` **1129 passed / 84 files**, `n
 
 ### UI rework Phase 2: the Form family rebuilt on the foundation
 
-Phase 2 of `TODO-PLANS/nexious-library-ui-rework-master-plan-2026-08-09.md`. Every form control
+Phase 2 of `companyuno-growth/product-planning/TODO-PLANS/nexious-library-ui-rework-master-plan-2026-08-09.md`. Every form control
 now renders through one field shell at one control height with one focus ring, the numbered entry
 strip is gone, and the four time and date types speak one grammar.
 
@@ -434,7 +434,7 @@ are no back-compat wrappers. `EntryThumbnailRailProps` survives as a deprecated 
 - **Control geometry moves to the tokens.** An input had 8px/16px padding and a select 8px/8px, so
   their text started eight pixels apart and the two resolved to different heights from the same
   font. Both now read `--control-height` and `--control-padding-*`. This one IS visible in
-  `nexious-client`: the client restyles these elements but sets no padding or height, so the
+  `companyuno-client/nexious-client`: the client restyles these elements but sets no padding or height, so the
   library really is the source of control geometry in production.
 - `_form-navigation.scss` rebuilt on tokens. The progress connector used the orange CTA color
   while the completed state used green, so a progress bar changed hue family halfway along its own
@@ -460,7 +460,7 @@ that is how the last three defects in this phase were found. All three read as c
    its content. Re-measured: every control **exactly 36px, at the same top edge, in both themes**.
 2. **A text input and a textarea rendered WHITE in dark mode.** The reset strips an input's border
    and background and nothing put one back, so they fell through to the browser default while the
-   select and date trigger (which do set a background) rendered dark. `nexious-client` masks this
+   select and date trigger (which do set a background) rendered dark. `companyuno-client/nexious-client` masks this
    by setting the same tokens itself, which is exactly why it survived: the only place it showed
    is standalone, and standalone is this rework's review surface.
 3. **Error text failed AA in dark mode at 3.77:1.** `.required` carries the danger ACCENT color,
@@ -469,16 +469,16 @@ that is how the last three defects in this phase were found. All three read as c
 
 > **Q3 is answered by the code, not by a decision.** The plan asks whether to keep, gate or retire
 > the 600px `.form-field-container` scroll region. It is already opt-in behind `Form`'s `formScroll`
-> prop, `.no-scroll` correctly wins the cascade when the prop is off, and `nexious-client` never
+> prop, `.no-scroll` correctly wins the cascade when the prop is off, and `companyuno-client/nexious-client` never
 > passes it. There is nothing live to retire, so nothing was changed.
 
 ### UI rework Phase 1: token and primitive foundation
 
-Phase 1 of `TODO-PLANS/nexious-library-ui-rework-master-plan-2026-08-09.md`, executed under
+Phase 1 of `companyuno-growth/product-planning/TODO-PLANS/nexious-library-ui-rework-master-plan-2026-08-09.md`, executed under
 FUTURE_PLANS items 50 (lanes 2, 3, 7, 9) and 51. **Token values and new tokens only. No `.tsx`
 file was touched, and no component rule changed except the one noted under Changed.**
 
-Why the values moved: this library and `nexious-client` share token NAMES but disagreed on
+Why the values moved: this library and `companyuno-client/nexious-client` share token NAMES but disagreed on
 VALUES for `--space-large`, `--text-large` and the radius scale. Because the client imports
 `nexious-library/@index.css` before its own `vars.css`, a shared name with a different value
 means the client silently changes what a library token MEANS, not just how it looks. Those
@@ -520,7 +520,7 @@ three collisions are now resolved in the library's favour of the design language
   beside it rather than replacing it so partials can migrate one at a time), and
   `reduced-motion` (wraps content in the reduced-motion query so the media feature name is
   written in exactly one place; it has been misspelled here before).
-- **`.stylelintrc.json` and a `lint:css` script**, mirroring `nexious-client`'s config, at
+- **`.stylelintrc.json` and a `lint:css` script**, mirroring `companyuno-client/nexious-client`'s config, at
   **warning** severity. Baseline recorded 2026-08-09: **266 warnings, 0 errors** (244
   `declaration-property-value-allowed-list`, 22 `color-no-hex`). Phase 4 drives that to zero and
   flips the severity to error. `stylelint` and `postcss-scss` added as devDependencies.
@@ -529,7 +529,7 @@ three collisions are now resolved in the library's favour of the design language
 
 - **`--space-large` 2rem to 1.5rem (32px to 24px)** and **`--text-large` 1.25rem to 1.125rem
   (20px to 18px)**, matching the design language. Neither is renamed, because renaming would
-  break a consumer reading it. `nexious-client` already overrides both to the new values, so
+  break a consumer reading it. `companyuno-client/nexious-client` already overrides both to the new values, so
   **production rendering is unchanged**; only the standalone and Storybook cases move.
 - Radius scale corrected from the off-scale **5 / 7 / 15px to 4 / 8 / 16px**. The concentric
   nesting rule (a 12px card holds 8px rows holds 4px chips) does not work on an off-scale set.
@@ -540,9 +540,9 @@ three collisions are now resolved in the library's favour of the design language
   and Storybook is the review surface for the rest of this rework. The client overrides every
   one of these, so production is unchanged.
 - `--text-success-color` is now an alias for `--success-text` so the two cannot disagree. It has
-  no readers inside this library and none in `nexious-client`.
+  no readers inside this library and none in `companyuno-client/nexious-client`.
 - **`--main-brand-color` default moves from `#484b6a` to the design language's indigo `#4f46e5`**
-  (owner decision on plan Q1). `nexious-client` overrides this token, so production is unchanged;
+  (owner decision on plan Q1). `companyuno-client/nexious-client` overrides this token, so production is unchanged;
   what moves is the standalone and Storybook rendering, which is the point, since Storybook is
   the review surface for the rest of the rework.
 - **`.countdown-timer` font size moves from `--text-large` to `--text-extra-large`.** This is the
@@ -554,7 +554,7 @@ three collisions are now resolved in the library's favour of the design language
   unchanged but its resolved standalone values move from 32px/20px to 24px/18px. That was a
   per-site decision, not an oversight: 24px horizontal padding and an 18px label are correct for
   a large button, and it is what the client has always rendered. The class has zero call sites in
-  `nexious-client`.
+  `companyuno-client/nexious-client`.
 
 #### Accessibility
 

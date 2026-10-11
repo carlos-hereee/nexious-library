@@ -15,7 +15,7 @@ import type { ComponentSpec, ComponentSpecMap } from "nxs-errors";
 // change its spec in the same commit.
 //
 // `docsSlug` resolves against DOCS_BASE_URL. Slugs are the kebab-case component name and
-// are verified against the live catalog in nexious-client/src/features/docs/content/catalog.
+// are verified against the live catalog in companyuno-client/nexious-client/src/features/docs/content/catalog.
 
 /** Public docs home for the package. Matches package.json `homepage`. */
 export const DOCS_BASE_URL = "https://www.companyuno.com/docs";
