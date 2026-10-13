@@ -1,5 +1,5 @@
 import { Input, InputCheckbox } from "@nxs-atoms/index";
-import type { FormFieldProps } from "nxs-form";
+import type { FieldShellProps, FormFieldProps } from "nxs-form";
 import { DataList, FieldQuantity, Select, TextArea, UploadFile } from "@nxs-molecules";
 import FieldPrice from "./FieldPrice";
 import FieldDate from "./FieldDate";
@@ -23,10 +23,21 @@ import FieldShell from "./FieldShell";
  */
 export type FieldRenderer = (props: FormFieldProps) => React.JSX.Element;
 
+/**
+ * The shell props every renderer derives from its field props, in one place. The set used to be
+ * retyped at each of the ten shell sites here plus the auth branch in Field.tsx, so a prop missed
+ * at one site (an addon, a hidden label) vanished for that single field type with nothing failing.
+ * `children` stays with the renderer, since the control is the one thing that differs.
+ */
+export const buildFieldShellProps = (props: FormFieldProps): Omit<FieldShellProps, "children"> => {
+  const { name, label, hideLabels, formError, formMessage, addon } = props;
+  return { name, label, hideLabel: hideLabels, error: formError, message: formMessage, addon };
+};
+
 const renderNumber: FieldRenderer = (props) => {
-  const { name, formMessage, value, label, handleChange, disableForm, formError, countSchema, hideLabels } = props;
+  const { name, value, handleChange, disableForm, formError, countSchema } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <FieldQuantity
         name={name}
         value={value ? parseInt(value as string, 10) : 0}
@@ -41,9 +52,9 @@ const renderNumber: FieldRenderer = (props) => {
 };
 
 const renderDatalist: FieldRenderer = (props) => {
-  const { name, formError, dataList, formMessage, value, label, handleChange, disableForm, hideLabels } = props;
+  const { name, dataList, value, handleChange, disableForm } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <DataList
         name={name}
         list={(dataList && dataList[name]) || []}
@@ -57,10 +68,9 @@ const renderDatalist: FieldRenderer = (props) => {
 };
 
 const renderSelect: FieldRenderer = (props) => {
-  const { name, formMessage, dataList, value, className, handleChange, hideLabels, label } = props;
-  const { clearSelection, formError, disableForm } = props;
+  const { name, dataList, value, className, handleChange, clearSelection, formError, disableForm } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <Select
         name={name}
         list={(dataList && dataList[name]) || []}
@@ -77,9 +87,9 @@ const renderSelect: FieldRenderer = (props) => {
 };
 
 const renderTextArea: FieldRenderer = (props) => {
-  const { name, value, placeholder, label, handleChange, disableForm, hideLabels, formMessage, formError } = props;
+  const { name, value, placeholder, label, handleChange, disableForm, formError } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <TextArea
         input={{ name, value: value as string, placeholder, label, onChange: handleChange, isDisabled: disableForm }}
         hideLabels
@@ -89,6 +99,10 @@ const renderTextArea: FieldRenderer = (props) => {
   );
 };
 
+// The one type with no FieldShell. InputCheckbox owns its own <label>, so there is no shell row for
+// an addon to sit in and a checkbox field ignores `addon`. Wrapping it in a shell only when an addon
+// is present would give the field a second label and a layout that differs from the same checkbox
+// without one, which is exactly the drift the shell exists to prevent.
 const renderCheckbox: FieldRenderer = (props) => {
   const { name, value, handleCheckbox, formMessage, formError, label, disableForm, populateLink } = props;
   return (
@@ -106,9 +120,9 @@ const renderCheckbox: FieldRenderer = (props) => {
 };
 
 const renderFile: FieldRenderer = (props) => {
-  const { name, disableForm, formMessage, formError, value, label, handleChange, hideLabels } = props;
+  const { name, disableForm, value, label, handleChange } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <UploadFile
         input={{ name, isDisabled: disableForm }}
         value={typeof value === "string" ? value : value instanceof File ? value : ""}
@@ -121,9 +135,9 @@ const renderFile: FieldRenderer = (props) => {
 };
 
 const renderPrice: FieldRenderer = (props) => {
-  const { name, formMessage, formError, value, label, type, handleChange, hideLabels } = props;
+  const { name, value, label, type, handleChange } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <FieldPrice
         name={name}
         value={typeof value === "number" ? value : typeof value === "string" ? parseInt(value || "0", 10) : 0}
@@ -137,18 +151,18 @@ const renderPrice: FieldRenderer = (props) => {
 };
 
 const renderDate: FieldRenderer = (props) => {
-  const { name, formMessage, formError, value, label, handleChange, hideLabels, disableForm } = props;
+  const { name, value, handleChange, disableForm } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <FieldDate name={name} value={`${value ?? ""}`} onChange={handleChange} isDisabled={disableForm} />
     </FieldShell>
   );
 };
 
 const renderTime: FieldRenderer = (props) => {
-  const { name, formMessage, formError, value, label, handleChange, hideLabels, disableForm, dataList } = props;
+  const { name, formError, value, handleChange, disableForm, dataList } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <FieldTime
         name={name}
         value={value as string}
@@ -162,9 +176,9 @@ const renderTime: FieldRenderer = (props) => {
 };
 
 const renderDay: FieldRenderer = (props) => {
-  const { name, formMessage, formError, value, label, handleChange, hideLabels, disableForm } = props;
+  const { name, formError, value, handleChange, disableForm } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <FieldDay
         name={name}
         value={value as string}
@@ -177,9 +191,9 @@ const renderDay: FieldRenderer = (props) => {
 };
 
 const renderText: FieldRenderer = (props) => {
-  const { name, value, handleChange, placeholder, disableForm, formError, label, hideLabels, formMessage } = props;
+  const { name, value, handleChange, placeholder, disableForm, formError } = props;
   return (
-    <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+    <FieldShell {...buildFieldShellProps(props)}>
       <Input
         value={value as string}
         onChange={handleChange}

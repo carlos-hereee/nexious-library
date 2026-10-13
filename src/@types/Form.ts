@@ -144,6 +144,13 @@ export type FormProps = {
   clearSelection?: { [key: string]: boolean };
   schema?: FormSchemaProps;
   fieldHeading?: KeyStringProp;
+  // A node rendered beside a TOP LEVEL field's label, keyed by field NAME (the key in
+  // initialValues, which is what a consumer's form config already speaks), never by the generated
+  // fieldId. Entry and multiply group fields ignore it on purpose: a group repeats the same field
+  // names once per slot, so one node per name could only be duplicated into every slot or land on
+  // an arbitrary one. The library attaches no meaning to the node. A consumer that leaves this off
+  // gets the DOM it gets today, byte for byte.
+  fieldAddons?: Record<string, React.ReactNode>;
   populateLink?: { [key: string]: { word: string; link: string }[] };
   labels?: KeyStringProp;
   placeholders?: KeyStringProp;
@@ -326,6 +333,9 @@ export interface FormFieldProps {
   dataList?: { [key: string]: MenuItemProp[] };
   countSchema?: FieldCountSchemaProps[];
   fieldHeading?: { [key: string]: string };
+  // Rendered by FieldShell beside this field's label (see FieldShellProps.addon). Form sets it from
+  // fieldAddons; FormField's entry branch deliberately does not forward it into a group's slots.
+  addon?: React.ReactNode;
   handleChange: (value: FormInitialValue, fieldId?: string) => void;
   setConfirmRemovals?: (key: boolean) => void;
   handleCheckbox?: (key: OnchangeProps) => void;
@@ -370,6 +380,13 @@ export interface FieldShellProps {
   message?: string;
   help?: string;
   className?: string;
+  // An optional node placed beside the label: the shell renders `div.field-label-row` with the
+  // label first and the node last inside `span.field-addon`, pushed to the end of the row. It is a
+  // SIBLING of the <label>, never a child, so pressing it does not focus the control and the
+  // control's accessible name stays the label text. With hideLabel the label is still rendered
+  // (sr-only) and still names the control, and the addon still shows. Left off, the shell renders
+  // exactly what it rendered before the slot existed, with no row wrapper.
+  addon?: React.ReactNode;
 }
 export interface UploadFileProps {
   input: InputProps;

@@ -70,7 +70,9 @@ const props = (type: string, over: Partial<FormFieldProps>): FormFieldProps => (
   ...over,
 });
 
-const Matrix = () => (
+// `addon` rides into every cell when given, so the WithAddon story is this same matrix and nothing
+// else: any difference between the two stories is the addon's doing.
+const Matrix = ({ addon }: { addon?: React.ReactNode }) => (
   <div className="sb-matrix-grid">
     <span />
     {STATES.map(([state]) => (
@@ -87,7 +89,7 @@ const Matrix = () => (
           <div className="sb-matrix-cell" key={`${type}-${state}`}>
             {/* The real component with real props. Nothing here fakes a state, because a faked
                 state proves the fake, not the rule. */}
-            <Field {...props(type, over)} />
+            <Field {...props(type, { ...over, addon })} />
           </div>
         ))}
       </Fragment>
@@ -111,6 +113,37 @@ export const AllStates: StoryObj = {
       </p>
       <div className="sb-matrix-dark dark-mode">
         <Matrix />
+      </div>
+    </div>
+  ),
+};
+
+/**
+ * The addon slot: a consumer node beside the label. A native button wearing the library's own
+ * control classes stands in for whatever a consumer renders there; the library attaches no meaning
+ * to it. What to look for: the node sits on the label line and is pushed to the end in every type
+ * and state; with the label hidden it is still there, alone at the end of the row; the error still
+ * renders below the control, never beside the addon; and the checkbox row has no addon at all,
+ * because that type renders no shell. Everything below the label line must match AllStates.
+ */
+const sampleAddon = (
+  <button type="button" className="btn-base btn-ghost btn-sm">
+    Help
+  </button>
+);
+
+export const WithAddon: StoryObj = {
+  render: () => (
+    <div className="sb-matrix">
+      <h2 className="sb-matrix-title">Field, every type against every state, with an addon beside the label</h2>
+      <p className="sb-matrix-note">
+        Compare against AllStates. The only difference should be the button at the end of each label line; the
+        control, the error slot and the column edges must not move. The hidden label column still shows the button.
+      </p>
+      <Matrix addon={sampleAddon} />
+      <h2 className="sb-matrix-title">The same matrix in dark mode</h2>
+      <div className="sb-matrix-dark dark-mode">
+        <Matrix addon={sampleAddon} />
       </div>
     </div>
   ),

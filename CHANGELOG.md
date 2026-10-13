@@ -7,6 +7,44 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ---
 
+## [Unreleased]
+
+### An optional addon beside a field's label (additive, minor)
+
+A consumer can place one node beside any top level form field's label, for example a per field
+toggle or a hint pill. The library attaches no meaning to the node, and a consumer that does not
+pass one gets the exact markup it gets today: the no addon case is pinned byte for byte in
+`FieldShell.test.tsx`. No existing prop changed meaning, `Label` is untouched, and no icon or
+behavior ships with the slot.
+
+#### Added
+
+- **`FieldShellProps.addon?: React.ReactNode`.** When present, the shell renders the label and the
+  addon in one row (`div.field-label-row`: the label first, the addon last inside
+  `span.field-addon`, pushed to the end of the row). The addon is a SIBLING of the `<label>`, never
+  a child, so pressing it does not focus the control and the control's accessible name stays the
+  label text. With `hideLabel` the label is still rendered (`sr-only`) and still names the control,
+  and the addon still shows. Without `addon` there is no row wrapper at all.
+- **`FormFieldProps.addon?: React.ReactNode`**, forwarded by every path to the shell: the ten
+  registry renderers that build one and the auth branch in `Field.tsx`, all through one
+  `buildFieldShellProps` helper in `fieldRegistry.tsx` (a module level helper shared with
+  `Field.tsx`, not a new public export) so the set of shell props cannot drift between renderers.
+  The checkbox type renders no shell (`InputCheckbox` owns its own label) and ignores `addon`.
+- **`FormProps.fieldAddons?: Record<string, React.ReactNode>`**, keyed by field NAME (the key in
+  `initialValues`), never by the generated `fieldId`. `Form` hands each top level field
+  `fieldAddons[field.name]`. Entry and multiply group fields ignore it on purpose: a group repeats
+  the same names once per slot, so one node per name has no single place to land. `FormField`'s
+  entry branch resets `addon` before rendering a slot.
+- **Styles** in `_field-shell.scss`, existing tokens only: `.field-label-row` is a flex row, items
+  centered, with the shell's `--space-small` gap and a `min-width: 0` floor; `.field-addon` never
+  shrinks and takes an auto start margin so it lands at the end whether the label is visible or
+  `sr-only`. Compiled into `dist/css/index.css` by the existing `compile:css` step.
+- **Tests**: the no addon markup pinned byte for byte in three states, label then addon order, the
+  addon outside the label, hidden label keeps the control's name, every registry type plus the auth
+  branch and the text fallback render it, the checkbox ignores it, `Form` places it by name on one
+  field only and never inside an entry group, and axe with an addon beside a shown and a hidden
+  label for every type. A `WithAddon` story joins the Field states matrix.
+
 ## [4.2.0] - 2026-09-20
 
 > 4.1.0 was version bumped but never published; npm goes 4.0.1 straight to 4.2.0. The number is

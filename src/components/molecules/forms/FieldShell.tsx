@@ -21,9 +21,23 @@ import type { FieldShellProps } from "nxs-form";
  * specifies. That is a visible move from today, where it rendered inside the label above the
  * control. The `required` class rides along beside `field-error` so existing consumer styling
  * for error text keeps applying.
+ *
+ * `addon` is the one optional extension: a consumer node (a toggle, a hint pill) that sits on the
+ * label line. It goes in a row NEXT TO the <label>, never inside it, because anything inside a
+ * <label> becomes part of the control's accessible name and a click on it activates the control;
+ * a toggle living there would both pollute the name and focus the input every time it was pressed.
+ * Without an addon there is no row wrapper at all, so a consumer that never passes one gets the
+ * exact markup it gets today.
  */
 const FieldShell: React.FC<FieldShellProps> = (props) => {
-  const { name, label, hideLabel, error, message, help, className, children } = props;
+  const { name, label, hideLabel, error, message, help, className, addon, children } = props;
+
+  // The same `label &&` expression the shell has always rendered, hoisted so both branches below
+  // place the identical node. Kept as an expression rather than a ternary so the no addon branch
+  // stays byte for byte what it was.
+  const labelNode = label && (
+    <Label name={name} label={label} message={message} className={hideLabel ? "field-label sr-only" : "field-label"} />
+  );
 
   return (
     <div className={className ? `field-shell ${className}` : "field-shell"}>
@@ -36,9 +50,18 @@ const FieldShell: React.FC<FieldShellProps> = (props) => {
 
           The error is deliberately NOT passed to Label. Label still renders one when given it
           (other call sites rely on that), and two nodes sharing `${name}-error` would make the
-          aria reference ambiguous. */}
-      {label && (
-        <Label name={name} label={label} message={message} className={hideLabel ? "field-label sr-only" : "field-label"} />
+          aria reference ambiguous.
+
+          With an addon the label and the node share one row. The hidden label stays in that row
+          (out of flow, still the control's name) and the addon is the row's only in flow child, so
+          the same auto margin lands it at the end whether the label is visible or not. */}
+      {addon ? (
+        <div className="field-label-row">
+          {labelNode}
+          <span className="field-addon">{addon}</span>
+        </div>
+      ) : (
+        labelNode
       )}
       {children}
       {help && <p className="field-help">{help}</p>}

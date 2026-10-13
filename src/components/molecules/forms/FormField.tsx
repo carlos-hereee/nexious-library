@@ -43,8 +43,18 @@ const FormField = (props: FormFieldProps) => {
     // What changed: isGallery now chooses only the LAYOUT. It used to choose between two entirely
     // different switcher components, one showing thumbnails and one showing numbered boxes.
     const isGallery = targetEntry.length > 0 && targetEntry.every((field) => field.type === "file");
+    // `addon` is reset AFTER the spreads on purpose. `props` is the group's own FormFieldProps and
+    // would otherwise carry the consumer's node for this field name into every slot of the group.
+    // Addons belong to top level fields (see FormProps.fieldAddons); a repeating group has no single
+    // label for one to sit beside.
     const fields = targetEntry.map((p) => (
-      <Field key={p.fieldId} {...props} {...p} handleChange={(e) => handleChange && handleChange(e, p.fieldId)} />
+      <Field
+        key={p.fieldId}
+        {...props}
+        {...p}
+        addon={undefined}
+        handleChange={(e) => handleChange && handleChange(e, p.fieldId)}
+      />
     ));
 
     return (

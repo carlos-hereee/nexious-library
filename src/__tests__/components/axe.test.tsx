@@ -180,6 +180,25 @@ describe("axe accessibility (no violations on isolated renders)", () => {
     expect(normalizeGeneratedIds(dark.firstElementChild?.innerHTML)).toBe(normalizeGeneratedIds(light.innerHTML));
   });
 
+  // ── The addon slot ──
+  // A consumer node beside the label (a native button, because the library Button drops props it
+  // does not list). It must sit OUTSIDE the <label>: inside, it would join the control's accessible
+  // name and a press on it would focus the control. With the label hidden the control's name still
+  // has to come from the sr-only label, never from the addon. Every type, in error, both ways.
+  const addon = <button type="button">Help</button>;
+
+  it.each(fieldTypes)("Field type %s with an addon beside a shown label has no violations", async (type) => {
+    expect(await check(<Field {...fieldProps(type, false)} addon={addon} />)).toHaveNoViolations();
+  });
+
+  it.each(fieldTypes)("Field type %s with an addon beside a HIDDEN label keeps the label as its name", async (type) => {
+    const { container } = render(<Field {...fieldProps(type, true)} addon={addon} />);
+    expect(container.querySelector(".field-label-row > label")).toHaveClass("sr-only");
+    expect(container.querySelector("label button")).toBeNull();
+    expect(container.querySelector(".field-addon button")).toBeInTheDocument();
+    expect(await axe(container, { rules: { region: { enabled: false } } })).toHaveNoViolations();
+  });
+
   it("EntryNavigator has no violations", async () => {
     const entries = {
       "slot-0": [{ name: "day", value: "Monday", type: "text", label: "Day", placeholder: "", fieldId: "a" }],

@@ -24,6 +24,35 @@
   line-height: var(--line-height-tight);
 }
 
+// The label row exists only when a consumer passes an addon. Without one the label is a direct
+// child of the shell, so nothing in this block can reach a form that never uses the slot. The gap
+// is the shell's own step, so an addon reads as part of the label line rather than as a second row.
+.field-label-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  // A row that is itself a column flex item defaults to min-width auto, which would let a long
+  // label widen the shell instead of wrapping inside it. The same floor .field-shell carries.
+  min-width: 0;
+
+  // The label yields and the addon does not: a long label wraps or clips inside its own box rather
+  // than pushing the addon past the shell's edge, which would hide the one control the consumer
+  // put there. Nothing else about the label changes; its typography is still the consumer's.
+  > .field-label {
+    min-width: 0;
+  }
+}
+
+// Pushed to the end with an auto margin rather than justify-content, so it lands there whether the
+// label is visible or sr-only (absolutely positioned, out of flow, leaving the addon as the row's
+// only in flow child). It never shrinks: the addon is the consumer's control and must stay whole.
+.field-addon {
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-inline-start: auto;
+}
+
 .field-help {
   margin: 0;
   font-size: var(--text-small);

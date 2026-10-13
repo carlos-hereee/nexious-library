@@ -2,7 +2,7 @@ import type { FormFieldProps } from "nxs-form";
 import { auth } from "@nxs-utils/form/types";
 import { AuthField } from "@nxs-molecules";
 import FieldShell from "./FieldShell";
-import { fieldRegistry, renderDefaultField } from "./fieldRegistry";
+import { buildFieldShellProps, fieldRegistry, renderDefaultField } from "./fieldRegistry";
 
 /**
  * Dispatches a field config to the control that renders it.
@@ -13,15 +13,14 @@ import { fieldRegistry, renderDefaultField } from "./fieldRegistry";
  * component instead of nine.
  */
 const Field: React.FC<FormFieldProps> = (props) => {
-  const { type, name, value, handleChange, placeholder, hideLabels, label } = props;
-  const { formError, disableForm, formMessage } = props;
+  const { type, name, value, handleChange, placeholder, formError, disableForm } = props;
 
   // Auth fields dispatch on the field NAME, not its type, so this stays a pre-check ahead of the
   // registry. Folding it into the type map would route a password field by its type and silently
   // lose the show/hide toggle and the password-manager wiring.
   if (auth.includes(name)) {
     return (
-      <FieldShell name={name} label={label} hideLabel={hideLabels} error={formError} message={formMessage}>
+      <FieldShell {...buildFieldShellProps(props)}>
         <AuthField
           name={name}
           value={value as string}

@@ -22,7 +22,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
   const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, className, entries } = props;
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals, isDev } = props;
-  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId } = props;
+  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId, fieldAddons } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
     useFormValidation({ ...schema });
 
@@ -252,6 +252,9 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           <DownArrow onClick={() => handleScroll("down", "form-field-container")} active={direction} />
         )}
         {values.map((field, keyIdx) => (
+          // fieldAddons is keyed by the field NAME a consumer's config speaks, never by the
+          // generated fieldId that keys everything else in this list. FormField's entry branch
+          // drops the value for a repeating group.
           <FormField
             key={field.fieldId}
             fieldId={field.fieldId}
@@ -269,6 +272,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             populateLink={populateLink?.[field.name]}
             dataList={dataList}
             label={field.label}
+            addon={fieldAddons?.[field.name]}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(value: FormInitialValue, id?: string) => handleChange(field, value, id || field.fieldId)}
