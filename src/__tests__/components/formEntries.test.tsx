@@ -1,8 +1,8 @@
 import "@testing-library/jest-dom";
-import { fireEvent, render, waitFor } from "@testing-library/react";
+import { act, fireEvent, render, screen, waitFor } from "@testing-library/react";
 import Form from "@nxs-template/Form";
 import { uniqueId } from "@nxs-utils/data/uniqueId";
-import type { AddEntryProps, FormProps } from "nxs-form";
+import type { AddEntryProps, FormEntriesHandle, FormProps } from "nxs-form";
 
 // Every fieldId and every card's sharedKey comes from uniqueId, which is random. A counter in its
 // place makes the rendered markup the same on every run, so it can be pinned as a literal.
@@ -91,5 +91,119 @@ describe("Form with repeating groups and neither entriesRef nor onEntriesChange"
     const onSubmit = jest.fn();
     const { container } = render(<Form {...pageFormProps({ onSubmit })} />);
     expect(await submitAndCapture(container, onSubmit)).toBe(PAGE_PAYLOAD_BEFORE_THE_HANDLE);
+  });
+});
+
+// ── Helpers for the handle ──
+type EntriesRef = React.MutableRefObject<FormEntriesHandle | null>;
+const newEntriesRef = (): EntriesRef => ({ current: null });
+const handleOf = (entriesRef: EntriesRef) => entriesRef.current as FormEntriesHandle;
+
+// The group renders inside div.container (a top level field renders inside div.form-field), and a
+// card's `title` shares its name and id with the top level `title`, so a card input is found by
+// name INSIDE the group, never by label.
+const groupOf = (container: HTMLElement) =>
+  container.querySelector(".form-field-container > .container") as HTMLElement;
+const cardTitle = (container: HTMLElement) =>
+  groupOf(container).querySelector('input[name="title"]') as HTMLInputElement;
+const cardBody = (container: HTMLElement) =>
+  groupOf(container).querySelector('textarea[name="body"]') as HTMLTextAreaElement;
+const pageTitle = (container: HTMLElement) =>
+  container.querySelector('.form-field input[name="title"]') as HTMLInputElement;
+const showCard = (position: number) =>
+  fireEvent.click(screen.getByRole("button", { name: new RegExp(`^Entry ${position} of `) }));
+
+// ── The unknown this API rests on ──
+// Form renders only the active card, so a card the owner is not looking at exists only in state.
+// These cases prove a write through the handle reaches that state for a hidden card, repaints a
+// visible one, survives switching cards, and lands in the payload of a submit started from OUTSIDE
+// the form (the client's dialogs put Save in a footer, not inside <form>).
+describe("entriesRef writes reach hidden cards, the visible card and the submit", () => {
+  const renderWithExternalSave = (entriesRef: EntriesRef, onSubmit: jest.Mock) =>
+    render(
+      <>
+        <Form {...pageFormProps({ entriesRef, onSubmit, hideSubmit: true })} />
+        <button type="submit" form="page-form">
+          Save
+        </button>
+      </>
+    );
+
+  it("sets the handle while mounted and reads every card in order", () => {
+    const entriesRef = newEntriesRef();
+    render(<Form {...pageFormProps({ entriesRef })} />);
+    const read = handleOf(entriesRef).readEntries();
+    expect(read.sections.map((card) => card.values)).toEqual([
+      { title: "One", body: "First" },
+      { title: "Two", body: "Second" },
+      { title: "Three", body: "Third" },
+    ]);
+    // The buttons group is off, so its seed (which the submit ignores) reads as no cards.
+    expect(read.buttons).toEqual([]);
+  });
+
+  it("writes a hidden card and the visible card, repaints the visible one, and submits both", async () => {
+    const entriesRef = newEntriesRef();
+    const onSubmit = jest.fn();
+    const { container } = renderWithExternalSave(entriesRef, onSubmit);
+    showCard(1);
+    expect(cardTitle(container)).toHaveValue("One");
+    const [first, , third] = handleOf(entriesRef).readEntries().sections;
+
+    let written: string[] = [];
+    act(() => {
+      written = handleOf(entriesRef).writeEntries("sections", [
+        { key: third.key, values: { title: "Three rewritten", body: "Third rewritten" } },
+        { key: first.key, values: { title: "One rewritten" } },
+      ]);
+    });
+    expect(written).toEqual([third.key, first.key]);
+
+    // Card 1 is on screen and repaints; its body was not named, so it keeps its text. The top level
+    // field that shares the name `title` is untouched.
+    expect(cardTitle(container)).toHaveValue("One rewritten");
+    expect(cardBody(container)).toHaveValue("First");
+    expect(pageTitle(container)).toHaveValue("Page title");
+
+    // Card 3 was never on screen while it was written; switching to it shows the written text.
+    showCard(3);
+    expect(cardTitle(container)).toHaveValue("Three rewritten");
+    expect(cardBody(container)).toHaveValue("Third rewritten");
+
+    fireEvent.click(screen.getByRole("button", { name: "Save" }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+    expect(onSubmit.mock.calls[0][0]).toEqual({
+      title: "Page title",
+      hasSections: true,
+      sections: [
+        { title: "One rewritten", body: "First" },
+        { title: "Two", body: "Second" },
+        { title: "Three rewritten", body: "Third rewritten" },
+      ],
+      hasButtons: false,
+    });
+  });
+
+  it("carries a write to a card that was never shown into the submit", async () => {
+    // The strongest form of the proof: card 2 is never the active card at any point, so its new
+    // text never touches the DOM before the payload is built.
+    const entriesRef = newEntriesRef();
+    const onSubmit = jest.fn();
+    renderWithExternalSave(entriesRef, onSubmit);
+    const { key } = handleOf(entriesRef).readEntries().sections[1];
+    act(() => {
+      handleOf(entriesRef).writeEntries("sections", [
+        { key, values: { title: "Two rewritten", body: "Second rewritten" } },
+      ]);
+    });
+    expect(screen.queryByDisplayValue("Two rewritten")).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole("button", { name: "Save" }));
+    await waitFor(() => expect(onSubmit).toHaveBeenCalledTimes(1));
+    expect(onSubmit.mock.calls[0][0].sections).toEqual([
+      { title: "One", body: "First" },
+      { title: "Two rewritten", body: "Second rewritten" },
+      { title: "Three", body: "Third" },
+    ]);
   });
 });
