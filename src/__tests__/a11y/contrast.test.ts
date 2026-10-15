@@ -348,3 +348,22 @@ describe.each(allThemes)("quiet-text hierarchy: %s theme", (theme) => {
     expect(muted.ratio).toBeLessThan(secondary.ratio);
   });
 });
+
+// ── Pairs the components promoted from the platform client brought with them ──────────────────
+// Each new skin put text on a fill this file did not measure yet, so each pair is asserted here
+// in both themes rather than trusted from the client, whose tokens are not these.
+describe.each(allThemes)("promoted components: %s theme", (theme) => {
+  it("StepProgress: the step number on its brand dot clears 1.4.3 AA", () => {
+    assertContrast(theme, "--primary-text-dark-mode-color", "--main-brand-color", BODY_TEXT_AA, "1.4.3");
+  });
+
+  it.each(["--text", "--text-secondary"])("SelectCard: %s on a card at rest clears 1.4.3 AA", (text) => {
+    assertContrast(theme, text, "--card-bg", BODY_TEXT_AA, "1.4.3");
+  });
+
+  it("SelectCard: the title on a selected card clears 1.4.3 AA", () => {
+    // The subtitle there takes --info-text, already asserted on --info-bg above. It is NOT
+    // --text-secondary, which measures 4.49:1 on the dark info fill.
+    assertContrast(theme, "--text", "--info-bg", BODY_TEXT_AA, "1.4.3");
+  });
+});

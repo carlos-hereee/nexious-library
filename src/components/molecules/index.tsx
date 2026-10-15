@@ -30,7 +30,9 @@ export { default as AvatarCard } from "@nxs-molecules/card/AvatarCard";
 export { default as AvatarCardButton } from "@nxs-molecules/card/AvatarCardButton";
 export { default as SettingsCardHeader } from "@nxs-molecules/card/SettingsCardHeader";
 export { default as CardDetails } from "@nxs-molecules/card/CardDetails";
-export type { CardProps } from "nxs-card";
+export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
+export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
+export type { CardProps, CardGridProps, SelectCardProps } from "nxs-card";
 
 // errors
 export { default as EmptySection } from "@nxs-molecules/errors/EmptySection";

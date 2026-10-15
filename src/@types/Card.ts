@@ -169,3 +169,56 @@ export interface CartProps {
   readOnly?: boolean;
   showItemTotal?: boolean;
 }
+
+// ── CardGrid and SelectCard ──────────────────────────────────────────────────────
+/** A responsive grid of cards that collapses to one column on its own, with no breakpoint. */
+export type CardGridProps = {
+  /**
+   * "div" by default. "nav" when the cards are the way through a section (a quick nav), so the
+   * grid is a navigation landmark; give it an `ariaLabel` then, or two navs read the same.
+   */
+  as?: "div" | "nav";
+  ariaLabel?: string;
+  /** Appended to the root's classes, for a page's own grid modifier. */
+  className?: string;
+  /** `root` REPLACES the default `nxs-card-grid` class. */
+  classNames?: { root?: string };
+  children: React.ReactNode;
+};
+/**
+ * A clickable card: an icon, a title, a supporting line and room for a badge. The element is
+ * chosen from the props, so a card is a link, a button or an inert tile without the caller
+ * branching: `href` and `linkAs` render the router's link with `to`, `href` alone a plain
+ * anchor, `onClick` a button, and anything else (including `disabled`) an inert div that
+ * announces itself as disabled.
+ */
+export type SelectCardProps = {
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  /** Rendered inside a hidden wrapper; the title names the card, never the glyph. */
+  icon?: React.ReactNode;
+  /** Rendered after the subtitle, for a badge or a status pill. */
+  children?: React.ReactNode;
+  onClick?: () => void;
+  /** Passed through safeUrl, like every anchor the library renders. */
+  href?: string;
+  /**
+   * The consumer's router link (react-router's Link, for example). It receives `to`, so an
+   * in-app destination navigates without a full page reload. The library imports no router.
+   */
+  linkAs?: React.ElementType;
+  /** Renders the inert branch whatever else is set. */
+  disabled?: boolean;
+  selected?: boolean;
+  /** The card's accessible name when the visible title alone is not enough. */
+  ariaLabel?: string;
+  ariaCurrent?: React.AriaAttributes["aria-current"];
+  /** Appended to the root's classes. */
+  className?: string;
+  /**
+   * One slot per part. A key that is set REPLACES that part's default class, so a consumer with
+   * its own card system does not inherit the library card underneath it. `selected` replaces the
+   * class added while `selected` is true.
+   */
+  classNames?: { root?: string; icon?: string; title?: string; subtitle?: string; selected?: string };
+};

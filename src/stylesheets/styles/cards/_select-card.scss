@@ -1,0 +1,101 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// Promoted from nexious-client's `.cu-card.cu-card-nav` (primitives.css) and its
+// `.pages-panel-card-icon` (dashboard.css), the clickable card recipe SelectCard rendered with
+// there. Rebuilt from library tokens: the client's `--surface-edge` hairline is `--border` here.
+//
+// One rule for every element SelectCard renders (a link, an anchor, a button, an inert div), so
+// the reset's per element defaults are undone in one place: a button centers its content and
+// takes `width: 100%; max-width: 250px`, an anchor underlines, and neither inherits the font.
+.nxs-select-card {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  gap: var(--space-medium);
+  box-sizing: border-box;
+  width: 100%;
+  max-width: none;
+  padding: var(--space-large);
+  background-color: var(--card-bg);
+  // Border and NOT shadow at rest, like every library surface; the shadow arrives with the lift.
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+  @include mixins.focus-ring;
+}
+
+// Only a card that goes somewhere lifts. The inert branch says aria-disabled, and a lift on it
+// would promise a click that does nothing.
+.nxs-select-card:not([aria-disabled="true"]):hover {
+  background-color: var(--card-bg);
+  border-color: var(--main-brand-color-accent);
+  box-shadow: var(--elevation-2);
+  transform: translateY(-2px);
+}
+
+.nxs-select-card[aria-disabled="true"] {
+  cursor: not-allowed;
+}
+
+// Selected, for a single select grid. The brand border plus the info surface, which themes in
+// dark for free, so there is no raw tint to keep in step.
+.nxs-select-card-selected {
+  border-color: var(--main-brand-color);
+  background-color: var(--info-bg);
+}
+
+// The info fill ships with its own text color as a set, and the quiet line takes it. Left on
+// --text-secondary it measures 4.49:1 on the dark info fill, just under AA; --info-text clears it
+// in both themes (asserted in contrast.test.ts). The title keeps --text, which clears it too.
+.nxs-select-card-selected .nxs-select-card-subtitle {
+  color: var(--info-text);
+}
+
+// The glyph is sized in em by the consumer's icon, so it scales from this font size rather than
+// from a width.
+.nxs-select-card-icon {
+  font-size: var(--text-2x-large);
+  color: var(--text-muted);
+}
+
+.nxs-select-card-title {
+  margin: 0;
+  max-width: 100%;
+  font-size: var(--text-large);
+  font-weight: var(--font-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.nxs-select-card-subtitle {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+// The global reduced motion switch shortens transitions and strips the hover transform; this
+// also drops the shadow, so the lift degrades to the border change alone rather than to a
+// shadow that appears with no motion.
+@include mixins.reduced-motion {
+  .nxs-select-card {
+    transition:
+      border-color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+  .nxs-select-card:not([aria-disabled="true"]):hover {
+    transform: none;
+    box-shadow: none;
+  }
+}

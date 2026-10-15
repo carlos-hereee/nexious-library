@@ -11,6 +11,8 @@ import PageNotFound from "@nxs-molecules/errors/PageNotFound";
 import Post from "@nxs-molecules/post/Post";
 import SwapOrderButtons from "@nxs-molecules/buttons/SwapOrderButtons";
 import StepProgress from "@nxs-molecules/navigation/StepProgress";
+import CardGrid from "@nxs-molecules/card/CardGrid";
+import SelectCard from "@nxs-molecules/card/SelectCard";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -343,5 +345,41 @@ describe("axe: StepProgress", () => {
         stepOfText={`Step ${current + 1} of 3`}
       />
     );
+  });
+});
+
+describe("axe: CardGrid and SelectCard", () => {
+  // A stand in for a router's Link, which renders an anchor carrying `to` as its href.
+  const RouterLink = ({ to, children, ...rest }: { to: string; children?: React.ReactNode }) => (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <a href={to} {...rest}>
+      {children}
+    </a>
+  );
+
+  it("a grid of every card branch has no violations", async () => {
+    await checkBothThemes(
+      <CardGrid>
+        <SelectCard title="Landing page" subtitle="Your home page" icon={<span>*</span>} onClick={() => {}} selected />
+        <SelectCard title="About" subtitle="Published" href="#about" />
+        <SelectCard title="Store" href="/store" linkAs={RouterLink} ariaCurrent="page" />
+        <SelectCard title="Analytics" subtitle="Not built yet" disabled>
+          <span>Coming soon</span>
+        </SelectCard>
+      </CardGrid>
+    );
+  });
+
+  it("a named nav grid has no violations", async () => {
+    await checkBothThemes(
+      <CardGrid as="nav" ariaLabel="Quick links">
+        <SelectCard title="Calendar" href="#calendar" ariaLabel="Open your calendar" />
+        <SelectCard title="Tasks" href="/tasks" linkAs={RouterLink} />
+      </CardGrid>
+    );
+  });
+
+  it("an inert card carrying an ariaLabel has no violations", async () => {
+    await checkBothThemes(<SelectCard title="Analytics" ariaLabel="Analytics, coming soon" disabled />);
   });
 });

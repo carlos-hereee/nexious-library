@@ -93,6 +93,10 @@ export type { SwapOrderButtonsProps, MoveOffset } from "nxs-button";
 // The progress header of a paginated form: steps, bar, "Step X of N" and a polite live region.
 export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress";
 export type { StepProgressProps } from "nxs-navigation";
+// The clickable card (a router link, an anchor, a button or an inert tile) and the grid it sits in.
+export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
+export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
+export type { CardGridProps, SelectCardProps } from "nxs-card";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks, lets consumers build custom form UIs using the same validation and state logic
