@@ -29,25 +29,38 @@ const join = (base: string, extra?: string): string => (extra ? `${base} ${extra
 const EmptyState: React.FC<EmptyStateProps> = (props) => {
   const { icon, iconSpin, hero, heading, message, actionLabel, actionVariant, onAction } = props;
   const { className, iconClassName, messageClassName, children } = props;
+  const { as: Root = "div", headingLevel = 3, classNames, media, actions } = props;
+  // A raw element rather than the Heading atom, which adds a class of its own and would change
+  // the markup every existing caller renders (pinned in EmptyState.test.tsx).
+  const HeadingTag = `h${headingLevel}` as const;
 
   return (
-    <div className={join("empty-state", className)}>
+    <Root className={join(classNames?.root ?? "empty-state", className)}>
       {hero && <Hero hero={hero} />}
       {icon && (
-        <div className={join("empty-state-icon", iconClassName)}>
+        <div className={join(classNames?.icon ?? "empty-state-icon", iconClassName)}>
           <Icon icon={icon} spin={iconSpin} />
         </div>
       )}
-      {heading && <h3 className="empty-state-heading">{heading}</h3>}
-      {message && <p className={join("empty-state-message", messageClassName)}>{message}</p>}
+      {media}
+      {heading && <HeadingTag className={classNames?.heading ?? "empty-state-heading"}>{heading}</HeadingTag>}
+      {message && <p className={join(classNames?.message ?? "empty-state-message", messageClassName)}>{message}</p>}
+      {/* A caller's own row replaces the single action outright, so a gate with two buttons
+          never also grows a third from a stray actionLabel. */}
+      {actions ? <div className={classNames?.actions ?? "empty-state-actions"}>{actions}</div> : null}
       {/* Gated on the label alone, not on the handler. PageNotFound renders its button with no
           onClick when the caller omits one, and requiring a handler here would delete that
           button from every such call site. */}
-      {actionLabel && (
-        <Button label={actionLabel} variant={actionVariant} className="empty-state-action" onClick={onAction} />
+      {!actions && actionLabel && (
+        <Button
+          label={actionLabel}
+          variant={actionVariant}
+          className={classNames?.action ?? "empty-state-action"}
+          onClick={onAction}
+        />
       )}
       {children}
-    </div>
+    </Root>
   );
 };
 

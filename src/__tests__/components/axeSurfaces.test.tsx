@@ -312,6 +312,26 @@ describe("axe: SwapOrderButtons", () => {
   });
 });
 
+describe("axe: EmptyState as a page gate", () => {
+  it("has no violations as a section with an h2, media and an actions row", async () => {
+    await checkBothThemes(
+      <EmptyState
+        as="section"
+        headingLevel={2}
+        media={<span aria-hidden="true">*</span>}
+        heading="Pick a deck to study"
+        message="Decks are chosen on the Path."
+        actions={
+          <>
+            <button type="button">Set up a deck</button>
+            <button type="button">Contact the owner</button>
+          </>
+        }
+      />
+    );
+  });
+});
+
 describe("axe: StepProgress", () => {
   it.each([0, 1, 2])("has no violations on step %i", async (current) => {
     await checkBothThemes(

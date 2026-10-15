@@ -94,6 +94,42 @@ export type EmptyStateProps = {
   iconClassName?: string;
   messageClassName?: string;
   children?: React.ReactNode;
+  /**
+   * The root element. "div" by default, which is what every existing caller renders. A gate that
+   * stands in for a whole page region passes "section" or "article" so the region is a landmark
+   * a screen reader can reach, rather than an anonymous box.
+   */
+  as?: "div" | "section" | "article";
+  /**
+   * The heading's level, 3 by default for the same reason as `as`. A gate that replaces a page's
+   * main content sits directly under the page title, so it needs an h2 or the document outline
+   * skips a level.
+   */
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  /**
+   * One slot per part. A key that is set REPLACES that part's default class, for a consumer that
+   * styles the part with its own system (a design-system button, a hint paragraph) and must not
+   * inherit the library rule underneath it. Unlike the `*ClassName` props, which APPEND.
+   */
+  classNames?: {
+    root?: string;
+    icon?: string;
+    heading?: string;
+    message?: string;
+    action?: string;
+    actions?: string;
+  };
+  /**
+   * Rendered as given after the icon and before the heading, with no wrapper. For a glyph the
+   * icon registry does not hold (an emoji, an illustration); `icon` still covers registry keys.
+   */
+  media?: React.ReactNode;
+  /**
+   * A row of the caller's own controls, for a surface with more than one next step or an action
+   * only some readers get. When set it renders in `.empty-state-actions` and the single
+   * `actionLabel` button is NOT rendered, so the two can never stack.
+   */
+  actions?: React.ReactNode;
 };
 export type ErrorProp = {
   value: { [key: string]: unknown } | unknown;

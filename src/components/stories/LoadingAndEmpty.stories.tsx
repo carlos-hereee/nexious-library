@@ -5,6 +5,7 @@ import EmptyState from "@nxs-molecules/errors/EmptyState";
 import EmptySection from "@nxs-molecules/errors/EmptySection";
 import ComingSoon from "@nxs-molecules/errors/ComingSoon";
 import Loading from "@nxs-molecules/errors/Loading";
+import Button from "@nxs-atoms/buttons/Button";
 import "./states-matrix.css";
 
 /**
@@ -93,6 +94,46 @@ const Sheet: React.FC = () => (
     </div>
   </Fragment>
 );
+
+// A page gate: a whole region standing in for content the reader cannot use yet. It is a section
+// with an h2 because it replaces a page's main content, carries a glyph the icon registry does
+// not hold through `media`, and puts two next steps in one row through `actions`, which is the
+// shape that has no single actionLabel.
+const GateSheet: React.FC = () => (
+  <div>
+    <h3 className="sb-matrix-title">A page gate</h3>
+    <p className="sb-matrix-note">
+      as section, headingLevel 2, media and an actions row. The single action button does not render
+      when actions is set.
+    </p>
+    <EmptyState
+      as="section"
+      headingLevel={2}
+      media={<span aria-hidden="true">&#128218;</span>}
+      heading="Pick a deck to study"
+      message="Decks are chosen on the Path, so head there first."
+      actions={
+        <>
+          <Button variant="primary" label="Set up a deck" />
+          <Button variant="secondary" label="Contact the owner" />
+        </>
+      }
+    />
+  </div>
+);
+
+export const Gate: StoryObj = {
+  render: () => (
+    <div className="sb-matrix">
+      <GateSheet />
+      <div className="sb-matrix-dark dark-mode">
+        <div className="sb-matrix">
+          <GateSheet />
+        </div>
+      </div>
+    </div>
+  ),
+};
 
 export const LightAndDark: StoryObj = {
   render: () => (

@@ -122,3 +122,20 @@
   line-height: var(--line-height-base);
   color: var(--text-secondary);
 }
+
+// The row a caller fills through `actions` when one next step is not enough, for example a gate
+// with an action only the owner gets beside one everybody gets. Centered like the single action
+// above it, and wrapping on a narrow phone rather than overflowing. The row owns its children's
+// width, the same handshake as `.nxs-button-group`, because the reset's `button { width: 100% }`
+// would otherwise stack two buttons that fit side by side.
+.empty-state-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: var(--space-small);
+  > * {
+    width: auto;
+    max-width: none;
+  }
+}
