@@ -151,6 +151,17 @@ export type FormProps = {
   // an arbitrary one. The library attaches no meaning to the node. A consumer that leaves this off
   // gets the DOM it gets today, byte for byte.
   fieldAddons?: Record<string, React.ReactNode>;
+  // A handle to the cards of every repeating group, for a consumer that must read or fill cards
+  // the DOM cannot reach: Form renders only the ACTIVE card of a group, and a card's fields reuse
+  // names (title, body) that top level fields also use, so cards are addressed by group name and
+  // card key only. The handle is set while Form is mounted and nulled on unmount. A consumer that
+  // leaves this off gets the DOM and the submit payload it gets today, byte for byte.
+  entriesRef?: React.MutableRefObject<FormEntriesHandle | null>;
+  // Cards per group name, a group that is off counting 0. Called once after Form seeds its
+  // entries, then whenever a group is turned on or off or a card is added or removed (appends
+  // through entriesRef included). Never called for a text edit, and calling it never re-renders
+  // Form.
+  onEntriesChange?: (summary: Record<string, number>) => void;
   populateLink?: { [key: string]: { word: string; link: string }[] };
   labels?: KeyStringProp;
   placeholders?: KeyStringProp;
@@ -162,6 +173,25 @@ export type FormProps = {
   onCancel?: () => void;
   onViewPreview?: (e: any) => void;
 };
+// What FormProps.entriesRef points at. Groups are named by their `groupName` (sections), never by
+// the toggle field that opens them (hasSections). A card's position is its place in the group's
+// insertion order, the same order the submit payload and the entry strip use. Only the cards of a
+// group that is ON count: a group turned off reads as no cards, takes no writes and takes no
+// appends, exactly as the submit leaves it out.
+export interface FormEntriesHandle {
+  // Every declared group, every card in order, each card's values keyed by field name, read from
+  // Form's state as it is now (not as it was at mount).
+  readEntries: () => Record<string, Array<{ key: string; values: Record<string, FormInitialValue> }>>;
+  // Sets the named fields of the keyed cards in one state update, repainting the active card's
+  // inputs. Unknown keys and field names are skipped. Returns the keys written.
+  writeEntries: (
+    groupName: string,
+    updates: Array<{ key: string; values: Record<string, FormInitialValue> }>
+  ) => string[];
+  // Adds one card per item, its named fields filled, through the same path as the group's own add
+  // button, stopping at the group's `max`. The active card does not change. Returns the new keys.
+  appendEntries: (groupName: string, items: Array<Record<string, FormInitialValue>>) => string[];
+}
 export type InputCheckBoxProps = {
   name: string;
   value: boolean;
