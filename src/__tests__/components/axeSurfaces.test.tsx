@@ -13,6 +13,7 @@ import SwapOrderButtons from "@nxs-molecules/buttons/SwapOrderButtons";
 import StepProgress from "@nxs-molecules/navigation/StepProgress";
 import CardGrid from "@nxs-molecules/card/CardGrid";
 import SelectCard from "@nxs-molecules/card/SelectCard";
+import ActiveSelectionBar from "@nxs-molecules/navigation/ActiveSelectionBar";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -381,5 +382,27 @@ describe("axe: CardGrid and SelectCard", () => {
 
   it("an inert card carrying an ariaLabel has no violations", async () => {
     await checkBothThemes(<SelectCard title="Analytics" ariaLabel="Analytics, coming soon" disabled />);
+  });
+});
+
+describe("axe: ActiveSelectionBar", () => {
+  it("has no violations with and without the caller's actions and the change aria-label", async () => {
+    await checkBothThemes(
+      <ActiveSelectionBar label="Studying" value="Fractions" changeLabel="Change" onChange={() => {}} />
+    );
+    await checkBothThemes(
+      <ActiveSelectionBar
+        label="Studying"
+        value="Fractions"
+        changeLabel="Change"
+        changeAriaLabel="Change the deck you are studying"
+        onChange={() => {}}
+        actions={
+          <button type="button" aria-pressed={false} aria-label="Fullscreen">
+            <span aria-hidden="true">[ ]</span>
+          </button>
+        }
+      />
+    );
   });
 });

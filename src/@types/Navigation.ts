@@ -153,3 +153,30 @@ export type StepProgressProps = {
   /** `root` REPLACES the root's default `nxs-step-progress` class. */
   classNames?: { root?: string };
 };
+
+// ── ActiveSelectionBar ───────────────────────────────────────────────────────────
+/**
+ * The thin bar that says which item is active ("Studying: Fractions") with a button to change
+ * it, and room for the caller's own controls before that button.
+ */
+export type ActiveSelectionBarProps = {
+  /** Already translated. Rendered as "{label}: " before the value. */
+  label: string;
+  /** The active item, rendered in a <strong>. */
+  value: React.ReactNode;
+  /** The visible text of the change button, already translated. */
+  changeLabel: string;
+  onChange: () => void;
+  /**
+   * The change button's accessible name when its visible text is not enough on its own ("Change"
+   * beside a deck title reads fine on screen and says nothing out of context). Rendered as
+   * aria-label only when set, so a caller that is content with the visible text gets no attribute.
+   */
+  changeAriaLabel?: string;
+  /** The caller's own controls, rendered before the change button inside the actions group. */
+  actions?: React.ReactNode;
+  /** Appended to the root's classes. */
+  className?: string;
+  /** One slot per part. A key that is set REPLACES that part's default class. */
+  classNames?: { root?: string; label?: string; actions?: string; change?: string };
+};

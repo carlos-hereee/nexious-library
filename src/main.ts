@@ -97,6 +97,9 @@ export type { StepProgressProps } from "nxs-navigation";
 export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
 export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
 export type { CardGridProps, SelectCardProps } from "nxs-card";
+// The "Studying: <item> / Change" bar, with room for the caller's own controls.
+export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
+export type { ActiveSelectionBarProps } from "nxs-navigation";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks, lets consumers build custom form UIs using the same validation and state logic

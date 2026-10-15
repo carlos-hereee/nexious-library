@@ -367,3 +367,15 @@ describe.each(allThemes)("promoted components: %s theme", (theme) => {
     assertContrast(theme, "--text", "--info-bg", BODY_TEXT_AA, "1.4.3");
   });
 });
+
+// The ActiveSelectionBar change button is brand text on --surface. The base indigo fails on the
+// dark surface, so its skin swaps to the accent there; this pins both halves of that swap.
+describe("promoted components: ActiveSelectionBar change button", () => {
+  it.each(surfaces)("--main-brand-color clears 1.4.3 AA on light %s", (surface) => {
+    assertContrast("light", "--main-brand-color", surface, BODY_TEXT_AA, "1.4.3");
+  });
+
+  it.each(surfaces)("--main-brand-color-accent clears 1.4.3 AA on dark %s", (surface) => {
+    assertContrast("dark", "--main-brand-color-accent", surface, BODY_TEXT_AA, "1.4.3");
+  });
+});
