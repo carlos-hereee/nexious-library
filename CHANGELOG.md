@@ -9,6 +9,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Card access for repeating groups (additive, minor)
+
+A consumer can read, fill and append the cards of a repeating group (section cards, buttons, FAQ
+items) and hear when a group's card count changes. `Form` renders only the ACTIVE card of a group,
+so the other cards exist only in state where the DOM cannot reach them, and a card's fields reuse
+names (`title`, `body`) that top level fields also use, so cards are addressed by group name and
+card key, never by field name alone. Both new props are optional: a form passing neither renders and
+submits exactly what it did before, pinned byte for byte in `formEntries.test.tsx`. No existing prop
+changed meaning, nothing new renders, and `EntryNavigator`, the field addon and the submit encoders
+are untouched.
+
+#### Added
+
+- **`FormProps.entriesRef?: React.MutableRefObject<FormEntriesHandle | null>`.** While `Form` is
+  mounted, `entriesRef.current` is the handle; on unmount it is `null`. Every method reads `Form`'s
+  state as it is now, not as it was at mount, and writes through `Form`'s own setters, so two calls
+  in one tick build on each other.
+  - `readEntries()` returns every declared group by its group name (`sections`, not the toggle
+    field `hasSections`), each card as `{ key, values }` in insertion order, the same order the
+    submit payload and the entry strip use, with values keyed by field name in the shape the submit
+    sends per card.
+  - `writeEntries(groupName, [{ key, values }])` sets the named fields of the keyed cards in one
+    state update and returns the keys written; unknown keys and field names are skipped. The active
+    card's inputs repaint, and the next submit carries every write, hidden cards included.
+  - `appendEntries(groupName, [values])` adds one card per item through the same path as the
+    group's own add button (same key scheme, field ids, labels and types), its named fields filled,
+    stopping at the group's `max`, and returns the new keys. The active card does not change.
+  - A group whose toggle is off reads as no cards, takes no writes and takes no appends, matching
+    the submit, which leaves it out. Unticking a toggle keeps the old cards in state until it is
+    ticked again (which starts a fresh card), so "off" is judged the way the submit judges it.
+- **`FormProps.onEntriesChange?: (summary: Record<string, number>) => void`**, cards per group
+  name with a group that is off counting 0. Called once after `Form` seeds its entries, then
+  whenever a group is turned on or off or a card is added or removed, appends included. Never called
+  for a text edit or a `writeEntries`, and reporting never re-renders `Form`.
+- **`FormEntriesHandle`**, exported from `nxs-form` and the package root.
+- **Tests** in `formEntries.test.tsx` with the real `Form`: the no prop markup and payload pinned
+  byte for byte (and the same markup with both props passed), a write to a hidden card and to the
+  visible one with the visible card repainting, switching cards and a submit from a button OUTSIDE
+  the form carrying both writes and the untouched card, a write to a card that is never shown
+  reaching the payload, reads of text typed after mount, two writes in one tick, skipped unknowns,
+  groups turned off, appends up to `max` and with no `max` while the active card stays put, the
+  summary on seed, toggle on and off, add, remove and append but never on typing or writes, no
+  extra render from reporting, and a `null` handle after unmount. An `Entries handle` story joins a
+  new `Templates/Form` page.
+
 ## [4.3.0] - 2026-10-15
 
 ### Five components from the platform client (additive, minor)
