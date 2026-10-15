@@ -115,3 +115,44 @@ export interface CopyToClipboardProps {
   data: string;
   isCopy?: boolean;
 }
+
+// ── SwapOrderButtons ─────────────────────────────────────────────────────────────
+/** One press moves a row one step: up the list (-1) or down it (1). */
+export type MoveOffset = -1 | 1;
+/**
+ * The Move up / Move down pair for a list reordered one row at a time.
+ *
+ * There is no `className`: the pair renders as a fragment so it drops into any row's action
+ * container, which leaves no root for a class to append to. `classNames.button` is the one slot.
+ */
+export type SwapOrderButtonsProps = {
+  /** This row's place in the list and the list's length. The ends disable from these two. */
+  position: number;
+  count: number;
+  onMove: (offset: MoveOffset) => void;
+  /**
+   * Already translated, and naming the row ("Move Fractions up"), so a screen reader user can
+   * tell one row's pair from the next. Required because both buttons are icon only.
+   */
+  upLabel: string;
+  downLabel: string;
+  /**
+   * A hold on BOTH buttons, for example while a move saves. A caller whose write guard already
+   * refuses a second move leaves this off, so the pressed button keeps focus through the save.
+   */
+  disabled?: boolean;
+  /**
+   * Renders data-move={`${moveKey}:${offset}`} on each button, so a caller that keys its rows by
+   * index can find the moved row's button again after the swap. Absent means no attribute.
+   */
+  moveKey?: string | number;
+  /** Replace the default arrowUp / arrowDown glyphs. Rendered inside the button as given. */
+  upIcon?: React.ReactNode;
+  downIcon?: React.ReactNode;
+  /**
+   * `button` REPLACES the whole default class string on both buttons (the secondary, medium
+   * variant classes plus `nxs-swap-order-button`), so a consumer with its own button system does
+   * not inherit a library skin underneath it and fight it on specificity.
+   */
+  classNames?: { button?: string };
+};

@@ -9,6 +9,7 @@ import EmptySection from "@nxs-molecules/errors/EmptySection";
 import ComingSoon from "@nxs-molecules/errors/ComingSoon";
 import PageNotFound from "@nxs-molecules/errors/PageNotFound";
 import Post from "@nxs-molecules/post/Post";
+import SwapOrderButtons from "@nxs-molecules/buttons/SwapOrderButtons";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -279,5 +280,33 @@ describe("axe: post card", () => {
     // Title only. Every other slot is optional, and an empty card is the shape a feed renders
     // while its first item is still loading its author, thumbnail and counts.
     await checkBothThemes(<Post post={{ postId: "bare", title: "Untitled" }} />);
+  });
+});
+
+// ── Components promoted from the platform client ────────────────────────────────
+// Each one carried hand rolled ARIA in nexious-client before it moved here, so each gets the same
+// two theme check as the surfaces above, on its default skin and in the shape a caller renders.
+
+describe("axe: SwapOrderButtons", () => {
+  it("has no violations mid list, at either end and under a hold", async () => {
+    const pair = (position: number, disabled?: boolean) => (
+      <ul>
+        <li>
+          Fractions
+          <SwapOrderButtons
+            position={position}
+            count={3}
+            upLabel="Move Fractions up"
+            downLabel="Move Fractions down"
+            disabled={disabled}
+            onMove={() => {}}
+          />
+        </li>
+      </ul>
+    );
+    await checkBothThemes(pair(1));
+    await checkBothThemes(pair(0));
+    await checkBothThemes(pair(2));
+    await checkBothThemes(pair(1, true));
   });
 });

@@ -87,6 +87,9 @@ export type { SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
 export { setDevMode, getDevMode } from "@nxs-utils/app/devMode";
 // reaction buttons
 export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
+// The Move up / Move down pair for a list reordered one row at a time.
+export { default as SwapOrderButtons } from "@nxs-molecules/buttons/SwapOrderButtons";
+export type { SwapOrderButtonsProps, MoveOffset } from "nxs-button";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks, lets consumers build custom form UIs using the same validation and state logic

@@ -14,7 +14,8 @@ export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
 export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
 export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
-export type { ButtonProps, IconButtonProps } from "nxs-button";
+export { default as SwapOrderButtons } from "@nxs-molecules/buttons/SwapOrderButtons";
+export type { ButtonProps, IconButtonProps, SwapOrderButtonsProps, MoveOffset } from "nxs-button";
 
 // card
 export { default as CardHeader } from "@nxs-molecules/card/CardHeader";
