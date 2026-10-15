@@ -1,3 +1,4 @@
+// Reuse record: companyuno-growth/product-planning/DESIGNS/reusable-components/empty-state/README.md
 import Button from "@nxs-atoms/buttons/Button";
 import Icon from "@nxs-atoms/assets/Icon";
 import Hero from "@nxs-molecules/assets/Hero";
