@@ -9,6 +9,75 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Five components from the platform client (additive, minor)
+
+nexious-client grew five shapes of its own that any consumer of this library needs: a Move up and
+Move down pair for a list reordered one row at a time, a paginated form's progress header, a
+clickable card and the grid it sits in, and a bar that names the active item with a way back to
+its chooser. Each one lived in the client as a component or a bare class recipe, with its skin in
+the client's stylesheets. They are library primitives now, each with its own default skin built
+from the token layer, so a consumer gets the look with no stylesheet of its own. Every piece takes
+the same class contract: `classNames` holds one optional key per part, and a key that is set
+REPLACES that part's default class, so a consumer with its own design system never inherits a
+library skin underneath it; `className` APPENDS to the root, as everywhere else in the library.
+Every user facing string is a prop. Nothing existing changed meaning.
+
+#### Added
+
+- **`SwapOrderButtons`** (`SwapOrderButtonsProps`, `MoveOffset`), a molecule. Two icon only
+  buttons rendered as a fragment, so the pair drops into any row's action container. The ends
+  disable themselves (`position <= 0` disables Move up, `position >= count - 1` disables Move
+  down), `disabled` holds both, `moveKey` renders `data-move="{moveKey}:{offset}"` only when set,
+  and a button that disables while it holds focus hands focus to its live sibling, both when the
+  row's node stays put and when a keyed list moves it. The glyphs default to the built in
+  `arrowUp` and `arrowDown`; `upIcon` and `downIcon` replace them. The default classes are
+  `btn-base btn-secondary btn-md nxs-swap-order-button`, and `classNames.button` replaces the
+  whole string.
+- **`StepProgress`** (`StepProgressProps`), a molecule. The numbered step list (`aria-current="step"`
+  on the current step, the numbers hidden from assistive tech), a native `<progress>` bar named by
+  `progressLabel` with `aria-valuetext`, the "Step X of N" line, and a polite live region using the
+  library's `.sr-only`. Classes `nxs-step-progress` and its parts; `classNames.root` replaces the
+  root's.
+- **`CardGrid`** (`CardGridProps`) and **`SelectCard`** (`SelectCardProps`), molecules. The grid is
+  a `div` or, with `as="nav"` and `ariaLabel`, a named navigation landmark. The card picks its
+  element from its props: `href` with `linkAs` renders the consumer's router link with `to` (the
+  library imports no router), `href` alone an anchor, `onClick` a button, and anything else,
+  `disabled` included, an inert `div` with `aria-disabled="true"`. Both link branches pass `href`
+  through `safeUrl`. `icon` renders in a hidden wrapper, then the title, the subtitle and
+  `children` (for a badge). `selected` adds `nxs-select-card-selected`; `ariaLabel` and
+  `ariaCurrent` reach every branch.
+- **`ActiveSelectionBar`** (`ActiveSelectionBarProps`), a molecule wrapped in `forwardRef`, the ref
+  reaching the root. It renders `{label}: <strong>{value}</strong>`, then an actions group holding
+  the caller's `actions` before a change button, whose `aria-label` renders only when
+  `changeAriaLabel` is set.
+- **Five partials**, each built from library tokens and mixins only and forwarded from its folder's
+  index: `styles/buttons/_swap-order-buttons.scss` (an icon only square at the control height that
+  grows to the 44px tap floor below the mobile breakpoint), `styles/components/_step-progress.scss`,
+  `styles/cards/_card-grid.scss`, `styles/cards/_select-card.scss` (hover lift, brand border,
+  elevation, focus ring, the selected state and a reduced motion fallback; only a card that goes
+  somewhere lifts) and `styles/components/_active-selection-bar.scss`.
+- **Stories** `Molecules/SwapOrderButtons`, `Molecules/StepProgress`, `Molecules/CardGrid`,
+  `Molecules/SelectCard` and `Molecules/ActiveSelectionBar`, and a `Gate` story beside the empty
+  states.
+- **Tests.** One suite per new component, with every case of the client's SwapOrderButtons and
+  StepProgress suites ported; a jest-axe case for each new component and for EmptyState as a gate,
+  in both themes; and the new text on fill pairs in the contrast suite: the step number on its
+  brand dot, card text at rest and on the selected fill, and the bar's change text, which takes
+  the brand accent on dark because the base indigo measures 2.72:1 on the dark surface.
+
+#### Changed
+
+- **`EmptyState`** gains `as` (`"div" | "section" | "article"`, default `"div"`), `headingLevel`
+  (1 to 6, default 3), `classNames` (`root`, `icon`, `heading`, `message`, `action`, `actions`, each
+  replacing that part's default class while the existing `className`, `iconClassName` and
+  `messageClassName` still append), `media` (rendered unwrapped after the icon and before the
+  heading, for a glyph the icon registry does not hold) and `actions` (a row of the caller's own
+  controls in `.empty-state-actions`, which replaces the single `actionLabel` button so the two
+  never stack). A new `.empty-state-actions` rule centers and wraps that row. Every existing prop
+  renders exactly as before: `EmptySection`, `ComingSoon` and `PageNotFound` are pinned byte for
+  byte, in their defaults and with every prop they read, by a test that passed before the change
+  and passes unchanged after it.
+
 ### An optional addon beside a field's label (additive, minor)
 
 A consumer can place one node beside any top level form field's label, for example a per field
