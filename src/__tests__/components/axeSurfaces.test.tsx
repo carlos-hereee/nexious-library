@@ -10,6 +10,7 @@ import ComingSoon from "@nxs-molecules/errors/ComingSoon";
 import PageNotFound from "@nxs-molecules/errors/PageNotFound";
 import Post from "@nxs-molecules/post/Post";
 import SwapOrderButtons from "@nxs-molecules/buttons/SwapOrderButtons";
+import StepProgress from "@nxs-molecules/navigation/StepProgress";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -308,5 +309,19 @@ describe("axe: SwapOrderButtons", () => {
     await checkBothThemes(pair(0));
     await checkBothThemes(pair(2));
     await checkBothThemes(pair(1, true));
+  });
+});
+
+describe("axe: StepProgress", () => {
+  it.each([0, 1, 2])("has no violations on step %i", async (current) => {
+    await checkBothThemes(
+      <StepProgress
+        steps={["about", "audience", "payout"]}
+        current={current}
+        labelFor={(id) => `The ${id} step`}
+        progressLabel="Application progress"
+        stepOfText={`Step ${current + 1} of 3`}
+      />
+    );
   });
 });

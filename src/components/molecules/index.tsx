@@ -81,6 +81,8 @@ export type {
 export { default as NavToggle } from "@nxs-molecules/navigation/NavToggle";
 export { default as ListItem } from "@nxs-molecules/navigation/ListItem";
 export { default as ThemeMenu } from "@nxs-molecules/navigation/ThemeMenu";
+export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress";
+export type { StepProgressProps } from "nxs-navigation";
 
 // post
 export { default as Post } from "@nxs-molecules/post/Post";

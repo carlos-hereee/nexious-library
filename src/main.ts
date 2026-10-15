@@ -90,6 +90,9 @@ export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReact
 // The Move up / Move down pair for a list reordered one row at a time.
 export { default as SwapOrderButtons } from "@nxs-molecules/buttons/SwapOrderButtons";
 export type { SwapOrderButtonsProps, MoveOffset } from "nxs-button";
+// The progress header of a paginated form: steps, bar, "Step X of N" and a polite live region.
+export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress";
+export type { StepProgressProps } from "nxs-navigation";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks, lets consumers build custom form UIs using the same validation and state logic

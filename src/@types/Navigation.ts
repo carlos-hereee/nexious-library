@@ -131,3 +131,25 @@ export interface FormNavigationProps {
   heading?: string;
   formOrder?: string[];
 }
+
+// ── StepProgress ─────────────────────────────────────────────────────────────────
+/**
+ * The progress header of a paginated form. Every string arrives already translated, so each form
+ * keeps its own copy and the library ships no English.
+ */
+export type StepProgressProps = {
+  /** Stable step ids, in order. Each is a React key, so they must be unique. */
+  steps: readonly string[];
+  /** Zero based index of the current step. */
+  current: number;
+  /** The visible label for a step id. */
+  labelFor: (stepId: string) => string;
+  /** The accessible name of the step list and of the bar. */
+  progressLabel: string;
+  /** The "Step X of N" sentence for the current step, shown under the bar and announced. */
+  stepOfText: string;
+  /** Appended to the root's classes. */
+  className?: string;
+  /** `root` REPLACES the root's default `nxs-step-progress` class. */
+  classNames?: { root?: string };
+};

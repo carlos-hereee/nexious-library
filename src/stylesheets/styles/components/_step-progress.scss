@@ -1,0 +1,94 @@
+// Promoted from nexious-client's `.cu-stepper` family (primitives.css), which skinned StepProgress
+// before the component moved here. Every rule is ported under the library's names so a form that
+// switches over keeps its look.
+//
+// Three dimensions stay literal because no token states them and a token would resize the part:
+// the 1.5rem number dot, its 0.72rem digit, and the 6px bar.
+
+.nxs-step-progress {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+}
+
+.nxs-step-progress-steps {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.nxs-step-progress-step {
+  display: flex;
+  align-items: center;
+  gap: var(--space-extra-small);
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+
+.nxs-step-progress-step-current {
+  color: var(--text);
+  font-weight: var(--font-semibold);
+}
+
+.nxs-step-progress-step-done {
+  color: var(--text);
+}
+
+.nxs-step-progress-step-num {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  font-size: 0.72rem;
+}
+
+// The label on a brand fill. --primary-text-dark-mode-color is the library's token for exactly
+// that, the same one .btn-primary paints its label with.
+.nxs-step-progress-step-current .nxs-step-progress-step-num,
+.nxs-step-progress-step-done .nxs-step-progress-step-num {
+  background: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
+  border-color: var(--main-brand-color);
+}
+
+// The native progress element, restyled. width: 100% beats the reset's sizing and each vendor
+// pseudo element paints the fill in the brand color, so no inline width is ever needed.
+.nxs-step-progress-bar {
+  display: block;
+  width: 100%;
+  height: 6px;
+  appearance: none;
+  border: 0;
+  border-radius: var(--radius-small);
+  overflow: hidden;
+  background: var(--border);
+  color: var(--main-brand-color);
+}
+
+.nxs-step-progress-bar::-webkit-progress-bar {
+  background: var(--border);
+  border-radius: var(--radius-small);
+}
+
+.nxs-step-progress-bar::-webkit-progress-value {
+  background: var(--main-brand-color);
+  border-radius: var(--radius-small);
+  transition: width var(--transition-base);
+}
+
+.nxs-step-progress-bar::-moz-progress-bar {
+  background: var(--main-brand-color);
+  border-radius: var(--radius-small);
+}
+
+.nxs-step-progress-stepof {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
