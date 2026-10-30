@@ -27,6 +27,11 @@ patch (2026-10 item 277, Session 2b).
   the navigation row does that. The new `.btn-calendar-tile--padding` rule only resets the cursor.
 - **`PageNotFound` forwards `headingLevel`** to `EmptyState`, so a 404 that is the whole page can
   render its heading as the page's one `h1`. Unset keeps the `h3` every caller renders today.
+- **`Calendar` takes an optional `headingLevel`** for the month view's heading ("June 2026"), which
+  was always an `h1` and made every calendar page carry two. Unset keeps the `h1`; a page with its
+  own title passes `2`. The week and day views already print their range as an `h2`. Forwarded
+  through `CalendarNavigation` (new optional `CalendarNavProps.headingLevel`) to the `Heading`
+  atom's `scale`.
 
 #### Added
 

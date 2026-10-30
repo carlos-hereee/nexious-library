@@ -128,6 +128,10 @@ export interface CalendarProps {
   // BCP 47 tag for Intl day names, dates and hour labels. Undefined is the runtime locale.
   locale?: string;
   labels?: CalendarLabels;
+  // The level of the month heading ("June 2026") in the month view. Unset keeps the h1 it has always
+  // been. A page that has its own title passes 2 so the month is a section heading under it and the
+  // page keeps one h1. The week and day views already print their range as an h2 and ignore this.
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 export interface CalendarTimeGridProps {
@@ -214,6 +218,8 @@ export interface CalendarNavProps {
   click: (e: string) => void;
   previous: { label: string; icon: string }[];
   next: { label: string; icon: string }[];
+  // Level of the month heading; unset is the h1 it has always rendered.
+  headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
 }
 
 export interface CalendarEventListProps {

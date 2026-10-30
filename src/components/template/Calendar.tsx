@@ -40,6 +40,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     now,
     locale,
     labels: labelsProp,
+    headingLevel,
   } = props;
   const labels = resolveCalendarLabels(labelsProp);
   const isTimeGrid = view === "week" || view === "day";
@@ -124,6 +125,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             click={(label) => monthChange({ label, active, setActive: moveTo })}
             previous={previous}
             next={next}
+            headingLevel={headingLevel}
           />
           <CalendarView
             data={active}

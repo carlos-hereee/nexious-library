@@ -53,3 +53,23 @@ describe("Calendar month grid cells", () => {
     expect(screen.queryByTitle(/has \d+ events|no events today/)).toBeNull();
   });
 });
+
+describe("Calendar month heading level", () => {
+  const seed = new Date("2026-06-15T12:00:00");
+
+  it("keeps the month heading an h1 when no level is given, so every existing caller is unchanged", () => {
+    render(<Calendar value={seed} />);
+    expect(screen.getByRole("heading", { level: 1, name: "June 2026" })).toBeInTheDocument();
+  });
+
+  it("renders the month heading at the level a page asks for, leaving the page its one h1", () => {
+    render(
+      <>
+        <h1>Book a call</h1>
+        <Calendar value={seed} headingLevel={2} />
+      </>
+    );
+    expect(screen.getByRole("heading", { level: 2, name: "June 2026" })).toBeInTheDocument();
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  });
+});

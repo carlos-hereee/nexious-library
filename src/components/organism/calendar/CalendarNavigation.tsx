@@ -11,7 +11,7 @@ import type { CalendarNavProps } from "nxs-calendar";
  * @returns
  */
 const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
-  const { date, previous, next, click } = props;
+  const { date, previous, next, click, headingLevel } = props;
   return (
     <div className="calendar-navigation">
       <div className="flex">
@@ -24,7 +24,7 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
           />
         ))}
       </div>
-      <Heading data={`${months[date.month]} ${date.year}`} />
+      <Heading data={`${months[date.month]} ${date.year}`} scale={headingLevel} />
       <div className="calendar-navigation-next-buttons flex">
         {next.map((p) => (
           <IconButton
