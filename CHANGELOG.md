@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.4.1] - not yet published
+
+Prepared on `staging` for the next release, not published. `package.json` stays at 4.4.0 on
+purpose: `npm run release:patch` runs `npm version patch`, which is what makes it 4.4.1, so a hand
+bump here would release as 4.4.2. Date this heading when it publishes. Both new props are optional,
+and every existing caller renders the same markup it did before, which is why the plan calls this a
+patch (2026-10 item 277, Session 2b).
+
+#### Accessibility
+
+- **Month grid padding cells are inert.** The cells before the 1st and after the last day of a
+  month were childless `Button`s: a screen reader announced each as an unnamed button (axe
+  `button-name`) and each took a tab stop. `CalendarView` now renders them as
+  `<span class="btn-calendar-tile btn-calendar-tile--padding" aria-hidden="true">`, keeping the
+  grid slot and the tile's box. Clicking a padding cell no longer moves to the neighbouring month;
+  the navigation row does that. The new `.btn-calendar-tile--padding` rule only resets the cursor.
+- **`PageNotFound` forwards `headingLevel`** to `EmptyState`, so a 404 that is the whole page can
+  render its heading as the page's one `h1`. Unset keeps the `h3` every caller renders today.
+
+#### Added
+
+- **`CalendarLabels.tileEvents?: (date, count) => string` and `CalendarLabels.tileNoEvents?: string`,**
+  the month tile's `title` for a day with events and a day without. The English defaults are the
+  strings the tile always showed (`"<date> has <n> events"`, `"no events today"`). `Calendar` hands
+  its `labels` to `CalendarView` (new optional `labels` prop), which resolves them and passes each
+  tile its `title`.
+- **`CalendarTileProps.title?: string`.** A direct `CalendarTile` consumer that passes none keeps
+  the English default.
+- **`ErrorProps.headingLevel?`,** read by `PageNotFound` only.
+
 ## [4.4.0] - 2026-10-15
 
 ### Card access for repeating groups (additive, minor)

@@ -30,6 +30,10 @@
 .btn-calendar-tile--muted {
   cursor: not-allowed;
 }
+// The inert cell before the 1st and after the last day: no control, so no pointer cue.
+.btn-calendar-tile--padding {
+  cursor: default;
+}
 .btn-calendar-tile {
   min-width: 0;
   padding: 0;

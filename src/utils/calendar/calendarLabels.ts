@@ -15,6 +15,8 @@ export const DEFAULT_CALENDAR_LABELS: ResolvedCalendarLabels = {
   to: "to",
   fewerEvents: "Show fewer",
   moreEvents: (count: number) => `+${count} more`,
+  tileEvents: (date: string, count: number) => `${date} has ${count} events`,
+  tileNoEvents: "no events today",
 };
 
 // Merged key by key rather than spread, so a consumer object carrying an explicit `undefined`

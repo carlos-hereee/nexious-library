@@ -43,6 +43,11 @@ export interface ErrorProps {
    */
   actionVariant?: Variant;
   /**
+   * The heading's level, forwarded to EmptyState, which defaults to 3. Read by PageNotFound only:
+   * a 404 is the whole page, so its consumer passes 1 and the page gets the one h1 it needs.
+   */
+  headingLevel?: EmptyStateProps["headingLevel"];
+  /**
    * Opt IN to a skeleton placeholder instead of Loading's spinner. Absent means spinner, which
    * is the default on purpose: Loading renders on dozens of consumer surfaces and flipping them
    * all is an owner decision, not a refactor's side effect.

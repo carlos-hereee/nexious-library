@@ -129,6 +129,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             data={active}
             today={hideToday ? undefined : today}
             minDate={mininumDate}
+            labels={labels}
             click={(e) => dayChange({ today, active: e, setActive: moveTo, events: calendarEvents, onDayClick })}
             events={
               calendarEvents

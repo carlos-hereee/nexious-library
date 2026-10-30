@@ -91,6 +91,9 @@ export interface CalendarLabels {
   // The "+N more" control under a crowded all day row, and its expanded twin.
   moreEvents?: (count: number) => string;
   fewerEvents?: string;
+  // The month grid's day tile title: a day holding events, and a day with none.
+  tileEvents?: (date: string, count: number) => string;
+  tileNoEvents?: string;
 }
 
 export interface CalendarProps {
@@ -203,6 +206,8 @@ export interface CalendarTileProps {
   };
   events: CalendarDayProp;
   click: (key: unknown) => void;
+  // The tile's title. CalendarView passes the localized one; unset keeps the English default.
+  title?: string;
 }
 export interface CalendarNavProps {
   date: { month: number; year: number };
@@ -222,6 +227,7 @@ export interface CalendarViewProps {
   today?: CalendarDayProp;
   minDate?: CalendarDayProp;
   events: CalendarDayProp[];
+  labels?: CalendarLabels;
 }
 export interface DayChangeProps {
   today: CalendarDayProp;

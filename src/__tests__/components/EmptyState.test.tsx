@@ -188,6 +188,19 @@ describe("EmptyState gate props", () => {
     expect(container.querySelector(".empty-state-action")).toBeNull();
   });
 
+  it("PageNotFound forwards headingLevel so a 404 page can carry its h1", () => {
+    render(<PageNotFound heading="Page not found" headingLevel={1} to="/" />);
+    expect(screen.getByRole("heading", { level: 1, name: "Page not found" })).toHaveAttribute(
+      "class",
+      "empty-state-heading"
+    );
+  });
+
+  it("PageNotFound keeps an h3 when no headingLevel is passed", () => {
+    render(<PageNotFound heading="Page not found" to="/" />);
+    expect(screen.getByRole("heading", { level: 3, name: "Page not found" })).toBeInTheDocument();
+  });
+
   it("classNames.actions replaces the row's default class", () => {
     const { container } = render(
       <EmptyState heading="Pick a deck" classNames={{ actions: "gate-row" }} actions={<button type="button">Go</button>} />

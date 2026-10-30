@@ -14,7 +14,7 @@ import type { ErrorProps } from "nxs-errors";
  * without one the message becomes the button the reader clicks.
  */
 const PageNotFound: React.FC<ErrorProps> = (props) => {
-  const { hero, message, to, timer, handleClick, heading, icon, actionVariant } = props;
+  const { hero, message, to, timer, handleClick, heading, icon, actionVariant, headingLevel } = props;
 
   const msg = message || `Page not found go to ${to === "/" ? "homepage" : to}`;
 
@@ -35,6 +35,7 @@ const PageNotFound: React.FC<ErrorProps> = (props) => {
       iconSpin="spin"
       iconClassName="text-center"
       heading={heading}
+      headingLevel={headingLevel}
       message={timer ? msg : undefined}
       messageClassName="page-not-found-message"
       actionLabel={timer ? undefined : msg}
