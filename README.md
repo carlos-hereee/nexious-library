@@ -419,6 +419,31 @@ Not reassigned on dark. Three named speeds, so a component picks a role rather t
 | `--transition-base` | `200ms ease` | Enter and exit, expand and collapse |
 | `--transition-slow` | `300ms ease` | Overlays and dialogs |
 
+To move an element on these tokens, use `useMotion` rather than writing a transition of your own,
+so every surface moves with one grammar:
+
+```tsx
+import { MotionProvider, useMotion } from "nexious-library";
+
+const Region = ({ items }: { items: string[] }) => {
+  const motion = useMotion();
+  return (
+    <ul {...motion.enter({ className: "my-list" })}>
+      {items.map((item, index) => (
+        <li key={item} {...motion.stagger(index)}>{item}</li>
+      ))}
+    </ul>
+  );
+};
+
+// Optional: change the defaults for a subtree. Renders no element.
+<MotionProvider speed="fast"><Region items={items} /></MotionProvider>;
+```
+
+`enter()` and `stagger()` play once on mount; `exit()` plays the reverse, and `exitDurationMs()`
+says how long to keep the element mounted (zero under reduced motion). Patterns are `fade-rise`
+(the default, an 8px lift) and `fade`. A staggered list finishes within 300ms however long it is.
+
 ### Status accents
 
 Not reassigned on dark: each is paired with a text color chosen for contrast against it, so the

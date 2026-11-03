@@ -19,6 +19,7 @@ export { default as Footer } from "@nxs-template/Footer";
 export { default as Form } from "@nxs-template/Form";
 export { default as Header } from "@nxs-template/Header";
 export { default as ItemDetail } from "@nxs-template/ItemDetail";
+export { default as MotionProvider } from "@nxs-template/MotionProvider";
 export { default as PaginateForm } from "@nxs-template/PaginateForm";
 export { default as Socials } from "@nxs-template/Socials";
 

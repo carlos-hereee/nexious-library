@@ -105,6 +105,12 @@ export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/curren
 // public hooks, lets consumers build custom form UIs using the same validation and state logic
 export { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 export { useValues } from "@nxs-utils/hooks/useFormValues";
+
+// Motion (design language 5.9): one provider plus one hook, so every surface moves with one grammar.
+export { default as MotionProvider } from "@nxs-template/MotionProvider";
+export { useMotion } from "@nxs-utils/hooks/useMotion";
+export type { MotionApi, MotionOptions, MotionPattern, MotionProps, MotionProviderProps, MotionSpeed } from "nxs-motion";
+
 // public prop types, surfaced from the package entry so consumers can type their own
 // wrappers without reaching into subpaths. The underlying type modules now ship in dist
 // (the @types ambient `declare module` blocks were converted to real emitted modules).

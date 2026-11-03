@@ -9,6 +9,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+**Semver note:** the entries below add public exports, which makes the release that carries them a
+MINOR, not the patch the 4.4.1 heading below was prepared as. Which number ships is the owner's call
+at release time; this note exists so nobody runs `release:patch` over new API by accident.
+
+#### Added
+
+- **`MotionProvider` and `useMotion`, the one motion primitive (design language 5.9, item 51 motion
+  extension Phase 1).** `useMotion()` returns `enter()`, `exit()`, `stagger(index)` and
+  `exitDurationMs()`; spread the result onto the element that moves. Patterns are `fade-rise` (the
+  5.9 fade and rise, 8px) and `fade`; speeds are `fast`, `base` and `slow`, read straight from the
+  `--transition-*` tokens. A staggered list settles within the 300ms core ceiling however long it is.
+  `MotionProvider` sets the default pattern and speed for a subtree and renders no element.
+  Types `MotionApi`, `MotionOptions`, `MotionPattern`, `MotionProps`, `MotionProviderProps` and
+  `MotionSpeed` are exported from the package entry.
+
+#### Accessibility
+
+- **Motion is reduced-motion safe in both halves.** Under `prefers-reduced-motion: reduce` the hook
+  resolves every pattern to an opacity fade, drops the stagger and reports a zero exit wait, and the
+  stylesheet makes the same swap on its own so a first painted frame is safe too; the global kill
+  switch then lands the fade instantly. Opacity and transform only, never layout, and an entering
+  element is clickable from its first frame.
+
+#### Fixed
+
+- **The library lint gate is green again.** 42 eslint errors in stories, tests and five source
+  files had kept `npm run lint` red on `staging`; all are cleared with no behavior change.
+
 ## [4.4.1] - not yet published
 
 Prepared on `staging` for the next release, not published. `package.json` stays at 4.4.0 on
