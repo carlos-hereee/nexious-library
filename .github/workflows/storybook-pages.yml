@@ -10,7 +10,7 @@ name: Storybook Pages
 
 on:
   push:
-    branches: ["main"]
+    branches: ["production"]
   workflow_dispatch:
 
 # Pages deploys with the default GITHUB_TOKEN: pages and id-token are the only
