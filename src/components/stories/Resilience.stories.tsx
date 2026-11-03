@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import type { FieldEntryProps } from "nxs-form";
 import type { PostData } from "nxs-post";
@@ -124,11 +123,11 @@ const Frame: React.FC<{ label: string; narrow?: boolean; children: React.ReactNo
 );
 
 const Band: React.FC<{ title: string; note: string; children: React.ReactNode }> = ({ title, note, children }) => (
-  <Fragment>
+  <>
     <h3 className="sb-matrix-title">{title}</h3>
     <p className="sb-matrix-note">{note}</p>
     {children}
-  </Fragment>
+  </>
 );
 
 // Rendered as markup rather than through Navbar because Navbar wants a full menu model plus
@@ -138,6 +137,7 @@ const TabBar: React.FC<{ labels: string[] }> = ({ labels }) => (
     {/* Keyed by position, not by label. The "many tabs" specimen repeats a label on purpose (that
         is what a bar with nine tabs looks like), and keying by label would collide. */}
     {labels.map((label, idx) => (
+      // eslint-disable-next-line react/no-array-index-key -- keyed by position on purpose, see the comment above.
       <li className={idx === 0 ? "nav-item is-active" : "nav-item"} key={`${idx}-${label}`}>
         <a className="nav-link" href="#tab" aria-current={idx === 0 ? "page" : undefined}>
           <span className="nav-label">{label}</span>
@@ -430,11 +430,11 @@ const ZeroOneMany: React.FC = () => (
 );
 
 const Sheet: React.FC = () => (
-  <Fragment>
+  <>
     <LongStrings />
     <Rtl />
     <ZeroOneMany />
-  </Fragment>
+  </>
 );
 
 export const LightAndDark: StoryObj = {

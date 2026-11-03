@@ -70,6 +70,7 @@ const ListItem = ({ className, item, hideIcons, activePath, handleClick }: ListI
     }
     return (
       <li className={liClass}>
+        {/* eslint-disable-next-line react/jsx-props-no-spreading -- aProps is assembled above so target, rel and aria-current are added only when they apply. */}
         <a {...aProps}>
           {item.icon && <Icon icon={item.icon} name={item.name} className="nav-icon" />}
           <span className="nav-label">{item.label || item.name}</span>

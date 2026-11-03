@@ -231,6 +231,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           setStatus(null);
         }
       };
+      // Fire and forget: runSubmit settles its own state in `finally`, and an onSubmit rejection belongs to the consumer.
+      // eslint-disable-next-line no-void
       void runSubmit();
     }
     if (validationStatus === "preview") {

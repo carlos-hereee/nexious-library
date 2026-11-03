@@ -8,6 +8,7 @@ export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9
 // ANY string still compiles (consumers register custom keys against an open registry, so we
 // cannot hard-restrict the union). Discoverability without locking the registry. The import
 // is type-only, so it is erased at emit and does not create a runtime cycle with iconRegistry.
+// eslint-disable-next-line @typescript-eslint/ban-types -- `{}` is the documented autocomplete idiom above; `unknown` or `object` would collapse the union to plain string.
 export type IconKey = LibraryIconKey | (string & {});
 export type IconProps = {
   icon: IconKey;

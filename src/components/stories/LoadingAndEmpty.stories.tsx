@@ -37,7 +37,7 @@ export default meta;
 const SHAPES = ["row", "block", "text", "page"] as const;
 
 const Sheet: React.FC = () => (
-  <Fragment>
+  <>
     <h3 className="sb-matrix-title">Skeleton shapes</h3>
     <p className="sb-matrix-note">
       Each shape matches the silhouette of what it is standing in for: rows for a list, a 16 by 9
@@ -92,7 +92,7 @@ const Sheet: React.FC = () => (
         <ComingSoon message="ComingSoon, legacy call" />
       </div>
     </div>
-  </Fragment>
+  </>
 );
 
 // A page gate: a whole region standing in for content the reader cannot use yet. It is a section

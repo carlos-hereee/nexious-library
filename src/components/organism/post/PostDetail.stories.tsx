@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import PostDetail from "./PostDetail";
 import type { PostData } from "nxs-post";
+import PostDetail from "./PostDetail";
 
 /**
  * PostDetail is the full reading view of a post. Body is capped at 70ch for

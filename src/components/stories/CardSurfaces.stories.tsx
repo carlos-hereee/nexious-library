@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import "./states-matrix.css";
 
@@ -65,7 +64,7 @@ const Tile: React.FC<{ surface: Surface }> = ({ surface }) => (
 );
 
 const Band: React.FC<{ title: string; note: string; surfaces: Surface[] }> = ({ title, note, surfaces }) => (
-  <Fragment>
+  <>
     <h3 className="sb-matrix-title">{title}</h3>
     <p className="sb-matrix-note">{note}</p>
     <div className="sb-matrix-grid">
@@ -75,11 +74,11 @@ const Band: React.FC<{ title: string; note: string; surfaces: Surface[] }> = ({ 
         </div>
       ))}
     </div>
-  </Fragment>
+  </>
 );
 
 const Sheet: React.FC = () => (
-  <Fragment>
+  <>
     <Band
       title="Navigational: these lift on hover"
       note="Each one opens something when clicked, so it gets the translateY(-2px) lift at --transition-fast. This is the only group allowed to move."
@@ -95,7 +94,7 @@ const Sheet: React.FC = () => (
       note="Rows hold the --row-height 52px floor so a short row cannot collapse below a tap target. The panel pair is the container lane's replacement for .container used as a box."
       surfaces={ROWS}
     />
-  </Fragment>
+  </>
 );
 
 export const LightAndDark: StoryObj = {

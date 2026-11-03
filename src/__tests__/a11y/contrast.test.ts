@@ -40,7 +40,7 @@ const readThemeMaps = (): Record<ThemeName, TokenMap> => {
   const light: TokenMap = {};
   const darkOverrides: TokenMap = {};
 
-  for (const file of ["_tokens.scss", "_control.scss"]) {
+  ["_tokens.scss", "_control.scss"].forEach((file) => {
     const source = stripComments(readFileSync(resolve(__dirname, "../../stylesheets/vars", file), "utf8"));
     const blockPattern = /([^{}]+)\{([^{}]*)\}/g;
     const declarationPattern = /(--[\w-]+)\s*:\s*([^;]+);/g;
@@ -49,13 +49,14 @@ const readThemeMaps = (): Record<ThemeName, TokenMap> => {
       const [, selector, body] = block;
       const isDark = /\.dark-mode|\[data-theme="dark"\]/.test(selector);
       const target = selector.includes(":root") ? light : isDark ? darkOverrides : null;
-      if (!target) continue;
-      declarationPattern.lastIndex = 0;
-      for (let decl = declarationPattern.exec(body); decl !== null; decl = declarationPattern.exec(body)) {
-        target[decl[1]] = decl[2].trim();
+      if (target) {
+        declarationPattern.lastIndex = 0;
+        for (let decl = declarationPattern.exec(body); decl !== null; decl = declarationPattern.exec(body)) {
+          target[decl[1]] = decl[2].trim();
+        }
       }
     }
-  }
+  });
 
   return { light, dark: { ...light, ...darkOverrides } };
 };

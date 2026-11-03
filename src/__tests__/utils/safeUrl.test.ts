@@ -5,8 +5,11 @@ import { safeUrl } from "../../utils/data/safeUrl";
 // but not the URL scheme, so these assertions lock the dangerous-scheme rejection.
 describe("safeUrl", () => {
   it("neutralizes javascript: URLs to #", () => {
+    // These literals are the attack under test, never evaluated.
+    /* eslint-disable no-script-url */
     expect(safeUrl("javascript:alert(document.cookie)")).toBe("#");
     expect(safeUrl("JavaScript:alert(1)")).toBe("#");
+    /* eslint-enable no-script-url */
   });
 
   it("neutralizes javascript: smuggled with control chars/whitespace", () => {

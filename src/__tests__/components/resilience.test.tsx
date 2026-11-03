@@ -72,7 +72,7 @@ const parseRules = (css: string): CssRule[] => {
   const rules: CssRule[] = [];
   const open: string[] = [];
   let buffer = "";
-  for (const character of withoutComments) {
+  Array.from(withoutComments).forEach((character) => {
     if (character === "{") {
       open.push(buffer.trim());
       buffer = "";
@@ -83,7 +83,7 @@ const parseRules = (css: string): CssRule[] => {
       if (selector && !selector.startsWith("@")) rules.push({ selector, declarations: buffer });
       buffer = "";
     } else buffer += character;
-  }
+  });
   return rules;
 };
 

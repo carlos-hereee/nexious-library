@@ -40,7 +40,7 @@ const ThemeMenu = ({ list, active, name = "theme", className, btnTheme, handleCh
 
   // Close on outside click.
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
     const onDoc = (e: MouseEvent) => {
       if (!wrapRef.current) return;
       if (!wrapRef.current.contains(e.target as Node)) setOpen(false);
@@ -154,6 +154,8 @@ const ThemeMenu = ({ list, active, name = "theme", className, btnTheme, handleCh
           {list.map((t, i) => {
             const selected = t.value === active || t.name === active;
             return (
+              // The listbox pattern takes keyboard input on the <ul> (onListKey: arrows, Home, End, Enter), not on each option.
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <li
                 key={t.uid || t.value || t.name}
                 role="option"

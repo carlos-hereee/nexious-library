@@ -1,4 +1,3 @@
-import { Fragment } from "react";
 import type { Meta, StoryObj } from "@storybook/react";
 import "./states-matrix.css";
 
@@ -61,7 +60,7 @@ const Sheet: React.FC<{ dense?: boolean }> = ({ dense }) => (
 );
 
 const Band: React.FC = () => (
-  <Fragment>
+  <>
     <h3 className="sb-matrix-title">Comfortable, 52px rows</h3>
     <p className="sb-matrix-note">The default density. Prices are .cell-numeric, product names are not.</p>
     <Sheet />
@@ -71,7 +70,7 @@ const Band: React.FC = () => (
       target floor and a row is a tap target.
     </p>
     <Sheet dense />
-  </Fragment>
+  </>
 );
 
 export const LightAndDark: StoryObj = {
