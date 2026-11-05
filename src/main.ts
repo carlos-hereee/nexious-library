@@ -60,6 +60,8 @@ export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Socials } from "@nxs-template/Socials";
 // form components
 export { default as Select } from "@nxs-molecules/forms/Select";
+export { default as SearchBar } from "@nxs-molecules/forms/SearchBar";
+export { SEARCH_BAR_DEBOUNCE_MS } from "@nxs-utils/form/searchBar";
 export { default as Rating } from "@nxs-molecules/assets/Rating";
 // card components
 export { default as SettingsCard } from "@nxs-organism/card/SettingsCard";
@@ -119,6 +121,7 @@ export type {
   FormEntriesHandle,
   FormProps,
   PaginateFormProps,
+  SearchBarProps,
   SelectProp,
   UseFormValidationApi,
   UseValuesApi,

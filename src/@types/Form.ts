@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { KeyboardEvent } from "react";
 import type { MenuItemProp } from "nxs-navigation";
 import type { KeyStringProp, OnchangeProps } from "custom-props";
 
@@ -243,8 +244,26 @@ export type InputProps = {
   isDisabled?: boolean;
   onChange?: (value: string) => void;
   onBlur?: () => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
   formMessage?: string;
 };
+// `value` is the COMMITTED search, not what is being typed: SearchBar holds the typed text itself and
+// calls `onChange` after the pause. `name` is the input id, so it must be unique per mount. `label` is
+// required because a placeholder disappears the moment someone types; `labelClassName` defaults to
+// visually hidden, so pass one to show it.
+export interface SearchBarProps {
+  name: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  inputClassName?: string;
+  labelClassName?: string;
+  debounceMs?: number;
+  isDisabled?: boolean;
+}
 export type FieldInitialValueProps = {
   value: FormInitialValue | { [key: string]: FormInitialValue }[];
   name: string;

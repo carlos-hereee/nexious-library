@@ -63,8 +63,10 @@ export { default as EntryNavigator } from "@nxs-molecules/forms/EntryNavigator";
 export { default as FieldDate } from "@nxs-molecules/forms/FieldDate";
 export { default as FieldTime } from "@nxs-molecules/forms/FieldTime";
 export { default as FieldDay } from "@nxs-molecules/forms/FieldDay";
+export { default as SearchBar } from "@nxs-molecules/forms/SearchBar";
 export type {
   InputProps,
+  SearchBarProps,
   SelectProp,
   UploadFileProps,
   FieldShellProps,

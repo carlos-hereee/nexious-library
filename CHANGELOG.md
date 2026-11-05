@@ -15,6 +15,12 @@ at release time; this note exists so nobody runs `release:patch` over new API by
 
 #### Added
 
+- **`SearchBar`, the one debounced search box.** It holds the typed text itself and calls `onChange`
+  once, `SEARCH_BAR_DEBOUNCE_MS` (300ms) after the last key press, so typing re-renders only the box
+  and never the page behind it. Clearing and Enter apply at once, unmount cancels a pending commit,
+  and a `value` changed from outside replaces the text. Labelled and a `search` landmark; the copy
+  comes from props. `Input` gains optional `onKeyDown` and `autoComplete` props; every existing
+  caller keeps `autoComplete="on"`. `SearchBarProps` is exported from the package entry.
 - **`MotionProvider` and `useMotion`, the one motion primitive (design language 5.9, item 51 motion
   extension Phase 1).** `useMotion()` returns `enter()`, `exit()`, `stagger(index)` and
   `exitDurationMs()`; spread the result onto the element that moves. Patterns are `fade-rise` (the

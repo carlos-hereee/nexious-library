@@ -4,11 +4,12 @@ import type { InputProps } from "nxs-form";
 // React.forwardRef lets consumers attach a ref to the underlying <input> DOM node
 // (e.g. for autofocus on mount, or programmatic focus from a parent component).
 const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
-  const { value, onChange, onBlur, name, className, isDisabled, placeholder, type, error } = props;
+  const { value, onChange, onBlur, onKeyDown, name, className, isDisabled, placeholder, type, error } = props;
+  const { autoComplete = "on" } = props;
   return (
     <input
       className={className}
-      autoComplete="on"
+      autoComplete={autoComplete}
       name={name}
       type={type || "text"}
       // Coalesce to "" so an initially-undefined value does not flip the input from
@@ -18,6 +19,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>((props, ref) => {
       placeholder={placeholder}
       onChange={(event) => onChange && onChange(event.currentTarget.value)}
       onBlur={onBlur}
+      onKeyDown={onKeyDown}
       disabled={isDisabled}
       // aria-invalid + aria-describedby point at the Label's `${name}-error` span so screen
       // readers announce the validation message; only set when an error is actually present.
