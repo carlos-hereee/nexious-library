@@ -9,9 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-**Semver note:** the entries below add public exports, which makes the release that carries them a
-MINOR, not the patch the 4.4.1 heading below was prepared as. Which number ships is the owner's call
-at release time; this note exists so nobody runs `release:patch` over new API by accident.
+## [4.6.0] - 2026-11-05
 
 #### Added
 
@@ -21,6 +19,11 @@ at release time; this note exists so nobody runs `release:patch` over new API by
   and a `value` changed from outside replaces the text. Labelled and a `search` landmark; the copy
   comes from props. `Input` gains optional `onKeyDown` and `autoComplete` props; every existing
   caller keeps `autoComplete="on"`. `SearchBarProps` is exported from the package entry.
+
+## [4.5.0] - 2026-11-04
+
+#### Added
+
 - **`MotionProvider` and `useMotion`, the one motion primitive (design language 5.9, item 51 motion
   extension Phase 1).** `useMotion()` returns `enter()`, `exit()`, `stagger(index)` and
   `exitDurationMs()`; spread the result onto the element that moves. Patterns are `fade-rise` (the
