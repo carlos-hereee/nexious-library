@@ -1,0 +1,54 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// Promoted from nexious-client's `.study-deck-bar` family (study.css), which skinned the bar
+// before the component moved here. Ported with neutral library tokens in place of the study
+// theme's: a consumer with a themed surface restyles it from its own sheet, through the parts'
+// classes. The client's 13px type is `--text-small` here, the nearest step on the scale.
+
+.nxs-active-selection-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium-small);
+  padding: var(--space-small) var(--space-medium-small);
+  margin-bottom: var(--space-medium);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  background: var(--surface);
+}
+
+.nxs-active-selection-bar-label {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+.nxs-active-selection-bar-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium-small);
+}
+
+// A text button, not a filled one: changing the active item is the quiet action beside the
+// content it frames. `width: fit-content` reclaims the reset's `button { width: 100% }`.
+.nxs-active-selection-bar-change {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  width: fit-content;
+  color: var(--main-brand-color);
+  font-size: var(--text-small);
+  cursor: pointer;
+  padding: var(--space-extra-small) var(--space-small);
+  @include mixins.focus-ring;
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// The base indigo measures 2.72:1 on the dark surface and fails AA for text, so dark takes the
+// lighter brand accent (5.73:1), the same flip --focus-ring-color makes. Both pairs are asserted
+// in contrast.test.ts.
+.dark-mode .nxs-active-selection-bar-change,
+[data-theme="dark"] .nxs-active-selection-bar-change {
+  color: var(--main-brand-color-accent);
+}

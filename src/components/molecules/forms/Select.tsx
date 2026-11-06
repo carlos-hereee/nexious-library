@@ -1,6 +1,7 @@
 import { Icon, Label, Option } from "@nxs-atoms";
 import { Hero, IconButton } from "@nxs-molecules";
 import type { SelectProp } from "nxs-form";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 /**
  *
@@ -12,9 +13,10 @@ import type { SelectProp } from "nxs-form";
  * @returns
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
+  const { list, onChange, className, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
-  const { placeholder } = props;
+  const { placeholder, inShell } = props;
+  const domId = useFieldDomId(name);
 
   const activeLabel = active || placeholder || "Choose Selection";
   const icon = active ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon : undefined;
@@ -22,38 +24,45 @@ const Select: React.FC<SelectProp> = (props) => {
 
   return (
     <>
-      {!hideLabels && label ? (
+      {/* Select is the one form control exported from the package root, so it has to stand alone
+          as well as sit inside a Field. Standalone it owns its label, its error node and its
+          fallback aria-label. Inside a Field it is passed inShell and gives up all three, because
+          the FieldShell already renders a (possibly visually hidden) <label htmlFor> and one
+          `${domId}-error` node: a second error node would make aria-describedby ambiguous, and a
+          leftover aria-label would beat the real label and announce the raw field name instead.
+          The standalone bare-error branch must survive, since the <select> advertises the error
+          id whether or not the label is visible. */}
+      {!inShell && !hideLabels && label ? (
         <Label name={name} label={label} error={error} message={formMessage} />
       ) : (
-        // The <select> below sets aria-describedby=`${name}-error` when invalid, so the
-        // error node must exist even with the label hidden, or the reference dangles.
+        !inShell &&
         error && (
-          <span className="required" id={`${name}-error`} role="alert">
+          <span className="required" id={`${domId}-error`} role="alert">
             {error}
           </span>
         )
       )}
-      <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
+      <div className={className ? `select-wrapper ${className}` : "select-wrapper"}>
         {active && icon ? (
-          <Icon icon={icon} name={icon} theme="select-icon" />
+          <Icon icon={icon} name={icon} className="select-icon" />
         ) : thumbnail ? (
-          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} theme="thumbnail-select" />
+          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} className="thumbnail-select" />
         ) : (
           ""
         )}
         <select
-          // id matches the Label's htmlFor={name} so the visible label is properly associated.
-          id={name}
+          // id matches the Label's htmlFor so the visible label is properly associated.
+          id={domId}
           className="select"
           value={activeLabel}
           disabled={isDisabled}
           // When the visible label is hidden the native control still needs a name for SR users.
-          aria-label={hideLabels || !label ? name : undefined}
+          aria-label={!inShell && (hideLabels || !label) ? name : undefined}
           // Mirror Input/InputCheckbox/TextArea so a select with a validation error is
-          // announced as invalid and points at the Label's `${name}-error` node. Select
+          // announced as invalid and points at the Label's `${domId}-error` node. Select
           // was the one form control missing this wiring.
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${name}-error` : undefined}
+          aria-describedby={error ? `${domId}-error` : undefined}
           onChange={(e) => onChange?.(e.target.value)}
         >
           <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />
@@ -64,7 +73,7 @@ const Select: React.FC<SelectProp> = (props) => {
           <IconButton
             icon={{ icon: "close" }}
             onClick={() => onChange?.("")}
-            theme="btn-icon"
+            className="btn-icon"
             aria-label="Clear selection"
           />
         )}

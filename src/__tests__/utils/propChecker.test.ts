@@ -36,7 +36,7 @@ describe("propChecker", () => {
   });
 
   it("distinguishes null from plain objects", () => {
-    // typeof null === "object" — same as a real object — so this also needs the fix
+    // typeof null === "object", same as a real object, so this also needs the fix
     expect(propChecker([null], {})).toBeNull();
     expect(propChecker([{}], null)).toBeNull();
     expect(propChecker([null, null], null)).toBe(null);

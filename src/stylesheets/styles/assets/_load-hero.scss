@@ -11,7 +11,10 @@
     opacity: 1;
   }
 }
+// The fade in runs on load, not on hover, so it needs no reduced-motion block of its own:
+// the global kill switch in vars/reset zeroes transition-duration, which makes the image
+// appear instantly rather than never (the end state still applies, only the tween is gone).
 .blur-load > .hero {
   opacity: 0;
-  transition: opacity 200ms ease-in-out;
+  transition: opacity var(--transition-base);
 }

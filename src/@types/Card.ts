@@ -1,7 +1,7 @@
 import type { AssetProps, UserProps } from "nxs-assets";
 
 export type DialogProps = {
-  theme?: string;
+  className?: string;
   label?: string;
   toggleLabel?: string;
   toggleShow?: boolean;
@@ -18,7 +18,7 @@ export type DialogProps = {
 };
 export type CTAProp = {
   name: string;
-  theme?: string;
+  className?: string;
   label: string;
   icon?: string;
   uid?: string;
@@ -27,7 +27,7 @@ export type CTAProp = {
   // onClick?: (key: unknown) => void;
 };
 export interface BannerProps {
-  theme?: string;
+  className?: string;
   message?: string;
   children?: React.ReactNode;
 }
@@ -50,7 +50,7 @@ export interface MerchProps {
 export interface PCardheader {
   title?: string;
   subtitle?: string;
-  theme?: string;
+  className?: string;
   details?: string;
   hero?: AssetProps;
 }
@@ -60,7 +60,7 @@ export interface CardProp {
   body?: string;
   description?: string;
   name?: string;
-  theme?: string;
+  className?: string;
   label?: string;
   hero?: AssetProps;
   uid?: string;
@@ -80,7 +80,7 @@ export interface CardProp {
 }
 export interface CardProps {
   data: CardProp;
-  theme?: string;
+  className?: string;
   canRemove?: boolean;
   hero?: AssetProps;
   showPrice?: boolean;
@@ -88,7 +88,7 @@ export interface CardProps {
   hidePrice?: boolean;
   hideButtons?: boolean;
   children?: React.ReactNode;
-  // NOTE: used inconsistently — Card.tsx calls onClick(cta: CTAProp) while MerchCard.tsx passes
+  // NOTE: used inconsistently, Card.tsx calls onClick(cta: CTAProp) while MerchCard.tsx passes
   // it straight to a <button onClick> (a MouseEvent). The `unknown` masks the conflict; narrowing
   // it needs Card and MerchCard reconciled to one contract first (FUTURE_PLANS item 80 #6).
   onClick?: (key: unknown) => void;
@@ -99,7 +99,7 @@ export interface CardProps {
 export interface HeroCardProps {
   data: CardProp;
   hero?: AssetProps;
-  theme?: string;
+  className?: string;
   onClick?: (key: unknown) => void;
   viewAsPreview?: boolean;
 }
@@ -113,7 +113,7 @@ export interface CardSectionProps {
   hero?: AssetProps;
   hideReadMore?: boolean;
   data?: string;
-  theme?: string;
+  className?: string;
 }
 export interface Section {
   title: string;
@@ -121,7 +121,7 @@ export interface Section {
   subtitle: string;
   details: string;
   body: string;
-  theme?: string;
+  className?: string;
   sharedKey?: string;
   heroId?: string;
   sectionHero?: AssetProps;
@@ -129,15 +129,17 @@ export interface Section {
 }
 export interface CardSectionList {
   sections: Section[];
-  theme?: string;
+  className?: string;
   handleClick: (link: unknown) => void;
 }
 
 export interface UserCardProps {
   hideLabels?: boolean;
   hideHero?: boolean;
-  theme?: string;
+  className?: string;
   user: UserProps;
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
 }
 
 export type PaymentType = {
@@ -163,7 +165,60 @@ export interface CartProps {
   removeFromCart: (e: MerchProps) => void;
   onEditDetails: (e: MerchProps) => void;
   setQuantity: (e: MerchProps, count: number) => void;
-  theme?: string;
+  className?: string;
   readOnly?: boolean;
   showItemTotal?: boolean;
 }
+
+// ── CardGrid and SelectCard ──────────────────────────────────────────────────────
+/** A responsive grid of cards that collapses to one column on its own, with no breakpoint. */
+export type CardGridProps = {
+  /**
+   * "div" by default. "nav" when the cards are the way through a section (a quick nav), so the
+   * grid is a navigation landmark; give it an `ariaLabel` then, or two navs read the same.
+   */
+  as?: "div" | "nav";
+  ariaLabel?: string;
+  /** Appended to the root's classes, for a page's own grid modifier. */
+  className?: string;
+  /** `root` REPLACES the default `nxs-card-grid` class. */
+  classNames?: { root?: string };
+  children: React.ReactNode;
+};
+/**
+ * A clickable card: an icon, a title, a supporting line and room for a badge. The element is
+ * chosen from the props, so a card is a link, a button or an inert tile without the caller
+ * branching: `href` and `linkAs` render the router's link with `to`, `href` alone a plain
+ * anchor, `onClick` a button, and anything else (including `disabled`) an inert div that
+ * announces itself as disabled.
+ */
+export type SelectCardProps = {
+  title: React.ReactNode;
+  subtitle?: React.ReactNode;
+  /** Rendered inside a hidden wrapper; the title names the card, never the glyph. */
+  icon?: React.ReactNode;
+  /** Rendered after the subtitle, for a badge or a status pill. */
+  children?: React.ReactNode;
+  onClick?: () => void;
+  /** Passed through safeUrl, like every anchor the library renders. */
+  href?: string;
+  /**
+   * The consumer's router link (react-router's Link, for example). It receives `to`, so an
+   * in-app destination navigates without a full page reload. The library imports no router.
+   */
+  linkAs?: React.ElementType;
+  /** Renders the inert branch whatever else is set. */
+  disabled?: boolean;
+  selected?: boolean;
+  /** The card's accessible name when the visible title alone is not enough. */
+  ariaLabel?: string;
+  ariaCurrent?: React.AriaAttributes["aria-current"];
+  /** Appended to the root's classes. */
+  className?: string;
+  /**
+   * One slot per part. A key that is set REPLACES that part's default class, so a consumer with
+   * its own card system does not inherit the library card underneath it. `selected` replaces the
+   * class added while `selected` is true.
+   */
+  classNames?: { root?: string; icon?: string; title?: string; subtitle?: string; selected?: string };
+};

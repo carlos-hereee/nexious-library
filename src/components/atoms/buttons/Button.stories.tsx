@@ -9,7 +9,7 @@ const meta: Meta<typeof Button> = {
     onClick: { action: "clicked" },
     onDragStart: { action: "dragStart" },
     onDragEnd: { action: "dragEnd" },
-    theme: { control: "text" },
+    className: { control: "text" },
     label: { control: "text" },
     title: { control: "text" },
     isDisable: { control: "boolean" },
@@ -29,7 +29,7 @@ export const Default: Story = {
 export const Themed: Story = {
   args: {
     label: "Primary",
-    theme: "btn-primary",
+    className: "btn-primary",
   },
 };
 
@@ -56,8 +56,8 @@ export const WithChildren: Story = {
 export const AriaLabelOverride: Story = {
   name: "Accessible (aria-label)",
   args: {
-    // icon-only close button — no visible label, aria-label provides the accessible name
+    // icon-only close button, no visible label, aria-label provides the accessible name
     "aria-label": "Close dialog",
-    theme: "btn-icon",
+    className: "btn-icon",
   },
 };

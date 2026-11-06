@@ -1,0 +1,99 @@
+name: Release (npm publish)
+
+# Publishes nexious-library to npm after a merge to production, behind two gates: the date guard
+# (first Monday or a typed hotfix ticket) and the npm-publish environment, whose required
+# reviewer is the owner. A merge that does not change the version publishes nothing, because
+# the already-published check below exits green.
+#
+# Publishing uses npm trusted publishing (OIDC), so no npm token is stored in GitHub. That needs
+# a one time owner step on npmjs.com: package Settings, Trusted Publisher, GitHub Actions, this
+# repository, workflow file release.yml, environment npm-publish.
+
+on:
+  push:
+    branches: [production]
+  workflow_dispatch:
+    inputs:
+      hotfix_ticket:
+        description: "P0 hotfix ticket. Leave empty for a normal first Monday release."
+        required: false
+        type: string
+
+permissions:
+  contents: read
+
+# One release at a time; an in flight publish is never cancelled halfway.
+concurrency:
+  group: library-release
+  cancel-in-progress: false
+
+jobs:
+  # The platform release law: production moves on the FIRST MONDAY of the month, or for a P0
+  # hotfix. This job enforces the date half. The hotfix half is a record, not a proof: the
+  # ticket lives in Workspace, which this runner cannot read, so a typed ticket is logged for
+  # the owner to audit and nothing more.
+  guard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: First Monday or hotfix
+        env:
+          HOTFIX_TICKET: ${{ inputs.hotfix_ticket }}
+        run: |
+          set -euo pipefail
+          if [ -n "${HOTFIX_TICKET:-}" ]; then
+            echo "Hotfix run. Ticket: ${HOTFIX_TICKET}" >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          DOW="$(TZ=America/Chicago date +%u)"
+          DOM="$(TZ=America/Chicago date +%d)"
+          if [ "$DOW" = "1" ] && [ "$((10#$DOM))" -le 7 ]; then
+            echo "First Monday (America/Chicago). Release allowed." >> "$GITHUB_STEP_SUMMARY"
+            exit 0
+          fi
+          echo "::error::Production releases run on the first Monday of the month (America/Chicago). For a P0 hotfix, run this workflow by hand and enter the ticket in hotfix_ticket."
+          exit 1
+
+  verify:
+    needs: guard
+    uses: ./.github/workflows/ci.yml
+
+  publish:
+    needs: verify
+    runs-on: ubuntu-latest
+    environment: npm-publish
+    permissions:
+      contents: write
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          registry-url: "https://registry.npmjs.org"
+          cache: "npm"
+      # Trusted publishing needs npm 11.5.1 or newer; Node 20 ships an older npm.
+      - run: npm install -g npm@latest
+      - run: npm ci
+      - name: Is this version already on npm
+        id: check
+        run: |
+          set -euo pipefail
+          NAME="$(node -p "require('./package.json').name")"
+          VERSION="$(node -p "require('./package.json').version")"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+          if npm view "$NAME@$VERSION" version >/dev/null 2>&1; then
+            echo "published=true" >> "$GITHUB_OUTPUT"
+            echo "$NAME@$VERSION is already on npm. Nothing to publish." >> "$GITHUB_STEP_SUMMARY"
+          else
+            echo "published=false" >> "$GITHUB_OUTPUT"
+          fi
+      # prepublishOnly runs the build, tsc and the tests again right before the upload.
+      - name: Publish with provenance
+        if: steps.check.outputs.published == 'false'
+        run: npm publish --provenance --access public
+      - name: Tag and create the GitHub Release
+        if: steps.check.outputs.published == 'false'
+        env:
+          GH_TOKEN: ${{ github.token }}
+          VERSION: ${{ steps.check.outputs.version }}
+        run: gh release create "v${VERSION}" --target "$GITHUB_SHA" --title "v${VERSION}" --generate-notes

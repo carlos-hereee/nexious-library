@@ -7,7 +7,7 @@ export type MenuItemProp = {
   name: string;
   label: string;
   value: string;
-  theme?: string;
+  className?: string;
   uid?: string;
   menuItemId?: string;
   url?: string;
@@ -41,7 +41,7 @@ export type MenuProp = {
   href?: string;
   external?: boolean;
   locale?: string;
-  theme?: string;
+  className?: string;
   label?: string;
   value?: string;
 };
@@ -53,10 +53,12 @@ export type UnsplashAsset = {
 // Define your exported types here
 export interface HeaderProps {
   menu: MenuProp[];
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
   ping?: number;
   heading?: string;
   uniqueId?: string;
-  theme?: string;
+  className?: string;
   layout?: string;
   includeHome?: boolean;
   hideIcons?: boolean;
@@ -86,7 +88,7 @@ export interface FooterProps {
   appName?: string;
   title?: string;
   media?: SectionProps;
-  theme?: string;
+  className?: string;
   hero?: AssetProps;
   hoursOfOperation?: PHoursOfOperation;
   links?: FooterLink[];
@@ -95,7 +97,9 @@ export interface FooterProps {
 export interface NavigationProps {
   onClick?: (key?: MenuProp | string) => void;
   menus: string[] | MenuProp[];
-  theme?: string;
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
+  className?: string;
   navItemTheme?: string;
   activeTheme?: string;
   active?: string;
@@ -104,7 +108,7 @@ export type NavbarProps = {
   show: { isActive: boolean; isClose: boolean };
   menu: MenuProp[];
   themeList?: ThemeList[];
-  theme?: string;
+  className?: string;
   active?: string;
   activePath?: string;
   navLayout?: string;
@@ -117,7 +121,7 @@ export type NavbarProps = {
 };
 export interface NavigationToggleProps {
   data: MenuProp;
-  theme?: string;
+  className?: string;
   onSelect: (a: MenuProp) => void;
   language?: MenuItemProp;
 }
@@ -127,3 +131,52 @@ export interface FormNavigationProps {
   heading?: string;
   formOrder?: string[];
 }
+
+// ── StepProgress ─────────────────────────────────────────────────────────────────
+/**
+ * The progress header of a paginated form. Every string arrives already translated, so each form
+ * keeps its own copy and the library ships no English.
+ */
+export type StepProgressProps = {
+  /** Stable step ids, in order. Each is a React key, so they must be unique. */
+  steps: readonly string[];
+  /** Zero based index of the current step. */
+  current: number;
+  /** The visible label for a step id. */
+  labelFor: (stepId: string) => string;
+  /** The accessible name of the step list and of the bar. */
+  progressLabel: string;
+  /** The "Step X of N" sentence for the current step, shown under the bar and announced. */
+  stepOfText: string;
+  /** Appended to the root's classes. */
+  className?: string;
+  /** `root` REPLACES the root's default `nxs-step-progress` class. */
+  classNames?: { root?: string };
+};
+
+// ── ActiveSelectionBar ───────────────────────────────────────────────────────────
+/**
+ * The thin bar that says which item is active ("Studying: Fractions") with a button to change
+ * it, and room for the caller's own controls before that button.
+ */
+export type ActiveSelectionBarProps = {
+  /** Already translated. Rendered as "{label}: " before the value. */
+  label: string;
+  /** The active item, rendered in a <strong>. */
+  value: React.ReactNode;
+  /** The visible text of the change button, already translated. */
+  changeLabel: string;
+  onChange: () => void;
+  /**
+   * The change button's accessible name when its visible text is not enough on its own ("Change"
+   * beside a deck title reads fine on screen and says nothing out of context). Rendered as
+   * aria-label only when set, so a caller that is content with the visible text gets no attribute.
+   */
+  changeAriaLabel?: string;
+  /** The caller's own controls, rendered before the change button inside the actions group. */
+  actions?: React.ReactNode;
+  /** Appended to the root's classes. */
+  className?: string;
+  /** One slot per part. A key that is set REPLACES that part's default class. */
+  classNames?: { root?: string; label?: string; actions?: string; change?: string };
+};

@@ -1,3 +1,12 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
+// -- Search and filter --
+// Search is a specialized FORM control, not a decorated div, which is why everything below
+// reads the same control tokens the Field family got. Before this, the field's height was
+// whatever its own 5px padding and font size added up to, so it sat a few pixels off every
+// Button and Select beside it: the "nothing lines up" complaint this rework exists to fix,
+// and one that no amount of color or radius work touches.
+
 .search-bar-wrapper {
   display: flex;
   justify-content: flex-end;
@@ -7,86 +16,178 @@
   align-items: flex-end;
   flex-wrap: wrap;
   text-align: left;
-  gap: 0.5rem;
-  padding-bottom: 0.5rem;
+  gap: var(--space-small);
+  padding-bottom: var(--space-small);
   position: relative;
 }
 .filter-price {
   display: flex;
-  gap: 0.5rem;
-}
-.dropdown-input {
-  user-select: none;
-  cursor: pointer;
-  border-radius: 0.5rem;
+  gap: var(--space-small);
 }
 
+// The dropdown TRIGGER, so it takes input geometry (a field cut into the surface) rather
+// than button geometry. Hover shifts the border and focus draws the ring: two different
+// signals, because a shared one tells a keyboard user nothing.
+.dropdown-input {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  user-select: none;
+  cursor: pointer;
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  background-color: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  border-radius: var(--control-radius-input);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  &:hover {
+    border-color: var(--main-brand-color);
+    background-color: var(--hover-bg);
+  }
+  @include mixin.focus-ring;
+}
+
+// A menu row, so it is sized by the dense row token instead of a 5px pad. 44px is the WCAG
+// 2.5.5 floor and a filter list is exactly the surface where a too-tight row gets shipped:
+// it looks tidy on a desktop review and is unhittable on a phone.
 .dropdown-item {
+  display: flex;
+  align-items: center;
   cursor: pointer;
-  border-radius: 0.5rem;
-  padding: 5px;
-  cursor: pointer;
+  min-height: var(--row-height-dense);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  border-radius: var(--radius-medium);
+  transition: background-color var(--transition-fast);
+  @include mixin.focus-ring;
 }
 
 .dropdown-item:hover {
-  background-color: #9fc3f870;
+  background-color: var(--hover-bg);
 }
 
+// Selected keeps the old solid fill rather than dropping to a wash: this row is a committed
+// choice, not a hover. --primary-text-dark-mode-color is the token for text sitting ON a
+// brand fill, so the pair cannot drift apart the way #0d6efd and #fff did.
 .dropdown-item.selected {
-  background-color: #0d6efd;
-  color: #fff;
+  background-color: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
 }
 
 .dropdown-tags {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: var(--space-extra-small);
 }
 
+// An applied-filter chip: chip radius, chip padding, and a translucent tint plus a hairline
+// rather than the old opaque #ddd, which was a light-only fill that turned into a pale block
+// on a dark page. Border and no shadow, per the border XOR shadow rule.
 .dropdown-tag-item {
-  background-color: #ddd;
-  padding: 2px 4px;
-  border-radius: 0.5rem;
   display: flex;
   align-items: center;
+  gap: var(--space-extra-small);
+  padding: var(--control-padding-y-small) var(--control-padding-x-small);
+  color: var(--text);
+  background-color: var(--hover-bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
 }
 
 .dropdown-tag-close {
   display: flex;
   align-items: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  &:hover {
+    color: var(--text);
+  }
+  @include mixin.focus-ring;
 }
 
+// The field shell. It is positioned but carries no border of its own: the geometry lives on
+// the input so the focus ring lands on the element that actually takes focus, and so the
+// affordances below can sit INSIDE the field instead of beside it.
 .search-box {
-  padding: 5px;
-  background-color: #eee;
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.search-box input {
+// The two :not() qualifiers are not decoration and must not be simplified away. The reset in
+// vars/reset/_forms.scss styles inputs through `input:not([type="checkbox"]):not([type="radio"])`,
+// which outweighs a plain `.search-box input` on specificity, so without them the reset's
+// standard x padding wins and the reserved gutters below silently do nothing.
+.search-box input:not([type="checkbox"]):not([type="radio"]) {
   width: 100%;
   box-sizing: border-box;
-  padding: 5px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
+  height: var(--control-height);
+  // Both gutters are reserved permanently, whether or not anything is in them. That is the
+  // whole point: a spinner that appears while a query runs, or a clear button that appears
+  // once there is text, would otherwise reflow the query under the user's cursor mid-type.
+  // The gutter is the control's own x padding on each side of a --space-medium icon box.
+  padding: var(--control-padding-y) calc(var(--control-padding-x) * 2 + var(--space-medium));
+  line-height: var(--line-height-tight);
+  background-color: var(--input-bg);
+  color: var(--text);
+  border: 1px solid var(--input-border);
+  border-radius: var(--control-radius-input);
+  transition: border-color var(--transition-fast);
+  &:hover {
+    border-color: var(--main-brand-color);
+  }
+  @include mixin.focus-ring;
 }
+
+// The two in-field slots: a leading search glyph and a trailing slot that holds either the
+// clear button or the loading spinner (never both, and they share one slot so swapping one
+// for the other cannot move anything). Consumers supply the DOM; these only place it.
+.search-box-icon,
+.search-box-action {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--space-medium);
+  height: var(--space-medium);
+  color: var(--text-muted);
+}
+.search-box-icon {
+  inset-inline-start: var(--control-padding-x);
+  // Decoration, so a click on it lands in the field behind rather than swallowing focus.
+  pointer-events: none;
+}
+.search-box-action {
+  inset-inline-end: var(--control-padding-x);
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 0;
+  &:hover {
+    color: var(--text);
+  }
+  @include mixin.focus-ring;
+}
+
 .applied-filter-container {
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  gap: 0.5rem;
+  gap: var(--space-small);
 }
 .applied-filter {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-small);
 }
 .filter-list {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  gap: 0.5rem;
+  gap: var(--space-small);
   div {
     display: flex;
-    gap: 0.5rem;
+    gap: var(--space-small);
   }
 }
 .search {

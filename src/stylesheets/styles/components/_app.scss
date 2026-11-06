@@ -1,4 +1,5 @@
 @use "../../vars/variables/_index.scss" as variables;
+@use "../../vars/mixin/_index.scss" as mixins;
 
 // Backdrop for the self-sufficient DialogOverlay modal. The Dialog inside is position:fixed
 // and lays itself out; this layer only dims the page, sits above content, and catches
@@ -6,31 +7,59 @@
 .dialog-overlay {
   position: fixed;
   inset: 0;
-  z-index: 1000;
-  background: rgba(0, 0, 0, 0.55);
+  // --scrim is the token the design language names for exactly this layer, and unlike the old
+  // rgba(0,0,0,0.55) it has a dark counterpart: a slate-tinted dim on light, plain black on dark
+  // (a slate scrim over a navy page reads as haze rather than as a dimmed page).
+  z-index: var(--z-overlay);
+  background: var(--scrim);
   overflow-y: auto;
+  // The scrim fades rather than snapping, so the page reads as being dimmed BY something instead
+  // of being replaced. An animation and not a transition because this element mounts: there is no
+  // previous value for a transition to run from.
+  animation: fadeIn var(--transition-slow);
+
+  // The global reduced-motion switch shortens animations to 1ms rather than removing them, which
+  // turns a fade into a flash. Naming animation: none here stops it outright and leaves the scrim
+  // simply present, which is the design language's rule (drop motion, keep the end state).
+  @include mixins.reduced-motion {
+    animation: none;
+  }
 }
 
 .dialog {
   position: fixed;
-  border-radius: variables.$border-radius;
+  // A dialog is the largest surface in the concentric radius ladder, so it takes the top step and
+  // the cards and rows inside it step down from here.
+  border-radius: var(--radius-extra-large);
   display: flex;
   flex-direction: column;
-  padding: variables.$rem;
+  padding: var(--space-medium);
   overflow-y: auto;
   top: 10%;
   aspect-ratio: 16/9;
   width: 95%;
-  z-index: 9;
+  z-index: var(--z-raised);
   max-height: 85vh;
   min-height: 60vh;
+  // Level 3 on the elevation ladder. The dialog sets no border, so per the border-XOR-shadow rule
+  // the shadow is what separates it from the scrim, and it has to be the deepest step or the panel
+  // reads as painted onto the dim rather than floating over it.
+  box-shadow: var(--elevation-3);
+  // Enters a step behind the scrim (200ms against the backdrop's 300ms) so the dim is already
+  // settling as the panel lands, which is what makes the two read as one movement. The panel is
+  // interactive the whole time; nothing here gates input.
+  animation: dialogIn var(--transition-base);
+
+  @include mixins.reduced-motion {
+    animation: none;
+  }
 }
 .dialog-header {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   .heading {
     text-align: center;
   }
@@ -40,14 +69,16 @@
   justify-content: flex-end;
   position: sticky;
   top: 3%;
-  z-index: 1;
+  z-index: var(--z-raised);
 }
 .btn-dialog {
   max-width: variables.$small-element-width;
 }
 .dialog-body {
-  padding: variables.$rem;
+  padding: var(--space-medium);
 }
+// CancelDialog passes this as Dialog's own className, so it lands on the SAME element as .dialog
+// and simply re-states the step. It is not a second layer sitting above the dialog.
 .dialog-cancel {
   position: fixed;
   min-height: fit-content;
@@ -56,11 +87,11 @@
   aspect-ratio: auto;
   top: 30%;
   width: 50%;
-  z-index: 10;
+  z-index: var(--z-raised);
 }
 .sections-container {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   grid-template-columns: repeat(3, minmax(0, auto));
   justify-content: center;
   grid-auto-rows: max-content;
@@ -71,7 +102,7 @@
 }
 .section-container {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   grid-template-columns: repeat(3, minmax(0, auto));
   justify-content: center;
   // grid-auto-rows: max-content;

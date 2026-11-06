@@ -1,0 +1,108 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
+// The navigation grammar: item, active, and nothing else.
+//
+// Why this file exists: the design language (5.10 Navigation) ships THREE patterns, a top
+// bar, a left rail and a bottom tab bar, and is explicit that active, hover and focus are
+// each defined once and referenced rather than re-invented per pattern. Before this the top
+// bar said "active" with a 700 weight and an orange underline, the theme popover said
+// "selected" with an orange wash, and three surfaces each hand-wrote their own focus
+// outline against a light-only color. Three answers to one question is the drift.
+//
+// Mixins rather than placeholder selectors because @extend cannot cross a Sass module
+// boundary and the patterns live in separate partials. Nothing here emits CSS on its own,
+// so the file is not forwarded from _index.scss.
+//
+// The one thing deliberately NOT defined here is the count pip: the library already has
+// exactly one, `.ping-count` in styles/assets/_icons.scss, and every pattern below anchors
+// it the same way (see position: relative). Restating it here would create the second
+// definition this file exists to prevent.
+
+// ── Item ────────────────────────────────────────────────────────────────────────
+// The shape every nav item shares whichever pattern it sits in. `position: relative` is
+// load bearing twice over: the active accent is a pseudo-element, and an absolutely
+// positioned `.ping-count` needs a positioned ancestor or it escapes to the page.
+@mixin nav-item {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-small);
+  // WCAG 2.5.5. A nav item is a tap target before it is anything else, so the floor holds
+  // at every width rather than only inside a mobile media query, where a desktop-sized
+  // item and a touch-sized one would be two geometries to keep in step.
+  min-height: var(--tap-target-min);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  // The reset ships `button { width: 100%; max-width: 250px }`, and a nav action rendered
+  // through Button gets no `.btn` class to neutralize it, so a text action stretched to
+  // 250px while the same action rendered through IconButton (which does carry `.btn-icon`)
+  // sized to its content. Both are nav items, so both size to their content here.
+  width: auto;
+  max-width: none;
+  border: 0;
+  border-radius: var(--radius-medium);
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: var(--font-medium);
+  line-height: var(--line-height-tight);
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+
+  // A nav item is a row, not a card, so hover tints rather than lifts or fades. The old
+  // `opacity: 0.85` dimmed the label and its icon together, which reads as "disabled".
+  &:hover {
+    background: var(--hover-bg);
+  }
+
+  @include mixin.focus-ring;
+}
+
+// ── Active ──────────────────────────────────────────────────────────────────────
+// One active treatment: brand accent plus semibold. $edge is the ONLY thing the three
+// patterns may disagree about, because the accent has to run along whichever edge the
+// pattern flows against (bottom on the top bar, left on the rail, top on the tab bar).
+//
+// Two details that look optional and are not. The accent is a pseudo-element rather than
+// a real border so becoming active never changes the item's box and shifts its neighbors.
+// And every branch sets all four offsets plus width and height, so a more specific pattern
+// (`.nav-rail .nav-link[aria-current]`) fully replaces the base edge instead of inheriting
+// half of it and drawing an L.
+@mixin nav-active($edge: bottom) {
+  color: var(--main-brand-color);
+  font-weight: var(--font-semibold);
+
+  &::after {
+    content: "";
+    position: absolute;
+    border-radius: var(--radius-full);
+    background: var(--main-brand-color);
+
+    @if $edge == bottom {
+      // Inset by the item's own horizontal padding so the underline measures the label,
+      // not the hover pill around it.
+      top: auto;
+      right: var(--control-padding-x);
+      bottom: 0;
+      left: var(--control-padding-x);
+      width: auto;
+      height: 2px;
+    } @else if $edge == top {
+      top: 0;
+      right: var(--control-padding-x);
+      bottom: auto;
+      left: var(--control-padding-x);
+      width: auto;
+      height: 2px;
+    } @else if $edge == left {
+      top: var(--space-extra-small);
+      right: auto;
+      bottom: var(--space-extra-small);
+      left: 0;
+      width: 2px;
+      height: auto;
+    } @else {
+      @error "nav-active() takes bottom, top or left, got #{$edge}.";
+    }
+  }
+}

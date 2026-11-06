@@ -8,7 +8,7 @@ import { uniqueId, uniqueRandomList } from "../../utils/data/uniqueId";
 // What these tests lock in:
 //   ① uniqueId runs in a DOM-like env (jest is configured with jsdom) without
 //      throwing. If someone reintroduces `import crypto from "crypto"` and the
-//      Node crypto surface, these tests still pass in Node — but the import
+//      Node crypto surface, these tests still pass in Node, but the import
 //      itself would break browser bundles. So we also assert we never touch
 //      any Node-only symbol by exercising the function through the compiled
 //      path in integration, and by asserting shape/length here.
@@ -18,7 +18,7 @@ import { uniqueId, uniqueRandomList } from "../../utils/data/uniqueId";
 //   ④ Character pool is respected (only allowed chars appear).
 
 describe("uniqueId", () => {
-  const allowed = /^[A-Za-z0-9!@#$%^&*()_+=\[\]{}|;:,.<>?\-]+$/;
+  const allowed = /^[A-Za-z0-9!@#$%^&*()_+=[\]{}|;:,.<>?-]+$/;
 
   it("does not throw in the test environment", () => {
     expect(() => uniqueId()).not.toThrow();
@@ -38,7 +38,7 @@ describe("uniqueId", () => {
 
   it("only produces characters from the known pool", () => {
     // Large-ish sample to catch off-by-ones in the modulo math.
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 50; i += 1) {
       const id = uniqueId(24);
       expect(id).toMatch(allowed);
     }
@@ -50,7 +50,7 @@ describe("uniqueId", () => {
     // stuck at a constant) which is the exact class of regression this test
     // is protecting against.
     const ids = new Set<string>();
-    for (let i = 0; i < 500; i++) ids.add(uniqueId());
+    for (let i = 0; i < 500; i += 1) ids.add(uniqueId());
     expect(ids.size).toBe(500);
   });
 });
@@ -60,7 +60,7 @@ describe("uniqueId urlSafe option (item 28)", () => {
   const urlSafeAllowed = /^[A-Za-z0-9-]+$/;
 
   it("urlSafe ids contain only alphanumerics and dashes", () => {
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 100; i += 1) {
       const id = uniqueId(24, { urlSafe: true });
       expect(id).toMatch(urlSafeAllowed);
     }

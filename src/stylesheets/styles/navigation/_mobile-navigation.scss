@@ -3,7 +3,7 @@
 @use "../../vars/variables/_index.scss" as variables;
 
 .mobile-navigation {
-  display: none;
+  display: flex;
   justify-content: flex-end;
   position: relative;
   // overflow: hidden;
@@ -11,18 +11,45 @@
     float: inline-end;
     flex-direction: column;
     position: absolute;
-    transition: clip-path ease-in-out 700ms;
+    transition: clip-path var(--transition-slow);
     align-items: center;
-    padding: variables.$rem;
+    padding: var(--space-medium);
     min-height: variables.$min-height-section;
-    z-index: 9999;
+    // The drawer is a panel summoned from the nav, so it sits on the dropdown step rather
+    // than the improvised 9999 it used to carry. That number outranked every overlay in
+    // the ladder, so a dialog opened while the drawer was up rendered behind it.
+    z-index: var(--z-dropdown);
     right: 3%;
     top: 100%;
   }
+  // 750ms before, which broke the design language's 300ms ceiling for core-product motion
+  // (5.9). Deliberately NOT wrapped in a reduced-motion override, and the reason is that an
+  // override would buy nothing rather than that it would break something. Measured under
+  // `chrome --force-prefers-reduced-motion`: the kill switch's `animation-delay: -1ms` with
+  // `animation-duration: 1ms` starts this animation already finished, so clip-path reads
+  // `circle(250%)` on the FIRST synchronous frame (against a 0% to 250% wipe with the flag
+  // off). That is the end state instantly, which is exactly what `animation: none` would
+  // produce, and `animationend` still fires at 1ms so Header's listener keeps working.
+  //
+  // An earlier note here claimed an override would "strand it open". It would not: Navbar
+  // computes `isActive ? "open" : isClose ? "closing" : "close"`, so `isClose` never holds
+  // the drawer open, and without an animationend the drawer would fall to "close" and
+  // `display: none`. Leave the rule alone because it already degrades correctly.
   .navigation[data-state="open"] {
     display: flex;
-    animation: circleOpen 750ms ease-in-out forwards;
+    animation: circleOpen var(--transition-slow) forwards;
   }
+  // No duration, so animation-duration resolves to 0s and `forwards` parks the drawer at
+  // `circle(0%)` in the same frame (verified in Chrome; reduced motion only moves it to 1ms,
+  // so there is nothing here for a reduced-motion guard to do).
+  //
+  // The stated reason to leave it instant holds: `.navigation` is `display: flex` with
+  // `flex-direction: column` and a gap, so flipping to `display: block` drops both the gaps
+  // and the centering, and a real duration would play that reflow underneath the wipe. Note
+  // though that the constraint is the `display: block`, not the duration. Nothing reads that
+  // block value (the open and closing attribute selectors never match together, so it only
+  // overrides the base flex), so giving the close a real 300ms wipe is a matter of keeping
+  // the state on flex, not of finding a duration that hides the jump.
   .navigation[data-state="closing"] {
     display: block;
     animation: circleClose ease-in-out forwards;
@@ -34,7 +61,7 @@
     content: "";
     clear: both;
   }
-  @include mixin.devices(tablet) {
-    display: flex;
+  @include mixin.respond-from(tablet) {
+    display: none;
   }
 }

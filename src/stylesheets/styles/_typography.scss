@@ -1,11 +1,13 @@
-@use "../vars/variables/_index.scss" as variables;
-
+// Status TEXT, not a status accent. $danger resolved to --danger-accent-color (crimson) and
+// $success to a compiled green, and neither of those has a dark counterpart, so both messages
+// rendered the light-mode hue on a navy page. --danger-text / --success-text are the paired
+// members of the status sets and flip with the theme.
 .error-message {
-  color: variables.$danger;
+  color: var(--danger-text);
   max-width: 100%;
 }
 .success {
-  color: variables.$success;
+  color: var(--success-text);
   max-width: 100%;
 }
 .heading-container {
@@ -17,7 +19,7 @@
   text-overflow: ellipsis;
 }
 .text-mute {
-  color: variables.$muted;
+  color: var(--text-muted);
 }
 .sub-title {
   text-align: left;
@@ -39,7 +41,7 @@
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   align-items: center;
-  padding: variables.$rem 0;
+  padding: var(--space-medium) 0;
   width: max-content;
 }
 .btn-rating {
@@ -54,7 +56,7 @@
   .cost {
     display: flex;
     justify-content: space-between;
-    border-bottom: 1px dotted variables.$dark;
+    border-bottom: 1px dotted var(--border);
   }
 }
 .heading {
@@ -62,6 +64,8 @@
   text-align: left;
 }
 
+// The keyword `xx-large` is whatever the UA decides it is (about 32px), which is why the class
+// named "3x" and the --text-3x-large token were never actually the same size. It reads the ramp now.
 .size-3x {
-  font-size: xx-large;
+  font-size: var(--text-3x-large);
 }

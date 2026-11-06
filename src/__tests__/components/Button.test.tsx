@@ -16,9 +16,25 @@ describe("Button", () => {
     expect(screen.getByRole("button")).toHaveAttribute("type", "submit");
   });
 
-  it("merges className onto the base class instead of replacing it", () => {
-    render(<Button label="x" theme="btn-main" className="btn-card highlight" />);
-    expect(screen.getByRole("button")).toHaveClass("btn-main", "btn-card", "highlight");
+  it("renders exactly the className it was given when no variant is set", () => {
+    // 4.0.0 contract, and the reason the migration is pixel-neutral: with no variant there is
+    // NO implicit base class, so a caller passing its own design-system classes gets those and
+    // nothing else. That is what the removed `theme` prop did.
+    render(<Button label="x" className="cu-btn cu-btn-primary" />);
+    const button = screen.getByRole("button");
+    expect(button).toHaveClass("cu-btn", "cu-btn-primary");
+    expect(button.className).toBe("cu-btn cu-btn-primary");
+  });
+
+  it("composes variant, size and className in that order", () => {
+    // className last so an equal-specificity consumer rule wins on source order.
+    render(<Button label="x" variant="primary" size="large" className="dialog-footer-action" />);
+    expect(screen.getByRole("button").className).toBe("btn-base btn-primary btn-lg dialog-footer-action");
+  });
+
+  it("renders no class attribute at all when given neither a variant nor a className", () => {
+    render(<Button label="x" />);
+    expect(screen.getByRole("button").getAttribute("class")).toBeNull();
   });
 
   it("calls onClick when clicked", () => {

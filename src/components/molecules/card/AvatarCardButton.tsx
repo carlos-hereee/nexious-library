@@ -3,16 +3,16 @@ import Hero from "@nxs-molecules/assets/Hero";
 
 interface AvatarCardButtonProps {
   user: { avatar: string; name: string };
-  theme?: string;
+  className?: string;
   onClick?: () => void;
   children?: React.ReactNode;
 }
 
-const AvatarCardButton = ({ user, theme, onClick, children }: AvatarCardButtonProps) => {
+const AvatarCardButton = ({ user, className, onClick, children }: AvatarCardButtonProps) => {
   return (
-    <Button theme={theme} onClick={onClick}>
+    <Button className={className} onClick={onClick}>
       {user.avatar ? (
-        <Hero hero={{ url: user.avatar, alt: `${user.name || "no-name"}-avatar"` }} theme="avatar-sm" />
+        <Hero hero={{ url: user.avatar, alt: `${user.name || "no-name"}-avatar"` }} className="avatar-sm" />
       ) : (
         <strong>{user.name || "No name"}</strong>
       )}

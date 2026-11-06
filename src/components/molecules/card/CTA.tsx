@@ -7,22 +7,22 @@ const CTA: React.FC<CTAProps> = (props) => {
   const { cta, viewAsPreview, onClick } = props;
   const icon = cta.icon || "";
   const label = cta.label || "";
-  const theme = cta.theme || "";
+  const className = cta.className || "";
   // console.log("onClick :>> ", onClick);
   if (viewAsPreview) {
     // prevent nesting buttons
     return (
-      <div className={theme || "btn-main btn-cta"}>
+      <div className={className || "btn-main btn-cta"}>
         {icon && <Icon icon={icon} />}
         {label && label}
       </div>
     );
   }
   return icon ? (
-    <IconButton icon={{ icon, label }} theme={theme || "btn-main btn-cta"} onClick={onClick} />
+    <IconButton icon={{ icon, label }} className={className || "btn-main btn-cta"} onClick={onClick} />
   ) : (
     label && (
-      <button type="button" className={theme || "btn-main btn-cta"} onClick={onClick}>
+      <button type="button" className={className || "btn-main btn-cta"} onClick={onClick}>
         {capFirstCharacter(label)}
       </button>
     )

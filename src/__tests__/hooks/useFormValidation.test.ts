@@ -13,7 +13,7 @@ const field = (overrides: Partial<FieldValueProps>): FieldValueProps => ({
   ...overrides,
 });
 
-describe("useFormValidation — checkRequired", () => {
+describe("useFormValidation, checkRequired", () => {
   it("adds an error when a required field is empty", () => {
     const { result } = renderHook(() => useFormValidation({ required: ["username"] }));
 
@@ -22,7 +22,7 @@ describe("useFormValidation — checkRequired", () => {
     });
 
     expect(result.current.validationStatus).toBe("error");
-    expect(result.current.formErrors["username"]).toBe("**Required");
+    expect(result.current.formErrors.username).toBe("**Required");
   });
 
   it("passes when a required field has a value", () => {
@@ -33,7 +33,7 @@ describe("useFormValidation — checkRequired", () => {
     });
 
     expect(result.current.validationStatus).toBe("validated");
-    expect(result.current.formErrors["username"]).toBeUndefined();
+    expect(result.current.formErrors.username).toBeUndefined();
   });
 
   it("does not flag non-required empty fields", () => {
@@ -44,11 +44,11 @@ describe("useFormValidation — checkRequired", () => {
     });
 
     expect(result.current.validationStatus).toBe("validated");
-    expect(result.current.formErrors["bio"]).toBeUndefined();
+    expect(result.current.formErrors.bio).toBeUndefined();
   });
 });
 
-describe("useFormValidation — checkEmail", () => {
+describe("useFormValidation, checkEmail", () => {
   it("adds an error for an invalid email address", () => {
     const { result } = renderHook(() => useFormValidation({}));
 
@@ -57,7 +57,7 @@ describe("useFormValidation — checkEmail", () => {
     });
 
     expect(result.current.validationStatus).toBe("error");
-    expect(result.current.formErrors["email"]).toMatch(/valid email/i);
+    expect(result.current.formErrors.email).toMatch(/valid email/i);
   });
 
   it("passes a valid email address", () => {
@@ -68,7 +68,7 @@ describe("useFormValidation — checkEmail", () => {
     });
 
     expect(result.current.validationStatus).toBe("validated");
-    expect(result.current.formErrors["email"]).toBeUndefined();
+    expect(result.current.formErrors.email).toBeUndefined();
   });
 
   it("skips email validation when the field is empty (caught by required instead)", () => {
@@ -79,7 +79,7 @@ describe("useFormValidation — checkEmail", () => {
     });
 
     // error should be the required message, not the email format message
-    expect(result.current.formErrors["email"]).toBe("**Required");
+    expect(result.current.formErrors.email).toBe("**Required");
   });
 
   it("does not validate email format on non-email fields", () => {
@@ -90,11 +90,11 @@ describe("useFormValidation — checkEmail", () => {
     });
 
     expect(result.current.validationStatus).toBe("validated");
-    expect(result.current.formErrors["username"]).toBeUndefined();
+    expect(result.current.formErrors.username).toBeUndefined();
   });
 });
 
-describe("useFormValidation — validateForm status", () => {
+describe("useFormValidation, validateForm status", () => {
   it("sets status to 'error' when there are validation errors", () => {
     const { result } = renderHook(() => useFormValidation({ required: ["name"] }));
 
@@ -140,7 +140,7 @@ describe("useFormValidation — validateForm status", () => {
   });
 });
 
-describe("useFormValidation — checkMatch", () => {
+describe("useFormValidation, checkMatch", () => {
   it("adds an error when field value does not match the expected value", () => {
     const { result } = renderHook(() =>
       useFormValidation({ match: [{ name: "confirmPassword", value: "secret123" }] })
@@ -151,7 +151,7 @@ describe("useFormValidation — checkMatch", () => {
     });
 
     expect(result.current.validationStatus).toBe("error");
-    expect(result.current.formErrors["confirmPassword"]).toMatch(/must match/i);
+    expect(result.current.formErrors.confirmPassword).toMatch(/must match/i);
   });
 
   it("passes when field value matches", () => {
@@ -167,7 +167,7 @@ describe("useFormValidation — checkMatch", () => {
   });
 });
 
-describe("useFormValidation — checkUniqueness", () => {
+describe("useFormValidation, checkUniqueness", () => {
   it("adds an error when field value already exists in the unique list", () => {
     const { result } = renderHook(() =>
       useFormValidation({ unique: [{ name: "appName", list: ["myapp", "otherapp"] }] })
@@ -178,7 +178,7 @@ describe("useFormValidation — checkUniqueness", () => {
     });
 
     expect(result.current.validationStatus).toBe("error");
-    expect(result.current.formErrors["appName"]).toMatch(/already exist/i);
+    expect(result.current.formErrors.appName).toMatch(/already exist/i);
   });
 
   it("passes when the value is not in the unique list", () => {

@@ -7,7 +7,7 @@ const meta: Meta<typeof IconButton> = {
   tags: ["autodocs"],
   argTypes: {
     onClick: { action: "clicked" },
-    theme: { control: "text" },
+    className: { control: "text" },
     title: { control: "text" },
     isDisable: { control: "boolean" },
     ping: { control: "number" },
@@ -43,7 +43,7 @@ export const Themed: Story = {
   args: {
     title: "Edit",
     icon: { icon: "edit" },
-    theme: "btn-primary",
+    className: "btn-primary",
   },
 };
 

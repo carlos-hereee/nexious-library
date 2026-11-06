@@ -15,7 +15,7 @@
   background-color: variables.$dark;
   color: variables.$light;
 }
-// dark-mode — paints from the token layer so the wrapper and its token-driven descendants
+// dark-mode, paints from the token layer so the wrapper and its token-driven descendants
 // share one dark surface/text (the .dark-mode selector also reassigns those tokens in
 // vars/_tokens.scss). Mirrors how .light-mode below is byte-identical to the :root defaults.
 .dark-mode {
@@ -34,18 +34,29 @@
   background-color: variables.$light-secondary;
   color: variables.$dark;
 }
-// theme light mode — var(--surface)/var(--text) resolve to #fff / #2c3e50 at :root, the
+// theme light mode, var(--surface)/var(--text) resolve to #fff / #2c3e50 at :root, the
 // same values $light-mode / $dark-mode held, so this is a no-op in light mode while letting
 // the same rule pick up dark values when nested under a dark-mode subtree.
 .light-mode {
   background-color: var(--surface);
   color: var(--text);
 }
+// The default panel paint for template/Dialog (`className || "alt-light-mode"`), which is why
+// this rule matters more than its name suggests: every library dialog that does not pass a
+// theme lands here, as do several of nexious-client's. It was a #ddddddfe fill under #2c3e50
+// text, a light-only pair with no dark counterpart, so a dialog opened in dark mode rendered a
+// pale gray card floating on a navy page. --surface and --text flip with the theme, and at
+// :root they resolve to white over the same slate the old pair used, so the only light-mode
+// difference is the panel losing its gray cast.
 .alt-light-mode {
-  background-color: variables.$light-mode-alt;
-  color: variables.$dark-mode;
+  background-color: var(--surface);
+  color: var(--text);
+  // :disabled matches form controls only, so this branch is for a Button carrying the theme,
+  // never for the dialog element itself. --hover-bg is the library's neutral inert tint; the
+  // old rule painted a DARK gray here, which reads as a deliberate state change rather than as
+  // unavailable, and inverted the text contrast along with it.
   &:disabled {
-    background-color: variables.$dark-mode-alt;
-    color: variables.$faded;
+    background-color: var(--hover-bg);
+    color: var(--text-muted);
   }
 }

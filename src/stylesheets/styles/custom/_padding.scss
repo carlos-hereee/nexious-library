@@ -1,16 +1,20 @@
+// -- Spacing utilities --
+// The names carry a legacy 1/2 numbering (.mt-2 is two steps, not 2rem by definition); the
+// values now point at the scale so that numbering means "steps of the spacing scale" rather
+// than a raw rem that drifts from the padding around it.
 .pad-t {
-  padding-top: 1rem;
+  padding-top: var(--space-medium);
 }
 // margin spacing
 .m {
-  margin: 1rem;
+  margin: var(--space-medium);
 }
 .mt-2 {
-  margin-top: 2rem;
+  margin-top: var(--space-extra-large);
 }
 .mb-2 {
-  margin-bottom: 2rem;
+  margin-bottom: var(--space-extra-large);
 }
 .m2 {
-  margin: 2rem;
+  margin: var(--space-extra-large);
 }

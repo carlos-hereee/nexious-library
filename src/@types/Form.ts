@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import type { KeyboardEvent } from "react";
 import type { MenuItemProp } from "nxs-navigation";
 import type { KeyStringProp, OnchangeProps } from "custom-props";
 
@@ -55,6 +56,40 @@ export type FieldDateTimeProps = {
   error?: string;
   formMessage?: string;
 };
+// The date trigger plus its calendar popover. Label, message and the error node are the shell's
+// job now, so they are not on this type; only what the control itself needs is.
+export type FieldDateProps = {
+  name: string;
+  value: string;
+  onChange?: (e: string) => void;
+  placeholder?: string;
+  isDisabled?: boolean;
+  error?: string;
+  // Opt back in to the old behavior where merely rendering the field emitted today's date.
+  // OFF by default: with it on, an optional date field can never be left blank.
+  defaultToToday?: boolean;
+};
+// One time control (native <input type="time">). `list` renders a <datalist> of suggestions on
+// that same input, so a constrained slot set stays ONE control rather than becoming two.
+export type FieldTimeProps = {
+  name: string;
+  value: string;
+  onChange?: (e: string) => void;
+  isDisabled?: boolean;
+  error?: string;
+  list?: OptionProps[];
+};
+// Serves both "date-day" and "date-week". `dayLabels` localizes the seven visible labels; the
+// stored VALUE stays the English day name, because that is what consumers already have saved.
+export type FieldDayProps = {
+  name: string;
+  value: string;
+  onChange?: (e: string) => void;
+  placeholder?: string;
+  isDisabled?: boolean;
+  error?: string;
+  dayLabels?: string[];
+};
 export type AuthFieldProp = {
   name: string;
   onChange: (value: string) => void;
@@ -86,6 +121,8 @@ export interface FieldCountSchemaProps {
 export type FormProps = {
   // required props
   initialValues: { [key: string]: FormInitialValue };
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
   // optional
   // Applied to the <form> element's id when provided (handy for testing/aria).
   // Optional because Form works without it; was previously required but unused.
@@ -94,7 +131,7 @@ export type FormProps = {
   previewLabel?: string;
   responseError?: string;
   submitLabel?: string;
-  theme?: string;
+  className?: string;
   submitIcon?: string;
   cancelLabel?: string;
   hideLabels?: boolean;
@@ -108,6 +145,24 @@ export type FormProps = {
   clearSelection?: { [key: string]: boolean };
   schema?: FormSchemaProps;
   fieldHeading?: KeyStringProp;
+  // A node rendered beside a TOP LEVEL field's label, keyed by field NAME (the key in
+  // initialValues, which is what a consumer's form config already speaks), never by the generated
+  // fieldId. Entry and multiply group fields ignore it on purpose: a group repeats the same field
+  // names once per slot, so one node per name could only be duplicated into every slot or land on
+  // an arbitrary one. The library attaches no meaning to the node. A consumer that leaves this off
+  // gets the DOM it gets today, byte for byte.
+  fieldAddons?: Record<string, React.ReactNode>;
+  // A handle to the cards of every repeating group, for a consumer that must read or fill cards
+  // the DOM cannot reach: Form renders only the ACTIVE card of a group, and a card's fields reuse
+  // names (title, body) that top level fields also use, so cards are addressed by group name and
+  // card key only. The handle is set while Form is mounted and nulled on unmount. A consumer that
+  // leaves this off gets the DOM and the submit payload it gets today, byte for byte.
+  entriesRef?: React.MutableRefObject<FormEntriesHandle | null>;
+  // Cards per group name, a group that is off counting 0. Called once after Form seeds its
+  // entries, then whenever a group is turned on or off or a card is added or removed (appends
+  // through entriesRef included). Never called for a text edit, and calling it never re-renders
+  // Form.
+  onEntriesChange?: (summary: Record<string, number>) => void;
   populateLink?: { [key: string]: { word: string; link: string }[] };
   labels?: KeyStringProp;
   placeholders?: KeyStringProp;
@@ -119,11 +174,30 @@ export type FormProps = {
   onCancel?: () => void;
   onViewPreview?: (e: any) => void;
 };
+// What FormProps.entriesRef points at. Groups are named by their `groupName` (sections), never by
+// the toggle field that opens them (hasSections). A card's position is its place in the group's
+// insertion order, the same order the submit payload and the entry strip use. Only the cards of a
+// group that is ON count: a group turned off reads as no cards, takes no writes and takes no
+// appends, exactly as the submit leaves it out.
+export interface FormEntriesHandle {
+  // Every declared group, every card in order, each card's values keyed by field name, read from
+  // Form's state as it is now (not as it was at mount).
+  readEntries: () => Record<string, Array<{ key: string; values: Record<string, FormInitialValue> }>>;
+  // Sets the named fields of the keyed cards in one state update, repainting the active card's
+  // inputs. Unknown keys and field names are skipped. Returns the keys written.
+  writeEntries: (
+    groupName: string,
+    updates: Array<{ key: string; values: Record<string, FormInitialValue> }>
+  ) => string[];
+  // Adds one card per item, its named fields filled, through the same path as the group's own add
+  // button, stopping at the group's `max`. The active card does not change. Returns the new keys.
+  appendEntries: (groupName: string, items: Array<Record<string, FormInitialValue>>) => string[];
+}
 export type InputCheckBoxProps = {
   name: string;
   value: boolean;
   label?: string;
-  theme?: string;
+  className?: string;
   error?: string;
   type?: string;
   placeholder?: string;
@@ -141,7 +215,7 @@ export interface NumberInputProps {
   name: string;
   value: number;
   label?: string;
-  theme?: string;
+  className?: string;
   error?: string;
   type?: string;
   placeholder?: string;
@@ -159,7 +233,7 @@ export type InputProps = {
   name: string;
   value?: string;
   label?: string;
-  theme?: string;
+  className?: string;
   error?: string;
   type?: string;
   placeholder?: string;
@@ -170,8 +244,26 @@ export type InputProps = {
   isDisabled?: boolean;
   onChange?: (value: string) => void;
   onBlur?: () => void;
+  onKeyDown?: (event: KeyboardEvent<HTMLInputElement>) => void;
+  autoComplete?: string;
   formMessage?: string;
 };
+// `value` is the COMMITTED search, not what is being typed: SearchBar holds the typed text itself and
+// calls `onChange` after the pause. `name` is the input id, so it must be unique per mount. `label` is
+// required because a placeholder disappears the moment someone types; `labelClassName` defaults to
+// visually hidden, so pass one to show it.
+export interface SearchBarProps {
+  name: string;
+  label: string;
+  value: string;
+  onChange: (value: string) => void;
+  placeholder?: string;
+  className?: string;
+  inputClassName?: string;
+  labelClassName?: string;
+  debounceMs?: number;
+  isDisabled?: boolean;
+}
 export type FieldInitialValueProps = {
   value: FormInitialValue | { [key: string]: FormInitialValue }[];
   name: string;
@@ -214,13 +306,15 @@ export type FieldValueProps = {
 export interface PaginateFormProps {
   // required props
   paginate: FormProps[];
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
   page?: number;
   navigationHeading?: string;
   // optional props
   order?: string[]; // defaults set to first form on list
   hideNavigation?: boolean;
   responseError?: string;
-  theme?: string;
+  className?: string;
   previewPage?: React.JSX.Element | null;
   onFormSubmit?: (e: unknown) => void;
   onCancel?: () => void;
@@ -267,7 +361,7 @@ export interface FormFieldProps {
   label: string;
   type: string;
   fieldId: string;
-  theme?: string;
+  className?: string;
   selected?: string;
   hideLabels?: boolean;
   confirmRemoval?: boolean;
@@ -288,23 +382,66 @@ export interface FormFieldProps {
   dataList?: { [key: string]: MenuItemProp[] };
   countSchema?: FieldCountSchemaProps[];
   fieldHeading?: { [key: string]: string };
+  // Rendered by FieldShell beside this field's label (see FieldShellProps.addon). Form sets it from
+  // fieldAddons; FormField's entry branch deliberately does not forward it into a group's slots.
+  addon?: React.ReactNode;
   handleChange: (value: FormInitialValue, fieldId?: string) => void;
   setConfirmRemovals?: (key: boolean) => void;
   handleCheckbox?: (key: OnchangeProps) => void;
   onRemovalClick?: (groupName: string, idx: number) => void;
 }
+// The one entry switcher. `entries` is the whole group, not just the active slot, because the
+// tile content is derived from each slot's own data (its upload, or its first text value).
+export interface EntryNavigatorProps {
+  entries: FieldEntryProps;
+  activeEntry: string;
+  max?: number;
+  isDisabled?: boolean;
+  railLabel?: string;
+  // Names the thing being switched between, for the accessible label ("Image 3 of 7"). Defaults
+  // to "Item" because the switcher is no longer image-only; a store-hours group is not images.
+  itemNoun?: string;
+  // "rail" is the vertical column beside a large hero (the catalog); "strip" is the horizontal
+  // row above the fields (everything else).
+  orientation?: "rail" | "strip";
+  // Consumer override for a tile's text, consulted only when the slot's own data yields nothing.
+  getTileLabel?: (key: string, index: number) => string;
+  onSelect: (sharedKey: string) => void;
+}
+/** @deprecated Renamed to EntryNavigatorProps when the numbered and thumbnail switchers merged. */
+export type EntryThumbnailRailProps = EntryNavigatorProps;
 export interface LabelProps {
   label: string;
   name: string;
-  theme?: string;
+  className?: string;
   error?: string;
   message?: string;
+}
+// The one field layout: label, control, optional help, error. `error` is rendered by the shell
+// and must NOT also be passed to a Label inside it, or two nodes share the `${name}-error` id
+// that every control's aria-describedby points at.
+export interface FieldShellProps {
+  name: string;
+  children: React.ReactNode;
+  label?: string;
+  hideLabel?: boolean;
+  error?: string;
+  message?: string;
+  help?: string;
+  className?: string;
+  // An optional node placed beside the label: the shell renders `div.field-label-row` with the
+  // label first and the node last inside `span.field-addon`, pushed to the end of the row. It is a
+  // SIBLING of the <label>, never a child, so pressing it does not focus the control and the
+  // control's accessible name stays the label text. With hideLabel the label is still rendered
+  // (sr-only) and still names the control, and the addon still shows. Left off, the shell renders
+  // exactly what it rendered before the slot existed, with no row wrapper.
+  addon?: React.ReactNode;
 }
 export interface UploadFileProps {
   input: InputProps;
   label: string;
   value: File | string;
-  theme?: string;
+  className?: string;
   hideLabels?: boolean;
   selectLabel?: string;
   error?: string;
@@ -313,7 +450,7 @@ export interface UploadFileProps {
 }
 export interface TextAreaProps {
   input: InputProps;
-  theme?: string;
+  className?: string;
   error?: string;
   hideLabels?: boolean;
   formMessage?: string;
@@ -322,12 +459,18 @@ export interface SelectProp {
   name: string;
   list: OptionProps[];
   active?: string;
-  theme?: string;
+  className?: string;
   hideLabels?: boolean;
   label?: string;
   error?: string;
   clearSelection?: boolean;
   isDisabled?: boolean;
+  // Set when a FieldShell above this control owns the label and the `${name}-error` node. The
+  // control then renders neither, and drops its fallback aria-label so the shell's real (possibly
+  // visually hidden) <label htmlFor> is what names it. Two nodes sharing the error id would make
+  // aria-describedby ambiguous, and a leftover aria-label would beat the real label and announce
+  // the raw field name. Standalone Select leaves this off and keeps owning all three.
+  inShell?: boolean;
   formMessage?: string;
   // Placeholder shown as the disabled first option when nothing is selected.
   // Defaults to "Choose Selection"; pass a localized string to avoid hardcoded English.

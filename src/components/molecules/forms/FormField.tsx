@@ -1,11 +1,13 @@
 import { Button, ButtonCancel } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
-import { IconButton, Loading } from "@nxs-molecules";
+import { Loading } from "@nxs-molecules";
+import { EntryFieldContext, buildEntryFieldScope } from "@nxs-utils/form/entryFieldContext";
 import Field from "./Field";
+import EntryNavigator from "./EntryNavigator";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { fieldHeading, name, isEntry, entries, entry, fieldId } = props;
+  const { fieldHeading, name, isEntry, entries, entry, fieldId, disableForm } = props;
 
   if (isEntry && entry && entries) {
     const { activeEntry, confirmRemoval } = props;
@@ -29,28 +31,54 @@ const FormField = (props: FormFieldProps) => {
       console.error("FormField: groupName is required for entry/multiply fields");
       return <Loading />;
     }
-    // onMultiply / canMultiply / canRemove are optional capabilities — the JSX below already
+    // onMultiply / canMultiply / canRemove are optional capabilities, the JSX below already
     // guards on each ({onMultiply && ...}, {canMultiply && ...}, {canRemove && ...}), so a
     // missing or false value simply hides that control. No throw needed.
 
-    return (
-      <div className="container" id={fieldId}>
-        {entry.max && entry.max > 0 && (
-          <div className="button-container">
-            {Array.from(Array(entry.max), (_, n) => n + 1).map((num) => (
-              <IconButton
-                key={num}
-                icon={{ icon: `${num}`, isNum: true }}
-                theme={activeIdx === num - 1 ? "btn-active highlight" : "highlight"}
-                isDisable={targetList.length < num}
-                onClick={() => setActiveEntry && setActiveEntry({ [groupName]: targetList[num - 1] })}
-              />
-            ))}
-          </div>
-        )}
+    // A group whose every field is an upload (the merch catalog) is a gallery: the active image
+    // renders large with the switcher as a vertical rail beside it. Every other group puts the
+    // switcher as a horizontal strip above the fields. Derived from the group's own field config,
+    // so a consumer opts in by declaring the field types it already declares. The length guard
+    // matters because [].every() is true, and an empty group has no gallery to show.
+    //
+    // What changed: isGallery now chooses only the LAYOUT. It used to choose between two entirely
+    // different switcher components, one showing thumbnails and one showing numbered boxes.
+    const isGallery = targetEntry.length > 0 && targetEntry.every((field) => field.type === "file");
+    // `addon` is reset AFTER the spreads on purpose. `props` is the group's own FormFieldProps and
+    // would otherwise carry the consumer's node for this field name into every slot of the group.
+    // Addons belong to top level fields (see FormProps.fieldAddons); a repeating group has no single
+    // label for one to sit beside.
+    //
+    // The provider scopes every control's DOM id to this card. It renders no element, so the only
+    // markup a card changes is its ids, and a top level field below never sees it. See useFieldDomId.
+    const fields = (
+      <EntryFieldContext.Provider value={buildEntryFieldScope(groupName, activeIdx)}>
         {targetEntry.map((p) => (
-          <Field key={p.fieldId} {...props} {...p} handleChange={(e) => handleChange && handleChange(e, p.fieldId)} />
+          <Field
+            key={p.fieldId}
+            {...props}
+            {...p}
+            addon={undefined}
+            handleChange={(e) => handleChange && handleChange(e, p.fieldId)}
+          />
         ))}
+      </EntryFieldContext.Provider>
+    );
+
+    return (
+      <div className={isGallery ? "container entry-gallery" : "container"} id={fieldId}>
+        {isGallery ? <div className="entry-gallery-main">{fields}</div> : null}
+        <EntryNavigator
+          entries={entries}
+          activeEntry={activeEntry}
+          max={entry.max}
+          isDisabled={disableForm}
+          itemNoun={isGallery ? "Image" : "Entry"}
+          orientation={isGallery ? "rail" : "strip"}
+          railLabel={onMultiply?.name || groupName}
+          onSelect={(sharedKey) => setActiveEntry && setActiveEntry({ [groupName]: sharedKey })}
+        />
+        {!isGallery ? fields : null}
         {onMultiply && (
           <div className="buttons-container">
             {canRemove && onRemovalClick && (

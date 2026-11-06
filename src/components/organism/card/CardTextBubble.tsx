@@ -2,20 +2,20 @@ import { Hero, Rating } from "@nxs-molecules/index";
 import { TextBubble } from "@nxs-atoms/index";
 import type { TextBubbleProps } from "nxs-assets";
 
-const CardTextBubble: React.FC<TextBubbleProps> = ({ hero, data, theme, children, sender }) => {
+const CardTextBubble: React.FC<TextBubbleProps> = ({ hero, data, className, children, sender }) => {
   return (
-    <div className={theme ? `${theme} card-text-bubble` : "card-text-bubble"}>
+    <div className={className ? `${className} card-text-bubble` : "card-text-bubble"}>
       {hero ? (
         <Hero
           hero={hero}
-          theme={
+          className={
             sender
-              ? `card-text-sender ${hero.theme ? hero.theme : "user-hero"}`
-              : `${hero.theme ? hero.theme : "user-hero"}`
+              ? `card-text-sender ${hero.className ? hero.className : "user-hero"}`
+              : `${hero.className ? hero.className : "user-hero"}`
           }
         />
       ) : (
-        // <UserCard user={hero} hideLabels theme={sender ? "card-text-sender" : undefined} />
+        // <UserCard user={hero} hideLabels className={sender ? "card-text-sender" : undefined} />
         <div className={sender ? "card-text-sender" : undefined} />
       )}
       {typeof data.rating === "number" ? (

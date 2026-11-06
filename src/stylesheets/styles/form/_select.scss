@@ -1,26 +1,36 @@
-@use "../../vars/variables/_index.scss" as variables;
+@use "../../vars/mixin/_index.scss" as mixin;
 
-// add basic styling
 .select-wrapper {
   display: flex;
   justify-content: flex-start;
-  border-radius: variables.$border-radius;
+  border-radius: var(--control-radius-input);
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-small);
   width: 100%;
 }
+
+// Hover and focus used to render the SAME outline here, which is an accessibility defect rather
+// than drift: a keyboard user could not distinguish "this is focused" from "a mouse happened to
+// be over it", and a mouse user got a focus-looking ring on everything they passed. They are now
+// two different signals. Hover shifts the border and adds the hover tint; focus is the library's
+// one focus ring, from the mixin, so this control cannot drift away from every other control.
 .select {
   display: flex;
   align-items: center;
   justify-content: space-between;
   position: relative;
-  outline: 1px solid variables.$faded;
-  border-radius: variables.$border-radius;
   width: 100%;
-  &:focus {
-    outline: 1px solid variables.$dark-mode;
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  border: 1px solid var(--input-border);
+  border-radius: var(--control-radius-input);
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  &:hover:not(:disabled) {
+    border-color: var(--main-brand-color);
+    background-color: var(--hover-bg);
   }
-  &:hover {
-    outline: 1px solid variables.$dark-mode;
+  @include mixin.focus-ring;
+  &:disabled {
+    cursor: not-allowed;
   }
 }

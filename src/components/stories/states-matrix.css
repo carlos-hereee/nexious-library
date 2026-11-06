@@ -1,0 +1,156 @@
+/* Layout for the Storybook states matrices and the control-alignment proof.
+ *
+ * It lives here, outside src/stylesheets, on purpose. The build compiles that whole directory
+ * into dist/css, so anything placed there ships to every consumer; this is review scaffolding
+ * and belongs to Storybook alone. Only "dist" is published, and stories are excluded from it.
+ *
+ * No inline styles in the story files (CLAUDE.md rule 13), and more importantly: a matrix whose
+ * states were faked with inline styles would prove nothing. The point is to make the component's
+ * REAL rules fire. */
+
+.sb-matrix {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-large);
+  padding: var(--space-medium);
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+.sb-matrix-title {
+  margin: 0;
+  font-size: var(--text-large);
+  font-weight: var(--font-semibold);
+}
+
+.sb-matrix-note {
+  margin: 0;
+  max-width: 60ch;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+/* Rows are field types, columns are states. One grid so a height difference between any two
+   cells is visible as a misaligned row rather than something you have to measure. */
+.sb-matrix-grid {
+  display: grid;
+  grid-template-columns: max-content repeat(var(--sb-columns, 6), minmax(180px, 1fr));
+  gap: var(--space-medium);
+  align-items: start;
+  overflow-x: auto;
+}
+
+.sb-matrix-heading {
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+.sb-matrix-rowlabel {
+  align-self: center;
+  font-size: var(--text-small);
+  font-weight: var(--font-semibold);
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.sb-matrix-cell {
+  min-width: 0;
+}
+
+/* The dark half renders on the same page as the light half, not behind a toggle. The library's
+   dark theme is produced entirely by token reassignment, so a component that hardcoded a color
+   instead of reading a token only reveals itself side by side with its light twin. */
+.sb-matrix-dark {
+  background-color: var(--bg);
+  color: var(--text);
+  border-radius: var(--radius-large);
+}
+
+/* ── The alignment proof ──
+   Controls sit on a background of 4px rules. If every control resolves to the same height, every
+   top and bottom edge lands on a rule, and that is readable at a glance in a way no checklist is. */
+.sb-alignment {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: var(--space-medium);
+  padding: var(--space-large);
+  background-color: var(--bg);
+  background-image: repeating-linear-gradient(
+    to bottom,
+    var(--border) 0,
+    var(--border) 1px,
+    transparent 1px,
+    transparent 4px
+  );
+}
+
+.sb-alignment-item {
+  min-width: 160px;
+}
+
+.sb-alignment-legend {
+  margin: 0 0 var(--space-small);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+
+/* ── The resilience axes ──
+   Long strings, RTL and zero/one/many share one property: the component looks correct until its
+   container has an EDGE to overflow. So every specimen sits in a frame with a visible boundary
+   and a real width cap. Without the frame a blown-out row just reads as "wide" and the reviewer
+   has nothing to compare it against.
+
+   The frame deliberately does NOT scroll. Giving it overflow-x would turn "the content escaped
+   its card" into "there is a scrollbar", which is a much quieter signal and is exactly the
+   failure this matrix exists to make loud. min-width: 0 is what keeps the frame at its declared
+   size so the content visibly escapes it instead of stretching it. */
+.sb-frame {
+  min-width: 0;
+  padding: var(--space-small);
+  border: 1px dashed var(--border);
+  border-radius: var(--radius-medium);
+  background-color: var(--surface);
+}
+
+/* 320px is a phone at its narrowest. Every missing shrink floor and every nowrap on user text
+   shows up here first, and several of them show up ONLY here. */
+.sb-frame-narrow {
+  max-width: 320px;
+}
+
+.sb-frame-label {
+  margin: 0 0 var(--space-small);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+
+/* LTR and RTL of the same specimen, side by side and never behind a toggle. A mirrored
+   affordance is only obvious against its unmirrored twin: on its own, a chevron pointing the
+   wrong way reads as a deliberate design choice. */
+.sb-pair {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-medium);
+  align-items: start;
+}
+
+.sb-stack {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  min-width: 0;
+}
+
+/* The theme popover is absolutely positioned against its trigger, so a specimen of it needs a
+   positioned box tall enough to hold the open list or the next section renders on top of it. */
+.sb-popover-slot {
+  position: relative;
+  min-height: 14rem;
+}

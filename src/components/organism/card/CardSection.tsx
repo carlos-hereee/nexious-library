@@ -3,10 +3,10 @@ import { Hero } from "@nxs-molecules";
 import type { CardSectionProps } from "nxs-card";
 
 const CardSection: React.FC<CardSectionProps> = (props) => {
-  const { hero, hideReadMore, theme, data } = props;
+  const { hero, hideReadMore, className, data } = props;
   return (
-    <div className={`card-section ${theme || ""}`}>
-      {hero && <Hero hero={hero} theme={hero.theme} />}
+    <div className={`card-section ${className || ""}`}>
+      {hero && <Hero hero={hero} className={hero.className} />}
       {hideReadMore ? data && <p className="text-center">{data}</p> : data && <ReadMore data={data} uid="header.uid" />}
     </div>
   );

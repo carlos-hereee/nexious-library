@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { Hero } from "@nxs-molecules";
 import type { UploadFileProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { selectLabel, label, hideLabels, onSelect, theme, value, formMessage, input, error } = props;
+  const { selectLabel, label, hideLabels, onSelect, className, value, formMessage, input, error } = props;
   const { name, isDisabled } = input;
+  const domId = useFieldDomId(name);
   // required props
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUploaderRef = useRef<HTMLInputElement>(null);
@@ -47,7 +49,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
   //   return <ErrorMessages errors={errors} component="Upload file" />;
   // }
   return (
-    <div className={`field-upload ${theme || ""}`}>
+    <div className={`field-upload ${className || ""}`}>
       <div className="field-upload-field">
         {!hideLabels && <Label name={name} label={label} error={error} message={formMessage} />}
         <input
@@ -56,7 +58,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           accept="image/*"
           name={name}
           ref={imageUploaderRef}
-          id={name}
+          id={domId}
           // The input is visually hidden behind a custom trigger button, so it still needs
           // an accessible name of its own for screen readers and file-picker tooling.
           aria-label={label || "Choose a file"}
@@ -73,13 +75,13 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
       </div>
       <div className="preview-hero-container">
         <span>Image Preview</span>
-        {previewImage && <Button label="x" onClick={handleRemoveImage} theme="btn-cancel preview-cancel" />}
+        {previewImage && <Button label="x" onClick={handleRemoveImage} className="btn-cancel preview-cancel" />}
         <Hero
           hero={{ url: previewImage, alt: `${name} image value` }}
           imageRef={imageRef}
           isDisable={isDisabled}
           onImageClick={imageClick}
-          theme="preview-hero"
+          className="preview-hero"
         />
       </div>
     </div>

@@ -1,5 +1,8 @@
 @use "./variables";
 @use "./tokens";
+// After tokens on purpose: the control layer is built ON the palette and scale that
+// _tokens.scss defines (its radius and focus tokens point at them).
+@use "./control";
 @use "./mixin";
 @use "./reset";
 @use "./keyframes";

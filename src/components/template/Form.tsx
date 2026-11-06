@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useValues } from "@nxs-utils/hooks/useFormValues";
 import { DownArrow, IconButton, SubmitButton, UpArrow } from "@nxs-molecules";
 import { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
-import type { FieldValueProps, FormInitialValue, FormProps } from "nxs-form";
+import type { FieldValueProps, FormEntriesHandle, FormInitialValue, FormProps, UseValuesApi } from "nxs-form";
 import FormField from "@nxs-molecules/forms/FormField";
 import ButtonCancel from "@nxs-atoms/buttons/ButtonCancel";
 import { formatFieldEntry, formatInitialFormValues } from "@nxs-utils/form/formatForm";
@@ -18,11 +18,122 @@ import { ErrorMessage } from "@nxs-atoms";
 import { scrollToError } from "@nxs-utils/app/scrollToElement";
 import { useScroll } from "@nxs-utils/hooks/useScroll";
 
+// ── Entries handle ──
+// FormProps.entriesRef and FormProps.onEntriesChange. Both are opt in: a form passing neither
+// never reaches anything below, so its DOM and its submit payload stay exactly what they were.
+
+// The slice of Form state the handle and the summary read. Kept in a ref (see latestStateRef in
+// Form) because the handle is called from a consumer's own events and effects, outside any render.
+type EntriesState = Pick<UseValuesApi, "values" | "entryValues" | "activeEntry" | "addNewEntry"> & {
+  addEntry: FormProps["addEntry"];
+};
+
+const hasField = (fieldValues: Record<string, FormInitialValue>, name: string) =>
+  Object.prototype.hasOwnProperty.call(fieldValues, name);
+
+// The keys of each declared group's cards, in order, or none when the group is OFF. "On" is the
+// test the submit itself applies: formatFormEntryData only emits a group whose first field sits in
+// `values`. Unticking a group's toggle drops that field but leaves the old cards in entryValues
+// (ticking it again starts a fresh card), so counting entryValues alone would see cards the
+// payload never carries. One helper, so the summary, the reads and the writes cannot disagree.
+const liveEntryKeys = ({ addEntry, values, entryValues }: EntriesState): Record<string, string[]> => {
+  const live: Record<string, string[]> = {};
+  Object.values(addEntry || {}).forEach(({ groupName }) => {
+    const isOn = values.some((field) => field.groupName === groupName);
+    live[groupName] = isOn && entryValues[groupName] ? Object.keys(entryValues[groupName]) : [];
+  });
+  return live;
+};
+
+const summarizeEntries = (state: EntriesState): Record<string, number> => {
+  const live = liveEntryKeys(state);
+  return Object.fromEntries(Object.keys(live).map((groupName) => [groupName, live[groupName].length]));
+};
+
+// Built once per entriesRef, at module level so it cannot close over a render: everything it
+// reads comes through `latest`, and everything it writes goes through the Form's own setters. Its
+// writes also land in `latest` on the spot, so two calls in one tick (a write to sections, then
+// one to buttons) build on each other instead of the second replacing the first with stale state.
+const buildEntriesHandle = (
+  latest: React.MutableRefObject<EntriesState>,
+  setEntries: UseValuesApi["setEntries"],
+  setActiveEntry: UseValuesApi["setActiveEntry"]
+): FormEntriesHandle => {
+  const commitEntries = (next: EntriesState["entryValues"]) => {
+    latest.current = { ...latest.current, entryValues: next };
+    setEntries(next);
+  };
+
+  return {
+    readEntries: () => {
+      const { entryValues } = latest.current;
+      const live = liveEntryKeys(latest.current);
+      return Object.fromEntries(
+        Object.keys(live).map((groupName) => [
+          groupName,
+          // formatFormData is the per card shape the submit already sends, so a read and the
+          // payload describe a card the same way.
+          live[groupName].map((key) => ({ key, values: formatFormData(entryValues[groupName][key]) })),
+        ])
+      );
+    },
+
+    writeEntries: (groupName, updates) => {
+      const { entryValues } = latest.current;
+      const liveKeys = liveEntryKeys(latest.current)[groupName] || [];
+      const group = { ...entryValues[groupName] };
+      const written: string[] = [];
+      updates.forEach(({ key, values: next }) => {
+        if (!liveKeys.includes(key) || !group[key].some((field) => hasField(next, field.name))) return;
+        // New field objects, never an in place edit: the active card's inputs repaint only
+        // because its array and its changed fields are new references.
+        group[key] = group[key].map((field) =>
+          hasField(next, field.name) ? { ...field, value: next[field.name] } : field
+        );
+        if (!written.includes(key)) written.push(key);
+      });
+      if (written.length) commitEntries({ ...entryValues, [groupName]: group });
+      return written;
+    },
+
+    appendEntries: (groupName, items) => {
+      const { entryValues, activeEntry, addEntry, addNewEntry } = latest.current;
+      // addEntry is keyed by the TOGGLE field's name (hasSections) while callers speak the group
+      // name (sections), so the group's config is found by what it files its cards under.
+      const toggleName = Object.keys(addEntry || {}).find((name) => addEntry?.[name].groupName === groupName);
+      const liveKeys = liveEntryKeys(latest.current)[groupName] || [];
+      if (!addEntry || !toggleName || !liveKeys.length) return [];
+      const { max } = addEntry[toggleName];
+      const room = max ? Math.max(max - liveKeys.length, 0) : items.length;
+      const group = { ...entryValues[groupName] };
+      const added: string[] = [];
+      items.slice(0, room).forEach((item) => {
+        // The add button's own path, so a new card gets the same sharedKey scheme, field ids,
+        // labels and types as one the owner adds by hand.
+        const card = addNewEntry({ addEntry: addEntry[toggleName], group: toggleName });
+        const { sharedKey } = card[0] || {};
+        if (!sharedKey) return;
+        group[sharedKey] = card.map((field) =>
+          hasField(item, field.name) ? { ...field, value: item[field.name] } : field
+        );
+        added.push(sharedKey);
+      });
+      if (!added.length) return added;
+      commitEntries({ ...entryValues, [groupName]: group });
+      // addNewEntry makes each new card the active one, which is right for the add button and
+      // wrong here: the owner keeps looking at the card they were on.
+      setActiveEntry(activeEntry);
+      return added;
+    },
+  };
+};
+
 const Form: React.FC<FormProps> = (props: FormProps) => {
   const { labels, placeholders, types, responseError, heading, hideSubmit, clearSelection, populateLink } = props;
-  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, theme, entries } = props;
-  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals } = props;
-  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId } = props;
+  const { addEntry, fieldHeading, hideLabels, withFileUpload, dataList, previewLabel, className, entries } = props;
+  const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals, isDev } = props;
+  const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId, fieldAddons, entriesRef, onEntriesChange } =
+    props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
     useFormValidation({ ...schema });
 
@@ -37,6 +148,46 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   // onSubmit settles. Prevents double-submit (duplicate account/order/merch)
   // when a handler is async and the form stays mounted during the request.
   const [isSubmitting, setIsSubmitting] = useState(false);
+  // Where a failed submit lands. Focus moves to the error paragraph when responseError changes to
+  // a value, so a keyboard user reaches the problem instead of hunting for it. Keyed on the text,
+  // not on every render: re-focusing while the user is already correcting a field would steal the
+  // caret from them.
+  const responseErrorRef = useRef<HTMLParagraphElement>(null);
+  useEffect(() => {
+    if (responseError) responseErrorRef.current?.focus();
+  }, [responseError]);
+
+  // The entries handle answers a consumer between renders, and entryValues is a new object on
+  // every set, so a handle that closed over a render would read the cards as they were then (at
+  // mount, the empty state before seeding). Refreshing this ref on every render is what makes
+  // readEntries read the current cards and writeEntries build on them.
+  const latestStateRef = useRef<EntriesState>({ values, entryValues, activeEntry, addEntry, addNewEntry });
+  latestStateRef.current = { values, entryValues, activeEntry, addEntry, addNewEntry };
+
+  useEffect(() => {
+    if (!entriesRef) return undefined;
+    entriesRef.current = buildEntriesHandle(latestStateRef, setEntries, setActiveEntry);
+    return () => {
+      entriesRef.current = null;
+    };
+  }, [entriesRef]);
+
+  // The summary last reported, serialized. Every keystroke in a card replaces entryValues and
+  // reruns the effect below, so it compares counts and stays quiet unless one moved; a consumer
+  // pricing by card count hears about cards, never about typing. A ref, not state: reporting must
+  // never re-render Form.
+  const reportedSummaryRef = useRef<string | null>(null);
+  useEffect(() => {
+    // values is empty only before the mount effect seeds the form, so the first report carries
+    // the seeded cards rather than a summary of nothing.
+    if (!onEntriesChange || !values.length) return;
+    const summary = summarizeEntries({ values, entryValues, activeEntry, addEntry, addNewEntry });
+    const serialized = JSON.stringify(summary);
+    if (serialized === reportedSummaryRef.current) return;
+    reportedSummaryRef.current = serialized;
+    onEntriesChange(summary);
+  }, [values, entryValues]);
+
 
   useEffect(() => {
     if (initialValues) {
@@ -66,7 +217,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
         setIsSubmitting(true);
         try {
           // Promise.resolve wraps the handler's return so this awaits correctly
-          // whether onSubmit is async (real promise) or sync (void) — and it
+          // whether onSubmit is async (real promise) or sync (void), and it
           // keeps the await-thenable lint rule satisfied for a void-typed prop.
           if (!withFileUpload && !addEntry) await Promise.resolve(onSubmit(formatFormData(values)));
           else if (!withFileUpload && addEntry)
@@ -80,6 +231,8 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           setStatus(null);
         }
       };
+      // Fire and forget: runSubmit settles its own state in `finally`, and an onSubmit rejection belongs to the consumer.
+      // eslint-disable-next-line no-void
       void runSubmit();
     }
     if (validationStatus === "preview") {
@@ -210,23 +363,42 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
     }
     setEntries({ ...entryValues, [groupName]: updatedGroup });
   };
-  if (!initialValues) return <ErrorMessage error={{ code: "missingInitialValues", prop: "form", value: values }} />;
+  if (!initialValues)
+    return (
+      <ErrorMessage
+        isDev={isDev}
+        error={{ code: "missingInitialValues", prop: "initialValues", value: initialValues, component: "Form" }}
+      />
+    );
 
   return (
     <form
       id={formId}
-      className={theme}
+      className={className}
       onSubmit={handleSubmit}
       encType={withFileUpload ? "multipart/form-data" : undefined}
     >
       {heading && <h2 className="heading">{heading}</h2>}
-      {responseError && <p className="error-message">{responseError}</p>}
+      {/* role="alert" announces the failed submit the moment it renders and the focus move lands a
+          keyboard user on it; before this the paragraph was silent, and this one element is every
+          form on the platform (the client wrappers AccountForm, AppForm, CalendarForm, MediaForm,
+          StoreForm twice and TaskboardForm all feed it: login, sign up, recovery, app create and
+          edit, events, posts, store, merch, taskboards). tabIndex -1 keeps it out of the tab order
+          while still focusable; the classname stays because client CSS targets it. */}
+      {responseError && (
+        <p ref={responseErrorRef} className="error-message" role="alert" tabIndex={-1}>
+          {responseError}
+        </p>
+      )}
       <div className={formScroll ? "form-field-container" : "form-field-container no-scroll"} id="form-field-container">
         {showScroll.up && <UpArrow onClick={() => handleScroll("up", "form-field-container")} active={direction} />}
         {showScroll.down && (
           <DownArrow onClick={() => handleScroll("down", "form-field-container")} active={direction} />
         )}
         {values.map((field, keyIdx) => (
+          // fieldAddons is keyed by the field NAME a consumer's config speaks, never by the
+          // generated fieldId that keys everything else in this list. FormField's entry branch
+          // drops the value for a repeating group.
           <FormField
             key={field.fieldId}
             fieldId={field.fieldId}
@@ -237,13 +409,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             entry={addEntry && addEntry[field.group || ""]}
             entries={entryValues[field.groupName || ""]}
             activeEntry={activeEntry[field.groupName || ""]}
-            theme={theme}
+            className={className}
             placeholder={field.placeholder}
             hideLabels={hideLabels}
             confirmRemoval={confirmRemoval}
             populateLink={populateLink?.[field.name]}
             dataList={dataList}
             label={field.label}
+            addon={fieldAddons?.[field.name]}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(value: FormInitialValue, id?: string) => handleChange(field, value, id || field.fieldId)}
@@ -261,14 +434,14 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
       </div>
       {onCancel || onViewPreview ? (
         <div className="buttons-container">
-          {onCancel && <ButtonCancel onClick={onCancel} theme="btn-main" label={cancelLabel} />}
+          {onCancel && <ButtonCancel onClick={onCancel} className="btn-main" label={cancelLabel} />}
           {!hideSubmit && (
             <SubmitButton label={submitLabel} isDisable={disableForm || isSubmitting} icon={submitIcon} />
           )}
           {onViewPreview && (
             <IconButton
               icon={{ icon: submitIcon || "eye", label: previewLabel }}
-              theme="btn-main"
+              className="btn-main"
               onClick={handleViewPreview}
             />
           )}
@@ -279,7 +452,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             label={submitLabel}
             isDisable={disableForm || isSubmitting}
             icon={submitIcon}
-            theme="form-submit-btn"
+            className="form-submit-btn"
           />
         )
       )}

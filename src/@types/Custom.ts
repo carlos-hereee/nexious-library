@@ -3,10 +3,10 @@ import type { PCardheader } from "nxs-card";
 
 export type KeyStringProp = { [key: string]: string };
 // export type FormInitialValues = { [key: string]: unknown };
-export type PTableData = { value?: string; isHeader?: boolean; uid?: string; theme?: string };
+export type PTableData = { value?: string; isHeader?: boolean; uid?: string; className?: string };
 export type OnchangeProps = React.ChangeEvent<HTMLInputElement>;
 export interface TableProps {
-  theme?: string;
+  className?: string;
   headerData?: PCardheader;
   list?: PEventDay[];
   bodyData?: PTableData[];
@@ -19,7 +19,7 @@ export interface SectionProps {
   details?: string;
   data?: string;
   body?: string;
-  theme?: string;
+  className?: string;
   hasCta?: boolean;
   hasBoolean?: boolean;
   uid?: string;
@@ -30,7 +30,7 @@ export interface SectionProps {
 }
 export interface TotalProps {
   total: number;
-  theme: string;
+  className: string;
   heading?: string;
   // Precomputed tax amount (same unit as total). Wins over taxRate when both set.
   tax?: number;

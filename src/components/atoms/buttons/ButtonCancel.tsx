@@ -4,7 +4,7 @@ import type { ButtonProps } from "nxs-button";
 import { useEffect, useState } from "react";
 
 const ButtonCancel: React.FC<ButtonProps> = (props) => {
-  const { onClick, label, theme, confirmSubmit, onSubmit, toggleLabel, hideIcon } = props;
+  const { onClick, label, className, confirmSubmit, onSubmit, toggleLabel, hideIcon } = props;
   const [show, setShow] = useState(false);
 
   useEffect(() => {
@@ -38,7 +38,7 @@ const ButtonCancel: React.FC<ButtonProps> = (props) => {
     return (
       <button
         type="button"
-        className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"}
+        className={className ? `btn-main btn-cancel ${className}` : "btn-main btn-cancel"}
         onClick={() => setShow(true)}
       >
         {!hideIcon && <Icon icon="cancel" />}
@@ -49,7 +49,7 @@ const ButtonCancel: React.FC<ButtonProps> = (props) => {
   return (
     <button
       type="button"
-      className={theme ? `btn-main btn-cancel ${theme}` : "btn-main btn-cancel"}
+      className={className ? `btn-main btn-cancel ${className}` : "btn-main btn-cancel"}
       onClick={() => onClick && onClick()}
     >
       {!hideIcon && <Icon icon="cancel" />}
