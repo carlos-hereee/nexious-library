@@ -1,6 +1,7 @@
 import { Button, ButtonCancel } from "@nxs-atoms";
 import type { FormFieldProps } from "nxs-form";
 import { Loading } from "@nxs-molecules";
+import { EntryFieldContext, buildEntryFieldScope } from "@nxs-utils/form/entryFieldContext";
 import Field from "./Field";
 import EntryNavigator from "./EntryNavigator";
 
@@ -47,15 +48,22 @@ const FormField = (props: FormFieldProps) => {
     // would otherwise carry the consumer's node for this field name into every slot of the group.
     // Addons belong to top level fields (see FormProps.fieldAddons); a repeating group has no single
     // label for one to sit beside.
-    const fields = targetEntry.map((p) => (
-      <Field
-        key={p.fieldId}
-        {...props}
-        {...p}
-        addon={undefined}
-        handleChange={(e) => handleChange && handleChange(e, p.fieldId)}
-      />
-    ));
+    //
+    // The provider scopes every control's DOM id to this card. It renders no element, so the only
+    // markup a card changes is its ids, and a top level field below never sees it. See useFieldDomId.
+    const fields = (
+      <EntryFieldContext.Provider value={buildEntryFieldScope(groupName, activeIdx)}>
+        {targetEntry.map((p) => (
+          <Field
+            key={p.fieldId}
+            {...props}
+            {...p}
+            addon={undefined}
+            handleChange={(e) => handleChange && handleChange(e, p.fieldId)}
+          />
+        ))}
+      </EntryFieldContext.Provider>
+    );
 
     return (
       <div className={isGallery ? "container entry-gallery" : "container"} id={fieldId}>

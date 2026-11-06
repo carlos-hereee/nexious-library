@@ -3,10 +3,12 @@ import { useEffect, useRef, useState } from "react";
 import { Hero } from "@nxs-molecules";
 import type { UploadFileProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { selectLabel, label, hideLabels, onSelect, className, value, formMessage, input, error } = props;
   const { name, isDisabled } = input;
+  const domId = useFieldDomId(name);
   // required props
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUploaderRef = useRef<HTMLInputElement>(null);
@@ -56,7 +58,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           accept="image/*"
           name={name}
           ref={imageUploaderRef}
-          id={name}
+          id={domId}
           // The input is visually hidden behind a custom trigger button, so it still needs
           // an accessible name of its own for screen readers and file-picker tooling.
           aria-label={label || "Choose a file"}

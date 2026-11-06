@@ -1,5 +1,6 @@
 import { Label } from "@nxs-atoms";
 import type { FieldShellProps } from "nxs-form";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 /**
  * FieldShell
@@ -10,7 +11,7 @@ import type { FieldShellProps } from "nxs-form";
  * and nothing read as a grouped unit.
  *
  * It also closes a real accessibility hole rather than just tidying markup. Every control in the
- * library sets `aria-describedby={`${name}-error`}` when invalid, but seven of them rendered the
+ * library sets `aria-describedby={`${domId}-error`}` when invalid, but seven of them rendered the
  * error INSIDE the Label, so hiding the label removed the node the description pointed at and a
  * screen reader announced "invalid" with no reason. Field.tsx and Select.tsx each worked around
  * that with their own duplicated bare-span fallback. Here the error node is owned by the shell
@@ -31,6 +32,7 @@ import type { FieldShellProps } from "nxs-form";
  */
 const FieldShell: React.FC<FieldShellProps> = (props) => {
   const { name, label, hideLabel, error, message, help, className, addon, children } = props;
+  const domId = useFieldDomId(name);
 
   // The same `label &&` expression the shell has always rendered, hoisted so both branches below
   // place the identical node. Kept as an expression rather than a ternary so the no addon branch
@@ -42,14 +44,14 @@ const FieldShell: React.FC<FieldShellProps> = (props) => {
   return (
     <div className={className ? `field-shell ${className}` : "field-shell"}>
       {/* hideLabel hides the label VISUALLY, it does not delete it. A hidden <label htmlFor> plus
-          the control's own id={name} gives every field type an accessible name for free, which is
+          the control's own id gives every field type an accessible name for free, which is
           strictly better than the per-control aria-label hack it replaces: it works for the time
           input, the date trigger and the quantity input that had no aria-label at all, and it
           reads the human label ("Publish date") rather than the raw field name ("publishedOn").
           .sr-only is absolutely positioned, so it adds no flex gap and no layout.
 
           The error is deliberately NOT passed to Label. Label still renders one when given it
-          (other call sites rely on that), and two nodes sharing `${name}-error` would make the
+          (other call sites rely on that), and two nodes sharing `${domId}-error` would make the
           aria reference ambiguous.
 
           With an addon the label and the node share one row. The hidden label stays in that row
@@ -66,7 +68,7 @@ const FieldShell: React.FC<FieldShellProps> = (props) => {
       {children}
       {help && <p className="field-help">{help}</p>}
       {error && (
-        <span className="required field-error" id={`${name}-error`} role="alert">
+        <span className="required field-error" id={`${domId}-error`} role="alert">
           {error}
         </span>
       )}

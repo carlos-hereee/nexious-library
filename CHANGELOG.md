@@ -9,6 +9,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Accessibility
+
+- **Repeating `Form` entries get their own control ids.** A card field that reused a top level name
+  rendered a second `id="title"` or `id="body"`, so its label bound to the top level input. A card's
+  control, label and error node now use `<name>-<groupName>-<position>`, for example
+  `title-sections-2`. Top level fields, standalone controls, `name` attributes, the submit payload
+  and every public prop are unchanged. A consumer that selected a repeated field by `#name` must
+  select by `[name="..."]` instead.
+
 ## [4.6.0] - 2026-11-05
 
 #### Added

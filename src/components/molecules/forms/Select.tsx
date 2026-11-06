@@ -1,6 +1,7 @@
 import { Icon, Label, Option } from "@nxs-atoms";
 import { Hero, IconButton } from "@nxs-molecules";
 import type { SelectProp } from "nxs-form";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 /**
  *
@@ -15,6 +16,7 @@ const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, className, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
   const { placeholder, inShell } = props;
+  const domId = useFieldDomId(name);
 
   const activeLabel = active || placeholder || "Choose Selection";
   const icon = active ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon : undefined;
@@ -26,7 +28,7 @@ const Select: React.FC<SelectProp> = (props) => {
           as well as sit inside a Field. Standalone it owns its label, its error node and its
           fallback aria-label. Inside a Field it is passed inShell and gives up all three, because
           the FieldShell already renders a (possibly visually hidden) <label htmlFor> and one
-          `${name}-error` node: a second error node would make aria-describedby ambiguous, and a
+          `${domId}-error` node: a second error node would make aria-describedby ambiguous, and a
           leftover aria-label would beat the real label and announce the raw field name instead.
           The standalone bare-error branch must survive, since the <select> advertises the error
           id whether or not the label is visible. */}
@@ -35,7 +37,7 @@ const Select: React.FC<SelectProp> = (props) => {
       ) : (
         !inShell &&
         error && (
-          <span className="required" id={`${name}-error`} role="alert">
+          <span className="required" id={`${domId}-error`} role="alert">
             {error}
           </span>
         )
@@ -49,18 +51,18 @@ const Select: React.FC<SelectProp> = (props) => {
           ""
         )}
         <select
-          // id matches the Label's htmlFor={name} so the visible label is properly associated.
-          id={name}
+          // id matches the Label's htmlFor so the visible label is properly associated.
+          id={domId}
           className="select"
           value={activeLabel}
           disabled={isDisabled}
           // When the visible label is hidden the native control still needs a name for SR users.
           aria-label={!inShell && (hideLabels || !label) ? name : undefined}
           // Mirror Input/InputCheckbox/TextArea so a select with a validation error is
-          // announced as invalid and points at the Label's `${name}-error` node. Select
+          // announced as invalid and points at the Label's `${domId}-error` node. Select
           // was the one form control missing this wiring.
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${name}-error` : undefined}
+          aria-describedby={error ? `${domId}-error` : undefined}
           onChange={(e) => onChange?.(e.target.value)}
         >
           <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />

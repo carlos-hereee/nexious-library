@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import type { FieldDateProps } from "nxs-form";
 import type { CalendarDayProp, CalendarPEventDay } from "nxs-calendar";
 import Calendar from "@nxs-template/Calendar";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 /**
  * FieldDate
@@ -27,6 +28,7 @@ import Calendar from "@nxs-template/Calendar";
  */
 const FieldDate: React.FC<FieldDateProps> = (props) => {
   const { value, onChange, name, error, isDisabled, defaultToToday, placeholder } = props;
+  const domId = useFieldDomId(name);
   const [isOpen, setIsOpen] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const hasSeeded = useRef(false);
@@ -73,7 +75,7 @@ const FieldDate: React.FC<FieldDateProps> = (props) => {
     <div className="field-date" ref={wrapperRef}>
       <button
         type="button"
-        id={name}
+        id={domId}
         className="field-date-trigger"
         disabled={isDisabled}
         aria-haspopup="dialog"
@@ -81,7 +83,7 @@ const FieldDate: React.FC<FieldDateProps> = (props) => {
         // aria-describedby only. Unlike the other controls this trigger is a button, and
         // aria-invalid is not supported on the button role, so it would be ignored at best and
         // is flagged by jsx-a11y at worst. The description still points at the error node.
-        aria-describedby={error ? `${name}-error` : undefined}
+        aria-describedby={error ? `${domId}-error` : undefined}
         onClick={() => setIsOpen(!isOpen)}
       >
         {/* An empty field says so in words. A blank trigger reads as a broken control, and the

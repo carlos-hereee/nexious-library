@@ -1,6 +1,7 @@
 import { useId } from "react";
 import type { FieldTimeProps } from "nxs-form";
 import { to24Hour, toWireTime } from "@nxs-utils/form/time";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
 /**
  * FieldTime
@@ -24,6 +25,7 @@ import { to24Hour, toWireTime } from "@nxs-utils/form/time";
  */
 const FieldTime: React.FC<FieldTimeProps> = (props) => {
   const { name, value, onChange, isDisabled, error, list } = props;
+  const domId = useFieldDomId(name);
   // A datalist needs an id, and the field name is not guaranteed unique on a page with two forms.
   const listId = useId();
 
@@ -40,7 +42,7 @@ const FieldTime: React.FC<FieldTimeProps> = (props) => {
       <input
         type="time"
         className="highlight field-time"
-        id={name}
+        id={domId}
         name={name}
         value={to24Hour(value)}
         disabled={isDisabled}
@@ -49,7 +51,7 @@ const FieldTime: React.FC<FieldTimeProps> = (props) => {
         // what keeps this one field instead of two.
         list={list && list.length > 0 ? listId : undefined}
         aria-invalid={error ? true : undefined}
-        aria-describedby={error ? `${name}-error` : undefined}
+        aria-describedby={error ? `${domId}-error` : undefined}
         onChange={(event) => onChange(toWireTime(event.currentTarget.value))}
       />
       {list && list.length > 0 && (

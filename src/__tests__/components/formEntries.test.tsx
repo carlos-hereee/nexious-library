@@ -71,7 +71,7 @@ const pageFormProps = (over: Partial<FormProps> = {}): FormProps => ({
 // install. Note the ACTIVE card is the last one: Form seeds its entries in order and the last card
 // seeded wins the active slot.
 const PAGE_FORM_BEFORE_THE_HANDLE =
-  '<form id="page-form"><div class="form-field-container no-scroll" id="form-field-container"><div class="form-field" id="id-1"><div class="field-shell"><label for="title" class="field-label"><span class="label-name">Title</span> </label><input class="highlight" autocomplete="on" id="title" type="text" value="Page title" name="title"></div></div><div class="form-field" id="id-2"><div class="field-shell"><div class="input-checkbox "><input id="hasSections" type="checkbox" checked="" name="hasSections"><label for="hasSections"><span class="label-name">Add sections</span> </label></div></div></div><div class="container" id="id-5"><div class="entry-rail entry-rail-strip"><div class="entry-rail-tiles" role="group" aria-label="sections"><button type="button" class="entry-rail-tile" aria-pressed="false" aria-label="Entry 1 of 3, One" title="Entry 1 of 3, One"><span class="entry-rail-placeholder">One</span></button><button type="button" class="entry-rail-tile" aria-pressed="false" aria-label="Entry 2 of 3, Two" title="Entry 2 of 3, Two"><span class="entry-rail-placeholder">Two</span></button><button type="button" class="entry-rail-tile entry-rail-tile-active" aria-pressed="true" aria-label="Entry 3 of 3, Three" title="Entry 3 of 3, Three"><span class="entry-rail-placeholder">Three</span></button></div><p class="entry-rail-count">3 of 4</p></div><div class="field-shell"><label for="title" class="field-label"><span class="label-name">Card title</span> </label><input class="highlight" autocomplete="on" id="title" type="text" value="Three" name="title"></div><div class="field-shell"><label for="body" class="field-label"><span class="label-name">Card body</span> </label><textarea class="highlight" name="body" id="body">Third</textarea></div><div class="buttons-container"><button type="button" class="btn-main btn-cancel"><svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Remove card</button><button type="button" title="Add another" aria-label="Add another">Add card</button></div></div><div class="form-field" id="id-3"><div class="field-shell"><div class="input-checkbox "><input id="hasButtons" type="checkbox" name="hasButtons"><label for="hasButtons"><span class="label-name">Add buttons</span> </label></div></div></div></div><button type="submit" class="btn-main form-submit-btn"><svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path></svg> Confirm</button></form>';
+  '<form id="page-form"><div class="form-field-container no-scroll" id="form-field-container"><div class="form-field" id="id-1"><div class="field-shell"><label for="title" class="field-label"><span class="label-name">Title</span> </label><input class="highlight" autocomplete="on" id="title" type="text" value="Page title" name="title"></div></div><div class="form-field" id="id-2"><div class="field-shell"><div class="input-checkbox "><input id="hasSections" type="checkbox" checked="" name="hasSections"><label for="hasSections"><span class="label-name">Add sections</span> </label></div></div></div><div class="container" id="id-5"><div class="entry-rail entry-rail-strip"><div class="entry-rail-tiles" role="group" aria-label="sections"><button type="button" class="entry-rail-tile" aria-pressed="false" aria-label="Entry 1 of 3, One" title="Entry 1 of 3, One"><span class="entry-rail-placeholder">One</span></button><button type="button" class="entry-rail-tile" aria-pressed="false" aria-label="Entry 2 of 3, Two" title="Entry 2 of 3, Two"><span class="entry-rail-placeholder">Two</span></button><button type="button" class="entry-rail-tile entry-rail-tile-active" aria-pressed="true" aria-label="Entry 3 of 3, Three" title="Entry 3 of 3, Three"><span class="entry-rail-placeholder">Three</span></button></div><p class="entry-rail-count">3 of 4</p></div><div class="field-shell"><label for="title-sections-2" class="field-label"><span class="label-name">Card title</span> </label><input class="highlight" autocomplete="on" id="title-sections-2" type="text" value="Three" name="title"></div><div class="field-shell"><label for="body-sections-2" class="field-label"><span class="label-name">Card body</span> </label><textarea class="highlight" name="body" id="body-sections-2">Third</textarea></div><div class="buttons-container"><button type="button" class="btn-main btn-cancel"><svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 6 6 18M6 6l12 12"></path></svg>Remove card</button><button type="button" title="Add another" aria-label="Add another">Add card</button></div></div><div class="form-field" id="id-3"><div class="field-shell"><div class="input-checkbox "><input id="hasButtons" type="checkbox" name="hasButtons"><label for="hasButtons"><span class="label-name">Add buttons</span> </label></div></div></div></div><button type="submit" class="btn-main form-submit-btn"><svg class="icon" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 2 11 13"></path><path d="M22 2 15 22l-4-9-9-4 20-7Z"></path></svg> Confirm</button></form>';
 // Serialized, so key ORDER is pinned along with the values.
 const PAGE_PAYLOAD_BEFORE_THE_HANDLE =
   '{"title":"Page title","hasSections":true,"sections":[{"title":"One","body":"First"},{"title":"Two","body":"Second"},{"title":"Three","body":"Third"}],"hasButtons":false}';
@@ -101,8 +101,8 @@ const newEntriesRef = (): EntriesRef => ({ current: null });
 const handleOf = (entriesRef: EntriesRef) => entriesRef.current as FormEntriesHandle;
 
 // The group renders inside div.container (a top level field renders inside div.form-field), and a
-// card's `title` shares its name and id with the top level `title`, so a card input is found by
-// name INSIDE the group, never by label.
+// card's `title` shares its name with the top level `title`, so a card input is found by name
+// INSIDE the group.
 const groupOf = (container: HTMLElement) =>
   container.querySelector(".form-field-container > .container") as HTMLElement;
 const cardTitle = (container: HTMLElement) =>
@@ -458,5 +458,42 @@ describe("onEntriesChange", () => {
       return commits;
     };
     expect(commitsWith({ onEntriesChange: jest.fn() })).toBe(commitsWith({}));
+  });
+});
+
+// ── Control ids ──
+// A card reuses top level names, so `id={name}` alone gave the page two controls with one id and
+// bound the card's label to the page's input. These pin the scoped id and what must not move.
+describe("repeating entries own their control ids", () => {
+  const idsIn = (container: HTMLElement) => [...container.querySelectorAll("[id]")].map((node) => node.id);
+
+  it("renders no duplicate id with the top level field and the card on screen", () => {
+    const { container } = render(<Form {...pageFormProps()} />);
+    const ids = idsIn(container);
+    expect(new Set(ids).size).toBe(ids.length);
+  });
+
+  it("binds each label to its own input", () => {
+    const { container } = render(<Form {...pageFormProps()} />);
+    expect(screen.getByLabelText("Title")).toBe(pageTitle(container));
+    expect(screen.getByLabelText("Card title")).toBe(cardTitle(container));
+    expect(screen.getByLabelText("Card body")).toBe(cardBody(container));
+  });
+
+  it("leaves the top level id and every name attribute where they were", () => {
+    const { container } = render(<Form {...pageFormProps()} />);
+    expect(pageTitle(container)).toHaveAttribute("id", "title");
+    expect(cardTitle(container)).toHaveAttribute("name", "title");
+    expect(cardBody(container)).toHaveAttribute("name", "body");
+  });
+
+  it("moves the id with the card that is showing and keeps labels bound", () => {
+    const { container } = render(<Form {...pageFormProps()} />);
+    showCard(1);
+    expect(cardTitle(container)).toHaveAttribute("id", "title-sections-0");
+    expect(screen.getByLabelText("Card title")).toHaveValue("One");
+    showCard(2);
+    expect(cardBody(container)).toHaveAttribute("id", "body-sections-1");
+    expect(screen.getByLabelText("Card body")).toHaveValue("Second");
   });
 });
