@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [4.7.0] - 2026-11-10
+
 #### Fixed
 
 - **`HintButton` opens its panel.** The panel rendered only while a `data` prop was set, and
