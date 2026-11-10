@@ -9,6 +9,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Fixed
+
+- **`HintButton` opens its panel.** The panel rendered only while a `data` prop was set, and
+  `ItemDetail` never passed one, so every hint toggled `aria-expanded` and showed nothing. It now
+  follows the toggle alone.
+- **The hint panel stays on screen and reads as a panel.** It sits in the flow under its toggle
+  with a surface, border and shadow from the design tokens, instead of floating at `left: 50%` with
+  no background, which ran off a phone screen and drew its text over the page.
+
+#### Added
+
+- **`HintButtonProps`**, exported, with `toggleLabel`, `closeLabel` and `label`, so the toggle's
+  name, the close button and the panel's fallback name can be localized. English defaults are
+  unchanged. `ItemDetail`'s `hint` passes `toggleLabel` and `closeLabel` through.
+
+#### Changed
+
+- **`HintButton` takes `HintButtonProps` instead of `ButtonProps`.** It only ever read `title`,
+  `body` and the dead `data` gate, so a caller passing another `ButtonProps` field now gets a type
+  error. The platform client uses it only through `ItemDetail` and passes none.
+
+#### Accessibility
+
+- **A hint title is text, not an `h2`,** so a hint beside a form label or a table row never adds a
+  heading to the page outline. The panel is still named by its title.
+
 ## [4.6.1] - 2026-11-06
 
 #### Accessibility

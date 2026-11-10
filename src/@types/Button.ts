@@ -71,6 +71,22 @@ export interface ButtonProps {
   body?: string;
   active?: CardinalDirectionProps;
 }
+/**
+ * HintButton: an icon toggle that opens a short explanation beside the thing it explains. Every
+ * string a reader sees or hears is a prop with an English default, so a consumer can localize it.
+ */
+export interface HintButtonProps {
+  /** Optional lead line inside the panel. Rendered as text, not a heading, so a hint never adds to the page outline. */
+  title?: string;
+  /** The explanation itself. */
+  body?: string;
+  /** Accessible name of the toggle. Defaults to "show hint". */
+  toggleLabel?: string;
+  /** Label of the close button inside the panel. Defaults to "close". */
+  closeLabel?: string;
+  /** Accessible name of the panel when no title is given. Defaults to "Hint". */
+  label?: string;
+}
 export interface IconButtonProps {
   // See HeroProps.isDev, overrides dev-panel visibility for this component.
   isDev?: boolean;

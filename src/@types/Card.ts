@@ -34,7 +34,8 @@ export interface BannerProps {
 export interface ItemDetailProps {
   label?: string;
   value?: string;
-  hint?: { title: string; body: string };
+  // The hint's labels ride along so a consumer can localize the toggle and close controls.
+  hint?: { title: string; body: string; toggleLabel?: string; closeLabel?: string };
   labelLayout?: "bolden";
   children?: React.ReactNode;
 }

@@ -130,7 +130,7 @@ export type {
 // same class hooks from its own CSS instead of guessing at them.
 export type { Variant, Size, Density } from "./@types/Variant";
 export { VARIANT_CLASS, SIZE_CLASS, buildControlClass } from "./@types/Variant";
-export type { ButtonProps, IconButtonProps } from "nxs-button";
+export type { ButtonProps, HintButtonProps, IconButtonProps } from "nxs-button";
 export type { CalendarProps } from "nxs-calendar";
 export type { CardProps } from "nxs-card";
 export type { PostProps, PostDetailProps } from "nxs-post";
