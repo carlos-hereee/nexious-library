@@ -11,6 +11,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Added
 
+- **A built in view switch and a year view on `Calendar`.** Pass `views` (for example
+  `["week", "month", "year"]`) and the calendar renders a Day, Week, Month, Year pill switch over
+  itself and moves between them on its own; `onViewChange` reports each change. Without `views`
+  nothing new renders. The new `year` view shows twelve mini months with event days filled, today
+  ringed and a count per month; a month opens the month view, and the year steps with Previous
+  year and Next year. `CalendarYearView` and `CalendarYearViewProps` are exported, and
+  `CalendarLabels` gains `viewSwitch`, `viewDay`, `viewWeek`, `viewMonth`, `viewYear`,
+  `previousYear`, `nextYear` and `yearMonthEvents`. `CalendarViewMode` gains `"year"`.
+
 - **`CalendarLabels` names the month view's buttons.** New optional `previousMonth`, `nextMonth`,
   `firstMonth` and `lastMonth`, plus `today` on the go to today button above every view, so the
   icon only controls have real names and tooltips a consumer can localize. `CalendarNavProps` gains
@@ -18,6 +27,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Fixed
 
+- **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
+  so for anyone west of Greenwich its count showed on the 17th. The month grid now reads the wire
+  date as a local day, through the same `localDayFromWire` the week view already used.
 - **Last month of the year lands on December.** The month view's last button went to January of
   the next year.
 - **Today and selected tiles stay readable in a dark theme.** Their light yellow fills now carry

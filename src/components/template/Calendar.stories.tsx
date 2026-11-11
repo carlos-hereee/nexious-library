@@ -111,6 +111,18 @@ export const Week: Story = {
   args: { value: now, view: "week", now, timedEvents: weekEvents, locale: "en-US" },
 };
 
+/** View switch: `views` adds the built in Week, Month and Year switch; it starts on `view`. */
+export const ViewSwitch: Story = {
+  parameters: wide,
+  args: { value: now, view: "month", views: ["week", "month", "year"], now, timedEvents: weekEvents, locale: "en-US" },
+};
+
+/** Year: twelve mini months with event days filled and today ringed; a month opens the month view. */
+export const Year: Story = {
+  parameters: wide,
+  args: { value: now, view: "year", views: ["week", "month", "year"], now, timedEvents: weekEvents, locale: "en-US" },
+};
+
 /** Day: the same grid with one column and the full weekday date as its heading. */
 export const Day: Story = {
   parameters: wide,

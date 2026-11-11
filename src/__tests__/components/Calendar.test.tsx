@@ -1,5 +1,5 @@
 import "@testing-library/jest-dom";
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import Calendar from "@nxs-template/Calendar";
 
 describe("Calendar event grouping", () => {
@@ -111,5 +111,72 @@ describe("Calendar month touch up (2026-11-11)", () => {
     const first = container.querySelector(".calendar-week .day") as HTMLElement;
     expect(first.querySelector('[aria-hidden="true"]')).toHaveTextContent("Sun");
     expect(first.querySelector(".sr-only")).toHaveTextContent("Sunday");
+  });
+});
+
+describe("Calendar built in view switch and year view", () => {
+  const now = new Date("2026-09-11T14:30:00");
+  const timedEvents = [
+    { id: "a", title: "Sep one", start: new Date("2026-09-08T09:00:00") },
+    { id: "b", title: "Sep two", start: new Date("2026-09-10T10:00:00") },
+    { id: "c", title: "Mar one", start: new Date("2026-03-02T10:00:00") },
+  ];
+
+  it("renders no switch without views, so existing callers are unchanged", () => {
+    render(<Calendar value={now} now={now} />);
+    expect(screen.queryByRole("group", { name: "Calendar view" })).toBeNull();
+  });
+
+  it("lists the views in day, week, month, year order and marks the current one", () => {
+    render(<Calendar value={now} now={now} view="month" views={["year", "month", "week"]} />);
+    const group = screen.getByRole("group", { name: "Calendar view" });
+    const options = Array.from(group.querySelectorAll("button")).map((button) => button.textContent);
+    expect(options).toEqual(["Week", "Month", "Year"]);
+    expect(screen.getByRole("button", { name: "Month" })).toHaveAttribute("aria-pressed", "true");
+  });
+
+  it("moves between views on its own and reports each change", () => {
+    const onViewChange = jest.fn();
+    const { container } = render(
+      <Calendar value={now} now={now} locale="en-US" views={["week", "month", "year"]} onViewChange={onViewChange} timedEvents={timedEvents} />
+    );
+    fireEvent.click(screen.getByRole("button", { name: "Week" }));
+    expect(onViewChange).toHaveBeenLastCalledWith("week");
+    expect(container.querySelector(".calendar-time-grid")).toBeInTheDocument();
+    fireEvent.click(screen.getByRole("button", { name: "Year" }));
+    expect(onViewChange).toHaveBeenLastCalledWith("year");
+    expect(container.querySelectorAll(".calendar-year-month")).toHaveLength(12);
+  });
+
+  it("names each month with its year and event count, and opens it in the month view", () => {
+    const onViewChange = jest.fn();
+    const { container } = render(
+      <Calendar value={now} now={now} locale="en-US" view="year" views={["month", "year"]} onViewChange={onViewChange} timedEvents={timedEvents} />
+    );
+    expect(screen.getByRole("heading", { level: 2, name: "2026" })).toBeInTheDocument();
+    const september = screen.getByRole("button", { name: "September 2026, 2 events" });
+    expect(september).toHaveAttribute("aria-current", "date");
+    expect(screen.getByRole("button", { name: "March 2026, 1 event" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "January 2026, No events" })).toBeInTheDocument();
+    fireEvent.click(september);
+    expect(onViewChange).toHaveBeenLastCalledWith("month");
+    expect(container.querySelector(".calendar-view-month")).toBeInTheDocument();
+  });
+
+  it("steps the year view by a whole year", () => {
+    const onDateChange = jest.fn();
+    render(<Calendar value={now} now={now} locale="en-US" view="year" onDateChange={onDateChange} />);
+    fireEvent.click(screen.getByRole("button", { name: "Next year" }));
+    expect((onDateChange.mock.calls[0][0] as Date).getFullYear()).toBe(2027);
+  });
+});
+
+describe("Calendar month counts land on the wire date's local day", () => {
+  it("puts a 2026-06-18 event on the 18th, not the 17th west of UTC", () => {
+    const { container } = render(<Calendar value={new Date("2026-06-15T12:00:00")} events={[{ date: "2026-06-18" }, { date: "2026-06-18" }]} />);
+    const tiles = Array.from(container.querySelectorAll(".calendar-view-month button"));
+    const withCount = tiles.filter((tile) => tile.querySelector(".calendar-tile-count"));
+    expect(withCount).toHaveLength(1);
+    expect(withCount[0].firstChild?.textContent).toBe("18");
   });
 });

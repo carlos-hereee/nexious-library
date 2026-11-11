@@ -8,11 +8,19 @@ import { dayChange } from "@nxs-utils/calendar/dayChange";
 import { addDays, startOfLocalDay, weekDays } from "@nxs-utils/calendar/weekRange";
 import { formatDayRange } from "@nxs-utils/calendar/formatDate";
 import { resolveCalendarLabels } from "@nxs-utils/calendar/calendarLabels";
-import { allDayFromPEventDay } from "@nxs-utils/calendar/allDayFromPEventDay";
-import type { CalendarDayProp, CalendarProps, PEventDay } from "nxs-calendar";
-import { CalendarNavigation, CalendarTimeGrid, CalendarView, WeekNavigation } from "@nxs-organism/index";
+import { allDayFromPEventDay, localDayFromWire } from "@nxs-utils/calendar/allDayFromPEventDay";
+import type { CalendarDayProp, CalendarProps, CalendarViewMode, PEventDay } from "nxs-calendar";
+import {
+  CalendarNavigation,
+  CalendarTimeGrid,
+  CalendarView,
+  CalendarYearView,
+  WeekNavigation,
+} from "@nxs-organism/index";
 
 const CLOCK_REFRESH_MS = 60000;
+// The switch always lists its views in this order, whatever order the consumer passed.
+const VIEW_ORDER: readonly CalendarViewMode[] = ["day", "week", "month", "year"];
 
 /**
  *
@@ -29,6 +37,8 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   const { value, events, minDate, className, onDayClick, setDay, hideToday } = props;
   const {
     view = "month",
+    views,
+    onViewChange,
     date,
     onDateChange,
     hideNavigation,
@@ -43,7 +53,18 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     headingLevel,
   } = props;
   const labels = resolveCalendarLabels(labelsProp);
-  const isTimeGrid = view === "week" || view === "day";
+  // The view on screen. It starts at `view`, follows a new `view` from the parent, and with the
+  // built in switch (`views`) the calendar moves it itself.
+  const [currentView, setCurrentView] = useState<CalendarViewMode>(view);
+  const isTimeGrid = currentView === "week" || currentView === "day";
+  const isYear = currentView === "year";
+  const switchViews = VIEW_ORDER.filter((option) => views?.includes(option));
+  const viewNames: Record<CalendarViewMode, string> = {
+    day: labels.viewDay,
+    week: labels.viewWeek,
+    month: labels.viewMonth,
+    year: labels.viewYear,
+  };
   // keep track of today, min date, and which calenday is active
   const [active, setActive] = useState<CalendarDayProp>(calendarValues(date ?? value));
   const [mininumDate, setMininumDate] = useState<CalendarDayProp>();
@@ -88,6 +109,10 @@ const Calendar: React.FC<CalendarProps> = (props) => {
   }, [date ? date.getTime() : undefined]);
 
   useEffect(() => {
+    setCurrentView(view);
+  }, [view]);
+
+  useEffect(() => {
     if (now || !isTimeGrid) return undefined;
     const intervalId = setInterval(() => setTick(new Date()), CLOCK_REFRESH_MS);
     return () => clearInterval(intervalId);
@@ -104,27 +129,82 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     if (onDateChange) onDateChange(new Date(nextActive.year, nextActive.month, nextActive.day));
   };
 
+  const changeView = (nextView: CalendarViewMode) => {
+    setCurrentView(nextView);
+    if (onViewChange) onViewChange(nextView);
+  };
+
   const focusDate = date ?? new Date(active.year, active.month, active.day);
-  const gridDays = view === "day" ? [startOfLocalDay(focusDate)] : weekDays(focusDate, weekStartsOn);
-  const gridStep = view === "day" ? 1 : 7;
+  const gridDays = currentView === "day" ? [startOfLocalDay(focusDate)] : weekDays(focusDate, weekStartsOn);
+  const gridStep = currentView === "day" ? 1 : 7;
   // A month consumer that flips the view without supplying timedEvents still sees its events,
   // as all day chips on their LOCAL day.
   const gridEvents = timedEvents ?? (events ? allDayFromPEventDay(events) : undefined);
+  // The year view counts every event once, timed or not, on its local day.
+  const yearEventDates = (gridEvents ?? []).map((event) => event.start);
+  const yearHeading = new Intl.DateTimeFormat(locale, { year: "numeric" }).format(focusDate);
+  // A month picked in the year view opens on its first day in the month view.
+  const openMonth = (month: number) => {
+    moveTo(calendarValues(new Date(focusDate.getFullYear(), month, 1)));
+    changeView("month");
+  };
 
   return (
     <div className={className ? `${className} calendar` : "calendar"}>
-      {!hideNavigation && (
-        <div className="flex-j-end">
-          <IconButton
-            onClick={() => moveTo(today)}
-            icon={{ icon: "refresh" }}
-            title={labels.today}
-            aria-label={labels.today}
-            className="btn-small"
-          />
+      {(switchViews.length > 1 || !hideNavigation) && (
+        <div className="calendar-toolbar">
+          {switchViews.length > 1 && (
+            // Buttons with aria-pressed rather than a radio group: each one is its own tab stop and
+            // works with a click or Enter, with no arrow key model to get wrong.
+            <div className="calendar-view-switch" role="group" aria-label={labels.viewSwitch}>
+              {switchViews.map((option) => (
+                <button
+                  key={option}
+                  type="button"
+                  className="calendar-view-switch-option"
+                  aria-pressed={currentView === option}
+                  onClick={() => changeView(option)}
+                >
+                  {viewNames[option]}
+                </button>
+              ))}
+            </div>
+          )}
+          {!hideNavigation && (
+            <IconButton
+              onClick={() => moveTo(today)}
+              icon={{ icon: "refresh" }}
+              title={labels.today}
+              aria-label={labels.today}
+              className="btn-small calendar-today-button"
+            />
+          )}
         </div>
       )}
-      {active && !isTimeGrid && (
+      {isYear && (
+        <>
+          {!hideNavigation && (
+            <WeekNavigation
+              heading={yearHeading}
+              headingId={headingId}
+              onPrevious={() => moveTo(calendarValues(new Date(focusDate.getFullYear() - 1, focusDate.getMonth(), 1)))}
+              onNext={() => moveTo(calendarValues(new Date(focusDate.getFullYear() + 1, focusDate.getMonth(), 1)))}
+              previousLabel={labels.previousYear}
+              nextLabel={labels.nextYear}
+            />
+          )}
+          <CalendarYearView
+            year={focusDate.getFullYear()}
+            eventDates={yearEventDates}
+            today={hideToday ? undefined : clock}
+            weekStartsOn={weekStartsOn}
+            locale={locale}
+            labels={labels}
+            onMonthClick={openMonth}
+          />
+        </>
+      )}
+      {active && !isTimeGrid && !isYear && (
         <>
           <CalendarNavigation
             date={active}
@@ -132,7 +212,12 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             previous={previous}
             next={next}
             headingLevel={headingLevel}
-            buttonNames={{ start: labels.firstMonth, prev: labels.previousMonth, next: labels.nextMonth, last: labels.lastMonth }}
+            buttonNames={{
+              start: labels.firstMonth,
+              prev: labels.previousMonth,
+              next: labels.nextMonth,
+              last: labels.lastMonth,
+            }}
           />
           <CalendarView
             data={active}
@@ -143,7 +228,9 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             events={
               calendarEvents
                 ? calendarEvents.map((e) => {
-                    const values = calendarValues(new Date(e.date));
+                    // The wire date's LOCAL day. Through the Date constructor "2026-06-18" is midnight
+                    // UTC, so every count landed a day early for anyone west of Greenwich.
+                    const values = calendarValues(localDayFromWire(e.date));
                     return { ...values, ping: e.list.length };
                   })
                 : []

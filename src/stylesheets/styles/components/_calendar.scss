@@ -13,6 +13,133 @@
   flex-direction: column;
   gap: var(--space-medium);
 }
+// The row over every view: the view switch at the start, the go to today button at the end. It
+// wraps on a phone, where the switch can take a line of its own.
+.calendar-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-small);
+}
+.calendar-today-button {
+  margin-inline-start: auto;
+}
+// The built in view switch: a row of pill buttons, the pressed one on the brand fill. Each pill is
+// a full tap target, and the pressed state is the fill AND aria-pressed, never color alone.
+.calendar-view-switch {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-extra-small);
+}
+.calendar-view-switch-option {
+  width: auto;
+  min-height: var(--tap-target-min);
+  padding: var(--space-extra-small) var(--space-medium);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background-color: transparent;
+  color: var(--text);
+  font: inherit;
+  font-weight: var(--font-semibold);
+  cursor: pointer;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+  @include mixin.focus-ring;
+  &:hover {
+    border-color: var(--main-brand-color);
+  }
+  &[aria-pressed="true"] {
+    background-color: var(--main-brand-color);
+    border-color: var(--main-brand-color);
+    color: var(--primary-text-dark-mode-color);
+  }
+}
+
+// ── Year view ──
+// Twelve mini months on an auto fill grid: four across a desktop, two on a phone. Each month is one
+// button; its day grid is decoration (aria-hidden), with event days filled and today ringed.
+.calendar-year-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  gap: var(--space-small);
+}
+.calendar-year-month {
+  display: flex;
+  flex-direction: column;
+  // A button centers its content, which set a five week month lower than a six week one beside it.
+  justify-content: flex-start;
+  gap: var(--space-extra-small);
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-small);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-medium);
+  background-color: var(--surface);
+  color: var(--text);
+  font: inherit;
+  text-align: start;
+  cursor: pointer;
+  transition: border-color var(--transition-fast), background-color var(--transition-fast);
+  @include mixin.focus-ring;
+  &:hover {
+    border-color: var(--main-brand-color);
+    background-color: var(--hover-bg);
+  }
+}
+.calendar-year-month--current {
+  border-color: var(--main-brand-color);
+}
+// Both rows take the button's full width: a button's content box does not stretch its children the
+// way a block does, and the grid collapsed to 12px day cells.
+.calendar-year-month-head,
+.calendar-year-month-grid {
+  width: 100%;
+}
+.calendar-year-month-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-extra-small);
+}
+.calendar-year-month-name {
+  font-weight: var(--font-semibold);
+}
+// The month's event count, the same amber pill as a day's count in the month view.
+.calendar-year-month-count {
+  min-width: 1.5em;
+  padding-inline: var(--space-extra-small);
+  border-radius: var(--radius-full);
+  background-color: var(--pending-accent-color);
+  color: var(--status-on-pending);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-bold);
+  line-height: 1.5;
+  text-align: center;
+}
+.calendar-year-month-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  font-size: var(--text-extra-small);
+  line-height: 1.7;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+.calendar-year-weekday {
+  color: var(--text-muted);
+}
+.calendar-year-day {
+  border-radius: var(--radius-full);
+  color: var(--text-secondary);
+}
+.calendar-year-day--events {
+  background-color: var(--pending-accent-color);
+  color: var(--status-on-pending);
+  font-weight: var(--font-bold);
+}
+.calendar-year-day--today {
+  box-shadow: inset 0 0 0 1px var(--main-brand-color);
+  color: var(--text);
+  font-weight: var(--font-bold);
+}
 .calendar-package-details {
   width: 100%;
   flex: 1;

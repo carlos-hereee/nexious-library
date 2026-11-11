@@ -43,7 +43,7 @@ export type CalendarDayProp = {
 export type EventMeetingProps = { meeting: MeetingProps };
 // ── Week and day views (additive; nothing above this line changed for them) ─────────
 
-export type CalendarViewMode = "month" | "week" | "day";
+export type CalendarViewMode = "month" | "week" | "day" | "year";
 
 // A closed set on purpose: each tone maps onto an EXISTING status or brand token pair in
 // _calendar.scss, so a consumer picks a meaning, never a color, and the contrast suite keeps
@@ -100,6 +100,16 @@ export interface CalendarLabels {
   nextMonth?: string;
   firstMonth?: string;
   lastMonth?: string;
+  // The built in view switch (shown only when `views` is set): its group name and one word per view.
+  viewSwitch?: string;
+  viewDay?: string;
+  viewWeek?: string;
+  viewMonth?: string;
+  viewYear?: string;
+  // The year view: its two navigation buttons and the count under a month.
+  previousYear?: string;
+  nextYear?: string;
+  yearMonthEvents?: (count: number) => string;
 }
 
 export interface CalendarProps {
@@ -113,6 +123,13 @@ export interface CalendarProps {
   // ── Week and day views, all optional; omitting every one of them renders the month grid
   //    exactly as before. ──
   view?: CalendarViewMode;
+  // The built in view switch: list two or more views and the calendar renders a Day, Week, Month,
+  // Year switch over itself, in this order, and moves between them on its own. Unset renders no
+  // switch, so every existing caller is unchanged. `view` is then the starting view, and a new
+  // `view` from the parent still moves it.
+  views?: CalendarViewMode[];
+  // Fired when the built in switch, or a month picked in the year view, changes the view.
+  onViewChange?: (view: CalendarViewMode) => void;
   // CONTROLLED focus date. `value` only seeds internal state once; when `date` is present it
   // wins, and changing it moves the calendar in every view.
   date?: Date;
@@ -155,6 +172,19 @@ export interface CalendarTimeGridProps {
   // The id of a visible heading naming the range. Without it the section names itself with the
   // formatted range, so it always has an accessible name.
   labelledBy?: string;
+}
+
+export interface CalendarYearViewProps {
+  year: number;
+  // Every event's local date, timed or not, for the dots and the per month counts.
+  eventDates: Date[];
+  // Today, to ring it in its mini month; unset marks nothing.
+  today?: Date;
+  weekStartsOn?: 0 | 1;
+  locale?: string;
+  labels?: CalendarLabels;
+  // Opens a month: its index, 0 for January.
+  onMonthClick: (month: number) => void;
 }
 
 export interface WeekNavigationProps {

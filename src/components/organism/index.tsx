@@ -49,8 +49,9 @@ export { default as CalendarNavigation } from "@nxs-organism/calendar/CalendarNa
 export { default as CalendarView } from "@nxs-organism/calendar/CalendarView";
 export { default as CalendarTimeGrid } from "@nxs-organism/calendar/CalendarTimeGrid";
 export { default as WeekNavigation } from "@nxs-organism/calendar/WeekNavigation";
+export { default as CalendarYearView } from "@nxs-organism/calendar/CalendarYearView";
 export type { CalendarEventListProps, CalendarViewProps } from "nxs-calendar";
-export type { CalendarNavProps, CalendarTimeGridProps, WeekNavigationProps } from "nxs-calendar";
+export type { CalendarNavProps, CalendarTimeGridProps, CalendarYearViewProps, WeekNavigationProps } from "nxs-calendar";
 
 // post
 export { default as PostDetail } from "@nxs-organism/post/PostDetail";

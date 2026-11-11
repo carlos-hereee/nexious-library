@@ -21,6 +21,14 @@ export const DEFAULT_CALENDAR_LABELS: ResolvedCalendarLabels = {
   nextMonth: "Next month",
   firstMonth: "First month of the year",
   lastMonth: "Last month of the year",
+  viewSwitch: "Calendar view",
+  viewDay: "Day",
+  viewWeek: "Week",
+  viewMonth: "Month",
+  viewYear: "Year",
+  previousYear: "Previous year",
+  nextYear: "Next year",
+  yearMonthEvents: (count: number) => (count === 1 ? "1 event" : `${count} events`),
 };
 
 // Merged key by key rather than spread, so a consumer object carrying an explicit `undefined`

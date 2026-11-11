@@ -161,7 +161,9 @@ export type { ICalEvent, CalendarPEventDays, PEventDay } from "nxs-calendar";
 // its own header without the template; the time parsers are the SAME rules FieldTime writes the
 // stored "3:00 PM" wire format with, exported so no consumer copies the regex.
 export { default as CalendarTimeGrid } from "@nxs-organism/calendar/CalendarTimeGrid";
+export { default as CalendarYearView } from "@nxs-organism/calendar/CalendarYearView";
 export type {
+  CalendarYearViewProps,
   CalendarViewMode,
   CalendarEventTone,
   CalendarTimedEvent,
