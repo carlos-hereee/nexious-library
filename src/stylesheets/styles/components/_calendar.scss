@@ -20,11 +20,16 @@
   text-align: left;
   align-items: flex-start;
 }
+// Both fills are light yellow literals with no dark counterpart, and the tile inherits its ink,
+// so a dark theme put near white text on them (about 1.1:1). The dark ink the amber badge uses
+// is pinned on both: 9.4:1 on the today yellow and 8:1 on the selected one, in every theme.
 .btn-calendar-tile--today {
   background-color: variables.$action-color;
+  color: var(--status-on-pending);
 }
 .btn-calendar-tile--selected {
   background-color: variables.$action-color-accent;
+  color: var(--status-on-pending);
 }
 
 .btn-calendar-tile--muted {
@@ -34,9 +39,16 @@
 .btn-calendar-tile--padding {
   cursor: default;
 }
+// The day number sits on the same line in every tile, whether or not a count follows it, so a
+// row of dates reads level; centering moved a day with events up by half the badge.
 .btn-calendar-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--space-extra-small);
   min-width: 0;
-  padding: 0;
+  padding: var(--space-extra-small) 0 0;
   position: relative;
   // The mobile step was 40px, which is under the 44px WCAG 2.5.5 target floor, and a calendar
   // tile is the densest grid of tap targets in the product. --tap-target-min is the floor
@@ -62,6 +74,21 @@
   @include mixin.respond-from(mobile) {
     min-height: 50px;
   }
+}
+// The day's event count, one pill holding the whole number, in the tile's own flow under the day
+// number. The old overhang (top -9%, right -2%) put it on the corner of the next tile, so it read
+// as belonging to whichever day sat beside or below it, and a 44px phone tile has no free corner
+// to tuck it into without covering the number.
+.calendar-tile-count {
+  min-width: 1.5em;
+  padding-inline: var(--space-extra-small);
+  border-radius: var(--radius-full);
+  background-color: var(--pending-accent-color);
+  color: var(--status-on-pending);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-bold);
+  line-height: 1.5;
+  text-align: center;
 }
 .event-list {
   display: flex;
@@ -119,6 +146,15 @@
   display: grid;
   grid-template-columns: repeat(7, 1fr);
   padding: var(--space-medium) 0;
+}
+// The weekday names sit right on the grid they label; two full paddings left an empty band
+// between them that read as a missing first row.
+.calendar-week {
+  padding-bottom: var(--space-small);
+  text-align: center;
+}
+.calendar-view-month {
+  padding-top: 0;
 }
 
 // ── Week and day time grid ──────────────────────────────────────────────────────

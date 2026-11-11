@@ -11,7 +11,9 @@ import type { CalendarNavProps } from "nxs-calendar";
  * @returns
  */
 const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
-  const { date, previous, next, click, headingLevel } = props;
+  const { date, previous, next, click, headingLevel, buttonNames } = props;
+  // An icon only button needs a real name; the label ("prev") is the old fallback.
+  const nameOf = (label: string): string => buttonNames?.[label] ?? label;
   return (
     <div className="calendar-navigation">
       <div className="flex">
@@ -20,6 +22,8 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
             key={p.label}
             onClick={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
+            title={nameOf(p.label)}
+            aria-label={nameOf(p.label)}
             className="btn-small"
           />
         ))}
@@ -31,6 +35,8 @@ const CalendarNavigation: React.FC<CalendarNavProps> = (props) => {
             key={p.label}
             onClick={() => click(p.label)}
             icon={{ name: p.label, icon: p.icon }}
+            title={nameOf(p.label)}
+            aria-label={nameOf(p.label)}
             className="btn-small"
           />
         ))}

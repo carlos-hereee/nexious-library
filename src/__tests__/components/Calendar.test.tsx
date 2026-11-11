@@ -73,3 +73,43 @@ describe("Calendar month heading level", () => {
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
 });
+
+describe("Calendar month touch up (2026-11-11)", () => {
+  const seed = new Date("2026-06-15T12:00:00");
+
+  it("names the icon only month buttons, and lets a consumer localize the names", () => {
+    const { rerender } = render(<Calendar value={seed} />);
+    ["Today", "First month of the year", "Previous month", "Next month", "Last month of the year"].forEach((name) =>
+      expect(screen.getByRole("button", { name })).toBeInTheDocument()
+    );
+    rerender(<Calendar value={seed} labels={{ today: "Hoy", previousMonth: "Mes anterior" }} />);
+    expect(screen.getByRole("button", { name: "Hoy" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Mes anterior" })).toBeInTheDocument();
+  });
+
+  it("jumps Last month of the year to December of the same year", () => {
+    const onDateChange = jest.fn();
+    render(<Calendar value={seed} onDateChange={onDateChange} />);
+    screen.getByRole("button", { name: "Last month of the year" }).click();
+    const landed: Date = onDateChange.mock.calls[onDateChange.mock.calls.length - 1][0];
+    expect(landed.getFullYear()).toBe(2026);
+    expect(landed.getMonth()).toBe(11);
+  });
+
+  it("shows a two digit event count as one badge, hidden from assistive tech", () => {
+    const events = Array.from({ length: 12 }, () => ({ date: "2026-06-18" }));
+    const { container } = render(<Calendar value={seed} events={events} />);
+    const badges = container.querySelectorAll(".calendar-tile-count");
+    expect(badges).toHaveLength(1);
+    expect(badges[0]).toHaveTextContent("12");
+    expect(badges[0]).toHaveAttribute("aria-hidden", "true");
+    expect(screen.getByTitle(/has 12 events/)).toBeInTheDocument();
+  });
+
+  it("prints three letter weekdays and keeps the full name for screen readers", () => {
+    const { container } = render(<Calendar value={seed} />);
+    const first = container.querySelector(".calendar-week .day") as HTMLElement;
+    expect(first.querySelector('[aria-hidden="true"]')).toHaveTextContent("Sun");
+    expect(first.querySelector(".sr-only")).toHaveTextContent("Sunday");
+  });
+});

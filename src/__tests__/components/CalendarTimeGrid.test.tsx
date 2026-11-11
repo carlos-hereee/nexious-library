@@ -22,6 +22,8 @@ const timed = (id: string, start: Date, end?: Date, extra: Partial<CalendarTimed
 // Intl in newer ICU builds separates "3:00" from "PM" with U+202F, which \s matches and a
 // literal space does not.
 const FRIDAY = "Friday, September 11, 2026";
+// A day header button opens its name with the text it shows (WCAG 2.5.3).
+const FRIDAY_HEADER = `Fri 11, ${FRIDAY}`;
 const dayGroups = () =>
   screen.getAllByRole("group").filter((group) => !(group.getAttribute("aria-label") ?? "").startsWith("All day"));
 const allDayGroups = () =>
@@ -43,12 +45,11 @@ describe("CalendarTimeGrid: structure", () => {
     expect(screen.getByRole("region", { name: "Sep 6 to 12, 2026" })).toBeInTheDocument();
   });
 
-  it("marks today with aria-current and a visually hidden label, and draws the now line there", () => {
+  it("marks today with aria-current and the word Today in its name, and draws the now line there", () => {
     const { container } = render(<CalendarTimeGrid days={week} now={now} locale={locale} />);
-    const today = screen.getByRole("button", { name: FRIDAY });
+    const today = screen.getByRole("button", { name: `${FRIDAY_HEADER}, Today` });
     expect(today).toHaveAttribute("aria-current", "date");
-    expect(within(today).getByText("Today")).toHaveClass("sr-only");
-    expect(screen.getAllByRole("button", { name: /2026$/ }).filter((b) => b.hasAttribute("aria-current"))).toHaveLength(1);
+    expect(screen.getAllByRole("button", { name: /2026(, Today)?$/ }).filter((b) => b.hasAttribute("aria-current"))).toHaveLength(1);
     const nowLine = container.querySelector(".calendar-now-line");
     expect(nowLine).toHaveAttribute("aria-hidden", "true");
     expect(nowLine?.parentElement).toHaveClass("calendar-day-column--today");
@@ -58,7 +59,7 @@ describe("CalendarTimeGrid: structure", () => {
 
   it("suppresses every today signal with hideToday", () => {
     const { container } = render(<CalendarTimeGrid days={week} now={now} locale={locale} hideToday />);
-    expect(screen.getByRole("button", { name: FRIDAY })).not.toHaveAttribute("aria-current");
+    expect(screen.getByRole("button", { name: new RegExp(`^${FRIDAY_HEADER}`) })).not.toHaveAttribute("aria-current");
     expect(container.querySelector(".calendar-now-line")).toBeNull();
   });
 
@@ -138,7 +139,7 @@ describe("CalendarTimeGrid: events", () => {
   it("fires onDayClick from a day header with the calendarValues shape", () => {
     const onDayClick = jest.fn();
     render(<CalendarTimeGrid days={week} now={now} locale={locale} onDayClick={onDayClick} />);
-    fireEvent.click(screen.getByRole("button", { name: FRIDAY }));
+    fireEvent.click(screen.getByRole("button", { name: new RegExp(`^${FRIDAY_HEADER}`) }));
     expect(onDayClick).toHaveBeenCalledWith(
       expect.objectContaining({ day: 11, month: 8, year: 2026, dayIdx: 5, yyyymmdd: expect.any(String) })
     );
@@ -177,7 +178,7 @@ describe("CalendarTimeGrid: all day row", () => {
     );
     expect(screen.getByRole("group", { name: `Todo el día, ${FRIDAY}` })).toBeInTheDocument();
     expect(screen.getByRole("button", { name: "1 más" })).toBeInTheDocument();
-    expect(screen.getByText("Hoy")).toHaveClass("sr-only");
+    expect(screen.getByRole("button", { name: `${FRIDAY_HEADER}, Hoy` })).toHaveAttribute("aria-current", "date");
     expect(screen.getAllByText("Sin eventos")).toHaveLength(6);
   });
 });
@@ -229,7 +230,7 @@ describe("Calendar template: month view untouched, week and day views added", ()
   it("fires onDateChange from the month view's own navigation too", () => {
     const onDateChange = jest.fn();
     render(<Calendar value={now} onDateChange={onDateChange} />);
-    fireEvent.click(screen.getByRole("button", { name: "next" }));
+    fireEvent.click(screen.getByRole("button", { name: "Next month" }));
     expect(onDateChange).toHaveBeenLastCalledWith(new Date(2026, 9, 1));
   });
 
@@ -262,7 +263,7 @@ describe("Calendar template: month view untouched, week and day views added", ()
   it("drills from a week header into onDayClick", () => {
     const onDayClick = jest.fn();
     render(<Calendar value={now} view="week" now={now} locale={locale} onDayClick={onDayClick} />);
-    fireEvent.click(screen.getByRole("button", { name: FRIDAY }));
+    fireEvent.click(screen.getByRole("button", { name: new RegExp(`^${FRIDAY_HEADER}`) }));
     expect(onDayClick).toHaveBeenCalledWith(expect.objectContaining({ day: 11, month: 8, year: 2026 }));
   });
 

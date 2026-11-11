@@ -82,11 +82,15 @@ const CalendarTimeGrid: React.FC<CalendarTimeGridProps> = (props) => {
     const hourCell = scroller.querySelector<HTMLElement>(`[data-hour="${targetHour}"]`);
     const head = scroller.querySelector<HTMLElement>(".calendar-time-grid-head");
     if (!hourCell) return;
+    // The hour label is centered on the hour line, so half of it sits above the cell; stopping
+    // at the line tucked that half under the sticky head and clipped the first hour's name.
+    const label = hourCell.querySelector<HTMLElement>(".calendar-time-grid-hour-label");
     const offset =
       hourCell.getBoundingClientRect().top -
       scroller.getBoundingClientRect().top +
       scroller.scrollTop -
-      (head?.offsetHeight ?? 0);
+      (head?.offsetHeight ?? 0) -
+      (label?.offsetHeight ?? 0);
     scroller.scrollTop = Math.max(0, offset);
   }, [rangeKey, scrollToHour]);
 
@@ -197,18 +201,23 @@ const CalendarTimeGrid: React.FC<CalendarTimeGridProps> = (props) => {
             <div className="calendar-time-grid-corner" aria-hidden="true" />
             {days.map((day) => {
               const isToday = todayInRange && isSameLocalDay(day, clock);
+              const shortName = formatWeekdayShort(day, locale);
+              const dayNumber = formatDayNumber(day, locale);
               return (
                 <button
                   key={localDayKey(day)}
                   type="button"
                   className={`calendar-day-header${isToday ? " calendar-day-header--today" : ""}`}
-                  aria-label={formatFullDate(day, locale)}
+                  // The name opens with what the button shows ("Fri 11"), so a voice control user can
+                  // say what they see (WCAG 2.5.3), then gives the full date and, on today, the word
+                  // Today. aria-label replaces the content, so a hidden span inside never reached a
+                  // screen reader; the word lives in the name instead.
+                  aria-label={`${shortName} ${dayNumber}, ${formatFullDate(day, locale)}${isToday ? `, ${labels.today}` : ""}`}
                   aria-current={isToday ? "date" : undefined}
                   onClick={() => onDayClick?.(calendarValues(day))}
                 >
-                  <span className="calendar-day-header-name">{formatWeekdayShort(day, locale)}</span>
-                  <span className="calendar-day-header-number">{formatDayNumber(day, locale)}</span>
-                  {isToday && <span className="sr-only">{labels.today}</span>}
+                  <span className="calendar-day-header-name">{shortName}</span>
+                  <span className="calendar-day-header-number">{dayNumber}</span>
                 </button>
               );
             })}

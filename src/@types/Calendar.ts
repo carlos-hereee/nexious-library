@@ -94,6 +94,12 @@ export interface CalendarLabels {
   // The month grid's day tile title: a day holding events, and a day with none.
   tileEvents?: (date: string, count: number) => string;
   tileNoEvents?: string;
+  // The month view's four icon only navigation buttons: their names for assistive tech and their
+  // tooltips. `today` names the go to today button above every view.
+  previousMonth?: string;
+  nextMonth?: string;
+  firstMonth?: string;
+  lastMonth?: string;
 }
 
 export interface CalendarProps {
@@ -220,6 +226,9 @@ export interface CalendarNavProps {
   next: { label: string; icon: string }[];
   // Level of the month heading; unset is the h1 it has always rendered.
   headingLevel?: 1 | 2 | 3 | 4 | 5 | 6;
+  // The accessible name of each button, keyed by its `label` ("start", "prev", "next", "last").
+  // A button with no entry keeps its label as the name, as before.
+  buttonNames?: Partial<Record<string, string>>;
 }
 
 export interface CalendarEventListProps {

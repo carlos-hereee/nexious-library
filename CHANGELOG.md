@@ -9,6 +9,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+#### Added
+
+- **`CalendarLabels` names the month view's buttons.** New optional `previousMonth`, `nextMonth`,
+  `firstMonth` and `lastMonth`, plus `today` on the go to today button above every view, so the
+  icon only controls have real names and tooltips a consumer can localize. `CalendarNavProps` gains
+  an optional `buttonNames`.
+
+#### Fixed
+
+- **Last month of the year lands on December.** The month view's last button went to January of
+  the next year.
+- **Today and selected tiles stay readable in a dark theme.** Their light yellow fills now carry
+  dark ink (9.4:1 and 8:1) instead of inheriting a dark theme's near white text (about 1.1:1).
+- **A day's event count is one badge under its number.** It drew one glyph per digit on the same
+  spot, so 12 read as a smudged 2, and it overhung the neighbouring tile. Counts past 99 show 99+.
+- **The week view opens with its first hour label in full** instead of half under the sticky head.
+
+#### Accessibility
+
+- A week or day header button's name now opens with the text it shows ("Fri 11, Friday,
+  September 11, 2026"), meeting WCAG 2.5.3, and carries Today in the name; the hidden span it
+  replaces never reached a screen reader because `aria-label` overrides content.
+
+#### Changed
+
+- Month view weekday headers print three letters (Sun, Mon) with the full name for screen readers,
+  so no column truncates; the gap under them is halved; day numbers sit on one line at the top of
+  every tile. The default tile title for a day with no events is "No events" (it said "no events
+  today" on every day).
+
 ## [4.7.0] - 2026-11-10
 
 #### Fixed

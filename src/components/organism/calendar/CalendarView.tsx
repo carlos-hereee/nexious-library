@@ -5,14 +5,19 @@ import { resolveCalendarLabels } from "@nxs-utils/calendar/calendarLabels";
 import type { CalendarViewProps } from "nxs-calendar";
 import { isTileMatch, isTileMute } from "@nxs-utils/calendar/findMatch";
 
+const WEEKDAY_SHORT_LENGTH = 3;
+
 const CalendarView: React.FC<CalendarViewProps> = ({ data, click, events, minDate, today, labels: labelsProp }) => {
   const labels = resolveCalendarLabels(labelsProp);
   return (
     <div className="container">
       <div className="calendar-week">
+        {/* Three letters on screen, so no column truncates to "Wedn..." on a narrow calendar, and
+            the whole name for a screen reader. */}
         {sundayFirst.map((w) => (
-          <span key={w} className="day text-overflow">
-            {w}
+          <span key={w} className="day">
+            <span aria-hidden="true">{w.slice(0, WEEKDAY_SHORT_LENGTH)}</span>
+            <span className="sr-only">{w}</span>
           </span>
         ))}
       </div>

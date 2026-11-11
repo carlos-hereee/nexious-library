@@ -115,7 +115,13 @@ const Calendar: React.FC<CalendarProps> = (props) => {
     <div className={className ? `${className} calendar` : "calendar"}>
       {!hideNavigation && (
         <div className="flex-j-end">
-          <IconButton onClick={() => moveTo(today)} icon={{ icon: "refresh" }} className="btn-small" />
+          <IconButton
+            onClick={() => moveTo(today)}
+            icon={{ icon: "refresh" }}
+            title={labels.today}
+            aria-label={labels.today}
+            className="btn-small"
+          />
         </div>
       )}
       {active && !isTimeGrid && (
@@ -126,6 +132,7 @@ const Calendar: React.FC<CalendarProps> = (props) => {
             previous={previous}
             next={next}
             headingLevel={headingLevel}
+            buttonNames={{ start: labels.firstMonth, prev: labels.previousMonth, next: labels.nextMonth, last: labels.lastMonth }}
           />
           <CalendarView
             data={active}
