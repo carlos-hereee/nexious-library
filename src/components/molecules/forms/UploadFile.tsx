@@ -64,18 +64,27 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           aria-label={label || "Choose a file"}
           hidden
         />
-        <button className="btn-main" type="button" onClick={imageClick} disabled={isDisabled}>
+        {/* Choosing a file is the neutral action and removing it the destructive one, on the nxs-btn
+            family (2026-11 item 337); the legacy btn-main and btn-cancel classes stay beside them until
+            2026-11 item 339 because the client still styles them. */}
+        <Button variant="secondary" className="btn-main" onClick={imageClick} isDisabled={isDisabled}>
           {selectLabel || "Choose a file"}
-        </button>
+        </Button>
         {previewImage && (
-          <button className="btn-main btn-cancel hide-on-mobile" type="button" onClick={handleRemoveImage}>
+          <Button variant="danger" className="btn-main btn-cancel hide-on-mobile" onClick={handleRemoveImage}>
             Remove File
-          </button>
+          </Button>
         )}
       </div>
       <div className="preview-hero-container">
         <span>Image Preview</span>
-        {previewImage && <Button label="x" onClick={handleRemoveImage} className="btn-cancel preview-cancel" />}
+        {previewImage && <Button
+            label="x"
+            variant="danger"
+            size="small"
+            onClick={handleRemoveImage}
+            className="btn-cancel preview-cancel"
+          />}
         <Hero
           hero={{ url: previewImage, alt: `${name} image value` }}
           imageRef={imageRef}

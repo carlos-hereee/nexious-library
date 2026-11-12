@@ -172,6 +172,20 @@
   --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
   --status-on-pending: #2c3e50; // dark on the amber pending badge (~5.5:1)
 
+  // ── Button tokens the nxs-btn family reads ──────────────────────────────────────
+  // Ported with the family from nexious-client's cu-btn block (2026-11 item 337), which reads
+  // three tokens the library never defined. Each default is the client's resolved value in
+  // vars.css, so a standalone or Storybook button looks the way the platform does, and the
+  // client's own declarations (loaded after this file) still win by source order.
+  // The label ON a brand fill. White on the indigo default; the client's presets redeclare it,
+  // and its Arcane theme flips it to dark ink on a light violet fill (the item 277 contrast fix),
+  // which is why the primary button reads this token rather than a fixed light text color.
+  --on-brand-color: #ffffff;
+  // The narrowest a labelled button may get, so a one letter label never renders as a sliver.
+  --min-button-width: 40px;
+  // The label on the muted grey disabled fill (--text-muted), white in both themes.
+  --button-disabled-text: #ffffff;
+
   // ── Status surfaces ─────────────────────────────────────────────────────────────
   // Each status gets a background, a border and a text color as a set, so a badge or a
   // banner can be built from tokens alone and inherits dark correctness for free. Before

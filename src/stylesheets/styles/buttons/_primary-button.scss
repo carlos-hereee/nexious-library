@@ -16,6 +16,10 @@
   gap: 0;
 }
 
+// DEPRECATED until 2026-11 item 339, with .btn-cta and .btn-cancel below: the library's own
+// components render the nxs-btn family now (item 337) but keep these classes beside it, because
+// the client still styles them. Item 339 deletes the three rules after the client moves off them.
+//
 // LEGACY. `.btn-main` is what `theme` defaulted to before 4.0.0, and it is kept so the call
 // sites that were migrated verbatim (`theme="btn-main"` became `className="btn-main"`) render
 // exactly as they did. New work uses `variant`, which resolves to the .btn-base plus .btn-*
@@ -53,10 +57,12 @@
   // min-height: 100%;
   @include mixin.focus-ring;
 }
+// DEPRECATED until 2026-11 item 339 (see .btn-main above).
 .btn-cta {
   background-color: variables.$cta-color;
   width: 100%;
 }
+// DEPRECATED until 2026-11 item 339 (see .btn-main above).
 .btn-cancel {
   width: 100%;
   background-color: variables.$danger;

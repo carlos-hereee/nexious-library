@@ -44,8 +44,12 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
       )}
       {securityLevel === "low" && (
         <>
-          {onCancel && <Button className="btn-main highlight" label={cancelLabel} onClick={onCancel} />}
-          <Button className="btn-main btn-danger highlight" label={confirmLabel} onClick={onConfirm} />
+          {/* Going back is the neutral action and confirming the destructive one, on the nxs-btn family
+              (2026-11 item 337); the legacy classes stay beside them until 2026-11 item 339. */}
+          {onCancel && (
+            <Button variant="secondary" className="btn-main highlight" label={cancelLabel} onClick={onCancel} />
+          )}
+          <Button variant="danger" className="btn-main btn-danger highlight" label={confirmLabel} onClick={onConfirm} />
         </>
       )}
     </div>

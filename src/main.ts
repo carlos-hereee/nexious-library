@@ -129,7 +129,14 @@ export type {
 // The 4.0.0 variant system. VARIANT_CLASS / SIZE_CLASS are exported so a consumer can target the
 // same class hooks from its own CSS instead of guessing at them.
 export type { Variant, Size, Density } from "./@types/Variant";
-export { VARIANT_CLASS, SIZE_CLASS, buildControlClass } from "./@types/Variant";
+export {
+  VARIANT_CLASS,
+  SIZE_CLASS,
+  NXS_BUTTON_BASE_CLASS,
+  NXS_VARIANT_CLASS,
+  NXS_SIZE_CLASS,
+  buildControlClass,
+} from "./@types/Variant";
 export type { ButtonProps, HintButtonProps, IconButtonProps } from "nxs-button";
 export type { CalendarProps } from "nxs-calendar";
 export type { CardProps } from "nxs-card";

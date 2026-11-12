@@ -1,4 +1,4 @@
-import { Icon } from "@nxs-atoms";
+import { Button, Icon } from "@nxs-atoms";
 
 type PasswordCheckerProps = {
   ease: string;
@@ -19,14 +19,16 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = (props) => {
         ))}
       </ol>
       <div className="flex-center m-tb">
-        <button type="button" className="btn-main btn-cancel" onClick={submit}>
+        {/* Continue anyway is the way past the advice (secondary) and Try again resubmits (primary), on
+            the nxs-btn family (2026-11 item 337); the legacy classes stay beside them until item 339. */}
+        <Button variant="secondary" className="btn-main btn-cancel" onClick={() => submit && submit(undefined)}>
           <Icon icon="submit" />
           Continue anyway
-        </button>
-        <button type="submit" className="btn-main">
+        </Button>
+        <Button type="submit" variant="primary" className="btn-main">
           <Icon icon="submit" />
           Try again
-        </button>
+        </Button>
       </div>
     </div>
   );

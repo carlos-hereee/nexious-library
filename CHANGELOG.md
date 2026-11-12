@@ -25,6 +25,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   icon only controls have real names and tooltips a consumer can localize. `CalendarNavProps` gains
   an optional `buttonNames`.
 
+- **The `nxs-btn` button family.** `Button`'s `variant` and `size` now also emit `nxs-btn`,
+  `nxs-btn-<variant>` and `nxs-btn-<size>` (`small`, `medium`, `large`), styled from the platform
+  client's `cu-btn` look with tokens only: primary, secondary, tertiary, danger and ghost, plus
+  `nxs-btn-icon` (a square for one glyph), `nxs-btn-block` and `nxs-btn-disabled`. They render
+  BESIDE the 4.0.0 `btn-base`, `btn-<variant>` and `btn-<size>` classes, which stay. A `Button` with
+  neither a variant nor a size still renders exactly its `className`. `NXS_BUTTON_BASE_CLASS`,
+  `NXS_VARIANT_CLASS` and `NXS_SIZE_CLASS` are exported next to `VARIANT_CLASS` and `SIZE_CLASS`.
+  Three tokens gain defaults: `--on-brand-color`, `--min-button-width` and `--button-disabled-text`.
+  This is part of the 5.0.0 major release (2026-11 item 337).
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -40,16 +50,36 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Accessibility
 
+- Every `nxs-btn` shows the shared focus ring on keyboard focus only, reaches a 44px target at
+  phone width, keeps color only transitions that switch off under reduced motion, and takes the
+  lighter brand accent for tertiary text on dark surfaces, where the base indigo measured about
+  2.7:1.
+
 - A week or day header button's name now opens with the text it shows ("Fri 11, Friday,
   September 11, 2026"), meeting WCAG 2.5.3, and carries Today in the name; the hidden span it
   replaces never reached a screen reader because `aria-label` overrides content.
 
 #### Changed
 
+- **The library's own buttons render `Button` variants.** SubmitButton (primary), ButtonCancel
+  (secondary), CTA (primary large), CartCancelRow, UploadFile, PasswordChecker, ShowAuthTips,
+  CopyButton, GoBackButton, AuthField's password toggle, CalendarEventList, CloseHeader,
+  ConfirmDialog, CancelDialog and PaymentMethods now carry the `nxs-btn` classes, so a library
+  Form's submit and cancel, a confirm dialog and a call to action take the platform's button look.
+  Each keeps its old class (`btn-main`, `btn-cancel`, `btn-cta`, `btn-danger`, `btn-submit`,
+  `btn-active`, `btn-payment`) beside the new ones, so a consumer's rules on those still match.
+  CTA's `onClick` now receives the clicked `cta` rather than the mouse event.
+
 - Month view weekday headers print three letters (Sun, Mon) with the full name for screen readers,
   so no column truncates; the gap under them is halved; day numbers sit on one line at the top of
   every tile. The default tile title for a day with no events is "No events" (it said "no events
   today" on every day).
+
+#### Deprecated
+
+- The legacy `.btn-main`, `.btn-cancel`, `.btn-cta` and `.btn-danger` rules. They keep rendering
+  and styling exactly as before, and are removed in a later release once consumers have moved to
+  the `nxs-btn` classes (2026-11 item 339).
 
 ## [4.7.0] - 2026-11-10
 

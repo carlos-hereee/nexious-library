@@ -1,5 +1,5 @@
 import type { DialogProps } from "nxs-card";
-import { Icon } from "@nxs-atoms";
+import { Button, Icon } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 import Dialog from "../../template/Dialog";
 
@@ -13,17 +13,20 @@ const CancelDialog = (props: DialogProps) => {
           <IconButton icon={{ icon: toggleShow ? "uncheck" : "check", label: toggleLabel }} onClick={onClick} />
         )}
         <div className="buttons-container">
-          <button
-            type="button"
+          {/* Confirming removes the current progress (danger) and dismissing is the neutral way out
+              (secondary), on the nxs-btn family (2026-11 item 337); the legacy classes stay beside them
+              until 2026-11 item 339 because the client still styles them. */}
+          <Button
+            variant="danger"
             className={className ? `btn-main btn-cancel ${className}` : "btn-main btn-cancel"}
-            onClick={onConfirmClick}
+            onClick={() => onConfirmClick && onConfirmClick()}
           >
             <Icon icon="cancel" />
             {label || "Cancel"}
-          </button>
-          <button type="button" className="btn-main" onClick={onDialogClose}>
+          </Button>
+          <Button variant="secondary" className="btn-main" onClick={() => onDialogClose && onDialogClose()}>
             Cancel
-          </button>
+          </Button>
         </div>
       </div>
     </Dialog>

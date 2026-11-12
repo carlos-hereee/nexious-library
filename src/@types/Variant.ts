@@ -44,12 +44,40 @@ export const SIZE_CLASS: Record<Size, string> = {
 };
 
 /**
+ * The canonical nxs-btn classes a variant and a size render (5.0.0, 2026-11 item 337), styled in
+ * stylesheets/styles/buttons/_button-variants.scss from the client's cu-btn block. They are added
+ * BESIDE VARIANT_CLASS and SIZE_CLASS, never instead of them: the client still styles the 4.0.0
+ * hooks and picks this release up on publish day, so swapping a class out from under it would
+ * restyle production. Exported so a consumer can target the same hooks in its own CSS.
+ */
+export const NXS_BUTTON_BASE_CLASS = "nxs-btn";
+
+export const NXS_VARIANT_CLASS: Record<Variant, string> = {
+  primary: "nxs-btn-primary",
+  secondary: "nxs-btn-secondary",
+  tertiary: "nxs-btn-tertiary",
+  danger: "nxs-btn-danger",
+  ghost: "nxs-btn-ghost",
+};
+
+export const NXS_SIZE_CLASS: Record<Size, string> = {
+  small: "nxs-btn-small",
+  medium: "nxs-btn-medium",
+  large: "nxs-btn-large",
+};
+
+/**
  * Builds the class string for a control from its variant, its size and the caller's className.
  *
  * One helper rather than the same three-way join copied into five button components, so they
  * cannot disagree about precedence or about what an absent variant means (CLAUDE.md rule 17).
  * Order matters and is not cosmetic: the caller's className comes LAST so an equal-specificity
  * rule of theirs wins on source order without needing !important.
+ *
+ * The nxs-btn base rides with the variant, exactly as btn-base does, so a size with no variant
+ * adds only its two size classes and never pulls a base look onto a control styled by its caller.
+ * With neither a variant nor a size the result is exactly the caller's className (the contract
+ * the client's own cu-btn call sites rest on).
  */
 export const buildControlClass = (parts: {
   variant?: Variant;
@@ -62,6 +90,9 @@ export const buildControlClass = (parts: {
     variant ? "btn-base" : "",
     variant ? VARIANT_CLASS[variant] : "",
     size ? SIZE_CLASS[size] : "",
+    variant ? NXS_BUTTON_BASE_CLASS : "",
+    variant ? NXS_VARIANT_CLASS[variant] : "",
+    size ? NXS_SIZE_CLASS[size] : "",
     extra || "",
     className || "",
   ].filter(Boolean);

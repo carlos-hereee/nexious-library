@@ -15,6 +15,8 @@ const hero = { url: "/banner.jpg", alt: "storefront at dusk" };
 // media and actions, and the suite passed against that code before the extension was written.
 // Every case covers the component's defaults or every prop it reads; PageNotFound appears in both
 // of its modes because the timer decides whether the message is prose or the button.
+// The action button strings were re captured once, for 2026-11 item 337: a Button variant now
+// emits the nxs-btn pair right after its btn-base pair. Nothing else in these strings moved.
 const pinCases: Record<string, { ui: ReactElement; html: string }> = {
   emptySectionDefault: {
     ui: <EmptySection />,
@@ -33,7 +35,7 @@ const pinCases: Record<string, { ui: ReactElement; html: string }> = {
         <span>extra</span>
       </EmptySection>
     ),
-    html: "<div class=\"empty-state container\"><div class=\"empty-state-icon\"><svg class=\"icon\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"></path></svg></div><h3 class=\"empty-state-heading\">No posts yet</h3><p class=\"empty-state-message\">Nothing has been posted yet.</p><button type=\"button\" class=\"btn-base btn-primary empty-state-action\" aria-label=\"Add a post\">Add a post</button><span>extra</span></div>",
+    html: "<div class=\"empty-state container\"><div class=\"empty-state-icon\"><svg class=\"icon\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"></path></svg></div><h3 class=\"empty-state-heading\">No posts yet</h3><p class=\"empty-state-message\">Nothing has been posted yet.</p><button type=\"button\" class=\"btn-base btn-primary nxs-btn nxs-btn-primary empty-state-action\" aria-label=\"Add a post\">Add a post</button><span>extra</span></div>",
   },
   comingSoonDefault: {
     ui: <ComingSoon />,
@@ -53,7 +55,7 @@ const pinCases: Record<string, { ui: ReactElement; html: string }> = {
         <span>extra</span>
       </ComingSoon>
     ),
-    html: "<div class=\"empty-state text-center\"><div><img loading=\"lazy\" class=\"hero\" alt=\"storefront at dusk\" src=\"/banner.jpg\"></div><div class=\"empty-state-icon\"><svg class=\"icon\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"></path></svg></div><h3 class=\"empty-state-heading\">Analytics</h3><p class=\"empty-state-message text-max\">Charts are on their way.</p><button type=\"button\" class=\"btn-base btn-secondary empty-state-action\" aria-label=\"Join the waitlist\">Join the waitlist</button><span>extra</span></div>",
+    html: "<div class=\"empty-state text-center\"><div><img loading=\"lazy\" class=\"hero\" alt=\"storefront at dusk\" src=\"/banner.jpg\"></div><div class=\"empty-state-icon\"><svg class=\"icon\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"></path></svg></div><h3 class=\"empty-state-heading\">Analytics</h3><p class=\"empty-state-message text-max\">Charts are on their way.</p><button type=\"button\" class=\"btn-base btn-secondary nxs-btn nxs-btn-secondary empty-state-action\" aria-label=\"Join the waitlist\">Join the waitlist</button><span>extra</span></div>",
   },
   pageNotFoundDefault: {
     ui: <PageNotFound />,
@@ -86,7 +88,7 @@ const pinCases: Record<string, { ui: ReactElement; html: string }> = {
         actionVariant="ghost"
       />
     ),
-    html: "<div class=\"empty-state page-center\"><div><img loading=\"lazy\" class=\"hero\" alt=\"storefront at dusk\" src=\"/banner.jpg\"></div><div class=\"empty-state-icon text-center\"><svg class=\"icon icon-spin\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"></path></svg></div><h3 class=\"empty-state-heading\">Lost</h3><button type=\"button\" class=\"btn-base btn-ghost empty-state-action\" aria-label=\"That page moved.\">That page moved.</button></div>",
+    html: "<div class=\"empty-state page-center\"><div><img loading=\"lazy\" class=\"hero\" alt=\"storefront at dusk\" src=\"/banner.jpg\"></div><div class=\"empty-state-icon text-center\"><svg class=\"icon icon-spin\" width=\"1em\" height=\"1em\" viewBox=\"0 0 24 24\" fill=\"currentColor\" stroke=\"none\" stroke-linecap=\"round\" stroke-linejoin=\"round\" aria-hidden=\"true\"><path d=\"M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z\"></path></svg></div><h3 class=\"empty-state-heading\">Lost</h3><button type=\"button\" class=\"btn-base btn-ghost nxs-btn nxs-btn-ghost empty-state-action\" aria-label=\"That page moved.\">That page moved.</button></div>",
   },
 };
 
@@ -145,10 +147,11 @@ describe("EmptyState gate props", () => {
     expect(root?.querySelector("div")).toHaveAttribute("class", "glyph gate-icon");
     expect(screen.getByRole("heading", { name: "Pick a deck" })).toHaveAttribute("class", "gate-title");
     expect(screen.getByText("Choose one on the Path.")).toHaveAttribute("class", "hint gate-copy");
-    // The action keeps its variant classes, exactly as today; only the hook class is replaced.
+    // The action keeps its variant classes (the nxs-btn pair beside btn-base since 2026-11 item
+    // 337); only the hook class is replaced.
     expect(screen.getByRole("button", { name: "Go to the Path" })).toHaveAttribute(
       "class",
-      "btn-base btn-primary cu-btn"
+      "btn-base btn-primary nxs-btn nxs-btn-primary cu-btn"
     );
     expect(container.querySelector(".empty-state, .empty-state-icon, .empty-state-heading")).toBeNull();
     expect(container.querySelector(".empty-state-message, .empty-state-action")).toBeNull();
