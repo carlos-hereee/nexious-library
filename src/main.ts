@@ -60,6 +60,8 @@ export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Socials } from "@nxs-template/Socials";
 // form components
 export { default as Select } from "@nxs-molecules/forms/Select";
+export { default as SearchBar } from "@nxs-molecules/forms/SearchBar";
+export { SEARCH_BAR_DEBOUNCE_MS } from "@nxs-utils/form/searchBar";
 export { default as Rating } from "@nxs-molecules/assets/Rating";
 // card components
 export { default as SettingsCard } from "@nxs-organism/card/SettingsCard";
@@ -75,21 +77,164 @@ export { default as CloseHeader } from "@nxs-molecules/header/CloseHeader";
 export { default as CountDown } from "@nxs-organism/timer/CountDown";
 // error components
 export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
+export { default as ErrorMessage } from "@nxs-atoms/texts/ErrorMessage";
+export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
+// Loading placeholders and the shared empty-state pattern (UI rework Phase 4). Loading still
+// renders a spinner by default; pass its `skeleton` prop to opt a surface into these.
+export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
+export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
+export type { SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
+// Placeholder rows shaped like the real ones, aria-hidden beside the caller's live region
+// (2026-11 item 337, Phase 5).
+export { default as SkeletonRows } from "@nxs-molecules/errors/SkeletonRows";
+export type { SkeletonRowsProps, SkeletonRowsColumn } from "nxs-errors";
+// The store states in front of a money surface (2026-11 item 337, Phase 5).
+export { default as StripeReadyGate } from "@nxs-molecules/errors/StripeReadyGate";
+export type { StripeReadyGateProps, StripeReadyGateCopy } from "nxs-errors";
+// dev-diagnostics switch, call setDevMode(import.meta.env.DEV) once at boot so the
+// missing-prop panels are guaranteed off in production (see utils/app/devMode.ts).
+export { setDevMode, getDevMode } from "@nxs-utils/app/devMode";
 // reaction buttons
 export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
+// The Move up / Move down pair for a list reordered one row at a time.
+export { default as SwapOrderButtons } from "@nxs-molecules/buttons/SwapOrderButtons";
+export type { SwapOrderButtonsProps, MoveOffset } from "nxs-button";
+// The progress header of a paginated form: steps, bar, "Step X of N" and a polite live region.
+export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress";
+export type { StepProgressProps } from "nxs-navigation";
+// The clickable card (a router link, an anchor, a button or an inert tile) and the grid it sits in.
+export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
+export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
+export type { CardGridProps, SelectCardProps } from "nxs-card";
+// One row of a list (lead, body, meta and actions slots), the nxs-list-row recipe (2026-11 item 337).
+export { default as ListRow } from "@nxs-molecules/card/ListRow";
+export type { ListRowProps } from "nxs-card";
+// Composites on Card and ListRow (2026-11 item 337, Phase 4): a kanban card whose Move to select is
+// the single pointer alternative to dragging, and one event as a card or a row with machine
+// readable dates and the caller's date formatter.
+export { default as BoardCard } from "@nxs-organism/card/BoardCard";
+export { default as EventCard } from "@nxs-organism/card/EventCard";
+export type { BoardCardProps, BoardCardMoveOption, EventCardProps, EventCardEvent, EventCardDatePart } from "nxs-card";
+// The stat band (2026-11 item 337, Phase 5): each tile's value arrives formatted by the caller.
+export { default as MetricRow } from "@nxs-molecules/card/MetricRow";
+export type { MetricRowProps, MetricRowEntry, MetricTrend } from "nxs-card";
+// The second Phase 5 batch ported from the client (2026-11 item 337): rows, cards, a ranked list, a
+// bar chart, a status pill, a discount line and a grid section, every string passed in.
+export { default as AttentionRow } from "@nxs-molecules/card/AttentionRow";
+export { default as AnnouncementCard } from "@nxs-molecules/card/AnnouncementCard";
+export { default as RankList } from "@nxs-molecules/card/RankList";
+export { default as BarChart } from "@nxs-molecules/card/BarChart";
+export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
+export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
+export { default as StatusBadge } from "@nxs-molecules/card/StatusBadge";
+export { default as DiscountNote } from "@nxs-molecules/card/DiscountNote";
+export { default as GridSection } from "@nxs-molecules/card/GridSection";
+export type {
+  StatusBadgeProps,
+  AttentionRowProps,
+  AnnouncementCardProps,
+  RankListProps,
+  RankListRow,
+  BarChartProps,
+  BarChartPoint,
+  ActivityListProps,
+  ActivityListItem,
+  StatusPillProps,
+  StatusPillTone,
+  DiscountNoteProps,
+  GridSectionProps,
+} from "nxs-card";
+// The settings switch, its row and the agreement checkbox (2026-11 item 337, Phase 5).
+export { default as ToggleSwitch } from "@nxs-atoms/forms/ToggleSwitch";
+export { default as ToggleRow } from "@nxs-molecules/forms/ToggleRow";
+export { default as LegalConsentCheckbox } from "@nxs-molecules/forms/LegalConsentCheckbox";
+export type { ToggleSwitchProps, ToggleRowProps, LegalConsentCheckboxProps, LegalConsentLink } from "nxs-form";
+// The data table: columns, rows of node cells, one caption, aria-sort and a labelled scroll
+// region, the nxs-table recipe (2026-11 item 337). Its parts are exported for a caller composing
+// its own table.
+export { default as Table } from "@nxs-organism/table/Table";
+export { default as TableHeader } from "@nxs-organism/table/TableHeader";
+export { default as TableBody } from "@nxs-organism/table/TableBody";
+export { default as TableFooter } from "@nxs-organism/table/TableFooter";
+export type {
+  TableProps,
+  TableColumn,
+  TableRowData,
+  TableSortDirection,
+  TableAlign,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+} from "custom-props";
+// The "Studying: <item> / Change" bar, with room for the caller's own controls.
+export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
+export type { ActiveSelectionBarProps } from "nxs-navigation";
+// The navigation pieces ported from the client (2026-11 item 337, Phase 4): the sectioned side rail
+// (a roving tablist or a nav), the pill tablist and its link twin, and the compact viewport's tab
+// bar and More sheet. Every string and glyph is passed in; links arrive through linkComponent.
+export { default as SectionedRail } from "@nxs-organism/navigation/SectionedRail";
+export { default as PillTabStrip } from "@nxs-molecules/navigation/PillTabStrip";
+export { default as PillNav } from "@nxs-molecules/navigation/PillNav";
+export { default as MobileTabBar } from "@nxs-organism/navigation/MobileTabBar";
+export { default as MoreSheet } from "@nxs-organism/navigation/MoreSheet";
+export type {
+  NavItem,
+  NavSection,
+  NavPingProps,
+  NavLinkComponent,
+  RailSemantics,
+  SectionedRailProps,
+  PillTabStripProps,
+  PillNavProps,
+  MobileTabBarProps,
+  MobileTabBarMore,
+  MoreSheetProps,
+} from "nxs-navigation";
+// The dropdown menu and the paging controls ported from the client (2026-11 item 337, Phase 5):
+// every label arrives translated and every href goes through safeUrl.
+export { default as ActionMenu } from "@nxs-molecules/navigation/ActionMenu";
+export { default as Pager } from "@nxs-molecules/navigation/Pager";
+export { default as LoadOlderButton } from "@nxs-molecules/navigation/LoadOlderButton";
+export type { ActionMenuEntry, ActionMenuProps, PagerProps, LoadOlderButtonProps } from "nxs-navigation";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
-// public hooks — lets consumers build custom form UIs using the same validation and state logic
+// public hooks, lets consumers build custom form UIs using the same validation and state logic
 export { useFormValidation } from "@nxs-utils/hooks/useFormValidation";
 export { useValues } from "@nxs-utils/hooks/useFormValues";
-// public prop types — surfaced from the package entry so consumers can type their own
+
+// Motion (design language 5.9): one provider plus one hook, so every surface moves with one grammar.
+export { default as MotionProvider } from "@nxs-template/MotionProvider";
+export { useMotion } from "@nxs-utils/hooks/useMotion";
+export type { MotionApi, MotionOptions, MotionPattern, MotionProps, MotionProviderProps, MotionSpeed } from "nxs-motion";
+
+// public prop types, surfaced from the package entry so consumers can type their own
 // wrappers without reaching into subpaths. The underlying type modules now ship in dist
 // (the @types ambient `declare module` blocks were converted to real emitted modules).
 export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";
-export type { FormProps, PaginateFormProps, SelectProp, UseFormValidationApi, UseValuesApi } from "nxs-form";
-export type { ButtonProps, IconButtonProps } from "nxs-button";
+export type {
+  FormEntriesHandle,
+  FormProps,
+  PaginateFormProps,
+  SearchBarProps,
+  SelectProp,
+  SelectOptionGroup,
+  UseFormValidationApi,
+  UseValuesApi,
+} from "nxs-form";
+// The 4.0.0 variant system. VARIANT_CLASS / SIZE_CLASS are exported so a consumer can target the
+// same class hooks from its own CSS instead of guessing at them.
+export type { Variant, Size, Density } from "./@types/Variant";
+export {
+  VARIANT_CLASS,
+  SIZE_CLASS,
+  NXS_BUTTON_BASE_CLASS,
+  NXS_VARIANT_CLASS,
+  NXS_SIZE_CLASS,
+  buildControlClass,
+} from "./@types/Variant";
+export type { ButtonProps, HintButtonProps, IconButtonProps } from "nxs-button";
 export type { CalendarProps } from "nxs-calendar";
-export type { CardProps } from "nxs-card";
+export type { CardProps, CardContentProps, CardHeadingLevel } from "nxs-card";
 export type { PostProps, PostDetailProps } from "nxs-post";
 
 // ── Remaining public prop types (2026-06-29 type-surface pass) ───────────────────
@@ -114,7 +259,21 @@ export type {
 } from "nxs-card";
 export type { TotalProps } from "custom-props";
 export type { ICalEvent, CalendarPEventDays, PEventDay } from "nxs-calendar";
-export type { ErrorProps, ErrorMessageProps } from "nxs-errors";
+// Calendar week and day views (additive). The grid is public so a consumer can compose it under
+// its own header without the template; the time parsers are the SAME rules FieldTime writes the
+// stored "3:00 PM" wire format with, exported so no consumer copies the regex.
+export { default as CalendarTimeGrid } from "@nxs-organism/calendar/CalendarTimeGrid";
+export { default as CalendarYearView } from "@nxs-organism/calendar/CalendarYearView";
+export type {
+  CalendarYearViewProps,
+  CalendarViewMode,
+  CalendarEventTone,
+  CalendarTimedEvent,
+  CalendarLabels,
+  CalendarTimeGridProps,
+} from "nxs-calendar";
+export { to24Hour, toWireTime } from "@nxs-utils/form/time";
+export type { ErrorProps, ErrorMessageProps, DevErrorMessageProps, InlineErrorMessageProps, ErrorProp, ErrorCodes, ComponentSpec, SpecProp } from "nxs-errors";
 export type { HeroProps, BubblyProps, TextBubbleProps, RatingProps, AssetProps, UserProps } from "nxs-assets";
 export type { IconProps, CopyToClipboardProps } from "nxs-button";
 export type { PostData, PostAuthor, PostReaction } from "nxs-post";

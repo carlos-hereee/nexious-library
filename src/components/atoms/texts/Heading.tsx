@@ -11,9 +11,12 @@ import type { HeadingProps } from "nxs-typography";
  * If both size and scale are provided, size takes priority.
  * Defaults to h1 when no level is specified.
  */
-const Heading: React.FC<HeadingProps> = ({ children, data, size, scale, theme }) => {
+const Heading: React.FC<HeadingProps> = ({ children, data, size, scale, className: callerClass }) => {
   const content = children ?? data;
-  const className = theme ? `heading ${theme}` : "heading";
+  // Heading keeps an implicit base class where Button dropped one, and the difference is
+  // deliberate: `heading` is the element's own typography, not a variant a caller chooses
+  // between, so appending is right here and replacing was right there.
+  const className = callerClass ? `heading ${callerClass}` : "heading";
 
   // resolve heading level: size string takes priority over numeric scale
   const sizeMap: Record<string, number> = { h1: 1, h2: 2, h3: 3, h4: 4, h5: 5, h6: 6 };

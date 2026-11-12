@@ -23,7 +23,7 @@ const Header: React.FC<HeaderProps> = (props) => {
     logo,
     ping,
     language,
-    theme,
+    className,
     uniqueId,
     themeList,
     includeHome,
@@ -31,9 +31,10 @@ const Header: React.FC<HeaderProps> = (props) => {
     hideIcons,
     utilities,
     activePath,
+    isDev,
   } = props;
   const { updateMenu, onLogoClick, handleTheme, onHomeClick } = props;
-  const { errors } = useRequiredProps({ menu }, true);
+  const { errors } = useRequiredProps({ menu });
   const [isActive, setActive] = useState(false);
   const [isClose, setClose] = useState(false);
   const headerRef = useRef<HTMLElement>(null);
@@ -67,7 +68,7 @@ const Header: React.FC<HeaderProps> = (props) => {
   // integration error worth replacing the header with a message. useRequiredProps
   // was hardened after 3.0.7 to also flag [] as "missing", so the old
   // `lightColor === "red"` gate blanked the ENTIRE header on every menu-less page.
-  if (!menu) return <ErrorMessages errors={errors} component="header" />;
+  if (!menu) return <ErrorMessages errors={errors} component="Header" isDev={isDev} />;
   return (
     <header className={layout} id={uniqueId} ref={headerRef}>
       {logo && <Logo hero={logo} label={logo.title} onLogoClick={onLogoClick} />}
@@ -81,9 +82,9 @@ const Header: React.FC<HeaderProps> = (props) => {
               handleTheme={handleTheme}
               language={language}
               themeList={themeList}
-              theme={theme}
+              className={className}
               hideIcons={hideIcons}
-              active={theme}
+              active={className}
               activePath={activePath}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}
@@ -103,9 +104,9 @@ const Header: React.FC<HeaderProps> = (props) => {
               hideIcons={hideIcons}
               language={language}
               themeList={themeList}
-              active={theme}
+              active={className}
               activePath={activePath}
-              theme={`alt-${theme}`}
+              className={`alt-${className}`}
               includeHome={includeHome}
               onHomeClick={handleHomeClick}
               handleTheme={handleTheme}

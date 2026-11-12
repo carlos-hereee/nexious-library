@@ -13,7 +13,7 @@ const meta: Meta<typeof Input> = {
     },
     isDisabled: { control: "boolean" },
     placeholder: { control: "text" },
-    theme: { control: "text" },
+    className: { control: "text" },
     onChange: { action: "changed" },
     onBlur: { action: "blurred" },
   },

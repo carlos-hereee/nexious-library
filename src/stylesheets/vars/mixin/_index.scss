@@ -25,3 +25,87 @@
     }
   }
 }
+
+// The mobile-first counterpart to devices(), which is desktop-first (max-width).
+//
+// The +0.02px is what makes the two tile the range exactly. devices(tablet) is
+// `max-width: 770px`, so its exact complement is "anything wider than 770px". Writing
+// `min-width: 770px` would double-apply at exactly 770px, and `min-width: 771px` would leave
+// fractional viewports (browser zoom, hidpi, a 770.5px window) matching neither. A hundredth of
+// a pixel is below any real device step, so there is no gap and no overlap.
+//
+// ── Why devices() is still here (item 50 lane 9, closed) ────────────────────────
+// Phase 4 migrated 39 of the library's 44 call sites. **The last five are permanent, not
+// pending**, so plan on both mixins living here rather than on deleting this one.
+//
+// Note first that the two are COMPLEMENTS, not synonyms, so a rename is always wrong: it moves a
+// rule to the opposite side of the breakpoint. A real conversion moves the small-screen values
+// into the base and states the wide-screen value under respond-from. Every survivor fails at
+// exactly that second step, because its declarations exist ONLY inside the max-width block and
+// there is no correct wide-screen value to state:
+//
+//   - `.hide-on-mobile` / `.hide-on-tablet` (styles/custom/_custom.scss, plus the .form-steps
+//     nesting of it in styles/form/_form-navigation.scss) are display utilities a consumer
+//     applies to ARBITRARY elements. There is no one desktop display for "whatever this was",
+//     and writing one would add an author-level declaration where none exists today, which would
+//     start winning cascade fights the utility currently loses.
+//   - `.btn-start` / `.btn-last` (styles/components/_calendar.scss) are emitted nowhere in this
+//     library or in its consumers, so the carrying tag, and therefore its display, is unknown.
+//   - `caption` (vars/reset/_table.scss) takes its alignment from the UA stylesheet, and that is
+//     `-webkit-center` in Blink against `center` in Gecko. There is no portable value.
+//
+// Each of the five carries this reasoning at its own call site too, so a later sweep does not
+// have to rediscover it. Converting one anyway is not a cleanup, it is a rendering change.
+@mixin respond-from($breakpoint) {
+  @if $breakpoint == laptop {
+    @media only screen and (min-width: variables.$laptop + 0.02px) {
+      @content;
+    }
+  }
+  @if $breakpoint == tablet {
+    @media only screen and (min-width: variables.$tablet + 0.02px) {
+      @content;
+    }
+  }
+  @if $breakpoint == mobile {
+    @media only screen and (min-width: variables.$mobile + 0.02px) {
+      @content;
+    }
+  }
+  @if $breakpoint == mini {
+    @media only screen and (min-width: variables.$mini + 0.02px) {
+      @content;
+    }
+  }
+}
+
+// The library's one focus treatment. Include it on every interactive selector.
+//
+// Why a mixin and not a rule each component writes: there are four different focus
+// treatments in the tree today, and two of them are accessibility defects rather than
+// drift. .select outlines identically on :hover and :focus, so a keyboard user cannot tell
+// focus from a passing mouse; .entry-rail-tile has no outline at all and signals focus with
+// an opacity change, which is effectively invisible. Both would pass a review that only
+// asked "does it have a focus style". One mixin makes the correct answer the easy one.
+//
+// :focus-visible rather than :focus so the ring shows for keyboard and assistive-tech
+// users without firing on every mouse click, and outline rather than box-shadow so it
+// cannot shift layout or be clipped by an ancestor's overflow.
+@mixin focus-ring {
+  &:focus-visible {
+    outline: var(--focus-ring);
+    outline-offset: var(--focus-ring-offset);
+  }
+}
+
+// Wraps @content in the reduced-motion query. The global kill switch in vars/reset already
+// neutralizes animations and transitions library-wide; this is for the cases that need a
+// specific alternative rather than a blanket off, and it exists so the media feature name
+// is written in exactly one place. It has been misspelled here before
+// (`prefers-reduced-inputdirection`), which silently disabled the whole guard for months
+// and is not the kind of bug a screenshot catches.
+@mixin reduced-motion {
+  @media (prefers-reduced-motion: reduce) {
+    @content;
+  }
+}

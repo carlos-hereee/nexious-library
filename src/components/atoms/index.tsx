@@ -3,7 +3,7 @@ export { default as Icon } from "@nxs-atoms/assets/Icon";
 export { default as Spinner } from "@nxs-atoms/assets/Spinner";
 export { default as Bubble } from "@nxs-atoms/assets/Bubble";
 export { default as Image } from "@nxs-atoms/assets/Image";
-// pluggable icon registry — lets a consumer supply its own icon set without forking
+// pluggable icon registry, lets a consumer supply its own icon set without forking
 export {
   registerIcons,
   getIconRenderer,
@@ -29,7 +29,8 @@ export { default as Label } from "@nxs-atoms/forms/Label";
 export { default as InputPrice } from "@nxs-atoms/forms/InputPrice";
 export { default as Option } from "@nxs-atoms/forms/Option";
 export { default as ShowAuthTips } from "@nxs-atoms/forms/ShowAuthTips";
-export type { InputProps, NumberInputProps } from "nxs-form";
+export { default as ToggleSwitch } from "@nxs-atoms/forms/ToggleSwitch";
+export type { InputProps, NumberInputProps, ToggleSwitchProps } from "nxs-form";
 
 // // save tables components for future update
 // // table

@@ -1,0 +1,182 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-table, the library's one data table ─────────────────────────────────────
+// Ported from nexious-client's `orders-table` block (shared/stylesheets/orders.css, 2026-11 item
+// 337), rebuilt on library tokens. The cell borders, header fill, zebra stripe and row hover come
+// from the element reset in vars/reset/_table.scss, which already themes for dark mode; this file
+// adds only what the reset does not own (spacing, typography, the sort button, the empty cell and
+// the stacked phone layout), so the two never define the same look twice.
+
+// The scroll region. Same two jobs as the reset's `.table-scroll`: a wide table scrolls here
+// instead of widening the page, and the height cap makes this box the scrollport the sticky
+// header pins to. min-width: 0 so a grid or flex parent cannot floor it at the table's width.
+.nxs-table-scroll {
+  width: 100%;
+  min-width: 0;
+  max-height: 100vh;
+  overflow: auto;
+  @include mixins.focus-ring;
+}
+
+.nxs-table {
+  width: 100%;
+  margin: 0;
+  border-collapse: collapse;
+  font-size: var(--text-small);
+}
+
+.nxs-table-caption {
+  padding-bottom: var(--space-small);
+  font-size: var(--text-large);
+  font-weight: var(--font-bold);
+  color: var(--text);
+  text-align: left;
+}
+
+.nxs-table .nxs-table-header-cell {
+  padding: var(--space-small) var(--space-medium-small);
+  text-align: left;
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.nxs-table .nxs-table-cell {
+  padding: var(--space-medium-small);
+  color: var(--text);
+  vertical-align: middle;
+}
+
+// A body th (a row header) keeps body type: the overline treatment is for column labels only.
+.nxs-table tbody th.nxs-table-cell {
+  font-weight: var(--font-semibold);
+}
+
+.nxs-table-dense .nxs-table-cell {
+  padding: var(--space-small) var(--space-medium-small);
+}
+.nxs-table-dense tbody tr {
+  height: var(--row-height-dense);
+}
+
+// End alignment comes with tabular figures, because end aligned columns hold numbers and money,
+// and ragged proportional digits are what makes a column of totals impossible to scan.
+.nxs-table .nxs-table-cell-end {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.nxs-table .nxs-table-cell-center {
+  text-align: center;
+}
+
+// The sort control fills its header cell and inherits its type, so a sortable header looks like
+// the others plus the arrow, and the whole label is the 44px target rather than the arrow alone.
+.nxs-table-sort {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-extra-small);
+  min-height: var(--tap-target-min);
+  width: auto;
+  padding: 0;
+  background: none;
+  border: none;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  cursor: pointer;
+  @include mixins.focus-ring;
+  &:hover {
+    color: var(--main-brand-color);
+  }
+}
+.nxs-table-cell-end .nxs-table-sort {
+  flex-direction: row-reverse;
+}
+
+// The arrow is two borders turned into a chevron, so it costs no glyph and no text a screen
+// reader could read. Unsorted shows a faint up arrow so the column reads as sortable at rest.
+.nxs-table-sort-icon {
+  width: var(--space-small);
+  height: var(--space-small);
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+  transform: rotate(-135deg);
+  opacity: 0.4;
+}
+.nxs-table-sort[data-sort="ascending"] .nxs-table-sort-icon {
+  opacity: 1;
+}
+.nxs-table-sort[data-sort="descending"] .nxs-table-sort-icon {
+  transform: rotate(45deg);
+  opacity: 1;
+}
+
+// The empty cell spans every column, so it sits centered with room to breathe instead of
+// reading as a one cell row of data.
+.nxs-table .nxs-table-empty {
+  padding: var(--space-large) var(--space-medium);
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.nxs-table-footer {
+  font-weight: var(--font-bold);
+}
+
+// ── Stacked on a phone (opt in: isStackedOnMobile) ──
+// The MARKUP stays one table at every width; only the presentation changes, so assistive
+// technology gets identical row and column semantics on a phone and a desktop. Each cell prints
+// its column's name from data-label, because a stacked cell with no header beside it is just an
+// unlabelled value. The client stacks at 720px; the library's nearest breakpoint is tablet.
+@include mixins.devices(tablet) {
+  // clip, not display:none: a display:none header leaves the accessibility tree and takes the
+  // column names the data-label text stands in for with it. No nowrap here (unlike .sr-only),
+  // so the compiled sheet keeps its one deliberate unmarked clip (resilience.test.tsx).
+  .nxs-table-stacked thead {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+  }
+  .nxs-table-stacked,
+  .nxs-table-stacked tbody,
+  .nxs-table-stacked tr,
+  .nxs-table-stacked .nxs-table-cell {
+    display: block;
+    width: 100%;
+  }
+  // The reset's `tbody tr { height }` is honored on a block row, which pinned a stacked card at
+  // the row height while its cells ran taller and overlapped the next card in the client.
+  .nxs-table-stacked tbody tr {
+    height: auto;
+    margin-bottom: var(--space-medium-small);
+    padding: var(--space-small) var(--space-medium-small);
+    border: 1px solid var(--surface-edge);
+    border-radius: var(--radius-medium);
+    background-color: var(--surface);
+  }
+  .nxs-table-stacked .nxs-table-cell {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-medium);
+    padding: var(--space-extra-small) 0;
+    border: none;
+    text-align: left;
+  }
+  .nxs-table-stacked .nxs-table-cell[data-label]::before {
+    content: attr(data-label);
+    flex: none;
+    font-size: var(--text-extra-small);
+    letter-spacing: var(--tracking-overline);
+    text-transform: uppercase;
+    color: var(--text-secondary);
+  }
+  .nxs-table-stacked .nxs-table-empty {
+    justify-content: center;
+  }
+}

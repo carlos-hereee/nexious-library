@@ -1,5 +1,7 @@
-@use "../../vars/variables/_index.scss" as variables;
-
+// -- Flex layout utilities --
+// Every gap here is one step of the spacing scale rather than a private 1rem. These classes
+// exist only to name a layout, so the moment one of them inlines a raw value it becomes a
+// second source of truth for spacing that a consumer's token override cannot reach.
 .flex {
   display: flex;
 }
@@ -12,35 +14,35 @@
 .flex-g,
 .flex-gap {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-end {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   justify-content: flex-end;
 }
 .flex-row {
   display: flex;
   flex-direction: row;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-d-row {
   display: flex;
   flex-direction: row;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-column,
 .flex-d-column {
   display: flex;
   flex-direction: column;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-j-start {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-j-end {
   display: flex;
@@ -51,26 +53,25 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  // flex-wrap: wrap;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-wrap,
 .flex-w {
   display: flex;
   flex-wrap: wrap;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .flex-start {
   display: flex;
   justify-content: flex-start;
   align-items: flex-start;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .align-center {
   align-items: center;

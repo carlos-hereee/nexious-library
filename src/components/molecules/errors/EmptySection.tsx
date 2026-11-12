@@ -1,13 +1,28 @@
+import EmptyState from "@nxs-molecules/errors/EmptyState";
 import type { ErrorProps } from "nxs-errors";
 
+/**
+ * Component - EmptySection
+ *
+ * The "this list has nothing in it yet" surface. It keeps its `.container` class and its
+ * default headline so existing call sites render unchanged, and gains the icon, guidance and
+ * next-action slots from the shared EmptyState pattern (design language 5.10).
+ */
 const EmptySection: React.FC<ErrorProps> = (props) => {
-  const { message, heading, children } = props;
+  const { message, heading, icon, actionLabel, actionVariant, handleClick, children } = props;
+
   return (
-    <div className="container">
-      <h3>{heading || "Nothing to see here"}</h3>
-      {message && <p>{message}</p>}
+    <EmptyState
+      className="container"
+      icon={icon}
+      heading={heading || "Nothing to see here"}
+      message={message}
+      actionLabel={actionLabel}
+      actionVariant={actionVariant}
+      onAction={handleClick}
+    >
       {children}
-    </div>
+    </EmptyState>
   );
 };
 

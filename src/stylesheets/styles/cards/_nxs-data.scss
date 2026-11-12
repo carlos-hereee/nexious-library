@@ -1,0 +1,113 @@
+// ── RankList and BarChart, the analytics pieces (2026-11 item 337, Phase 5) ───────
+// Ported from nexious-client's analytics-rank and analytics-chart rules (dashboard.css), rebuilt on
+// library tokens. Only the bars scale with the chart's viewBox; every label is HTML so it stays in
+// true CSS px.
+
+.nxs-rank-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nxs-rank-list-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium);
+  padding-bottom: var(--space-small);
+  border-bottom: 1px solid var(--surface-edge);
+}
+.nxs-rank-list-row:last-child {
+  padding-bottom: 0;
+  border-bottom: none;
+}
+// min-width 0 is what lets the ellipsis happen: without it the text refuses to shrink and pushes
+// the figure out of the row instead.
+.nxs-rank-list-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  min-width: 0;
+}
+.nxs-rank-list-name,
+.nxs-rank-list-meta {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nxs-rank-list-name {
+  color: var(--text);
+  font-weight: var(--font-medium);
+}
+.nxs-rank-list-meta {
+  color: var(--text-muted);
+  font-size: var(--text-extra-small);
+}
+// --text, not the brand color: the brand is per tenant and carries no contrast guarantee behind a
+// number that must be read.
+.nxs-rank-list-value {
+  color: var(--text);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.nxs-rank-list-empty {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}
+
+.nxs-bar-chart {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  width: 100%;
+}
+.nxs-bar-chart-plot {
+  display: block;
+  width: 100%;
+}
+// non-scaling-stroke keeps the baseline a crisp 1px instead of a viewBox scaled smudge.
+.nxs-bar-chart-baseline {
+  stroke: var(--border);
+  stroke-width: 1;
+  vector-effect: non-scaling-stroke;
+}
+.nxs-bar-chart-bar {
+  fill: var(--main-brand-color);
+}
+// Ticks mirror the bar slots: equal flex 1 columns centered under each bar.
+.nxs-bar-chart-axis {
+  display: flex;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nxs-bar-chart-tick {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  min-width: 0;
+}
+.nxs-bar-chart-tick-value {
+  color: var(--text);
+  font-size: var(--text-small);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+}
+.nxs-bar-chart-tick-label {
+  color: var(--text-muted);
+  font-size: var(--text-extra-small);
+}
+// The wide window fallback: the first and last label only, so labels never collide.
+.nxs-bar-chart-range {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

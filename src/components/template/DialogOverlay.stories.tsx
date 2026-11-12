@@ -15,7 +15,7 @@ const meta: Meta<typeof DialogOverlay> = {
   tags: ["autodocs"],
   parameters: { layout: "fullscreen" },
   argTypes: {
-    theme: { control: "text" },
+    className: { control: "text" },
     closeOnBackdropClick: { control: "boolean" },
     onDialogClose: { action: "close" },
   },

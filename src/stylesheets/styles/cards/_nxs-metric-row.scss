@@ -1,0 +1,108 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-metric-row and nxs-stat, the "how is this doing" band ─────────────────────
+// Ported from nexious-client's `cu-stat` and `cu-metric-row` primitives (primitives.css, section
+// 5, 2026-11 item 337, Phase 5), rebuilt on library tokens. A tile is a level one surface (a
+// hairline edge, never a shadow) and never a nav card, so it does not lift.
+
+.nxs-stat {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--space-medium);
+  border-radius: var(--radius-large);
+  background-color: var(--card-bg);
+  border: 1px solid var(--surface-edge);
+  // min-width 0 lets the tile shrink; break-word stops an unbroken word spilling past it and
+  // scrolling the page sideways, without splitting an ordinary number the way `anywhere` would.
+  overflow-wrap: break-word;
+}
+.nxs-stat-label {
+  margin: 0;
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--text-secondary);
+}
+// Tabular figures keep digits aligned as values update.
+.nxs-stat-value {
+  margin: 0;
+  font-size: var(--text-3x-large);
+  font-weight: var(--font-bold);
+  line-height: 1.1;
+  color: var(--main-brand-color);
+  font-variant-numeric: tabular-nums;
+}
+// The base indigo measured 2.72:1 on the client's dark card, under the large text floor, so a dark
+// surface takes the brand accent, as the client's `.dark-mode .cu-stat-value` does.
+.dark-mode .nxs-stat-value {
+  color: var(--main-brand-color-accent);
+}
+.nxs-stat-hint {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--text-muted);
+}
+// The direction maps to the status text tokens so up and down theme in both modes; the word for
+// the direction reaches a screen reader through the caller's trendLabel, never the color alone.
+.nxs-stat-delta {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-extra-small);
+  align-self: flex-start;
+  padding: var(--space-extra-small) var(--space-small);
+  border-radius: var(--radius-medium);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  font-variant-numeric: tabular-nums;
+  color: var(--text-secondary);
+  background-color: var(--hover-bg);
+}
+.nxs-stat-delta-up {
+  color: var(--success-text);
+  background-color: var(--success-bg);
+}
+.nxs-stat-delta-down {
+  color: var(--danger-text);
+  background-color: var(--danger-bg);
+}
+
+// Fits as many columns as the width allows, so a two, three or four tile band reflows without a
+// class per count.
+.nxs-metric-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  gap: var(--space-medium);
+  width: 100%;
+}
+// One line that scrolls sideways on a narrow screen (a plugin shell's metric strip).
+.nxs-metric-row-scroll {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  scroll-snap-type: x proximity;
+}
+.nxs-metric-row-scroll > .nxs-stat {
+  flex: 0 0 auto;
+  min-width: 9rem;
+  scroll-snap-align: start;
+}
+
+@include mixins.devices(tablet) {
+  .nxs-metric-row {
+    gap: var(--space-medium-small);
+  }
+}
+// The client's 480px two column breakpoint is read at the library's mobile breakpoint (580px), the
+// one every other nxs block uses.
+@include mixins.devices(mobile) {
+  .nxs-metric-row:not(.nxs-metric-row-scroll) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .nxs-stat-value {
+    font-size: var(--text-2x-large);
+  }
+}

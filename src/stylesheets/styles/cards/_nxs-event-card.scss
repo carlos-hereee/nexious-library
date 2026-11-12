@@ -1,0 +1,39 @@
+// ── nxs-event-card, one event as a card or a row ────────────────────────────────
+// Ported from nexious-client's `event-card` block (plugin-modules/events) and the feed's
+// `home-feed-event-when` line, 2026-11 item 337. The frame is Card's or ListRow's; this file only
+// lays out the when line, the badges and the location, on tokens.
+.nxs-event-card-when {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--space-extra-small);
+}
+.nxs-event-card-separator {
+  color: var(--text-secondary);
+}
+.nxs-event-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-extra-small);
+}
+// The all day pill: the info wash with its own text token, AA in both themes.
+.nxs-event-card-all-day {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--space-extra-small) var(--space-small);
+  border-radius: var(--radius-full);
+  background-color: var(--info-bg);
+  color: var(--info-text);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-medium);
+}
+.nxs-event-card-location {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}
+// A row's when line sits in ListRow's one line subtitle; let it wrap rather than cut a date.
+.nxs-event-card-row .nxs-list-row-subtitle {
+  white-space: normal;
+}

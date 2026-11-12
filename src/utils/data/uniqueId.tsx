@@ -32,7 +32,7 @@ const DASH_THRESHOLD = 10;
 // Where: inline helper used only by uniqueId below; not exported.
 const randomIndex = (max: number): number => {
   // Prefer globalThis.crypto (browser + modern Node). If a runtime somehow
-  // lacks it, fall back to Math.random so the app still boots — uniqueId is
+  // lacks it, fall back to Math.random so the app still boots, uniqueId is
   // used for React keys and form uids, not for security-sensitive tokens.
   const g = (globalThis as unknown as { crypto?: Crypto }).crypto;
   if (!g?.getRandomValues) return Math.floor(Math.random() * max);
@@ -44,7 +44,7 @@ const randomIndex = (max: number): number => {
   const buf = new Uint32Array(1);
   // Bounded retry loop. At max = 85 (current chars.length) the worst-case
   // rejection rate is ~0.00000002%, so this is effectively a single draw.
-  for (let attempt = 0; attempt < 10; attempt++) {
+  for (let attempt = 0; attempt < 10; attempt += 1) {
     g.getRandomValues(buf);
     if (buf[0] < limit) return buf[0] % max;
   }
@@ -73,7 +73,7 @@ export const uniqueId = (length?: number, options?: UniqueIdOptions) => {
 
   // Build raw random string
   let raw = "";
-  for (let i = 0; i < totalChars; i++) {
+  for (let i = 0; i < totalChars; i += 1) {
     raw += pool[randomIndex(pool.length)];
   }
 

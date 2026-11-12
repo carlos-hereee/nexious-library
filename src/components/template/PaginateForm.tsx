@@ -7,9 +7,9 @@ import Dialog from "./Dialog";
 
 const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   // handle required props errors
-  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, theme } = props;
+  const { order, paginate, responseError, navigationHeading, page, hideNavigation, previewPage, className, isDev } = props;
   const { onFormSubmit, setNewPage, onPageClick, onCancel, onDialogClose } = props;
-  const { errors, lightColor } = useRequiredProps({ paginate }, true);
+  const { errors, lightColor } = useRequiredProps({ paginate });
   // key variables
   const [initialValues, setInitialValues] = useState<FormValueProps>();
   const [pageNumber, setPageNumber] = useState<number>(page || 0);
@@ -62,7 +62,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
   };
 
   if (lightColor === "red") {
-    return <ErrorMessages errors={errors} component="PaginateForm" />;
+    return <ErrorMessages errors={errors} component="PaginateForm" isDev={isDev} />;
   }
   return (
     <div className="container">
@@ -84,7 +84,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
           placeholders={placeholders}
           submitLabel={submitLabel}
           types={types}
-          theme={theme}
+          className={className}
           withFileUpload={withFileUpload}
           responseError={responseError}
           schema={schema}
@@ -98,7 +98,7 @@ const PaginateForm: React.FC<PaginateFormProps> = (props) => {
         />
       )}
       {previewPage && (
-        <Dialog onDialogClose={onDialogClose} theme={theme}>
+        <Dialog onDialogClose={onDialogClose} className={className}>
           {previewPage}
         </Dialog>
       )}

@@ -2,7 +2,7 @@ import { useState } from "react";
 import type { HeroProps } from "@nxs-molecules/index";
 
 const Image = (props: HeroProps) => {
-  const { theme, onImageClick, imageRef, hero, onImageLoad, crossOrigin } = props;
+  const { className, onImageClick, imageRef, hero, onImageLoad, crossOrigin } = props;
 
   // Track the src that failed to load so a broken or unreachable image degrades to
   // the neutral placeholder below instead of the browser's broken-image glyph on a
@@ -36,7 +36,7 @@ const Image = (props: HeroProps) => {
       // item 68), painting a broken image. Nothing here reads pixels via canvas, so
       // CORS is not needed by default; a caller that needs a clean canvas opts in.
       crossOrigin={crossOrigin ? "anonymous" : undefined}
-      className={theme ? `hero ${theme}` : "hero"}
+      className={className ? `hero ${className}` : "hero"}
       ref={imageRef}
       src={hero.url}
       alt={hero.alt}

@@ -3,6 +3,15 @@ import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import type { AuthFieldProp } from "nxs-form";
 import { IconButton } from "@nxs-molecules";
+import { buildNxsButtonClass } from "../../../@types/Variant";
+
+// The show or hide password toggle is an icon only secondary nxs-btn square (2026-11 item 337),
+// composed as a class string because IconButton takes its look that way. The legacy btn-main,
+// btn-small and highlight hooks stay beside it until 2026-11 item 339.
+const PASSWORD_TOGGLE_CLASS = buildNxsButtonClass({
+  variant: "secondary",
+  className: "nxs-btn-icon btn-main btn-small highlight",
+});
 
 const AuthField = (props: AuthFieldProp) => {
   const { value, onChange, name, placeholder, formMessage, labels, error } = props;
@@ -21,12 +30,12 @@ const AuthField = (props: AuthFieldProp) => {
           isDisabled={isDisabled}
           type={seePassword[name] ? "text" : "password"}
           placeholder={placeholders}
-          theme="highlight password"
+          className="highlight password"
           error={error}
         />
         <IconButton
           icon={{ icon: seePassword[name] ? "eyeSlash" : "eye" }}
-          theme="btn-main btn-small highlight"
+          className={PASSWORD_TOGGLE_CLASS}
           onClick={() => togglePassword(name)}
           aria-label={seePassword[name] ? "Hide password" : "Show password"}
         />

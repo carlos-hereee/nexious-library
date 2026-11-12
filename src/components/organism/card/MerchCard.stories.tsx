@@ -23,7 +23,7 @@ const meta: Meta<typeof MerchCard> = {
   component: MerchCard,
   tags: ["autodocs"],
   argTypes: {
-    theme: { control: "text" },
+    className: { control: "text" },
     canRemove: { control: "boolean" },
     hideButtons: { control: "boolean" },
     onAddToCart: { action: "add-to-cart" },

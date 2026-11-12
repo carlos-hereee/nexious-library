@@ -14,23 +14,28 @@
   border-radius: variables.$border-radius;
 }
 
-.btn-danger {
-  border: none;
-  color: white;
-  background-color: variables.$danger;
-}
+// `.btn-danger` was declared HERE and again in _button-variants.scss, with different rules, and
+// which one won depended on forward order in styles/buttons/_index.scss. The variant file owns it
+// now (it is token driven and part of the .btn-base system); this duplicate is deleted rather
+// than reconciled, because two rules for one class is the drift this rework exists to remove.
 .btn-payment {
-  gap: variables.$rem;
-  justify-content: flex-start;
+  gap: var(--space-medium);
+  justify-content: center;
   flex: 1;
-  @include mixin.devices(mobile) {
-    justify-content: center;
+  @include mixin.respond-from(mobile) {
+    justify-content: flex-start;
   }
 }
+// Brand token, not $action-color: this is a "chosen" state, so it must read as brand AND match
+// nexious-client's own .btn-active rule (--main-brand-color + --primary-text-dark-mode-color).
+// Both rules are single-class, so whichever stylesheet loads last wins; keeping the two identical
+// means a flip in import order can no longer repaint these buttons (it would have turned them the
+// #ffee99 placeholder). $action-color stays the highlight yellow for the calendar today tile and
+// card-row active, which are highlight states, not brand states.
 .btn-selected,
 .btn-active {
-  background-color: variables.$action-color;
-  color: variables.$dark-mode;
+  background-color: var(--main-brand-color);
+  color: var(--primary-text-dark-mode-color);
 }
 .btn-add {
   // border: 1px solid variables.$dark-primary;

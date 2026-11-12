@@ -4,7 +4,7 @@ import type { DialogProps } from "nxs-card";
 import Dialog from "@nxs-template/Dialog";
 
 export interface DialogOverlayProps extends DialogProps {
-  // Click the dimmed backdrop to dismiss. On by default — the universally expected modal
+  // Click the dimmed backdrop to dismiss. On by default, the universally expected modal
   // affordance. Set false for flows that must be dismissed deliberately (e.g. a destructive
   // confirm) so a stray backdrop click cannot cancel them. Keyboard users always dismiss
   // via Escape (provided by Dialog's asModal), regardless of this flag.
@@ -12,7 +12,7 @@ export interface DialogOverlayProps extends DialogProps {
 }
 
 /**
- * DialogOverlay — the complete, self-sufficient modal the library ships so consumers do not
+ * DialogOverlay, the complete, self-sufficient modal the library ships so consumers do not
  * have to hand-roll the accessibility-critical pieces around Dialog. It renders Dialog with
  * asModal (so the focus trap + Escape + role="dialog"/aria-modal engage) inside a portaled,
  * scroll-locked, dimmed backdrop:
@@ -25,7 +25,7 @@ export interface DialogOverlayProps extends DialogProps {
  * drop-in modal that is conformant on its own.
  */
 const DialogOverlay = (props: DialogOverlayProps) => {
-  const { closeOnBackdropClick = true, onDialogClose, theme, header, children } = props;
+  const { closeOnBackdropClick = true, onDialogClose, className, header, children } = props;
 
   useEffect(() => {
     // Lock body scroll for the modal's lifetime; restore the PRIOR value (not a hardcoded
@@ -59,7 +59,7 @@ const DialogOverlay = (props: DialogOverlayProps) => {
           : undefined
       }
     >
-      <Dialog asModal theme={theme} header={header} onDialogClose={onDialogClose}>
+      <Dialog asModal className={className} header={header} onDialogClose={onDialogClose}>
         {children}
       </Dialog>
     </div>,

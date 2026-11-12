@@ -3,7 +3,9 @@
   flex-direction: column;
   gap: var(--space-small);
   position: absolute;
-  z-index: 999;
+  // The list floats above page content but must stay UNDER a modal backdrop, so it takes the
+  // dropdown step rather than the toast step. 999 was already sitting one below the old raw 1000.
+  z-index: var(--z-dropdown);
   width: 100%;
   max-height: 40vh;
   overflow-y: auto;

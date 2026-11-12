@@ -1,0 +1,193 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-card, the one card recipe ──────────────────────────────────────────────
+// Ported from nexious-client's `cu-card` block (shared/stylesheets/primitives.css, section 3,
+// 2026-11 item 337), the look the platform already ships, rebuilt on library tokens. The legacy
+// `.card` rules in _cards.scss stay untouched beside it, because the client's AppPage still
+// renders Card's legacy data markup on them until 2026-11 item 332 moves it.
+//
+// A level 1 surface with a container edge only at rest (border, never border plus shadow). A
+// content card tints on hover and never lifts; only a card that goes somewhere (it holds an
+// `nxs-card-link`, or SelectCard adds `nxs-card-nav`) lifts, so the lift always promises a click.
+.nxs-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  // Anchors the stretched `nxs-card-link` overlay below.
+  position: relative;
+  box-sizing: border-box;
+  min-width: 0;
+  padding: var(--space-large);
+  background-color: var(--card-bg);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-large);
+  color: var(--text);
+  transition:
+    border-color var(--transition-fast),
+    background-color var(--transition-fast),
+    box-shadow var(--transition-base),
+    transform var(--transition-base);
+}
+.nxs-card:hover {
+  background-color: var(--hover-bg);
+}
+
+// Optional top media. The child radius is one step smaller than the card's.
+.nxs-card-media {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-medium);
+}
+.nxs-card-media img,
+.nxs-card-media video {
+  display: block;
+  width: 100%;
+  object-fit: cover;
+}
+
+.nxs-card-header {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  min-width: 0;
+}
+.nxs-card-title {
+  margin: 0;
+  max-width: 100%;
+  font-size: var(--text-large);
+  font-weight: var(--font-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nxs-card-subtitle {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+}
+.nxs-card-body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  min-width: 0;
+}
+// margin-top auto pins the footer to the card's foot, so a row of cards with uneven text keeps
+// its actions level. Raised above the stretched link, or its buttons could never be pressed.
+.nxs-card-footer {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-small);
+  margin-top: auto;
+}
+
+// ── Clickable through a child, never as a whole ──
+// The card is never role="button": a button that contains headings and other buttons is invalid
+// and reads as one long name. The caller puts a real link or button in the title with
+// `nxs-card-link`, and its ::after covers the card, so the whole card is the hit area while the
+// accessible name stays the title. The focus ring is drawn on the overlay, around the card.
+.nxs-card-link {
+  color: inherit;
+  text-decoration: none;
+  // A button in the title slot: undo the reset's per element look so it reads as the title text.
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+.nxs-card-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.nxs-card-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.nxs-card-link:focus-visible {
+  outline: none;
+}
+.nxs-card-link:focus-visible::after {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+
+// The navigational variant: the ONLY card that lifts. `nxs-card-nav` is for a card whose own
+// element is the link or button (SelectCard), and :has covers a card holding an nxs-card-link.
+// The alignment lines undo the reset's bare `button { align-items: center }`, which would
+// otherwise center every part inside a left aligned card.
+.nxs-card-nav {
+  cursor: pointer;
+  font: inherit;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: flex-start;
+  @include mixins.focus-ring;
+}
+.nxs-card-nav:not([aria-disabled="true"]):hover,
+.nxs-card:has(.nxs-card-link):hover {
+  // Lift instead of tint, keeping the rest border so border and shadow only stack while raised.
+  background-color: var(--card-bg);
+  border-color: var(--main-brand-color-accent);
+  box-shadow: var(--shadow-medium);
+  transform: translateY(-2px);
+}
+
+// Selected, for a single select grid: the brand border plus the info surface, which themes in
+// dark for free. The state itself is announced by the child control (aria-pressed or
+// aria-current), never by the card, since a plain container has no selected state to expose.
+.nxs-card-selected {
+  border-color: var(--main-brand-color);
+  background-color: var(--info-bg);
+}
+// --text-secondary on the dark info fill measures 4.49:1, just under AA; --info-text is the
+// token designed for that fill and clears it in both themes.
+.nxs-card-selected .nxs-card-subtitle {
+  color: var(--info-text);
+}
+
+// ── The surface ladder's nested rule ──
+// A card inside a card drops to surface 2: a lighter fill, NO edge, a radius one step smaller.
+// Each layer carries exactly one signal. Card's record says a card never sits inside another
+// card or a dialog body; this keeps an accidental nesting legible rather than double outlined.
+// border-color transparent rather than none, so the box keeps its size.
+.nxs-card .nxs-card {
+  background-color: var(--surface-2);
+  border-color: transparent;
+  border-radius: var(--radius-medium);
+}
+// --hover-bg is translucent, so on surface 2 it would hover darker than at rest; the nested card
+// hovers to the dedicated opaque step instead.
+.nxs-card .nxs-card:hover {
+  background-color: var(--surface-2-hover);
+}
+// Interaction may ADD an edge; rest may not. Without these the nested rule's later source order
+// would strip the brand border off a nested nav card's hover and a nested selected card.
+.nxs-card .nxs-card-nav:not([aria-disabled="true"]):hover {
+  background-color: var(--surface-2);
+  border-color: var(--main-brand-color-accent);
+}
+.nxs-card .nxs-card-selected {
+  border-color: var(--main-brand-color);
+  background-color: var(--info-bg);
+}
+
+@include mixins.reduced-motion {
+  .nxs-card {
+    transition:
+      border-color var(--transition-fast),
+      background-color var(--transition-fast);
+  }
+  .nxs-card-nav:not([aria-disabled="true"]):hover,
+  .nxs-card:has(.nxs-card-link):hover {
+    transform: none;
+    box-shadow: none;
+  }
+}

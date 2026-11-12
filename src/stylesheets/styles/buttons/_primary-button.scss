@@ -4,9 +4,9 @@
 
 .btn {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   align-items: center;
-  padding: variables.$rem;
+  padding: var(--space-medium);
   border-radius: variables.$border-radius;
 }
 .btn-icon,
@@ -16,23 +16,34 @@
   gap: 0;
 }
 
+// DEPRECATED until 2026-11 item 339, with .btn-cta and .btn-cancel below: the library's own
+// components render the nxs-btn family now (item 337) but keep these classes beside it, because
+// the client still styles them. Item 339 deletes the three rules after the client moves off them.
+//
+// LEGACY. `.btn-main` is what `theme` defaulted to before 4.0.0, and it is kept so the call
+// sites that were migrated verbatim (`theme="btn-main"` became `className="btn-main"`) render
+// exactly as they did. New work uses `variant`, which resolves to the .btn-base plus .btn-*
+// system in _button-variants.scss. This rule is scheduled for deletion once those call sites
+// have moved; it is not a second system to build on.
 .btn-main {
-  width: 100%;
-  max-width: variables.$max-width-button-lg;
-  border: 1px solid variables.$faded;
-  // padding: 0;
-  white-space: nowrap;
+  // `width: 100%; max-width: 450px` REMOVED in 4.0.0. Width is owned by the container, and the
+  // reset's own `button { width: 100% }` is neutralized by .btn-base or by .nxs-button-group /
+  // the consumer's own wrapper. Those two declarations are what the !important war was about.
+  width: auto;
+  max-width: none;
+  // $faded and $dark-mode are compiled light-only literals with no dark counterpart, so on a dark
+  // page the resting hairline disappeared into the surface and the hover border painted itself the
+  // LIGHT mode text color. --border and --text both flip, so each state reads in either theme.
+  border: 1px solid var(--border);
+  white-space: wrap;
   &:hover {
-    border: 1px solid variables.$dark-mode;
+    border: 1px solid var(--text);
   }
-  // A 2px outline (not just a border-color shift) is a perceivable focus indicator;
-  // :focus-visible so it only shows for keyboard users, and outline doesn't shift layout.
-  &:focus-visible {
-    outline: 2px solid var(--main-brand-color);
-    outline-offset: 2px;
-  }
-  @include mixin.devices(mobile) {
-    white-space: wrap;
+  // Was a hand-written outline, one of the four different focus treatments the library carried.
+  // It is the shared ring now, so it flips correctly on dark and cannot drift again.
+  @include mixin.focus-ring;
+  @include mixin.respond-from(mobile) {
+    white-space: nowrap;
   }
 }
 
@@ -40,19 +51,24 @@
   display: flex;
   flex-direction: column;
   text-align: left;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   min-width: 100%;
   padding: 0;
   // min-height: 100%;
+  @include mixin.focus-ring;
 }
+// DEPRECATED until 2026-11 item 339 (see .btn-main above).
 .btn-cta {
   background-color: variables.$cta-color;
   width: 100%;
 }
+// DEPRECATED until 2026-11 item 339 (see .btn-main above).
 .btn-cancel {
   width: 100%;
   background-color: variables.$danger;
-  color: variables.$light-primary;
+  // The label sits ON a danger fill, so it takes the same on-accent token .btn-danger uses rather
+  // than $light-primary, which was a light-only literal that could never follow a theme change.
+  color: var(--status-on-accent);
 }
 .btn-removal,
 .btn-remove {
@@ -62,13 +78,14 @@
   right: 0;
   width: variables.$icon-width-sm;
   border-radius: variables.$border-radius;
-  color: variables.$light-primary;
+  color: var(--status-on-accent);
   background-color: variables.$error;
-  z-index: 3;
+  z-index: var(--z-raised);
   &:hover {
     background-color: variables.$danger;
-    border: 1px solid variables.$dark;
+    border: 1px solid var(--border);
   }
+  @include mixin.focus-ring;
 }
 .btn-burger,
 .btn-x {

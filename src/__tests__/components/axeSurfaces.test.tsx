@@ -1,0 +1,816 @@
+import "@testing-library/jest-dom";
+import type { ReactElement } from "react";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { axe, toHaveNoViolations } from "jest-axe";
+import Skeleton from "@nxs-molecules/errors/Skeleton";
+import Loading from "@nxs-molecules/errors/Loading";
+import EmptyState from "@nxs-molecules/errors/EmptyState";
+import EmptySection from "@nxs-molecules/errors/EmptySection";
+import ComingSoon from "@nxs-molecules/errors/ComingSoon";
+import PageNotFound from "@nxs-molecules/errors/PageNotFound";
+import Post from "@nxs-molecules/post/Post";
+import SwapOrderButtons from "@nxs-molecules/buttons/SwapOrderButtons";
+import StepProgress from "@nxs-molecules/navigation/StepProgress";
+import CardGrid from "@nxs-molecules/card/CardGrid";
+import SelectCard from "@nxs-molecules/card/SelectCard";
+import ListRow from "@nxs-molecules/card/ListRow";
+import Card from "@nxs-organism/card/Card";
+import ActiveSelectionBar from "@nxs-molecules/navigation/ActiveSelectionBar";
+import Table from "@nxs-organism/table/Table";
+import Select from "@nxs-molecules/forms/Select";
+import SearchBar from "@nxs-molecules/forms/SearchBar";
+import SectionedRail from "@nxs-organism/navigation/SectionedRail";
+import MobileTabBar from "@nxs-organism/navigation/MobileTabBar";
+import PillNav from "@nxs-molecules/navigation/PillNav";
+import BoardCard from "@nxs-organism/card/BoardCard";
+import EventCard from "@nxs-organism/card/EventCard";
+import PillTabStrip from "@nxs-molecules/navigation/PillTabStrip";
+import MoreSheet from "@nxs-organism/navigation/MoreSheet";
+import ActionMenu from "@nxs-molecules/navigation/ActionMenu";
+import Pager from "@nxs-molecules/navigation/Pager";
+import LoadOlderButton from "@nxs-molecules/navigation/LoadOlderButton";
+import MetricRow from "@nxs-molecules/card/MetricRow";
+import AttentionRow from "@nxs-molecules/card/AttentionRow";
+import AnnouncementCard from "@nxs-molecules/card/AnnouncementCard";
+import RankList from "@nxs-molecules/card/RankList";
+import BarChart from "@nxs-molecules/card/BarChart";
+import ActivityList from "@nxs-molecules/card/ActivityList";
+import StatusPill from "@nxs-molecules/card/StatusPill";
+import StatusBadge from "@nxs-molecules/card/StatusBadge";
+import SkeletonRows from "@nxs-molecules/errors/SkeletonRows";
+import DiscountNote from "@nxs-molecules/card/DiscountNote";
+import GridSection from "@nxs-molecules/card/GridSection";
+import StripeReadyGate from "@nxs-molecules/errors/StripeReadyGate";
+import ErrorMessage from "@nxs-atoms/texts/ErrorMessage";
+import type { SkeletonShape } from "nxs-errors";
+import type { PostData } from "nxs-post";
+
+expect.extend(toHaveNoViolations);
+
+// Companion to axe.test.tsx, which owns the Button/Form/Dialog family. This file covers the
+// surfaces Phase 4 added or rebuilt: skeletons, the shared empty-state pattern, Loading's two
+// modes, the table markup and the post card. Split by surface rather than folded in because one
+// file carrying both would be the longest test in the repo by a factor of two.
+
+// Same harness as axe.test.tsx, and deliberately the same: an isolated component render is not a
+// whole page, so the landmark/region rule would false-positive on every case below.
+const AXE_OPTIONS = { rules: { region: { enabled: false } } };
+
+// React's useId mints a document-unique id per render, so the same tree rendered twice differs by
+// that string alone. The comparison below has to blank those out or it reports a difference that
+// has nothing to do with theme. Same normalizer as axe.test.tsx; see the note there.
+const normalizeGeneratedIds = (html?: string): string =>
+  (html ?? "").replace(/:r[0-9a-z]+:|_r_[0-9a-z]+_/g, "generated-id");
+
+/**
+ * Renders the same tree twice, once bare and once inside a `.dark-mode` subtree, and asserts
+ * both are axe-clean AND that the two subtrees are byte-identical markup.
+ *
+ * Read what this does NOT prove. jsdom applies no external stylesheet, so `.dark-mode` resolves
+ * to no styles at all here and axe's color-contrast rule cannot run (it needs computed colors and
+ * silently reports "incomplete" without them). A dark render in this environment therefore says
+ * nothing whatsoever about dark contrast; contrast is asserted against the real token values in a
+ * separate suite. What it DOES prove is that no component branches on theme to emit different
+ * markup, different roles or different accessible names, which is the failure this catches: a
+ * component that swaps an icon-only control in for a labelled one under a dark class.
+ */
+const checkBothThemes = async (ui: ReactElement) => {
+  const light = render(ui).container;
+  const dark = render(<div className="dark-mode">{ui}</div>).container;
+
+  expect(await axe(light, AXE_OPTIONS)).toHaveNoViolations();
+  expect(await axe(dark, AXE_OPTIONS)).toHaveNoViolations();
+  expect(normalizeGeneratedIds(dark.firstElementChild?.innerHTML)).toBe(normalizeGeneratedIds(light.innerHTML));
+};
+
+// Every node in a subtree that exposes an accessible name of its own. Counting these is stricter
+// than counting role="status" nodes: the regression that matters for a placeholder is a BAR
+// gaining a title or an aria-label, which announces "loading" N times without adding a second
+// status region.
+const namedNodes = (root: HTMLElement) => root.querySelectorAll("[aria-label],[aria-labelledby],[title]");
+
+const skeletonShapes: SkeletonShape[] = ["row", "block", "page", "text"];
+
+describe("axe: Skeleton", () => {
+  it.each(skeletonShapes)("shape %s has no violations in either theme", async (shape) => {
+    await checkBothThemes(<Skeleton shape={shape} count={3} />);
+  });
+
+  it.each([1, 3, 7])("announces the region exactly once with %i bars", async (count) => {
+    // The assertion that matters, and the one "no violations" would not make: axe is happy with
+    // seven named boxes, a screen reader user is not.
+    const { container } = render(<Skeleton shape="row" count={count} label="Loading orders" />);
+
+    expect(container.querySelectorAll(".skeleton-bar")).toHaveLength(count);
+    expect(namedNodes(container)).toHaveLength(1);
+    expect(container.querySelector('[role="status"]')).toHaveAccessibleName("Loading orders");
+  });
+
+  it("a page skeleton still announces once even with its extra header bar", async () => {
+    const { container } = render(<Skeleton shape="page" count={4} />);
+
+    expect(container.querySelectorAll(".skeleton-bar")).toHaveLength(5);
+    expect(namedNodes(container)).toHaveLength(1);
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  // SkeletonRows (2026-11 item 337, Phase 5 repair 3) is aria-hidden beside the caller's region.
+  it("shaped skeleton rows beside the caller's live region have no violations in either theme", async () => {
+    await checkBothThemes(
+      <div>
+        <p role="status">Loading orders</p>
+        <SkeletonRows columns={[{ width: "5rem" }, { width: "1fr" }, { width: "6rem", shape: "pill" }]} count={3} />
+      </div>
+    );
+  });
+});
+
+describe("axe: Loading", () => {
+  it("spinner mode has no violations in either theme", async () => {
+    await checkBothThemes(<Loading message="Loading posts" />);
+  });
+
+  it("skeleton mode has no violations in either theme", async () => {
+    await checkBothThemes(<Loading skeleton="row" skeletonCount={3} message="Loading posts" />);
+  });
+
+  it("skeleton mode names the wait once, not once per bar and once for the message", async () => {
+    // Loading duplicates its message into the skeleton's label, so the visible <p> is aria-hidden.
+    // Un-hiding it would read the message twice, which is the whole reason that attribute is there.
+    const { container } = render(<Loading skeleton="page" skeletonCount={4} message="Loading posts" />);
+
+    expect(namedNodes(container)).toHaveLength(1);
+    expect(container.querySelector('[role="status"]')).toHaveAccessibleName("Loading posts");
+  });
+});
+
+describe("axe: the shared empty-state pattern", () => {
+  it("EmptyState without an action has no violations in either theme", async () => {
+    await checkBothThemes(
+      <EmptyState icon="star" heading="No pages yet" message="Pages are how visitors find your work." />
+    );
+  });
+
+  it("EmptyState with an action has no violations in either theme", async () => {
+    await checkBothThemes(
+      <EmptyState
+        icon="star"
+        heading="No pages yet"
+        message="Pages are how visitors find your work."
+        actionLabel="Create a page"
+        actionVariant="primary"
+        onAction={() => {}}
+      />
+    );
+  });
+
+  it("the action button takes its accessible name from actionLabel", async () => {
+    // The action is a Button, and Button derives its aria-label from title, then label, then
+    // name. An empty-state action passes only a label, so this is the one prop standing between
+    // the primary next step and an unnamed control.
+    const { container } = render(<EmptyState heading="No pages yet" actionLabel="Create a page" onAction={() => {}} />);
+
+    expect(container.querySelector(".empty-state-action")).toHaveAccessibleName("Create a page");
+  });
+
+  it("EmptySection has no violations with or without an action", async () => {
+    await checkBothThemes(<EmptySection message="Nothing has been posted yet." />);
+    await checkBothThemes(
+      <EmptySection message="Nothing has been posted yet." actionLabel="Add a post" handleClick={() => {}} />
+    );
+  });
+
+  it("ComingSoon has no violations with or without an action", async () => {
+    await checkBothThemes(<ComingSoon heading="Analytics" message="More coming soon" />);
+    await checkBothThemes(<ComingSoon heading="Analytics" actionLabel="Join the waitlist" handleClick={() => {}} />);
+  });
+
+  it("PageNotFound has no violations in its button mode", async () => {
+    // No timer: the message BECOMES the button, so this is the shape where the accessible name
+    // and the visible text are the same string and a missing label would be invisible in review.
+    await checkBothThemes(<PageNotFound to="/" handleClick={() => {}} />);
+  });
+
+  it("PageNotFound has no violations in its timer mode", async () => {
+    // A large timer so the redirect never fires mid-test; cleanup unmounts and clears it.
+    await checkBothThemes(<PageNotFound to="/" timer={100000} handleClick={() => {}} />);
+  });
+
+  it("PageNotFound's button carries the message as its name", async () => {
+    const { container } = render(<PageNotFound to="/" handleClick={() => {}} />);
+
+    expect(container.querySelector("button")).toHaveAccessibleName("Page not found go to homepage");
+  });
+});
+
+// ── Table markup ──────────────────────────────────────────────────────────────
+// Built inline rather than imported. TableHeader, TableBody and TableFooter are commented out of
+// the organism barrel and Table is not exported at all (filed in TECH_DEBT), so importing any of
+// them would test something no consumer can reach. What Phase 4 actually reworked is the
+// ELEMENT-level reset in vars/reset/_table.scss, whose contract is exactly this markup: a thead,
+// .cell-numeric cells and the .table-dense modifier on the table element.
+const tableMarkup = (isDense?: boolean): ReactElement => (
+  <div className="table-scroll">
+    <table className={isDense ? "table table-dense" : "table"}>
+      <caption className="table-title">Quarterly revenue</caption>
+      <thead>
+        <tr>
+          <th scope="col">Product</th>
+          <th scope="col" className="cell-numeric">
+            Units
+          </th>
+          <th scope="col" className="cell-numeric">
+            Revenue
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">Studio</th>
+          <td className="cell-numeric">1204</td>
+          <td className="cell-numeric">48160</td>
+        </tr>
+        <tr>
+          <th scope="row">Pro</th>
+          <td className="cell-numeric">318</td>
+          <td className="cell-numeric">6042</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+);
+
+describe("axe: table markup", () => {
+  it("a comfortable table has no violations in either theme", async () => {
+    await checkBothThemes(tableMarkup());
+  });
+
+  it("a dense table has no violations in either theme", async () => {
+    // Density is a class on the table element, so the accessible structure must be identical to
+    // the comfortable case. A dense variant that dropped the header row would still look fine.
+    await checkBothThemes(tableMarkup(true));
+  });
+
+  it("keeps its header cells associated with the data beneath them", async () => {
+    const { container } = render(tableMarkup(true));
+
+    expect(container.querySelectorAll("thead th")).toHaveLength(3);
+    container.querySelectorAll("th").forEach((cell) => expect(cell).toHaveAttribute("scope"));
+    // The numeric class is presentational only. It right-aligns and switches on tabular figures,
+    // and it must not be doing anything to the accessible name of the cell.
+    expect(container.querySelector("td.cell-numeric")).toHaveTextContent("1204");
+  });
+});
+
+// ── Cards ─────────────────────────────────────────────────────────────────────
+const post: PostData = {
+  postId: "post-1",
+  title: "Shipping the token layer",
+  body: "The rework replaces every literal color with a token that names its role.",
+  thumbnail: "https://www.companyuno.com/thumb.png",
+  thumbnailAlt: "A wall of color swatches",
+  href: "https://www.companyuno.com/posts/post-1",
+  createdBy: { name: "qwerty", handle: "qwerty", avatar: "https://www.companyuno.com/avatar.png" },
+  createdAt: "2026-08-01T12:00:00.000Z",
+  commentCount: 4,
+  reactions: [{ name: "like", icon: "heart", count: 12, active: true }],
+  tags: ["release"],
+};
+
+describe("axe: post card", () => {
+  it("has no violations with every control mounted, in either theme", async () => {
+    await checkBothThemes(
+      <Post
+        post={post}
+        allowRemoval
+        onView={() => {}}
+        onLike={() => {}}
+        onReply={() => {}}
+        onRemove={() => {}}
+        onAuthorClick={() => {}}
+        onReactionClick={() => {}}
+      />
+    );
+  });
+
+  it("has no violations as a plain linkable card with no callbacks", async () => {
+    await checkBothThemes(<Post post={post} linkable />);
+  });
+
+  it("names every icon-adjacent control", async () => {
+    // The reaction, comment and remove controls render a glyph and a bare number, so their only
+    // accessible name is the aria-label the card builds. This is where a name is easiest to lose:
+    // the button still looks right on screen with no name at all.
+    const { container } = render(
+      <Post
+        post={post}
+        allowRemoval
+        onView={() => {}}
+        onReply={() => {}}
+        onRemove={() => {}}
+        onReactionClick={() => {}}
+      />
+    );
+
+    expect(container.querySelector(".post-card-reaction")).toHaveAccessibleName("like, 12");
+    expect(container.querySelectorAll(".post-card-reaction")[1]).toHaveAccessibleName("Comment, 4 comments");
+    expect(container.querySelector(".post-card-remove")).toHaveAccessibleName(`Remove post: ${post.title}`);
+    expect(container.querySelector(".post-card-title-btn")).toHaveAccessibleName(post.title);
+  });
+
+  it("has no violations when the card is empty of everything optional", async () => {
+    // Title only. Every other slot is optional, and an empty card is the shape a feed renders
+    // while its first item is still loading its author, thumbnail and counts.
+    await checkBothThemes(<Post post={{ postId: "bare", title: "Untitled" }} />);
+  });
+});
+
+// ── Components promoted from the platform client ────────────────────────────────
+// Each one carried hand rolled ARIA in nexious-client before it moved here, so each gets the same
+// two theme check as the surfaces above, on its default skin and in the shape a caller renders.
+
+describe("axe: SwapOrderButtons", () => {
+  it("has no violations mid list, at either end and under a hold", async () => {
+    const pair = (position: number, disabled?: boolean) => (
+      <ul>
+        <li>
+          Fractions
+          <SwapOrderButtons
+            position={position}
+            count={3}
+            upLabel="Move Fractions up"
+            downLabel="Move Fractions down"
+            disabled={disabled}
+            onMove={() => {}}
+          />
+        </li>
+      </ul>
+    );
+    await checkBothThemes(pair(1));
+    await checkBothThemes(pair(0));
+    await checkBothThemes(pair(2));
+    await checkBothThemes(pair(1, true));
+  });
+});
+
+describe("axe: EmptyState as a page gate", () => {
+  it("has no violations as a section with an h2, media and an actions row", async () => {
+    await checkBothThemes(
+      <EmptyState
+        as="section"
+        headingLevel={2}
+        media={<span aria-hidden="true">*</span>}
+        heading="Pick a deck to study"
+        message="Decks are chosen on the Path."
+        actions={
+          <>
+            <button type="button">Set up a deck</button>
+            <button type="button">Contact the owner</button>
+          </>
+        }
+      />
+    );
+  });
+});
+
+describe("axe: StepProgress", () => {
+  it.each([0, 1, 2])("has no violations on step %i", async (current) => {
+    await checkBothThemes(
+      <StepProgress
+        steps={["about", "audience", "payout"]}
+        current={current}
+        labelFor={(id) => `The ${id} step`}
+        progressLabel="Application progress"
+        stepOfText={`Step ${current + 1} of 3`}
+      />
+    );
+  });
+});
+
+describe("axe: CardGrid and SelectCard", () => {
+  // A stand in for a router's Link, which renders an anchor carrying `to` as its href.
+  const RouterLink = ({ to, children, ...rest }: { to: string; children?: React.ReactNode }) => (
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    <a href={to} {...rest}>
+      {children}
+    </a>
+  );
+
+  it("a grid of every card branch has no violations", async () => {
+    await checkBothThemes(
+      <CardGrid>
+        <SelectCard title="Landing page" subtitle="Your home page" icon={<span>*</span>} onClick={() => {}} selected />
+        <SelectCard title="About" subtitle="Published" href="#about" />
+        <SelectCard title="Store" href="/store" linkAs={RouterLink} ariaCurrent="page" />
+        <SelectCard title="Analytics" subtitle="Not built yet" disabled>
+          <span>Coming soon</span>
+        </SelectCard>
+      </CardGrid>
+    );
+  });
+
+  it("a named nav grid has no violations", async () => {
+    await checkBothThemes(
+      <CardGrid as="nav" ariaLabel="Quick links">
+        <SelectCard title="Calendar" href="#calendar" ariaLabel="Open your calendar" />
+        <SelectCard title="Tasks" href="/tasks" linkAs={RouterLink} />
+      </CardGrid>
+    );
+  });
+
+  it("an inert card carrying an ariaLabel has no violations", async () => {
+    await checkBothThemes(<SelectCard title="Analytics" ariaLabel="Analytics, coming soon" disabled />);
+  });
+});
+
+describe("axe: Card and ListRow (2026-11 item 337)", () => {
+  it("a grid of nxs-cards, one linked through its title, has no violations", async () => {
+    await checkBothThemes(
+      <CardGrid>
+        <Card title="Spring sale" subtitle="Ends Friday" footer={<button type="button">Shop</button>}>
+          <p>Every sticker half off.</p>
+        </Card>
+        <Card
+          as="article"
+          isSelected
+          title={
+            <a href="#forge" className="nxs-card-link" aria-current="page">
+              Iron Forge
+            </a>
+          }
+        />
+      </CardGrid>
+    );
+  });
+
+  it("a row group with a linked row and actions has no violations", async () => {
+    await checkBothThemes(
+      <ul className="nxs-list-row-group" aria-label="Orders">
+        <ListRow as="li" title="Order 1041" subtitle="One item" meta="Nov 11" />
+        <ListRow
+          as="li"
+          isDense
+          title={
+            <a href="#order-1042" className="nxs-list-row-link">
+              Order 1042
+            </a>
+          }
+          actions={<button type="button">Refund</button>}
+        />
+      </ul>
+    );
+  });
+});
+
+describe("axe: ActiveSelectionBar", () => {
+  it("has no violations with and without the caller's actions and the change aria-label", async () => {
+    await checkBothThemes(
+      <ActiveSelectionBar label="Studying" value="Fractions" changeLabel="Change" onChange={() => {}} />
+    );
+    await checkBothThemes(
+      <ActiveSelectionBar
+        label="Studying"
+        value="Fractions"
+        changeLabel="Change"
+        changeAriaLabel="Change the deck you are studying"
+        onChange={() => {}}
+        actions={
+          <button type="button" aria-pressed={false} aria-label="Fullscreen">
+            <span aria-hidden="true">[ ]</span>
+          </button>
+        }
+      />
+    );
+  });
+});
+
+describe("axe: Table, Select and SearchBar (2026-11 item 337)", () => {
+  const orderColumns = [
+    { key: "order", header: "Order", isRowHeader: true },
+    { key: "status", header: "Status" },
+    { key: "total", header: "Total", align: "end" as const, isSortable: true, sortDirection: "ascending" as const },
+    { key: "actions", header: <span className="sr-only">Actions</span>, label: "Actions" },
+  ];
+  const orderRows = [
+    {
+      id: "1041",
+      cells: { order: "1041", status: <span>Paid</span>, total: "24.00", actions: <button type="button">Refund 1041</button> },
+    },
+  ];
+
+  it("a sortable, stacked Table with node cells has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Table caption="Orders" columns={orderColumns} rows={orderRows} onSort={() => {}} isStackedOnMobile />
+    );
+  });
+
+  it("an empty, dense Table with a hidden caption has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Table caption="Orders" isCaptionVisible={false} isDense columns={orderColumns} rows={[]} emptyState="No orders yet" />
+    );
+  });
+
+  it("a Select with groups, a value and a clear button has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Select
+        name="food"
+        label="Food"
+        list={[{ name: "apple", value: "apple", label: "Apple", uid: "a" }]}
+        groups={[{ uid: "veg", label: "Vegetables", options: [{ name: "kale", value: "kale", label: "Kale", uid: "k" }] }]}
+        value="kale"
+        clearSelection
+        onChange={() => {}}
+      />
+    );
+  });
+
+  it("a SearchBar with a result count has no violations in either theme", async () => {
+    await checkBothThemes(<SearchBar name="orders-search" label="Search orders" value="" onChange={() => {}} resultCount={2} />);
+  });
+});
+
+// The navigation pieces (2026-11 item 337, Phase 4). No element ids here: checkBothThemes renders
+// each tree twice into one document, and a tab's aria-controls would then name a duplicated id.
+// The MoreSheet portals to the body, so its dialog is checked open in MobileTabBar.test.tsx.
+describe("axe: SectionedRail, PillNav and MobileTabBar (2026-11 item 337)", () => {
+  const railSections = [
+    { id: "overview", label: "Overview", items: [{ id: "home", label: "Home" }, { id: "inbox", label: "Inbox" }] },
+    { id: "setup", label: "Setup", items: [{ id: "team", label: "Team", href: "/team" }] },
+  ];
+
+  it("a tablist rail with nothing selected has no violations in either theme", async () => {
+    await checkBothThemes(<SectionedRail sections={railSections} ariaLabel="Dashboard" activeId={null} />);
+  });
+
+  it("a nav rail with a current item and a footer has no violations in either theme", async () => {
+    await checkBothThemes(
+      <SectionedRail sections={railSections} semantics="nav" ariaLabel="Sections" activeId="team" footer={<p>Footer</p>} />
+    );
+  });
+
+  // PillTabStrip is checked with its panels in PillTabStrip.test.tsx: its aria-controls is
+  // required, and a panel here would be a duplicated id across the two renders.
+  it("a pill nav has no violations in either theme", async () => {
+    await checkBothThemes(
+      <PillNav items={[{ id: "events", label: "Events", href: "/events" }]} activeId="events" ariaLabel="Arena" />
+    );
+  });
+
+  it("a tab bar with More has no violations in either theme", async () => {
+    await checkBothThemes(
+      <MobileTabBar
+        tabs={[
+          { id: "home", label: "Home" },
+          { id: "store", label: "Store" },
+        ]}
+        activeId="home"
+        ariaLabel="Dashboard"
+        more={{ label: "More", isOpen: false, sheetId: "axe-more", onToggle: () => {} }}
+      />
+    );
+  });
+});
+
+describe("axe: BoardCard and EventCard (2026-11 item 337)", () => {
+  it("a board card with its Move to select has no violations in either theme", async () => {
+    await checkBothThemes(
+      <BoardCard
+        id="axe-board"
+        title="Write the brief"
+        meta={<span>Due Nov 14</span>}
+        moveOptions={[
+          { value: "todo", label: "To do" },
+          { value: "done", label: "Done" },
+        ]}
+        currentColumn="todo"
+        onMove={() => {}}
+        moveLabel="Move to"
+      />
+    );
+  });
+
+  it("an event card and an event row have no violations in either theme", async () => {
+    const formatDate = (date: Date) => String(date.getDate());
+    await checkBothThemes(
+      <div>
+        <EventCard
+          event={{ title: "Raid night", start: "2026-11-20T19:00:00.000Z", end: "2026-11-20T21:00:00.000Z", href: "/events/1" }}
+          formatDate={formatDate}
+          rangeSeparator="to"
+        />
+        <EventCard density="row" event={{ title: "Season start", start: "2026-11-12", isAllDay: true }} formatDate={formatDate} allDayLabel="All day" />
+      </div>
+    );
+  });
+});
+
+// Session 5 (2026-11 item 337) makes this file cover every export the plan added or rebuilt. The two
+// that cannot take the two theme check get a single render here instead: PillTabStrip's required
+// aria-controls names a panel id that a second render would duplicate, and MoreSheet portals its
+// dialog to the body, so axe scans the body rather than the render container.
+describe("axe: PillTabStrip and MoreSheet, single render (2026-11 item 337)", () => {
+  it("a pill tablist wired to its panel has no violations", async () => {
+    const { container } = render(
+      <>
+        <PillTabStrip
+          tabs={["members", "roles"] as const}
+          active="members"
+          onSelect={() => {}}
+          ariaLabel="Team"
+          labelFor={(tab) => (tab === "members" ? "Members" : "Roles")}
+          tabId={(tab) => `axe-team-tab-${tab}`}
+          panelId={(tab) => `axe-team-panel-${tab}`}
+        />
+        <div role="tabpanel" id="axe-team-panel-members" aria-labelledby="axe-team-tab-members">
+          Members panel
+        </div>
+        <div role="tabpanel" id="axe-team-panel-roles" aria-labelledby="axe-team-tab-roles" hidden>
+          Roles panel
+        </div>
+      </>
+    );
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  it("an open More sheet has no violations", async () => {
+    const { baseElement } = render(
+      <MoreSheet
+        id="axe-more-sheet"
+        isOpen
+        title="More"
+        closeLabel="Close"
+        sections={[{ id: "setup", label: "Setup", items: [{ id: "team", label: "Team" }] }]}
+        activeId="team"
+        onSelect={() => {}}
+        onClose={() => {}}
+      />
+    );
+    expect(await axe(baseElement, AXE_OPTIONS)).toHaveNoViolations();
+  });
+});
+
+describe("axe: ActionMenu, Pager, LoadOlderButton and MetricRow (2026-11 item 337)", () => {
+  const menuEntries = [
+    { id: "edit", label: "Edit", onSelect: () => {} },
+    { id: "docs", label: "Open docs", href: "https://example.com/docs" },
+    { id: "archive", label: "Archive", isDisabled: true, hint: "Unavailable" },
+    { id: "remove", label: "Remove", isDanger: true, onSelect: () => {} },
+  ];
+
+  it("a closed action menu has no violations in either theme", async () => {
+    await checkBothThemes(<ActionMenu label="Row actions" entries={menuEntries} />);
+  });
+
+  it("an open action menu has no violations", async () => {
+    const { container } = render(<ActionMenu label="Row actions" entries={menuEntries} />);
+    fireEvent.click(screen.getByRole("button", { name: "Row actions" }));
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  it("a pager mid list has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Pager
+        page={2}
+        totalPages={4}
+        onPage={() => {}}
+        ariaLabel="Orders pages"
+        previousLabel="Previous"
+        nextLabel="Next"
+        formatStatus={(page, total) => `Page ${page} of ${total}`}
+      />
+    );
+  });
+
+  it("a load older button idle and loading has no violations in either theme", async () => {
+    await checkBothThemes(<LoadOlderButton hasMore isLoading={false} onLoad={() => {}} label="Load older" loadingLabel="Loading" />);
+    await checkBothThemes(<LoadOlderButton hasMore isLoading onLoad={() => {}} label="Load older" loadingLabel="Loading" />);
+  });
+
+  it("a metric row with a delta, a hint and an empty tile has no violations in either theme", async () => {
+    await checkBothThemes(
+      <MetricRow
+        ariaLabel="This month"
+        entries={[
+          { id: "sales", label: "Sales", value: "$120.00", delta: "+4%", trend: "up", trendLabel: "Up" },
+          { id: "views", label: "Views", emptyText: "Not available yet" },
+        ]}
+      />
+    );
+  });
+});
+
+describe("axe: the second Phase 5 batch (2026-11 item 337)", () => {
+  const barPoints = Array.from({ length: 14 }, (_, index) => ({ id: `day-${index + 1}`, label: `11/${index + 1}`, value: index * 3 }));
+  const gateCopy = {
+    storeMissingTitle: "Set up your store first",
+    storeMissingBody: "Memberships are sold through your store.",
+    storeMissingAction: "Set up store",
+    stripeTitle: "Finish setting up Stripe",
+    stripeBody: "Until Stripe is finished, nothing here can take payments.",
+    stripeAction: "Finish Stripe",
+  };
+
+  it("an attention row with a dismiss control has no violations in either theme", async () => {
+    await checkBothThemes(
+      <ul>
+        <AttentionRow
+          title="Connect Stripe for Iron Forge"
+          detail="Its store cannot take payments yet"
+          severityLabel="Revenue blocked"
+          actionLabel="Connect Stripe"
+          href="/dashboard/store"
+          lead={<span>!</span>}
+          onDismiss={() => {}}
+          dismissLabel="Dismiss notification"
+        />
+      </ul>
+    );
+  });
+
+  it("an announcement card with a link and a dismiss has no violations in either theme", async () => {
+    await checkBothThemes(
+      <AnnouncementCard
+        badgeLabel="Platform update"
+        body="The store now takes tips."
+        link={{ href: "https://example.com/notes", label: "Read the notes", newTabHint: "(opens in a new tab)" }}
+        onDismiss={() => {}}
+        dismissLabel="Dismiss update"
+      />
+    );
+  });
+
+  it("a rank list and its empty label have no violations in either theme", async () => {
+    await checkBothThemes(
+      <RankList
+        ariaLabel="Top pages"
+        emptyLabel="No visits yet"
+        rows={[
+          { id: "home", label: "Home", meta: "/", value: "120" },
+          { id: "store", label: "Store", value: "48" },
+        ]}
+      />
+    );
+    await checkBothThemes(<RankList rows={[]} emptyLabel="No visits yet" />);
+  });
+
+  it("a bar chart with ticks and with the range fallback has no violations in either theme", async () => {
+    await checkBothThemes(<BarChart ariaLabel="Visits per day" points={barPoints.slice(0, 7)} />);
+    await checkBothThemes(<BarChart ariaLabel="Visits per day" points={barPoints} />);
+  });
+
+  it("an activity list with linked and plain rows has no violations in either theme", async () => {
+    await checkBothThemes(
+      <ActivityList
+        ariaLabel="Recent activity"
+        formatTimestamp={() => "Nov 12"}
+        items={[
+          { id: "order", title: "Order 1042", description: "Paid", href: "/orders/1042", timestamp: "2026-11-12" },
+          { id: "notice", title: "Store opened", icon: <span>*</span> },
+        ]}
+      />
+    );
+  });
+
+  it("status pills in every tone, status badges and a discount note have no violations in either theme", async () => {
+    await checkBothThemes(
+      <p>
+        <StatusPill label="Pending" />
+        <StatusPill label="Paid" tone="success" icon={<span>+</span>} />
+        <StatusPill label="Shipped" tone="info" size="medium" />
+        <StatusPill label="On hold" tone="warning" />
+        <StatusPill label="Refunded" tone="danger" />
+        <StatusBadge label="Legend" tier="legend" glyph="*" title="Platform standing" />
+        <StatusBadge label="Partner" tier="partner" size="small" />
+        <DiscountNote label="Member discount (20% off)" amount="-$4.00" />
+      </p>
+    );
+  });
+
+  it("the stripe ready gate in both gate states and the error line have no violations in either theme", async () => {
+    await checkBothThemes(
+      <StripeReadyGate storeMissing storeNotReady={false} setUpStorePath="/dashboard/store" finishStripe={() => {}} copy={gateCopy}>
+        {() => <p>Plans</p>}
+      </StripeReadyGate>
+    );
+    await checkBothThemes(
+      <StripeReadyGate storeMissing={false} storeNotReady setUpStorePath="/dashboard/store" finishStripe={() => {}} copy={gateCopy}>
+        {(isViewOnly) => <p>{isViewOnly ? "View only" : "Editable"}</p>}
+      </StripeReadyGate>
+    );
+    await checkBothThemes(<ErrorMessage message="That email is already in use." />);
+  });
+
+  // A single render: the section's id and its heading id would repeat across checkBothThemes' two
+  // trees, and aria-labelledby would then name an ambiguous element.
+  it("a grid section with cards and with its empty hint has no violations", async () => {
+    const { container } = render(
+      <>
+        <GridSection id="axe-installed" title="Installed" supporting="Plugins this app runs" action={<button type="button">Filter</button>}>
+          <Card title="Store" />
+        </GridSection>
+        <GridSection id="axe-available" title="Available" emptyHint="Nothing to add yet" />
+      </>
+    );
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+});

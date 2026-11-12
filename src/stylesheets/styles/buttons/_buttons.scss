@@ -3,22 +3,22 @@
 
 .buttons-container {
   display: grid;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   // justify-items: center;
   width: 100%;
-  grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width, 1fr));
+  grid-template-columns: 1fr;
   grid-template-rows: auto auto;
-  @include mixin.devices(mobile) {
-    grid-template-columns: 1fr;
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: repeat(auto-fit, minmax(variables.$min-cell-width, 1fr));
   }
 }
 .buttons-container-row {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
 }
 .button-container {
   display: flex;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   * {
     width: 100%;
     max-width: 100%;
@@ -28,25 +28,41 @@
 .bag-btns {
   display: flex;
   justify-content: center;
-  gap: 0.5rem;
+  gap: var(--space-small);
 }
 
 .button-hint-container {
-  position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: flex-start;
+  max-width: 100%;
 }
+// The panel sits in the flow under its toggle rather than floating over the page. It used to be
+// absolute at left: 50% with width: max-content, which ran off a phone screen and, having no
+// surface, drew its text straight over whatever lay beneath. In the flow it can never overflow its
+// container, needs no z-index, and pushes the content below it down while open.
 .hint-container {
   min-width: 0;
-  width: max-content;
-  max-width: 90vw;
+  max-width: min(100%, 22rem);
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   flex-direction: column;
-  padding: 1rem;
-  border-radius: 10px;
-  position: absolute;
-  top: 0;
-  left: 50%;
+  gap: var(--space-small);
+  margin-top: var(--space-small);
+  padding: var(--space-medium);
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  // A hint is a floating panel, not a row, so it takes the panel radius step.
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-medium);
+  text-align: left;
+  font-weight: normal;
+  overflow-wrap: anywhere;
 }
-.hint-container .heading {
-  text-align: center;
+.hint-container p {
+  margin: 0;
+}
+.hint-container .hint-title {
+  font-weight: bold;
 }

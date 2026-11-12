@@ -1,5 +1,6 @@
 import type { FindMatchProps, CalendarDayProp } from "nxs-calendar";
 import { calendarValues } from "./calendarValues";
+import { localDayFromWire } from "./allDayFromPEventDay";
 
 type TileMatchProps = {
   day1: CalendarDayProp;
@@ -32,7 +33,8 @@ export const isTileMute = ({ day, minDate, data }: TileMuteProps) => {
 export const findMatch = ({ events, calDay }: FindMatchProps) => {
   return events
     ? events?.filter((e) => {
-        const values = calendarValues(new Date(e.date));
+        // The wire date's LOCAL day: through the Date constructor "2026-06-18" was the 17th west of UTC.
+        const values = calendarValues(localDayFromWire(e.date));
         return values.date === calDay.date && values.year === calDay.year && values.month === calDay.month;
       })[0]
     : null;

@@ -13,7 +13,7 @@ interface CountDownProps {
   targetDate?: Date;
   heading?: string;
   labels?: CountDownLabels;
-  theme?: string;
+  className?: string;
 }
 
 const defaultLabels: CountDownLabels = {
@@ -25,7 +25,7 @@ const defaultLabels: CountDownLabels = {
   seconds: "seconds",
 };
 
-const CountDown = ({ targetDate, heading, labels, theme }: CountDownProps) => {
+const CountDown = ({ targetDate, heading, labels, className }: CountDownProps) => {
   const [countdown, setCountdown] = useState({ weeks: 0, days: 0, hours: 0, minutes: 0, seconds: 0, months: 0 });
   const l = { ...defaultLabels, ...labels };
 
@@ -66,7 +66,7 @@ const CountDown = ({ targetDate, heading, labels, theme }: CountDownProps) => {
 
   if (!targetDate) return <h1 className="required">TARGET DATE NOT SET</h1>;
   return (
-    <div className={`container countdown-banner${theme ? ` ${theme}` : ""}`}>
+    <div className={`container countdown-banner${className ? ` ${className}` : ""}`}>
       {heading && <h2 className="heading text-center">{heading}</h2>}
       <p className="w-max text-center countdown-timer">
         {countdown.months > 0 && (

@@ -14,7 +14,8 @@ export { default as CopyButton } from "@nxs-molecules/buttons/CopyButton";
 export { default as HintButton } from "@nxs-molecules/buttons/HintButton";
 export { default as BurgerButton } from "@nxs-molecules/buttons/BurgerButton";
 export { default as MessageReactions } from "@nxs-molecules/buttons/MessageReactions";
-export type { ButtonProps, IconButtonProps } from "nxs-button";
+export { default as SwapOrderButtons } from "@nxs-molecules/buttons/SwapOrderButtons";
+export type { ButtonProps, IconButtonProps, SwapOrderButtonsProps, MoveOffset } from "nxs-button";
 
 // card
 export { default as CardHeader } from "@nxs-molecules/card/CardHeader";
@@ -29,18 +30,57 @@ export { default as AvatarCard } from "@nxs-molecules/card/AvatarCard";
 export { default as AvatarCardButton } from "@nxs-molecules/card/AvatarCardButton";
 export { default as SettingsCardHeader } from "@nxs-molecules/card/SettingsCardHeader";
 export { default as CardDetails } from "@nxs-molecules/card/CardDetails";
-export type { CardProps } from "nxs-card";
+export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
+export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
+export { default as ListRow } from "@nxs-molecules/card/ListRow";
+export { default as MetricRow } from "@nxs-molecules/card/MetricRow";
+export { default as AttentionRow } from "@nxs-molecules/card/AttentionRow";
+export { default as AnnouncementCard } from "@nxs-molecules/card/AnnouncementCard";
+export { default as RankList } from "@nxs-molecules/card/RankList";
+export { default as BarChart } from "@nxs-molecules/card/BarChart";
+export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
+export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
+export { default as StatusBadge } from "@nxs-molecules/card/StatusBadge";
+export { default as DiscountNote } from "@nxs-molecules/card/DiscountNote";
+export { default as GridSection } from "@nxs-molecules/card/GridSection";
+export type {
+  AttentionRowProps,
+  AnnouncementCardProps,
+  RankListProps,
+  BarChartProps,
+  ActivityListProps,
+  StatusPillProps,
+  StatusBadgeProps,
+  DiscountNoteProps,
+  GridSectionProps,
+} from "nxs-card";
+export type { CardProps, CardGridProps, SelectCardProps, ListRowProps, MetricRowProps } from "nxs-card";
 
 // errors
 export { default as EmptySection } from "@nxs-molecules/errors/EmptySection";
-// TODO: remove message required. same result with classname theme
+// TODO: remove message required. same result with a classname
 // export { default as MessageRequired } from "@nxs-molecules/errors/MessageRequired";
 export { default as PageNotFound } from "@nxs-molecules/errors/PageNotFound";
 export { default as Loading } from "@nxs-molecules/errors/Loading";
 export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
 export { default as ComingSoon } from "@nxs-molecules/errors/ComingSoon";
 export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
-export type { ErrorProps } from "nxs-errors";
+// Both are also exported from main.ts. They are repeated here because ./@nxs-molecules is a
+// published subpath, and a consumer that imports the rest of this family from it would
+// otherwise find the two newest members missing from the only barrel they use.
+export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
+export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
+export { default as StripeReadyGate } from "@nxs-molecules/errors/StripeReadyGate";
+export { default as SkeletonRows } from "@nxs-molecules/errors/SkeletonRows";
+export type {
+  ErrorProps,
+  SkeletonProps,
+  SkeletonShape,
+  SkeletonRowsProps,
+  SkeletonRowsColumn,
+  EmptyStateProps,
+  StripeReadyGateProps,
+} from "nxs-errors";
 
 // forms
 export { default as FieldQuantity } from "@nxs-molecules/forms/FieldQuantity";
@@ -50,7 +90,26 @@ export { default as Field } from "@nxs-molecules/forms/Field";
 export { default as TextArea } from "@nxs-molecules/forms/TextArea";
 export { default as UploadFile } from "@nxs-molecules/forms/UploadFile";
 export { default as DataList } from "@nxs-molecules/forms/DataList";
-export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
+export { default as FieldShell } from "@nxs-molecules/forms/FieldShell";
+export { default as EntryNavigator } from "@nxs-molecules/forms/EntryNavigator";
+export { default as FieldDate } from "@nxs-molecules/forms/FieldDate";
+export { default as FieldTime } from "@nxs-molecules/forms/FieldTime";
+export { default as FieldDay } from "@nxs-molecules/forms/FieldDay";
+export { default as SearchBar } from "@nxs-molecules/forms/SearchBar";
+export { default as ToggleRow } from "@nxs-molecules/forms/ToggleRow";
+export { default as LegalConsentCheckbox } from "@nxs-molecules/forms/LegalConsentCheckbox";
+export type { ToggleRowProps, LegalConsentCheckboxProps } from "nxs-form";
+export type {
+  InputProps,
+  SearchBarProps,
+  SelectProp,
+  UploadFileProps,
+  FieldShellProps,
+  EntryNavigatorProps,
+  FieldDateProps,
+  FieldTimeProps,
+  FieldDayProps,
+} from "nxs-form";
 
 // TODO: ADD Tables types
 // // tables
@@ -61,6 +120,22 @@ export type { InputProps, SelectProp, UploadFileProps } from "nxs-form";
 export { default as NavToggle } from "@nxs-molecules/navigation/NavToggle";
 export { default as ListItem } from "@nxs-molecules/navigation/ListItem";
 export { default as ThemeMenu } from "@nxs-molecules/navigation/ThemeMenu";
+export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress";
+export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
+export { default as PillTabStrip } from "@nxs-molecules/navigation/PillTabStrip";
+export { default as PillNav } from "@nxs-molecules/navigation/PillNav";
+export { default as ActionMenu } from "@nxs-molecules/navigation/ActionMenu";
+export { default as Pager } from "@nxs-molecules/navigation/Pager";
+export { default as LoadOlderButton } from "@nxs-molecules/navigation/LoadOlderButton";
+export type {
+  StepProgressProps,
+  ActiveSelectionBarProps,
+  PillTabStripProps,
+  PillNavProps,
+  ActionMenuProps,
+  PagerProps,
+  LoadOlderButtonProps,
+} from "nxs-navigation";
 
 // post
 export { default as Post } from "@nxs-molecules/post/Post";

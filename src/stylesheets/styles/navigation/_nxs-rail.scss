@@ -1,0 +1,177 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-rail, the sectioned side rail (SectionedRail) ───────────────────────────
+// Ported from nexious-client's three rail blocks (2026-11 item 337, Phase 4): the frame from
+// `.cu-shell-rail` (primitives.css), the items from `.settings-nav` (dashboard.css) and the section
+// overline from `.cu-section-overline` plus `.owner-rail-group-label`. Tokens only. Every selector is
+// one nxs- class, so a client rule on its own classes never meets these, and none of these meet a
+// class the client styles today.
+
+// The frame: a sticky column that scrolls inside itself when a long rail outgrows the viewport.
+// --rail-width is the library's name for the client's --cu-rail-width (240px, vars.css).
+.nxs-rail {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+  width: var(--rail-width);
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--space-medium);
+  align-self: flex-start;
+  max-height: calc(100dvh - var(--space-extra-large));
+  overflow-y: auto;
+  // Thin and themed, or the classic bar reads as a second page scrollbar beside the document's.
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-edge) transparent;
+  padding: var(--space-small);
+  border-radius: var(--radius-medium);
+  background-color: var(--bg);
+  z-index: var(--z-raised);
+}
+
+// The ONE list element every section renders into (see SectionedRail's DOM order note).
+.nxs-rail-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  width: 100%;
+}
+
+// The section overline: small, heavy, tracked and uppercase, in secondary text so it reads as a
+// label rather than a heading, with a hairline above every section after the first.
+.nxs-rail-overline {
+  margin: var(--space-medium) 0 0;
+  padding: var(--space-small) var(--space-small) 0;
+  border-top: 1px solid var(--surface-edge);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.nxs-rail-overline:first-child {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: none;
+}
+
+// One item, a button (tablist) or a link (nav). width and max-width are restated because the
+// library's bare button reset gives every button a width of its own.
+.nxs-rail-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-medium-small);
+  width: 100%;
+  max-width: none;
+  min-height: var(--tap-target-min);
+  margin: 0;
+  padding: var(--space-small) var(--space-medium-small);
+  border: none;
+  border-radius: var(--radius-medium);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  @include mixins.focus-ring;
+}
+.nxs-rail-item:hover {
+  background-color: var(--surface);
+}
+// The active item: a surface fill, a heavier label and a brand rail on its leading edge, so the
+// state never rests on color alone.
+.nxs-rail-item-active {
+  background-color: var(--surface);
+  font-weight: var(--font-semibold);
+  box-shadow: inset 3px 0 0 var(--main-brand-color);
+}
+
+// The glyph box is explicit: a mask icon is an EMPTY element and collapses to nothing at auto width.
+.nxs-rail-icon {
+  display: inline-grid;
+  place-items: center;
+  flex-shrink: 0;
+  width: 1.5rem;
+  font-size: var(--text-large);
+}
+.nxs-rail-label {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-small);
+}
+
+// With a footer the rail grows to the viewport so the footer lands in the bottom corner instead of
+// directly under the last item.
+.nxs-rail-footer {
+  margin-top: auto;
+}
+.nxs-rail:has(.nxs-rail-footer) {
+  min-height: calc(100dvh - var(--space-extra-large));
+}
+
+@include mixins.reduced-motion {
+  .nxs-rail-item {
+    transition: none;
+  }
+}
+
+// The compact layout: the rail becomes a horizontal strip pinned above the body. Overlines and
+// labels hide visually (labels stay in the accessibility tree), the active rail moves to the
+// bottom edge, and the strip scrolls inside itself so the page never scrolls sideways.
+@include mixins.devices(tablet) {
+  .nxs-rail {
+    top: 0;
+    width: 100%;
+    max-height: none;
+    min-height: 0;
+    flex-direction: row;
+    flex-wrap: wrap;
+    padding: 0;
+    border-bottom: 1px solid var(--surface-edge);
+    border-radius: 0;
+    overflow: visible;
+    z-index: var(--z-sticky);
+  }
+  .nxs-rail:has(.nxs-rail-footer) {
+    min-height: 0;
+  }
+  .nxs-rail-list {
+    flex-direction: row;
+    overflow-x: auto;
+    gap: 0;
+  }
+  .nxs-rail-overline {
+    display: none;
+  }
+  .nxs-rail-item {
+    flex: 1 0 auto;
+    justify-content: center;
+    width: auto;
+    gap: 0;
+    padding: var(--space-medium-small) var(--space-small);
+    border-radius: 0;
+  }
+  .nxs-rail-item-active {
+    background: none;
+    box-shadow: inset 0 -3px 0 var(--main-brand-color);
+  }
+  .nxs-rail-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    // No nowrap, unlike .sr-only: the resilience suite treats nowrap plus a hidden overflow with
+    // no ellipsis as a silent cut, and a visually hidden label needs neither.
+    clip-path: inset(50%);
+  }
+  .nxs-rail-icon {
+    font-size: var(--text-extra-large);
+  }
+  .nxs-rail-footer {
+    flex-basis: 100%;
+    margin-top: 0;
+    padding: var(--space-small);
+  }
+}

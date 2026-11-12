@@ -1,0 +1,28 @@
+// ── nxs-pager and nxs-load-older, the paging controls ─────────────────────────────
+// Ported from nexious-client's `.orders-pager` block (orders.css) and `.inbox-load-older`
+// (inbox.css) (2026-11 item 337, Phase 5). The buttons are nxs-btn secondary; these rules only
+// lay the controls out. Tokens only.
+
+.nxs-pager {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-medium);
+  padding-top: var(--space-small);
+}
+// The pager's buttons size to their labels: the row is centred, never stretched.
+.nxs-pager-button {
+  width: auto;
+  flex: none;
+}
+.nxs-pager-status {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  font-variant-numeric: tabular-nums;
+}
+
+.nxs-load-older {
+  display: flex;
+  justify-content: center;
+  padding: var(--space-extra-small) 0 var(--space-small);
+}
