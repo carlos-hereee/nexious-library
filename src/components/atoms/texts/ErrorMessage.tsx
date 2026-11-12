@@ -2,7 +2,7 @@ import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { resolveDevMode } from "@nxs-utils/app/devMode";
 import { buildErrorReport, formatReportForConsole } from "@nxs-utils/app/buildErrorReport";
 import { nextPanelId, registerPanel, unregisterPanel, isFirstPanel } from "@nxs-utils/app/devPanelRegistry";
-import type { ErrorMessageProps } from "nxs-errors";
+import type { DevErrorMessageProps, ErrorMessageProps } from "nxs-errors";
 
 // ── The dev-mode teaching panel ──────────────────────────────────────────────
 // WHAT: what a component renders instead of itself when it was called wrong.
@@ -29,7 +29,7 @@ import type { ErrorMessageProps } from "nxs-errors";
 // ErrorMessage of their own when it is empty, which is exactly the state a broken app is
 // often in. Importing them here would let one missing icon recurse into an infinite tree.
 
-const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, isDev }) => {
+const DevErrorPanel = ({ error, isDev }: DevErrorMessageProps) => {
   const showPanel = resolveDevMode(isDev);
   const report = buildErrorReport(error);
   const [copied, setCopied] = useState(false);
@@ -175,6 +175,27 @@ const ErrorMessage: React.FC<ErrorMessageProps> = ({ error, isDev }) => {
         {report.docsUrl.replace("https://www.", "")} →
       </a>
     </div>
+  );
+};
+
+/**
+ * Component: ErrorMessage
+ *
+ * Two modes behind one name, chosen by the props. `message` is the user facing alert line the
+ * client kept as its own ErrorMessage (2026-11 item 337 reconciled it here rather than porting a
+ * second component of the same name); it renders in production too. `error` is the dev only
+ * teaching panel above, unchanged from 4.x, so every library caller keeps its behavior. The split
+ * into a separate panel component keeps the panel's hooks unconditional.
+ */
+const ErrorMessage = (props: ErrorMessageProps) => {
+  const { error, isDev, message, className } = props;
+  if (error !== undefined) return <DevErrorPanel error={error} isDev={isDev} />;
+  // role="alert" announces the error the moment it mounts; without it a failed submit is silent to
+  // assistive technology (WCAG 4.1.3).
+  return (
+    <p className={className ? `error-message nxs-error-message ${className}` : "error-message nxs-error-message"} role="alert">
+      <strong>{message}</strong>
+    </p>
   );
 };
 export default ErrorMessage;

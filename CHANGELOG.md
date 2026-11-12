@@ -139,6 +139,31 @@ so a consumer that changes nothing renders as before apart from the library's ow
   `LoadOlderButtonProps`, `MetricRowProps`, `MetricRowEntry` and `MetricTrend` are exported. Part of
   the 5.0.0 major release (2026-11 item 337).
 
+- **Twelve more components ported from the platform client, every string passed in.**
+  `AttentionRow` is one attention item on `ListRow` whose link name leads with the caller's severity
+  word, with an optional dismiss outside the link. `AnnouncementCard` is the official update as an
+  `nxs-card` with a badge, an optional new tab link and a dismiss that disables after one press.
+  `RankList` is ranked rows with a caller formatted figure and an empty label. `BarChart` is bars as
+  one named image with a tick per bar, collapsing past `maxTickLabels` to a first and last label plus
+  a visually hidden table of every value. `ActivityList` is recent activity rows whose timestamp the
+  caller's `formatTimestamp` prints. `StatusPill` is a status word in one of five tones with an
+  optional glyph. `DiscountNote` is one money line under a total. `GridSection` is a titled section
+  over a `CardGrid` whose heading takes focus through a forwarded ref, or an empty hint.
+  `StripeReadyGate` is the no store and unfinished Stripe states in front of a money surface, the
+  content view only while Stripe is unfinished. `ToggleSwitch` is an on and off switch, `ToggleRow`
+  its labelled settings row, and `LegalConsentCheckbox` the agreement sentence with two real links
+  and an alert error. Links take `linkComponent` (receiving `to`) and go through `safeUrl`. Each is
+  styled under `nxs-` classes (`nxs-attention-row`, `nxs-announcement-card`, `nxs-rank-list`,
+  `nxs-bar-chart`, `nxs-activity-list`, `nxs-status-pill`, `nxs-discount-note`, `nxs-grid-section`,
+  `nxs-switch`, `nxs-toggle-row`, `nxs-consent`), and their props types are exported. Part of the
+  5.0.0 major release (2026-11 item 337).
+
+- **`ErrorMessage` gains a user facing mode.** Pass `message` (and an optional `className`) for a
+  `role="alert"` line that renders in every build, reconciled from the client's own `ErrorMessage`
+  rather than shipped as a second component. Passing `error` renders the dev only teaching panel
+  exactly as before. `DevErrorMessageProps` and `InlineErrorMessageProps` are exported. Part of the
+  5.0.0 major release (2026-11 item 337).
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -197,6 +222,14 @@ so a consumer that changes nothing renders as before apart from the library's ow
   a polite live region and whose ends disable natively. `LoadOlderButton` is `aria-busy` while it
   loads. `MetricRow` speaks a delta's direction through `trendLabel`, because its tone is color, and
   takes the brand accent for its value on dark surfaces, where the base indigo measured about 2.7:1.
+
+- **The second Phase 5 batch keeps state off color alone and names every control.** `ToggleSwitch`
+  is a native button with `role="switch"` and `aria-checked`, named by a required `label`, and its
+  knob stops moving under reduced motion. `StatusPill` requires its word. `BarChart` gives a screen
+  reader every value through its ticks or a hidden table. `LegalConsentCheckbox` underlines its
+  links and ties its alert error to the input. `GridSection`'s heading can take focus so a jump to
+  it is announced. The dismiss controls on `AttentionRow` and `AnnouncementCard` are separate named
+  tab stops.
 
 #### Changed
 

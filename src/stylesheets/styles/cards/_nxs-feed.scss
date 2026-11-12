@@ -1,0 +1,180 @@
+// ── The second Phase 5 batch of display pieces (2026-11 item 337) ─────────────────
+// Ported from nexious-client's attention-row, home-feed-announcement, owner-home-list,
+// orders-status-pill, orders-member-discount and plugins-section rules (dashboard.css and
+// orders.css), rebuilt on library tokens. Every selector is an nxs- class, so nothing here reaches
+// a client element until the client renders these components.
+
+// ── AttentionRow: a ListRow whose dismiss control sits beside the stretched link ──
+.nxs-attention-row-lead {
+  display: inline-flex;
+  color: var(--text-secondary);
+}
+.nxs-attention-row-dismiss {
+  color: var(--text-secondary);
+}
+
+// ── AnnouncementCard ──
+.nxs-announcement-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-small);
+}
+// The badge pairs the info text and fill, which clear AA in both themes.
+.nxs-announcement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-extra-small);
+  padding: var(--space-extra-small) var(--space-small);
+  border: 1px solid var(--info-border);
+  border-radius: var(--radius-small);
+  background-color: var(--info-bg);
+  color: var(--info-text);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+}
+.nxs-announcement-card-body {
+  margin: 0;
+  color: var(--text);
+  overflow-wrap: break-word;
+}
+
+// ── ActivityList ──
+.nxs-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nxs-activity-list-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  min-width: 0;
+}
+.nxs-activity-list-icon {
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+}
+// min-width 0 lets the text column shrink so a long title ends in an ellipsis.
+.nxs-activity-list-text {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  min-width: 0;
+}
+.nxs-activity-list-title {
+  margin: 0;
+  overflow: hidden;
+  color: var(--text);
+  font-weight: var(--font-semibold);
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+a.nxs-activity-list-title:hover {
+  text-decoration: underline;
+}
+.nxs-activity-list-meta {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}
+.nxs-activity-list-when {
+  flex: 0 0 auto;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+  font-variant-numeric: tabular-nums;
+}
+
+// ── StatusPill: the soft token triples, one per tone ──
+.nxs-status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-extra-small);
+  padding: var(--space-extra-small) var(--space-small);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background-color: var(--surface-2);
+  color: var(--text-secondary);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  white-space: nowrap;
+}
+.nxs-status-pill-medium {
+  font-size: var(--text-small);
+}
+.nxs-status-pill-info {
+  border-color: var(--info-border);
+  background-color: var(--info-bg);
+  color: var(--info-text);
+}
+.nxs-status-pill-success {
+  border-color: var(--success-border);
+  background-color: var(--success-bg);
+  color: var(--success-text);
+}
+.nxs-status-pill-warning {
+  border-color: var(--warn-border);
+  background-color: var(--warn-bg);
+  color: var(--warn-text);
+}
+.nxs-status-pill-danger {
+  border-color: var(--danger-border);
+  background-color: var(--danger-bg);
+  color: var(--danger-text);
+}
+.nxs-status-pill-icon {
+  display: inline-flex;
+}
+
+// ── DiscountNote: the amount in the success tone, money the buyer kept ──
+.nxs-discount-note {
+  display: block;
+  color: var(--text-secondary);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-normal);
+}
+.nxs-discount-note-amount {
+  color: var(--success-text);
+}
+
+// ── GridSection ──
+.nxs-grid-section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-medium);
+}
+// The titles stack on the left; the action trails and wraps under them on a narrow screen.
+.nxs-grid-section-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-small);
+}
+.nxs-grid-section-titles {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  min-width: 0;
+}
+// The heading takes programmatic focus from an overview jump; the margin keeps it clear of a
+// sticky header when it scrolls into view.
+.nxs-grid-section-title {
+  margin: 0;
+  scroll-margin-top: var(--space-large);
+}
+.nxs-grid-section-title:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+.nxs-grid-section-supporting,
+.nxs-grid-section-empty {
+  margin: 0;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}

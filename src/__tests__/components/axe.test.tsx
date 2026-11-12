@@ -17,6 +17,9 @@ import Calendar from "@nxs-template/Calendar";
 import SubmitButton from "@nxs-molecules/buttons/SubmitButton";
 import CTA from "@nxs-molecules/card/CTA";
 import ConfirmDialog from "@nxs-organism/card/ConfirmDialog";
+import ToggleSwitch from "@nxs-atoms/forms/ToggleSwitch";
+import ToggleRow from "@nxs-molecules/forms/ToggleRow";
+import LegalConsentCheckbox from "@nxs-molecules/forms/LegalConsentCheckbox";
 import type { CalendarTimedEvent } from "nxs-calendar";
 import type { Size, Variant } from "../../@types/Variant";
 
@@ -64,6 +67,32 @@ describe("axe accessibility (no violations on isolated renders)", () => {
     expect(await check(<SubmitButton label="Save" />)).toHaveNoViolations();
     expect(await check(<CTA cta={{ uid: "buy", name: "buy", label: "Buy now" }} onClick={() => {}} />)).toHaveNoViolations();
     expect(await check(<ConfirmDialog onConfirm={() => {}} onCancel={() => {}} />)).toHaveNoViolations();
+  });
+
+  // The form controls Phase 5 ported from the client (2026-11 item 337): the switch in both states
+  // and disabled, the settings row around it, and the agreement checkbox with and without its error.
+  it("ToggleSwitch on, off and disabled, and a ToggleRow, have no violations", async () => {
+    expect(
+      await check(
+        <div>
+          <ToggleSwitch checked onChange={() => {}} label="Message emails" />
+          <ToggleSwitch checked={false} onChange={() => {}} label="Order emails" />
+          <ToggleSwitch checked={false} onChange={() => {}} label="Pause bookings" disabled />
+        </div>
+      )
+    ).toHaveNoViolations();
+    expect(await check(<ToggleRow checked onChange={() => {}} label="Members only" help="Only members can open this page" />)).toHaveNoViolations();
+  });
+
+  it("LegalConsentCheckbox with and without its error has no violations", async () => {
+    const consent = {
+      prefix: "I agree to the",
+      terms: { label: "Terms of Service", href: "/terms" },
+      join: "and the",
+      privacy: { label: "Privacy Policy", href: "/privacy" },
+    };
+    expect(await check(<LegalConsentCheckbox {...consent} checked={false} onChange={() => {}} />)).toHaveNoViolations();
+    expect(await check(<LegalConsentCheckbox {...consent} checked={false} onChange={() => {}} error="Agree to continue" />)).toHaveNoViolations();
   });
 
   it("BurgerButton (icon-only) has no violations", async () => {

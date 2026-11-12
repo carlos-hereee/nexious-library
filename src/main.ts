@@ -84,6 +84,9 @@ export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
 export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
 export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
 export type { SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
+// The store states in front of a money surface (2026-11 item 337, Phase 5).
+export { default as StripeReadyGate } from "@nxs-molecules/errors/StripeReadyGate";
+export type { StripeReadyGateProps, StripeReadyGateCopy } from "nxs-errors";
 // dev-diagnostics switch, call setDevMode(import.meta.env.DEV) once at boot so the
 // missing-prop panels are guaranteed off in production (see utils/app/devMode.ts).
 export { setDevMode, getDevMode } from "@nxs-utils/app/devMode";
@@ -111,6 +114,35 @@ export type { BoardCardProps, BoardCardMoveOption, EventCardProps, EventCardEven
 // The stat band (2026-11 item 337, Phase 5): each tile's value arrives formatted by the caller.
 export { default as MetricRow } from "@nxs-molecules/card/MetricRow";
 export type { MetricRowProps, MetricRowEntry, MetricTrend } from "nxs-card";
+// The second Phase 5 batch ported from the client (2026-11 item 337): rows, cards, a ranked list, a
+// bar chart, a status pill, a discount line and a grid section, every string passed in.
+export { default as AttentionRow } from "@nxs-molecules/card/AttentionRow";
+export { default as AnnouncementCard } from "@nxs-molecules/card/AnnouncementCard";
+export { default as RankList } from "@nxs-molecules/card/RankList";
+export { default as BarChart } from "@nxs-molecules/card/BarChart";
+export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
+export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
+export { default as DiscountNote } from "@nxs-molecules/card/DiscountNote";
+export { default as GridSection } from "@nxs-molecules/card/GridSection";
+export type {
+  AttentionRowProps,
+  AnnouncementCardProps,
+  RankListProps,
+  RankListRow,
+  BarChartProps,
+  BarChartPoint,
+  ActivityListProps,
+  ActivityListItem,
+  StatusPillProps,
+  StatusPillTone,
+  DiscountNoteProps,
+  GridSectionProps,
+} from "nxs-card";
+// The settings switch, its row and the agreement checkbox (2026-11 item 337, Phase 5).
+export { default as ToggleSwitch } from "@nxs-atoms/forms/ToggleSwitch";
+export { default as ToggleRow } from "@nxs-molecules/forms/ToggleRow";
+export { default as LegalConsentCheckbox } from "@nxs-molecules/forms/LegalConsentCheckbox";
+export type { ToggleSwitchProps, ToggleRowProps, LegalConsentCheckboxProps, LegalConsentLink } from "nxs-form";
 // The data table: columns, rows of node cells, one caption, aria-sort and a labelled scroll
 // region, the nxs-table recipe (2026-11 item 337). Its parts are exported for a caller composing
 // its own table.
@@ -235,7 +267,7 @@ export type {
   CalendarTimeGridProps,
 } from "nxs-calendar";
 export { to24Hour, toWireTime } from "@nxs-utils/form/time";
-export type { ErrorProps, ErrorMessageProps, ErrorProp, ErrorCodes, ComponentSpec, SpecProp } from "nxs-errors";
+export type { ErrorProps, ErrorMessageProps, DevErrorMessageProps, InlineErrorMessageProps, ErrorProp, ErrorCodes, ComponentSpec, SpecProp } from "nxs-errors";
 export type { HeroProps, BubblyProps, TextBubbleProps, RatingProps, AssetProps, UserProps } from "nxs-assets";
 export type { IconProps, CopyToClipboardProps } from "nxs-button";
 export type { PostData, PostAuthor, PostReaction } from "nxs-post";

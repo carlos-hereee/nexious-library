@@ -34,6 +34,24 @@ export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
 export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
 export { default as ListRow } from "@nxs-molecules/card/ListRow";
 export { default as MetricRow } from "@nxs-molecules/card/MetricRow";
+export { default as AttentionRow } from "@nxs-molecules/card/AttentionRow";
+export { default as AnnouncementCard } from "@nxs-molecules/card/AnnouncementCard";
+export { default as RankList } from "@nxs-molecules/card/RankList";
+export { default as BarChart } from "@nxs-molecules/card/BarChart";
+export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
+export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
+export { default as DiscountNote } from "@nxs-molecules/card/DiscountNote";
+export { default as GridSection } from "@nxs-molecules/card/GridSection";
+export type {
+  AttentionRowProps,
+  AnnouncementCardProps,
+  RankListProps,
+  BarChartProps,
+  ActivityListProps,
+  StatusPillProps,
+  DiscountNoteProps,
+  GridSectionProps,
+} from "nxs-card";
 export type { CardProps, CardGridProps, SelectCardProps, ListRowProps, MetricRowProps } from "nxs-card";
 
 // errors
@@ -50,7 +68,8 @@ export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
 // otherwise find the two newest members missing from the only barrel they use.
 export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
 export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
-export type { ErrorProps, SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
+export { default as StripeReadyGate } from "@nxs-molecules/errors/StripeReadyGate";
+export type { ErrorProps, SkeletonProps, SkeletonShape, EmptyStateProps, StripeReadyGateProps } from "nxs-errors";
 
 // forms
 export { default as FieldQuantity } from "@nxs-molecules/forms/FieldQuantity";
@@ -66,6 +85,9 @@ export { default as FieldDate } from "@nxs-molecules/forms/FieldDate";
 export { default as FieldTime } from "@nxs-molecules/forms/FieldTime";
 export { default as FieldDay } from "@nxs-molecules/forms/FieldDay";
 export { default as SearchBar } from "@nxs-molecules/forms/SearchBar";
+export { default as ToggleRow } from "@nxs-molecules/forms/ToggleRow";
+export { default as LegalConsentCheckbox } from "@nxs-molecules/forms/LegalConsentCheckbox";
+export type { ToggleRowProps, LegalConsentCheckboxProps } from "nxs-form";
 export type {
   InputProps,
   SearchBarProps,

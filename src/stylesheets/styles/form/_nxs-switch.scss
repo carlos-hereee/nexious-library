@@ -1,0 +1,123 @@
+// ── ToggleSwitch, ToggleRow and LegalConsentCheckbox (2026-11 item 337, Phase 5) ──
+// Ported from nexious-client's cu-switch (dashboard.css), the members-only settings row and the
+// legal-consent block (auth.css), rebuilt on library tokens.
+
+// The library resets bare buttons to full width; the switch pins its own size so it never
+// stretches across a settings cell.
+.nxs-switch {
+  flex: 0 0 auto;
+  width: 44px;
+  min-width: 44px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border-radius: var(--radius-full);
+  background: none;
+  cursor: pointer;
+}
+.nxs-switch:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+.nxs-switch:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+.nxs-switch-track {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-full);
+  background-color: var(--input-bg);
+  transition: background-color var(--transition-fast);
+}
+.nxs-switch-on .nxs-switch-track {
+  border-color: var(--main-brand-color);
+  background-color: var(--main-brand-color);
+}
+// The knob sits ON the brand fill in the on state, so it takes the on brand color (white in both
+// themes) rather than a surface token that would vanish into the track on a dark page.
+.nxs-switch-knob {
+  display: block;
+  width: 18px;
+  height: 18px;
+  margin: var(--space-extra-small);
+  border-radius: var(--radius-full);
+  background-color: var(--on-brand-color);
+  box-shadow: 0 0 0 1px var(--border);
+  transition: transform var(--transition-fast);
+}
+.nxs-switch-on .nxs-switch-knob {
+  transform: translateX(20px);
+}
+@media (prefers-reduced-motion: reduce) {
+  .nxs-switch-track,
+  .nxs-switch-knob {
+    transition: none;
+  }
+}
+
+.nxs-toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-medium);
+}
+.nxs-toggle-row-text {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  min-width: 0;
+}
+.nxs-toggle-row-label {
+  color: var(--text);
+  font-weight: var(--font-semibold);
+}
+.nxs-toggle-row-help {
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}
+
+.nxs-consent {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+}
+.nxs-consent-row {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-small);
+}
+// The reset gives bare inputs a full width box, so the checkbox pins its size; accent-color paints
+// the checked state in the brand in both themes.
+.nxs-consent-input {
+  flex-shrink: 0;
+  width: 1.05rem;
+  min-width: 1.05rem;
+  max-width: none;
+  height: 1.05rem;
+  margin: 0;
+  accent-color: var(--main-brand-color);
+  cursor: pointer;
+}
+// --text, not a muted token: this is the sentence the reader agrees to, so it is content.
+.nxs-consent-label {
+  color: var(--text);
+  font-size: var(--text-small);
+  line-height: 1.5;
+  cursor: pointer;
+}
+// Underlined, not color only: the policy names sit inside a sentence (WCAG 1.4.1).
+.nxs-consent-label a {
+  color: inherit;
+  font-weight: var(--font-medium);
+  text-decoration: underline;
+}
+.nxs-consent-error {
+  margin: 0;
+  color: var(--danger-text);
+  font-size: var(--text-small);
+  line-height: 1.4;
+}

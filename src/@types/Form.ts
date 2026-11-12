@@ -560,3 +560,67 @@ export interface UseValuesApi {
   setEntries: React.Dispatch<React.SetStateAction<{ [x: string]: FieldEntryProps }>>;
   addExtraEntry: (args: FormatExtraEntryProps) => void;
 }
+
+// ── Phase 5 repair ports from the client (2026-11 item 337) ─────────────────────
+/** An on and off switch for a setting that takes effect immediately. */
+export interface ToggleSwitchProps {
+  checked: boolean;
+  /** Called on press; the caller flips the value. */
+  onChange: () => void;
+  /** Names what the switch controls. Required: a switch with no name announces only its state. */
+  label: string;
+  disabled?: boolean;
+  /** The id of an element explaining the state (why it is disabled, a help line). */
+  describedBy?: string;
+  id?: string;
+  /** Appended to the switch's classes. */
+  className?: string;
+}
+
+/** A settings row: a label and a help line beside a ToggleSwitch the label also names. */
+export interface ToggleRowProps {
+  checked: boolean;
+  /** Called with the next value. */
+  onChange: (next: boolean) => void;
+  /** The visible label and the switch's name, already translated. */
+  label: string;
+  /** The help line; it describes the switch. */
+  help?: string;
+  disabled?: boolean;
+  /** The switch's id, for a control elsewhere that moves focus to it. */
+  id?: string;
+  /** Appended to the row's classes. */
+  className?: string;
+}
+
+/** One policy link inside the consent sentence. */
+export interface LegalConsentLink {
+  label: string;
+  href: string;
+}
+/**
+ * The agreement checkbox: "prefix, first link, join, second link", with real links, and an error
+ * announced when the reader tries to go on without agreeing. Every word arrives translated.
+ */
+export interface LegalConsentCheckboxProps {
+  checked: boolean;
+  onChange: (checked: boolean) => void;
+  /** The words before the first link ("I agree to the"). */
+  prefix: string;
+  /** The first policy link (the terms). */
+  terms: LegalConsentLink;
+  /** The words between the links ("and the"). */
+  join: string;
+  /** The second policy link (the privacy policy). */
+  privacy: LegalConsentLink;
+  /** A router link component; it receives `to`, so reading a policy keeps a half filled form. */
+  linkComponent?: React.ElementType;
+  /** Rendered under the checkbox, as an alert, when set. */
+  error?: string;
+  /** The input's id; a generated id when absent. */
+  inputId?: string;
+  /** The error's id; a generated id when absent. */
+  errorId?: string;
+  /** Appended to the root's classes. */
+  className?: string;
+}

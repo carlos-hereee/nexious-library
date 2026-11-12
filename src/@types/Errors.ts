@@ -145,7 +145,8 @@ export type ErrorProp = {
   // know (e.g. the runtime list of registered icon keys).
   hint?: string;
 };
-export type ErrorMessageProps = {
+/** The dev only teaching panel a component renders when it was called wrong. */
+export type DevErrorMessageProps = {
   error: ErrorProp;
   /**
    * Force the dev panel on or off for this call, overriding both setDevMode() and the
@@ -153,7 +154,27 @@ export type ErrorMessageProps = {
    * whose NODE_ENV the bundler did not replace.
    */
   isDev?: boolean;
+  message?: undefined;
+  className?: undefined;
 };
+/**
+ * The user facing error line (2026-11 item 337, reconciled from nexious-client's
+ * features/app/components/ErrorMessage.tsx): a `role="alert"` paragraph that renders in every
+ * mode, so a failed submit is announced the moment it appears.
+ */
+export type InlineErrorMessageProps = {
+  /** The error sentence, already translated. */
+  message: string;
+  /** Appended to `error-message nxs-error-message`. */
+  className?: string;
+  error?: undefined;
+  isDev?: undefined;
+};
+/**
+ * ErrorMessage has two modes chosen by its props: `error` renders the dev only teaching panel
+ * (the 4.x contract, unchanged), `message` renders the user facing alert line.
+ */
+export type ErrorMessageProps = DevErrorMessageProps | InlineErrorMessageProps;
 
 // ── Component teaching specs (see utils/data/componentSpecs.ts) ──────────────
 /** One required prop, described well enough that the reader does not need the docs. */
@@ -179,3 +200,37 @@ export type ComponentSpec = {
   fixes: string[];
 };
 export type ComponentSpecMap = { [component: string]: ComponentSpec };
+
+// ── The store states in front of a money surface (2026-11 item 337, Phase 5) ────
+/** The six strings StripeReadyGate shows, already translated by the caller. */
+export interface StripeReadyGateCopy {
+  storeMissingTitle: string;
+  storeMissingBody: string;
+  storeMissingAction: string;
+  stripeTitle: string;
+  stripeBody: string;
+  stripeAction: string;
+}
+export interface StripeReadyGateProps {
+  /** The app has no store: only the set up link renders. */
+  storeMissing: boolean;
+  /** The store exists but its Stripe account is unfinished: the content renders view only. */
+  storeNotReady: boolean;
+  /** Where the set up link goes. */
+  setUpStorePath: string;
+  /** Sends the owner into Stripe's hosted onboarding. */
+  finishStripe: () => void;
+  copy: StripeReadyGateCopy;
+  /** A router link component for the set up link; it receives `to` and `className`. */
+  linkComponent?: React.ElementType;
+  /** The glyph above the no store heading. */
+  storeMissingMedia?: React.ReactNode;
+  /** The glyph above the unfinished Stripe heading. */
+  stripeMedia?: React.ReactNode;
+  /** The empty state's class, so each caller keeps its own spacing. */
+  className?: string;
+  /** Replaces the Finish Stripe button's class (a caller inside a dialog passes its button class). */
+  actionClassName?: string;
+  /** The content behind the gate; `viewOnly` is true while Stripe is unfinished. */
+  children: (viewOnly: boolean) => React.ReactNode;
+}

@@ -418,3 +418,172 @@ export type MetricRowProps = {
   /** Appended to the band's classes. */
   className?: string;
 };
+
+// ── Phase 5 repair ports from the client (2026-11 item 337) ─────────────────────
+/**
+ * One attention item as a row: a link whose accessible name leads with the severity word, plus an
+ * optional dismiss control outside the link. Every string arrives translated.
+ */
+export interface AttentionRowProps {
+  /** The visible title, already interpolated. */
+  title: string;
+  /** The optional second line. */
+  detail?: string;
+  /** The severity word ("Revenue blocked"); it leads the link's accessible name. */
+  severityLabel: string;
+  /** The action verb ("Connect Stripe"), read after the severity word. */
+  actionLabel?: string;
+  /**
+   * Replaces the composed accessible name. Without it the link reads
+   * "severity. action: title. detail", joined with plain punctuation.
+   */
+  ariaLabel?: string;
+  /** Where the row goes. Routed through `linkComponent` (receiving `to`) or a plain anchor. */
+  href: string;
+  /** A router link component; it receives `to`, `className` and `aria-label`. */
+  linkComponent?: React.ElementType;
+  /** The decorative glyph in the lead slot (hidden from assistive technology). */
+  lead?: React.ReactNode;
+  /** Appended to the lead's wrapper classes, for the caller's severity tone. */
+  leadClassName?: string;
+  /** Renders the dismiss control when set together with `dismissLabel`. */
+  onDismiss?: () => void;
+  /** The dismiss control's accessible name, already translated. */
+  dismissLabel?: string;
+  /** The dismiss glyph. Defaults to a multiplication sign hidden from speech. */
+  dismissIcon?: React.ReactNode;
+  /** "li" by default, inside the caller's list. */
+  as?: "div" | "li";
+  className?: string;
+}
+
+/** The official announcement as a feed card: a badge, the body, an optional link and a dismiss. */
+export interface AnnouncementCardProps {
+  /** The badge text that marks the card official ("Platform update"), already translated. */
+  badgeLabel: string;
+  /** A decorative glyph inside the badge. */
+  badgeIcon?: React.ReactNode;
+  body: React.ReactNode;
+  /**
+   * The optional external link, opened in a new tab; the href goes through safeUrl. `newTabHint`
+   * ("opens in a new tab") is read after the label by a screen reader only.
+   */
+  link?: { href: string; label: string; newTabHint?: string };
+  /** Renders the dismiss control when set together with `dismissLabel`; one press disables it. */
+  onDismiss?: () => void;
+  /** The dismiss control's accessible name, already translated. */
+  dismissLabel?: string;
+  /** The dismiss glyph. Defaults to a multiplication sign hidden from speech. */
+  dismissIcon?: React.ReactNode;
+  className?: string;
+}
+
+/** One ranked row: a label, an optional second line and a right aligned, already formatted figure. */
+export interface RankListRow {
+  /** The row's own id, used as the React key. */
+  id: string;
+  label: string;
+  meta?: string;
+  value: string;
+}
+export interface RankListProps {
+  rows: RankListRow[];
+  /** Shown instead of the list when there are no rows, already translated. */
+  emptyLabel: string;
+  /** Names the list for assistive technology. Optional. */
+  ariaLabel?: string;
+  className?: string;
+}
+
+/** One bar: a stable id, its short axis label (caller formatted) and its numeric value. */
+export interface BarChartPoint {
+  id: string;
+  /** The short label under the bar and in the text equivalent ("3/4"), already localized. */
+  label: string;
+  value: number;
+}
+export interface BarChartProps {
+  points: BarChartPoint[];
+  /** Names the chart image and captions its text equivalent, already translated. */
+  ariaLabel: string;
+  /** The precise readout (bar tooltip and the text equivalent). Defaults to the plain number. */
+  formatValue?: (value: number) => string;
+  /** The compact readout under each bar. Defaults to the plain number. */
+  formatTick?: (value: number) => string;
+  /** One bar's tooltip. Defaults to the bar's id, a colon and its formatted value. */
+  formatTooltip?: (point: BarChartPoint) => string;
+  /** How many bars still get their own tick before the axis collapses to a range. 10 by default. */
+  maxTickLabels?: number;
+  className?: string;
+}
+
+/** One activity row: an order, a booking, a notice. Every string arrives translated. */
+export interface ActivityListItem {
+  id: string;
+  title: string;
+  description?: string;
+  /** Where the row's title links. Without it the title is plain text. */
+  href?: string;
+  /** A decorative glyph before the text. */
+  icon?: React.ReactNode;
+  /** A timestamp, printed through the caller's `formatTimestamp`. */
+  timestamp?: string;
+  /** Echoed on `data-activity-type` for the caller's styling. */
+  type?: string;
+}
+export interface ActivityListProps {
+  items: ActivityListItem[];
+  /** Prints a row's timestamp; the library carries no locale. An empty string prints nothing. */
+  formatTimestamp: (timestamp: string) => string;
+  /** Shows only the first `limit` items. */
+  limit?: number;
+  /** A router link component; it receives `to` and `className`. */
+  linkComponent?: React.ElementType;
+  /** Names the list for assistive technology. Optional. */
+  ariaLabel?: string;
+  className?: string;
+}
+
+/** The tone a status pill paints from the token triples. */
+export type StatusPillTone = "neutral" | "info" | "success" | "warning" | "danger";
+/** A status as a badge: the word and a shape, never color alone. */
+export interface StatusPillProps {
+  /** The status word, already translated. Required, so color never carries the state alone. */
+  label: string;
+  /** "neutral" by default. */
+  tone?: StatusPillTone;
+  /** A decorative glyph before the word (the shape that survives greyscale). */
+  icon?: React.ReactNode;
+  /** "small" for a table cell (the default), "medium" for a detail header. */
+  size?: "small" | "medium";
+  className?: string;
+}
+
+/** One compact money line under a total ("Member discount (20% off)" then "-$4.00"). */
+export interface DiscountNoteProps {
+  /** The description, already translated. */
+  label: string;
+  /** The amount, already formatted by the caller. */
+  amount: string;
+  className?: string;
+}
+
+/** A titled section whose heading can take focus, holding a CardGrid or a one line empty hint. */
+export interface GridSectionProps {
+  /** The section's id; the heading's id is `${id}-title`. */
+  id: string;
+  title: string;
+  /** The supporting line under the title. */
+  supporting?: string;
+  /** Rendered in the header's trailing area (a filter strip). */
+  action?: React.ReactNode;
+  /** Rendered between the header and the grid (an upgrade card). */
+  notice?: React.ReactNode;
+  /** One line shown instead of the grid; the header stays so the section remains a landmark. */
+  emptyHint?: string | null;
+  /** 3 by default. */
+  headingLevel?: CardHeadingLevel;
+  /** Appended to the section's classes. */
+  className?: string;
+  children?: React.ReactNode;
+}

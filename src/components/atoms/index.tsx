@@ -29,7 +29,8 @@ export { default as Label } from "@nxs-atoms/forms/Label";
 export { default as InputPrice } from "@nxs-atoms/forms/InputPrice";
 export { default as Option } from "@nxs-atoms/forms/Option";
 export { default as ShowAuthTips } from "@nxs-atoms/forms/ShowAuthTips";
-export type { InputProps, NumberInputProps } from "nxs-form";
+export { default as ToggleSwitch } from "@nxs-atoms/forms/ToggleSwitch";
+export type { InputProps, NumberInputProps, ToggleSwitchProps } from "nxs-form";
 
 // // save tables components for future update
 // // table

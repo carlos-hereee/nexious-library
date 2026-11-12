@@ -30,6 +30,16 @@ import ActionMenu from "@nxs-molecules/navigation/ActionMenu";
 import Pager from "@nxs-molecules/navigation/Pager";
 import LoadOlderButton from "@nxs-molecules/navigation/LoadOlderButton";
 import MetricRow from "@nxs-molecules/card/MetricRow";
+import AttentionRow from "@nxs-molecules/card/AttentionRow";
+import AnnouncementCard from "@nxs-molecules/card/AnnouncementCard";
+import RankList from "@nxs-molecules/card/RankList";
+import BarChart from "@nxs-molecules/card/BarChart";
+import ActivityList from "@nxs-molecules/card/ActivityList";
+import StatusPill from "@nxs-molecules/card/StatusPill";
+import DiscountNote from "@nxs-molecules/card/DiscountNote";
+import GridSection from "@nxs-molecules/card/GridSection";
+import StripeReadyGate from "@nxs-molecules/errors/StripeReadyGate";
+import ErrorMessage from "@nxs-atoms/texts/ErrorMessage";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -674,5 +684,119 @@ describe("axe: ActionMenu, Pager, LoadOlderButton and MetricRow (2026-11 item 33
         ]}
       />
     );
+  });
+});
+
+describe("axe: the second Phase 5 batch (2026-11 item 337)", () => {
+  const barPoints = Array.from({ length: 14 }, (_, index) => ({ id: `day-${index + 1}`, label: `11/${index + 1}`, value: index * 3 }));
+  const gateCopy = {
+    storeMissingTitle: "Set up your store first",
+    storeMissingBody: "Memberships are sold through your store.",
+    storeMissingAction: "Set up store",
+    stripeTitle: "Finish setting up Stripe",
+    stripeBody: "Until Stripe is finished, nothing here can take payments.",
+    stripeAction: "Finish Stripe",
+  };
+
+  it("an attention row with a dismiss control has no violations in either theme", async () => {
+    await checkBothThemes(
+      <ul>
+        <AttentionRow
+          title="Connect Stripe for Iron Forge"
+          detail="Its store cannot take payments yet"
+          severityLabel="Revenue blocked"
+          actionLabel="Connect Stripe"
+          href="/dashboard/store"
+          lead={<span>!</span>}
+          onDismiss={() => {}}
+          dismissLabel="Dismiss notification"
+        />
+      </ul>
+    );
+  });
+
+  it("an announcement card with a link and a dismiss has no violations in either theme", async () => {
+    await checkBothThemes(
+      <AnnouncementCard
+        badgeLabel="Platform update"
+        body="The store now takes tips."
+        link={{ href: "https://example.com/notes", label: "Read the notes", newTabHint: "(opens in a new tab)" }}
+        onDismiss={() => {}}
+        dismissLabel="Dismiss update"
+      />
+    );
+  });
+
+  it("a rank list and its empty label have no violations in either theme", async () => {
+    await checkBothThemes(
+      <RankList
+        ariaLabel="Top pages"
+        emptyLabel="No visits yet"
+        rows={[
+          { id: "home", label: "Home", meta: "/", value: "120" },
+          { id: "store", label: "Store", value: "48" },
+        ]}
+      />
+    );
+    await checkBothThemes(<RankList rows={[]} emptyLabel="No visits yet" />);
+  });
+
+  it("a bar chart with ticks and with the range fallback has no violations in either theme", async () => {
+    await checkBothThemes(<BarChart ariaLabel="Visits per day" points={barPoints.slice(0, 7)} />);
+    await checkBothThemes(<BarChart ariaLabel="Visits per day" points={barPoints} />);
+  });
+
+  it("an activity list with linked and plain rows has no violations in either theme", async () => {
+    await checkBothThemes(
+      <ActivityList
+        ariaLabel="Recent activity"
+        formatTimestamp={() => "Nov 12"}
+        items={[
+          { id: "order", title: "Order 1042", description: "Paid", href: "/orders/1042", timestamp: "2026-11-12" },
+          { id: "notice", title: "Store opened", icon: <span>*</span> },
+        ]}
+      />
+    );
+  });
+
+  it("status pills in every tone and a discount note have no violations in either theme", async () => {
+    await checkBothThemes(
+      <p>
+        <StatusPill label="Pending" />
+        <StatusPill label="Paid" tone="success" icon={<span>+</span>} />
+        <StatusPill label="Shipped" tone="info" size="medium" />
+        <StatusPill label="On hold" tone="warning" />
+        <StatusPill label="Refunded" tone="danger" />
+        <DiscountNote label="Member discount (20% off)" amount="-$4.00" />
+      </p>
+    );
+  });
+
+  it("the stripe ready gate in both gate states and the error line have no violations in either theme", async () => {
+    await checkBothThemes(
+      <StripeReadyGate storeMissing storeNotReady={false} setUpStorePath="/dashboard/store" finishStripe={() => {}} copy={gateCopy}>
+        {() => <p>Plans</p>}
+      </StripeReadyGate>
+    );
+    await checkBothThemes(
+      <StripeReadyGate storeMissing={false} storeNotReady setUpStorePath="/dashboard/store" finishStripe={() => {}} copy={gateCopy}>
+        {(isViewOnly) => <p>{isViewOnly ? "View only" : "Editable"}</p>}
+      </StripeReadyGate>
+    );
+    await checkBothThemes(<ErrorMessage message="That email is already in use." />);
+  });
+
+  // A single render: the section's id and its heading id would repeat across checkBothThemes' two
+  // trees, and aria-labelledby would then name an ambiguous element.
+  it("a grid section with cards and with its empty hint has no violations", async () => {
+    const { container } = render(
+      <>
+        <GridSection id="axe-installed" title="Installed" supporting="Plugins this app runs" action={<button type="button">Filter</button>}>
+          <Card title="Store" />
+        </GridSection>
+        <GridSection id="axe-available" title="Available" emptyHint="Nothing to add yet" />
+      </>
+    );
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
   });
 });
