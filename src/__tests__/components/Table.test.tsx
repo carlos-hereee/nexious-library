@@ -209,6 +209,14 @@ describe("Table parts", () => {
     );
   });
 
+  it("TableHeader keeps the 4.x missing data message by default and takes the caller's", () => {
+    const { rerender } = render(<TableHeader data={undefined} />);
+    expect(screen.getByText("No header data available")).toHaveClass("error-message");
+
+    rerender(<TableHeader data={undefined} missingDataMessage="Sin datos de encabezado" />);
+    expect(screen.getByText("Sin datos de encabezado")).toHaveClass("error-message");
+  });
+
   it("HoursOfOperation still renders its 4.x table", () => {
     const { container } = render(
       <HoursOfOperation

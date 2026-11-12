@@ -491,6 +491,9 @@ export interface SelectProp {
   labelId?: string;
   // The clear button's accessible name. Defaults to "Clear selection"; pass a localized string.
   clearLabel?: string;
+  // The alt text of the selected option's thumbnail. Defaults to "selection thumbnail"; pass a
+  // localized string, or "" when the option's own text already says what the picture shows.
+  thumbnailAlt?: string;
   onChange?: (key: string) => void;
 }
 /** One optgroup of a Select: its visible group label and the options under it. */

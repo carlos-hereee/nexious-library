@@ -2,18 +2,23 @@
 
 // ── nxs-select (2026-11 item 337) ──
 // Ported from nexious-client's `select.cu-input` (shared/stylesheets/primitives.css), rebuilt on
-// library tokens. Select renders these classes BESIDE `select-wrapper` and `select`, and they sit
-// ABOVE the 4.x rules on purpose: on a property both set, the 4.x rule comes later at the same
-// specificity and wins, so the current client's selects keep their look until Plan B moves them
-// (2026-11 item 332). Only what the 4.x rules never set (the fill, the ink, the type) is new.
-.nxs-select {
+// library tokens. Select renders these classes BESIDE `select-wrapper` and `select`, and every
+// selector, state pseudo-classes included, sits inside :where() so it carries ZERO specificity.
+// That is the compatibility rule, not style: 5.0.0 reaches the current client a month before Plan B
+// (2026-11 item 332) moves it, and a plain class rule here would beat the element reset in
+// vars/reset/_forms.scss (which sets font-size: inherit on every select) and change the type size of
+// every client select. At zero specificity the reset, the 4.x rules below and every client rule win,
+// so these rules are the documented nxs look and the hook Plan B builds on, inert beside them today.
+// The 44px floor for the clear button is not here for the same reason: nothing sets min-width on
+// `.btn-icon`, so even a zero specificity floor would resize the client's clear buttons on touch.
+:where(.nxs-select) {
   display: flex;
   align-items: center;
   gap: var(--space-small);
   width: 100%;
 }
 
-.nxs-select-control {
+:where(.nxs-select-control) {
   width: 100%;
   box-sizing: border-box;
   min-height: var(--control-height);
@@ -28,28 +33,21 @@
   transition:
     border-color var(--transition-fast),
     background-color var(--transition-fast);
-  &:hover:not(:disabled) {
-    border-color: var(--main-brand-color);
-  }
-  @include mixin.focus-ring;
-  &:disabled {
-    background-color: var(--hover-bg);
-    color: var(--text-muted);
-    cursor: not-allowed;
-  }
-  &[aria-invalid="true"] {
-    border-color: var(--danger-border);
-  }
 }
-
-// The clear button keeps the 44px floor on a coarse pointer only, so a mouse layout beside a
-// 36px control does not change size under the current client.
-@media (pointer: coarse) {
-  .nxs-select-clear {
-    flex: none;
-    min-width: var(--tap-target-min);
-    min-height: var(--tap-target-min);
-  }
+:where(.nxs-select-control:hover:not(:disabled)) {
+  border-color: var(--main-brand-color);
+}
+:where(.nxs-select-control:focus-visible) {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+}
+:where(.nxs-select-control:disabled) {
+  background-color: var(--hover-bg);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+:where(.nxs-select-control[aria-invalid="true"]) {
+  border-color: var(--danger-border);
 }
 
 .select-wrapper {

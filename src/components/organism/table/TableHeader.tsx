@@ -4,6 +4,10 @@ import type { TableColumn as TableColumnDef, TableHeaderColumnsProps, TableHeade
 
 // The columns API is the Table's; the data API is the 4.x shape HoursOfOperation still renders,
 // kept byte for byte so its markup does not move (2026-11 item 337 compatibility rule).
+// The 4.x English default, kept so HoursOfOperation renders what it always did; overridable
+// through `missingDataMessage` so a localized caller is not stuck with it.
+const DEFAULT_MISSING_DATA_MESSAGE = "No header data available";
+
 const isColumnsProps = (props: TableHeaderProps): props is TableHeaderColumnsProps => "columns" in props;
 
 type HeaderCellProps = { column: TableColumnDef; onSort?: (key: string) => void };
@@ -50,8 +54,8 @@ const TableHeader = (props: TableHeaderProps) => {
       </thead>
     );
   }
-  const { data, numericColumns } = props;
-  if (!data) return <p className="error-message">No header data available</p>;
+  const { data, numericColumns, missingDataMessage = DEFAULT_MISSING_DATA_MESSAGE } = props;
+  if (!data) return <p className="error-message">{missingDataMessage}</p>;
   return (
     <thead>
       <TableColumn data={data} isHeader numericColumns={numericColumns} />

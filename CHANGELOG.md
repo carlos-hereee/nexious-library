@@ -69,14 +69,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`Select` selects by value and takes option groups.** New optional `value` (the control is
   driven by an option's value; without it `active` works exactly as before), `groups` (rendered as
   `optgroup` after `list`), `labelId` (named by a label the caller already renders) and
-  `clearLabel` (the clear button's name, "Clear selection" by default). It renders `nxs-select` on
-  the wrapper and `nxs-select-control` on the control BESIDE `select-wrapper` and `select`, and
-  `nxs-select-clear` beside `btn-icon`; the 4.x rules load after the new ones, so a consumer
-  styling the 4.x classes keeps its look. `SelectOptionGroup` is exported.
+  `clearLabel` (the clear button's name, "Clear selection" by default) and `thumbnailAlt` (the
+  selected option's thumbnail alt text, "selection thumbnail" by default). It renders `nxs-select`
+  on the wrapper and `nxs-select-control` on the control BESIDE `select-wrapper` and `select`, and
+  `nxs-select-clear` beside `btn-icon`. Every `nxs-select` rule carries zero specificity, so the
+  form reset, the 4.x rules and a consumer's own rules all win and an existing select renders
+  exactly as before. `SelectOptionGroup` is exported.
 
 - **`SearchBar` renders `nxs-search` and `nxs-search-input` and can announce a result count.** The
-  classes sit before the caller's `className` and `inputClassName`, which stay, and their rules
-  carry zero specificity so a caller's own rule always wins. Pass `resultCount` to announce how many
+  classes sit before the caller's `className` and `inputClassName`, which stay, and in this release
+  they are hooks with no rules of their own, so an existing search box renders exactly as before.
+  Pass `resultCount` to announce how many
   results the search leaves in a polite status region; `formatResultCount` localizes the sentence
   ("1 result" and "4 results" in English by default).
 
@@ -140,7 +143,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `bodyData` props, its hardcoded "No data available" and its second caption are gone, along with
   `TableBody`'s `data` and `TableFooter`'s `data` props. None of the three were reachable from the
   package entry before this release. `TableHeader` still accepts its 4.x `data` and
-  `numericColumns`, which `HoursOfOperation` renders unchanged.
+  `numericColumns`, which `HoursOfOperation` renders unchanged, and gains `missingDataMessage` to
+  replace its English "No header data available" when `data` is missing.
 
 #### Deprecated
 

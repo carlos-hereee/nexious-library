@@ -67,6 +67,9 @@ export interface TableHeaderLegacyProps {
   data?: PEventDay[];
   // Threaded through so a numeric column's HEADER right-aligns with the figures beneath it.
   numericColumns?: number[];
+  // Shown in place of the header when `data` is missing. Defaults to "No header data available";
+  // pass a localized string.
+  missingDataMessage?: string;
 }
 export type TableHeaderProps = TableHeaderColumnsProps | TableHeaderLegacyProps;
 

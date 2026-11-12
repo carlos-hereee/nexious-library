@@ -3,10 +3,12 @@ import { Hero, IconButton } from "@nxs-molecules";
 import type { OptionProps, SelectProp } from "nxs-form";
 import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 
-// The 4.x defaults, kept so a caller that passes no copy renders what it always did. Both are
-// English, which is why placeholder and clearLabel exist: a localized caller passes its own.
+// The 4.x defaults, kept so a caller that passes no copy renders what it always did. All three are
+// English, which is why placeholder, clearLabel and thumbnailAlt exist: a localized caller passes
+// its own.
 const DEFAULT_PLACEHOLDER = "Choose Selection";
 const DEFAULT_CLEAR_LABEL = "Clear selection";
+const DEFAULT_THUMBNAIL_ALT = "selection thumbnail";
 
 /** Every option the control offers, the flat list first and then each group's options. */
 const allOptions = (props: SelectProp): OptionProps[] => [
@@ -47,6 +49,7 @@ const Select: React.FC<SelectProp> = (props) => {
   const { list, onChange, className, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
   const { placeholder, inShell, value, groups, labelId, clearLabel = DEFAULT_CLEAR_LABEL } = props;
+  const { thumbnailAlt = DEFAULT_THUMBNAIL_ALT } = props;
   const domId = useFieldDomId(name);
   const isValueMode = value !== undefined;
 
@@ -83,7 +86,7 @@ const Select: React.FC<SelectProp> = (props) => {
         {hasSelection && icon ? (
           <Icon icon={icon} name={icon} className="select-icon" />
         ) : thumbnail ? (
-          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} className="thumbnail-select" />
+          <Hero hero={{ url: thumbnail, alt: thumbnailAlt }} className="thumbnail-select" />
         ) : (
           ""
         )}

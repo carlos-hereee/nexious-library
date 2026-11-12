@@ -199,6 +199,44 @@ describe("compiled stylesheet: direction", () => {
   });
 });
 
+// True when the selector is one :where( ... ) whose closing paren is the last character, so no
+// part of it (a pseudo-class, an attribute, a descendant) adds specificity outside the wrapper.
+const isWhollyInsideWhere = (selector: string): boolean => {
+  if (!selector.startsWith(":where(")) return false;
+  const wrapperOpen = ":where(".length;
+  let depth = 1;
+  for (let index = wrapperOpen; index < selector.length; index += 1) {
+    if (selector[index] === "(") depth += 1;
+    if (selector[index] === ")") depth -= 1;
+    if (depth === 0) return index === selector.length - 1;
+  }
+  return false;
+};
+
+describe("compiled stylesheet: the 5.0.0 compatibility rule", () => {
+  // 5.0.0 reaches the current client a month before Plan B (2026-11 item 332) moves it, so the
+  // nxs classes Select renders beside its 4.x hooks must not outweigh anything: a plain class rule
+  // beats the element reset's font-size: inherit and retypes every client select. Every selector
+  // that names an nxs-select class has to sit wholly inside :where().
+  it("keeps every nxs-select rule at zero specificity", () => {
+    const selectors = rules
+      .flatMap((rule) => rule.selector.split(","))
+      .map((selector) => selector.trim())
+      .filter((selector) => /\.nxs-select(-control|-clear)?(?![\w-])/.test(selector));
+
+    expect(selectors.length).toBeGreaterThan(0);
+    expect(selectors.filter((selector) => !isWhollyInsideWhere(selector))).toEqual([]);
+  });
+
+  // Even a zero specificity rule applies wherever a caller sets nothing, and three client callers
+  // pass SearchBar no className at all, so the nxs-search hooks carry no rules until Plan B.
+  it("gives the nxs-search hooks no rules", () => {
+    const targeting = rules.filter((rule) => /\.nxs-search(-input)?(?![\w-])/.test(rule.selector)).map((rule) => rule.selector);
+
+    expect(targeting).toEqual([]);
+  });
+});
+
 describe("long strings do not change the DOM", () => {
   it.each([
     ["Post", <Post post={shortPost} key="s" />, <Post post={longPost} key="l" />],

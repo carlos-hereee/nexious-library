@@ -56,6 +56,15 @@ describe("Select", () => {
     expect(screen.getByRole("combobox")).toHaveAttribute("class", "select nxs-select-control");
   });
 
+  it("keeps the 4.x thumbnail alt by default and takes the caller's thumbnailAlt", () => {
+    const withThumbnail = [{ name: "apple", value: "apple", label: "Apple", uid: "1", thumbnail: "/apple.png" }];
+    const { container, rerender } = render(<Select name="fruit" list={withThumbnail} value="apple" onChange={jest.fn()} />);
+    expect(container.querySelector("img")).toHaveAttribute("alt", "selection thumbnail");
+
+    rerender(<Select name="fruit" list={withThumbnail} value="apple" thumbnailAlt="Manzana" onChange={jest.fn()} />);
+    expect(container.querySelector("img")).toHaveAttribute("alt", "Manzana");
+  });
+
   it("keeps the active path as today when value is absent: active is the displayed first option", () => {
     render(<Select name="fruit" list={list} active="Banana" onChange={jest.fn()} />);
 
