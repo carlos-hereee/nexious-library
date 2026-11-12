@@ -36,6 +36,8 @@ import RankList from "@nxs-molecules/card/RankList";
 import BarChart from "@nxs-molecules/card/BarChart";
 import ActivityList from "@nxs-molecules/card/ActivityList";
 import StatusPill from "@nxs-molecules/card/StatusPill";
+import StatusBadge from "@nxs-molecules/card/StatusBadge";
+import SkeletonRows from "@nxs-molecules/errors/SkeletonRows";
 import DiscountNote from "@nxs-molecules/card/DiscountNote";
 import GridSection from "@nxs-molecules/card/GridSection";
 import StripeReadyGate from "@nxs-molecules/errors/StripeReadyGate";
@@ -110,6 +112,16 @@ describe("axe: Skeleton", () => {
     expect(container.querySelectorAll(".skeleton-bar")).toHaveLength(5);
     expect(namedNodes(container)).toHaveLength(1);
     expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  // SkeletonRows (2026-11 item 337, Phase 5 repair 3) is aria-hidden beside the caller's region.
+  it("shaped skeleton rows beside the caller's live region have no violations in either theme", async () => {
+    await checkBothThemes(
+      <div>
+        <p role="status">Loading orders</p>
+        <SkeletonRows columns={[{ width: "5rem" }, { width: "1fr" }, { width: "6rem", shape: "pill" }]} count={3} />
+      </div>
+    );
   });
 });
 
@@ -759,7 +771,7 @@ describe("axe: the second Phase 5 batch (2026-11 item 337)", () => {
     );
   });
 
-  it("status pills in every tone and a discount note have no violations in either theme", async () => {
+  it("status pills in every tone, status badges and a discount note have no violations in either theme", async () => {
     await checkBothThemes(
       <p>
         <StatusPill label="Pending" />
@@ -767,6 +779,8 @@ describe("axe: the second Phase 5 batch (2026-11 item 337)", () => {
         <StatusPill label="Shipped" tone="info" size="medium" />
         <StatusPill label="On hold" tone="warning" />
         <StatusPill label="Refunded" tone="danger" />
+        <StatusBadge label="Legend" tier="legend" glyph="*" title="Platform standing" />
+        <StatusBadge label="Partner" tier="partner" size="small" />
         <DiscountNote label="Member discount (20% off)" amount="-$4.00" />
       </p>
     );

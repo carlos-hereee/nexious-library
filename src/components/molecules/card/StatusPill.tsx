@@ -11,10 +11,10 @@ import type { StatusPillProps } from "nxs-card";
  * The tint, the word and an optional glyph. Color is never the only carrier (WCAG 1.4.1): the word
  * is required, and the glyph is the shape that survives greyscale printing.
  */
-const StatusPill = ({ label, tone = "neutral", icon, size = "small", className }: StatusPillProps) => {
+const StatusPill = ({ label, tone = "neutral", icon, size = "small", title, className }: StatusPillProps) => {
   const pillClass = `nxs-status-pill nxs-status-pill-${tone} nxs-status-pill-${size}`;
   return (
-    <span className={className ? `${pillClass} ${className}` : pillClass}>
+    <span className={className ? `${pillClass} ${className}` : pillClass} title={title}>
       {icon ? (
         <span className="nxs-status-pill-icon" aria-hidden="true">
           {icon}

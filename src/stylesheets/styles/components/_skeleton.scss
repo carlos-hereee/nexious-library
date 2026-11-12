@@ -81,6 +81,45 @@
   justify-content: flex-start;
 }
 
+// ── SkeletonRows: shaped placeholder rows (2026-11 item 337, Phase 5) ────────────
+// Ported from the client's orders-skeleton and cu-skeleton-row rules. The bars reuse .skeleton-bar
+// above for the fill, the shimmer and its reduced motion stop; only the row geometry is new.
+// Phone first: two columns, then the caller's tracks from the tablet breakpoint up (the client
+// folded at 720px, the library's tablet step is 770px).
+.nxs-skeleton-rows {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+  width: 100%;
+}
+
+// The dense row height so a placeholder row occupies what the real row will.
+.nxs-skeleton-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: var(--space-medium);
+  box-sizing: border-box;
+  min-height: var(--row-height-dense);
+  padding: var(--space-medium-small);
+  border: 1px solid var(--surface-edge);
+  border-radius: var(--radius-medium);
+
+  @include mixins.respond-from(tablet) {
+    grid-template-columns: var(--nxs-skeleton-columns, 1fr);
+  }
+}
+
+.nxs-skeleton-cell-bar {
+  height: var(--text-small);
+  border-radius: var(--radius-small);
+}
+
+.nxs-skeleton-cell-pill {
+  height: var(--text-large);
+  border-radius: var(--radius-full);
+}
+
 // ── Empty states (design language 5.10) ─────────────────────────────────────────
 // A small glyph, a one-line headline, a sentence of guidance, and the next action. One block
 // serves EmptySection, ComingSoon and PageNotFound so the three cannot drift.

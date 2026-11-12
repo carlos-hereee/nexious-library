@@ -556,6 +556,33 @@ export interface StatusPillProps {
   icon?: React.ReactNode;
   /** "small" for a table cell (the default), "medium" for a detail header. */
   size?: "small" | "medium";
+  /** A supplementary tooltip. The word stays the accessible content; a title is never the only carrier. */
+  title?: string;
+  className?: string;
+}
+
+/**
+ * A standing badge on StatusPill: one rung of a caller's ladder (a tier or a role) as a pill whose
+ * colors the caller sets per tier through custom properties, rendering nothing without a word.
+ */
+export interface StatusBadgeProps {
+  /**
+   * The rung's word, already translated. Empty or null renders nothing, so a caller that cannot
+   * name a key (one it does not know) passes nothing rather than the raw key.
+   */
+  label?: string | null;
+  /**
+   * The rung's key ("legend", "owner"), emitted as the hook class nxs-status-badge-<tier> after
+   * reducing it to lowercase letters, digits and hyphens. The caller's stylesheet sets
+   * --nxs-status-badge-bg, -fg and -border on that class.
+   */
+  tier?: string;
+  /** A decorative glyph before the word (the shape that survives greyscale). */
+  glyph?: React.ReactNode;
+  /** "medium" for a surface (the default), "small" for inline chrome. */
+  size?: "small" | "medium";
+  /** A supplementary tooltip, already translated. */
+  title?: string;
   className?: string;
 }
 

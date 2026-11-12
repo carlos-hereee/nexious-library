@@ -131,6 +131,17 @@ a.nxs-activity-list-title:hover {
   display: inline-flex;
 }
 
+// ── StatusBadge: a ladder rung on StatusPill, colored by the caller per tier ──
+// Ported from the client's status-badge rules (status.css). The library knows no ladder, so each
+// tier's colors arrive as three custom properties the caller sets on nxs-status-badge-<tier>; with
+// none set the badge is the neutral pill. Two classes so it wins over the tone rules above.
+.nxs-status-pill.nxs-status-badge {
+  border-color: var(--nxs-status-badge-border, var(--border));
+  border-radius: var(--radius-full);
+  background-color: var(--nxs-status-badge-bg, var(--surface-2));
+  color: var(--nxs-status-badge-fg, var(--text-secondary));
+}
+
 // ── DiscountNote: the amount in the success tone, money the buyer kept ──
 .nxs-discount-note {
   display: block;

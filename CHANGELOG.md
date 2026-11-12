@@ -158,6 +158,16 @@ so a consumer that changes nothing renders as before apart from the library's ow
   `nxs-switch`, `nxs-toggle-row`, `nxs-consent`), and their props types are exported. Part of the
   5.0.0 major release (2026-11 item 337).
 
+- **`StatusBadge` and `SkeletonRows`, ported from the platform client.** `StatusBadge` is one rung
+  of a caller's ladder (a tier or a role) on `StatusPill`: the word, an optional glyph, a tooltip,
+  and a `nxs-status-badge-<tier>` hook whose colors the caller sets through
+  `--nxs-status-badge-bg`, `-fg` and `-border`; with no word it renders nothing. `StatusPill`
+  gains an optional `title` for that tooltip. `SkeletonRows` is placeholder rows shaped like the
+  real ones, one bar or pill per caller column on its grid track, folding to two columns below the
+  tablet breakpoint (`nxs-skeleton-rows`). `Skeleton` is unchanged. `StatusBadgeProps`,
+  `SkeletonRowsProps` and `SkeletonRowsColumn` are exported. Part of the 5.0.0 major release
+  (2026-11 item 337).
+
 - **`ErrorMessage` gains a user facing mode.** Pass `message` (and an optional `className`) for a
   `role="alert"` line that renders in every build, reconciled from the client's own `ErrorMessage`
   rather than shipped as a second component. Passing `error` renders the dev only teaching panel
@@ -230,6 +240,11 @@ so a consumer that changes nothing renders as before apart from the library's ow
   links and ties its alert error to the input. `GridSection`'s heading can take focus so a jump to
   it is announced. The dismiss controls on `AttentionRow` and `AnnouncementCard` are separate named
   tab stops.
+
+- **`StatusBadge` never shows a raw key and `SkeletonRows` stays silent.** `StatusBadge` requires
+  its word (no word, no badge) and hides its glyph from speech; its tooltip is supplementary.
+  `SkeletonRows` is `aria-hidden` and owns no live region, so the caller's one status region
+  announces the load once instead of a screen reader walking empty bars.
 
 #### Changed
 

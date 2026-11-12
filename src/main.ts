@@ -84,6 +84,10 @@ export { default as ErrorMessages } from "@nxs-molecules/errors/ErrorMessages";
 export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
 export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
 export type { SkeletonProps, SkeletonShape, EmptyStateProps } from "nxs-errors";
+// Placeholder rows shaped like the real ones, aria-hidden beside the caller's live region
+// (2026-11 item 337, Phase 5).
+export { default as SkeletonRows } from "@nxs-molecules/errors/SkeletonRows";
+export type { SkeletonRowsProps, SkeletonRowsColumn } from "nxs-errors";
 // The store states in front of a money surface (2026-11 item 337, Phase 5).
 export { default as StripeReadyGate } from "@nxs-molecules/errors/StripeReadyGate";
 export type { StripeReadyGateProps, StripeReadyGateCopy } from "nxs-errors";
@@ -122,9 +126,11 @@ export { default as RankList } from "@nxs-molecules/card/RankList";
 export { default as BarChart } from "@nxs-molecules/card/BarChart";
 export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
 export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
+export { default as StatusBadge } from "@nxs-molecules/card/StatusBadge";
 export { default as DiscountNote } from "@nxs-molecules/card/DiscountNote";
 export { default as GridSection } from "@nxs-molecules/card/GridSection";
 export type {
+  StatusBadgeProps,
   AttentionRowProps,
   AnnouncementCardProps,
   RankListProps,

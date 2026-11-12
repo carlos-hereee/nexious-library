@@ -40,6 +40,7 @@ export { default as RankList } from "@nxs-molecules/card/RankList";
 export { default as BarChart } from "@nxs-molecules/card/BarChart";
 export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
 export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
+export { default as StatusBadge } from "@nxs-molecules/card/StatusBadge";
 export { default as DiscountNote } from "@nxs-molecules/card/DiscountNote";
 export { default as GridSection } from "@nxs-molecules/card/GridSection";
 export type {
@@ -49,6 +50,7 @@ export type {
   BarChartProps,
   ActivityListProps,
   StatusPillProps,
+  StatusBadgeProps,
   DiscountNoteProps,
   GridSectionProps,
 } from "nxs-card";
@@ -69,7 +71,16 @@ export { default as ErrorFallback } from "@nxs-molecules/errors/ErrorFallback";
 export { default as Skeleton } from "@nxs-molecules/errors/Skeleton";
 export { default as EmptyState } from "@nxs-molecules/errors/EmptyState";
 export { default as StripeReadyGate } from "@nxs-molecules/errors/StripeReadyGate";
-export type { ErrorProps, SkeletonProps, SkeletonShape, EmptyStateProps, StripeReadyGateProps } from "nxs-errors";
+export { default as SkeletonRows } from "@nxs-molecules/errors/SkeletonRows";
+export type {
+  ErrorProps,
+  SkeletonProps,
+  SkeletonShape,
+  SkeletonRowsProps,
+  SkeletonRowsColumn,
+  EmptyStateProps,
+  StripeReadyGateProps,
+} from "nxs-errors";
 
 // forms
 export { default as FieldQuantity } from "@nxs-molecules/forms/FieldQuantity";

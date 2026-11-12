@@ -75,6 +75,27 @@ export type SkeletonProps = {
   label?: string;
 };
 
+/** One column of a shaped skeleton row: its grid track and the bar shape drawn in it. */
+export type SkeletonRowsColumn = {
+  /** A CSS grid track ("5rem", "1fr", "minmax(4rem, 6rem)"). Defaults to "1fr". */
+  width?: string;
+  /** "bar" (a text line, the default) or "pill" (a taller, fully rounded status chip). */
+  shape?: "bar" | "pill";
+};
+/**
+ * Rows whose bars mirror the columns of the real rows (an order number, two texts, a pill, a
+ * total), so a list does not reflow when the data lands. Unlike Skeleton it is NOT a live region:
+ * it is aria-hidden and the caller owns the sibling status region and its words.
+ */
+export type SkeletonRowsProps = {
+  /** The columns each row draws, left to right. At least one is drawn. */
+  columns: SkeletonRowsColumn[];
+  /** How many rows to draw. Defaults to 3, clamped to at least 1. */
+  count?: number;
+  /** Appended to the wrapper's classes, never replacing them. */
+  className?: string;
+};
+
 // ── The empty-state pattern ─────────────────────────────────────────────────────
 /**
  * Props for the one empty/error layout EmptySection, ComingSoon and PageNotFound all render
