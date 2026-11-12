@@ -3,12 +3,12 @@ import { useSeePassword } from "@nxs-utils/hooks/useSeePassword";
 import { initPlaceholders } from "@nxs-utils/form/placeholders";
 import type { AuthFieldProp } from "nxs-form";
 import { IconButton } from "@nxs-molecules";
-import { buildControlClass } from "../../../@types/Variant";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 // The show or hide password toggle is an icon only secondary nxs-btn square (2026-11 item 337),
 // composed as a class string because IconButton takes its look that way. The legacy btn-main,
 // btn-small and highlight hooks stay beside it until 2026-11 item 339.
-const PASSWORD_TOGGLE_CLASS = buildControlClass({
+const PASSWORD_TOGGLE_CLASS = buildNxsButtonClass({
   variant: "secondary",
   className: "nxs-btn-icon btn-main btn-small highlight",
 });

@@ -1,9 +1,10 @@
 // The library's own buttons on the nxs-btn family (2026-11 item 337, Session 2a).
 //
-// Each of the fifteen internal components that rendered a legacy button class now renders a
-// Button variant (or composes one through buildControlClass where it hands its look to
-// IconButton). Two things are pinned for every one of them: the nxs-btn classes are there, and
-// the legacy class the client still styles is still there beside them, because 5.0.0 reaches the
+// Each of the internal components that rendered a legacy button class now composes its nxs-btn
+// variant through buildNxsButtonClass and passes it as className to Button or IconButton. Three
+// things are pinned: the nxs-btn classes are there, the legacy class the client still styles is
+// still there beside them, and none of them gains the 4.0.0 btn-base or btn-<variant> hooks it
+// never rendered (the compatibility rule), because 5.0.0 reaches the
 // client's production on publish day and those hooks go only with 2026-11 item 339. Each surface
 // also gets a jest-axe pass and a native button check, since keyboard activation rides on the
 // element being a real <button>.
@@ -26,6 +27,8 @@ import CloseHeader from "@nxs-molecules/header/CloseHeader";
 import ConfirmDialog from "@nxs-organism/card/ConfirmDialog";
 import CancelDialog from "@nxs-organism/card/CancelDialog";
 import PaymentMethods from "@nxs-organism/checkout/PaymentMethods";
+import Dialog from "@nxs-template/Dialog";
+import Form from "@nxs-template/Form";
 import type { ICalEvent } from "nxs-calendar";
 
 expect.extend(toHaveNoViolations);
@@ -53,6 +56,16 @@ const expectNative = (button: HTMLElement) => {
   expect(button).not.toHaveAttribute("tabindex");
 };
 
+const LEGACY_VARIANT_HOOKS = ["btn-base", "btn-primary", "btn-secondary", "btn-tertiary", "btn-ghost", "btn-sm", "btn-md", "btn-lg"];
+
+// None of these internals rendered a 4.0.0 variant hook before item 337, so gaining one would put
+// the library btn-base sizing and the client cu-button-group rules on them.
+const expectNoLegacyVariantHooks = (container: HTMLElement) => {
+  container.querySelectorAll(".nxs-btn").forEach((element) => {
+    LEGACY_VARIANT_HOOKS.forEach((hook) => expect(element).not.toHaveClass(hook));
+  });
+};
+
 describe("library buttons render the nxs-btn family beside their legacy classes", () => {
   it("SubmitButton is a primary submit that keeps btn-main and btn-submit", async () => {
     const { container } = render(
@@ -70,7 +83,7 @@ describe("library buttons render the nxs-btn family beside their legacy classes"
   it("SubmitButton keeps a caller className in place of btn-submit and honors isDisable", () => {
     render(<SubmitButton label="Save" className="form-submit-btn" isDisable />);
     const button = screen.getByRole("button", { name: "Save" });
-    expect(button.className).toBe("btn-base btn-primary nxs-btn nxs-btn-primary btn-main form-submit-btn");
+    expect(button.className).toBe("nxs-btn nxs-btn-primary btn-main form-submit-btn");
     expect(button).toBeDisabled();
   });
 
@@ -78,7 +91,7 @@ describe("library buttons render the nxs-btn family beside their legacy classes"
     const onClick = jest.fn();
     const { container } = render(<ButtonCancel label="Cancel" onClick={onClick} className="extra" />);
     const button = screen.getByRole("button", { name: "Cancel" });
-    expect(button).toHaveClass("nxs-btn", "nxs-btn-secondary", "btn-main", "btn-cancel", "extra");
+    expect(button.className).toBe("nxs-btn nxs-btn-secondary btn-main btn-cancel extra");
     expectNative(button);
     fireEvent.click(button);
     expect(onClick).toHaveBeenCalledTimes(1);
@@ -96,8 +109,10 @@ describe("library buttons render the nxs-btn family beside their legacy classes"
     const { container } = render(<CTA cta={cta} onClick={onClick} />);
     const button = screen.getByRole("button", { name: "Start now" });
     expect(button).toHaveClass("nxs-btn", "nxs-btn-primary", "nxs-btn-large", "btn-main", "btn-cta");
+    expect(button.className).toBe("nxs-btn nxs-btn-primary nxs-btn-large btn-main btn-cta");
     fireEvent.click(button);
-    expect(onClick).toHaveBeenCalledWith(cta);
+    // The 4.x contract: CTA hands its onClick the native click event, on both branches.
+    expect(onClick).toHaveBeenCalledWith(expect.objectContaining({ type: "click" }));
     await axeClean(container);
   });
 
@@ -112,7 +127,12 @@ describe("library buttons render the nxs-btn family beside their legacy classes"
     const { container, rerender } = render(
       <CTA cta={{ uid: "a", name: "a", label: "Open", icon: "eye" }} onClick={noop} />
     );
-    expect(screen.getByRole("button", { name: "Open" })).toHaveClass("nxs-btn-primary", "nxs-btn-large", "btn-cta");
+    const onClick = jest.fn();
+    rerender(<CTA cta={{ uid: "a", name: "a", label: "Open", icon: "eye" }} onClick={onClick} />);
+    const iconButton = screen.getByRole("button", { name: "Open" });
+    expect(iconButton).toHaveClass("nxs-btn-primary", "nxs-btn-large", "btn-cta");
+    fireEvent.click(iconButton);
+    expect(onClick).toHaveBeenCalledWith(expect.objectContaining({ type: "click" }));
     rerender(<CTA cta={{ uid: "a", name: "a", label: "Open" }} viewAsPreview />);
     // The preview renders a div so it can sit inside another control without nesting buttons.
     expect(container.querySelector("div.nxs-btn.btn-cta")).not.toBeNull();
@@ -262,6 +282,72 @@ describe("library buttons render the nxs-btn family beside their legacy classes"
 
 // Renders every surface once more as one tree so a regression that only shows when the buttons
 // sit together (duplicate ids, an unnamed control) is caught too.
+describe("the template buttons item 337 moved in its repair pass", () => {
+  it("Dialog close is an icon only tertiary square that keeps btn-dialog btn-cancel", async () => {
+    const onDialogClose = jest.fn();
+    const { container } = render(
+      <Dialog onDialogClose={onDialogClose} header={{ heading: "Settings" }}>
+        <p>Body</p>
+      </Dialog>
+    );
+    const close = screen.getByRole("button", { name: "Close" });
+    expect(close.className).toBe("nxs-btn nxs-btn-tertiary nxs-btn-icon btn-dialog btn-cancel");
+    expectNative(close);
+    fireEvent.click(close);
+    expect(onDialogClose).toHaveBeenCalledTimes(1);
+    await axeClean(container);
+  });
+
+  it("Form preview is a secondary nxs-btn that keeps btn-main and calls onViewPreview", async () => {
+    const onViewPreview = jest.fn();
+    const { container } = render(
+      <Form
+        formId="preview-form"
+        initialValues={{ title: "Hello" }}
+        labels={{ title: "Title" }}
+        onSubmit={noop}
+        onCancel={noop}
+        onViewPreview={onViewPreview}
+        previewLabel="Preview"
+      />
+    );
+    const preview = screen.getByRole("button", { name: "Preview" });
+    expect(preview.className).toBe("btn-icon nxs-btn nxs-btn-secondary btn-main");
+    fireEvent.click(preview);
+    expect(onViewPreview).toHaveBeenCalled();
+    expectNoLegacyVariantHooks(container);
+    await axeClean(container);
+  });
+});
+
+describe("no internal button gains a 4.0.0 variant hook", () => {
+  it("renders only nxs-btn classes beside each component legacy hooks", () => {
+    const events = [calendarEvent("1", "Standup"), calendarEvent("2", "Review")];
+    const data = [
+      { uid: "card", type: "card", name: "Card" },
+      { uid: "cash", type: "cash", name: "Cash" },
+    ];
+    const { container } = render(
+      <div>
+        <SubmitButton label="Save" />
+        <CTA cta={{ uid: "go", name: "go", label: "start now" }} onClick={noop} />
+        <CTA cta={{ uid: "a", name: "a", label: "Open", icon: "eye" }} onClick={noop} />
+        <UploadFile input={{ name: "logo" }} label="Logo" value="/logo.png" onSelect={noop} />
+        <PasswordChecker ease="easy" tips={["Add a number"]} submit={noop} />
+        <ShowAuthTips onSubmit={noop} />
+        <CopyButton data="https://example.com" />
+        <GoBackButton onClick={noop} />
+        <AuthField name="password" value="" onChange={noop} placeholder="Password" />
+        <CalendarEventList events={events} event={events[1]} onEventClick={noop} />
+        <CancelDialog label="Discard" onConfirmClick={noop} onDialogClose={noop} />
+        <PaymentMethods data={data} active={data[0]} onClick={noop} />
+      </div>
+    );
+    expect(container.querySelectorAll(".nxs-btn").length).toBeGreaterThanOrEqual(16);
+    expectNoLegacyVariantHooks(container);
+  });
+});
+
 describe("library button surfaces together", () => {
   it("have no axe violations side by side", async () => {
     const surfaces: ReactElement[] = [
@@ -271,6 +357,7 @@ describe("library button surfaces together", () => {
       <ConfirmDialog key="confirm" onConfirm={noop} onCancel={noop} />,
     ];
     const { container } = render(<div>{surfaces}</div>);
+    expectNoLegacyVariantHooks(container);
     await axeClean(container);
   });
 });

@@ -2,6 +2,7 @@ import { Hero } from "@nxs-molecules";
 import { Button, Icon } from "@nxs-atoms";
 import type { PaymentMethodsProps, PaymentType } from "nxs-card";
 import { useState } from "react";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 const PaymentMethods: React.FC<PaymentMethodsProps> = ({ data, onClick, heading, errorMessage }) => {
   const [activeType, setActive] = useState<PaymentType>();
@@ -19,8 +20,11 @@ const PaymentMethods: React.FC<PaymentMethodsProps> = ({ data, onClick, heading,
             337); btn-main, btn-cta and btn-payment stay beside them until 2026-11 item 339. */}
         {data.map((d: PaymentType) => (
           <Button
-            variant={activeType && activeType?.uid === d.uid ? "primary" : "secondary"}
-            className={activeType && activeType?.uid === d.uid ? "btn-main btn-cta" : "btn-main btn-payment"}
+            className={
+              activeType && activeType?.uid === d.uid
+                ? buildNxsButtonClass({ variant: "primary", className: "btn-main btn-cta" })
+                : buildNxsButtonClass({ variant: "secondary", className: "btn-main btn-payment" })
+            }
             key={d.uid}
             onClick={() => handleClick(d)}
           >

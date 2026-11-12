@@ -17,6 +17,11 @@ import type { OnchangeProps } from "custom-props";
 import { ErrorMessage } from "@nxs-atoms";
 import { scrollToError } from "@nxs-utils/app/scrollToElement";
 import { useScroll } from "@nxs-utils/hooks/useScroll";
+import { buildNxsButtonClass } from "../../@types/Variant";
+
+// The preview control is a secondary nxs-btn beside Cancel (2026-11 item 337); the legacy btn-main
+// stays beside it until 2026-11 item 339 because the client still styles it.
+const PREVIEW_BUTTON_CLASS = buildNxsButtonClass({ variant: "secondary", className: "btn-main" });
 
 // ── Entries handle ──
 // FormProps.entriesRef and FormProps.onEntriesChange. Both are opt in: a form passing neither
@@ -441,7 +446,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
           {onViewPreview && (
             <IconButton
               icon={{ icon: submitIcon || "eye", label: previewLabel }}
-              className="btn-main"
+              className={PREVIEW_BUTTON_CLASS}
               onClick={handleViewPreview}
             />
           )}

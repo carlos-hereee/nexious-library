@@ -4,6 +4,7 @@ import { Hero } from "@nxs-molecules";
 import type { UploadFileProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
 import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
   const { selectLabel, label, hideLabels, onSelect, className, value, formMessage, input, error } = props;
@@ -67,11 +68,15 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         {/* Choosing a file is the neutral action and removing it the destructive one, on the nxs-btn
             family (2026-11 item 337); the legacy btn-main and btn-cancel classes stay beside them until
             2026-11 item 339 because the client still styles them. */}
-        <Button variant="secondary" className="btn-main" onClick={imageClick} isDisabled={isDisabled}>
+        <Button
+          className={buildNxsButtonClass({ variant: "secondary", className: "btn-main" })}
+          onClick={imageClick} isDisabled={isDisabled}>
           {selectLabel || "Choose a file"}
         </Button>
         {previewImage && (
-          <Button variant="danger" className="btn-main btn-cancel hide-on-mobile" onClick={handleRemoveImage}>
+          <Button
+            className={buildNxsButtonClass({ variant: "danger", className: "btn-main btn-cancel hide-on-mobile" })}
+            onClick={handleRemoveImage}>
             Remove File
           </Button>
         )}
@@ -80,10 +85,8 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         <span>Image Preview</span>
         {previewImage && <Button
             label="x"
-            variant="danger"
-            size="small"
             onClick={handleRemoveImage}
-            className="btn-cancel preview-cancel"
+            className={buildNxsButtonClass({ variant: "danger", size: "small", className: "btn-cancel preview-cancel" })}
           />}
         <Hero
           hero={{ url: previewImage, alt: `${name} image value` }}

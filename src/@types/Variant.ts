@@ -99,3 +99,22 @@ export const buildControlClass = (parts: {
   // undefined rather than "" so React omits the attribute entirely on an unstyled control.
   return classes.length ? classes.join(" ") : undefined;
 };
+
+/**
+ * Builds ONLY the nxs-btn classes for a variant and an optional size, followed by the caller's
+ * className. It is for the library's own internal buttons (ButtonCancel, SubmitButton, CTA, the
+ * dialogs and the rest moved in 2026-11 item 337), which pass the result to Button or IconButton
+ * as className with no `variant` prop.
+ *
+ * Why not `variant` on Button: buildControlClass also emits the 4.0.0 btn-base, btn-<variant> and
+ * btn-<size> hooks, and none of these internals ever rendered them. Adding them would pull the
+ * library's btn-base sizing and the client's `.cu-button-group > .btn-secondary` rules onto
+ * controls the client styles today, which the compatibility rule forbids: an existing export keeps
+ * the classes it had and only gains nxs- classes beside them. Those hooks retire with item 339.
+ */
+export const buildNxsButtonClass = (parts: { variant: Variant; size?: Size; className?: string }): string => {
+  const { variant, size, className } = parts;
+  return [NXS_BUTTON_BASE_CLASS, NXS_VARIANT_CLASS[variant], size ? NXS_SIZE_CLASS[size] : "", className || ""]
+    .filter(Boolean)
+    .join(" ");
+};

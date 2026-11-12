@@ -2,6 +2,7 @@ import type { DialogProps } from "nxs-card";
 import { Button, Icon } from "@nxs-atoms";
 import { IconButton } from "@nxs-molecules";
 import Dialog from "../../template/Dialog";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 const CancelDialog = (props: DialogProps) => {
   const { onDialogClose, className, onClick, label, onConfirmClick, toggleShow, toggleLabel } = props;
@@ -17,14 +18,18 @@ const CancelDialog = (props: DialogProps) => {
               (secondary), on the nxs-btn family (2026-11 item 337); the legacy classes stay beside them
               until 2026-11 item 339 because the client still styles them. */}
           <Button
-            variant="danger"
-            className={className ? `btn-main btn-cancel ${className}` : "btn-main btn-cancel"}
+            className={buildNxsButtonClass({
+              variant: "danger",
+              className: className ? `btn-main btn-cancel ${className}` : "btn-main btn-cancel",
+            })}
             onClick={() => onConfirmClick && onConfirmClick()}
           >
             <Icon icon="cancel" />
             {label || "Cancel"}
           </Button>
-          <Button variant="secondary" className="btn-main" onClick={() => onDialogClose && onDialogClose()}>
+          <Button
+            className={buildNxsButtonClass({ variant: "secondary", className: "btn-main" })}
+            onClick={() => onDialogClose && onDialogClose()}>
             Cancel
           </Button>
         </div>

@@ -1,5 +1,6 @@
 import { Button, ErrorMessage } from "@nxs-atoms/index";
 import type { ICalendarEventDetails } from "nxs-calendar";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 const CalendarEventList: React.FC<ICalendarEventDetails> = ({ events, event, onEventClick, isDev }) => {
   if (!events)
@@ -17,8 +18,11 @@ const CalendarEventList: React.FC<ICalendarEventDetails> = ({ events, event, onE
       {events.map((e) => (
         <Button
           key={e.uid}
-          variant={event && event.uid === e.uid ? "primary" : "secondary"}
-          className={event && event.uid === e.uid ? "btn-active btn-main highlight" : "btn-main highlight"}
+          className={
+            event && event.uid === e.uid
+              ? buildNxsButtonClass({ variant: "primary", className: "btn-active btn-main highlight" })
+              : buildNxsButtonClass({ variant: "secondary", className: "btn-main highlight" })
+          }
           title={e.name}
           label={e.name}
           onClick={() => onEventClick && onEventClick(e)}

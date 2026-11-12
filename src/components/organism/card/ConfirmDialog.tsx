@@ -1,5 +1,6 @@
 import Button from "@nxs-atoms/buttons/Button";
 import Form from "@nxs-template/Form";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 interface ConfirmDialogProps {
   onConfirm: () => void;
@@ -47,9 +48,13 @@ const ConfirmDialog = (props: ConfirmDialogProps) => {
           {/* Going back is the neutral action and confirming the destructive one, on the nxs-btn family
               (2026-11 item 337); the legacy classes stay beside them until 2026-11 item 339. */}
           {onCancel && (
-            <Button variant="secondary" className="btn-main highlight" label={cancelLabel} onClick={onCancel} />
+            <Button
+              className={buildNxsButtonClass({ variant: "secondary", className: "btn-main highlight" })}
+              label={cancelLabel} onClick={onCancel} />
           )}
-          <Button variant="danger" className="btn-main btn-danger highlight" label={confirmLabel} onClick={onConfirm} />
+          <Button
+            className={buildNxsButtonClass({ variant: "danger", className: "btn-main btn-danger highlight" })}
+            label={confirmLabel} onClick={onConfirm} />
         </>
       )}
     </div>

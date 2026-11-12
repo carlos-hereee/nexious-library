@@ -61,14 +61,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 #### Changed
 
-- **The library's own buttons render `Button` variants.** SubmitButton (primary), ButtonCancel
+- **The library's own buttons render the `nxs-btn` family.** SubmitButton (primary), ButtonCancel
   (secondary), CTA (primary large), CartCancelRow, UploadFile, PasswordChecker, ShowAuthTips,
   CopyButton, GoBackButton, AuthField's password toggle, CalendarEventList, CloseHeader,
-  ConfirmDialog, CancelDialog and PaymentMethods now carry the `nxs-btn` classes, so a library
-  Form's submit and cancel, a confirm dialog and a call to action take the platform's button look.
-  Each keeps its old class (`btn-main`, `btn-cancel`, `btn-cta`, `btn-danger`, `btn-submit`,
-  `btn-active`, `btn-payment`) beside the new ones, so a consumer's rules on those still match.
-  CTA's `onClick` now receives the clicked `cta` rather than the mouse event.
+  ConfirmDialog, CancelDialog, PaymentMethods, Dialog's close button and Form's preview button now
+  carry the `nxs-btn` classes, so a library Form's submit and cancel, a confirm dialog and a call to
+  action take the platform's button look. Each keeps exactly the classes it had (`btn-main`,
+  `btn-cancel`, `btn-cta`, `btn-danger`, `btn-submit`, `btn-active`, `btn-payment`,
+  `btn-dialog`) beside the new ones and gains none of the 4.0.0 `btn-base` or `btn-<variant>`
+  classes, so a consumer's rules on those match exactly what they matched before. CTA still hands
+  its `onClick` the click event on both its label and its icon branch.
 
 - Month view weekday headers print three letters (Sun, Mon) with the full name for screen readers,
   so no column truncates; the gap under them is halved; day numbers sit on one line at the top of

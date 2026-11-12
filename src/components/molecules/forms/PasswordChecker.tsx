@@ -1,4 +1,5 @@
 import { Button, Icon } from "@nxs-atoms";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 type PasswordCheckerProps = {
   ease: string;
@@ -21,11 +22,13 @@ const PasswordChecker: React.FC<PasswordCheckerProps> = (props) => {
       <div className="flex-center m-tb">
         {/* Continue anyway is the way past the advice (secondary) and Try again resubmits (primary), on
             the nxs-btn family (2026-11 item 337); the legacy classes stay beside them until item 339. */}
-        <Button variant="secondary" className="btn-main btn-cancel" onClick={() => submit && submit(undefined)}>
+        <Button
+          className={buildNxsButtonClass({ variant: "secondary", className: "btn-main btn-cancel" })}
+          onClick={() => submit && submit(undefined)}>
           <Icon icon="submit" />
           Continue anyway
         </Button>
-        <Button type="submit" variant="primary" className="btn-main">
+        <Button type="submit" className={buildNxsButtonClass({ variant: "primary", className: "btn-main" })}>
           <Icon icon="submit" />
           Try again
         </Button>

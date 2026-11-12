@@ -2,6 +2,7 @@ import { useTips } from "@nxs-utils/hooks/useTips";
 import { Icon } from "@nxs-atoms";
 import Button from "@nxs-atoms/buttons/Button";
 import type { ButtonProps } from "nxs-button";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 const ShowAuthTips: React.FC<ButtonProps> = (props) => {
   const { onSubmit } = props;
@@ -19,7 +20,9 @@ const ShowAuthTips: React.FC<ButtonProps> = (props) => {
       </ol>
       <div className="flex-center m-tb">
         {/* The secondary nxs-btn (2026-11 item 337); the legacy classes stay beside it until item 339. */}
-        <Button variant="secondary" className="btn-main btn-cancel" onClick={() => onSubmit && onSubmit()}>
+        <Button
+          className={buildNxsButtonClass({ variant: "secondary", className: "btn-main btn-cancel" })}
+          onClick={() => onSubmit && onSubmit()}>
           <Icon icon="submit" />
           Continue anyway
         </Button>

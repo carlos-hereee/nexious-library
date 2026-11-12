@@ -3,11 +3,14 @@ import CancelDialog from "@nxs-organism/card/CancelDialog";
 import type { ButtonProps } from "nxs-button";
 import { useEffect, useState } from "react";
 import Button from "./Button";
+import { buildNxsButtonClass } from "../../../@types/Variant";
 
 // Cancel is the neutral way out, so it renders the secondary nxs-btn (2026-11 item 337). The legacy
 // btn-main and btn-cancel classes stay beside it because the client still styles them; they go with
 // 2026-11 item 339.
 const CANCEL_CLASS = "btn-main btn-cancel";
+const cancelClass = (className?: string) =>
+  buildNxsButtonClass({ variant: "secondary", className: className ? `${CANCEL_CLASS} ${className}` : CANCEL_CLASS });
 
 const ButtonCancel: React.FC<ButtonProps> = (props) => {
   const { onClick, label, className, confirmSubmit, onSubmit, toggleLabel, hideIcon } = props;
@@ -43,8 +46,7 @@ const ButtonCancel: React.FC<ButtonProps> = (props) => {
   if (confirmSubmit) {
     return (
       <Button
-        variant="secondary"
-        className={className ? `${CANCEL_CLASS} ${className}` : CANCEL_CLASS}
+        className={cancelClass(className)}
         onClick={() => setShow(true)}
       >
         {!hideIcon && <Icon icon="cancel" />}
@@ -54,8 +56,7 @@ const ButtonCancel: React.FC<ButtonProps> = (props) => {
   }
   return (
     <Button
-      variant="secondary"
-      className={className ? `${CANCEL_CLASS} ${className}` : CANCEL_CLASS}
+      className={cancelClass(className)}
       onClick={() => onClick && onClick()}
     >
       {!hideIcon && <Icon icon="cancel" />}
