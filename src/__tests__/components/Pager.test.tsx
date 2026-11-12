@@ -9,7 +9,7 @@ expect.extend(toHaveNoViolations);
 // Pager and LoadOlderButton (2026-11 item 337, Phase 5), ported from the client's
 // components/list/Pager.tsx and LoadOlderButton.tsx. Pinned: nothing renders without a second
 // page or more history, every string comes from props, the ends disable, the status is polite,
-// the loading state, the nxs classes, native button tab stops and jest-axe.
+// the loading state, the nxs classes, native button tab stops for both, and jest-axe.
 
 const AXE_OPTIONS = { rules: { region: { enabled: false } } };
 const formatStatus = (page: number, total: number) => `Page ${page} of ${total}`;
@@ -93,6 +93,20 @@ describe("LoadOlderButton", () => {
     const button = screen.getByRole("button", { name: "Loading" });
     expect(button).toBeDisabled();
     expect(button).toHaveAttribute("aria-busy", "true");
+  });
+
+  it("is one native tab stop that leaves the tab order only while a page loads", () => {
+    const { rerender } = render(<LoadOlderButton hasMore isLoading={false} onLoad={jest.fn()} label="Load older" loadingLabel="Loading" />);
+    const button = screen.getByRole("button", { name: "Load older" });
+    // Enter and Space activation come from the native button element, so the contract to hold is
+    // a real button of type button with a default tab stop that keyboard focus can land on.
+    expect(button.tagName).toBe("BUTTON");
+    expect(button).toHaveAttribute("type", "button");
+    expect(button.tabIndex).toBe(0);
+    button.focus();
+    expect(button).toHaveFocus();
+    rerender(<LoadOlderButton hasMore isLoading onLoad={jest.fn()} label="Load older" loadingLabel="Loading" />);
+    expect(screen.getByRole("button", { name: "Loading" })).toBeDisabled();
   });
 
   it("has no axe violations in both states", async () => {
