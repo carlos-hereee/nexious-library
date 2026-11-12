@@ -249,6 +249,9 @@
 
   // ── Sizing ──────────────────────────────────────────────────────────────────────
   --max-card-width: 600px;
+  // One width for every navigation rail (SectionedRail, 2026-11 item 337), the client's resolved
+  // --cu-rail-width in vars.css, so a standalone or Storybook rail is as wide as the platform's.
+  --rail-width: 240px;
 }
 
 // ── Dark theme ──────────────────────────────────────────────────────────────────

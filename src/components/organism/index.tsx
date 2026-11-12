@@ -3,6 +3,11 @@ export { default as Navbar } from "@nxs-organism/navigation/Navbar";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
 export { default as FormNavigation } from "@nxs-organism/navigation/FormNavigation";
 export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navigation";
+// the sectioned rail and the compact viewport's tab bar and More sheet (2026-11 item 337)
+export { default as SectionedRail } from "@nxs-organism/navigation/SectionedRail";
+export { default as MobileTabBar } from "@nxs-organism/navigation/MobileTabBar";
+export { default as MoreSheet } from "@nxs-organism/navigation/MoreSheet";
+export type { SectionedRailProps, MobileTabBarProps, MobileTabBarMore, MoreSheetProps } from "nxs-navigation";
 // table (2026-11 item 337): the columns and rows Table, and its parts for a caller composing its own
 export { default as Table } from "@nxs-organism/table/Table";
 export { default as TableHeader } from "@nxs-organism/table/TableHeader";

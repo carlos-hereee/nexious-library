@@ -122,6 +122,27 @@ export type {
 // The "Studying: <item> / Change" bar, with room for the caller's own controls.
 export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
 export type { ActiveSelectionBarProps } from "nxs-navigation";
+// The navigation pieces ported from the client (2026-11 item 337, Phase 4): the sectioned side rail
+// (a roving tablist or a nav), the pill tablist and its link twin, and the compact viewport's tab
+// bar and More sheet. Every string and glyph is passed in; links arrive through linkComponent.
+export { default as SectionedRail } from "@nxs-organism/navigation/SectionedRail";
+export { default as PillTabStrip } from "@nxs-molecules/navigation/PillTabStrip";
+export { default as PillNav } from "@nxs-molecules/navigation/PillNav";
+export { default as MobileTabBar } from "@nxs-organism/navigation/MobileTabBar";
+export { default as MoreSheet } from "@nxs-organism/navigation/MoreSheet";
+export type {
+  NavItem,
+  NavSection,
+  NavPingProps,
+  NavLinkComponent,
+  RailSemantics,
+  SectionedRailProps,
+  PillTabStripProps,
+  PillNavProps,
+  MobileTabBarProps,
+  MobileTabBarMore,
+  MoreSheetProps,
+} from "nxs-navigation";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks, lets consumers build custom form UIs using the same validation and state logic

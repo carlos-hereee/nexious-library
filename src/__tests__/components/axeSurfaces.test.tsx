@@ -19,6 +19,9 @@ import ActiveSelectionBar from "@nxs-molecules/navigation/ActiveSelectionBar";
 import Table from "@nxs-organism/table/Table";
 import Select from "@nxs-molecules/forms/Select";
 import SearchBar from "@nxs-molecules/forms/SearchBar";
+import SectionedRail from "@nxs-organism/navigation/SectionedRail";
+import MobileTabBar from "@nxs-organism/navigation/MobileTabBar";
+import PillNav from "@nxs-molecules/navigation/PillNav";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -493,5 +496,47 @@ describe("axe: Table, Select and SearchBar (2026-11 item 337)", () => {
 
   it("a SearchBar with a result count has no violations in either theme", async () => {
     await checkBothThemes(<SearchBar name="orders-search" label="Search orders" value="" onChange={() => {}} resultCount={2} />);
+  });
+});
+
+// The navigation pieces (2026-11 item 337, Phase 4). No element ids here: checkBothThemes renders
+// each tree twice into one document, and a tab's aria-controls would then name a duplicated id.
+// The MoreSheet portals to the body, so its dialog is checked open in MobileTabBar.test.tsx.
+describe("axe: SectionedRail, PillNav and MobileTabBar (2026-11 item 337)", () => {
+  const railSections = [
+    { id: "overview", label: "Overview", items: [{ id: "home", label: "Home" }, { id: "inbox", label: "Inbox" }] },
+    { id: "setup", label: "Setup", items: [{ id: "team", label: "Team", href: "/team" }] },
+  ];
+
+  it("a tablist rail with nothing selected has no violations in either theme", async () => {
+    await checkBothThemes(<SectionedRail sections={railSections} ariaLabel="Dashboard" activeId={null} />);
+  });
+
+  it("a nav rail with a current item and a footer has no violations in either theme", async () => {
+    await checkBothThemes(
+      <SectionedRail sections={railSections} semantics="nav" ariaLabel="Sections" activeId="team" footer={<p>Footer</p>} />
+    );
+  });
+
+  // PillTabStrip is checked with its panels in PillTabStrip.test.tsx: its aria-controls is
+  // required, and a panel here would be a duplicated id across the two renders.
+  it("a pill nav has no violations in either theme", async () => {
+    await checkBothThemes(
+      <PillNav items={[{ id: "events", label: "Events", href: "/events" }]} activeId="events" ariaLabel="Arena" />
+    );
+  });
+
+  it("a tab bar with More has no violations in either theme", async () => {
+    await checkBothThemes(
+      <MobileTabBar
+        tabs={[
+          { id: "home", label: "Home" },
+          { id: "store", label: "Store" },
+        ]}
+        activeId="home"
+        ariaLabel="Dashboard"
+        more={{ label: "More", isOpen: false, sheetId: "axe-more", onToggle: () => {} }}
+      />
+    );
   });
 });

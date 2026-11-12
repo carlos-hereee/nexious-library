@@ -88,7 +88,9 @@ export { default as ListItem } from "@nxs-molecules/navigation/ListItem";
 export { default as ThemeMenu } from "@nxs-molecules/navigation/ThemeMenu";
 export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress";
 export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
-export type { StepProgressProps, ActiveSelectionBarProps } from "nxs-navigation";
+export { default as PillTabStrip } from "@nxs-molecules/navigation/PillTabStrip";
+export { default as PillNav } from "@nxs-molecules/navigation/PillNav";
+export type { StepProgressProps, ActiveSelectionBarProps, PillTabStripProps, PillNavProps } from "nxs-navigation";
 
 // post
 export { default as Post } from "@nxs-molecules/post/Post";

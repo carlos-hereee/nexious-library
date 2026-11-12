@@ -83,6 +83,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   results the search leaves in a polite status region; `formatResultCount` localizes the sentence
   ("1 result" and "4 results" in English by default).
 
+- **Navigation pieces: `SectionedRail`, `PillTabStrip`, `PillNav`, `MobileTabBar` and
+  `MoreSheet`.** Ported from the platform client's dashboard rail, pill tabs, plugin tab strip and
+  compact viewport nav, with every string and glyph passed in. `SectionedRail` draws sections
+  under overlines either as ONE vertical roving tablist (`semantics="tablist"`, the default) or as
+  a nav of links with `aria-current` (`semantics="nav"`), with `activeId`, a separate `focusId`
+  for the tab stop, `itemElementId`, `panelId`, `onKeyDown`, a `renderPing` slot for attention
+  badges, a `footer` and a `linkComponent` that receives `to`. `PillTabStrip` is the pill tablist
+  that swaps panels; `PillNav` is the same pills as route links, kept apart from it.
+  `MobileTabBar` is the bottom tab bar with a More button outside its tablist and its height
+  published on the root (`heightProperty`); `MoreSheet` is the modal sheet behind More. Styled as
+  `nxs-rail`, `nxs-pill-tabs`, `nxs-pill-nav`, `nxs-tabbar` and `nxs-more`. A `--rail-width` token
+  (240px) is added. `NavItem`, `NavSection`, `NavPingProps`, `NavLinkComponent`, `RailSemantics`,
+  `SectionedRailProps`, `PillTabStripProps`, `PillNavProps`, `MobileTabBarProps`,
+  `MobileTabBarMore` and `MoreSheetProps` are exported. Part of the 5.0.0 major release (2026-11
+  item 337).
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -115,6 +131,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`Select` with a visually hidden label is named by the label, not the field name.** With
   `hideLabels` and a `label`, the control's fallback `aria-label` is now the label text; with no
   label at all it is still `name`, and with `labelId` there is no `aria-label`.
+
+- **The navigation pieces keep one tab stop and walk with the arrow keys.** `SectionedRail`,
+  `PillTabStrip` and `MobileTabBar` give exactly one item `tabIndex` 0 (`focusId`, then the active
+  item, then the first, so a rail with nothing selected stays reachable), move focus and selection
+  with either arrow axis, Home and End, and walk a rail across its sections because the overlines
+  are plain paragraphs inside one tablist. More sits outside the tab bar's tablist so the arrows
+  never land on it. `PillNav` and a `nav` rail mark the current link with `aria-current="page"`.
+  `MoreSheet` is a named modal that traps focus, closes on Escape and the scrim, locks the page and
+  returns focus to More. Badges render inside each item after its label, so the name composes.
+  Every item keeps a 44px target (48px in the tab bar and sheet).
 
 #### Changed
 
