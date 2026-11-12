@@ -263,6 +263,11 @@ export interface SearchBarProps {
   labelClassName?: string;
   debounceMs?: number;
   isDisabled?: boolean;
+  // How many results the current search leaves, announced in a polite status region when set.
+  resultCount?: number;
+  // Turns resultCount into the announced sentence. Defaults to English ("1 result", "4 results");
+  // pass a localized formatter.
+  formatResultCount?: (count: number) => string;
 }
 export type FieldInitialValueProps = {
   value: FormInitialValue | { [key: string]: FormInitialValue }[];
@@ -475,7 +480,24 @@ export interface SelectProp {
   // Placeholder shown as the disabled first option when nothing is selected.
   // Defaults to "Choose Selection"; pass a localized string to avoid hardcoded English.
   placeholder?: string;
+  // ── 2026-11 item 337 additions, all optional so every 4.x call keeps its behavior ──
+  // Selects by option VALUE. When set, the control is driven by it and `active` is ignored; when
+  // absent, `active` works exactly as before (the displayed text in a disabled first option).
+  value?: string;
+  // Option groups rendered as optgroup after `list`, for a choice that falls into named sets.
+  groups?: SelectOptionGroup[];
+  // The id of a label the caller already renders. The control is then named by it through
+  // aria-labelledby and drops its aria-label fallback.
+  labelId?: string;
+  // The clear button's accessible name. Defaults to "Clear selection"; pass a localized string.
+  clearLabel?: string;
   onChange?: (key: string) => void;
+}
+/** One optgroup of a Select: its visible group label and the options under it. */
+export interface SelectOptionGroup {
+  label: string;
+  options: OptionProps[];
+  uid?: string;
 }
 export type ValidateFormStatus = "error" | "preview" | "validated" | "green" | null;
 export type ValidateProps = {

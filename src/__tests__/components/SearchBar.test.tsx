@@ -148,4 +148,72 @@ describe("SearchBar", () => {
     expect(screen.getByRole("search", { name: LABEL })).toBeTruthy();
     expect(await axe(container)).toHaveNoViolations();
   });
+
+  // ── 2026-11 item 337: canonical classes and the result count ──
+  it("renders nxs-search and nxs-search-input beside the caller's classes", () => {
+    render(
+      <SearchBar
+        name="search"
+        label={LABEL}
+        value=""
+        onChange={jest.fn()}
+        className="orders-search"
+        inputClassName="cu-input orders-search-input"
+      />,
+    );
+    expect(screen.getByRole("search")).toHaveAttribute("class", "nxs-search orders-search");
+    expect(box()).toHaveAttribute("class", "nxs-search-input cu-input orders-search-input");
+  });
+
+  it("renders only the canonical classes when the caller passes none", () => {
+    renderBar();
+    expect(screen.getByRole("search")).toHaveAttribute("class", "nxs-search");
+    expect(box()).toHaveAttribute("class", "nxs-search-input");
+  });
+
+  it("renders no status region unless the caller counts", () => {
+    renderBar();
+    expect(screen.queryByRole("status")).not.toBeInTheDocument();
+  });
+
+  it("announces resultCount in a polite status region, in English by default", () => {
+    const onChange = jest.fn();
+    const { rerender } = render(<SearchBar name="search" label={LABEL} value="" onChange={onChange} resultCount={1} />);
+    const status = screen.getByRole("status");
+    expect(status).toHaveAttribute("aria-live", "polite");
+    expect(status).toHaveClass("sr-only");
+    expect(status).toHaveTextContent("1 result");
+
+    rerender(<SearchBar name="search" label={LABEL} value="" onChange={onChange} resultCount={4} />);
+    expect(screen.getByRole("status")).toHaveTextContent("4 results");
+  });
+
+  it("announces through the caller's formatter", () => {
+    render(
+      <SearchBar
+        name="search"
+        label={LABEL}
+        value=""
+        onChange={jest.fn()}
+        resultCount={0}
+        formatResultCount={(count) => `${count} resultados`}
+      />,
+    );
+    expect(screen.getByRole("status")).toHaveTextContent("0 resultados");
+  });
+
+  it("keeps the box the one keyboard stop: the status region takes no tabindex", () => {
+    render(<SearchBar name="search" label={LABEL} value="" onChange={jest.fn()} resultCount={2} />);
+    box().focus();
+    expect(box()).toHaveFocus();
+    expect(screen.getByRole("status")).not.toHaveAttribute("tabindex");
+  });
+
+  it("passes axe with a result count", async () => {
+    jest.useRealTimers();
+    const { container } = render(
+      <SearchBar name="search" label={LABEL} value="" onChange={jest.fn()} resultCount={3} className="orders-search" />,
+    );
+    expect(await axe(container)).toHaveNoViolations();
+  });
 });

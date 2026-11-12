@@ -4,11 +4,9 @@ import "./states-matrix.css";
 /**
  * Table surfaces after the Phase 4 fan-out.
  *
- * Rendered as bare markup on purpose, and that is itself the finding: the four table components
- * (Table, TableHeader, TableBody, TableFooter and the atoms under them) are commented out of
- * every barrel, so a consumer cannot import them without a deep path. Phase 4 tokenized the
- * ELEMENT-level reset, which is what actually reaches consumers today, so that is what this
- * reviews. Exporting the components is a public API decision for the owner, filed in TECH_DEBT.
+ * Rendered as bare markup on purpose: this reviews the ELEMENT level reset, which reaches every
+ * table a consumer writes by hand. The Table component and its parts are exported and have their
+ * own stories under Organisms/Table (2026-11 item 337).
  *
  * What to look for:
  * 1. Digits line up vertically in the numeric column. .cell-numeric sets tabular-nums and right

@@ -102,6 +102,23 @@ export type { CardGridProps, SelectCardProps } from "nxs-card";
 // One row of a list (lead, body, meta and actions slots), the nxs-list-row recipe (2026-11 item 337).
 export { default as ListRow } from "@nxs-molecules/card/ListRow";
 export type { ListRowProps } from "nxs-card";
+// The data table: columns, rows of node cells, one caption, aria-sort and a labelled scroll
+// region, the nxs-table recipe (2026-11 item 337). Its parts are exported for a caller composing
+// its own table.
+export { default as Table } from "@nxs-organism/table/Table";
+export { default as TableHeader } from "@nxs-organism/table/TableHeader";
+export { default as TableBody } from "@nxs-organism/table/TableBody";
+export { default as TableFooter } from "@nxs-organism/table/TableFooter";
+export type {
+  TableProps,
+  TableColumn,
+  TableRowData,
+  TableSortDirection,
+  TableAlign,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+} from "custom-props";
 // The "Studying: <item> / Change" bar, with room for the caller's own controls.
 export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
 export type { ActiveSelectionBarProps } from "nxs-navigation";
@@ -126,6 +143,7 @@ export type {
   PaginateFormProps,
   SearchBarProps,
   SelectProp,
+  SelectOptionGroup,
   UseFormValidationApi,
   UseValuesApi,
 } from "nxs-form";

@@ -1,28 +1,49 @@
-import TableCaption from "@nxs-atoms/table/TableCaption";
-import TableRow from "@nxs-molecules/table/TableRow";
-import type { PTableData } from "custom-props";
+import { columnCellClass, stackedCellLabel } from "@nxs-utils/helpers/tableCell";
+import type { TableBodyProps } from "custom-props";
 
-type TableBodyProp = {
-  data?: PTableData[];
-};
 /**
- * element is used in conjunction with the <thead> and <tfoot>
- * elements to specify each part of a table (body, header, footer).
- * @param span array for each section
- * @returns
+ * Component: TableBody
+ *
+ * One tr per row and one cell per column, in column order, so a row cannot render its cells out
+ * of step with the header. With no rows it renders the caller's emptyState in one cell that
+ * spans every column, because a message in no cell is invalid markup and reads as a broken grid.
  */
-const TableBody: React.FC<TableBodyProp> = ({ data }) => {
+const TableBody = ({ columns, rows, emptyState }: TableBodyProps) => {
+  if (rows.length === 0) {
+    return (
+      <tbody>
+        {emptyState ? (
+          <tr className="nxs-table-empty-row">
+            <td className="nxs-table-cell nxs-table-empty" colSpan={Math.max(columns.length, 1)}>
+              {emptyState}
+            </td>
+          </tr>
+        ) : null}
+      </tbody>
+    );
+  }
   return (
     <tbody>
-      {data && data.length > 0 ? (
-        // isHeader is deliberately NOT forwarded: it would turn a body cell into a th, and any
-        // caller that set it on body data today is getting a td and expecting one.
-        data.map((d) => <TableRow key={d.uid} value={d.value} className={d.className} />)
-      ) : (
-        <tr className="table-row">
-          <TableCaption value="No data available" />
+      {rows.map((row) => (
+        <tr key={row.id} className={row.className ? `nxs-table-row ${row.className}` : "nxs-table-row"}>
+          {columns.map((column) => {
+            const cellClass = columnCellClass(column, "nxs-table-cell");
+            const label = stackedCellLabel(column);
+            if (column.isRowHeader) {
+              return (
+                <th key={column.key} scope="row" className={cellClass} data-label={label}>
+                  {row.cells[column.key]}
+                </th>
+              );
+            }
+            return (
+              <td key={column.key} className={cellClass} data-label={label}>
+                {row.cells[column.key]}
+              </td>
+            );
+          })}
         </tr>
-      )}
+      ))}
     </tbody>
   );
 };

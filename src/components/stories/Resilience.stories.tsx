@@ -99,12 +99,12 @@ const longEntries: FieldEntryProps = {
   b: [field("day", UNBROKEN)],
 };
 
-const tableHeader = [
-  { uid: "h1", value: "Reference" },
-  { uid: "h2", value: "Amount" },
+const tableColumns = [
+  { key: "reference", header: "Reference" },
+  { key: "amount", header: "Amount", align: "end" as const },
 ];
 const rows = (count: number) =>
-  Array.from({ length: count }, (_, i) => ({ uid: `r${i}`, value: `Row ${i + 1}` }));
+  Array.from({ length: count }, (_, i) => ({ id: `r${i}`, cells: { reference: `Row ${i + 1}`, amount: "12.00" } }));
 
 const NAV_SHORT = ["Home", "Store", "Calendar", "More"];
 const NAV_LONG = ["Startseite", "Veranstaltungskalender", "Kundenbetreuung", "Einstellungen"];
@@ -194,12 +194,8 @@ const LongStrings: React.FC = () => (
       <Frame label="Post row, unbroken title (clips, has aria-label)" narrow>
         <PostRow post={longPost} onView={() => {}} />
       </Frame>
-      <Frame label="Table cell, unbroken token (scrolls in .table-scroll)" narrow>
-        <Table
-          headerData={{ title: "Payouts" }}
-          list={tableHeader}
-          bodyData={[{ uid: "b1", value: UNBROKEN }]}
-        />
+      <Frame label="Table cell, unbroken token (scrolls in .nxs-table-scroll)" narrow>
+        <Table caption="Payouts" columns={tableColumns} rows={[{ id: "b1", cells: { reference: UNBROKEN } }]} />
       </Frame>
       <Frame label="Empty state, compound heading" narrow>
         <EmptyState heading={COMPOUND} message={SENTENCE} actionLabel="Weiter" />
@@ -267,13 +263,12 @@ const RtlSpecimens: React.FC = () => (
     </Frame>
     <Frame label="Table: header and numeric column alignment">
       <Table
-        headerData={{ title: "المدفوعات" }}
-        list={[
-          { uid: "h1", value: "الوصف" },
-          { uid: "h2", value: "المبلغ" },
+        caption="المدفوعات"
+        columns={[
+          { key: "description", header: "الوصف" },
+          { key: "amount", header: "المبلغ", align: "end" },
         ]}
-        bodyData={[{ uid: "b1", value: "1,240.00", className: "cell-numeric" }]}
-        numericColumns={[1]}
+        rows={[{ id: "b1", cells: { description: "", amount: "1,240.00" } }]}
       />
     </Frame>
     <Frame label="Post card: byline order and read-more spacing">
@@ -351,17 +346,17 @@ const ZeroOneMany: React.FC = () => (
       <span className="sb-matrix-rowlabel">Table</span>
       <div className="sb-matrix-cell">
         <Frame label="no rows">
-          <Table headerData={{ title: "Payouts" }} list={tableHeader} bodyData={[]} />
+          <Table caption="Payouts" columns={tableColumns} rows={[]} emptyState="No payouts yet" />
         </Frame>
       </div>
       <div className="sb-matrix-cell">
         <Frame label="one row">
-          <Table headerData={{ title: "Payouts" }} list={tableHeader} bodyData={rows(1)} />
+          <Table caption="Payouts" columns={tableColumns} rows={rows(1)} />
         </Frame>
       </div>
       <div className="sb-matrix-cell">
         <Frame label="twenty four rows">
-          <Table headerData={{ title: "Payouts" }} list={tableHeader} bodyData={rows(24)} />
+          <Table caption="Payouts" columns={tableColumns} rows={rows(24)} />
         </Frame>
       </div>
 

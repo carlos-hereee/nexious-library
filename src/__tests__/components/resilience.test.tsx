@@ -272,34 +272,36 @@ describe("zero, one, many", () => {
     expect(container.querySelectorAll(".entry-rail-tile")).toHaveLength(24);
   });
 
-  // This render logs a React warning, and the warning is the point rather than a flaw in the
-  // test: TableBody puts the empty-state text in a <caption> inside a <tr>, which is invalid
-  // nesting, so the message lands in no cell and spans no column. Asserted as the text being
-  // PRESENT (which it is) rather than as the correct node, because the fix belongs to the table
-  // lane's files and a failing assertion here would leave the suite red for another owner's bug.
+  // The 4.x Table put its own "No data available" in a caption inside a tr, invalid nesting that
+  // spanned no column. The 2026-11 item 337 Table takes the message from the caller and puts it in
+  // one cell spanning every column, so this now asserts the real node rather than bare presence.
+  const tableColumns = [{ key: "reference", header: "Reference" }];
   it("tells the reader a table is empty instead of rendering a bare grid", () => {
-    render(<Table headerData={{ title: "Payouts" }} list={[{ uid: "h", value: "Reference" }]} bodyData={[]} />);
+    const { container } = render(
+      <Table caption="Payouts" columns={tableColumns} rows={[]} emptyState="No data available" />
+    );
 
-    expect(screen.getByText("No data available")).toBeInTheDocument();
+    const emptyCell = screen.getByText("No data available");
+    expect(emptyCell.tagName).toBe("TD");
+    expect(emptyCell).toHaveAttribute("colSpan", "1");
+    expect(container.querySelectorAll("tbody tr")).toHaveLength(1);
   });
 
   it("renders one row for one datum, with no filler and no divider left behind", () => {
     const { container } = render(
-      <Table headerData={{ title: "Payouts" }} list={[{ uid: "h", value: "Reference" }]} bodyData={[{ uid: "b", value: "one" }]} />
+      <Table caption="Payouts" columns={tableColumns} rows={[{ id: "b", cells: { reference: "one" } }]} />
     );
 
     expect(container.querySelectorAll("tbody tr")).toHaveLength(1);
   });
 
   it("keeps a long table inside its own scrollport so it cannot widen the page", () => {
-    const bodyData = Array.from({ length: 40 }, (_, index) => ({ uid: `r${index}`, value: `Row ${index + 1}` }));
-    const { container } = render(
-      <Table headerData={{ title: "Payouts" }} list={[{ uid: "h", value: "Reference" }]} bodyData={bodyData} />
-    );
+    const rows = Array.from({ length: 40 }, (_, index) => ({ id: `r${index}`, cells: { reference: `Row ${index + 1}` } }));
+    const { container } = render(<Table caption="Payouts" columns={tableColumns} rows={rows} />);
 
     expect(container.querySelectorAll("tbody tr")).toHaveLength(40);
     // The wrapper is the component's job, not the consumer's. Without it a wide table stretches
     // whatever grid or flex row holds it, which is the failure vars/reset/_table.scss documents.
-    expect(container.querySelector(".table-scroll")).toBeInTheDocument();
+    expect(container.querySelector(".nxs-table-scroll")).toBeInTheDocument();
   });
 });

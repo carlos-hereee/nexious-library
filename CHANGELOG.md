@@ -54,6 +54,32 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Three tokens gain defaults for the card ladder: `--surface-edge`, `--surface-2` and
   `--surface-2-hover`, each the platform client's light and dark value.
 
+- **`Table`, the library's data table, is exported with `TableHeader`, `TableBody` and
+  `TableFooter`.** Pass `columns` (`key`, `header`, `label`, `align`, `isSortable`, `sortDirection`,
+  `isRowHeader`) and `rows` whose cells are React nodes, so a cell can hold a link, a badge or a
+  button. It renders one `caption` (visible, or screen reader only with `isCaptionVisible={false}`)
+  that also names a focusable scroll region, `th scope` on every header, `aria-sort` on sortable
+  columns with a real sort button when `onSort` is passed, `isDense`, `isStackedOnMobile` (rows
+  restack into labelled cards on a phone), a `footer` of the caller's rows and the caller's
+  `emptyState` in one cell spanning every column. It has no copy of its own. Styled as `nxs-table`
+  from the platform client's orders table. `TableProps`, `TableColumn`, `TableRowData`,
+  `TableSortDirection`, `TableAlign`, `TableHeaderProps`, `TableBodyProps` and `TableFooterProps`
+  are exported. Part of the 5.0.0 major release (2026-11 item 337).
+
+- **`Select` selects by value and takes option groups.** New optional `value` (the control is
+  driven by an option's value; without it `active` works exactly as before), `groups` (rendered as
+  `optgroup` after `list`), `labelId` (named by a label the caller already renders) and
+  `clearLabel` (the clear button's name, "Clear selection" by default). It renders `nxs-select` on
+  the wrapper and `nxs-select-control` on the control BESIDE `select-wrapper` and `select`, and
+  `nxs-select-clear` beside `btn-icon`; the 4.x rules load after the new ones, so a consumer
+  styling the 4.x classes keeps its look. `SelectOptionGroup` is exported.
+
+- **`SearchBar` renders `nxs-search` and `nxs-search-input` and can announce a result count.** The
+  classes sit before the caller's `className` and `inputClassName`, which stay, and their rules
+  carry zero specificity so a caller's own rule always wins. Pass `resultCount` to announce how many
+  results the search leaves in a polite status region; `formatResultCount` localizes the sentence
+  ("1 result" and "4 results" in English by default).
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -83,6 +109,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   September 11, 2026"), meeting WCAG 2.5.3, and carries Today in the name; the hidden span it
   replaces never reached a screen reader because `aria-label` overrides content.
 
+- **`Select` with a visually hidden label is named by the label, not the field name.** With
+  `hideLabels` and a `label`, the control's fallback `aria-label` is now the label text; with no
+  label at all it is still `name`, and with `labelId` there is no `aria-label`.
+
 #### Changed
 
 - **The library's own buttons render the `nxs-btn` family.** SubmitButton (primary), ButtonCancel
@@ -105,6 +135,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   nxs-select-card` when it is a link or a button and `nxs-card nxs-select-card` when inert, so the
   inert tile takes the card's hover tint. A `classNames.root` still replaces the whole default, so
   a consumer with its own card classes gets none of the new ones.
+
+- **The unexported 4.x `Table` takes the columns and rows API.** Its `headerData`, `list` and
+  `bodyData` props, its hardcoded "No data available" and its second caption are gone, along with
+  `TableBody`'s `data` and `TableFooter`'s `data` props. None of the three were reachable from the
+  package entry before this release. `TableHeader` still accepts its 4.x `data` and
+  `numericColumns`, which `HoursOfOperation` renders unchanged.
 
 #### Deprecated
 

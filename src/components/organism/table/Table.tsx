@@ -1,35 +1,48 @@
-import TableCaption from "@nxs-atoms/table/TableCaption";
+// Reuse record: companyuno-growth/product-planning/DESIGNS/reusable-components/table/README.md
+// The library's one data table, written for 2026-11 item 337 over the 4.x folder, styled as
+// nxs-table from the platform client's orders-table. It lays out columns and rows the caller
+// passes and owns no data, no sorting and no copy: the order, the empty message and the caption
+// all arrive through props. Exported from main.ts with its parts.
+import { useId } from "react";
 import TableBody from "@nxs-organism/table/TableBody";
+import TableFooter from "@nxs-organism/table/TableFooter";
 import TableHeader from "@nxs-organism/table/TableHeader";
 import type { TableProps } from "custom-props";
 
-// isDense and numericColumns are declared here instead of on TableProps because that interface
-// lives in the shared @types barrel next to unrelated props; widening it locally keeps every
-// other reader of TableProps the same shape.
-type PTable = TableProps & {
-  // Swaps the row height from --row-height (52px) to --row-height-dense (44px). Both clear the
-  // tap floor, which is why the density toggle is safe to expose at all.
-  isDense?: boolean;
-  numericColumns?: number[];
-};
+/**
+ * Component: Table
+ *
+ * Renders a labelled scroll region holding one table: one caption (visible or screen reader
+ * only), a header row of th scope="col" with aria-sort on sortable columns, a body of the rows'
+ * node cells (or the caller's emptyState across every column) and an optional footer.
+ */
+const Table = (props: TableProps) => {
+  const { columns, rows, caption, isCaptionVisible = true, isDense, emptyState, footer, onSort } = props;
+  const { isStackedOnMobile, className } = props;
+  const captionId = `${useId()}-caption`;
+  const tableClass = [
+    "nxs-table",
+    isDense ? "nxs-table-dense" : "",
+    isStackedOnMobile ? "nxs-table-stacked" : "",
+    className ?? "",
+  ]
+    .filter(Boolean)
+    .join(" ");
 
-const Table = ({ headerData, className, list, bodyData, isDense, numericColumns }: PTable) => {
-  if (!list || list.length === 0) return <p className="error-message">No data available</p>;
-  // Consumer class stays FIRST, exactly as before, so a selector or a test that matched the old
-  // `${className} table` string still matches.
-  const tableClass = [className, "table", isDense && "table-dense"].filter(Boolean).join(" ");
   return (
-    // The wrapper is the component's job, not the consumer's: the sticky header needs a
-    // scrollport to pin against and a wide table needs somewhere to overflow that is not the
-    // page. See the .table-scroll block in vars/reset/_table.scss for why the two are the same
-    // element and why it carries a height cap.
-    <div className="table-scroll">
+    // The region is the component's job: a wide table must scroll in its own box rather than
+    // widen the page, and a keyboard user can only scroll that box if it takes focus, which is
+    // also why it needs a name (WCAG 2.1.1, axe scrollable-region-focusable). The caption names
+    // it so the table and its scroll box can never be called two different things.
+    // eslint-disable-next-line jsx-a11y/no-noninteractive-tabindex
+    <div className="nxs-table-scroll" role="region" aria-labelledby={captionId} tabIndex={0}>
       <table className={tableClass}>
-        <TableCaption value={headerData?.title || ""} className="table-title" />
-        <TableCaption value={headerData?.subtitle || ""} className="table-subtitle" />
-        <TableHeader data={list.map((l) => ({ ...l, isHeader: true }))} numericColumns={numericColumns} />
-        <TableBody data={bodyData} />
-        {/* <TableFooter data={footerData} /> */}
+        <caption id={captionId} className={isCaptionVisible ? "nxs-table-caption" : "nxs-table-caption sr-only"}>
+          {caption}
+        </caption>
+        <TableHeader columns={columns} onSort={onSort} />
+        <TableBody columns={columns} rows={rows} emptyState={emptyState} />
+        {footer ? <TableFooter>{footer}</TableFooter> : null}
       </table>
     </div>
   );

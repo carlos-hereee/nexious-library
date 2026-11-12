@@ -86,3 +86,44 @@ export const Disabled: Story = {
     isDisabled: true,
   },
 };
+
+const foods = [
+  { uid: "fruit", label: "Fruit", options: [{ uid: "apple", name: "apple", value: "apple", label: "Apple" }] },
+  {
+    uid: "veg",
+    label: "Vegetables",
+    options: [
+      { uid: "kale", name: "kale", value: "kale", label: "Kale" },
+      { uid: "leek", name: "leek", value: "leek", label: "Leek" },
+    ],
+  },
+];
+
+/** `value` selects by option value (2026-11 item 337); `active` is ignored when it is set. */
+export const ByValue: Story = {
+  args: { name: "currency", label: "Currency", list: currencies, value: "mxn" },
+};
+
+/** `groups` renders optgroups after `list`, here selected by value with a localized clear label. */
+export const OptionGroups: Story = {
+  args: {
+    name: "food",
+    label: "Food",
+    list: [],
+    groups: foods,
+    value: "leek",
+    placeholder: "Pick a food",
+    clearSelection: true,
+    clearLabel: "Clear the food",
+  },
+};
+
+/** `labelId` names the control by a label the caller already renders, with no aria-label fallback. */
+export const NamedByLabelId: Story = {
+  render: (args) => (
+    <>
+      <p id="story-currency-heading">Payout currency</p>
+      <Select {...args} name="payout-currency" list={currencies} labelId="story-currency-heading" value="" placeholder="Choose a currency" />
+    </>
+  ),
+};

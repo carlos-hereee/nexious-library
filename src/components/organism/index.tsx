@@ -3,10 +3,21 @@ export { default as Navbar } from "@nxs-organism/navigation/Navbar";
 export { default as Navigation } from "@nxs-organism/navigation/Navigation";
 export { default as FormNavigation } from "@nxs-organism/navigation/FormNavigation";
 export type { NavigationProps, NavbarProps, FormNavigationProps } from "nxs-navigation";
-// TODO: add table types
-// export { default as TableBody } from "@nxs-organism/table/TableBody";
-// export { default as TableHeader } from "@nxs-organism/table/TableHeader";
-// export { default as TableFooter } from "@nxs-organism/table/TableFooter";
+// table (2026-11 item 337): the columns and rows Table, and its parts for a caller composing its own
+export { default as Table } from "@nxs-organism/table/Table";
+export { default as TableHeader } from "@nxs-organism/table/TableHeader";
+export { default as TableBody } from "@nxs-organism/table/TableBody";
+export { default as TableFooter } from "@nxs-organism/table/TableFooter";
+export type {
+  TableProps,
+  TableColumn,
+  TableRowData,
+  TableSortDirection,
+  TableAlign,
+  TableHeaderProps,
+  TableBodyProps,
+  TableFooterProps,
+} from "custom-props";
 export { default as NavList } from "@nxs-organism/lists/NavList";
 export { default as SectionList } from "@nxs-organism/lists/SectionList";
 

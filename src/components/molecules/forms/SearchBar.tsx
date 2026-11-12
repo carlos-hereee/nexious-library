@@ -3,7 +3,11 @@ import type { KeyboardEvent } from "react";
 import type { SearchBarProps } from "nxs-form";
 import Input from "@nxs-atoms/forms/Input";
 import Label from "@nxs-atoms/forms/Label";
-import { SEARCH_BAR_DEBOUNCE_MS } from "@nxs-utils/form/searchBar";
+import { SEARCH_BAR_DEBOUNCE_MS, formatSearchResultCount } from "@nxs-utils/form/searchBar";
+
+/** Puts the library's class first and the caller's after it, so both stay on the element. */
+const withCallerClass = (libraryClass: string, callerClass?: string): string =>
+  callerClass ? `${libraryClass} ${callerClass}` : libraryClass;
 
 /**
  * The one search box: the typed text stays inside this component and the caller hears about it once,
@@ -12,10 +16,15 @@ import { SEARCH_BAR_DEBOUNCE_MS } from "@nxs-utils/form/searchBar";
  *
  * It does not filter, fetch or guard against slow responses; those belong to the caller. Clearing and
  * Enter skip the pause, because neither leaves anything more to wait for.
+ *
+ * It renders `nxs-search` and `nxs-search-input` beside the caller's `className` and
+ * `inputClassName` (2026-11 item 337). Given `resultCount`, it announces the count in a polite
+ * status region, so a screen reader hears how many results the search left without moving focus.
  */
 const SearchBar = (props: SearchBarProps) => {
   const { name, label, value, onChange, placeholder, className, inputClassName } = props;
   const { labelClassName = "sr-only", debounceMs = SEARCH_BAR_DEBOUNCE_MS, isDisabled } = props;
+  const { resultCount, formatResultCount = formatSearchResultCount } = props;
 
   const [draft, setDraft] = useState(value);
   // The last value the caller knows about, so a `value` that changes because the caller caught up to
@@ -73,12 +82,12 @@ const SearchBar = (props: SearchBarProps) => {
   };
 
   return (
-    <div className={className} role="search" aria-label={label}>
+    <div className={withCallerClass("nxs-search", className)} role="search" aria-label={label}>
       <Label name={name} label={label} className={labelClassName} />
       <Input
         name={name}
         type="search"
-        className={inputClassName}
+        className={withCallerClass("nxs-search-input", inputClassName)}
         value={draft}
         placeholder={placeholder}
         isDisabled={isDisabled}
@@ -86,6 +95,13 @@ const SearchBar = (props: SearchBarProps) => {
         onChange={handleChange}
         onKeyDown={handleKeyDown}
       />
+      {/* Rendered whenever the caller counts, even before the first search, because a live
+          region inserted at the same moment as its text is often not announced at all. */}
+      {resultCount !== undefined ? (
+        <p className="sr-only nxs-search-status" role="status" aria-live="polite" aria-atomic="true">
+          {formatResultCount(resultCount)}
+        </p>
+      ) : null}
     </div>
   );
 };

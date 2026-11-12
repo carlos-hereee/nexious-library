@@ -195,3 +195,47 @@
     flex-wrap: wrap;
   }
 }
+
+// ── nxs-search (2026-11 item 337) ──
+// The canonical search box classes SearchBar now renders beside the caller's own. Ported from the
+// field look nexious-client gives it through `cu-input` (shared/stylesheets/primitives.css),
+// rebuilt on the control tokens. Wrapped in :where() so they carry ZERO specificity: every
+// caller rule on `className` or `inputClassName` still wins, which keeps the current client's 18
+// search boxes looking as they do until Plan B (2026-11 item 332) drops their own classes.
+:where(.nxs-search) {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+  width: 100%;
+  min-width: 0;
+}
+
+:where(.nxs-search-input) {
+  width: 100%;
+  box-sizing: border-box;
+  min-height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  background-color: var(--input-bg);
+  border: 1px solid var(--input-border);
+  border-radius: var(--control-radius-input);
+  color: var(--text);
+  font-size: var(--text-base);
+  font-family: inherit;
+  transition: border-color var(--transition-fast);
+}
+:where(.nxs-search-input)::placeholder {
+  color: var(--text-muted);
+}
+:where(.nxs-search-input):hover:not(:disabled) {
+  border-color: var(--main-brand-color);
+}
+:where(.nxs-search-input):focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: var(--focus-ring-offset);
+  border-color: var(--main-brand-color);
+}
+:where(.nxs-search-input):disabled {
+  background-color: var(--hover-bg);
+  color: var(--text-muted);
+  cursor: not-allowed;
+}

@@ -16,6 +16,9 @@ import SelectCard from "@nxs-molecules/card/SelectCard";
 import ListRow from "@nxs-molecules/card/ListRow";
 import Card from "@nxs-organism/card/Card";
 import ActiveSelectionBar from "@nxs-molecules/navigation/ActiveSelectionBar";
+import Table from "@nxs-organism/table/Table";
+import Select from "@nxs-molecules/forms/Select";
+import SearchBar from "@nxs-molecules/forms/SearchBar";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -445,5 +448,50 @@ describe("axe: ActiveSelectionBar", () => {
         }
       />
     );
+  });
+});
+
+describe("axe: Table, Select and SearchBar (2026-11 item 337)", () => {
+  const orderColumns = [
+    { key: "order", header: "Order", isRowHeader: true },
+    { key: "status", header: "Status" },
+    { key: "total", header: "Total", align: "end" as const, isSortable: true, sortDirection: "ascending" as const },
+    { key: "actions", header: <span className="sr-only">Actions</span>, label: "Actions" },
+  ];
+  const orderRows = [
+    {
+      id: "1041",
+      cells: { order: "1041", status: <span>Paid</span>, total: "24.00", actions: <button type="button">Refund 1041</button> },
+    },
+  ];
+
+  it("a sortable, stacked Table with node cells has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Table caption="Orders" columns={orderColumns} rows={orderRows} onSort={() => {}} isStackedOnMobile />
+    );
+  });
+
+  it("an empty, dense Table with a hidden caption has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Table caption="Orders" isCaptionVisible={false} isDense columns={orderColumns} rows={[]} emptyState="No orders yet" />
+    );
+  });
+
+  it("a Select with groups, a value and a clear button has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Select
+        name="food"
+        label="Food"
+        list={[{ name: "apple", value: "apple", label: "Apple", uid: "a" }]}
+        groups={[{ uid: "veg", label: "Vegetables", options: [{ name: "kale", value: "kale", label: "Kale", uid: "k" }] }]}
+        value="kale"
+        clearSelection
+        onChange={() => {}}
+      />
+    );
+  });
+
+  it("a SearchBar with a result count has no violations in either theme", async () => {
+    await checkBothThemes(<SearchBar name="orders-search" label="Search orders" value="" onChange={() => {}} resultCount={2} />);
   });
 });
