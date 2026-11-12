@@ -9,6 +9,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+This release is a major one and publishes as 5.0.0 (2026-11 item 337, the library component
+migration; the release script sets the number). The library becomes the home of the platform's
+buttons, cards, rows, tables, selects, search, rails, menus and paging, each under an `nxs-` class
+family with a jest-axe test, a keyboard test where it is interactive, a story and a register
+record. It is a major because the unexported 4.x `Table` changed shape, `Card`, `Select` and
+`SearchBar` gained new classes beside their old ones, and the library's own buttons now render the
+`nxs-btn` classes. Every existing export keeps its props and the classes a consumer already styles,
+so a consumer that changes nothing renders as before apart from the library's own buttons taking the
+`nxs-btn` look.
+
 #### Added
 
 - **A built in view switch and a year view on `Calendar`.** Pass `views` (for example
@@ -114,6 +124,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `BoardCardMoveOption`, `EventCardProps`, `EventCardEvent` and `EventCardDatePart` are exported.
   Part of the 5.0.0 major release (2026-11 item 337).
 
+- **`ActionMenu`, `Pager`, `LoadOlderButton` and `MetricRow`, ported from the platform client.**
+  `ActionMenu` is the shared dropdown: a trigger with `aria-expanded` and a `role="menu"` panel of
+  `entries` (`id`, `label`, `isDanger`, `isDisabled`, `hint`, and either `href` or `onSelect`),
+  aligned to the trigger's `end` edge by default or its `start`, styled as `nxs-menu` (the client
+  rendered a plugin's `study-ws-menu` classes). `Pager` is the previous and next pager under a paged
+  list with a status sentence from the caller's `formatStatus`, styled as `nxs-pager`.
+  `LoadOlderButton` pages a transcript or list for more history and renders nothing once there is
+  none, styled as `nxs-load-older`. `MetricRow` is the band of stat tiles (`label`, an already
+  formatted `value`, a `delta` toned by `trend`, a `hint` and `emptyText` for a metric with no
+  number), with `isScrollable`, a `trailing` cell and an optional group name, styled as
+  `nxs-metric-row` and `nxs-stat` from the client's `cu-metric-row` and `cu-stat`. None of them
+  carries copy of its own. `ActionMenuEntry`, `ActionMenuProps`, `PagerProps`,
+  `LoadOlderButtonProps`, `MetricRowProps`, `MetricRowEntry` and `MetricTrend` are exported. Part of
+  the 5.0.0 major release (2026-11 item 337).
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -163,6 +188,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   floor because it is the only way to move a card from a phone. `EventCard`'s default range
   separator is a glyph hidden from speech, so a caller passes `rangeSeparator` to have the range
   read aloud, and `locationLabel` is read before the location by a screen reader only.
+
+- **The menu, the pagers and the stat band are usable without sight or a mouse.** `ActionMenu`
+  focuses its first entry on open, walks with the arrows, Home and End, closes on Escape, Tab and an
+  outside press and returns focus to its trigger before an entry runs, so a dialog the entry opens
+  hands focus back to the trigger; a disabled entry stays focusable through `aria-disabled` so it is
+  still announced, and every entry keeps a 44px target. `Pager` is a named nav whose page status is
+  a polite live region and whose ends disable natively. `LoadOlderButton` is `aria-busy` while it
+  loads. `MetricRow` speaks a delta's direction through `trendLabel`, because its tone is color, and
+  takes the brand accent for its value on dark surfaces, where the base indigo measured about 2.7:1.
 
 #### Changed
 

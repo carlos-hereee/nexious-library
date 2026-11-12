@@ -377,3 +377,93 @@ export type MoreSheetProps<TPing = unknown> = NavPingProps<TPing> & {
   /** Appended to the sheet's classes. */
   className?: string;
 };
+
+// ── Menus and paging ported from nexious-client (2026-11 item 337, Phase 5) ──────────
+// ActionMenu, Pager and LoadOlderButton. As with the pieces above, every string arrives already
+// translated, so the library ships no English of its own.
+
+/**
+ * One entry of an ActionMenu. It carries EITHER an `href` (an anchor, so middle click and the
+ * browser's own new tab handling keep working) or an `onSelect` (a button), never both.
+ */
+export type ActionMenuEntry = {
+  /** Stable id, unique within the menu. */
+  id: string;
+  /** The visible label, already translated. */
+  label: string;
+  /** Renders in the danger tone (a destructive entry). */
+  isDanger?: boolean;
+  /**
+   * Unavailable: the entry stays focusable through `aria-disabled` so a screen reader still
+   * announces it, and its handler refuses the click.
+   */
+  isDisabled?: boolean;
+  /** Why a disabled entry is unavailable, shown as its title. Ignored when available. */
+  hint?: string;
+  /** An external or route URL; goes through `safeUrl()`. Opens in a new tab. */
+  href?: string;
+  onSelect?: () => void;
+};
+
+/**
+ * A menu button: a trigger with `aria-expanded` and a `role="menu"` panel of entries. Outside
+ * click and Escape close it, the arrows, Home and End walk the entries and focus returns to the
+ * trigger. Ported from the client's components/menu/ActionMenu.tsx.
+ */
+export type ActionMenuProps = {
+  /** The accessible name of the trigger and of the menu, already translated. */
+  label: string;
+  /** Trigger content. Defaults to a decorative ellipsis glyph. */
+  trigger?: React.ReactNode;
+  /**
+   * Replaces the trigger's default classes (`nxs-btn nxs-btn-secondary nxs-menu-trigger`), so a
+   * consumer with its own button look gets none of the defaults.
+   */
+  triggerClassName?: string;
+  entries: readonly ActionMenuEntry[];
+  /** Which edge the panel aligns to. "end" (the default) suits a trigger at a row's right edge. */
+  align?: "start" | "end";
+  /** Appended to the root's classes. */
+  className?: string;
+};
+
+/**
+ * The previous and next pager under a paged list, with a polite page status. Renders nothing
+ * while there is only one page. Ported from the client's components/list/Pager.tsx.
+ */
+export type PagerProps = {
+  /** The current page, counted from 1. */
+  page: number;
+  totalPages: number;
+  /** Called with the page to show. */
+  onPage: (page: number) => void;
+  /** The nav landmark's accessible name, already translated ("Orders pages"). */
+  ariaLabel: string;
+  /** The previous button's label, already translated. */
+  previousLabel: string;
+  /** The next button's label, already translated. */
+  nextLabel: string;
+  /** The status sentence ("Page 2 of 5"), localized by the caller. */
+  formatStatus: (page: number, totalPages: number) => string;
+  /** Appended to the root's classes. */
+  className?: string;
+};
+
+/**
+ * The one control that pages a list for more history: at the top of a transcript that pages
+ * backwards, or under a newest first list. Renders nothing once nothing more exists, and disables
+ * itself while a page loads. Ported from the client's components/list/LoadOlderButton.tsx.
+ */
+export type LoadOlderButtonProps = {
+  /** Whether more history exists. False renders nothing. */
+  hasMore: boolean;
+  /** A page is loading: the button disables itself and shows `loadingLabel`. */
+  isLoading: boolean;
+  onLoad: () => void;
+  /** The button's label, already translated ("Load older messages"). */
+  label: string;
+  /** The label while loading, already translated ("Loading"). */
+  loadingLabel: string;
+  /** Appended to the wrapper's classes. */
+  className?: string;
+};

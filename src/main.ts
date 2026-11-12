@@ -108,6 +108,9 @@ export type { ListRowProps } from "nxs-card";
 export { default as BoardCard } from "@nxs-organism/card/BoardCard";
 export { default as EventCard } from "@nxs-organism/card/EventCard";
 export type { BoardCardProps, BoardCardMoveOption, EventCardProps, EventCardEvent, EventCardDatePart } from "nxs-card";
+// The stat band (2026-11 item 337, Phase 5): each tile's value arrives formatted by the caller.
+export { default as MetricRow } from "@nxs-molecules/card/MetricRow";
+export type { MetricRowProps, MetricRowEntry, MetricTrend } from "nxs-card";
 // The data table: columns, rows of node cells, one caption, aria-sort and a labelled scroll
 // region, the nxs-table recipe (2026-11 item 337). Its parts are exported for a caller composing
 // its own table.
@@ -149,6 +152,12 @@ export type {
   MobileTabBarMore,
   MoreSheetProps,
 } from "nxs-navigation";
+// The dropdown menu and the paging controls ported from the client (2026-11 item 337, Phase 5):
+// every label arrives translated and every href goes through safeUrl.
+export { default as ActionMenu } from "@nxs-molecules/navigation/ActionMenu";
+export { default as Pager } from "@nxs-molecules/navigation/Pager";
+export { default as LoadOlderButton } from "@nxs-molecules/navigation/LoadOlderButton";
+export type { ActionMenuEntry, ActionMenuProps, PagerProps, LoadOlderButtonProps } from "nxs-navigation";
 // currency utils
 export { formatPenniesToDollars, formatDollarsToPennies } from "@nxs-math/currency";
 // public hooks, lets consumers build custom form UIs using the same validation and state logic

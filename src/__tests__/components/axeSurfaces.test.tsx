@@ -1,6 +1,6 @@
 import "@testing-library/jest-dom";
 import type { ReactElement } from "react";
-import { render } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { axe, toHaveNoViolations } from "jest-axe";
 import Skeleton from "@nxs-molecules/errors/Skeleton";
 import Loading from "@nxs-molecules/errors/Loading";
@@ -24,6 +24,12 @@ import MobileTabBar from "@nxs-organism/navigation/MobileTabBar";
 import PillNav from "@nxs-molecules/navigation/PillNav";
 import BoardCard from "@nxs-organism/card/BoardCard";
 import EventCard from "@nxs-organism/card/EventCard";
+import PillTabStrip from "@nxs-molecules/navigation/PillTabStrip";
+import MoreSheet from "@nxs-organism/navigation/MoreSheet";
+import ActionMenu from "@nxs-molecules/navigation/ActionMenu";
+import Pager from "@nxs-molecules/navigation/Pager";
+import LoadOlderButton from "@nxs-molecules/navigation/LoadOlderButton";
+import MetricRow from "@nxs-molecules/card/MetricRow";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -572,6 +578,101 @@ describe("axe: BoardCard and EventCard (2026-11 item 337)", () => {
         />
         <EventCard density="row" event={{ title: "Season start", start: "2026-11-12", isAllDay: true }} formatDate={formatDate} allDayLabel="All day" />
       </div>
+    );
+  });
+});
+
+// Session 5 (2026-11 item 337) makes this file cover every export the plan added or rebuilt. The two
+// that cannot take the two theme check get a single render here instead: PillTabStrip's required
+// aria-controls names a panel id that a second render would duplicate, and MoreSheet portals its
+// dialog to the body, so axe scans the body rather than the render container.
+describe("axe: PillTabStrip and MoreSheet, single render (2026-11 item 337)", () => {
+  it("a pill tablist wired to its panel has no violations", async () => {
+    const { container } = render(
+      <>
+        <PillTabStrip
+          tabs={["members", "roles"] as const}
+          active="members"
+          onSelect={() => {}}
+          ariaLabel="Team"
+          labelFor={(tab) => (tab === "members" ? "Members" : "Roles")}
+          tabId={(tab) => `axe-team-tab-${tab}`}
+          panelId={(tab) => `axe-team-panel-${tab}`}
+        />
+        <div role="tabpanel" id="axe-team-panel-members" aria-labelledby="axe-team-tab-members">
+          Members panel
+        </div>
+        <div role="tabpanel" id="axe-team-panel-roles" aria-labelledby="axe-team-tab-roles" hidden>
+          Roles panel
+        </div>
+      </>
+    );
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  it("an open More sheet has no violations", async () => {
+    const { baseElement } = render(
+      <MoreSheet
+        id="axe-more-sheet"
+        isOpen
+        title="More"
+        closeLabel="Close"
+        sections={[{ id: "setup", label: "Setup", items: [{ id: "team", label: "Team" }] }]}
+        activeId="team"
+        onSelect={() => {}}
+        onClose={() => {}}
+      />
+    );
+    expect(await axe(baseElement, AXE_OPTIONS)).toHaveNoViolations();
+  });
+});
+
+describe("axe: ActionMenu, Pager, LoadOlderButton and MetricRow (2026-11 item 337)", () => {
+  const menuEntries = [
+    { id: "edit", label: "Edit", onSelect: () => {} },
+    { id: "docs", label: "Open docs", href: "https://example.com/docs" },
+    { id: "archive", label: "Archive", isDisabled: true, hint: "Unavailable" },
+    { id: "remove", label: "Remove", isDanger: true, onSelect: () => {} },
+  ];
+
+  it("a closed action menu has no violations in either theme", async () => {
+    await checkBothThemes(<ActionMenu label="Row actions" entries={menuEntries} />);
+  });
+
+  it("an open action menu has no violations", async () => {
+    const { container } = render(<ActionMenu label="Row actions" entries={menuEntries} />);
+    fireEvent.click(screen.getByRole("button", { name: "Row actions" }));
+    expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+
+  it("a pager mid list has no violations in either theme", async () => {
+    await checkBothThemes(
+      <Pager
+        page={2}
+        totalPages={4}
+        onPage={() => {}}
+        ariaLabel="Orders pages"
+        previousLabel="Previous"
+        nextLabel="Next"
+        formatStatus={(page, total) => `Page ${page} of ${total}`}
+      />
+    );
+  });
+
+  it("a load older button idle and loading has no violations in either theme", async () => {
+    await checkBothThemes(<LoadOlderButton hasMore isLoading={false} onLoad={() => {}} label="Load older" loadingLabel="Loading" />);
+    await checkBothThemes(<LoadOlderButton hasMore isLoading onLoad={() => {}} label="Load older" loadingLabel="Loading" />);
+  });
+
+  it("a metric row with a delta, a hint and an empty tile has no violations in either theme", async () => {
+    await checkBothThemes(
+      <MetricRow
+        ariaLabel="This month"
+        entries={[
+          { id: "sales", label: "Sales", value: "$120.00", delta: "+4%", trend: "up", trendLabel: "Up" },
+          { id: "views", label: "Views", emptyText: "Not available yet" },
+        ]}
+      />
     );
   });
 });

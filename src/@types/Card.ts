@@ -372,3 +372,49 @@ export interface EventCardProps {
   /** A description or anything else, after the location. */
   children?: React.ReactNode;
 }
+
+// ── MetricRow (2026-11 item 337, Phase 5) ─────────────────────────────────────────
+/** The direction of a metric's change, which picks the delta's tone. */
+export type MetricTrend = "up" | "down" | "flat";
+
+/**
+ * One tile of a MetricRow. The caller formats every value (money, counts, locale), so the library
+ * bakes in no currency or number format.
+ */
+export type MetricRowEntry = {
+  /** Stable id, unique within the row; also rendered as `data-metric`. */
+  id: string;
+  /** The tile's label, already translated. */
+  label: React.ReactNode;
+  /** The formatted value. Absent renders `emptyText` in its place (a metric with no number). */
+  value?: React.ReactNode;
+  /** The formatted change ("+4.2%"), shown as a toned chip. */
+  delta?: React.ReactNode;
+  /** Picks the delta's tone; "flat" or absent is neutral. */
+  trend?: MetricTrend;
+  /**
+   * The words a screen reader hears before the delta ("Up from last month"), because the tone
+   * alone is color. Optional; without it the delta's text is read as is.
+   */
+  trendLabel?: string;
+  /** A quiet line under the value (why it is derived, what it counts). */
+  hint?: React.ReactNode;
+  /** Shown instead of the value when `value` is absent ("Not available yet"). */
+  emptyText?: React.ReactNode;
+};
+
+/**
+ * The band of stat tiles that answers "how is this doing", ported from the client's
+ * features/dashboard/components/MetricRow.tsx and its `cu-metric-row` and `cu-stat` primitives.
+ */
+export type MetricRowProps = {
+  entries: readonly MetricRowEntry[];
+  /** One trailing cell that is a status rather than a number, aligned with the tiles. */
+  trailing?: React.ReactNode;
+  /** Keeps the tiles on one line and scrolls the band sideways on a narrow screen. */
+  isScrollable?: boolean;
+  /** Names the band as a group for assistive tech ("This month"). Optional. */
+  ariaLabel?: string;
+  /** Appended to the band's classes. */
+  className?: string;
+};

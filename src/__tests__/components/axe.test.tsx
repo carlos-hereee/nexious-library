@@ -14,7 +14,11 @@ import ThemeMenu from "@nxs-molecules/navigation/ThemeMenu";
 import DialogOverlay from "@nxs-template/DialogOverlay";
 import Dialog from "@nxs-template/Dialog";
 import Calendar from "@nxs-template/Calendar";
+import SubmitButton from "@nxs-molecules/buttons/SubmitButton";
+import CTA from "@nxs-molecules/card/CTA";
+import ConfirmDialog from "@nxs-organism/card/ConfirmDialog";
 import type { CalendarTimedEvent } from "nxs-calendar";
+import type { Size, Variant } from "../../@types/Variant";
 
 const selectList = [{ uid: "1", name: "Admin", label: "Admin", value: "admin" }];
 
@@ -38,6 +42,28 @@ const normalizeGeneratedIds = (html?: string): string =>
 describe("axe accessibility (no violations on isolated renders)", () => {
   it("Button has an accessible name and no violations", async () => {
     expect(await check(<Button label="Save" />)).toHaveNoViolations();
+  });
+
+  // The nxs-btn family (2026-11 item 337): every variant and size Button emits, and the library's own
+  // buttons now on it, stay named and violation free.
+  const buttonVariants: Variant[] = ["primary", "secondary", "tertiary", "danger", "ghost"];
+  const buttonSizes: Size[] = ["small", "medium", "large"];
+  it.each(buttonVariants)("Button variant %s in every size has no violations", async (variant) => {
+    expect(
+      await check(
+        <div>
+          {buttonSizes.map((size) => (
+            <Button key={size} label={`Save ${size}`} variant={variant} size={size} />
+          ))}
+        </div>
+      )
+    ).toHaveNoViolations();
+  });
+
+  it("SubmitButton, a CTA and a ConfirmDialog on nxs-btn have no violations", async () => {
+    expect(await check(<SubmitButton label="Save" />)).toHaveNoViolations();
+    expect(await check(<CTA cta={{ uid: "buy", name: "buy", label: "Buy now" }} onClick={() => {}} />)).toHaveNoViolations();
+    expect(await check(<ConfirmDialog onConfirm={() => {}} onCancel={() => {}} />)).toHaveNoViolations();
   });
 
   it("BurgerButton (icon-only) has no violations", async () => {

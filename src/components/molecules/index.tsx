@@ -33,7 +33,8 @@ export { default as CardDetails } from "@nxs-molecules/card/CardDetails";
 export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
 export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
 export { default as ListRow } from "@nxs-molecules/card/ListRow";
-export type { CardProps, CardGridProps, SelectCardProps, ListRowProps } from "nxs-card";
+export { default as MetricRow } from "@nxs-molecules/card/MetricRow";
+export type { CardProps, CardGridProps, SelectCardProps, ListRowProps, MetricRowProps } from "nxs-card";
 
 // errors
 export { default as EmptySection } from "@nxs-molecules/errors/EmptySection";
@@ -90,7 +91,18 @@ export { default as StepProgress } from "@nxs-molecules/navigation/StepProgress"
 export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
 export { default as PillTabStrip } from "@nxs-molecules/navigation/PillTabStrip";
 export { default as PillNav } from "@nxs-molecules/navigation/PillNav";
-export type { StepProgressProps, ActiveSelectionBarProps, PillTabStripProps, PillNavProps } from "nxs-navigation";
+export { default as ActionMenu } from "@nxs-molecules/navigation/ActionMenu";
+export { default as Pager } from "@nxs-molecules/navigation/Pager";
+export { default as LoadOlderButton } from "@nxs-molecules/navigation/LoadOlderButton";
+export type {
+  StepProgressProps,
+  ActiveSelectionBarProps,
+  PillTabStripProps,
+  PillNavProps,
+  ActionMenuProps,
+  PagerProps,
+  LoadOlderButtonProps,
+} from "nxs-navigation";
 
 // post
 export { default as Post } from "@nxs-molecules/post/Post";
