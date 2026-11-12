@@ -102,6 +102,12 @@ export type { CardGridProps, SelectCardProps } from "nxs-card";
 // One row of a list (lead, body, meta and actions slots), the nxs-list-row recipe (2026-11 item 337).
 export { default as ListRow } from "@nxs-molecules/card/ListRow";
 export type { ListRowProps } from "nxs-card";
+// Composites on Card and ListRow (2026-11 item 337, Phase 4): a kanban card whose Move to select is
+// the single pointer alternative to dragging, and one event as a card or a row with machine
+// readable dates and the caller's date formatter.
+export { default as BoardCard } from "@nxs-organism/card/BoardCard";
+export { default as EventCard } from "@nxs-organism/card/EventCard";
+export type { BoardCardProps, BoardCardMoveOption, EventCardProps, EventCardEvent, EventCardDatePart } from "nxs-card";
 // The data table: columns, rows of node cells, one caption, aria-sort and a labelled scroll
 // region, the nxs-table recipe (2026-11 item 337). Its parts are exported for a caller composing
 // its own table.

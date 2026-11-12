@@ -42,6 +42,8 @@ export { default as CardSection } from "@nxs-organism/card/CardSection";
 export { default as CardTextBubble } from "@nxs-organism/card/CardTextBubble";
 export { default as SettingsCard } from "@nxs-organism/card/SettingsCard";
 export { default as ConfirmDialog } from "@nxs-organism/card/ConfirmDialog";
+export { default as BoardCard } from "@nxs-organism/card/BoardCard";
+export { default as EventCard } from "@nxs-organism/card/EventCard";
 
 // timer
 export { default as CountDown } from "@nxs-organism/timer/CountDown";
@@ -54,6 +56,11 @@ export type {
   CardSectionProps,
   DialogProps,
   BannerProps,
+  BoardCardProps,
+  BoardCardMoveOption,
+  EventCardProps,
+  EventCardEvent,
+  EventCardDatePart,
 } from "nxs-card";
 export type { TextBubbleProps } from "nxs-assets";
 

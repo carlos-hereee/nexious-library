@@ -22,6 +22,8 @@ import SearchBar from "@nxs-molecules/forms/SearchBar";
 import SectionedRail from "@nxs-organism/navigation/SectionedRail";
 import MobileTabBar from "@nxs-organism/navigation/MobileTabBar";
 import PillNav from "@nxs-molecules/navigation/PillNav";
+import BoardCard from "@nxs-organism/card/BoardCard";
+import EventCard from "@nxs-organism/card/EventCard";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
 
@@ -537,6 +539,39 @@ describe("axe: SectionedRail, PillNav and MobileTabBar (2026-11 item 337)", () =
         ariaLabel="Dashboard"
         more={{ label: "More", isOpen: false, sheetId: "axe-more", onToggle: () => {} }}
       />
+    );
+  });
+});
+
+describe("axe: BoardCard and EventCard (2026-11 item 337)", () => {
+  it("a board card with its Move to select has no violations in either theme", async () => {
+    await checkBothThemes(
+      <BoardCard
+        id="axe-board"
+        title="Write the brief"
+        meta={<span>Due Nov 14</span>}
+        moveOptions={[
+          { value: "todo", label: "To do" },
+          { value: "done", label: "Done" },
+        ]}
+        currentColumn="todo"
+        onMove={() => {}}
+        moveLabel="Move to"
+      />
+    );
+  });
+
+  it("an event card and an event row have no violations in either theme", async () => {
+    const formatDate = (date: Date) => String(date.getDate());
+    await checkBothThemes(
+      <div>
+        <EventCard
+          event={{ title: "Raid night", start: "2026-11-20T19:00:00.000Z", end: "2026-11-20T21:00:00.000Z", href: "/events/1" }}
+          formatDate={formatDate}
+          rangeSeparator="to"
+        />
+        <EventCard density="row" event={{ title: "Season start", start: "2026-11-12", isAllDay: true }} formatDate={formatDate} allDayLabel="All day" />
+      </div>
     );
   });
 });

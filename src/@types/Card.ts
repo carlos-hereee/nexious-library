@@ -282,3 +282,93 @@ export type SelectCardProps = {
    */
   classNames?: { root?: string; icon?: string; title?: string; subtitle?: string; selected?: string };
 };
+
+// ── BoardCard and EventCard (2026-11 item 337, Session 4b) ──
+
+/** One column a BoardCard can move to: the value `onMove` receives and the name the menu shows. */
+export interface BoardCardMoveOption {
+  value: string;
+  label: string;
+}
+/**
+ * One card on a kanban board, on the nxs-card recipe. It renders the card and its Move to select,
+ * the single pointer alternative to dragging that WCAG 2.2 SC 2.5.7 requires; dragging itself stays
+ * with the caller, which wraps the card in its own draggable element.
+ */
+export interface BoardCardProps {
+  /** The card's name, a heading. Put the opener here (a button or link with `nxs-card-link`). */
+  title: React.ReactNode;
+  /** Facts under the title (a customer, a price, a due day), in `nxs-board-card-meta`. */
+  meta?: React.ReactNode;
+  /** Status pills, in `nxs-board-card-badges`. */
+  badges?: React.ReactNode;
+  /** Anything else in the body, after the badges. */
+  children?: React.ReactNode;
+  /** Every column the board has, or only the legal targets; `currentColumn` is left out of the menu. */
+  moveOptions?: BoardCardMoveOption[];
+  /** The column the card sits in now, by value. */
+  currentColumn?: string;
+  /** Fired with the chosen column's value. With no `onMove`, or no other column, there is no select. */
+  onMove?: (value: string) => void;
+  /** The select's accessible name and its placeholder row ("Move to"). Required with `onMove`. */
+  moveLabel?: string;
+  /** Unique on the page; the select's id derives from it. A generated id when absent. */
+  id?: string;
+  /** 3 by default, as on Card. */
+  headingLevel?: CardHeadingLevel;
+  /** Dims the card while the caller drags it. */
+  isDragging?: boolean;
+  isSelected?: boolean;
+  /** "div" by default; "li" inside a column's list. */
+  as?: "div" | "article" | "li";
+  /** Appended to the root's classes. */
+  className?: string;
+}
+
+/** The one event an EventCard shows, already shaped by the caller. */
+export interface EventCardEvent {
+  title: React.ReactNode;
+  /** An ISO date time, a bare YYYY-MM-DD day (read as that local day), or a Date. */
+  start: string | Date;
+  end?: string | Date;
+  /** The dates are days: `dateTime` carries YYYY-MM-DD and the formatter is told so. */
+  isAllDay?: boolean;
+  location?: React.ReactNode;
+  badges?: React.ReactNode;
+  /** Makes the title a link; passed through safeUrl. */
+  href?: string;
+}
+/** Which end of the event a formatted date is, so a caller can word the end ("until 9 PM"). */
+export type EventCardDatePart = "start" | "end";
+/**
+ * One event as a card (`density="card"`, on Card) or a row (`density="row"`, on ListRow). Every
+ * visible date goes through the caller's `formatDate`, so the library bakes in no locale or time
+ * zone, and each one sits in a `time` element whose `dateTime` a machine can read.
+ */
+export interface EventCardProps {
+  event: EventCardEvent;
+  /** Turns a date into the text a reader sees. Called once per date shown. */
+  formatDate: (date: Date, part: EventCardDatePart, isAllDay: boolean) => string;
+  /** "card" by default. */
+  density?: "card" | "row";
+  /** Card: 3 by default. Row: the title is plain text unless this is set. */
+  headingLevel?: CardHeadingLevel;
+  /** Shown between the start and the end. A visual arrow, hidden from speech, when absent. */
+  rangeSeparator?: React.ReactNode;
+  /** A badge for an all day event ("All day"); nothing extra when absent. */
+  allDayLabel?: string;
+  /** Read before the location by a screen reader only ("Location"). */
+  locationLabel?: string;
+  /** The caller's router link; it receives `to`. A plain anchor when absent. */
+  linkComponent?: React.ElementType;
+  /** Card footer, or the row's actions slot. */
+  actions?: React.ReactNode;
+  /** A row's lead slot (an icon or a date block); unused by the card density. */
+  lead?: React.ReactNode;
+  /** "article" by default for a card, "div" for a row; "li" inside a list. */
+  as?: "div" | "article" | "li";
+  /** Appended to the root's classes. */
+  className?: string;
+  /** A description or anything else, after the location. */
+  children?: React.ReactNode;
+}

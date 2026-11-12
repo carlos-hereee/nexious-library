@@ -99,6 +99,21 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `MobileTabBarMore` and `MoreSheetProps` are exported. Part of the 5.0.0 major release (2026-11
   item 337).
 
+- **`BoardCard` and `EventCard`, on `Card` and `ListRow`.** `BoardCard` is one kanban card
+  ported from the platform client's task, order, job and ticket board cards: a `title` heading
+  (`headingLevel`, 3 by default), `meta`, `badges` and children in the body, and a Move to `Select`
+  in the footer that lists `moveOptions` without the `currentColumn` and fires `onMove` with the
+  chosen value; it is left out with one column, no `onMove` or no `moveLabel`. Dragging stays with
+  the caller, which wraps the card in its own draggable element; `isDragging` dims it. `EventCard`
+  shows one event from a view model (`title`, `start`, `end`, `isAllDay`, `location`, `badges`,
+  `href`) as a card (`density="card"`, an `article` by default) or a row (`density="row"`), with
+  every date in a `time` element carrying a machine readable `dateTime` and its text from the
+  caller's `formatDate`, so no locale or time zone is baked in. A bare YYYY-MM-DD start is read as
+  that local day. `rangeSeparator`, `allDayLabel`, `locationLabel`, `linkComponent`, `actions` and
+  `lead` are optional. Styled as `nxs-board-card` and `nxs-event-card`. `BoardCardProps`,
+  `BoardCardMoveOption`, `EventCardProps`, `EventCardEvent` and `EventCardDatePart` are exported.
+  Part of the 5.0.0 major release (2026-11 item 337).
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -141,6 +156,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   `MoreSheet` is a named modal that traps focus, closes on Escape and the scrim, locks the page and
   returns focus to More. Badges render inside each item after its label, so the name composes.
   Every item keeps a 44px target (48px in the tab bar and sheet).
+
+- **The board and event cards keep their controls real.** `BoardCard` is never a button or a tab
+  stop itself: its opener is the caller's link or button in the title and its Move to select is the
+  single pointer alternative to dragging (WCAG 2.2 SC 2.5.7), named by `moveLabel`, with a 44px
+  floor because it is the only way to move a card from a phone. `EventCard`'s default range
+  separator is a glyph hidden from speech, so a caller passes `rangeSeparator` to have the range
+  read aloud, and `locationLabel` is read before the location by a screen reader only.
 
 #### Changed
 
