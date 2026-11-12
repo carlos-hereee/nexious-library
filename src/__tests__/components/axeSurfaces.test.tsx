@@ -13,6 +13,8 @@ import SwapOrderButtons from "@nxs-molecules/buttons/SwapOrderButtons";
 import StepProgress from "@nxs-molecules/navigation/StepProgress";
 import CardGrid from "@nxs-molecules/card/CardGrid";
 import SelectCard from "@nxs-molecules/card/SelectCard";
+import ListRow from "@nxs-molecules/card/ListRow";
+import Card from "@nxs-organism/card/Card";
 import ActiveSelectionBar from "@nxs-molecules/navigation/ActiveSelectionBar";
 import type { SkeletonShape } from "nxs-errors";
 import type { PostData } from "nxs-post";
@@ -382,6 +384,45 @@ describe("axe: CardGrid and SelectCard", () => {
 
   it("an inert card carrying an ariaLabel has no violations", async () => {
     await checkBothThemes(<SelectCard title="Analytics" ariaLabel="Analytics, coming soon" disabled />);
+  });
+});
+
+describe("axe: Card and ListRow (2026-11 item 337)", () => {
+  it("a grid of nxs-cards, one linked through its title, has no violations", async () => {
+    await checkBothThemes(
+      <CardGrid>
+        <Card title="Spring sale" subtitle="Ends Friday" footer={<button type="button">Shop</button>}>
+          <p>Every sticker half off.</p>
+        </Card>
+        <Card
+          as="article"
+          isSelected
+          title={
+            <a href="#forge" className="nxs-card-link" aria-current="page">
+              Iron Forge
+            </a>
+          }
+        />
+      </CardGrid>
+    );
+  });
+
+  it("a row group with a linked row and actions has no violations", async () => {
+    await checkBothThemes(
+      <ul className="nxs-list-row-group" aria-label="Orders">
+        <ListRow as="li" title="Order 1041" subtitle="One item" meta="Nov 11" />
+        <ListRow
+          as="li"
+          isDense
+          title={
+            <a href="#order-1042" className="nxs-list-row-link">
+              Order 1042
+            </a>
+          }
+          actions={<button type="button">Refund</button>}
+        />
+      </ul>
+    );
   });
 });
 

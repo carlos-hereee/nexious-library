@@ -46,6 +46,15 @@
   --surface: #ffffff;
   --card-bg: #ffffff;
   --border: #dddddd;
+  // The card ladder's three steps, ported with nxs-card and nxs-list-row from nexious-client's
+  // vars.css (2026-11 item 337), each the client's resolved light value so a standalone or
+  // Storybook card looks the way the platform does; the client's own declarations still win by
+  // source order. --surface-edge is a CONTAINER edge, not a control boundary, which is why it can
+  // sit far under 3:1: a control's edge is --border. --surface-2 and its hover are the fill a card
+  // nested in a card or panel drops to (one signal per layer, fill or edge, never both).
+  --surface-edge: rgba(15, 23, 42, 0.08);
+  --surface-2: #f7f8fa;
+  --surface-2-hover: #eef1f5;
   --input-bg: #ffffff;
   --input-border: #cbd5e1;
   --text: #2c3e50;
@@ -266,6 +275,10 @@
   --surface: #111c2e; // card / panel surface
   --card-bg: #111c2e;
   --border: #1e293b; // subtle divider on dark
+  // The client's dark card ladder values (vars.css), so a dark card nests the way it does there.
+  --surface-edge: rgba(255, 255, 255, 0.07);
+  --surface-2: #18233a;
+  --surface-2-hover: #1d2a44;
   --input-bg: #111c2e;
   --input-border: #334155;
   --text: #f8fafc; // body text

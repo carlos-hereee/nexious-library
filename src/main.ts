@@ -99,6 +99,9 @@ export type { StepProgressProps } from "nxs-navigation";
 export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
 export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
 export type { CardGridProps, SelectCardProps } from "nxs-card";
+// One row of a list (lead, body, meta and actions slots), the nxs-list-row recipe (2026-11 item 337).
+export { default as ListRow } from "@nxs-molecules/card/ListRow";
+export type { ListRowProps } from "nxs-card";
 // The "Studying: <item> / Change" bar, with room for the caller's own controls.
 export { default as ActiveSelectionBar } from "@nxs-molecules/navigation/ActiveSelectionBar";
 export type { ActiveSelectionBarProps } from "nxs-navigation";
@@ -139,7 +142,7 @@ export {
 } from "./@types/Variant";
 export type { ButtonProps, HintButtonProps, IconButtonProps } from "nxs-button";
 export type { CalendarProps } from "nxs-calendar";
-export type { CardProps } from "nxs-card";
+export type { CardProps, CardContentProps, CardHeadingLevel } from "nxs-card";
 export type { PostProps, PostDetailProps } from "nxs-post";
 
 // ── Remaining public prop types (2026-06-29 type-surface pass) ───────────────────

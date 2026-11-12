@@ -30,7 +30,15 @@ export { default as ConfirmDialog } from "@nxs-organism/card/ConfirmDialog";
 // timer
 export { default as CountDown } from "@nxs-organism/timer/CountDown";
 
-export type { HeroCardProps, UserCardProps, CardProps, CardSectionProps, DialogProps, BannerProps } from "nxs-card";
+export type {
+  HeroCardProps,
+  UserCardProps,
+  CardProps,
+  CardContentProps,
+  CardSectionProps,
+  DialogProps,
+  BannerProps,
+} from "nxs-card";
 export type { TextBubbleProps } from "nxs-assets";
 
 // cart

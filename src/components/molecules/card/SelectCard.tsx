@@ -19,8 +19,14 @@ const SelectCard: React.FC<SelectCardProps> = (props) => {
   const { title, subtitle, icon, children, onClick, href, linkAs: LinkAs, disabled, selected } = props;
   const { ariaLabel, ariaCurrent, className, classNames } = props;
 
+  const isInteractive = !disabled && Boolean(href || onClick);
+  // The default root sits on the nxs-card recipe, plus its nav lift when the card goes somewhere.
+  // A classNames.root still REPLACES all of it: the client's cu-card cu-card-nav root is the only
+  // way SelectCard reaches the app today, and adding nxs-card under it would restyle every client
+  // card grid a month before 2026-11 item 332 moves them (the compatibility rule of item 337).
+  const defaultRoot = isInteractive ? "nxs-card nxs-card-nav nxs-select-card" : "nxs-card nxs-select-card";
   const rootClass = [
-    classNames?.root ?? "nxs-select-card",
+    classNames?.root ?? defaultRoot,
     selected ? classNames?.selected ?? "nxs-select-card-selected" : "",
     className ?? "",
   ]

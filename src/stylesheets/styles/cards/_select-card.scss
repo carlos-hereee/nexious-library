@@ -4,6 +4,11 @@
 // `.pages-panel-card-icon` (dashboard.css), the clickable card recipe SelectCard rendered with
 // there. Rebuilt from library tokens: the client's `--surface-edge` hairline is `--border` here.
 //
+// SelectCard's default root also carries `nxs-card` (plus `nxs-card-nav` when it goes somewhere,
+// 2026-11 item 337, _nxs-card.scss). This file loads after that one, so the rules below win the
+// ties and the card looks as it did in 4.x; nxs-card contributes the shared recipe and the nested
+// card rule.
+//
 // One rule for every element SelectCard renders (a link, an anchor, a button, an inert div), so
 // the reset's per element defaults are undone in one place: a button centers its content and
 // takes `width: 100%; max-width: 250px`, an anchor underlines, and neither inherits the font.

@@ -1,0 +1,181 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-list-row, the workhorse that replaces most cards ────────────────────────
+// Ported from nexious-client's `cu-list-row` block (shared/stylesheets/primitives.css, section 4,
+// 2026-11 item 337), rebuilt on library tokens. A row is FLUSH, not a box: no border or shadow at
+// rest, the dividers belong to the group, and hover is a tint, never a lift.
+
+// The container a list of rows sits in, usually a `ul`. It owns the dividers so a row never draws
+// its own edge and two rows never stack two lines.
+.nxs-list-row-group {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.nxs-list-row-group > .nxs-list-row + .nxs-list-row {
+  border-top: 1px solid var(--surface-edge);
+}
+
+.nxs-list-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--space-medium);
+  // Anchors the stretched `nxs-list-row-link` overlay below.
+  position: relative;
+  box-sizing: border-box;
+  width: 100%;
+  min-width: 0;
+  padding: var(--space-medium-small) var(--space-medium);
+  background-color: transparent;
+  color: var(--text);
+  border-radius: var(--radius-medium);
+  text-align: left;
+  transition: background-color var(--transition-fast);
+}
+
+// Leading slot: a fixed size icon, avatar or thumbnail, one radius step smaller than the row.
+.nxs-list-row-lead {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: none;
+  width: 40px;
+  height: 40px;
+  overflow: hidden;
+  border-radius: var(--radius-small);
+}
+.nxs-list-row-lead img,
+.nxs-list-row-lead svg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+// The text stack claims the free width; min-width 0 lets long text ellipsize instead of pushing
+// the meta off the row.
+.nxs-list-row-body {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-extra-small);
+}
+.nxs-list-row-title {
+  margin: 0;
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nxs-list-row-subtitle {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Trailing slots: the meta hugs the right edge, and the actions follow it.
+.nxs-list-row-meta {
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  flex: none;
+  margin-left: auto;
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}
+// Raised above the stretched link, or its buttons could never be pressed.
+.nxs-list-row-actions {
+  position: relative;
+  z-index: var(--z-raised);
+  display: flex;
+  align-items: center;
+  gap: var(--space-small);
+  flex: none;
+}
+// With no meta, the actions take over the job of hugging the right edge.
+.nxs-list-row-body + .nxs-list-row-actions {
+  margin-left: auto;
+}
+
+// ── A navigable row, through a child link ──
+// The client's cu-list-row-link made the row itself the anchor or button, which cannot hold the
+// actions slot (a button inside a button is invalid). Here the link sits in the title and its
+// ::after covers the row, so the whole row is the hit area and the actions stay pressable.
+.nxs-list-row:has(.nxs-list-row-link) {
+  // The 44px tap floor (WCAG 2.5.5) for a row that goes somewhere, dense or not.
+  min-height: var(--tap-target-min);
+  cursor: pointer;
+}
+.nxs-list-row:has(.nxs-list-row-link):hover {
+  background-color: var(--hover-bg);
+}
+.nxs-list-row-link {
+  color: inherit;
+  text-decoration: none;
+  background: none;
+  border: 0;
+  padding: 0;
+  font: inherit;
+  text-align: inherit;
+  cursor: pointer;
+}
+.nxs-list-row-link:hover {
+  color: inherit;
+  text-decoration: none;
+}
+.nxs-list-row-link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+.nxs-list-row-link:focus-visible {
+  outline: none;
+}
+// Inset, so a row flush against its group's edge never has its ring clipped.
+.nxs-list-row-link:focus-visible::after {
+  outline: var(--focus-ring);
+  outline-offset: calc(var(--focus-ring-width) * -1);
+}
+
+// Dense, for log style lists. The tap floor above still holds when the row is a link.
+.nxs-list-row-dense {
+  gap: var(--space-small);
+  padding: var(--space-small) var(--space-medium-small);
+}
+.nxs-list-row-dense .nxs-list-row-lead {
+  width: 32px;
+  height: 32px;
+}
+.nxs-list-row-dense .nxs-list-row-body {
+  gap: 0;
+}
+
+// Selected, for a single select list: a brand wash plus an inset brand rail, no layout shift. The
+// state is announced by the child control, never by the row.
+.nxs-list-row-selected {
+  background-color: var(--info-bg);
+  box-shadow: inset 2px 0 0 var(--main-brand-color);
+}
+// --info-text rather than the brand color: it is the token designed for the info fill, and the
+// brand indigo on the dark info fill would fall under AA.
+.nxs-list-row-selected .nxs-list-row-title {
+  color: var(--info-text);
+}
+.nxs-list-row-selected .nxs-list-row-subtitle {
+  color: var(--info-text);
+}
+
+@include mixins.reduced-motion {
+  .nxs-list-row {
+    transition: none;
+  }
+}

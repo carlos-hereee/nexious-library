@@ -35,6 +35,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   Three tokens gain defaults: `--on-brand-color`, `--min-button-width` and `--button-disabled-text`.
   This is part of the 5.0.0 major release (2026-11 item 337).
 
+- **`Card` takes a props API on the `nxs-card` recipe.** Without `data`, `Card` renders the
+  platform client's `cu-card` look with tokens only: optional `media` on top, a `title` rendered as
+  a heading at `headingLevel` (3 by default, 2 to 6), a `subtitle`, the children as the body and a
+  `footer` of actions, on a `div`, `article` or `li` (`as`), with an `isSelected` look. A card is
+  never a button itself: to make one clickable, put a link or button with the `nxs-card-link` class
+  in its title, and its overlay covers the card while the footer's controls stay pressable. With
+  `data`, `Card` renders exactly the 4.x `div.card` markup with CardHeader, CardBody and its CTAs,
+  unchanged. `CardContentProps` and `CardHeadingLevel` are exported beside `CardProps`. Part of the
+  5.0.0 major release (2026-11 item 337).
+
+- **`ListRow`, one row of a list.** `lead`, a body of `title`, `subtitle` and children, `meta` and
+  `actions` slots, `isDense`, `isSelected`, an optional `headingLevel` for the title and `as` (`div`
+  or `li`), styled as `nxs-list-row` from the platform client's `cu-list-row`. Rows sit in an
+  `nxs-list-row-group`, which draws the dividers, and a row is navigable through a child link or
+  button with the `nxs-list-row-link` class. `ListRowProps` is exported.
+
+- Three tokens gain defaults for the card ladder: `--surface-edge`, `--surface-2` and
+  `--surface-2-hover`, each the platform client's light and dark value.
+
 #### Fixed
 
 - **Month view event counts land on the right day.** A `"2026-06-18"` event was read as midnight UTC,
@@ -54,6 +73,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   phone width, keeps color only transitions that switch off under reduced motion, and takes the
   lighter brand accent for tertiary text on dark surfaces, where the base indigo measured about
   2.7:1.
+
+- `Card` and `ListRow` are never `role="button"`: their link or button child carries the name,
+  takes the focus ring (drawn around the whole card or row) and keeps the actions as separate tab
+  stops. A linked row keeps the 44px target in both densities, and the selected card and row move
+  their quiet text to `--info-text`, which clears AA on the info fill in both themes.
 
 - A week or day header button's name now opens with the text it shows ("Fri 11, Friday,
   September 11, 2026"), meeting WCAG 2.5.3, and carries Today in the name; the hidden span it
@@ -76,6 +100,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   so no column truncates; the gap under them is halved; day numbers sit on one line at the top of
   every tile. The default tile title for a day with no events is "No events" (it said "no events
   today" on every day).
+
+- **`SelectCard`'s default root sits on `nxs-card`.** It renders `nxs-card nxs-card-nav
+  nxs-select-card` when it is a link or a button and `nxs-card nxs-select-card` when inert, so the
+  inert tile takes the card's hover tint. A `classNames.root` still replaces the whole default, so
+  a consumer with its own card classes gets none of the new ones.
 
 #### Deprecated
 

@@ -32,7 +32,8 @@ export { default as SettingsCardHeader } from "@nxs-molecules/card/SettingsCardH
 export { default as CardDetails } from "@nxs-molecules/card/CardDetails";
 export { default as CardGrid } from "@nxs-molecules/card/CardGrid";
 export { default as SelectCard } from "@nxs-molecules/card/SelectCard";
-export type { CardProps, CardGridProps, SelectCardProps } from "nxs-card";
+export { default as ListRow } from "@nxs-molecules/card/ListRow";
+export type { CardProps, CardGridProps, SelectCardProps, ListRowProps } from "nxs-card";
 
 // errors
 export { default as EmptySection } from "@nxs-molecules/errors/EmptySection";

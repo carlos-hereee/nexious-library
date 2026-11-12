@@ -103,10 +103,36 @@ describe("SelectCard parts and classes", () => {
   });
 
   it("adds the selected class only while selected", () => {
+    // 2026-11 item 337: the default root sits on the nxs-card recipe, so nxs-card and its nav lift
+    // lead the 4.x nxs-select-card class, which stays.
     const { container, rerender } = render(<SelectCard title="Pages" onClick={() => {}} />);
-    expect(container.firstElementChild).toHaveAttribute("class", "nxs-select-card");
+    expect(container.firstElementChild).toHaveAttribute("class", "nxs-card nxs-card-nav nxs-select-card");
     rerender(<SelectCard title="Pages" onClick={() => {}} selected />);
-    expect(container.firstElementChild).toHaveAttribute("class", "nxs-select-card nxs-select-card-selected");
+    expect(container.firstElementChild).toHaveAttribute(
+      "class",
+      "nxs-card nxs-card-nav nxs-select-card nxs-select-card-selected"
+    );
+  });
+
+  it.each([
+    ["the router link", { href: "/x", linkAs: FakeLink }, "nxs-card nxs-card-nav nxs-select-card"],
+    ["the anchor", { href: "/x" }, "nxs-card nxs-card-nav nxs-select-card"],
+    ["the button", { onClick: () => {} }, "nxs-card nxs-card-nav nxs-select-card"],
+    ["the inert div", { disabled: true }, "nxs-card nxs-select-card"],
+    ["the bare tile", {}, "nxs-card nxs-select-card"],
+  ])("puts %s on nxs-card, lifting only when it goes somewhere", (_branch, branchProps, expected) => {
+    // eslint-disable-next-line react/jsx-props-no-spreading
+    const { container } = render(<SelectCard title="Pages" {...branchProps} />);
+    expect(container.firstElementChild).toHaveAttribute("class", expected);
+  });
+
+  it("keeps a classNames.root free of every nxs-card class, the client's cu-card contract", () => {
+    // The client reaches SelectCard only through classNames.root (cu-card cu-card-nav); an nxs-card
+    // class under it would restyle every client card grid before item 332 moves them.
+    const { container } = render(
+      <SelectCard title="Pages" onClick={() => {}} classNames={{ root: "cu-card cu-card-nav" }} />
+    );
+    expect(container.firstElementChild).toHaveAttribute("class", "cu-card cu-card-nav");
   });
 
   it("lets every classNames key replace its part's default, and className append to the root", () => {

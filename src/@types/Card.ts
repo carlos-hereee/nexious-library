@@ -97,6 +97,65 @@ export interface CardProps {
   onAddToCart?: (key: unknown) => void;
   setQuantity?: (key: number) => void;
 }
+// ── Card (nxs-card) and ListRow ───────────────────────────────────────────────────
+/** The heading level a card's or row's title renders at, so it fits the page's outline. */
+export type CardHeadingLevel = 2 | 3 | 4 | 5 | 6;
+/**
+ * The nxs-card recipe: optional top media, a title and a supporting line, the body as children,
+ * and a footer of actions. The card is never a button itself; to make the whole card clickable,
+ * pass a link or button with the `nxs-card-link` class as (or inside) the `title`, and its
+ * overlay covers the card while the title stays its accessible name.
+ *
+ * `data` must be absent: a `data` prop selects the 4.x legacy markup (`CardProps`).
+ */
+export interface CardContentProps {
+  data?: undefined;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  /** Rendered first, in `nxs-card-media`; an image here carries its own alt (empty when decorative). */
+  media?: React.ReactNode;
+  /** Actions at the card's foot, raised above a stretched title link so they stay pressable. */
+  footer?: React.ReactNode;
+  /** 3 by default. The title renders as this heading, or as nothing when there is no title. */
+  headingLevel?: CardHeadingLevel;
+  /** The selected look; announce the state on the child control (aria-pressed or aria-current). */
+  isSelected?: boolean;
+  /** "div" by default; "article" for a self contained item, "li" inside a list. */
+  as?: "div" | "article" | "li";
+  /** Appended to the root's classes. */
+  className?: string;
+  /** The card's body. */
+  children?: React.ReactNode;
+}
+/**
+ * One row of a list: a lead (icon, avatar or thumbnail), a body of a title, a supporting line and
+ * any extra children, a meta slot and an actions slot. Flush, never a box; put rows in an
+ * `nxs-list-row-group` (a `ul` when each row is an `li`) for the dividers. Like Card, a row is
+ * clickable only through a child link or button with the `nxs-list-row-link` class in its title.
+ */
+export interface ListRowProps {
+  /** Decorative by default (hidden); give an image its own alt when it carries meaning. */
+  lead?: React.ReactNode;
+  /** Whether the lead is hidden from assistive technology. True by default. */
+  isLeadDecorative?: boolean;
+  title?: React.ReactNode;
+  subtitle?: React.ReactNode;
+  /** Trailing facts (a time, a count, a status pill). */
+  meta?: React.ReactNode;
+  /** Trailing controls, raised above a stretched title link so they stay pressable. */
+  actions?: React.ReactNode;
+  /** Renders the title as this heading; by default the title is plain text, as most rows are. */
+  headingLevel?: CardHeadingLevel;
+  isDense?: boolean;
+  /** The selected look; announce the state on the child control (aria-pressed or aria-current). */
+  isSelected?: boolean;
+  /** "div" by default; "li" inside a `ul.nxs-list-row-group`. */
+  as?: "div" | "li";
+  /** Appended to the root's classes. */
+  className?: string;
+  /** Extra body content after the title and subtitle. */
+  children?: React.ReactNode;
+}
 export interface HeroCardProps {
   data: CardProp;
   hero?: AssetProps;
