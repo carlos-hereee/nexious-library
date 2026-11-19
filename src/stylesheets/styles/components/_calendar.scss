@@ -500,8 +500,8 @@
   box-sizing: border-box;
   width: calc(100% / var(--block-columns));
   height: calc(var(--calendar-hour-height) * var(--block-length) / 60);
-  padding-inline-end: 2px;
-  padding-block-end: 1px;
+  padding-inline-end: calc(var(--space-extra-small) / 2);
+  padding-block-end: calc(var(--space-extra-small) / 4);
   // Size containment lets the block's own height decide how much text it shows (below).
   container-type: size;
 }

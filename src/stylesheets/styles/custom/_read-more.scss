@@ -10,6 +10,9 @@
 .read-more-target {
   opacity: 0;
   max-height: 0;
+  // Not a type size: zero collapses the hidden text's line boxes along with max-height, so the
+  // collapsed block takes no space. No type token means "no text", which is why this is exempt.
+  // stylelint-disable-next-line declaration-property-value-allowed-list
   font-size: 0;
   transition: var(--transition-base);
 }

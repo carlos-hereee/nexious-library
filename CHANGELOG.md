@@ -9,6 +9,62 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Design tokens (2026-11 item 51)
+
+These entries land after the 5.0.0 publish. The library's token layer becomes the canonical source
+for the platform (root CLAUDE.md rule 24), carrying the platform's own values in light, dark and a
+new Arcane theme. The 5.0.0 notes further down are still waiting to be rolled under their own
+heading by the release.
+
+#### Added
+
+- **`nexious-library/tokens`, a framework free token module.** Plain constants with no import of
+  any kind, for native code that cannot read CSS custom properties: `space`, `fontSize`,
+  `fontWeight`, `lineHeight`, `type`, `radius` and `layout` as px numbers (plus `layout.measure`
+  as `"65ch"`), `shadow` as strings, and `color.light`, `color.dark` and `color.arcane`, each the
+  cascade an element sees. `ThemeColors` and `ThemeName` are exported with it. A parity test fails
+  when a value here and its SCSS token disagree.
+- **Type roles.** `--type-display`, `--type-title-large`, `--type-page-title`,
+  `--type-section-title`, `--type-card-title`, `--type-body`, `--type-body-small` and
+  `--type-caption`, each as `-size`, `-weight` and `-line-height`, on two new scale steps,
+  `--text-4x-large` (2.25rem) and `--text-5x-large` (3rem).
+- **Layout tokens.** `--content-max` (1120px), the one page content width, and `--measure`
+  (65ch), the body copy line length.
+- **The Arcane theme.** An `.arcane-mode` block layered on dark (light, then dark, then Arcane),
+  with its raw `--arcane-*` palette on `:root`.
+- **Shared tokens the platform already used:** `--main-border-color`, the teal `--accent` set
+  (`--accent`, `--accent-hover`, `--accent-strong`, `--accent-wash`), `--section-tint`,
+  `--on-brand-accent-color`, `--danger-fill-color`, `--focus-ring-wash` and the `--color-*`
+  aliases, each with its dark value.
+
+#### Changed
+
+- **Token values now match the platform.** Light `--border` (`#8290a5`), `--input-border`
+  (`#748399`), `--text` and `--primary-text-light-mode-color` (`#0f172a`), `--text-secondary`
+  (`#475569`), `--pending-accent-color` (`#f5cf90`) and `--max-card-width` (400px); dark
+  `--border` (`#5b6982`) and `--input-border` (`#64748b`). Dark no longer deepens the three
+  shadows, so it inherits the light ones. `--success-accent-color` and `--danger-accent-color`
+  keep the library's values, because white labels sit on both.
+- **Two raw font sizes are on the scale.** The `StepProgress` step number moves from 0.72rem to
+  `--text-extra-small` (0.75rem), and the empty `PreviewHero` from `xx-large` to
+  `--text-3x-large` (1.875rem). Every raw spacing value is now a space token or an exact `calc()`
+  of one, so nothing else moves.
+- **The `StepProgress` dot label follows the brand (a scope exception outside the lint pass).**
+  The current and done step numbers read `--on-brand-color` instead of
+  `--primary-text-dark-mode-color`: white on indigo as before, and dark ink on Arcane's violet,
+  where the old near white label measured 2.60:1.
+- **Stylelint errors on a raw font-size and on raw padding, margin and gap,** every longhand
+  included, alongside the existing hex and radius rules, and CI now runs `npm run lint:css` as a
+  hard gate.
+
+#### Accessibility
+
+- **Control boundaries clear WCAG 1.4.11.** The new light `--border` measures 3.24:1 on white and
+  the dark one 3.08:1 on the dark surface, where the old values were far under 3:1. The contrast
+  suite now asserts every pair on the Arcane theme too.
+
+### 5.0.0 notes
+
 This release is a major one and publishes as 5.0.0 (2026-11 item 337, the library component
 migration; the release script sets the number). The library becomes the home of the platform's
 buttons, cards, rows, tables, selects, search, rails, menus and paging, each under an `nxs-` class

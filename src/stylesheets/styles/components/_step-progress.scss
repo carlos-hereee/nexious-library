@@ -45,15 +45,16 @@
   height: 1.5rem;
   border-radius: var(--radius-full);
   border: 1px solid var(--border);
-  font-size: 0.72rem;
+  font-size: var(--text-extra-small);
 }
 
-// The label on a brand fill. --primary-text-dark-mode-color is the library's token for exactly
-// that, the same one .btn-primary paints its label with.
+// The label on a brand fill reads --on-brand-color, the token that FLIPS with the brand: white on
+// the indigo of light and dark, dark ink on Arcane's violet, which is a light fill where near
+// white measured 2.60:1. A fixed light text token cannot follow that flip.
 .nxs-step-progress-step-current .nxs-step-progress-step-num,
 .nxs-step-progress-step-done .nxs-step-progress-step-num {
   background: var(--main-brand-color);
-  color: var(--primary-text-dark-mode-color);
+  color: var(--on-brand-color);
   border-color: var(--main-brand-color);
 }
 

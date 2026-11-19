@@ -25,13 +25,21 @@
           "12px",
           "16px"
         ],
-        "gap": ["/^var\\(--space/", "0", "inherit"],
-        "padding": ["/^var\\(--space/", "/^var\\(--control-padding/", "0", "inherit"],
-        "margin": ["/^var\\(--space/", "0", "auto", "inherit", "0 auto"]
+        "font-size": [
+          "/^var\\(--(type-[a-z-]+-size|text-[a-z0-9-]+)\\)$/",
+          "inherit",
+          "/^clamp\\(var\\(--(type|text)-[a-z0-9-]+\\), [0-9.]+vw( \\+ var\\(--[a-z0-9-]+\\))?, var\\(--(type|text)-[a-z0-9-]+\\)\\)$/"
+        ],
+        "/^(padding|margin)(-(top|right|bottom|left|inline|block)(-(start|end))?)?$/": [
+          "/^(var\\(--(space|control-padding)-[a-z0-9-]+\\)|0|auto|inherit|-?[0-9.]+%|env\\(safe-area-inset-(top|right|bottom|left)\\)|calc\\((\\s*(-?[0-9.]+|var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|[-+*/])\\s*)+\\)|max\\((var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0)(,\\s*(var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0))*\\))(\\s+(var\\(--(space|control-padding)-[a-z0-9-]+\\)|0|auto|inherit|-?[0-9.]+%|env\\(safe-area-inset-(top|right|bottom|left)\\)|calc\\((\\s*(-?[0-9.]+|var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|[-+*/])\\s*)+\\)|max\\((var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0)(,\\s*(var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0))*\\))){0,3}$/"
+        ],
+        "/^(gap|row-gap|column-gap)$/": [
+          "/^(var\\(--(space|control-padding)-[a-z0-9-]+\\)|0|auto|inherit|-?[0-9.]+%|env\\(safe-area-inset-(top|right|bottom|left)\\)|calc\\((\\s*(-?[0-9.]+|var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|[-+*/])\\s*)+\\)|max\\((var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0)(,\\s*(var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0))*\\))(\\s+(var\\(--(space|control-padding)-[a-z0-9-]+\\)|0|auto|inherit|-?[0-9.]+%|env\\(safe-area-inset-(top|right|bottom|left)\\)|calc\\((\\s*(-?[0-9.]+|var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|[-+*/])\\s*)+\\)|max\\((var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0)(,\\s*(var\\(--(space|control-padding)-[a-z0-9-]+\\)|env\\(safe-area-inset-(top|right|bottom|left)\\)|0))*\\))){0,3}$/"
+        ]
       },
       {
         "severity": "error",
-        "message": "Use a scale token. Radius: var(--radius-*) or a canonical step (4/8/12/16px). Spacing: var(--space-*). Stray radii (5/6/7/10/15px) and raw rem spacing are the drift this rework is removing."
+        "message": "Use a design token: var(--radius-*) or a canonical radius step (4/8/12/16px), var(--type-*-size) or var(--text-*) for font-size, and var(--space-*) for padding, margin and gap (0, auto, a percentage, env(safe-area-inset-*) and a calc() or max() of space tokens are allowed too). See root CLAUDE.md rule 24."
       }
     ]
   },

@@ -52,6 +52,10 @@
   --focus-ring-offset: 2px;
   --focus-ring-color: var(--main-brand-color);
   --focus-ring: var(--focus-ring-width) solid var(--focus-ring-color);
+  // The soft halo a FIELD gets on focus, as `box-shadow: 0 0 0 3px var(--focus-ring-wash)`. Kept
+  // apart from --focus-ring-color because a field draws focus as a border color change plus this
+  // halo rather than as an outline, and a halo at a lower alpha all but vanishes on white.
+  --focus-ring-wash: rgba(79, 70, 229, 0.25);
 
   // ── Touch ───────────────────────────────────────────────────────────────────────
   // WCAG 2.5.5 target size. Applied at mobile width only, in Phase 3; naming it here so
@@ -66,4 +70,15 @@
 .dark-mode,
 [data-theme="dark"] {
   --focus-ring-color: var(--main-brand-color-accent);
+  // A lift on navy needs more alpha than a wash on white to read as the same step.
+  --focus-ring-wash: rgba(129, 140, 248, 0.35);
+}
+
+// Arcane's ring is the light violet, and it lives here rather than in the .arcane-mode block of
+// _tokens.scss because this file loads AFTER that one: on the shell element that carries both
+// `dark-mode arcane-mode`, the dark rule just above would otherwise win on source order and the
+// ring would stay indigo accent on a violet theme.
+.arcane-mode {
+  --focus-ring-color: var(--arcane-accent-strong);
+  --focus-ring-wash: rgba(196, 181, 253, 0.35);
 }

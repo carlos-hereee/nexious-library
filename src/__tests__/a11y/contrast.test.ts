@@ -19,7 +19,7 @@ import { resolve } from "path";
 // ── Token parsing ────────────────────────────────────────────────────────────────
 
 type TokenMap = Record<string, string>;
-type ThemeName = "light" | "dark";
+type ThemeName = "light" | "dark" | "arcane";
 
 /**
  * Strip SCSS comments before parsing. The token files are mostly prose, and a `//` line
@@ -29,16 +29,32 @@ type ThemeName = "light" | "dark";
 const stripComments = (scss: string): string =>
   scss.replace(/\/\*[\s\S]*?\*\//g, "").replace(/(^|\s)\/\/[^\n]*/g, "$1");
 
+/** Which theme map a token block feeds, or null for a block that is not a theme root. */
+function selectThemeTarget(
+  selector: string,
+  maps: { light: TokenMap; darkOverrides: TokenMap; arcaneOverrides: TokenMap }
+): TokenMap | null {
+  if (selector.includes(":root")) return maps.light;
+  if (selector === ".arcane-mode") return maps.arcaneOverrides;
+  if (/\.dark-mode|\[data-theme="dark"\]/.test(selector)) return maps.darkOverrides;
+  return null;
+}
+
 /**
- * Read the token layer into one map per theme. Both files declare a `:root` block and a
- * `.dark-mode, [data-theme="dark"]` block, neither nested, so a flat block scan is enough
- * and does not need a real SCSS parser. Dark is built as light-plus-overrides on purpose:
- * that is what the cascade actually does, and it is why pairs the dark block never
+ * Read the token layer into one map per theme. Both files declare a `:root` block, a
+ * `.dark-mode, [data-theme="dark"]` block and an `.arcane-mode` block, none nested, so a flat
+ * block scan is enough and does not need a real SCSS parser. Dark is built as light-plus-overrides
+ * on purpose: that is what the cascade actually does, and it is why pairs the dark block never
  * reassigns (--success-accent-color, --status-on-accent) still have to be asserted on dark.
+ * Arcane goes one layer further, built the way nexious-client's contrast suite builds it: the
+ * platform shell carries BOTH `dark-mode arcane-mode`, so arcane is light, then the dark
+ * overrides, then the Arcane overrides. The Arcane selector is matched EXACTLY, so a compound
+ * selector such as `.arcane-mode .x` can never poison the map.
  */
 const readThemeMaps = (): Record<ThemeName, TokenMap> => {
   const light: TokenMap = {};
   const darkOverrides: TokenMap = {};
+  const arcaneOverrides: TokenMap = {};
 
   ["_tokens.scss", "_control.scss"].forEach((file) => {
     const source = stripComments(readFileSync(resolve(__dirname, "../../stylesheets/vars", file), "utf8"));
@@ -47,8 +63,7 @@ const readThemeMaps = (): Record<ThemeName, TokenMap> => {
 
     for (let block = blockPattern.exec(source); block !== null; block = blockPattern.exec(source)) {
       const [, selector, body] = block;
-      const isDark = /\.dark-mode|\[data-theme="dark"\]/.test(selector);
-      const target = selector.includes(":root") ? light : isDark ? darkOverrides : null;
+      const target = selectThemeTarget(selector.trim(), { light, darkOverrides, arcaneOverrides });
       if (target) {
         declarationPattern.lastIndex = 0;
         for (let decl = declarationPattern.exec(body); decl !== null; decl = declarationPattern.exec(body)) {
@@ -58,7 +73,11 @@ const readThemeMaps = (): Record<ThemeName, TokenMap> => {
     }
   });
 
-  return { light, dark: { ...light, ...darkOverrides } };
+  return {
+    light,
+    dark: { ...light, ...darkOverrides },
+    arcane: { ...light, ...darkOverrides, ...arcaneOverrides },
+  };
 };
 
 const themes = readThemeMaps();
@@ -195,7 +214,7 @@ const assertContrast = (
   expect(measured.ratio).toBeGreaterThanOrEqual(minimum);
 };
 
-const allThemes: ThemeName[] = ["light", "dark"];
+const allThemes: ThemeName[] = ["light", "dark", "arcane"];
 // Every text pair is asserted on BOTH surfaces. They are close but not identical (light
 // --bg is #f9fafb, not white), and a token tuned against one can quietly miss on the other.
 const surfaces = ["--surface", "--bg"];
@@ -248,10 +267,18 @@ describe("contrast math", () => {
 });
 
 describe("token parsing", () => {
-  it("reads both theme blocks out of the token layer", () => {
+  it("reads all three theme blocks out of the token layer", () => {
     expect(Object.keys(themes.light).length).toBeGreaterThan(30);
     expect(themes.light["--surface"]).toBe("#ffffff");
     expect(themes.dark["--surface"]).toBe("#111c2e");
+    expect(resolveToken(themes.arcane, "--surface")).toBe("#171331");
+  });
+
+  it("layers Arcane on dark, so a token Arcane leaves alone keeps its dark value", () => {
+    // --accent is deliberately left unset in .arcane-mode; if the layering broke, Arcane would
+    // silently fall back to the LIGHT teal and every Arcane assertion below would change meaning.
+    expect(themes.arcane["--accent"]).toBe(themes.dark["--accent"]);
+    expect(themes.arcane["--accent"]).not.toBe(themes.light["--accent"]);
   });
 
   it("lets dark inherit every token it does not reassign", () => {
@@ -355,7 +382,7 @@ describe.each(allThemes)("quiet-text hierarchy: %s theme", (theme) => {
 // in both themes rather than trusted from the client, whose tokens are not these.
 describe.each(allThemes)("promoted components: %s theme", (theme) => {
   it("StepProgress: the step number on its brand dot clears 1.4.3 AA", () => {
-    assertContrast(theme, "--primary-text-dark-mode-color", "--main-brand-color", BODY_TEXT_AA, "1.4.3");
+    assertContrast(theme, "--on-brand-color", "--main-brand-color", BODY_TEXT_AA, "1.4.3");
   });
 
   it.each(["--text", "--text-secondary"])("SelectCard: %s on a card at rest clears 1.4.3 AA", (text) => {
@@ -370,7 +397,8 @@ describe.each(allThemes)("promoted components: %s theme", (theme) => {
 });
 
 // The ActiveSelectionBar change button is brand text on --surface. The base indigo fails on the
-// dark surface, so its skin swaps to the accent there; this pins both halves of that swap.
+// dark surface, so its skin swaps to the accent there; this pins both halves of that swap, plus
+// the Arcane surface, which keeps the dark skin.
 describe("promoted components: ActiveSelectionBar change button", () => {
   it.each(surfaces)("--main-brand-color clears 1.4.3 AA on light %s", (surface) => {
     assertContrast("light", "--main-brand-color", surface, BODY_TEXT_AA, "1.4.3");
@@ -378,5 +406,9 @@ describe("promoted components: ActiveSelectionBar change button", () => {
 
   it.each(surfaces)("--main-brand-color-accent clears 1.4.3 AA on dark %s", (surface) => {
     assertContrast("dark", "--main-brand-color-accent", surface, BODY_TEXT_AA, "1.4.3");
+  });
+
+  it.each(surfaces)("--main-brand-color-accent clears 1.4.3 AA on Arcane %s", (surface) => {
+    assertContrast("arcane", "--main-brand-color-accent", surface, BODY_TEXT_AA, "1.4.3");
   });
 });

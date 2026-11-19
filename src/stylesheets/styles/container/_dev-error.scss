@@ -283,7 +283,7 @@
     font-family: inherit;
     font-size: var(--text-extra-small);
     margin-bottom: var(--space-extra-small);
-    padding-left: 1.1rem;
+    padding-left: calc(var(--space-medium) * 1.1);
     text-indent: -1.1rem;
     &::before {
       content: "→ ";

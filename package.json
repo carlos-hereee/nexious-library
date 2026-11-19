@@ -67,6 +67,12 @@
         "types": "./dist/@types/math/index.d.ts"
       }
     },
+    "./tokens": {
+      "import": {
+        "types": "./dist/@types/tokens/index.d.ts",
+        "default": "./dist/esm/tokens/index.js"
+      }
+    },
     "./fontawesome-icons": {
       "import": {
         "types": "./dist/@types/icons-fontawesome/index.d.ts",

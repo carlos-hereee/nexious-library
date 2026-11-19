@@ -40,5 +40,8 @@ jobs:
       # then drop continue-on-error to make lint a hard gate.
       - run: npm run lint
         continue-on-error: true
+      # A hard gate, unlike the eslint step above: the stylesheets are already at zero, so a new raw
+      # hex, off scale radius, raw font-size or raw spacing value fails here (root CLAUDE.md rule 24).
+      - run: npm run lint:css
       - run: npx tsc --noEmit
       - run: npm test
