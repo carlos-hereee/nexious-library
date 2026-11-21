@@ -33,6 +33,11 @@
   // with color-mix rather than pinned as an rgba literal so it tracks whatever the brand
   // token actually is, including a consumer override.
   --brand-wash: color-mix(in srgb, var(--main-brand-color) 6%, transparent);
+  // The ProgressRing arc (2026-11 item 387, decision D2). Its own token rather than the brand on
+  // purpose: the base indigo is 2.49:1 on the dark --surface-2 track, under the 1.4.11 bar of 3:1,
+  // so dark takes the accent while light and Arcane keep the brand. contrast.test.ts asserts the
+  // arc on the track and on the card surface in all three themes.
+  --progress-ring-arc: var(--main-brand-color);
 
   // ── Accent (teal): AI and live states only ───────────────────────────────────────
   // Teal carries one meaning, Dero and AI affordances plus live or real time states, so its
@@ -340,6 +345,13 @@
   // One width for every navigation rail (SectionedRail). Library only under this name: the
   // client calls the same width --cu-rail-width, a known two name duplicate (TECH_DEBT).
   --rail-width: 240px;
+  // The ProgressRing's three footprints (2026-11 item 387), lifted from Study's 36, 56 and 104px
+  // ring. The hero opening is about 78px, which is why its caption caps at 4.75rem: "Course ready"
+  // and "Curso listo" each fit on one line at the caption size. Shrinking the hero breaks that.
+  --progress-ring-size-small: 2.25rem;
+  --progress-ring-size-large: 3.5rem;
+  --progress-ring-size-hero: 6.5rem;
+  --progress-ring-caption-max: 4.75rem;
 }
 
 // ── Dark theme ──────────────────────────────────────────────────────────────────
@@ -387,6 +399,8 @@
   // The wash follows the lighter brand accent on dark, and needs more alpha for the same
   // reason the hover tint does.
   --brand-wash: color-mix(in srgb, var(--main-brand-color-accent) 16%, transparent);
+  // The ring arc takes the lighter accent on navy (5.25:1 on --surface-2); see :root.
+  --progress-ring-arc: var(--main-brand-color-accent);
   // Teal brightens on navy so it still reads as the AI and live signal.
   --accent: #2dd4bf;
   --accent-hover: #5eead4;
@@ -439,6 +453,9 @@
   --section-tint: var(--arcane-section-tint);
   --main-brand-color: var(--arcane-accent);
   --main-brand-color-accent: var(--arcane-accent-strong);
+  // Back to the brand: Arcane's violet already clears 3:1 on its track, and without this line the
+  // ring would inherit dark's accent and read lighter than every other brand mark in the theme.
+  --progress-ring-arc: var(--main-brand-color);
   --main-brand-hover-color: var(--arcane-accent-strong);
   --main-border-color: var(--arcane-border-2);
   // Violet is a LIGHT fill: white on #a78bfa is 2.72:1, so the brand label flips to the

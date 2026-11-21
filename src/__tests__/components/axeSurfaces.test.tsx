@@ -34,6 +34,7 @@ import AttentionRow from "@nxs-molecules/card/AttentionRow";
 import AnnouncementCard from "@nxs-molecules/card/AnnouncementCard";
 import RankList from "@nxs-molecules/card/RankList";
 import BarChart from "@nxs-molecules/card/BarChart";
+import ProgressRing from "@nxs-molecules/card/ProgressRing";
 import ActivityList from "@nxs-molecules/card/ActivityList";
 import StatusPill from "@nxs-molecules/card/StatusPill";
 import StatusBadge from "@nxs-molecules/card/StatusBadge";
@@ -812,5 +813,20 @@ describe("axe: the second Phase 5 batch (2026-11 item 337)", () => {
       </>
     );
     expect(await axe(container, AXE_OPTIONS)).toHaveNoViolations();
+  });
+});
+
+describe("axe: ProgressRing (2026-11 item 387)", () => {
+  it("every size, a custom value text and hero children have no violations in either theme", async () => {
+    await checkBothThemes(
+      <p>
+        <ProgressRing value={0} label="Course ready" />
+        <ProgressRing value={50} label="Course ready" size="large" />
+        <ProgressRing value={100} label="Course ready" size="hero" />
+        <ProgressRing value={60} label="Weekly goal" valueText="3 of 5" size="hero">
+          <span>applications</span>
+        </ProgressRing>
+      </p>
+    );
   });
 });

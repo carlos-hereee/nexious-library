@@ -389,6 +389,14 @@ describe.each(allThemes)("promoted components: %s theme", (theme) => {
     assertContrast(theme, text, "--card-bg", BODY_TEXT_AA, "1.4.3");
   });
 
+  // ProgressRing (2026-11 item 387, D2): the arc is a graphic that carries the value, so 1.4.11
+  // asks 3:1 against what sits next to it, the --surface-2 track and the card it is placed on.
+  // The brand indigo measures 2.49:1 on the dark track, which is why --progress-ring-arc takes the
+  // accent on dark; this keeps that swap honest in every theme.
+  it.each(["--surface-2", "--card-bg"])("ProgressRing: the arc on %s clears 1.4.11 non-text contrast", (background) => {
+    assertContrast(theme, "--progress-ring-arc", background, NON_TEXT_AA, "1.4.11");
+  });
+
   it("SelectCard: the title on a selected card clears 1.4.3 AA", () => {
     // The subtitle there takes --info-text, already asserted on --info-bg above. It is NOT
     // --text-secondary, which measures 4.49:1 on the dark info fill.

@@ -9,6 +9,29 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### ProgressRing, a percent as a circular arc (2026-11 item 387 Phase 1, prerelease 5.1.0-next.0)
+
+#### Added
+
+- **`ProgressRing`** (`nexious-library` and `nexious-library/@nxs-molecules`), lifted from the
+  client's Study `StudyProgressRing` so Study and Job Hunt draw one ring. `value` is clamped to 0
+  to 100 and rounded; `label` is required and the whole ring is one `role="img"` named
+  "label: value"; `size` is `small` (default), `large` or `hero`; `valueText` replaces the printed
+  and spoken percent ("3 of 5"); `children` show inside the hero ring in place of its default label
+  caption (non interactive text only, because they sit inside the image); `className` and
+  `classNames.root` like the other molecules. The arc is drawn with stroke-dasharray attributes
+  from 12 o'clock and the value is HTML outside the viewBox. `ProgressRingProps` and
+  `ProgressRingSize` are exported. Styles are the new `nxs-progress-ring` block.
+- **`--progress-ring-arc`** (`color.<theme>.progressRingArc` in `nexious-library/tokens`): the
+  brand in light and Arcane, the brand accent in dark, where the indigo measured 2.49:1 on the
+  track. `contrast.test.ts` asserts the arc at 3:1 on `--surface-2` and `--card-bg` in all three
+  themes.
+- **`--progress-ring-size-small`, `-large`, `-hero` and `--progress-ring-caption-max`** (2.25rem,
+  3.5rem, 6.5rem, 4.75rem), the ring's geometry, web only like the row heights.
+
+Consumers that mirror the token layer (the client's vars.css and theme.css) add these five tokens
+in the same release, or the client parity test fails.
+
 ### UploadFile can hand its picker to the consumer's own element (2026-11 item 385 Phase 3)
 
 #### Added

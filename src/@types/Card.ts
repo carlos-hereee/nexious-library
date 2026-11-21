@@ -523,6 +523,39 @@ export interface BarChartProps {
   className?: string;
 }
 
+// ── ProgressRing (2026-11 item 387, Phase 1) ──────────────────────────────────────
+/** The ring's footprint: small beside a line of text, large in a card, hero in a banner. */
+export type ProgressRingSize = "small" | "large" | "hero";
+
+/**
+ * A percent drawn as a circular arc with its value printed as text, lifted from the client's
+ * Study StudyProgressRing. The whole ring is one `role="img"` whose name is the label and value.
+ */
+export interface ProgressRingProps {
+  /** The percent. Clamped to 0 to 100 and rounded to a whole number before it is drawn or spoken. */
+  value: number;
+  /** What the ring measures ("Course ready"), already translated. Required: it is the ring's accessible name. */
+  label: string;
+  /** "small" by default. */
+  size?: ProgressRingSize;
+  /**
+   * The printed and spoken value, already formatted ("3 of 5"). Defaults to the rounded percent
+   * followed by a percent sign.
+   */
+  valueText?: string;
+  /**
+   * Hero only: shown inside the ring under the value, in place of the label caption the hero
+   * shows by default. Non interactive text only: it sits inside `role="img"`, so assistive tech
+   * treats it as presentational and a link or button there would be unreachable. Ignored by the
+   * small and large sizes.
+   */
+  children?: React.ReactNode;
+  /** Appended to the root's classes. */
+  className?: string;
+  /** `root` REPLACES the default `nxs-progress-ring` class. */
+  classNames?: { root?: string };
+}
+
 /** One activity row: an order, a booking, a notice. Every string arrives translated. */
 export interface ActivityListItem {
   id: string;

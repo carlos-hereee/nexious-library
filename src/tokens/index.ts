@@ -207,6 +207,7 @@ export const color = {
     skeletonShimmer: "rgba(255, 255, 255, 0.65)",
     focusRingColor: "#4f46e5",
     focusRingWash: "rgba(79, 70, 229, 0.25)",
+    progressRingArc: "#4f46e5",
   },
   dark: {
     mainBrandColor: "#4f46e5",
@@ -311,6 +312,7 @@ export const color = {
     skeletonShimmer: "rgba(255, 255, 255, 0.16)",
     focusRingColor: "#818cf8",
     focusRingWash: "rgba(129, 140, 248, 0.35)",
+    progressRingArc: "#818cf8",
   },
   arcane: {
     mainBrandColor: "#a78bfa",
@@ -415,6 +417,7 @@ export const color = {
     skeletonShimmer: "rgba(255, 255, 255, 0.16)",
     focusRingColor: "#c4b5fd",
     focusRingWash: "rgba(196, 181, 253, 0.35)",
+    progressRingArc: "#a78bfa",
   },
 } as const;
 

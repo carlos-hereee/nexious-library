@@ -38,6 +38,7 @@ export { default as AttentionRow } from "@nxs-molecules/card/AttentionRow";
 export { default as AnnouncementCard } from "@nxs-molecules/card/AnnouncementCard";
 export { default as RankList } from "@nxs-molecules/card/RankList";
 export { default as BarChart } from "@nxs-molecules/card/BarChart";
+export { default as ProgressRing } from "@nxs-molecules/card/ProgressRing";
 export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
 export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
 export { default as StatusBadge } from "@nxs-molecules/card/StatusBadge";
@@ -48,6 +49,7 @@ export type {
   AnnouncementCardProps,
   RankListProps,
   BarChartProps,
+  ProgressRingProps,
   ActivityListProps,
   StatusPillProps,
   StatusBadgeProps,

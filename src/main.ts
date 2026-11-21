@@ -124,6 +124,8 @@ export { default as AttentionRow } from "@nxs-molecules/card/AttentionRow";
 export { default as AnnouncementCard } from "@nxs-molecules/card/AnnouncementCard";
 export { default as RankList } from "@nxs-molecules/card/RankList";
 export { default as BarChart } from "@nxs-molecules/card/BarChart";
+// A percent as a circular arc with its value as text (2026-11 item 387, Phase 1), lifted from Study.
+export { default as ProgressRing } from "@nxs-molecules/card/ProgressRing";
 export { default as ActivityList } from "@nxs-molecules/card/ActivityList";
 export { default as StatusPill } from "@nxs-molecules/card/StatusPill";
 export { default as StatusBadge } from "@nxs-molecules/card/StatusBadge";
@@ -137,6 +139,8 @@ export type {
   RankListRow,
   BarChartProps,
   BarChartPoint,
+  ProgressRingProps,
+  ProgressRingSize,
   ActivityListProps,
   ActivityListItem,
   StatusPillProps,
