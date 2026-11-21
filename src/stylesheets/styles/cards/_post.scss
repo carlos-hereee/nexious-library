@@ -408,7 +408,7 @@
 .post-detail {
   display: flex;
   flex-direction: column;
-  gap: var(--space-medium);
+  gap: calc(var(--space-medium) + var(--space-stack-extra));
   max-width: 720px;
   margin: 0 auto;
   padding: var(--space-medium);

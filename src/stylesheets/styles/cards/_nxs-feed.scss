@@ -63,7 +63,7 @@
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
-  gap: var(--space-extra-small);
+  gap: calc(var(--space-extra-small) + var(--space-stack-extra));
   min-width: 0;
 }
 .nxs-activity-list-title {
@@ -157,7 +157,7 @@ a.nxs-activity-list-title:hover {
 .nxs-grid-section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-medium);
+  gap: calc(var(--space-medium) + var(--space-stack-extra));
 }
 // The titles stack on the left; the action trails and wraps under them on a narrow screen.
 .nxs-grid-section-header {
@@ -170,7 +170,7 @@ a.nxs-activity-list-title:hover {
 .nxs-grid-section-titles {
   display: flex;
   flex-direction: column;
-  gap: var(--space-extra-small);
+  gap: calc(var(--space-extra-small) + var(--space-stack-extra));
   min-width: 0;
 }
 // The heading takes programmatic focus from an overview jump; the margin keeps it clear of a

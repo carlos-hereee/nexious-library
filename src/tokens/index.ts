@@ -24,6 +24,8 @@ export const space = {
   extraLarge: 32,
   section: 48,
   page: 64,
+  /** Added to the row gap of every shared vertical stack, --space-stack-extra. */
+  stackExtra: 4,
 } as const;
 
 /** The type scale in px (16px per rem), the --text-* size steps. */

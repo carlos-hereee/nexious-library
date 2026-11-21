@@ -68,7 +68,7 @@
 .nxs-toggle-row-text {
   display: flex;
   flex-direction: column;
-  gap: var(--space-extra-small);
+  gap: calc(var(--space-extra-small) + var(--space-stack-extra));
   min-width: 0;
 }
 .nxs-toggle-row-label {

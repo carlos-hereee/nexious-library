@@ -7,7 +7,7 @@
 .field-shell {
   display: flex;
   flex-direction: column;
-  gap: var(--space-small);
+  gap: calc(var(--space-small) + var(--space-stack-extra));
   width: 100%;
   // The shell is a flex item inside .form-field. Without this, a wide control (a long select
   // option, a preview image) pushes the shell past its column instead of shrinking, because a

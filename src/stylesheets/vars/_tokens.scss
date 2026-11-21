@@ -199,6 +199,10 @@
   --space-extra-large: 2rem;
   --space-section: 3rem;
   --space-page: 4rem;
+  // Added to the row gap of every shared vertical stack (cards, panels, stat tiles, list rows,
+  // fields, sections) so the space between stacked components and text is tuned in one place,
+  // never per surface. The owner asked for a quarter rem more breathing room platform wide.
+  --space-stack-extra: 0.25rem;
 
   // ── Radii ───────────────────────────────────────────────────────────────────────
   // The design language's 4 / 8 / 12 / 16. The scale has to be exact for the concentric

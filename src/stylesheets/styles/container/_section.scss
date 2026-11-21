@@ -9,7 +9,7 @@
 .section {
   display: flex;
   flex-direction: column;
-  gap: var(--space-medium);
+  gap: calc(var(--space-medium) + var(--space-stack-extra));
   min-width: 0;
 }
 .section + .section {

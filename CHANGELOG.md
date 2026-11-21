@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### A quarter rem more vertical space in every stack (owner request, no ledger item)
+
+#### Added
+
+- **`--space-stack-extra` (0.25rem, `space.stackExtra` in `nexious-library/tokens`).** Added to the
+  row gap of every shared vertical stack, so the space between stacked components and text is
+  tuned in one place.
+
+#### Changed
+
+- **The row gap of `.nxs-card`, `.nxs-card-header`, `.nxs-card-body`, `.nxs-list-row-body`,
+  `.nxs-stat`, `.nxs-metric-row`, `.nxs-grid-section`, `.nxs-grid-section-titles`,
+  `.nxs-activity-list-text`, `.nxs-rank-list-text`, `.nxs-toggle-row-text`, `.nxs-select-card`,
+  `.panel`, `.panel-body`, `.section`, `.field-shell`, `.form-field-container`, `.form-field`,
+  `.settings-card` and `.post-detail` grows by `--space-stack-extra`.** Column gaps are unchanged.
+
 ### Stat tiles draw no frame (owner request, no ledger item)
 
 #### Changed

@@ -6,7 +6,7 @@
 .settings-card {
   display: flex;
   flex-direction: column;
-  gap: var(--space-medium);
+  gap: calc(var(--space-medium) + var(--space-stack-extra));
 }
 
 // The accordion toggle. It is a real button, so rule 5 applies even though the button
