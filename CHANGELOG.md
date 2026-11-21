@@ -9,6 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### MetricRow tiles can name who a value belongs to (owner request, no ledger item)
+
+#### Added
+
+- **`MetricRowEntry.subject`.** An optional node rendered as `.nxs-stat-subject` on its own line
+  under the value (the top scorer's name beside their score), so a name with no length limit never
+  sits in headline type. Shown only with a value. Additive; no existing entry changes.
+
 ### A quarter rem more vertical space in every stack (owner request, no ledger item)
 
 #### Added

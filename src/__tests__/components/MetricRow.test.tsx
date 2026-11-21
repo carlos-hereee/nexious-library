@@ -7,8 +7,8 @@ import type { MetricRowEntry } from "nxs-card";
 expect.extend(toHaveNoViolations);
 
 // MetricRow (2026-11 item 337, Phase 5), ported from the client's features/dashboard/components/
-// MetricRow.tsx and its cu-stat primitives. Pinned: each tile's label, value, toned delta with its
-// spoken direction, hint and empty text, the scroll variant, the trailing cell, the optional group
+// MetricRow.tsx and its cu-stat primitives. Pinned: each tile's label, value, subject, toned delta
+// with its spoken direction, hint and empty text, the scroll variant, the trailing cell, the optional group
 // name, and jest-axe. The component formats nothing: every value arrives as the caller wrote it.
 
 const AXE_OPTIONS = { rules: { region: { enabled: false } } };
@@ -16,7 +16,7 @@ const AXE_OPTIONS = { rules: { region: { enabled: false } } };
 const entries: MetricRowEntry[] = [
   { id: "sales", label: "Store sales", value: "$1,240.00", delta: "+12%", trend: "up", trendLabel: "Up" },
   { id: "members", label: "Members", value: "38", delta: "-3%", trend: "down", hint: "Across every app" },
-  { id: "views", label: "Page views", emptyText: "Not available yet", hint: "never shown without a value" },
+  { id: "views", label: "Page views", emptyText: "Not available yet", hint: "never shown without a value", subject: "no subject either" },
   { id: "tickets", label: "Tickets", value: 0, delta: "0%" },
 ];
 
@@ -34,6 +34,17 @@ describe("MetricRow", () => {
     expect(screen.getByText("Across every app")).toHaveClass("nxs-stat-hint");
   });
 
+  it("puts the subject on its own line under the value, never inside it", () => {
+    const { container } = render(
+      <MetricRow entries={[{ id: "top", label: "Top scorer", value: "1980", subject: "shadowgamer", hint: "All time" }]} />
+    );
+    const tile = container.querySelector(".nxs-stat") as HTMLElement;
+    expect(tile.querySelector(".nxs-stat-value")).toHaveTextContent(/^1980$/);
+    expect(screen.getByText("shadowgamer")).toHaveClass("nxs-stat-subject");
+    const order = Array.from(tile.children).map((child) => child.className);
+    expect(order).toEqual(["nxs-stat-label", "nxs-stat-value", "nxs-stat-subject", "nxs-stat-hint"]);
+  });
+
   it("tones the delta by trend and speaks the direction before it", () => {
     const { container } = render(<MetricRow entries={entries} />);
     const deltas = container.querySelectorAll(".nxs-stat-delta");
@@ -48,6 +59,7 @@ describe("MetricRow", () => {
     render(<MetricRow entries={entries} />);
     expect(screen.getByText("Not available yet")).toHaveClass("nxs-stat-hint", "nxs-stat-empty");
     expect(screen.queryByText("never shown without a value")).not.toBeInTheDocument();
+    expect(screen.queryByText("no subject either")).not.toBeInTheDocument();
     expect(screen.getByText("0")).toHaveClass("nxs-stat-value");
   });
 

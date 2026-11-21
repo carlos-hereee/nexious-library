@@ -11,14 +11,15 @@ const DELTA_TONE_CLASS: Record<NonNullable<MetricRowEntry["trend"]>, string> = {
   flat: "nxs-stat-delta",
 };
 
-/** One tile: the label, then the value or its empty text, the delta and the hint. */
+/** One tile: the label, then the value or its empty text, the subject, the delta and the hint. */
 const MetricTile = ({ entry }: { entry: MetricRowEntry }) => {
-  const { id, label, value, delta, trend, trendLabel, hint, emptyText } = entry;
+  const { id, label, value, subject, delta, trend, trendLabel, hint, emptyText } = entry;
   const hasValue = value !== undefined && value !== null;
   return (
     <div className="nxs-stat" data-metric={id}>
       <p className="nxs-stat-label">{label}</p>
       {hasValue ? <p className="nxs-stat-value">{value}</p> : null}
+      {hasValue && subject ? <p className="nxs-stat-subject">{subject}</p> : null}
       {!hasValue && emptyText ? <p className="nxs-stat-hint nxs-stat-empty">{emptyText}</p> : null}
       {hasValue && delta ? (
         <span className={DELTA_TONE_CLASS[trend ?? "flat"]}>

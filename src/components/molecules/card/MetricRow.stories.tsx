@@ -24,6 +24,16 @@ export const OwnerHome: Story = {
   },
 };
 
+// A value that belongs to someone: the name sits on its own line under the number.
+export const WithSubject: Story = {
+  args: {
+    entries: [
+      { id: "players", label: "Total players", value: "120" },
+      { id: "top", label: "Top scorer", value: "1,980", subject: "shadowgamer", hint: "All time" },
+    ],
+  },
+};
+
 export const ScrollingStrip: Story = {
   args: {
     isScrollable: true,

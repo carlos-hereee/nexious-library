@@ -39,6 +39,15 @@
 .dark-mode .nxs-stat-value {
   color: var(--main-brand-color-accent);
 }
+// The person or thing a value belongs to, as title text under the number rather than a label and
+// value pair. Ported from the client's .cu-stat-subject.
+.nxs-stat-subject {
+  margin: 0;
+  font-size: var(--text-small);
+  font-weight: var(--font-semibold);
+  line-height: 1.3;
+  color: var(--text);
+}
 .nxs-stat-hint {
   margin: 0;
   font-size: var(--text-small);

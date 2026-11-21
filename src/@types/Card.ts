@@ -397,6 +397,12 @@ export type MetricRowEntry = {
    * alone is color. Optional; without it the delta's text is read as is.
    */
   trendLabel?: string;
+  /**
+   * Who or what the value belongs to (the top scorer's name beside their score), on its own line
+   * under the value, never inside it: a name has no length limit and headline type fits about eight
+   * characters on a phone. Shown only with a value.
+   */
+  subject?: React.ReactNode;
   /** A quiet line under the value (why it is derived, what it counts). */
   hint?: React.ReactNode;
   /** Shown instead of the value when `value` is absent ("Not available yet"). */
