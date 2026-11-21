@@ -9,6 +9,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### UploadFile can hand its picker to the consumer's own element (2026-11 item 385 Phase 3)
+
+#### Added
+
+- **`UploadFile` `renderTrigger`.** An optional function that receives `{ openPicker, isDisabled }`
+  and returns the consumer's trigger, so an image can be its own picker (the page editor's in
+  place image control). In this mode UploadFile draws only its hidden input and the consumer's
+  element: no label, choose button, remove buttons or preview. `onSelect` fires only when a file is
+  picked and always with a `File`, `value` is not echoed back, no object URL is created (the
+  consumer draws and revokes its own preview), and the input is cleared after each pick so the same
+  file can be picked again. The consumer renders a real `<button type="button">` that calls
+  `openPicker` and names it. `UploadFileTriggerProps` is exported beside `UploadFileProps` from
+  `nexious-library/@nxs-molecules`. Additive; without the prop UploadFile renders and behaves
+  exactly as before, which the new `UploadFile.test.tsx` pins for the Form's file field too.
+- **A Storybook entry for `UploadFile`** with the default control and the image as trigger.
+
 ### MetricRow tiles can name who a value belongs to (owner request, no ledger item)
 
 #### Added

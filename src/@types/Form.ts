@@ -442,6 +442,15 @@ export interface FieldShellProps {
   // exactly what it rendered before the slot existed, with no row wrapper.
   addon?: React.ReactNode;
 }
+/**
+ * What `UploadFile` hands a custom trigger through `renderTrigger`.
+ */
+export interface UploadFileTriggerProps {
+  /** Opens the native file picker. Does nothing while `input.isDisabled` is set. */
+  openPicker: () => void;
+  /** Mirrors `input.isDisabled`, so the trigger can draw and announce its own disabled state. */
+  isDisabled: boolean;
+}
 export interface UploadFileProps {
   input: InputProps;
   label: string;
@@ -452,6 +461,21 @@ export interface UploadFileProps {
   error?: string;
   onSelect: (e: File | string) => void;
   formMessage?: string;
+  /**
+   * Replaces the choose button, the remove buttons and the preview with the consumer's own element,
+   * so an image can be its own picker (an in place image editor). The function receives
+   * `openPicker` and `isDisabled` and returns the trigger; render a real `<button type="button">`
+   * that calls `openPicker` on click, which gives it Enter, Space and touch activation, and give it
+   * the accessible name ("Change hero image"), because UploadFile draws no label in this mode.
+   * The consumer draws its own preview from the File it receives.
+   *
+   * With a trigger, `onSelect` fires only when a file is picked and always with a `File`: `value`
+   * is not echoed back on mount or on change, and the hidden input is cleared after each pick so
+   * the same file can be picked again. `label` names the hidden input only; `className`,
+   * `hideLabels`, `selectLabel`, `error` and `formMessage` are not drawn. Left off, UploadFile
+   * renders and behaves exactly as it does without the prop.
+   */
+  renderTrigger?: (trigger: UploadFileTriggerProps) => React.ReactNode;
 }
 export interface TextAreaProps {
   input: InputProps;

@@ -1,3 +1,8 @@
+// An image picker built on a hidden native file input. By default it draws its own choose button,
+// remove buttons and preview, and echoes `value` through `onSelect`; with `renderTrigger` the
+// consumer's element (the image itself) opens the picker and the consumer draws the preview.
+// It does not upload anything: the File goes back through `onSelect`. Called by the Form's file
+// field (fieldRegistry renderFile) and directly by consumers through `@nxs-molecules`.
 import { Button, Label } from "@nxs-atoms/index";
 import { useEffect, useRef, useState } from "react";
 import { Hero } from "@nxs-molecules";
@@ -7,9 +12,11 @@ import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 import { buildNxsButtonClass } from "../../../@types/Variant";
 
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { selectLabel, label, hideLabels, onSelect, className, value, formMessage, input, error } = props;
+  const { selectLabel, label, hideLabels, onSelect, className, value, formMessage, input, error, renderTrigger } =
+    props;
   const { name, isDisabled } = input;
   const domId = useFieldDomId(name);
+  const hasCustomTrigger = Boolean(renderTrigger);
   // required props
   const [previewImage, setPreviewImage] = useState<string>("");
   const imageUploaderRef = useRef<HTMLInputElement>(null);
@@ -26,6 +33,10 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     }
   };
   useEffect(() => {
+    // A custom trigger draws its own preview, so echoing `value` back here would hand the consumer
+    // a change nobody made (an in place editor would record an undo step for merely opening) and
+    // would mint an object URL nothing revokes.
+    if (hasCustomTrigger) return;
     formatImageData(value);
   }, [value]);
 
@@ -43,6 +54,38 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
     formatImageData("");
     if (imageUploaderRef.current) imageUploaderRef.current.value = "";
   };
+
+  const openPicker = () => {
+    if (isDisabled) return;
+    imageUploaderRef.current?.click();
+  };
+
+  const pickForCustomTrigger = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const pickedFile = event.target.files?.[0];
+    // The consumer removes an image from its own draft, which this input never hears about, so
+    // without the reset picking that same file again would fire no change event at all.
+    event.target.value = "";
+    if (pickedFile) onSelect(pickedFile);
+  };
+
+  if (renderTrigger) {
+    // No `name` on purpose: the File reaches the consumer only through onSelect, and a named but
+    // cleared input inside an enclosing <form> would add an empty file entry to its FormData.
+    return (
+      <>
+        <input
+          type="file"
+          onChange={pickForCustomTrigger}
+          accept="image/*"
+          ref={imageUploaderRef}
+          id={domId}
+          aria-label={label || "Choose a file"}
+          hidden
+        />
+        {renderTrigger({ openPicker, isDisabled: Boolean(isDisabled) })}
+      </>
+    );
+  }
 
   // console.log("lightColor :>> ", lightColor);
 

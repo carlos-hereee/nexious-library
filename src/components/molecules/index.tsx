@@ -104,6 +104,7 @@ export type {
   SearchBarProps,
   SelectProp,
   UploadFileProps,
+  UploadFileTriggerProps,
   FieldShellProps,
   EntryNavigatorProps,
   FieldDateProps,
