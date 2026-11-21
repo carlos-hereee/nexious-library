@@ -2,8 +2,10 @@
 
 // ── nxs-metric-row and nxs-stat, the "how is this doing" band ─────────────────────
 // Ported from nexious-client's `cu-stat` and `cu-metric-row` primitives (primitives.css, section
-// 5, 2026-11 item 337, Phase 5), rebuilt on library tokens. A tile is a level one surface (a
-// hairline edge, never a shadow) and never a nav card, so it does not lift.
+// 5, 2026-11 item 337, Phase 5), rebuilt on library tokens. A tile draws no frame of its own: the
+// band always sits inside a panel or card, and a bordered tile there is a card in a card (the
+// owner's platform rule), so the grid gap alone separates the tiles. The text sits on the
+// parent's surface, which is the --card-bg the client's contrast test measures the value against.
 
 .nxs-stat {
   display: flex;
@@ -11,10 +13,6 @@
   gap: var(--space-extra-small);
   box-sizing: border-box;
   min-width: 0;
-  padding: var(--space-medium);
-  border-radius: var(--radius-large);
-  background-color: var(--card-bg);
-  border: 1px solid var(--surface-edge);
   // min-width 0 lets the tile shrink; break-word stops an unbroken word spilling past it and
   // scrolling the page sideways, without splitting an ordinary number the way `anywhere` would.
   overflow-wrap: break-word;
@@ -98,9 +96,12 @@
 }
 // The client's 480px two column breakpoint is read at the library's mobile breakpoint (580px), the
 // one every other nxs block uses.
+// A phone stacks the band two columns wide, so the row gap is the whitespace it can spare; the
+// column gap stays wider because, with no frame, it is the only thing between two values.
 @include mixins.devices(mobile) {
   .nxs-metric-row:not(.nxs-metric-row-scroll) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-small) var(--space-medium-small);
   }
   .nxs-stat-value {
     font-size: var(--text-2x-large);
