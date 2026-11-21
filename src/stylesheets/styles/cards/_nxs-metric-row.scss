@@ -96,12 +96,13 @@
 }
 // The client's 480px two column breakpoint is read at the library's mobile breakpoint (580px), the
 // one every other nxs block uses.
-// A phone stacks the band two columns wide, so the row gap is the whitespace it can spare; the
-// column gap stays wider because, with no frame, it is the only thing between two values.
+// A phone stacks the band two columns wide. With no frame, the row gap is the only thing between
+// one stat's hint and the next stat's label, so it is wider than the column gap; an 8px row gap
+// read as one crowded block (owner review). The client's .cu-metric-row uses the same values.
 @include mixins.devices(mobile) {
   .nxs-metric-row:not(.nxs-metric-row-scroll) {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: var(--space-small) var(--space-medium-small);
+    gap: var(--space-large) var(--space-medium-small);
   }
   .nxs-stat-value {
     font-size: var(--text-2x-large);

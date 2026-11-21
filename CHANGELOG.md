@@ -16,8 +16,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - **`MetricRow` tiles (`.nxs-stat`) lose their border, fill, radius and padding.** The band always
   sits inside a panel or card, and a bordered tile there is a card inside a card. The grid gap
   alone now separates the tiles, and the value sits on the parent's surface. On a phone the two
-  column band tightens its gap to `--space-small` between rows and `--space-medium-small` between
-  columns. A caller that wants a framed tile now draws the frame itself.
+  column band takes `--space-large` between rows and `--space-medium-small` between columns, so a
+  stat's hint never runs into the label below it. A caller that wants a framed tile now draws the frame itself.
 
 ### Design tokens (2026-11 item 51)
 
