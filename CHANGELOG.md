@@ -9,7 +9,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-### ProgressRing, a percent as a circular arc (2026-11 item 387 Phase 1, prerelease 5.1.0-next.0)
+## [5.1.0] - 2026-11-21
+
+### ProgressRing, a percent as a circular arc (2026-11 item 387 Phase 1)
 
 #### Added
 
