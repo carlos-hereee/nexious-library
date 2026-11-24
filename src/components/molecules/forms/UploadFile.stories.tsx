@@ -36,6 +36,24 @@ const WithDefaultControl = () => {
 /** Default: the library's own choose button and preview. */
 export const Default: Story = { render: () => <WithDefaultControl /> };
 
+const WithSpanishWords = () => {
+  const [logo, setLogo] = useState<File | string>(PLACEHOLDER_IMAGE);
+  return (
+    <UploadFile
+      input={{ name: "story-logo-es" }}
+      label="Logotipo"
+      selectLabel="Elegir archivo"
+      removeLabel="Quitar archivo"
+      previewLabel="Vista previa"
+      value={logo}
+      onSelect={setLogo}
+    />
+  );
+};
+
+/** Every word passed in, for a consumer that renders in another language. */
+export const TranslatedWords: Story = { render: () => <WithSpanishWords /> };
+
 const WithImageAsTrigger = () => {
   const [previewUrl, setPreviewUrl] = useState(PLACEHOLDER_IMAGE);
   const [pickedName, setPickedName] = useState("");

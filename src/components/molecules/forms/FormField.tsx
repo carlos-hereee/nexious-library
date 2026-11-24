@@ -7,7 +7,7 @@ import EntryNavigator from "./EntryNavigator";
 
 const FormField = (props: FormFieldProps) => {
   // key variables
-  const { fieldHeading, name, isEntry, entries, entry, fieldId, disableForm } = props;
+  const { fieldHeading, name, isEntry, entries, entry, fieldId, disableForm, fieldWords } = props;
 
   if (isEntry && entry && entries) {
     const { activeEntry, confirmRemoval } = props;
@@ -76,6 +76,9 @@ const FormField = (props: FormFieldProps) => {
           itemNoun={isGallery ? "Image" : "Entry"}
           orientation={isGallery ? "rail" : "strip"}
           railLabel={onMultiply?.name || groupName}
+          formatCount={fieldWords?.entryCount}
+          formatPosition={fieldWords?.entryPosition}
+          emptyLabel={fieldWords?.entryEmpty}
           onSelect={(sharedKey) => setActiveEntry && setActiveEntry({ [groupName]: sharedKey })}
         />
         {!isGallery ? fields : null}
@@ -85,7 +88,7 @@ const FormField = (props: FormFieldProps) => {
               <ButtonCancel
                 label={onMultiply.removalLabel}
                 confirmSubmit={confirmRemoval}
-                toggleLabel="Don't show again"
+                toggleLabel={fieldWords?.skipRemovalQuestion || "Don't show again"}
                 onSubmit={() => onRemovalClick(groupName, activeIdx)}
                 onClick={() => setConfirmRemovals && setConfirmRemovals(!confirmRemoval)}
               />
@@ -94,7 +97,11 @@ const FormField = (props: FormFieldProps) => {
               <Button
                 label={onMultiply.additionLabel}
                 isDisable={targetList.length === entry.max}
-                title={targetList.length === entry.max ? "No more allowed" : "Add another"}
+                title={
+                  targetList.length === entry.max
+                    ? fieldWords?.entriesFull || "No more allowed"
+                    : fieldWords?.addEntry || "Add another"
+                }
                 onClick={onMultiplyClick}
               />
             )}

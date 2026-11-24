@@ -139,6 +139,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
   const { initialValues, submitLabel, schema, disableForm, cancelLabel, formScroll, confirmRemovals, isDev } = props;
   const { submitIcon, onChange, onCancel, onSubmit, onViewPreview, formId, fieldAddons, entriesRef, onEntriesChange } =
     props;
+  const { fieldWords } = props;
   const { formErrors, validationStatus, validateForm, setStatus, formMessage, checkInverseCheckbox } =
     useFormValidation({ ...schema });
 
@@ -422,6 +423,7 @@ const Form: React.FC<FormProps> = (props: FormProps) => {
             dataList={dataList}
             label={field.label}
             addon={fieldAddons?.[field.name]}
+            fieldWords={fieldWords}
             formError={formErrors[field.fieldId]}
             formMessage={formMessage[field.name]}
             handleChange={(value: FormInitialValue, id?: string) => handleChange(field, value, id || field.fieldId)}

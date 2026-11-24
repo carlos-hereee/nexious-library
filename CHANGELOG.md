@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Form words a consumer can translate (2026-11 item 410)
+
+#### Added
+
+- **`Form` takes `fieldWords`** (`FormFieldWords`, exported from `nexious-library`): the words its own controls
+  draw that no field label covers, the file picker's choose and remove buttons and preview caption,
+  the entry switcher's count line, tile names and empty word, the add button's hints and the remove
+  question's opt out. Each word left off keeps its English default, so a form passing nothing renders
+  what it rendered before.
+- **`UploadFile` takes `removeLabel` and `previewLabel`** beside `selectLabel`, which now also names the
+  hidden input when there is no `label`.
+- **`EntryNavigator` takes `formatCount`, `formatPosition` and `emptyLabel`.** Where the numbers stand
+  in "2 of 20" differs by language, so the two that carry numbers are formatters.
+
 ## [5.1.0] - 2026-11-21
 
 ### ProgressRing, a percent as a circular arc (2026-11 item 387 Phase 1)

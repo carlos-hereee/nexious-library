@@ -11,9 +11,14 @@ import { urlFile } from "@nxs-utils/data/urlFile";
 import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
 import { buildNxsButtonClass } from "../../../@types/Variant";
 
+// The English words, used where a consumer passes none of its own (2026-11 item 410).
+const SELECT_LABEL = "Choose a file";
+const REMOVE_LABEL = "Remove File";
+const PREVIEW_LABEL = "Image Preview";
+
 const UploadFile: React.FC<UploadFileProps> = (props) => {
-  const { selectLabel, label, hideLabels, onSelect, className, value, formMessage, input, error, renderTrigger } =
-    props;
+  const { label, hideLabels, onSelect, className, value, formMessage, input, error, renderTrigger } = props;
+  const { selectLabel = SELECT_LABEL, removeLabel = REMOVE_LABEL, previewLabel = PREVIEW_LABEL } = props;
   const { name, isDisabled } = input;
   const domId = useFieldDomId(name);
   const hasCustomTrigger = Boolean(renderTrigger);
@@ -79,7 +84,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           accept="image/*"
           ref={imageUploaderRef}
           id={domId}
-          aria-label={label || "Choose a file"}
+          aria-label={label || SELECT_LABEL}
           hidden
         />
         {renderTrigger({ openPicker, isDisabled: Boolean(isDisabled) })}
@@ -105,7 +110,7 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
           id={domId}
           // The input is visually hidden behind a custom trigger button, so it still needs
           // an accessible name of its own for screen readers and file-picker tooling.
-          aria-label={label || "Choose a file"}
+          aria-label={label || selectLabel}
           hidden
         />
         {/* Choosing a file is the neutral action and removing it the destructive one, on the nxs-btn
@@ -114,18 +119,18 @@ const UploadFile: React.FC<UploadFileProps> = (props) => {
         <Button
           className={buildNxsButtonClass({ variant: "secondary", className: "btn-main" })}
           onClick={imageClick} isDisabled={isDisabled}>
-          {selectLabel || "Choose a file"}
+          {selectLabel}
         </Button>
         {previewImage && (
           <Button
             className={buildNxsButtonClass({ variant: "danger", className: "btn-main btn-cancel hide-on-mobile" })}
             onClick={handleRemoveImage}>
-            Remove File
+            {removeLabel}
           </Button>
         )}
       </div>
       <div className="preview-hero-container">
-        <span>Image Preview</span>
+        <span>{previewLabel}</span>
         {previewImage && <Button
             label="x"
             onClick={handleRemoveImage}

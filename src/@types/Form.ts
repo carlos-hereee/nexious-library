@@ -164,6 +164,10 @@ export type FormProps = {
   // Form.
   onEntriesChange?: (summary: Record<string, number>) => void;
   populateLink?: { [key: string]: { word: string; link: string }[] };
+  // The words Form's own controls draw that no field label covers (the file picker, the entry
+  // switcher and the entry buttons). Each one left off keeps its English default, so a consumer
+  // passing nothing renders exactly what it rendered before.
+  fieldWords?: FormFieldWords;
   labels?: KeyStringProp;
   placeholders?: KeyStringProp;
   entries?: { [key: string]: KeyStringProp[] };
@@ -174,6 +178,30 @@ export type FormProps = {
   onCancel?: () => void;
   onViewPreview?: (e: any) => void;
 };
+/**
+ * The words Form's own controls draw, for a consumer that renders in a language other than English.
+ * A word that carries numbers is a function, because where the numbers stand differs by language.
+ */
+export interface FormFieldWords {
+  /** The file picker's button. Default "Choose a file". */
+  selectFile?: string;
+  /** The file picker's remove button. Default "Remove File". */
+  removeFile?: string;
+  /** Over the file picker's preview. Default "Image Preview". */
+  imagePreview?: string;
+  /** Under the entry switcher. Default "2 of 20". */
+  entryCount?: (count: number, max: number) => string;
+  /** Names one entry for a screen reader. Default "Entry 2 of 3", "Image 2 of 3" in a gallery group. */
+  entryPosition?: (position: number, count: number) => string;
+  /** Said after the position of an entry nothing identifies yet. Default "empty". */
+  entryEmpty?: string;
+  /** The add button's hint. Default "Add another". */
+  addEntry?: string;
+  /** The add button's hint once the group is full. Default "No more allowed". */
+  entriesFull?: string;
+  /** The remove question's opt out. Default "Don't show again". */
+  skipRemovalQuestion?: string;
+}
 // What FormProps.entriesRef points at. Groups are named by their `groupName` (sections), never by
 // the toggle field that opens them (hasSections). A card's position is its place in the group's
 // insertion order, the same order the submit payload and the entry strip use. Only the cards of a
@@ -390,6 +418,8 @@ export interface FormFieldProps {
   // Rendered by FieldShell beside this field's label (see FieldShellProps.addon). Form sets it from
   // fieldAddons; FormField's entry branch deliberately does not forward it into a group's slots.
   addon?: React.ReactNode;
+  // Form's own control words (FormProps.fieldWords). Unlike addon it reaches a group's slots too.
+  fieldWords?: FormFieldWords;
   handleChange: (value: FormInitialValue, fieldId?: string) => void;
   setConfirmRemovals?: (key: boolean) => void;
   handleCheckbox?: (key: OnchangeProps) => void;
@@ -411,6 +441,12 @@ export interface EntryNavigatorProps {
   orientation?: "rail" | "strip";
   // Consumer override for a tile's text, consulted only when the slot's own data yields nothing.
   getTileLabel?: (key: string, index: number) => string;
+  /** The line under the tiles. Defaults to English ("2 of 20"); pass a localized formatter. */
+  formatCount?: (count: number, max: number) => string;
+  /** Names a tile by position. Defaults to English ("Item 2 of 3"); it replaces itemNoun's sentence. */
+  formatPosition?: (position: number, count: number) => string;
+  /** Said after the position of a tile nothing identifies. Defaults to "empty". */
+  emptyLabel?: string;
   onSelect: (sharedKey: string) => void;
 }
 /** @deprecated Renamed to EntryNavigatorProps when the numbered and thumbnail switchers merged. */
@@ -458,6 +494,10 @@ export interface UploadFileProps {
   className?: string;
   hideLabels?: boolean;
   selectLabel?: string;
+  /** The remove button's words, which also name the small x on the preview. Defaults to "Remove File". */
+  removeLabel?: string;
+  /** Over the preview. Defaults to "Image Preview". */
+  previewLabel?: string;
   error?: string;
   onSelect: (e: File | string) => void;
   formMessage?: string;
@@ -472,7 +512,7 @@ export interface UploadFileProps {
    * With a trigger, `onSelect` fires only when a file is picked and always with a `File`: `value`
    * is not echoed back on mount or on change, and the hidden input is cleared after each pick so
    * the same file can be picked again. `label` names the hidden input only; `className`,
-   * `hideLabels`, `selectLabel`, `error` and `formMessage` are not drawn. Left off, UploadFile
+   * `hideLabels`, `selectLabel`, `removeLabel`, `previewLabel`, `error` and `formMessage` are not drawn. Left off, UploadFile
    * renders and behaves exactly as it does without the prop.
    */
   renderTrigger?: (trigger: UploadFileTriggerProps) => React.ReactNode;

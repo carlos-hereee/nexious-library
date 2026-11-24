@@ -217,6 +217,7 @@ export type { MotionApi, MotionOptions, MotionPattern, MotionProps, MotionProvid
 export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";
 export type {
   FormEntriesHandle,
+  FormFieldWords,
   FormProps,
   PaginateFormProps,
   SearchBarProps,

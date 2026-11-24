@@ -3,6 +3,8 @@ import { Hero } from "@nxs-molecules";
 import type { EntryNavigatorProps } from "nxs-form";
 import { urlFile } from "@nxs-utils/data/urlFile";
 
+const englishCount = (count: number, max: number) => `${count} of ${max}`;
+
 /**
  * EntryNavigator
  *
@@ -23,6 +25,7 @@ import { urlFile } from "@nxs-utils/data/urlFile";
  */
 const EntryNavigator: React.FC<EntryNavigatorProps> = (props) => {
   const { entries, activeEntry, max, isDisabled, railLabel, itemNoun, orientation, getTileLabel, onSelect } = props;
+  const { formatCount = englishCount, formatPosition, emptyLabel = "empty" } = props;
   const entryKeys = Object.keys(entries);
   const noun = itemNoun || "Item";
 
@@ -84,7 +87,9 @@ const EntryNavigator: React.FC<EntryNavigatorProps> = (props) => {
           const derived = derivedLabels[idx];
           const custom = getTileLabel ? getTileLabel(key, idx) : "";
           const tileText = derived || custom || `${idx + 1}`;
-          const position = `${noun} ${idx + 1} of ${entryKeys.length}`;
+          const position = formatPosition
+            ? formatPosition(idx + 1, entryKeys.length)
+            : `${noun} ${idx + 1} of ${entryKeys.length}`;
           // The accessible name says WHAT the tile is when the data can say it, and falls back to
           // bare position when it cannot, so a screen reader user gets the same information a
           // sighted user gets from the thumbnail or the day name.
@@ -92,7 +97,7 @@ const EntryNavigator: React.FC<EntryNavigatorProps> = (props) => {
             ? position
             : derived || custom
             ? `${position}, ${derived || custom}`
-            : `${position}, empty`;
+            : `${position}, ${emptyLabel}`;
           return (
             <button
               key={key}
@@ -117,7 +122,7 @@ const EntryNavigator: React.FC<EntryNavigatorProps> = (props) => {
         // Remaining capacity used to be shown as a row of dead disabled boxes. This line says the
         // same thing in one place, and the add button beside the group is the way to use it.
         <p className="entry-rail-count">
-          {entryKeys.length} of {max}
+          {formatCount(entryKeys.length, max)}
         </p>
       )}
     </div>

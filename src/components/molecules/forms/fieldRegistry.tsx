@@ -120,7 +120,7 @@ const renderCheckbox: FieldRenderer = (props) => {
 };
 
 const renderFile: FieldRenderer = (props) => {
-  const { name, disableForm, value, label, handleChange } = props;
+  const { name, disableForm, value, label, handleChange, fieldWords } = props;
   return (
     <FieldShell {...buildFieldShellProps(props)}>
       <UploadFile
@@ -128,6 +128,9 @@ const renderFile: FieldRenderer = (props) => {
         value={typeof value === "string" ? value : value instanceof File ? value : ""}
         label={label}
         hideLabels
+        selectLabel={fieldWords?.selectFile}
+        removeLabel={fieldWords?.removeFile}
+        previewLabel={fieldWords?.imagePreview}
         onSelect={handleChange}
       />
     </FieldShell>

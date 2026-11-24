@@ -24,6 +24,33 @@ beforeEach(() => {
   URL.revokeObjectURL = jest.fn();
 });
 
+describe("EntryNavigator words", () => {
+  const entries = entriesOf([[field("day", "Lunes")], [field("day", "")]]);
+
+  it("draws the consumer's count, names and empty word", () => {
+    render(
+      <EntryNavigator
+        entries={entries}
+        activeEntry="slot-0"
+        max={20}
+        formatCount={(count, max) => `${count} de ${max}`}
+        formatPosition={(position, count) => `Elemento ${position} de ${count}`}
+        emptyLabel="vacío"
+        onSelect={jest.fn()}
+      />
+    );
+    expect(screen.getByText("2 de 20")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Elemento 1 de 2, Lunes" })).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Elemento 2 de 2, vacío" })).toBeInTheDocument();
+  });
+
+  it("keeps its English words when none are passed", () => {
+    render(<EntryNavigator entries={entries} activeEntry="slot-0" max={20} onSelect={jest.fn()} />);
+    expect(screen.getByText("2 of 20")).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: "Item 2 of 2, empty" })).toBeInTheDocument();
+  });
+});
+
 describe("EntryNavigator tile content resolution", () => {
   it("prefers a thumbnail over every other source", () => {
     const file = new File(["x"], "photo.png", { type: "image/png" });
