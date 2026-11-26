@@ -1,0 +1,31 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// Promoted from nexious-client's `.cu-btn-icon` square (primitives.css), which skinned the pair
+// before the component moved here. The geometry is rebuilt from the control tokens so the pair
+// stands the same height as the input and button beside it in a row.
+//
+// Rides on `.btn-base.btn-secondary.btn-md`, which SwapOrderButtons renders with it by default,
+// so the variant owns color, border, radius, hover and the disabled state. This rule only makes
+// the button an icon only square. It loads after _button-variants.scss on purpose: at equal
+// specificity its width and padding have to win over `.btn-md` on source order.
+.nxs-swap-order-button {
+  gap: 0;
+  padding: 0;
+  // Mobile first, like the touch floor in _button-variants.scss: the WCAG 2.5.5 target is the
+  // base, and the square drops back to the control height above the phone breakpoint. Width is
+  // stated with the height, because a square is the point and the reset's `width: 100%` is not.
+  width: var(--tap-target-min);
+  min-width: var(--tap-target-min);
+  height: var(--tap-target-min);
+  max-width: none;
+  // One step above the button's label size, so the glyph reads as the button's content rather
+  // than as a caption inside it.
+  font-size: var(--text-base);
+  @include mixins.focus-ring;
+
+  @include mixins.respond-from(mobile) {
+    width: var(--control-height);
+    min-width: var(--control-height);
+    height: var(--control-height);
+  }
+}

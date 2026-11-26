@@ -1,0 +1,184 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
+// ── Entry navigator ─────────────────────────────────────────────────────────────
+// The one entry switcher, in its two layouts. A file-only group (FormField sets .entry-gallery
+// when every field in the group is an upload) renders the active image large with the switcher
+// as a vertical rail beside it. Every other group gets the horizontal strip below.
+//
+// Both used to be separate: this file styled the gallery rail and the numbered box strip was
+// styled by generic button classes. One switcher now serves both, so the tile rules are shared
+// and only the container layout differs.
+
+// Two tiles plus the gutter. Local because nothing outside this block sizes against the rail.
+$rail-width: 150px;
+// Roughly the height of the hero beside it; past this the rail scrolls instead of stretching
+// the grid row and pushing the form's action buttons off screen.
+$rail-max-height: 280px;
+
+.entry-gallery {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-areas:
+    "main"
+    "rail"
+    "actions";
+  gap: var(--space-medium);
+  align-items: start;
+
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: minmax(0, 1fr) $rail-width;
+    grid-template-areas:
+      "main rail"
+      "actions actions";
+  }
+}
+.entry-gallery-main {
+  grid-area: main;
+  // Without this a wide image blows the 1fr track out past the rail instead of shrinking.
+  min-width: 0;
+}
+.entry-gallery > .buttons-container {
+  grid-area: actions;
+}
+
+// The stock .field-upload is a two column grid: file picker beside a 100px preview thumbnail.
+// Here the preview IS the subject of the screen, so stack them and hand the full column to the
+// image. order puts the image first (the sketch's large hero) while leaving the "Images" label
+// attached to the picker it names.
+.entry-gallery .field-upload {
+  grid-template-columns: 1fr;
+}
+.entry-gallery .preview-hero-container {
+  order: -1;
+  width: 100%;
+  margin: 0;
+}
+.entry-gallery .preview-hero,
+.entry-gallery .preview-hero-empty {
+  width: 100%;
+  max-width: 100%;
+  max-height: none;
+  aspect-ratio: 4/3;
+  object-fit: contain;
+}
+// _avatar.scss pins .preview-hero-empty to a pill radius (it shares that rule with the small
+// contact avatar). At the stock 100px that reads as a rounded thumbnail; at full width it bows
+// into a blob, so the empty slot gets the plain radius of the image it is standing in for.
+// Two classes to clear the avatar rule's specificity. Scoped here so avatars are untouched.
+.entry-gallery .preview-hero-empty {
+  border-radius: var(--radius-medium);
+}
+// "Image Preview" earns its place as a caption for a 100px thumbnail. Above a full width hero it
+// only repeats what the image already says, so it is dropped rather than restyled.
+.entry-gallery .preview-hero-container > span {
+  display: none;
+}
+
+.entry-rail {
+  grid-area: rail;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-small);
+}
+.entry-rail-tiles {
+  display: grid;
+  // No vertical room under the hero on a phone, so the rail starts as a swipeable strip.
+  grid-auto-flow: column;
+  grid-auto-columns: 64px;
+  gap: var(--space-small);
+  // Both axes are unconditional: overflow-y is what the tall two-column rail scrolls on, and an
+  // overflow-x of visible beside it computes to auto anyway, so stating it costs nothing above.
+  overflow-x: auto;
+  overflow-y: auto;
+
+  @include mixin.respond-from(mobile) {
+    grid-template-columns: repeat(2, 1fr);
+    // The strip is the base now, so the two-column rail has to put the flow and the implicit
+    // column size back to their initial values, or the tiles keep running sideways past the tracks.
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    max-height: $rail-max-height;
+  }
+}
+// The horizontal layout, used by every non-gallery group. It replaces the row of numbered
+// IconButtons that used to sit above the fields, so it reads as a strip of tabs rather than a
+// column beside a hero.
+.entry-rail-strip {
+  grid-area: auto;
+  width: 100%;
+  .entry-rail-tiles {
+    grid-template-columns: none;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(var(--tap-target-min), 1fr);
+    max-height: none;
+    overflow-x: auto;
+  }
+  // A tile carrying a day name is a label, not a thumbnail, so it must not be forced square.
+  .entry-rail-tile {
+    aspect-ratio: auto;
+    min-height: var(--control-height-large);
+    padding: var(--control-padding-y) var(--control-padding-x);
+  }
+  .entry-rail-count {
+    text-align: left;
+  }
+}
+
+.entry-rail-tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  aspect-ratio: 1/1;
+  // The touch floor (WCAG 2.5.5). The old numbered boxes were never measured against it.
+  min-width: var(--tap-target-min);
+  min-height: var(--tap-target-min);
+  padding: 0;
+  overflow: hidden;
+  cursor: pointer;
+  background-color: transparent;
+  border: 2px solid var(--border);
+  border-radius: var(--radius-small);
+  // Dimming is the whole point of the rail: a supporting image has to read as "not the one you
+  // are editing" while staying legible enough to click back to.
+  opacity: 0.5;
+  transition: opacity var(--transition-fast), border-color var(--transition-fast);
+  &:hover {
+    opacity: 1;
+  }
+  // Focus used to be signalled by the opacity change alone, which is effectively invisible: a
+  // keyboard user tabbing along the rail could not tell where they were. The opacity change
+  // stays as a SECONDARY signal, never the only one.
+  @include mixin.focus-ring;
+  &:focus-visible {
+    opacity: 1;
+  }
+  &:disabled {
+    cursor: not-allowed;
+  }
+}
+.entry-rail-tile-active {
+  opacity: 1;
+  border-color: var(--main-brand-color);
+}
+.entry-rail-thumb {
+  // Only aspect-ratio and object-fit are set: .hero's own width/max-width already resolve to the
+  // tile at this size, so there is no specificity fight with the base class to win.
+  width: 100%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.entry-rail-placeholder {
+  font-weight: var(--font-semibold);
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  // A derived label ("Wednesday") can be longer than its tile. Clip rather than wrap, since the
+  // full string is already on the button's title and aria-label.
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.entry-rail-count {
+  font-size: var(--text-small);
+  color: var(--text-secondary);
+  text-align: center;
+}

@@ -1,71 +1,134 @@
 import { Icon, Label, Option } from "@nxs-atoms";
 import { Hero, IconButton } from "@nxs-molecules";
-import type { SelectProp } from "nxs-form";
+import type { OptionProps, SelectProp } from "nxs-form";
+import { useFieldDomId } from "@nxs-utils/hooks/useFieldDomId";
+
+// The 4.x defaults, kept so a caller that passes no copy renders what it always did. All three are
+// English, which is why placeholder, clearLabel and thumbnailAlt exist: a localized caller passes
+// its own.
+const DEFAULT_PLACEHOLDER = "Choose Selection";
+const DEFAULT_CLEAR_LABEL = "Clear selection";
+const DEFAULT_THUMBNAIL_ALT = "selection thumbnail";
+
+/** Every option the control offers, the flat list first and then each group's options. */
+const allOptions = (props: SelectProp): OptionProps[] => [
+  ...(props.list ?? []),
+  ...(props.groups ?? []).flatMap((group) => group.options),
+];
+
+/** The icon and thumbnail of the option `value` selects. */
+const selectedArt = (props: SelectProp) => {
+  const selected = allOptions(props).find((option) => option.value === props.value);
+  return { icon: selected?.icon, thumbnail: selected?.thumbnail };
+};
+
+/** The 4.x lookups, kept as they were: `active` matched against an option's icon for the icon
+ * and against its value for the thumbnail. */
+const activeArt = ({ active, list }: SelectProp) => {
+  if (!active || !list) return { icon: undefined, thumbnail: undefined };
+  return {
+    icon: list.filter((l) => l && l.icon && l.icon === active)[0]?.icon,
+    thumbnail: list.filter((l) => l && l.value && l.value === active)[0]?.thumbnail,
+  };
+};
 
 /**
+ * Component: Select
  *
- * @param name the title of the selection tag
- * @param list an array of all the options
- * @param onChange a callback fired when a selection is made
- * @param active the current selection
- * @param placeholder disabled first option shown when nothing is selected
- * @returns
+ * A styled native select. Two ways to drive it: `value` selects an option by its value (the
+ * 2026-11 item 337 path), and with no `value` the 4.x `active` path renders the displayed text in
+ * a disabled first option, unchanged. `groups` adds optgroups after `list`. The wrapper renders
+ * `nxs-select` beside `select-wrapper`, and the control `nxs-select-control` beside `select`, so
+ * a consumer styling the 4.x classes keeps matching.
+ *
+ * @param name the field name, also the control's id and its last resort accessible name
+ * @param list the flat options
+ * @param onChange fired with the chosen option's value, or "" when cleared
  */
 const Select: React.FC<SelectProp> = (props) => {
-  const { list, onChange, theme, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
+  const { list, onChange, className, name, hideLabels, label, error, formMessage, active, clearSelection, isDisabled } =
     props;
-  const { placeholder } = props;
+  const { placeholder, inShell, value, groups, labelId, clearLabel = DEFAULT_CLEAR_LABEL } = props;
+  const { thumbnailAlt = DEFAULT_THUMBNAIL_ALT } = props;
+  const domId = useFieldDomId(name);
+  const isValueMode = value !== undefined;
 
-  const activeLabel = active || placeholder || "Choose Selection";
-  const icon = active ? list && list.filter((l) => l && l.icon && l.icon === active)[0]?.icon : undefined;
-  const thumbnail = active ? list && list.filter((l) => l && l.value && l.value === active)[0]?.thumbnail : undefined;
+  const activeLabel = active || placeholder || DEFAULT_PLACEHOLDER;
+  const { icon, thumbnail } = isValueMode ? selectedArt(props) : activeArt(props);
+  const hasSelection = isValueMode ? Boolean(value) : Boolean(active);
+
+  // Named, in order of preference: a caller's own label element, the Label this renders, the
+  // label text when it is visually hidden, and only with no label at all the raw field name.
+  const fallbackName = hideLabels && label ? label : name;
+  const ariaLabel = labelId || inShell || (!hideLabels && label) ? undefined : fallbackName;
 
   return (
     <>
-      {!hideLabels && label ? (
+      {/* Select is the one form control exported from the package root, so it has to stand alone
+          as well as sit inside a Field. Standalone it owns its label, its error node and its
+          fallback aria-label. Inside a Field it is passed inShell and gives up all three, because
+          the FieldShell already renders a (possibly visually hidden) <label htmlFor> and one
+          `${domId}-error` node: a second error node would make aria-describedby ambiguous, and a
+          leftover aria-label would beat the real label and announce the raw field name instead.
+          The standalone bare-error branch must survive, since the <select> advertises the error
+          id whether or not the label is visible. */}
+      {!inShell && !hideLabels && label ? (
         <Label name={name} label={label} error={error} message={formMessage} />
       ) : (
-        // The <select> below sets aria-describedby=`${name}-error` when invalid, so the
-        // error node must exist even with the label hidden, or the reference dangles.
+        !inShell &&
         error && (
-          <span className="required" id={`${name}-error`} role="alert">
+          <span className="required" id={`${domId}-error`} role="alert">
             {error}
           </span>
         )
       )}
-      <div className={theme ? `select-wrapper ${theme}` : "select-wrapper"}>
-        {active && icon ? (
-          <Icon icon={icon} name={icon} theme="select-icon" />
+      <div className={className ? `select-wrapper nxs-select ${className}` : "select-wrapper nxs-select"}>
+        {hasSelection && icon ? (
+          <Icon icon={icon} name={icon} className="select-icon" />
         ) : thumbnail ? (
-          <Hero hero={{ url: thumbnail, alt: "selection thumbnail" }} theme="thumbnail-select" />
+          <Hero hero={{ url: thumbnail, alt: thumbnailAlt }} className="thumbnail-select" />
         ) : (
           ""
         )}
         <select
-          // id matches the Label's htmlFor={name} so the visible label is properly associated.
-          id={name}
-          className="select"
-          value={activeLabel}
+          // id matches the Label's htmlFor so the visible label is properly associated.
+          id={domId}
+          className="select nxs-select-control"
+          value={isValueMode ? value : activeLabel}
           disabled={isDisabled}
-          // When the visible label is hidden the native control still needs a name for SR users.
-          aria-label={hideLabels || !label ? name : undefined}
+          aria-labelledby={labelId}
+          aria-label={ariaLabel}
           // Mirror Input/InputCheckbox/TextArea so a select with a validation error is
-          // announced as invalid and points at the Label's `${name}-error` node. Select
-          // was the one form control missing this wiring.
+          // announced as invalid and points at the Label's `${domId}-error` node.
           aria-invalid={error ? true : undefined}
-          aria-describedby={error ? `${name}-error` : undefined}
+          aria-describedby={error ? `${domId}-error` : undefined}
           onChange={(e) => onChange?.(e.target.value)}
         >
-          <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />
-          <Option data={{ label: "", name: "", value: "" }} hideOption />
-          {list && list.map((l) => <Option key={l.uid} data={l} />)}
+          {isValueMode ? (
+            // The empty value is the "nothing chosen" row, disabled so it cannot be picked; the
+            // clear button is how a chosen value goes back to it.
+            <Option data={{ label: placeholder || DEFAULT_PLACEHOLDER, name: "", value: "" }} isDisabled />
+          ) : (
+            <>
+              <Option data={{ label: activeLabel, name: activeLabel, value: activeLabel }} isDisabled />
+              <Option data={{ label: "", name: "", value: "" }} hideOption />
+            </>
+          )}
+          {list && list.map((l) => <Option key={l.uid ?? l.value} data={l} />)}
+          {groups?.map((group) => (
+            <optgroup key={group.uid ?? group.label} label={group.label}>
+              {group.options.map((option) => (
+                <Option key={option.uid ?? option.value} data={option} />
+              ))}
+            </optgroup>
+          ))}
         </select>
-        {active && clearSelection && (
+        {hasSelection && clearSelection && (
           <IconButton
             icon={{ icon: "close" }}
             onClick={() => onChange?.("")}
-            theme="btn-icon"
-            aria-label="Clear selection"
+            className="btn-icon nxs-select-clear"
+            aria-label={clearLabel}
           />
         )}
       </div>

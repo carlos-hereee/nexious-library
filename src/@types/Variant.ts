@@ -1,0 +1,120 @@
+/**
+ * The enumerated visual vocabulary, replacing the free-form `theme?: string` prop in 4.0.0.
+ *
+ * Why this had to be an enum and a rename rather than one or the other: `theme` was doing two
+ * unrelated jobs at once. Measured across both repos before the change, roughly 85 percent of its
+ * call sites passed a LAYOUT hook (`entry-rail-thumb`, `select-icon`, `user-chip-compact`) or the
+ * consuming app's own design-system classes (`cu-btn cu-btn-primary`, at 270 sites), and only
+ * about a dozen passed something that was genuinely a variant. So `theme` was `className` with a
+ * misleading name, plus a variant selector nobody could type-check, welded together.
+ *
+ * 4.0.0 splits them. `className` is the escape hatch and behaves the way every React consumer
+ * already expects. `variant` and `size` are the semantic API, and a typo in either is a compile
+ * error instead of an unstyled control.
+ *
+ * There is deliberately NO default variant. A button with no `variant` renders only what its
+ * `className` says, which is exactly what `theme` did (it REPLACED the base class), so every
+ * existing call site keeps its current output through the migration. A default would have
+ * appended a library class underneath the 270 app-owned ones and started a specificity fight.
+ */
+export type Variant = "primary" | "secondary" | "tertiary" | "danger" | "ghost";
+
+/** Maps onto the three control heights in vars/_control.scss: 28px, 36px, 44px. */
+export type Size = "small" | "medium" | "large";
+
+/**
+ * Reserved for the table and list work in Phase 4, where a dense row legitimately drops one
+ * spacing step. Declared here so both halves land on one name rather than inventing two.
+ */
+export type Density = "comfortable" | "compact";
+
+/** The class a variant renders. Exported so a consumer can target the same hooks in its own CSS. */
+export const VARIANT_CLASS: Record<Variant, string> = {
+  primary: "btn-primary",
+  secondary: "btn-secondary",
+  tertiary: "btn-tertiary",
+  danger: "btn-danger",
+  ghost: "btn-ghost",
+};
+
+export const SIZE_CLASS: Record<Size, string> = {
+  small: "btn-sm",
+  medium: "btn-md",
+  large: "btn-lg",
+};
+
+/**
+ * The canonical nxs-btn classes a variant and a size render (5.0.0, 2026-11 item 337), styled in
+ * stylesheets/styles/buttons/_button-variants.scss from the client's cu-btn block. They are added
+ * BESIDE VARIANT_CLASS and SIZE_CLASS, never instead of them: the client still styles the 4.0.0
+ * hooks and picks this release up on publish day, so swapping a class out from under it would
+ * restyle production. Exported so a consumer can target the same hooks in its own CSS.
+ */
+export const NXS_BUTTON_BASE_CLASS = "nxs-btn";
+
+export const NXS_VARIANT_CLASS: Record<Variant, string> = {
+  primary: "nxs-btn-primary",
+  secondary: "nxs-btn-secondary",
+  tertiary: "nxs-btn-tertiary",
+  danger: "nxs-btn-danger",
+  ghost: "nxs-btn-ghost",
+};
+
+export const NXS_SIZE_CLASS: Record<Size, string> = {
+  small: "nxs-btn-small",
+  medium: "nxs-btn-medium",
+  large: "nxs-btn-large",
+};
+
+/**
+ * Builds the class string for a control from its variant, its size and the caller's className.
+ *
+ * One helper rather than the same three-way join copied into five button components, so they
+ * cannot disagree about precedence or about what an absent variant means (CLAUDE.md rule 17).
+ * Order matters and is not cosmetic: the caller's className comes LAST so an equal-specificity
+ * rule of theirs wins on source order without needing !important.
+ *
+ * The nxs-btn base rides with the variant, exactly as btn-base does, so a size with no variant
+ * adds only its two size classes and never pulls a base look onto a control styled by its caller.
+ * With neither a variant nor a size the result is exactly the caller's className (the contract
+ * the client's own cu-btn call sites rest on).
+ */
+export const buildControlClass = (parts: {
+  variant?: Variant;
+  size?: Size;
+  className?: string;
+  extra?: string;
+}): string | undefined => {
+  const { variant, size, className, extra } = parts;
+  const classes = [
+    variant ? "btn-base" : "",
+    variant ? VARIANT_CLASS[variant] : "",
+    size ? SIZE_CLASS[size] : "",
+    variant ? NXS_BUTTON_BASE_CLASS : "",
+    variant ? NXS_VARIANT_CLASS[variant] : "",
+    size ? NXS_SIZE_CLASS[size] : "",
+    extra || "",
+    className || "",
+  ].filter(Boolean);
+  // undefined rather than "" so React omits the attribute entirely on an unstyled control.
+  return classes.length ? classes.join(" ") : undefined;
+};
+
+/**
+ * Builds ONLY the nxs-btn classes for a variant and an optional size, followed by the caller's
+ * className. It is for the library's own internal buttons (ButtonCancel, SubmitButton, CTA, the
+ * dialogs and the rest moved in 2026-11 item 337), which pass the result to Button or IconButton
+ * as className with no `variant` prop.
+ *
+ * Why not `variant` on Button: buildControlClass also emits the 4.0.0 btn-base, btn-<variant> and
+ * btn-<size> hooks, and none of these internals ever rendered them. Adding them would pull the
+ * library's btn-base sizing and the client's `.cu-button-group > .btn-secondary` rules onto
+ * controls the client styles today, which the compatibility rule forbids: an existing export keeps
+ * the classes it had and only gains nxs- classes beside them. Those hooks retire with item 339.
+ */
+export const buildNxsButtonClass = (parts: { variant: Variant; size?: Size; className?: string }): string => {
+  const { variant, size, className } = parts;
+  return [NXS_BUTTON_BASE_CLASS, NXS_VARIANT_CLASS[variant], size ? NXS_SIZE_CLASS[size] : "", className || ""]
+    .filter(Boolean)
+    .join(" ");
+};

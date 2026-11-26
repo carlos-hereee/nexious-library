@@ -1,5 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
+import { useState, type ComponentProps } from "react";
 import FormNavigation from "./FormNavigation";
 
 /**
@@ -25,22 +25,28 @@ type Story = StoryObj<typeof FormNavigation>;
 
 const steps = ["account_basics", "contact_info", "preferences", "review_and_submit"];
 
+/**
+ * Holds the current step so a click in the story moves it. A component rather than inline render
+ * code because a hook may only run inside a component.
+ */
+const StatefulFormNavigation = (props: ComponentProps<typeof FormNavigation>) => {
+  const { pageNumber, onClick, ...args } = props;
+  const [page, setPage] = useState(pageNumber ?? 0);
+  return (
+    <FormNavigation
+      {...args}
+      pageNumber={page}
+      onClick={(i) => {
+        setPage(i);
+        onClick?.(i);
+      }}
+    />
+  );
+};
+
 /** Interactive. Click a step to jump to it. */
 export const Interactive: Story = {
-  render: (args) => {
-    const [page, setPage] = useState(args.pageNumber ?? 0);
-    return (
-      <FormNavigation
-        {...args}
-        pageNumber={page}
-        formOrder={steps}
-        onClick={(i) => {
-          setPage(i);
-          args.onClick?.(i);
-        }}
-      />
-    );
-  },
+  render: (args) => <StatefulFormNavigation {...args} formOrder={steps} />,
   args: {
     heading: "New account",
     pageNumber: 0,

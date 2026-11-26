@@ -41,6 +41,7 @@
       "nxs-calendar": ["./src/@types/Calendar"],
       "nxs-card": ["./src/@types/Card"],
       "nxs-errors": ["./src/@types/Errors"],
+      "nxs-motion": ["./src/@types/Motion"],
       "nxs-form": ["./src/@types/Form"],
       "nxs-navigation": ["./src/@types/Navigation"],
       "nxs-post": ["./src/@types/Post"],

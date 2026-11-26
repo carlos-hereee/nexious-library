@@ -6,7 +6,7 @@ interface ThemeMenuProps {
   list: ThemeList[];
   active?: string;
   name?: string;
-  theme?: string;
+  className?: string;
   btnTheme?: string;
   handleChange?: (value: string) => void;
 }
@@ -27,7 +27,7 @@ interface ThemeMenuProps {
  * This scales to many themes later without needing a redesign. It also means
  * the active theme can show a color swatch next to its label.
  */
-const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange }: ThemeMenuProps) => {
+const ThemeMenu = ({ list, active, name = "theme", className, btnTheme, handleChange }: ThemeMenuProps) => {
   const [open, setOpen] = useState(false);
   const [focusIdx, setFocusIdx] = useState<number>(-1);
   const wrapRef = useRef<HTMLLIElement>(null);
@@ -40,7 +40,7 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
 
   // Close on outside click.
   useEffect(() => {
-    if (!open) return;
+    if (!open) return undefined;
     const onDoc = (e: MouseEvent) => {
       if (!wrapRef.current) return;
       if (!wrapRef.current.contains(e.target as Node)) setOpen(false);
@@ -119,7 +119,7 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
     }
   };
 
-  const wrapClass = ["theme-menu", theme || "", btnTheme || ""].filter(Boolean).join(" ");
+  const wrapClass = ["theme-menu", className || "", btnTheme || ""].filter(Boolean).join(" ");
 
   return (
     <li className={wrapClass} ref={wrapRef}>
@@ -134,12 +134,12 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
         onClick={() => setOpen((v) => !v)}
         onKeyDown={onTriggerKey}
       >
-        <Icon icon="palette" name="theme" theme="theme-menu-icon" />
+        <Icon icon="palette" name="theme" className="theme-menu-icon" />
         <span className="theme-menu-label">{activeLabel}</span>
         {activeItem?.colors && (
           <span className="theme-menu-swatch" aria-hidden="true" style={{ background: activeItem.colors.primary }} />
         )}
-        <Icon icon="chevronDown" name="chevron" theme={`theme-menu-chevron${open ? " is-open" : ""}`} />
+        <Icon icon="chevronDown" name="chevron" className={`theme-menu-chevron${open ? " is-open" : ""}`} />
       </button>
 
       {open && (
@@ -154,6 +154,8 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
           {list.map((t, i) => {
             const selected = t.value === active || t.name === active;
             return (
+              // The listbox pattern takes keyboard input on the <ul> (onListKey: arrows, Home, End, Enter), not on each option.
+              // eslint-disable-next-line jsx-a11y/click-events-have-key-events
               <li
                 key={t.uid || t.value || t.name}
                 role="option"
@@ -171,7 +173,7 @@ const ThemeMenu = ({ list, active, name = "theme", theme, btnTheme, handleChange
                   />
                 )}
                 <span className="theme-menu-option-label">{t.label}</span>
-                {selected && <Icon icon="checkMark" name="check" theme="theme-menu-option-check" />}
+                {selected && <Icon icon="checkMark" name="check" className="theme-menu-option-check" />}
               </li>
             );
           })}

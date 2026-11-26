@@ -1,5 +1,6 @@
 import type { CardinalDirectionProps } from "nxs-typography";
 import type { LibraryIconKey } from "@nxs-atoms/assets/iconRegistry";
+import type { Variant, Size } from "./Variant";
 
 export type SizeProp = "2xs" | "xs" | "sm" | "lg" | "xl" | "2xl";
 export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9x" | "10x";
@@ -7,9 +8,12 @@ export type NumSize = "1x" | "2x" | "3x" | "4x" | "5x" | "6x" | "7x" | "8x" | "9
 // ANY string still compiles (consumers register custom keys against an open registry, so we
 // cannot hard-restrict the union). Discoverability without locking the registry. The import
 // is type-only, so it is erased at emit and does not create a runtime cycle with iconRegistry.
+// eslint-disable-next-line @typescript-eslint/ban-types -- `{}` is the documented autocomplete idiom above; `unknown` or `object` would collapse the union to plain string.
 export type IconKey = LibraryIconKey | (string & {});
 export type IconProps = {
   icon: IconKey;
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
   isNum?: boolean;
   size?: SizeProp | NumSize;
   spin?: string;
@@ -17,19 +21,26 @@ export type IconProps = {
   label?: string;
   name?: string;
   hideHints?: boolean;
-  theme?: string;
+  className?: string;
   layout?: string;
 };
 export interface ButtonProps {
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
   // optional
   // Called on click. Kept as an optional data string (not the DOM event) because internal
   // callers such as NavButton pass a payload through it; widening to the event would break them.
   onClick?: (data?: string) => void;
   onSubmit?: () => void;
   children?: React.ReactNode;
-  theme?: string;
-  // className merges with the computed theme/btn-main class rather than replacing it,
-  // so consumers can extend styling without losing the base button styles.
+  // The semantic API, new in 4.0.0. A typo is a compile error instead of an unstyled control.
+  // There is NO default variant: a Button with no variant renders only its className, which is
+  // exactly what the removed `theme` prop did (it REPLACED the base class), so every existing
+  // call site keeps its rendered output through the migration.
+  variant?: Variant;
+  size?: Size;
+  // The escape hatch, and the direct replacement for `theme`. Appended AFTER the variant and
+  // size classes so an equal-specificity consumer rule wins on source order without !important.
   className?: string;
   // type defaults to "button"; pass "submit" to use Button inside a form.
   type?: "button" | "submit" | "reset";
@@ -60,11 +71,31 @@ export interface ButtonProps {
   body?: string;
   active?: CardinalDirectionProps;
 }
+/**
+ * HintButton: an icon toggle that opens a short explanation beside the thing it explains. Every
+ * string a reader sees or hears is a prop with an English default, so a consumer can localize it.
+ */
+export interface HintButtonProps {
+  /** Optional lead line inside the panel. Rendered as text, not a heading, so a hint never adds to the page outline. */
+  title?: string;
+  /** The explanation itself. */
+  body?: string;
+  /** Accessible name of the toggle. Defaults to "show hint". */
+  toggleLabel?: string;
+  /** Label of the close button inside the panel. Defaults to "close". */
+  closeLabel?: string;
+  /** Accessible name of the panel when no title is given. Defaults to "Hint". */
+  label?: string;
+}
 export interface IconButtonProps {
+  // See HeroProps.isDev, overrides dev-panel visibility for this component.
+  isDev?: boolean;
   // all of button props
   name?: string;
   title?: string;
-  theme?: string;
+  variant?: Variant;
+  size?: Size;
+  className?: string;
   isDisable?: boolean;
   // alias of isDisable (see ButtonProps); lets callers use the canonical spelling.
   isDisabled?: boolean;
@@ -97,7 +128,48 @@ export interface CopyToClipboardProps {
   heading?: string;
   label?: string;
   labelLayout?: string;
-  theme?: string;
+  className?: string;
   data: string;
   isCopy?: boolean;
 }
+
+// ── SwapOrderButtons ─────────────────────────────────────────────────────────────
+/** One press moves a row one step: up the list (-1) or down it (1). */
+export type MoveOffset = -1 | 1;
+/**
+ * The Move up / Move down pair for a list reordered one row at a time.
+ *
+ * There is no `className`: the pair renders as a fragment so it drops into any row's action
+ * container, which leaves no root for a class to append to. `classNames.button` is the one slot.
+ */
+export type SwapOrderButtonsProps = {
+  /** This row's place in the list and the list's length. The ends disable from these two. */
+  position: number;
+  count: number;
+  onMove: (offset: MoveOffset) => void;
+  /**
+   * Already translated, and naming the row ("Move Fractions up"), so a screen reader user can
+   * tell one row's pair from the next. Required because both buttons are icon only.
+   */
+  upLabel: string;
+  downLabel: string;
+  /**
+   * A hold on BOTH buttons, for example while a move saves. A caller whose write guard already
+   * refuses a second move leaves this off, so the pressed button keeps focus through the save.
+   */
+  disabled?: boolean;
+  /**
+   * Renders data-move={`${moveKey}:${offset}`} on each button, so a caller that keys its rows by
+   * index can find the moved row's button again after the swap. Absent means no attribute.
+   */
+  moveKey?: string | number;
+  /** Replace the default arrowUp / arrowDown glyphs. Rendered inside the button as given. */
+  upIcon?: React.ReactNode;
+  downIcon?: React.ReactNode;
+  /**
+   * `button` REPLACES the whole default class string on both buttons (the secondary, medium
+   * variant classes plus `nxs-swap-order-button`), so a consumer with its own button system does
+   * not inherit a library skin underneath it and fight it on specificity.
+   */
+  classNames?: { button?: string };
+};

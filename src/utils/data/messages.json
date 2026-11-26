@@ -1,6 +1,8 @@
 {
-  "missingProps": "is missing a required prop — check that all required props are passed",
-  "iconNotFound": "could not find the requested icon — verify the icon name matches the library's icon list",
-  "missingAsset": "is missing a required image or asset — check that the hero/url prop is provided",
-  "missingInitialValues": "is missing initialValues — the Form component requires an initialValues object"
+  "missingProps": "is missing a required prop",
+  "iconNotFound": "was given an icon key that is not in the registry",
+  "missingAsset": "is missing its image asset",
+  "missingInitialValues": "is missing initialValues, so it has no fields to build",
+  "wrongPropType": "was given the wrong type for a prop",
+  "emptyCollection": "was given an empty list where it needs at least one item"
 }

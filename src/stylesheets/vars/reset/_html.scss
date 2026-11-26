@@ -20,10 +20,15 @@ body {
 [hidden] {
   display: none;
 }
-// Add basic styling to disabled components
+// Add basic styling to disabled components.
+//
+// Was a linear-gradient between $dimmer and $dim, two compiled light-only grays, so every disabled
+// control in a dark subtree painted itself a pale rectangle. --hover-bg is the one surface TINT
+// that carries a dark counterpart, and a flat tint is also what the design language asks for:
+// gradients are reserved for a premium or celebratory moment, which a disabled control is not.
 [disabled] {
   cursor: not-allowed;
-  background: linear-gradient(variables.$dimmer, variables.$dim);
+  background: var(--hover-bg);
 }
 
 *,
@@ -51,8 +56,8 @@ section {
 header {
   display: flex;
   align-items: center;
-  gap: variables.$rem;
-  padding: variables.$rem05 variables.$rem;
+  gap: var(--space-medium);
+  padding: var(--space-small) var(--space-medium);
 }
 
 ul {
@@ -75,11 +80,14 @@ button {
   background-color: transparent;
   font: inherit;
   color: inherit;
-  padding: variables.$rem05 variables.$rem;
+  padding: var(--space-small) var(--space-medium);
+  // The `max-width` + `width` pair below is the library's documented width trap and is deliberately
+  // left as it stands: .btn-base and .nxs-button-group already reclaim width, and changing the
+  // reset itself is an owner decision, not a tokenization pass.
   max-width: variables.$max-width-button;
   width: 100%;
   border: none;
   border-radius: variables.$border-radius;
-  gap: variables.$rem;
+  gap: var(--space-medium);
   cursor: pointer;
 }

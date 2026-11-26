@@ -1,0 +1,26 @@
+// The loading-skeleton sweep (design language 5.9: "skeleton shimmer, 1.2s loop, subtle").
+//
+// It animates background-position, not opacity or transform, for two reasons. Opacity would
+// fade the whole placeholder in and out, which reads as a flicker rather than as progress.
+// Transform would move the element itself, so a column of skeleton rows would visibly slide
+// against its own container. Sweeping a fixed 200% gradient across a 100%-wide box moves only
+// the paint, so the box stays exactly where the real content will land.
+//
+// The direction is the counterintuitive part, and it is worth stating because the obvious
+// keyframe runs backwards. A percentage background-position aligns the same percentage point
+// of the IMAGE with that point of the BOX, so on a 200%-wide image the paint offset works out
+// to -(box width) x P/100: P of 100% pushes the highlight LEFT and P of -100% pushes it RIGHT.
+// Sweeping left to right, which is what matches reading direction, therefore counts DOWN from
+// 100% to -100%. Writing the intuitive -100% to 100% renders a right-to-left sweep.
+//
+// The travel is a full 100% either side rather than 0 to 100% because the gradient's highlight
+// sits in the MIDDLE of the image: starting at 0 would begin the first cycle with the highlight
+// already halfway across the box, so it would not match any cycle after it.
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}

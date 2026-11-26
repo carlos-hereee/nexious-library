@@ -1,6 +1,11 @@
 import { IconButton } from "@nxs-molecules/index";
 import type { CopyToClipboardProps } from "nxs-button";
 import { useEffect, useState } from "react";
+import { buildNxsButtonClass } from "../../../@types/Variant";
+
+// IconButton takes its look as a class string, so the secondary nxs-btn (2026-11 item 337) is
+// composed here with the legacy btn-main kept beside it until 2026-11 item 339.
+const COPY_BUTTON_CLASS = buildNxsButtonClass({ variant: "secondary", className: "btn-main" });
 
 const CopyButton = ({ data, label }: CopyToClipboardProps) => {
   const [isCopy, setCopy] = useState(false);
@@ -33,7 +38,7 @@ const CopyButton = ({ data, label }: CopyToClipboardProps) => {
       <IconButton
         icon={{ icon: isCopy ? "check" : "copy", label: label || "Copy link" }}
         onClick={copyData}
-        theme="btn-main"
+        className={COPY_BUTTON_CLASS}
         aria-label={label || "Copy link"}
       />
       {/* The icon swap (copy → check) is silent to screen readers; this polite live region

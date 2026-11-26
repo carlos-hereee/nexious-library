@@ -13,7 +13,7 @@ const ItemDetail = ({ label, value, labelLayout, children, hint }: ItemDetailPro
           ) : (
             <p>{label}</p>
           )}
-          <HintButton title={hint.title} body={hint.body} />
+          <HintButton title={hint.title} body={hint.body} toggleLabel={hint.toggleLabel} closeLabel={hint.closeLabel} />
         </div>
         {children || <p>{value}</p>}
       </div>

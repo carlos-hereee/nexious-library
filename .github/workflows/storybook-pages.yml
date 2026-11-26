@@ -1,0 +1,55 @@
+# Builds the Storybook playground and deploys it to GitHub Pages, served at
+# https://storybook.companyuno.com. It never publishes to npm and never gates a
+# pull request: ci.yml stays the verify gate, this workflow only ships the site.
+#
+# The custom domain lives in the repository's Pages settings (owner owned), not
+# in a CNAME file, because an Actions deployment ignores CNAME files. The site
+# sits at the domain root, so Storybook needs no base path flag.
+
+name: Storybook Pages
+
+on:
+  push:
+    branches: ["production"]
+  workflow_dispatch:
+
+# Pages deploys with the default GITHUB_TOKEN: pages and id-token are the only
+# write scopes it gets, and contents stays read only for the checkout.
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# One deploy at a time. An in flight deploy is allowed to finish rather than
+# being cancelled halfway, so the live site is never left half replaced.
+concurrency:
+  group: storybook-pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    env:
+      STORYBOOK_DISABLE_TELEMETRY: "1"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+      - run: npm ci
+      - run: npm run build-storybook -- --output-dir storybook-static
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: storybook-static
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4

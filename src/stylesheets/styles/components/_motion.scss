@@ -1,0 +1,56 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// The classes useMotion hands out (design language 5.9). Each moving element carries four:
+// `.motion`, a direction, a pattern and a speed, and the three modifiers only set custom
+// properties, so the one `animation` declaration below is the whole engine and nothing else in
+// the library animates through these classes.
+//
+// What this deliberately does NOT do: animate layout (height, width, position), delay pointer
+// input, or run past 300ms. Opacity and transform only, and an entering element is clickable from
+// its first frame, which is the 5.9 rule that the user can click through an entering panel.
+.motion {
+  --motion-speed: var(--transition-base);
+  --motion-keyframes: fadeIn;
+  // The speed token carries its easing ("200ms ease"), which the animation shorthand accepts as
+  // its duration and timing function, so the tokens are read as they are rather than mirrored.
+  // `both` holds the from-frame through a stagger delay, so a delayed item does not flash in at
+  // full opacity before its own animation starts.
+  animation: var(--motion-speed) var(--motion-keyframes) both;
+  animation-delay: var(--motion-delay, 0ms);
+}
+
+.motion-fast {
+  --motion-speed: var(--transition-fast);
+}
+.motion-base {
+  --motion-speed: var(--transition-base);
+}
+.motion-slow {
+  --motion-speed: var(--transition-slow);
+}
+
+.motion-enter {
+  --motion-keyframes: fadeIn;
+}
+.motion-exit {
+  --motion-keyframes: fadeOut;
+}
+.motion-enter.motion-fade-rise {
+  --motion-keyframes: motion-fade-rise-in;
+}
+.motion-exit.motion-fade-rise {
+  --motion-keyframes: motion-fade-rise-out;
+}
+
+@include mixins.reduced-motion {
+  // useMotion already hands out "fade" under reduced motion, but it reads the media query in JS
+  // and a server rendered or first painted frame can arrive before it does. Restating the swap
+  // here means the CSS alone drops the translate. The global kill switch then clamps the fade to
+  // 1ms with a -1ms delay, which lands it on its end state at once: instant opacity, no motion.
+  .motion-enter.motion-fade-rise {
+    --motion-keyframes: fadeIn;
+  }
+  .motion-exit.motion-fade-rise {
+    --motion-keyframes: fadeOut;
+  }
+}

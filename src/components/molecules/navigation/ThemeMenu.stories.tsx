@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import { useState } from "react";
-import ThemeMenu from "./ThemeMenu";
+import { useState, type ComponentProps } from "react";
 import type { ThemeList } from "nxs-navigation";
+import ThemeMenu from "./ThemeMenu";
 
 /**
  * ThemeMenu is a listbox button theme picker that replaces the native
@@ -18,7 +18,7 @@ const meta: Meta<typeof ThemeMenu> = {
   argTypes: {
     active: { control: "text" },
     name: { control: "text" },
-    theme: { control: "text" },
+    className: { control: "text" },
     btnTheme: { control: "text" },
     handleChange: { action: "theme-selected" },
   },
@@ -80,22 +80,31 @@ const manyThemes: ThemeList[] = [
   },
 ];
 
-/** Two theme choice (the current nexious use case). */
+type StatefulThemeMenuProps = ComponentProps<typeof ThemeMenu> & { initialTheme: string };
+
+/**
+ * Holds the picked theme the way a real consumer would, so clicking an option in the story moves
+ * the selection. It is a component rather than inline render code because a hook may only run
+ * inside a component.
+ */
+const StatefulThemeMenu = (props: StatefulThemeMenuProps) => {
+  const { initialTheme, handleChange, ...args } = props;
+  const [active, setActive] = useState(args.active || initialTheme);
+  return (
+    <ThemeMenu
+      {...args}
+      active={active}
+      handleChange={(v) => {
+        setActive(v);
+        handleChange?.(v);
+      }}
+    />
+  );
+};
+
+/** Two theme choices (the current nexious use case). */
 export const TwoThemes: Story = {
-  render: (args) => {
-    const [active, setActive] = useState(args.active || "light");
-    return (
-      <ThemeMenu
-        {...args}
-        list={twoThemes}
-        active={active}
-        handleChange={(v) => {
-          setActive(v);
-          args.handleChange?.(v);
-        }}
-      />
-    );
-  },
+  render: (args) => <StatefulThemeMenu {...args} list={twoThemes} initialTheme="light" />,
   args: {
     name: "theme",
     active: "light",
@@ -104,20 +113,7 @@ export const TwoThemes: Story = {
 
 /** Scales to many themes without a redesign. */
 export const ManyThemes: Story = {
-  render: (args) => {
-    const [active, setActive] = useState(args.active || "solarized");
-    return (
-      <ThemeMenu
-        {...args}
-        list={manyThemes}
-        active={active}
-        handleChange={(v) => {
-          setActive(v);
-          args.handleChange?.(v);
-        }}
-      />
-    );
-  },
+  render: (args) => <StatefulThemeMenu {...args} list={manyThemes} initialTheme="solarized" />,
   args: {
     name: "theme",
     active: "solarized",

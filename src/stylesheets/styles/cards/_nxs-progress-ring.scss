@@ -1,0 +1,66 @@
+// ── nxs-progress-ring, a percent as a circular arc ──────────────────────────────────
+// Lifted from nexious-client's study-ws-ring rules (study.css) with the ProgressRing component
+// (2026-11 item 387, Phase 1), rebuilt on library tokens. The svg is sized here, never by its
+// viewBox, and the value is HTML beside it (small, large) or stacked over it (hero), so the text
+// stays in true CSS pixels at every size. The arc reads --progress-ring-arc, which each theme sets
+// so the arc clears 3:1 on its track (contrast.test.ts measures it).
+
+.nxs-progress-ring {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-extra-small);
+}
+.nxs-progress-ring-svg {
+  width: var(--progress-ring-size-small);
+  height: var(--progress-ring-size-small);
+  flex-shrink: 0;
+}
+.nxs-progress-ring-track {
+  stroke: var(--surface-2);
+}
+.nxs-progress-ring-arc {
+  stroke: var(--progress-ring-arc);
+}
+// Tabular figures keep the digits from jumping as the value changes.
+.nxs-progress-ring-value {
+  font-weight: var(--font-semibold);
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.nxs-progress-ring-large .nxs-progress-ring-svg {
+  width: var(--progress-ring-size-large);
+  height: var(--progress-ring-size-large);
+}
+.nxs-progress-ring-large .nxs-progress-ring-value {
+  font-size: var(--text-large);
+}
+
+// Hero: the svg and the value share one grid cell, so the value and its caption sit INSIDE the
+// circle as HTML rather than as svg text in the viewBox.
+.nxs-progress-ring-hero {
+  display: inline-grid;
+  place-items: center;
+}
+.nxs-progress-ring-hero > * {
+  grid-area: 1 / 1;
+}
+.nxs-progress-ring-hero .nxs-progress-ring-svg {
+  width: var(--progress-ring-size-hero);
+  height: var(--progress-ring-size-hero);
+}
+.nxs-progress-ring-hero .nxs-progress-ring-value {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: var(--text-2x-large);
+  line-height: var(--line-height-tight);
+}
+.nxs-progress-ring-caption {
+  max-width: var(--progress-ring-caption-max);
+  font-size: var(--type-caption-size);
+  font-weight: var(--type-caption-weight);
+  line-height: var(--type-caption-line-height);
+  color: var(--text-secondary);
+  text-align: center;
+}

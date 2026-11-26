@@ -2,14 +2,17 @@ import { ErrorMessage } from "@nxs-atoms/index";
 import { Hero } from "@nxs-molecules";
 import type { UserCardProps } from "nxs-card";
 
-const UserCard: React.FC<UserCardProps> = ({ user, hideLabels, theme, hideHero }) => {
-  if (!user) return <ErrorMessage error={{ code: "missingProps", prop: "user", value: user, isAProp: true }} />;
+const UserCard: React.FC<UserCardProps> = ({ user, hideLabels, className, hideHero, isDev }) => {
+  if (!user)
+    return (
+      <ErrorMessage isDev={isDev} error={{ code: "missingProps", prop: "user", value: user, component: "UserCard" }} />
+    );
 
   const name = user.nickname || user.name || user.username || "";
   return (
-    <div className={theme ? `user-card ${theme}` : "user-card"}>
+    <div className={className ? `user-card ${className}` : "user-card"}>
       {!hideHero && user.hero && (
-        <Hero hero={{ url: user.hero, alt: `avatar ${user.name || user.username}` }} theme="hero-user" />
+        <Hero hero={{ url: user.hero, alt: `avatar ${user.name || user.username}` }} className="hero-user" />
       )}
       {!hideLabels && (
         <>

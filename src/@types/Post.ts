@@ -57,7 +57,7 @@ export interface PostCallbacks {
 /** Feed card variant (most prominent). */
 export interface PostProps extends PostCallbacks {
   post: PostData;
-  theme?: string;
+  className?: string;
   /** Truncate body preview to this many characters (default 280). */
   bodyPreviewLength?: number;
   /** When true, show the full body. Use this in PostDetail. */
@@ -72,14 +72,14 @@ export interface PostProps extends PostCallbacks {
 /** Compact list row variant. */
 export interface PostRowProps extends PostCallbacks {
   post: PostData;
-  theme?: string;
+  className?: string;
   allowRemoval?: boolean;
 }
 
 /** Full detail variant. */
 export interface PostDetailProps extends PostCallbacks {
   post: PostData;
-  theme?: string;
+  className?: string;
   /** Optional comments slot; client passes its own comment list component. */
   children?: ReactNode;
   allowRemoval?: boolean;

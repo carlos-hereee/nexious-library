@@ -11,7 +11,7 @@ describe("useRequiredProps", () => {
   });
 
   it("returns green for boolean false (explicitly set prop, not missing)", () => {
-    // false is a valid value — it should not be flagged as missing
+    // false is a valid value, it should not be flagged as missing
     const { result } = renderHook(() => useRequiredProps({ isVisible: false }));
 
     expect(result.current.lightColor).toBe("green");
@@ -54,7 +54,7 @@ describe("useRequiredProps", () => {
   });
 
   it("returns red when a prop is an empty object", () => {
-    // BUG WAS: `objLength(value) < 0` can never be true — was effectively dead code.
+    // BUG WAS: `objLength(value) < 0` can never be true, was effectively dead code.
     // Fixed to `=== 0` so empty objects are correctly flagged.
     const { result } = renderHook(() => useRequiredProps({ config: {} }));
 
@@ -63,7 +63,7 @@ describe("useRequiredProps", () => {
   });
 
   // ── accumulation: the stale closure regression ─────────────────────────────
-  it("accumulates multiple errors — one per missing prop", () => {
+  it("accumulates multiple errors, one per missing prop", () => {
     // BUG WAS: stale closure meant each call to missingProps overwrote with the
     // initial empty array. Only the last error survived. Fixed with functional update.
     const { result } = renderHook(() => useRequiredProps({ title: "", subtitle: null, items: undefined }));
@@ -77,7 +77,7 @@ describe("useRequiredProps", () => {
     expect(names).toContain("items");
   });
 
-  it("mixes: some props valid, some missing — only missing ones flagged", () => {
+  it("mixes: some props valid, some missing, only missing ones flagged", () => {
     const { result } = renderHook(() => useRequiredProps({ name: "Alice", email: "" }));
 
     expect(result.current.lightColor).toBe("red");

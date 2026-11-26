@@ -2,13 +2,14 @@
 
 @use "../../vars/variables/_index.scss" as variables;
 
+// The 550px cap is what keeps width:100% from letting a Hero fill an arbitrarily wide
+// container. Any theme layered on top of .hero (avatars especially) has to set its own,
+// tighter cap or it inherits this one and balloons. See _avatar.scss.
 .hero {
   display: block;
   width: 100%;
   max-width: variables.$max-hero-width;
   max-height: variables.$max-hero-height;
-  // object-fit: cover;
-  // object-position: center;
   border-radius: variables.$border-radius;
 }
 .hero-wrapper {
@@ -34,7 +35,6 @@
   max-height: 35px;
   width: 100%;
   height: 100%;
-  // height: min-content;
   aspect-ratio: 16/9;
   color: inherit;
 }
@@ -42,11 +42,18 @@
   display: flex;
   align-items: center;
   justify-content: space-around;
-  gap: variables.$rem;
-  @include mixin.devices(mobile) {
+  gap: var(--space-medium);
+  .hero,
+  .credit-to {
+    display: none;
+  }
+  // Both desktop values are the elements' own defaults, read off the source rather than guessed:
+  // .hero is an img, which the reset and the .hero rule above both set to block, and .credit-to is
+  // the <p> from UnsplashCredit, which no rule in the library or in nexious-client touches.
+  @include mixin.respond-from(mobile) {
     .hero,
     .credit-to {
-      display: none;
+      display: block;
     }
   }
 }

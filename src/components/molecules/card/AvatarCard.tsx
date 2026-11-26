@@ -5,14 +5,14 @@ interface AvatarCardProps {
     avatar: string;
     name: string;
   };
-  theme?: string;
+  className?: string;
   children?: React.ReactNode;
 }
 
-const AvatarCard = ({ user, theme, children }: AvatarCardProps) => {
+const AvatarCard = ({ user, className, children }: AvatarCardProps) => {
   return (
-    <div className={theme || "user-avatar-container"}>
-      <Hero hero={{ url: user.avatar, alt: "user-avatar" }} theme="avatar-sm" />
+    <div className={className || "user-avatar-container"}>
+      <Hero hero={{ url: user.avatar, alt: "user-avatar" }} className="avatar-sm" />
       {user.name && <p> {user.name}</p>}
       {children}
     </div>

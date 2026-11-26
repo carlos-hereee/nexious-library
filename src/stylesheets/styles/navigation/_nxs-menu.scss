@@ -1,0 +1,68 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-menu, the dropdown menu (ActionMenu) ───────────────────────────────────────
+// Ported from nexious-client's `.study-ws-menu` block (study.css, 2026-11 item 337, Phase 5),
+// renamed because a plugin's prefix on a shared menu misleads the next reader. Tokens only.
+
+.nxs-menu {
+  position: relative;
+  display: inline-block;
+}
+.nxs-menu-glyph {
+  font-size: var(--text-large);
+  line-height: 1;
+}
+.nxs-menu-panel {
+  position: absolute;
+  right: 0;
+  z-index: var(--z-dropdown);
+  min-width: 220px;
+  margin-top: var(--space-extra-small);
+  padding: var(--space-extra-small);
+  background-color: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-large);
+  box-shadow: var(--shadow-medium);
+}
+// A trigger at a row's left edge opens its panel rightward instead.
+.nxs-menu-panel-start {
+  right: auto;
+  left: 0;
+}
+.nxs-menu-item {
+  display: block;
+  box-sizing: border-box;
+  width: 100%;
+  // The 44px tap floor (WCAG 2.5.5): a menu is often opened from a phone.
+  min-height: var(--tap-target-min);
+  padding: var(--space-small) var(--space-medium);
+  background: none;
+  border: 0;
+  border-radius: var(--radius-medium);
+  color: var(--text);
+  font: inherit;
+  text-align: left;
+  // An entry with an href is an anchor, which would otherwise be the one underlined row.
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color var(--transition-fast);
+  @include mixins.focus-ring;
+}
+// Matched on the attribute, not :disabled: an unavailable entry carries aria-disabled so it stays
+// focusable and therefore announced inside role="menu".
+.nxs-menu-item:hover:not([aria-disabled="true"]) {
+  background-color: var(--surface-2-hover);
+}
+.nxs-menu-item[aria-disabled="true"] {
+  color: var(--text-muted);
+  cursor: not-allowed;
+}
+.nxs-menu-item-danger {
+  color: var(--danger-text);
+}
+
+@include mixins.reduced-motion {
+  .nxs-menu-item {
+    transition: none;
+  }
+}

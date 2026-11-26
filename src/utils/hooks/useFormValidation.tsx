@@ -119,13 +119,13 @@ export const useFormValidation = (schema: ValidateProps): UseFormValidationApi =
     // when errors were found. This meant form submissions with errors could appear
     // to succeed. Fix: check errors first, then honor the requested status.
     if (Object.keys(errors).length > 0) {
-      // validation found problems — always signal error regardless of requested status
+      // validation found problems, always signal error regardless of requested status
       setStatus("error");
     } else if (status) {
       // no errors and caller requested a specific follow-up status (e.g. "green" to submit)
       setStatus(status);
     } else {
-      // no errors, no specific status requested — mark as clean
+      // no errors, no specific status requested, mark as clean
       setStatus("validated");
     }
     setFormErrors(errors);

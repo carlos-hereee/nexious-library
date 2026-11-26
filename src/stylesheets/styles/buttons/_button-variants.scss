@@ -1,4 +1,6 @@
-/* Global transition baseline for interactive elements */
+@use "../../vars/mixin/_index.scss" as mixin;
+
+// Global transition baseline for interactive elements
 button,
 a,
 .nav-btn,
@@ -9,45 +11,355 @@ a,
     box-shadow var(--transition-fast), color var(--transition-fast), transform var(--transition-fast);
 }
 
-.btn-ghost {
-  background-color: transparent;
-  border: 1px solid var(--border);
-  color: var(--text);
-}
-.btn-ghost:hover {
-  background-color: var(--surface);
-  border-color: var(--main-brand-color);
-  box-shadow: var(--shadow-small);
+// ── The button system ───────────────────────────────────────────────────────────
+// One base plus five variants plus three sizes, all from the control tokens, so a button lines
+// up with the input beside it by construction rather than by anyone measuring.
+//
+// Reached for only when a caller passes `variant`. There is no implicit base class in 4.0.0, so a
+// caller that brings its own design-system classes gets exactly those. That matters here more
+// than it sounds: nexious-client styles 319 of its 335 button call sites with its own `cu-btn`
+// primitives, so a library base class underneath would be a specificity fight at every one.
+//
+// This file is the one that was already fully token driven before the rework, which is why it is
+// the file that absorbed the other three rather than the other way round.
+.btn-base {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  // Height and padding match the form controls exactly. A button in a row with an input and a
+  // select is the last piece of the alignment proof.
+  height: var(--control-height);
+  // min-height is deliberately NOT here. It is the WCAG tap floor at base width and drops back to
+  // this control height above mobile, so both bands are stated together in the touch floor section
+  // at the bottom of this file rather than split between a rule and a query.
+  padding: var(--control-padding-y) var(--control-padding-x);
+  border: 1px solid transparent;
+  border-radius: var(--control-radius-button);
+  font-size: var(--text-small);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  cursor: pointer;
+  // The library reset ships `button { width: 100%; max-width: 250px }`, so width has to be
+  // reclaimed here or every variant inherits a cap it did not ask for. Width belongs to the
+  // container (.nxs-button-group), never to the button.
+  width: auto;
+  max-width: none;
+  @include mixin.focus-ring;
+  &:disabled {
+    cursor: not-allowed;
+    opacity: 0.6;
+  }
 }
 
-.btn-outline {
-  background-color: transparent;
-  border: 1px solid var(--main-brand-color);
-  color: var(--main-brand-color);
-}
-.btn-outline:hover {
+.btn-primary {
   background-color: var(--main-brand-color);
-  color: #ffffff;
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-small);
+  color: var(--primary-text-dark-mode-color);
+  border-color: var(--main-brand-color);
+  &:hover:not(:disabled) {
+    background-color: var(--main-brand-hover-color);
+    border-color: var(--main-brand-hover-color);
+  }
 }
 
+// Secondary is a NEUTRAL, not a second brand hue. The design language is explicit about this
+// (section 5.3): a competing saturated color fights indigo for attention and makes the product
+// louder, which is the opposite of the goal.
+.btn-secondary {
+  background-color: var(--surface);
+  color: var(--text);
+  border-color: var(--border);
+  &:hover:not(:disabled) {
+    background-color: var(--hover-bg);
+    border-color: var(--main-brand-color);
+  }
+}
+
+.btn-tertiary {
+  background-color: transparent;
+  color: var(--main-brand-color);
+  border-color: transparent;
+  &:hover:not(:disabled) {
+    background-color: var(--brand-wash);
+  }
+}
+
+// DEPRECATED until 2026-11 item 339. `.btn-danger` doubles as a legacy alias the client still
+// writes by hand, so the rule stays, and variant="danger" keeps emitting it beside
+// .nxs-btn-danger, until the client moves off it. New work reads .nxs-btn-danger.
 .btn-danger {
   background-color: var(--danger-accent-color);
-  color: #ffffff;
-  border: none;
-}
-.btn-danger:hover {
-  background-color: #dc2626;
+  color: var(--status-on-accent);
+  border-color: var(--danger-accent-color);
+  &:hover:not(:disabled) {
+    background-color: var(--danger-text);
+    border-color: var(--danger-text);
+  }
 }
 
+.btn-ghost {
+  background-color: transparent;
+  color: var(--text);
+  border-color: var(--border);
+  &:hover:not(:disabled) {
+    background-color: var(--surface);
+    border-color: var(--main-brand-color);
+    box-shadow: var(--elevation-1);
+  }
+}
+
+// ── Sizes ───────────────────────────────────────────────────────────────────────
+// Three, matching the three control heights. `btn-md` is the same as the base and exists so a
+// caller can say the size explicitly rather than relying on an omission to mean medium.
 .btn-sm {
-  padding: var(--space-extra-small) var(--space-small);
-  font-size: var(--text-small);
+  height: var(--control-height-small);
+  padding: var(--control-padding-y-small) var(--control-padding-x-small);
+  font-size: var(--text-extra-small);
   border-radius: var(--radius-small);
 }
+.btn-md {
+  height: var(--control-height);
+  padding: var(--control-padding-y) var(--control-padding-x);
+  font-size: var(--text-small);
+}
 .btn-lg {
+  height: var(--control-height-large);
+  padding: var(--control-padding-y-large) var(--control-padding-x-large);
+  font-size: var(--text-base);
+  border-radius: var(--control-radius-button);
+}
+
+// ── Touch floor ─────────────────────────────────────────────────────────────────
+// WCAG 2.5.5. Now that the file is mobile first the floor is the BASE, and each size opts back
+// down to its own control height above mobile width, because a 44px control at desktop density
+// makes a dense toolbar unusable and pointer accuracy is not the constraint there.
+//
+// This section owns min-height for all four classes, in both bands. Two things about it are
+// load bearing. It has to sit AFTER the size rules above, since the floor overrides all of them
+// unconditionally. And the restores below have to keep the same relative order as those size
+// rules, because a button carrying two of these classes (.btn-base plus .btn-sm, say) is resolved
+// by source order at equal specificity, and reordering them would silently change which height
+// such a button lands on.
+.btn-base,
+.btn-sm,
+.btn-md,
+.btn-lg {
+  min-height: var(--tap-target-min);
+}
+@include mixin.respond-from(mobile) {
+  .btn-base {
+    min-height: var(--control-height);
+  }
+  .btn-sm {
+    min-height: var(--control-height-small);
+  }
+  .btn-md {
+    min-height: var(--control-height);
+  }
+  .btn-lg {
+    min-height: var(--control-height-large);
+  }
+}
+
+// ── The width handshake ─────────────────────────────────────────────────────────
+// Button width is owned by the CONTAINER, never by the button. This is the library half of the
+// handshake nexious-client already shipped as `cu-button-group`: the client built its side to
+// neutralize `.btn-main`'s `width: 100%; max-width: 450px` at the wrapper, and the library side
+// was never done, which is what kept the !important war alive.
+.nxs-button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-small);
+  align-items: center;
+  > * {
+    width: auto;
+    max-width: none;
+  }
+}
+.nxs-button-group-stretch > * {
+  flex: 1 1 0;
+}
+
+// ── The nxs-btn family (2026-11 item 337) ───────────────────────────────────────
+// The canonical button, ported from nexious-client's `cu-btn` block (primitives.css section 10),
+// which is the look the platform already ships on about 356 of its button call sites. Button
+// emits these classes BESIDE the 4.0.0 btn-base / btn-<variant> / btn-<size> classes rather than
+// instead of them, because the client still styles those hooks and 5.0.0 reaches its production
+// on release day through `npm i nexious-library@latest`. The nxs rules sit last in this file so
+// they win the equal specificity ties against the btn-base system on source order.
+//
+// Every value is a token. The three the client block reads and the library never defined
+// (--on-brand-color, --min-button-width, --button-disabled-text) have defaults in vars/_tokens.scss.
+.nxs-btn {
+  // The library reset ships `button { width: 100%; max-width: 250px }`; one class outranks it.
+  width: auto;
+  max-width: none;
+  // btn-base pins a fixed height. nxs-btn sizes by min-height instead, so a two line label grows
+  // the button rather than overflowing it, and nxs-btn-icon can stay square at every size.
+  height: auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-small);
+  box-sizing: border-box;
+  min-height: var(--control-height);
+  min-width: var(--min-button-width);
+  padding: var(--space-small) var(--space-medium);
+  border: 1px solid transparent;
+  border-radius: var(--radius-medium);
+  font-size: var(--text-base);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+  // An anchor wearing these classes otherwise keeps the browser's underline.
+  text-decoration: none;
+  // Hover shifts color only, never a transform, so a row of buttons never jitters.
+  transition: background-color var(--transition-fast), border-color var(--transition-fast),
+    color var(--transition-fast);
+  @include mixin.focus-ring;
+}
+
+// Primary: the filled brand, the dominant action. The label reads --on-brand-color so a preset
+// that flips it (Arcane's dark ink on light violet) keeps its contrast fix.
+.nxs-btn-primary {
+  background-color: var(--main-brand-color);
+  border-color: var(--main-brand-color);
+  color: var(--on-brand-color);
+  &:hover:not(:disabled):not(.nxs-btn-disabled) {
+    background-color: var(--main-brand-hover-color);
+    border-color: var(--main-brand-hover-color);
+  }
+}
+
+// Secondary: an outlined neutral. The transparent fill keeps primary dominant beside it, and the
+// hover tint is the themed one so it never flashes white on a dark page.
+.nxs-btn-secondary {
+  background-color: transparent;
+  border-color: var(--border);
+  color: var(--text);
+  font-weight: var(--font-medium);
+  &:hover:not(:disabled):not(.nxs-btn-disabled) {
+    background-color: var(--hover-bg);
+    border-color: var(--main-brand-color);
+  }
+}
+
+// Tertiary: text only, the lowest emphasis.
+.nxs-btn-tertiary {
+  background-color: transparent;
+  border-color: transparent;
+  color: var(--main-brand-color);
+  font-weight: var(--font-medium);
+  &:hover:not(:disabled):not(.nxs-btn-disabled) {
+    background-color: var(--hover-bg);
+    text-decoration: underline;
+  }
+}
+// The base indigo measures about 2.7:1 on the navy surfaces, under the 4.5:1 text floor, so dark
+// takes the lighter brand accent, as the client's `.dark-mode .cu-btn-tertiary` does.
+.dark-mode .nxs-btn-tertiary,
+[data-theme="dark"] .nxs-btn-tertiary {
+  color: var(--main-brand-color-accent);
+}
+
+// Danger: an outline at rest that fills the danger wash on hover. Every danger token flips with
+// the theme, so it needs no dark pair.
+.nxs-btn-danger {
+  background-color: transparent;
+  border-color: var(--danger-border);
+  color: var(--danger-text);
+  &:hover:not(:disabled):not(.nxs-btn-disabled) {
+    background-color: var(--danger-bg);
+    border-color: var(--danger-text);
+  }
+}
+
+// Ghost has no cu-btn twin; it is the library's 4.0.0 ghost variant restated on the nxs base so
+// every Variant value has an nxs class.
+.nxs-btn-ghost {
+  background-color: transparent;
+  border-color: var(--border);
+  color: var(--text);
+  &:hover:not(:disabled):not(.nxs-btn-disabled) {
+    background-color: var(--surface);
+    border-color: var(--main-brand-color);
+    box-shadow: var(--elevation-1);
+  }
+}
+
+// Sizes set min-height, not height, so nxs-btn-icon stays square at every size. Medium is the
+// base restated, so a caller can name the size instead of relying on an omission.
+.nxs-btn-small {
+  min-height: var(--control-height-small);
+  padding: var(--space-extra-small) var(--space-medium-small);
+  font-size: var(--text-small);
+}
+.nxs-btn-medium {
+  min-height: var(--control-height);
+  padding: var(--space-small) var(--space-medium);
+  font-size: var(--text-base);
+}
+.nxs-btn-large {
+  min-height: var(--control-height-large);
   padding: var(--space-medium-small) var(--space-large);
   font-size: var(--text-large);
-  border-radius: var(--radius-medium);
+}
+
+// Icon only: a square for one glyph. The markup must carry an aria-label. The widths are the
+// three control heights, which is exactly the client's 28, 36 and 44px squares.
+.nxs-btn-icon {
+  gap: 0;
+  padding: 0;
+  min-width: var(--control-height);
+  width: var(--control-height);
+  aspect-ratio: 1 / 1;
+}
+.nxs-btn-icon.nxs-btn-small {
+  min-width: var(--control-height-small);
+  width: var(--control-height-small);
+}
+.nxs-btn-icon.nxs-btn-large {
+  min-width: var(--control-height-large);
+  width: var(--control-height-large);
+}
+
+// Block: the full row (forms, stacked mobile actions).
+.nxs-btn-block {
+  width: 100%;
+  max-width: none;
+}
+
+// Disabled: the native attribute, and the class for an anchor or div styled as a button, which
+// has no disabled attribute to read.
+.nxs-btn:disabled,
+.nxs-btn-disabled {
+  background-color: var(--text-muted);
+  border-color: var(--text-muted);
+  color: var(--button-disabled-text);
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+// The WCAG 2.5.5 touch floor on a phone. The client bumps at 480px; this uses the library's own
+// mobile breakpoint (580px) so the floor agrees with btn-base's above, which only widens the band
+// that gets the larger target. The small icon square follows too: a two class rule kept it at
+// 28px wide while the one class bump made it 44px tall, a 28 by 44 pill, in the client before.
+@include mixin.devices(mobile) {
+  .nxs-btn {
+    min-height: var(--tap-target-min);
+  }
+  .nxs-btn-icon,
+  .nxs-btn-icon.nxs-btn-small {
+    min-width: var(--tap-target-min);
+    width: var(--tap-target-min);
+  }
+}
+
+@include mixin.reduced-motion {
+  .nxs-btn {
+    transition: none;
+  }
 }

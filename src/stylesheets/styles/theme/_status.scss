@@ -1,18 +1,38 @@
-// Self-contained status badges: each pins BOTH its background and a text color that
-// clears WCAG 1.4.3 AA (>=4.5:1) on that background, so a badge stays legible no
-// matter the inherited body text color or theme. The old rules put a green text
-// token on a green background (invisible) and leaned on a dark-mode override that
-// itself failed contrast on the green badge.
+// Status surfaces, painted from the token TRIPLES (--warn-bg / --warn-border / --warn-text and
+// friends) instead of the loud *-accent-color fills these rules used to carry.
+//
+// Two reasons the soft triple is the right recipe. First, the accent fills are light-only: they
+// have no dark counterpart, so a success message on a dark page rendered a solid slab of green
+// no matter the theme, while the triples flip with .dark-mode for free. Second, a saturated
+// full-bleed fill reads as an oversized banner and buries the message inside the color, which is
+// why nexious-client already paints its own .log-message-btn.status-error from --danger-bg and
+// --danger-text: the library and its main consumer were disagreeing about what a status surface
+// looks like, and the consumer was right.
+//
+// Border and no shadow, per design language 5.7 (a surface gets one or the other, never both),
+// and --radius-small because these are badge-scale surfaces on the concentric radius ladder.
 .status-pending,
 .status-due-soon {
-  color: var(--status-on-pending);
-  background-color: var(--pending-accent-color);
+  color: var(--warn-text);
+  background-color: var(--warn-bg);
+  border: 1px solid var(--warn-border);
+  border-radius: var(--radius-small);
 }
+
+// The one rule that deliberately keeps an accent fill. --complete-accent-color survives in
+// vars/_tokens.scss ONLY because this selector reads it: nexious-client deleted its own copy and
+// now relies on the library default, so moving this onto the success triple would strand the
+// token with no reader anywhere and silently drop the badge's background for that consumer. The
+// cost is that .status-complete stays a solid green while .status-success is now a soft one;
+// collapsing the two is an owner decision about retiring the token, not a lane decision.
 .status-complete {
   color: var(--status-on-accent);
   background-color: var(--complete-accent-color);
+  border-radius: var(--radius-small);
 }
 .status-success {
-  color: var(--status-on-accent);
-  background-color: var(--success-accent-color);
+  color: var(--success-text);
+  background-color: var(--success-bg);
+  border: 1px solid var(--success-border);
+  border-radius: var(--radius-small);
 }

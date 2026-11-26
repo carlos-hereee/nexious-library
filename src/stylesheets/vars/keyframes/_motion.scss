@@ -1,0 +1,29 @@
+// The "fade and rise" pair from design language 5.9: opacity plus a lift of --space-small (8px),
+// for content entering a region. The exit is the same move reversed, sinking back down, so a
+// region that leaves retraces the path it arrived on rather than vanishing in a new direction.
+//
+// The plain opacity fade is NOT redefined here: fadeIn and fadeOut in ./_fade.scss already are
+// that pattern, and the motion classes reuse them for "fade" and for every reduced-motion case.
+//
+// `transform: none` as the resting frame rather than translateY(0), so a finished element carries
+// no transform and creates no containing block for a fixed-position descendant.
+@keyframes motion-fade-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--space-small));
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes motion-fade-rise-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+  to {
+    opacity: 0;
+    transform: translateY(var(--space-small));
+  }
+}

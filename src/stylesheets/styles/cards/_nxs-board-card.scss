@@ -1,0 +1,55 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-board-card, one card on a kanban board ──────────────────────────────────
+// Ported from nexious-client's `kanban-card` block (shared/stylesheets/task-board.css, 2026-11
+// item 337) onto the nxs-card recipe it now sits on, so only what a board adds lives here: a
+// tighter padding for narrow columns, the grab cursor, the dragging dim and the Move to select.
+// Every rule is a single class on tokens, and the client's kanban-card rules are left alone.
+.nxs-board-card {
+  gap: var(--space-small);
+  padding: var(--space-medium-small) var(--space-medium);
+  border-radius: var(--radius-medium);
+  cursor: grab;
+}
+.nxs-board-card:active {
+  cursor: grabbing;
+}
+// Dims the source while the caller drags it, so the drop preview reads as the card in motion.
+.nxs-board-card-dragging {
+  opacity: 0.4;
+}
+// The title wraps on a board: a task name cut to one line hides the very thing a column scans for.
+.nxs-board-card .nxs-card-title {
+  font-size: var(--text-base);
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+.nxs-board-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-small);
+  color: var(--text-secondary);
+  font-size: var(--text-small);
+}
+.nxs-board-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--space-extra-small);
+}
+// The Move to select fills the card width, and its height keeps the 44px touch floor, because
+// this select is the only way to move a card from a phone (drag events never fire from touch).
+.nxs-board-card-move .select-wrapper {
+  width: 100%;
+}
+.nxs-board-card-move select {
+  width: 100%;
+  min-height: var(--tap-target-min);
+}
+
+@include mixins.reduced-motion {
+  .nxs-board-card {
+    transition: none;
+  }
+}

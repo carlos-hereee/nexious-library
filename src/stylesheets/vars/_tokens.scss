@@ -1,75 +1,481 @@
-// Default design tokens for nexious-library.
+// Canonical design tokens for the Company Uno platform.
 //
-// Why this exists: button variants, status colors, spacing, radii and shadows across the
-// library reference CSS custom properties (var(--surface), var(--space-medium), ...). With
-// no :root defining them, those declarations resolve to nothing and the library renders
-// unstyled unless the consuming app happens to define the exact same token names. This
-// block ships sensible defaults so the library is self-contained.
+// What: every shared token (the spacing, type, weight, radius, shadow, motion and layout scales,
+// the type roles, and the shared semantic colors in light, dark and Arcane) is declared here, with
+// the control geometry beside it in _control.scss. Library components read these through var().
 //
-// Non-breaking by design: a consumer that defines these tokens (e.g. nexious-client's
-// vars.css, imported AFTER the library stylesheet) overrides every value via normal source
-// order, so existing apps are unaffected; only the drop-it-in-unstyled case changes.
+// The contract (root CLAUDE.md rule 24): this file is the SOURCE. nexious-client still holds a
+// value identical copy in its vars.css and theme.css until 2026-11 item 377 deletes it, because
+// staging installs the published library and cannot read a token that has not been released yet.
+// The client loads that copy after this stylesheet, so the copy is what a browser renders today,
+// and the client parity test fails whenever the two disagree. So a token change made here is
+// mirrored into the client in the same release, never left for later. src/tokens/index.ts is the
+// framework free mirror for native code, pinned to this file by __tests__/tokens/tokenParity.test.ts.
+//
+// What does NOT live here: palettes that describe one product feature rather than the shared
+// system (the client's tier ladder, Dero, print, logo plate, Study Lab and tenant presets), so no
+// library component can come to depend on a feature it does not own.
 :root {
-  // brand + surfaces
-  --main-brand-color: #484b6a;
+  // ── Brand ───────────────────────────────────────────────────────────────────────
+  // The design language's indigo, replacing the library's old neutral slate #484b6a (owner
+  // decision on plan Q1, 2026-08-09). Storybook is the review surface for the library, and a
+  // states matrix rendered in a brand the product never ships reviews the wrong thing.
+  --main-brand-color: #4f46e5;
+  // The hover and accent shades of the brand, under the long names the platform uses. The design
+  // language's shorthand names (--brand-hover, --brand-accent) are deliberately NOT introduced:
+  // shipping both would be two names for one concept.
+  --main-brand-hover-color: #4338ca;
+  --main-brand-color-accent: #818cf8;
+  // The soft brand outline for a selected or highlighted container. Not a control boundary (that
+  // is --border, which has to clear 3:1), so it may sit light.
+  --main-border-color: #c3d0ff;
+  // The brand at low alpha, for selected-row tints and subtle brand backgrounds. Derived
+  // with color-mix rather than pinned as an rgba literal so it tracks whatever the brand
+  // token actually is, including a consumer override.
+  --brand-wash: color-mix(in srgb, var(--main-brand-color) 6%, transparent);
+  // The ProgressRing arc (2026-11 item 387, decision D2). Its own token rather than the brand on
+  // purpose: the base indigo is 2.49:1 on the dark --surface-2 track, under the 1.4.11 bar of 3:1,
+  // so dark takes the accent while light and Arcane keep the brand. contrast.test.ts asserts the
+  // arc on the track and on the card surface in all three themes.
+  --progress-ring-arc: var(--main-brand-color);
+
+  // ── Accent (teal): AI and live states only ───────────────────────────────────────
+  // Teal carries one meaning, Dero and AI affordances plus live or real time states, so its
+  // presence always reads as "intelligent or live". It is not a generic accent: brand emphasis
+  // is --main-brand-color-accent. The lighter --accent-strong is accent TEXT on a dark surface.
+  --accent: #0d9488;
+  --accent-hover: #0f766e;
+  --accent-strong: #2dd4bf;
+  --accent-wash: rgba(13, 148, 136, 0.08);
+
+  // ── Arcane palette ──────────────────────────────────────────────────────────────
+  // The raw night valley and violet palette the .arcane-mode block below points at. Declared on
+  // :root (not inside the theme block) so a semantic token on every theme can reach one step of
+  // it, which --on-brand-accent-color does. The derived solids carry their measured ratios on the
+  // Arcane surfaces because 1.4.11 needs 3:1 on a control boundary and the translucent
+  // --arcane-border reaches only 1.35:1.
+  --arcane-background: #0a0916;
+  --arcane-surface: #171331;
+  --arcane-accent: #a78bfa;
+  --arcane-accent-soft: rgba(167, 139, 250, 0.16);
+  --arcane-accent-strong: #c4b5fd;
+  --arcane-on-accent: #120f27;
+  --arcane-text: #f3f0ff;
+  --arcane-text-2: #b9b3d6;
+  --arcane-text-3: #8480a8;
+  --arcane-success: #6ee7a8;
+  --arcane-amber: #f0b74a;
+  --arcane-danger: #f4726b;
+  --arcane-gold: #e8c877;
+  --arcane-border: rgba(167, 139, 250, 0.18);
+  --arcane-border-2: rgba(167, 139, 250, 0.34);
+  --arcane-line: rgba(196, 181, 253, 0.36);
+  --arcane-stub: rgba(196, 181, 253, 0.5);
+  --arcane-track-0: #a78bfa;
+  --arcane-track-1: #5eb3f6;
+  --arcane-track-2: #e8c877;
+  --arcane-track-3: #6ee7a8;
+  --arcane-section-tint: #100e23; // midpoint of background and surface
+  --arcane-control-border: #6e6497; // 3.35 / 3.70 / 3.55 on the Arcane surfaces
+  --arcane-input-border: #7b71a7; // 4.06 / 4.48 / 4.29, one step heavier than the card edge
+  --arcane-surface-2: #1c1839;
+  --arcane-surface-2-hover: #221d44;
+  --arcane-success-bg: #233142; // success text on it 8.59:1
+  --arcane-success-border: #427d6c;
+  --arcane-warn-bg: #352a34; // amber text on it 7.56:1
+  --arcane-warn-border: #84653e;
+  --arcane-danger-bg: #362039; // danger text on it 5.25:1
+  --arcane-danger-border: #86424e;
+  --arcane-info-bg: #21294d; // track 1 sky as the info text, 6.22:1
+  --arcane-info-border: #3a6394;
+
+  // ── Surfaces and text ───────────────────────────────────────────────────────────
+  --bg: #f9fafb;
   --surface: #ffffff;
-  --border: #dddddd;
-  --text: #2c3e50;
+  --card-bg: #ffffff;
+  // The CONTROL boundary (a secondary button's edge, a divider a control relies on), so it has to
+  // clear WCAG 1.4.11 at 3:1 on --surface and --bg (3.24:1 on white). A container's quiet edge is
+  // --surface-edge instead, which is why that one may sit far lighter.
+  --border: #8290a5;
+  // The card ladder's three steps. --surface-edge is a CONTAINER edge, not a control boundary,
+  // which is why it can sit far under 3:1. --surface-2 and its hover are the fill a card nested
+  // in a card or panel drops to (one signal per layer, fill or edge, never both).
+  --surface-edge: rgba(15, 23, 42, 0.08);
+  --surface-2: #f7f8fa;
+  --surface-2-hover: #eef1f5;
+  // The alternating section background: lighter than --surface's neighbors and distinct from the
+  // page --bg, so sections can take a rhythm without divider lines.
+  --section-tint: #f5f7fb;
+  --input-bg: #ffffff;
+  // One step heavier than --border, because an input's edge is the ONLY thing marking where the
+  // field is (1.4.11), while a button also has its label.
+  --input-border: #748399;
+  --text: #0f172a;
+  // Quieter prose (table captions, detail lines). Darker than the #666/#999 literals it
+  // replaced, which only reached ~2.8:1 on white and failed WCAG 1.4.3 AA.
+  --text-secondary: #475569;
+  // One step quieter than --text-secondary, still AA on white (~4.6:1). Timestamps, meta.
+  --text-muted: #6b7280;
+  // The subtle row and cell hover tint, and the modal backdrop.
+  --hover-bg: rgba(15, 23, 42, 0.04);
+  --scrim: rgba(15, 23, 42, 0.45);
+  // Table surfaces. TRANSLUCENT rather than opaque hex on purpose: a table composites over
+  // whatever sits beneath it (page background, card, panel, dialog), and an opaque fill has
+  // to assume that surface is white. Over white these resolve to #f2f2f2 / #f9f9f9 / #e0e0e0.
+  --table-header-bg: rgba(0, 0, 0, 0.05);
+  --table-stripe-bg: rgba(0, 0, 0, 0.04);
+  --table-row-hover-bg: rgba(0, 0, 0, 0.12);
+
+  // ── Neutral ramp (slate) ────────────────────────────────────────────────────────
+  // Formalized so every gray in the library is an intentional step rather than one of the
+  // ad-hoc $faded / $dim / $muted literals in variables/_colors.scss. Library only: the
+  // skeleton fill reads one step, and the client has no copy of the ramp.
+  --slate-900: #0f172a;
+  --slate-700: #334155;
+  --slate-600: #475569;
+  --slate-500: #6b7280;
+  --slate-300: #cbd5e1;
+  --slate-200: #e2e8f0;
+  --slate-50: #f9fafb;
+
+  // ── Type scale ──────────────────────────────────────────────────────────────────
+  // --text-large is 1.125rem (18px), not 20px; a rule that genuinely wants 20px reads
+  // --text-extra-large. The two top steps exist for the display and title-large roles below;
+  // nothing above 1.875rem existed before them, so every hero title invented its own size.
+  --text-extra-small: 0.75rem;
   --text-small: 0.875rem;
-  --text-large: 1.25rem;
-  // status accents. Greens are darkened from #4bb161 to #2e7d46 so WHITE badge
-  // text (--status-on-accent) clears WCAG 1.4.3 AA (~5.1:1); the old #4bb161 only
-  // reached 2.7:1 against white. --text-success-color (success text on the white
-  // surface) is darkened to the same value for ~5.1:1.
-  --danger-accent-color: crimson;
-  --pending-accent-color: #eaab4c;
-  --success-accent-color: #2e7d46;
-  --complete-accent-color: #2e7d46;
-  --text-success-color: #2e7d46;
-  --primary-text-light-mode-color: #2c3e50;
-  // status badge text colors, each AA on its own badge background
-  --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
-  --status-on-pending: #2c3e50; // dark on the amber pending badge (~5.5:1)
-  // spacing scale
+  --text-base: 1rem;
+  --text-large: 1.125rem;
+  --text-extra-large: 1.25rem;
+  --text-2x-large: 1.5rem;
+  --text-3x-large: 1.875rem;
+  --text-4x-large: 2.25rem;
+  --text-5x-large: 3rem;
+  --line-height-tight: 1.2;
+  --line-height-base: 1.5;
+  // The overline/eyebrow tracking (12px, 600, uppercase). One token so a field label and a
+  // section eyebrow cannot drift apart by a hundredth of an em.
+  --tracking-overline: 0.06em;
+  --font-normal: 400;
+  --font-medium: 500;
+  --font-semibold: 600;
+  --font-bold: 700;
+
+  // ── Type roles ──────────────────────────────────────────────────────────────────
+  // Type is set by ROLE (rule 24), so a heading says what it is and the three values that make
+  // it a heading travel together; picking a raw size per component is how one page ended up with
+  // five near identical title sizes. Size and weight point at the scales above so a scale change
+  // moves every role with it, and a line height equal to an existing line height token points at
+  // that token rather than repeating the number. The values are the plan's proposal (2026-11
+  // item 51, Assumption 4) and are reviewed in its debug pass.
+  --type-display-size: var(--text-5x-large);
+  --type-display-weight: var(--font-bold);
+  --type-display-line-height: 1.1;
+  --type-title-large-size: var(--text-4x-large);
+  --type-title-large-weight: var(--font-bold);
+  --type-title-large-line-height: 1.15;
+  --type-page-title-size: var(--text-3x-large);
+  --type-page-title-weight: var(--font-bold);
+  --type-page-title-line-height: var(--line-height-tight);
+  --type-section-title-size: var(--text-extra-large);
+  --type-section-title-weight: var(--font-semibold);
+  --type-section-title-line-height: 1.3;
+  --type-card-title-size: var(--text-large);
+  --type-card-title-weight: var(--font-semibold);
+  --type-card-title-line-height: 1.35;
+  --type-body-size: var(--text-base);
+  --type-body-weight: var(--font-normal);
+  --type-body-line-height: 1.6;
+  --type-body-small-size: var(--text-small);
+  --type-body-small-weight: var(--font-normal);
+  --type-body-small-line-height: var(--line-height-base);
+  --type-caption-size: var(--text-extra-small);
+  --type-caption-weight: var(--font-medium);
+  --type-caption-line-height: 1.4;
+
+  // ── Spacing scale ───────────────────────────────────────────────────────────────
+  // --space-large is 1.5rem (24px) and 2rem is --space-extra-large; redeclared rather than
+  // renamed so no consumer reading either name broke.
   --space-extra-small: 0.25rem;
   --space-small: 0.5rem;
   --space-medium-small: 0.75rem;
   --space-medium: 1rem;
-  --space-large: 2rem;
-  // radii
-  --radius-small: 5px;
-  --radius-medium: 7px;
-  --radius-extra-large: 15px;
+  --space-large: 1.5rem;
+  --space-extra-large: 2rem;
+  --space-section: 3rem;
+  --space-page: 4rem;
+  // Added to the row gap of every shared vertical stack (cards, panels, stat tiles, list rows,
+  // fields, sections) so the space between stacked components and text is tuned in one place,
+  // never per surface. The owner asked for a quarter rem more breathing room platform wide.
+  --space-stack-extra: 0.25rem;
+
+  // ── Radii ───────────────────────────────────────────────────────────────────────
+  // The design language's 4 / 8 / 12 / 16. The scale has to be exact for the concentric
+  // nesting rule to work at all (a 12px card holds 8px rows holds 4px chips); one step being
+  // 7px instead of 8px makes every nested corner slightly wrong.
+  --radius-small: 4px;
+  --radius-medium: 8px;
+  --radius-large: 12px;
+  --radius-extra-large: 16px;
   --radius-full: 9999px;
-  // elevation
-  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.08);
-  --shadow-medium: 0 4px 8px rgba(0, 0, 0, 0.1);
-  --shadow-large: 0 10px 28px rgba(0, 0, 0, 0.12);
-  // motion
-  --transition-fast: 150ms ease;
-  // sizing
-  --max-card-width: 600px;
+
+  // ── Elevation ───────────────────────────────────────────────────────────────────
+  // The --elevation-* aliases name the ladder from design language 5.7 by ROLE, so a rule
+  // says what a surface is rather than which blur radius it wanted. The rule that comes with
+  // them: a surface gets a border OR a shadow at rest, never both. Dark does not redeclare the
+  // shadows, because dark surfaces lean on a lighter fill plus a hairline rather than on depth.
+  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-medium: 0 4px 6px rgba(0, 0, 0, 0.07), 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-large: 0 10px 15px rgba(0, 0, 0, 0.1), 0 4px 6px rgba(0, 0, 0, 0.05);
+  --elevation-1: var(--shadow-small); // cards, panels at rest
+  --elevation-2: var(--shadow-medium); // dropdowns, popovers
+  --elevation-3: var(--shadow-large); // modals, dialogs
+
+  // ── Motion ──────────────────────────────────────────────────────────────────────
+  // Three named speeds so a component picks a role, not a number.
+  --transition-fast: 150ms ease; // hover, focus, color changes
+  --transition-base: 200ms ease; // enter and exit, expand and collapse
+  --transition-slow: 300ms ease; // overlays and dialogs
+
+  // ── Status accents ──────────────────────────────────────────────────────────────
+  // --danger-accent-color and --success-accent-color keep the library's values (owner decision,
+  // 2026-11 item 51), because each carries a white label: white --status-on-accent on the green
+  // clears WCAG 1.4.3 AA (~5.1:1) and on crimson (.btn-danger) ~5.0:1, where the paler client
+  // values reached 1.49:1 and 3.76:1. The client moves onto these two in the plan's next phase.
+  --danger-accent-color: crimson;
+  --pending-accent-color: #f5cf90;
+  --success-accent-color: #2e7d46;
+  // The FILL behind a white label on a destructive action. Pinned separately from
+  // --danger-accent-color so a danger fill stays the same in every theme: white on crimson
+  // clears 4.99:1.
+  --danger-fill-color: #dc143c;
+  // Not dead here: styles/theme/_status.scss reads it for .status-complete, and a consumer that
+  // does not define it relies on this default for that badge's background.
+  --complete-accent-color: #2e7d46;
+  --primary-text-light-mode-color: #0f172a;
+  // Light text for placement ON a brand fill (.btn-active / .btn-selected, the StepProgress dot).
+  --primary-text-dark-mode-color: #f8fafc;
+  // status badge text colors, each AA on its own badge background
+  --status-on-accent: #ffffff; // white on the darkened green badges (~5.1:1)
+  --status-on-pending: #2c3e50; // dark on the amber pending badge (~7.4:1)
+
+  // ── Labels on fills ─────────────────────────────────────────────────────────────
+  // The label ON a brand fill. White on the indigo default; a theme whose brand is a light color
+  // (Arcane's violet) flips it to dark ink, which is why the primary button reads this token
+  // rather than a fixed light text color.
+  --on-brand-color: #ffffff;
+  // The label on an ACCENT fill (--main-brand-color-accent). Every accent in every theme is a light
+  // tint, where white measures 1.48:1 to 4.06:1, so this is the palette's dark ink on all of them.
+  --on-brand-accent-color: var(--arcane-on-accent);
+  // The narrowest a labelled button may get, so a one letter label never renders as a sliver.
+  --min-button-width: 40px;
+  // The label on the muted grey disabled fill (--text-muted), white in both themes.
+  --button-disabled-text: #ffffff;
+
+  // ── Status surfaces ─────────────────────────────────────────────────────────────
+  // Each status gets a background, a border and a text color as a set, so a badge or a
+  // banner can be built from tokens alone and inherits dark correctness for free.
+  --success-bg: #dcfce7;
+  --success-border: #86efac;
+  --success-text: #15803d;
+  --warn-bg: #fef3c7;
+  --warn-border: #f59e0b;
+  --warn-text: #92400e;
+  --danger-bg: #fef2f2;
+  --danger-border: #fca5a5;
+  --danger-text: #b91c1c;
+  --info-bg: #dbeafe;
+  --info-border: #93c5fd;
+  --info-text: #1e40af;
+  // The library's older name for success text, now an alias so the two cannot disagree.
+  // Kept rather than deleted because removing a published token is a consumer-visible
+  // change for no gain; nothing inside this library reads it.
+  --text-success-color: var(--success-text);
+
+  // ── Legacy color aliases ────────────────────────────────────────────────────────
+  // Older --color-* names that platform rules still read. Each is an alias, never a value, so it
+  // cannot drift from the semantic token it names. A custom property resolves its var() where it
+  // is DECLARED, so the dark block redeclares the ones whose target flips; otherwise they would
+  // keep the light value on a dark page. Arcane needs no copy: the shell element carries both
+  // classes, so the dark redeclaration resolves against the Arcane values on that same element.
+  --color-primary: var(--main-brand-color);
+  --color-on-primary: var(--on-brand-color);
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-success: var(--success-text);
+  --color-danger: var(--danger-text);
+
+  // ── Loading placeholders ────────────────────────────────────────────────────────
+  // A skeleton is two colors, not one: a resting fill and the lighter band that sweeps
+  // across it. Naming both means the sweep can be tuned per theme without a component
+  // knowing how it is drawn, and it is why the shimmer is a background-image gradient over
+  // --skeleton-bg rather than an opacity pulse (a pulse on a real surface dims whatever is
+  // behind it, which reads as a flicker rather than as loading).
+  --skeleton-bg: var(--slate-200);
+  --skeleton-shimmer: rgba(255, 255, 255, 0.65);
+  // 1.2s per design language 5.9. Long enough to read as deliberate, short enough that a
+  // slow request still shows motion rather than appearing frozen.
+  --skeleton-duration: 1200ms;
+
+  // ── List rows ───────────────────────────────────────────────────────────────────
+  // The design language's two row densities (5.10 Tables and Lists). Both clear the 44px
+  // tap floor by construction, which is the point of naming them: a "compact" row that
+  // someone sets to 36px because it looked tighter is a WCAG 2.5.5 failure that no visual
+  // review catches. Comfortable is the default; compact is the density toggle.
+  --row-height: 52px;
+  --row-height-dense: 44px;
+
+  // ── Stacking ────────────────────────────────────────────────────────────────────
+  // Named steps so two layered surfaces can never fight over an improvised z-index.
+  --z-base: 0;
+  --z-raised: 10;
+  --z-sticky: 100;
+  --z-dropdown: 1000;
+  --z-overlay: 2000;
+  --z-toast: 3000;
+  --z-command: 4000;
+
+  // ── Layout ──────────────────────────────────────────────────────────────────────
+  // --content-max is the one page content width (the .cu-page container); four competing page
+  // widths (1080 to 1440px) are what it replaces. --measure caps body copy at a readable line
+  // length, since a line past about 75 characters is where readers start losing their place.
+  --content-max: 1120px;
+  --measure: 65ch;
+  --max-card-width: 400px;
+  // One width for every navigation rail (SectionedRail). Library only under this name: the
+  // client calls the same width --cu-rail-width, a known two name duplicate (TECH_DEBT).
+  --rail-width: 240px;
+  // The ProgressRing's three footprints (2026-11 item 387), lifted from Study's 36, 56 and 104px
+  // ring. The hero opening is about 78px, which is why its caption caps at 4.75rem: "Course ready"
+  // and "Curso listo" each fit on one line at the caption size. Shrinking the hero breaks that.
+  --progress-ring-size-small: 2.25rem;
+  --progress-ring-size-large: 3.5rem;
+  --progress-ring-size-hero: 6.5rem;
+  --progress-ring-caption-max: 4.75rem;
 }
 
 // ── Dark theme ──────────────────────────────────────────────────────────────────
 // Reassign the token layer for any subtree under the `dark-mode` class (the value the
-// theme menu applies, see utils/data/themeList) or a `[data-theme="dark"]` attribute.
-// Why this exists: previously the tokens were defined only once in :root with light
-// values, and the `.dark-mode` class merely repainted one wrapper's background/color, so
-// every descendant using var(--surface)/var(--text) stayed light (white cards on a dark
-// page). CSS custom properties cascade, so reassigning them here re-themes every
-// token-driven descendant of a dark-mode subtree. Light mode keeps the :root defaults
-// above. Values chosen for WCAG AA text contrast on --surface; verify visually before
-// publishing (the remaining hardcoded $light-mode surfaces are FUTURE_PLANS item 80).
+// theme menu applies, see utils/data/themeList) or a `[data-theme="dark"]` attribute
+// (Storybook and several components theme by the attribute, so both selectors stay).
+// CSS custom properties cascade, so reassigning them here re-themes every token-driven
+// descendant of a dark-mode subtree. Light mode keeps the :root defaults above.
+//
+// Note what is NOT reassigned here: --main-brand-hover-color and --main-brand-color-accent,
+// and the shadows. The brand pair does not flip on dark, and dark surfaces lean on a lighter
+// fill plus a hairline rather than on shadow depth.
 .dark-mode,
 [data-theme="dark"] {
-  --surface: #1f2a37; // card / panel surface
-  --border: #3a4756; // subtle divider on dark
-  --text: #e6eaf0; // body text (~11:1 on --surface)
-  // Success TEXT must lighten on a dark surface; the light-mode #2e7d46 is too dark here.
-  --text-success-color: #5dd07a;
-  // Deeper shadows so elevation still reads against a dark background.
-  --shadow-small: 0 1px 2px rgba(0, 0, 0, 0.5);
-  --shadow-medium: 0 4px 10px rgba(0, 0, 0, 0.55);
-  --shadow-large: 0 12px 30px rgba(0, 0, 0, 0.6);
+  --bg: #0b1120; // page background
+  --surface: #111c2e; // card / panel surface
+  --card-bg: #111c2e;
+  --border: #5b6982; // control boundary on dark, 3.08:1 on --surface (1.4.11)
+  --surface-edge: rgba(255, 255, 255, 0.07);
+  --surface-2: #18233a;
+  --surface-2-hover: #1d2a44;
+  --section-tint: #0e1830;
+  --input-bg: #111c2e;
+  --input-border: #64748b;
+  --text: #f8fafc; // body text
+  --text-secondary: #94a3b8; // quieter prose, still AA on --surface
+  // #7c8ba1 clears AA on --surface and --bg (4.93:1 and 5.44:1) while staying a visible step
+  // below --text-secondary at 6.66:1, so the hierarchy the two tokens exist to express survives.
+  // The old #64748b measured 3.59:1 and failed 1.4.3.
+  --text-muted: #7c8ba1;
+  // A lift on dark needs MORE alpha than a darken on light does to read as the same step,
+  // hence the asymmetry with :root for the hover tint and the table surfaces. The scrim
+  // goes to plain black because a slate-tinted scrim over a navy page reads as haze.
+  --hover-bg: rgba(255, 255, 255, 0.06);
+  --scrim: rgba(0, 0, 0, 0.6);
+  --table-header-bg: rgba(255, 255, 255, 0.09);
+  --table-stripe-bg: rgba(255, 255, 255, 0.06);
+  --table-row-hover-bg: rgba(255, 255, 255, 0.12);
+  // The light skeleton pair is a solid slate with a white sweep, which on a navy page would
+  // be a bright rectangle where content is ABSENT: the loudest thing on screen would be the
+  // part with nothing in it. Both sides drop to low-alpha white so the placeholder reads as
+  // a dimmer patch of the surface it will become.
+  --skeleton-bg: rgba(255, 255, 255, 0.08);
+  --skeleton-shimmer: rgba(255, 255, 255, 0.16);
+  // The wash follows the lighter brand accent on dark, and needs more alpha for the same
+  // reason the hover tint does.
+  --brand-wash: color-mix(in srgb, var(--main-brand-color-accent) 16%, transparent);
+  // The ring arc takes the lighter accent on navy (5.25:1 on --surface-2); see :root.
+  --progress-ring-arc: var(--main-brand-color-accent);
+  // Teal brightens on navy so it still reads as the AI and live signal.
+  --accent: #2dd4bf;
+  --accent-hover: #5eead4;
+  --accent-strong: #99f6e4;
+  --accent-wash: rgba(45, 212, 191, 0.16);
+  // Status surfaces flip so a badge or banner built from tokens can never ship light-only.
+  --success-bg: #052e1a;
+  --success-border: #14532d;
+  --success-text: #4ade80;
+  --warn-bg: #78350f;
+  --warn-border: #f59e0b;
+  --warn-text: #fde68a;
+  --danger-bg: #450a0a;
+  --danger-border: #991b1b;
+  --danger-text: #fca5a5;
+  --info-bg: #1e3a5f;
+  --info-border: #1d4ed8;
+  --info-text: #93c5fd;
+  // Re-resolved against the dark tokens above (see the alias note in :root). --color-primary
+  // and --color-on-primary stay, since the brand fill does not flip on dark.
+  --color-text-muted: var(--text-muted);
+  --color-border: var(--border);
+  --color-success: var(--success-text);
+  --color-danger: var(--danger-text);
+}
+
+// ── Arcane theme ────────────────────────────────────────────────────────────────
+// The third platform theme (night valley and violet). It is LAYERED on dark: the platform shell
+// carries both `dark-mode arcane-mode`, so the cascade is light, then the dark block above, then
+// this block, which redeclares only what differs. It has to come after the dark block (same
+// specificity, later source) to win on the element carrying both classes; its focus tokens sit
+// at the end of _control.scss for the same reason, because that file loads after this one.
+// Left unset on purpose, so they inherit dark: the teal --accent set (the AI and live story),
+// the status accents and the shadows.
+.arcane-mode {
+  --bg: var(--arcane-background);
+  --surface: var(--arcane-surface);
+  --card-bg: var(--arcane-surface);
+  --surface-2: var(--arcane-surface-2);
+  --surface-2-hover: var(--arcane-surface-2-hover);
+  --surface-edge: var(--arcane-border);
+  --input-bg: var(--arcane-surface);
+  --text: var(--arcane-text);
+  --text-secondary: var(--arcane-text-2);
+  --text-muted: var(--arcane-text-3);
+  // NOT the palette's --arcane-border (1.35:1 on the surface): --border and --input-border are
+  // the only boundary a secondary button and an input have, so 1.4.11 needs the derived solids.
+  --border: var(--arcane-control-border);
+  --input-border: var(--arcane-input-border);
+  --section-tint: var(--arcane-section-tint);
+  --main-brand-color: var(--arcane-accent);
+  --main-brand-color-accent: var(--arcane-accent-strong);
+  // Back to the brand: Arcane's violet already clears 3:1 on its track, and without this line the
+  // ring would inherit dark's accent and read lighter than every other brand mark in the theme.
+  --progress-ring-arc: var(--main-brand-color);
+  --main-brand-hover-color: var(--arcane-accent-strong);
+  --main-border-color: var(--arcane-border-2);
+  // Violet is a LIGHT fill: white on #a78bfa is 2.72:1, so the brand label flips to the
+  // palette's dark ink (6.87:1 at rest, 10.13:1 on the #c4b5fd hover fill).
+  --on-brand-color: var(--arcane-on-accent);
+  --success-text: var(--arcane-success);
+  --success-bg: var(--arcane-success-bg);
+  --success-border: var(--arcane-success-border);
+  --warn-text: var(--arcane-amber);
+  --warn-bg: var(--arcane-warn-bg);
+  --warn-border: var(--arcane-warn-border);
+  --danger-text: var(--arcane-danger);
+  --danger-bg: var(--arcane-danger-bg);
+  --danger-border: var(--arcane-danger-border);
+  --info-text: var(--arcane-track-1);
+  --info-bg: var(--arcane-info-bg);
+  --info-border: var(--arcane-info-border);
+  --hover-bg: rgba(167, 139, 250, 0.06);
+  --table-header-bg: var(--arcane-accent-soft);
+  --table-stripe-bg: rgba(167, 139, 250, 0.06);
+  --table-row-hover-bg: rgba(167, 139, 250, 0.12);
+  --scrim: rgba(10, 9, 22, 0.7);
 }

@@ -56,6 +56,7 @@ const svgIcon = (children: ReactNode, filled = false): IconComponent => {
         strokeWidth={filled ? undefined : 2}
         strokeLinecap="round"
         strokeLinejoin="round"
+        // eslint-disable-next-line react/jsx-props-no-spreading -- a11y() returns one of two mutually exclusive attribute sets (named image or hidden), so a spread keeps the pair from ever rendering half and half.
         {...a11y(label)}
       >
         {children}
@@ -76,6 +77,7 @@ const digitIcon = (digit: string): IconComponent => {
         width={dimension}
         height={dimension}
         viewBox="0 0 24 24"
+        // eslint-disable-next-line react/jsx-props-no-spreading -- a11y() returns one of two mutually exclusive attribute sets (named image or hidden), so a spread keeps the pair from ever rendering half and half.
         {...a11y(label)}
       >
         <text x="12" y="18" textAnchor="middle" fontSize="20" fontWeight="700" fill={color ?? "currentColor"}>

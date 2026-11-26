@@ -17,7 +17,7 @@ const meta: Meta<typeof ListItem> = {
   argTypes: {
     activePath: { control: "text" },
     hideIcons: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
     handleClick: { action: "clicked" },
   },
   decorators: [

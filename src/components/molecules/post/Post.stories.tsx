@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import Post from "./Post";
 import type { PostData } from "nxs-post";
+import Post from "./Post";
 
 /**
  * Post is the editorial feed card. Title is the anchor, 16:9 thumbnail acts
@@ -24,7 +24,7 @@ const meta: Meta<typeof Post> = {
     showFullBody: { control: "boolean" },
     linkable: { control: "boolean" },
     allowRemoval: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
   decorators: [
     (Story) => (

@@ -1,11 +1,19 @@
+@use "../../vars/mixin/_index.scss" as mixin;
+
+// An onboarding checklist step. It is usually rendered on a button, so it is clickable, but
+// it is NOT a navigable card: it is one row of a list of steps. Per 5.7 that means a hover
+// tint and no lift, and it means the resting box-shadow goes away entirely (it was stacked
+// on top of the border, which is the doubled weight the elevation rule exists to remove).
+// The radius drops from --radius-extra-large, which is the modal step, to the card step.
 .onboarding-card {
-  padding: var(--space-small) var(--space-medium);
+  padding: var(--space-medium) var(--space-large);
   border: 1px solid var(--border);
-  border-radius: var(--radius-extra-large);
+  border-radius: var(--radius-large);
   background-color: var(--surface);
-  box-shadow: var(--shadow-small);
-  transition: box-shadow var(--transition-fast), transform var(--transition-fast);
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
+
+  @include mixin.focus-ring;
 }
 .onboarding-card:hover {
-  box-shadow: var(--shadow-medium);
+  background-color: var(--hover-bg);
 }

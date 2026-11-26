@@ -1,0 +1,18 @@
+// Promoted from nexious-client's `.pages-panel-grid` (dashboard.css), the grid its Pages tab,
+// quick nav, calendar quick actions, plugins tab and taskboard home shared before CardGrid
+// existed.
+//
+// auto-fill plus minmax rather than a fixed column count, so the grid follows the number of
+// cards instead of needing a breakpoint per count, and collapses to a single column on its own
+// below about 240px of usable width.
+.nxs-card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: var(--space-medium);
+}
+
+// A card's own gap is set for a media, title and footer card and reads airy on three short
+// stacked lines. Tightened only inside the grid, so a SelectCard placed anywhere else keeps it.
+.nxs-card-grid .nxs-select-card {
+  gap: var(--space-small);
+}

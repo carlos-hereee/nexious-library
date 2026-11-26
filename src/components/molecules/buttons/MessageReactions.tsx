@@ -3,7 +3,7 @@ import IconButton from "@nxs-molecules/buttons/IconButton";
 interface MessageReactionsProps {
   likeList: string[];
   messageId: string;
-  theme?: string;
+  className?: string;
   commentPing?: number;
   activeReply?: boolean;
   replyIcon?: boolean;
@@ -14,15 +14,15 @@ interface MessageReactionsProps {
 }
 
 const MessageReactions = (props: MessageReactionsProps) => {
-  const { likeList, messageId, activeReply, replyIcon, theme, allowRemoval, commentPing } = props;
+  const { likeList, messageId, activeReply, replyIcon, className, allowRemoval, commentPing } = props;
   const { onReplyClick, onLikeClick, onRemovalClick } = props;
   return (
-    <div className={`flex-g${theme ? ` ${theme}` : ""}`}>
+    <div className={`flex-g${className ? ` ${className}` : ""}`}>
       {onLikeClick && (
         <IconButton
           icon={{ icon: "heart" }}
           title="Like"
-          theme={`btn-icon-reaction btn-small highlight${likeList.includes(messageId) ? ` btn-like-icon` : ""}`}
+          className={`btn-icon-reaction btn-small highlight${likeList.includes(messageId) ? ` btn-like-icon` : ""}`}
           onClick={onLikeClick}
         />
       )}
@@ -30,7 +30,7 @@ const MessageReactions = (props: MessageReactionsProps) => {
         <IconButton
           icon={{ icon: replyIcon ? "reply" : "comment" }}
           title={replyIcon ? "Reply" : "Comment"}
-          theme={`btn-icon-reaction highlight btn-small${activeReply ? " btn-selected" : ""}`}
+          className={`btn-icon-reaction highlight btn-small${activeReply ? " btn-selected" : ""}`}
           onClick={onReplyClick}
           ping={commentPing || undefined}
         />
@@ -39,7 +39,7 @@ const MessageReactions = (props: MessageReactionsProps) => {
         <IconButton
           icon={{ icon: "cancel" }}
           title="Remove reaction"
-          theme={`btn-icon-reaction highlight btn-small${activeReply ? " btn-selected" : ""}`}
+          className={`btn-icon-reaction highlight btn-small${activeReply ? " btn-selected" : ""}`}
           onClick={onRemovalClick}
         />
       )}

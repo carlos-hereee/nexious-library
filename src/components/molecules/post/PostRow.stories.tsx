@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react";
-import PostRow from "./PostRow";
 import type { PostData } from "nxs-post";
+import PostRow from "./PostRow";
 
 /**
  * PostRow is the compact list row variant of Post. The selection affordance
@@ -16,7 +16,7 @@ const meta: Meta<typeof PostRow> = {
     onRemove: { action: "remove" },
     onAuthorClick: { action: "author-click" },
     allowRemoval: { control: "boolean" },
-    theme: { control: "text" },
+    className: { control: "text" },
   },
   decorators: [
     (Story) => (

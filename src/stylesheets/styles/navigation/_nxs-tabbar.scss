@@ -1,0 +1,208 @@
+@use "../../vars/mixin/_index.scss" as mixins;
+
+// ── nxs-tabbar and nxs-more, the compact viewport's nav (MobileTabBar, MoreSheet) ─
+// Ported from nexious-client's `.cu-tabbar` and `.cu-more-*` blocks (dashboard.css, 2026-11 item
+// 337, Phase 4). Tokens only: the bar reads the surface and border tokens the rail reads, and the
+// active state is the info wash behind the glyph plus the brand label. Both pieces are fixed to the
+// viewport; when to render them instead of a rail is the caller's breakpoint, not this file's.
+
+// ── The bar ──
+.nxs-tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: var(--z-sticky);
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 0;
+  padding: var(--space-extra-small) var(--space-extra-small)
+    calc(var(--space-extra-small) + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+  background: var(--surface);
+}
+// The tablist is a DOM parent (the roving keys index its tabs) but not a grid cell: its tabs and
+// More share the bar's five columns.
+.nxs-tabbar-tabs {
+  display: contents;
+}
+// A column of glyph over label, at least 48px each way, with no surface of its own.
+.nxs-tabbar-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-extra-small);
+  width: auto;
+  max-width: none;
+  min-width: 48px;
+  min-height: 48px;
+  margin: 0;
+  padding: var(--space-extra-small) 0;
+  border: 0;
+  border-radius: var(--radius-medium);
+  background: none;
+  color: var(--text-secondary);
+  font: inherit;
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  cursor: pointer;
+}
+// Inside the item: the bar runs edge to edge, so an outside ring would be clipped by the viewport.
+.nxs-tabbar-item:focus-visible {
+  outline: var(--focus-ring);
+  outline-offset: -2px;
+}
+.nxs-tabbar-icon {
+  display: grid;
+  place-items: center;
+  width: 2.75rem;
+  height: 1.75rem;
+  border-radius: var(--radius-full);
+  font-size: var(--text-large);
+  transition: background-color var(--transition-fast);
+}
+.nxs-tabbar-item-active {
+  color: var(--main-brand-color);
+}
+.nxs-tabbar-item-active .nxs-tabbar-icon {
+  background-color: var(--info-bg);
+}
+.nxs-tabbar-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+// The active label at 12px failed contrast on the client's dark bar (2.7:1); the accent passes.
+.dark-mode .nxs-tabbar-item-active,
+[data-theme="dark"] .nxs-tabbar-item-active {
+  color: var(--main-brand-color-accent);
+}
+
+// ── The sheet ──
+.nxs-more-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: var(--z-overlay);
+  background: var(--scrim);
+}
+.nxs-more-sheet {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: calc(var(--z-overlay) + 1);
+  max-height: 85dvh;
+  overflow-y: auto;
+  padding: var(--space-small) var(--space-medium) calc(var(--space-large) + env(safe-area-inset-bottom));
+  border-radius: var(--radius-large) var(--radius-large) 0 0;
+  background: var(--surface);
+  box-shadow: var(--elevation-3);
+  animation: nxs-more-rise var(--transition-base);
+}
+@keyframes nxs-more-rise {
+  from {
+    transform: translateY(100%);
+  }
+  to {
+    transform: none;
+  }
+}
+.nxs-more-grab {
+  width: 40px;
+  height: 5px;
+  margin: 0 auto;
+  margin-bottom: var(--space-small);
+  border-radius: var(--radius-full);
+  background: var(--border);
+}
+.nxs-more-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-small);
+}
+.nxs-more-title {
+  margin: 0;
+  font-size: var(--text-large);
+  font-weight: var(--font-semibold);
+  color: var(--text);
+}
+.nxs-more-section {
+  margin-top: var(--space-medium);
+}
+.nxs-more-overline {
+  margin: 0;
+  margin-bottom: var(--space-small);
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--text-secondary);
+}
+.nxs-more-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: var(--space-small);
+}
+.nxs-more-item {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-extra-small);
+  width: auto;
+  max-width: none;
+  min-height: 48px;
+  margin: 0;
+  padding: var(--space-extra-small) 0;
+  border: 0;
+  border-radius: var(--radius-medium);
+  background: none;
+  color: var(--text);
+  font: inherit;
+  font-size: var(--text-extra-small);
+  font-weight: var(--font-semibold);
+  line-height: var(--line-height-tight);
+  text-align: center;
+  cursor: pointer;
+  @include mixins.focus-ring;
+}
+.nxs-more-item-icon {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-medium);
+  background-color: var(--surface-2);
+  color: var(--text);
+  font-size: var(--text-large);
+}
+.nxs-more-item[aria-current="page"] {
+  color: var(--main-brand-color);
+}
+.nxs-more-item[aria-current="page"] .nxs-more-item-icon {
+  background-color: var(--info-bg);
+  color: var(--main-brand-color);
+}
+.nxs-more-item-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.nxs-more-footer {
+  margin-top: var(--space-medium);
+}
+
+@include mixins.reduced-motion {
+  .nxs-more-sheet {
+    animation: none;
+  }
+  .nxs-tabbar-icon {
+    transition: none;
+  }
+}
