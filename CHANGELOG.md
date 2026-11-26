@@ -23,6 +23,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   accessible name is the consumer's translated words. A footer without `credit` renders exactly the
   markup it rendered before.
 
+## [5.2.0] - 2026-11-25
+
 ### Form words a consumer can translate (2026-11 item 410)
 
 #### Added
