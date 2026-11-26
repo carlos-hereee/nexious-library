@@ -9,6 +9,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Footer credit row (2026-11 item 431 Phase 2)
+
+#### Added
+
+- **`Footer` takes `credit`** (`FooterCredit`, exported from `nexious-library`): `{ label, links }`
+  draws a smaller second row under the footer links, such as a platform's "Built on" line with its
+  legal links. The links go through `safeUrl` and open in the same tab like the footer's own.
+
+#### Accessibility
+
+- The credit row is its own `nav`, named by its visible `label` through `aria-labelledby`, so its
+  accessible name is the consumer's translated words. A footer without `credit` renders exactly the
+  markup it rendered before.
+
 ### Form words a consumer can translate (2026-11 item 410)
 
 #### Added

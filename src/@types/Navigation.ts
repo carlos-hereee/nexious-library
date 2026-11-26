@@ -84,6 +84,15 @@ export interface FooterLink {
   label: string;
   href: string;
 }
+/**
+ * A small credit row drawn under a footer's own links, for example a platform's "Built on" line
+ * with its legal links. `label` is visible text and also names the row's nav for screen readers,
+ * so the consumer passes it already translated.
+ */
+export interface FooterCredit {
+  label: string;
+  links: FooterLink[];
+}
 export interface FooterProps {
   appName?: string;
   title?: string;
@@ -92,6 +101,7 @@ export interface FooterProps {
   hero?: AssetProps;
   hoursOfOperation?: PHoursOfOperation;
   links?: FooterLink[];
+  credit?: FooterCredit;
 }
 
 export interface NavigationProps {

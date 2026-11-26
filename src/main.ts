@@ -214,7 +214,7 @@ export type { MotionApi, MotionOptions, MotionPattern, MotionProps, MotionProvid
 // public prop types, surfaced from the package entry so consumers can type their own
 // wrappers without reaching into subpaths. The underlying type modules now ship in dist
 // (the @types ambient `declare module` blocks were converted to real emitted modules).
-export type { HeaderProps, MenuProp, NavbarProps, FooterProps } from "nxs-navigation";
+export type { HeaderProps, MenuProp, NavbarProps, FooterProps, FooterCredit } from "nxs-navigation";
 export type {
   FormEntriesHandle,
   FormFieldWords,

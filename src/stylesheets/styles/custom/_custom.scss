@@ -205,3 +205,16 @@
     opacity: 1;
   }
 }
+
+// Footer credit row (template/Footer.tsx `credit`): a quieter second row under the footer links, for
+// a platform's "Built on" line. Body small rather than caption so the legal links stay readable, and
+// .footer-credit .footer-link outranks a consumer's `.footer-links a` font size on purpose.
+.footer-credit {
+  padding-top: 0;
+  color: var(--text-secondary);
+  font-size: var(--type-body-small-size);
+  line-height: var(--type-body-small-line-height);
+}
+.footer-credit .footer-link {
+  font-size: inherit;
+}
